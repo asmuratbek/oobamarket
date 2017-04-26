@@ -12,7 +12,7 @@ class Filters(models.Model):
         verbose_name_plural = 'Параметры'
 
     title = models.CharField( max_length=255, unique=False, null=False, verbose_name='Название')
-    category = models.ForeignKey(Category, on_delete=models.CASCADE, null=False, verbose_name='Категория')
+    category = models.ManyToManyField(Category, verbose_name='Категория')
     value = models.CharField(max_length=255, unique=False, null=True, verbose_name='Значение')
 
     created_at = models.DateTimeField(auto_now_add=True, null=True, verbose_name='Создано')
