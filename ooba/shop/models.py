@@ -23,6 +23,9 @@ class Shop(models.Model):
                                 verbose_name='Логотип')
     banner = models.ForeignKey('Banners', on_delete=models.CASCADE)
 
+    def __str__(self):
+        return self.title
+
 
 class Banners(models.Model):
     class Meta:
@@ -35,3 +38,6 @@ class Banners(models.Model):
     def save(self, *args, **kwargs):
         super(Banners, self).save(*args, **kwargs)
         self.title = str(self.image)
+
+    def __str__(self):
+        return self.title

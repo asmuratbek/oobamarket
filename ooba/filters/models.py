@@ -18,5 +18,5 @@ class Filters(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, null=True, verbose_name='Создано')
     updated_at = models.DateTimeField(auto_now=True, null=True, verbose_name='Обновлено')
 
-    # def __unicode__(self):
-    #     return '%s - %s' % (self.title, self.value)
+    def __str__(self):
+        return '{} - {}'.format(self.title, self.value)

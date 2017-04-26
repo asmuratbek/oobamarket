@@ -24,3 +24,6 @@ class Product(models.Model):
     delivery_currency = models.CharField(null=True, max_length=255, verbose_name='Валюта доставки')
     # settings = models.ManyToManyField('ProductSettings', verbose_name='Характеристика')
     in_stock = models.BooleanField(default=False, verbose_name='В наличии?')
+
+    def __str__(self):
+        return "{shop} - {category} - {title}".format(shop=self.shop.title, category=self.category, title=self.title)

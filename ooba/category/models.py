@@ -18,6 +18,9 @@ class Category(models.Model):
     created_at = models.DateTimeField(auto_now=True, verbose_name="Создано")
     updated_at = models.DateTimeField(auto_now_add=True, verbose_name="Обновлено")
 
+    def __str__(self):
+        return self.title
+
 
 class GlobalCategory(models.Model):
     class Meta:
@@ -28,3 +31,6 @@ class GlobalCategory(models.Model):
     slug = models.CharField(max_length=32, verbose_name='Название на транслите')
     created_at = models.DateTimeField(auto_now=True, verbose_name="Создано")
     updated_at = models.DateTimeField(auto_now_add=True, verbose_name="Обновлено")
+
+    def __str__(self):
+        return self.title
