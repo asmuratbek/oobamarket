@@ -1,7 +1,7 @@
 # coding=utf-8
 from __future__ import unicode_literals
-from ooba.shop.models import Shop
-from ooba.category.models import Category
+from apps.shop.models import Shop
+from apps.category.models import Category
 from django.db import models
 
 # Create your models here.

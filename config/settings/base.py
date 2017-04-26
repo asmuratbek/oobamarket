@@ -11,8 +11,8 @@ import environ
 import os
 
 DB_DIR = os.path.split(os.path.split(os.path.abspath(os.path.dirname(__file__)))[0])[0]
-ROOT_DIR = environ.Path(__file__) - 3  # (ooba/config/settings/base.py - 3 = ooba/)
-APPS_DIR = ROOT_DIR.path('ooba')
+ROOT_DIR = environ.Path(__file__) - 3  # (apps/config/settings/base.py - 3 = ooba/)
+APPS_DIR = ROOT_DIR.path('apps')
 
 # Load operating system environment variables and then prepare to use them
 env = environ.Env()
@@ -58,13 +58,13 @@ THIRD_PARTY_APPS = [
 # Apps specific for this project go here.
 LOCAL_APPS = [
     # custom users app
-    'ooba.users.apps.UsersConfig',
+    'apps.users.apps.UsersConfig',
     # Your stuff: custom apps go here
-    'ooba.category',
-    'ooba.favorites',
-    'ooba.filters',
-    'ooba.product',
-    'ooba.shop',
+    'apps.category',
+    'apps.favorites',
+    'apps.filters',
+    'apps.product',
+    'apps.shop',
 ]
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
@@ -85,7 +85,7 @@ MIDDLEWARE = [
 # MIGRATIONS CONFIGURATION
 # ------------------------------------------------------------------------------
 MIGRATION_MODULES = {
-    'sites': 'ooba.contrib.sites.migrations'
+    'sites': 'apps.contrib.sites.migrations'
 }
 
 # DEBUG
@@ -262,8 +262,8 @@ ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 
 ACCOUNT_ALLOW_REGISTRATION = env.bool('DJANGO_ACCOUNT_ALLOW_REGISTRATION', True)
-ACCOUNT_ADAPTER = 'ooba.users.adapters.AccountAdapter'
-SOCIALACCOUNT_ADAPTER = 'ooba.users.adapters.SocialAccountAdapter'
+ACCOUNT_ADAPTER = 'apps.users.adapters.AccountAdapter'
+SOCIALACCOUNT_ADAPTER = 'apps.users.adapters.SocialAccountAdapter'
 
 # Custom user app defaults
 # Select the correct user model
@@ -275,7 +275,7 @@ LOGIN_URL = 'account_login'
 AUTOSLUG_SLUGIFY_FUNCTION = 'slugify.slugify'
 
 ########## CELERY
-INSTALLED_APPS += ['ooba.taskapp.celery.CeleryConfig']
+INSTALLED_APPS += ['apps.taskapp.celery.CeleryConfig']
 CELERY_BROKER_URL = env('CELERY_BROKER_URL', default='django://')
 if CELERY_BROKER_URL == 'django://':
     CELERY_RESULT_BACKEND = 'redis://'
