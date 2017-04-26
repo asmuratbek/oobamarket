@@ -5,8 +5,11 @@ from django.contrib import admin
 from django.views.generic import TemplateView
 from django.views import defaults as default_views
 
+from apps.category.views import IndexView
+
 urlpatterns = [
-    url(r'^$', TemplateView.as_view(template_name='pages/home.html'), name='home'),
+    url(r'^$', IndexView.as_view(), name='index'),
+    url(r'^categories/', include('apps.category.urls', namespace='categories')),
     url(r'^about/$', TemplateView.as_view(template_name='pages/about.html'), name='about'),
 
     # Django Admin, use {% url 'admin:index' %}
