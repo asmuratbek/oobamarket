@@ -8,8 +8,9 @@ from django.views import defaults as default_views
 from apps.category.views import IndexView
 
 urlpatterns = [
-    url(r'^$', IndexView.as_view(), name='index'),
+    url(r'^$', IndexView.as_view(), name='home'),
     url(r'^categories/', include('apps.category.urls', namespace='categories')),
+    url(r'^shops/', include('apps.shop.urls', namespace='shops')),
     url(r'^about/$', TemplateView.as_view(template_name='pages/about.html'), name='about'),
 
     # Django Admin, use {% url 'admin:index' %}

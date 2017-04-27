@@ -5,6 +5,7 @@ from django.db import models
 
 
 # Create your models here.
+from django.urls import reverse
 
 
 class Shop(models.Model):
@@ -21,10 +22,16 @@ class Shop(models.Model):
     updated_ad = models.DateTimeField(auto_now_add=True, verbose_name='Обновленно')
     logo = models.ImageField(upload_to='images/shop/logo/', null=True,
                                 verbose_name='Логотип')
-    banner = models.ForeignKey('Banners', on_delete=models.CASCADE)
+    banner = models.ForeignKey('Banners', on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
         return self.title
+
+    def get_absolute_url(self):
+        return reverse("shops:detail", kwargs={'slug': self.slug})
+
+    def get_logo(self):
+        return self.logo.url
 
 
 class Banners(models.Model):

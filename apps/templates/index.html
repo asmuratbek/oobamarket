@@ -143,7 +143,7 @@
                     <!--
                     Когда вход выполнен!
                     -->
-
+                    {% if user.is_authenticated %}
                     <div class="dropdown">
                         <a class="enter btn" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Магазин
@@ -153,9 +153,13 @@
                         <ul class="dropdown-menu" aria-labelledby="dLabel">
                             <li><a href="">Мой магазин</a></li>
                             <li><a href="">Редактировать</a></li>
-                            <li><a href="">Выйти</a></li>
+                            <li><a href="{% url 'account_logout' %}">Выйти</a></li>
                         </ul>
                     </div>
+                        {% else %}
+                        <a href="{% url 'account_login' %}" class="enter btn" type="button">
+                            Войти</a>
+                    {% endif %}
                 </div>
             </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
@@ -211,10 +215,10 @@
                 <div class="title">
                     <p>{{ product.title }}</p>
                     {% if product.discount %}
-                        <span class="old-price"><strike>product.price</strike></span>
-                        <span>product.get_price</span>
+                        <span>{{ product.get_price }} {{ product.currency }}</span>
+                        <span class="old-price"><strike>{{ product.price }} {{ product.currency }}</strike></span>
                         {% else %}
-                        <span>product.get_price</span>
+                        <span>{{ product.get_price }} {{ product.currency }}</span>
                     {% endif %}
                 </div>
                 <div class="bottom-line">
@@ -222,7 +226,9 @@
                         <span class="glyphicon glyphicon-shopping-cart"></span>
                         Добавить в корзину
                     </a>
-                    <span class="truck pull-right" data-toggle="tooltip" title="" data-placement="top" data-original-title="Доставка 1"><i class="fa fa-truck" aria-hidden="true"></i></span>
+                    <span class="truck pull-right {% if product.delivery_type == 'paid' %} yellow
+                    {% elif product.delivery_type == 'free' %} green {% endif %}" data-toggle="tooltip" title=""
+                          data-placement="top" data-original-title="{{ product.get_delivery_type }}"><i class="fa fa-truck" aria-hidden="true"></i></span>
                     <span class="hearth pull-right"><i class="glyphicon glyphicon-heart"></i></span>
 
                 </div>
@@ -234,58 +240,17 @@
 
 <section class="magazin">
     <h2>Магазины</h2>
+
     <div class="owl-carousel">
+        {% for shop in shops %}
         <div class="item">
-            <a href="">
-                <img src="img/png/o1.jpeg" alt="">
+            <a href="{{ shop.get_absolute_url }}">
+                <img src="{{ shop.get_logo }}" alt="{{ shop.title }}">
             </a>
         </div>
-        <div class="item">
-            <a href="">
-                <img src="img/png/o2.png" alt="">
-            </a>
-        </div>
-        <div class="item">
-            <a href="">
-                <img src="img/png/o3.jpeg" alt="">
-            </a>
-        </div>
-        <div class="item">
-            <a href="">
-                <img src="img/png/o4.jpeg" alt="">
-            </a>
-        </div>
-        <div class="item">
-            <a href="">
-                <img src="img/png/o5.jpeg" alt="">
-            </a>
-        </div>
-        <div class="item">
-            <a href="">
-                <img src="img/png/o6.gif" alt="">
-            </a>
-        </div>
-        <div class="item">
-            <a href="">
-                <img src="img/png/o7.png" alt="">
-            </a>
-        </div>
-        <div class="item">
-            <a href="">
-                <img src="img/png/o8.png" alt="">
-            </a>
-        </div>
-        <div class="item">
-            <a href="">
-                <img src="img/png/o9.png" alt="">
-            </a>
-        </div>
-        <div class="item">
-            <a href="">
-                <img src="img/png/o10.gif" alt="">
-            </a>
-        </div>
+        {% endfor %}
     </div>
+
 </section>
 
 <!--[if lt IE 9]>
