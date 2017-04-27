@@ -6,6 +6,7 @@ from django.db import models
 from django.utils.translation import ugettext as _
 
 # Create your models here.
+from apps.users.models import User
 
 DELIVERY_TYPES = (
     ('self', u'Самовывоз'),
@@ -26,6 +27,7 @@ class ProductPublishedManager(models.Manager):
 
 
 class Product(models.Model):
+
     class Meta:
         verbose_name = 'Продукт'
         verbose_name_plural = 'Продукты'
@@ -66,6 +68,12 @@ class Product(models.Model):
 
     def get_delivery_type(self):
         return self.get_delivery_type_display()
+
+
+class FavoriteProduct(Product):
+    product = models.ForeignKey(Product, related_name='related_product')
+    user = models.ForeignKey(User)
+
 
 
 class ProductImage(models.Model):

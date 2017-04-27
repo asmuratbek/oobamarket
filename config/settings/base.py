@@ -61,7 +61,6 @@ LOCAL_APPS = [
     'apps.users.apps.UsersConfig',
     # Your stuff: custom apps go here
     'apps.category',
-    'apps.favorites',
     'apps.filters',
     'apps.product',
     'apps.shop',
