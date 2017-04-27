@@ -11,7 +11,7 @@ from django.utils.translation import ugettext as _
 class BestWeekProductsManager(models.Manager):
 
     def get_query_set(self):
-        return super(BestWeekProductsManager, self).get_query_set()
+        return super(BestWeekProductsManager, self).get_query_set().order_by('sell_count').limit(8)
 
 class Product(models.Model):
     class Meta:
@@ -44,9 +44,9 @@ class Product(models.Model):
 
     def get_price(self):
         if self.discount:
-            return '<span class="old-price"><strike>{}</strike></span>'.format((self.price * self.discount) / 100)
+            return (self.price * self.discount) / 100
         else:
-            return '<span>{}</span>'.format(self.price)
+            return self.price
 
 
 class ProductImage(models.Model):

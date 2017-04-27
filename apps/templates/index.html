@@ -210,7 +210,12 @@
                 </div>
                 <div class="title">
                     <p>{{ product.title }}</p>
-                    {{ product.get_price }}
+                    {% if product.discount %}
+                        <span class="old-price"><strike>product.price</strike></span>
+                        <span>product.get_price</span>
+                        {% else %}
+                        <span>product.get_price</span>
+                    {% endif %}
                 </div>
                 <div class="bottom-line">
                     <a href="#" class="add-basket">
