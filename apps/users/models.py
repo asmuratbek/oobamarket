@@ -17,3 +17,6 @@ class User(AbstractUser):
 
     def get_absolute_url(self):
         return reverse('users:detail', kwargs={'username': self.username})
+
+    def get_favorites_count(self):
+        return self.favoriteproduct_set.count()

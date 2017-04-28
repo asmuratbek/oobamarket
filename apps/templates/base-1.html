@@ -61,7 +61,7 @@
                             <!--<button type="submit" class="btn btn-default">Найти</button>-->
                         <!--</div>-->
                     <!--</form>-->
-                    <a href=""  class="favorites btn"><span class="glyphicon glyphicon-heart"></span> Избранные (2)</a>
+                    <a href=""  class="favorites btn"><span class="glyphicon glyphicon-heart"></span> Избранные {% if user.is_authenticated %}({{ user.get_favorites_count }}){% endif %}</a>
                     <a href=""  class="basket btn"><span class="glyphicon glyphicon-shopping-cart"></span> Корзина (9)</a>
                     <!-- <a href=""  class="enter btn">Войти</a> -->
 
