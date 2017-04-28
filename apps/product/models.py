@@ -15,12 +15,6 @@ DELIVERY_TYPES = (
 )
 
 
-class BestWeekProductsManager(models.Manager):
-
-    def get_query_set(self):
-        return super(BestWeekProductsManager, self).get_query_set().order_by('sell_count').limit(8)
-
-
 class ProductPublishedManager(models.Manager):
     def get_query_set(self):
         return super(ProductPublishedManager, self).get_query_set().filter(published=True)
@@ -48,7 +42,6 @@ class Product(models.Model):
     in_stock = models.BooleanField(default=False, verbose_name='В наличии?')
     published = models.BooleanField(default=True)
     objects = ProductPublishedManager()
-    week_best = BestWeekProductsManager()
 
     def __str__(self):
         return "{shop} - {category} - {title}".format(shop=self.shop.title, category=self.category, title=self.title)

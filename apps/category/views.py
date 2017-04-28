@@ -22,7 +22,7 @@ class IndexView(generic.ListView):
     def get_context_data(self, **kwargs):
         context = super(IndexView, self).get_context_data(**kwargs)
         context['shops'] = Shop.objects.all()
-        context["weeks_best_products"] = Product.week_best.all()
+        context["weeks_best_products"] = Product.objects.all()[:8]
         return context
 
 
