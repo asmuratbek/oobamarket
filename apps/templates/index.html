@@ -18,7 +18,7 @@
         <div class="clearfix"></div>
 
         <ul class="category">
-            {% for object in object_list %}
+            {% for object in fixed_categories %}
             <li>
                 <a href="{{ object.get_absolute_url }}"></a>
                 <div class="img-wrapper">
@@ -40,7 +40,7 @@
         {% for product in weeks_best_products %}
         <div class="col-md-3 col-sm-6">
             <div class="cover">
-                <a class="url-item" href=""></a>
+                <a class="url-item" href="{{ product.get_absolute_url }}"></a>
                 <div class="top-line">
                     <h2>{{ product.get_shop_title }}</h2>
                 </div>

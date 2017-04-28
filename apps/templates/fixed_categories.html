@@ -1,0 +1,16 @@
+<ul class="fixed-category scroll-pane">
+
+    {% for category in fixed_categories %}
+
+    <li data-toggle="tooltip" title="{{ category.title }}" data-placement="right"
+        data-original-title="{{ category.title }}">
+        <div class="img-wrapper">
+            <a href="{{ category.get_absolute_url }}">
+                <img src="{{ category.get_icon }}" alt="">
+            </a>
+        </div>
+    </li>
+
+    {% endfor %}
+
+</ul>

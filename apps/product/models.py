@@ -1,5 +1,8 @@
 # coding=utf-8
 from __future__ import unicode_literals
+
+from django.urls import reverse
+
 from apps.shop.models import Shop
 from apps.category.models import Category
 from django.db import models
@@ -64,6 +67,9 @@ class Product(models.Model):
     def get_delivery_type(self):
         return self.get_delivery_type_display()
 
+    def get_absolute_url(self):
+        return reverse("product:detail", kwargs={'slug': self.slug})
+
 
 class FavoriteProduct(models.Model):
 
@@ -103,6 +109,9 @@ class FavoriteProduct(models.Model):
 
     def get_title(self):
         return self.product.title
+
+    def get_absolute_url(self):
+        return self.product.get_absolute_url()
 
 
 class ProductImage(models.Model):

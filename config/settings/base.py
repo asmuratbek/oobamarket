@@ -176,6 +176,7 @@ TEMPLATES = [
                 'django.template.context_processors.static',
                 'django.template.context_processors.tz',
                 'django.contrib.messages.context_processors.messages',
+                'apps.category.context_processors.fixed_categories'
                 # Your stuff: custom template context processors go here
             ],
         },

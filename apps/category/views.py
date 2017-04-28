@@ -15,8 +15,7 @@ from apps.shop.models import Shop
 from apps.users.models import User
 
 
-class IndexView(generic.ListView):
-    model = GlobalCategory
+class IndexView(generic.TemplateView):
     template_name = "index.html"
 
     def get_context_data(self, **kwargs):
