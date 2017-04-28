@@ -5,7 +5,7 @@ from django.contrib import admin
 from django.views.generic import TemplateView
 from django.views import defaults as default_views
 
-from apps.category.views import IndexView
+from apps.category.views import IndexView, fixtures
 from apps.shop.views import create, agreement
 
 urlpatterns = [
@@ -15,6 +15,7 @@ urlpatterns = [
     url(r'^about/$', TemplateView.as_view(template_name='pages/about.html'), name='about'),
     url(r'^create/$', create, name='create'),
     url(r'^agreement/$', agreement, name='agreement'),
+    url(r'^fixtures/(?P<name>\w+)$', fixtures, name='fixtures'),
 
     # Django Admin, use {% url 'admin:index' %}
     url(settings.ADMIN_URL, admin.site.urls),
