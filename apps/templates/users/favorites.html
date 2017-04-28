@@ -1,42 +1,9 @@
 {% extends 'base-1.html' %}
-{% load staticfiles %}
 
 {% block content %}
-<section class="search-index">
-    <div class="container">
-
-        <img class="center-block" src="{% static 'img/logo.svg' %}" alt="">
-
-        <div class="col-md-offset-3 col-md-6">
-            <form class="form-inline">
-                <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Поиск товаров...">
-                    <button type="submit" class="btn btn-default">Найти</button>
-                </div>
-            </form>
-        </div>
-        <div class="clearfix"></div>
-
-        <ul class="category">
-            {% for object in object_list %}
-            <li>
-                <a href="{{ object.get_absolute_url }}"></a>
-                <div class="img-wrapper">
-                    <img src="{{ object.get_icon }}" alt="">
-                </div>
-                <div class="title">
-                    <p>{{ object.title }}</p>
-                </div>
-            </li>
-            {% endfor %}
-        </ul>
-
-    </div>
-</section>
-
 <section class="goods-of-week">
     <div class="container">
-        <h1>Товары недели</h1>
+        <h1>Избранные товары</h1>
         {% for product in weeks_best_products %}
         <div class="col-md-3 col-sm-6">
             <div class="cover">
@@ -72,27 +39,5 @@
         {% endfor %}
     </div>
 </section>
-
-<section class="magazin">
-    <h2>Магазины</h2>
-
-    <div class="owl-carousel">
-        {% for shop in shops %}
-        <div class="item">
-            <a href="{{ shop.get_absolute_url }}">
-                <img src="{{ shop.get_logo }}" alt="{{ shop.title }}">
-            </a>
-        </div>
-        {% endfor %}
-    </div>
-
-</section>
-
-<!--[if lt IE 9]>
-    <script src="libs/html5shiv/es5-shim.min.js"></script>
-    <script src="libs/html5shiv/html5shiv.min.js"></script>
-    <script src="libs/html5shiv/html5shiv-printshiv.min.js"></script>
-    <script src="libs/respond/respond.min.js"></script>
-<![endif]-->
 
 {% endblock %}

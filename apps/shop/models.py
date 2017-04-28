@@ -1,11 +1,10 @@
 # coding=utf-8
 from __future__ import unicode_literals
-
-from django.db import models
-
-
-# Create your models here.
 from django.urls import reverse
+from apps.users.models import User
+from django.db import models
+# Create your models here.
+
 
 
 class Shop(models.Model):
@@ -13,6 +12,7 @@ class Shop(models.Model):
         verbose_name = 'Магазин'
         verbose_name_plural = 'Магазины'
 
+    user = models.ManyToManyField(to=User, verbose_name='Администратор магазина')
     title = models.CharField(max_length=255, verbose_name='Название магазина')
     slug = models.CharField(max_length=32, verbose_name='Название на транслите')
     email = models.EmailField(verbose_name='E-mail магазина')
@@ -33,6 +33,8 @@ class Shop(models.Model):
     def get_logo(self):
         return self.logo.url
 
+    def get_shop_user(self):
+        return str(self.user.username)
 
 class Banners(models.Model):
     class Meta:

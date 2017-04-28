@@ -6,3 +6,20 @@ from .models import Shop
 
 class ShopDetailView(generic.DetailView):
     model = Shop
+
+
+def create(request):
+
+    params = {
+        'shop': 'shop'
+    }
+
+    return render(request, 'shop/create.html', params)
+
+def agreement(request):
+
+    params = {
+        'shop': 'shop'
+    }
+
+    return render(request, 'shop/agreement.html', params)

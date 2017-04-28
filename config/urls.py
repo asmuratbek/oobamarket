@@ -6,12 +6,15 @@ from django.views.generic import TemplateView
 from django.views import defaults as default_views
 
 from apps.category.views import IndexView
+from apps.shop.views import create, agreement
 
 urlpatterns = [
     url(r'^$', IndexView.as_view(), name='home'),
     url(r'^categories/', include('apps.category.urls', namespace='categories')),
     url(r'^shops/', include('apps.shop.urls', namespace='shops')),
     url(r'^about/$', TemplateView.as_view(template_name='pages/about.html'), name='about'),
+    url(r'^create/$', create, name='create'),
+    url(r'^agreement/$', agreement, name='agreement'),
 
     # Django Admin, use {% url 'admin:index' %}
     url(settings.ADMIN_URL, admin.site.urls),

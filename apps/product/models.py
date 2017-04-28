@@ -76,6 +76,8 @@ class FavoriteProduct(Product):
 
 
 
+
+
 class ProductImage(models.Model):
 
     class Meta:
