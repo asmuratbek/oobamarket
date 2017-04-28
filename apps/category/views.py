@@ -1,7 +1,7 @@
 import random
 
 import datetime
-
+import requests
 from django.core.files import File
 from django.http import JsonResponse
 from django.shortcuts import render
@@ -48,6 +48,14 @@ def fixtures(request, name):
             post.in_stock = True
             post.published = True
             post.save()
+
+            # reopen = open(base.STATICFILES_DIRS[0] + '/img/img/t10.jpg')
+            # image = ProductImage()
+            # image.product = post
+            # image.image.save('some-title.jpg', File(reopen), save=True)
+            # image.save()
+            # reopen.close()
+            # suka blyat!!!!!
     elif name == 'product_delete':
         if Product.objects.all():
             for p in Product.objects.all():
