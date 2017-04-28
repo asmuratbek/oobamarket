@@ -23,4 +23,9 @@ urlpatterns = [
         view=views.UserUpdateView.as_view(),
         name='update'
     ),
+    url(
+        regex=r'^(?P<pk>[0-9]+)/favorites/$',
+        view=views.UsersFavoritesListView.as_view(),
+        name='favorites'
+    ),
 ]

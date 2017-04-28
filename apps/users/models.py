@@ -20,3 +20,9 @@ class User(AbstractUser):
 
     def get_favorites_count(self):
         return self.favoriteproduct_set.count()
+
+    def get_favorites(self):
+        return self.favoriteproduct_set.all()
+
+    def get_favorites_link(self):
+        return reverse("users:favorites", kwargs={'pk': self.pk})

@@ -4,7 +4,7 @@
 <section class="goods-of-week">
     <div class="container">
         <h1>Избранные товары</h1>
-        {% for product in weeks_best_products %}
+        {% for product in object.favoriteproduct_set.all %}
         <div class="col-md-3 col-sm-6">
             <div class="cover">
                 <a class="url-item" href=""></a>
@@ -15,12 +15,12 @@
                     <img src="{{ product.get_main_image }}" alt="">
                 </div>
                 <div class="title">
-                    <p>{{ product.title }}</p>
-                    {% if product.discount %}
-                        <span>{{ product.get_price }} {{ product.currency }}</span>
-                        <span class="old-price"><strike>{{ product.price }} {{ product.currency }}</strike></span>
+                    <p>{{ product.get_title }}</p>
+                    {% if product.is_discount %}
+                        <span>{{ product.get_price }} {{ product.get_currency }}</span>
+                        <span class="old-price"><strike>{{ product.get_old_price }} {{ product.get_currency }}</strike></span>
                         {% else %}
-                        <span>{{ product.get_price }} {{ product.currency }}</span>
+                        <span>{{ product.get_price }} {{ product.get_currency }}</span>
                     {% endif %}
                 </div>
                 <div class="bottom-line">
@@ -28,9 +28,9 @@
                         <span class="glyphicon glyphicon-shopping-cart"></span>
                         Добавить в корзину
                     </a>
-                    <span class="truck pull-right {% if product.delivery_type == 'paid' %} yellow
-                    {% elif product.delivery_type == 'free' %} green {% endif %}" data-toggle="tooltip" title=""
-                          data-placement="top" data-original-title="{{ product.get_delivery_type }}"><i class="fa fa-truck" aria-hidden="true"></i></span>
+                    <span class="truck pull-right {% if product.get_delivery_type == 'paid' %} yellow
+                    {% elif product.get_delivery_type == 'free' %} green {% endif %}" data-toggle="tooltip" title=""
+                          data-placement="top" data-original-title="{{ product.get_delivery_type_display }}"><i class="fa fa-truck" aria-hidden="true"></i></span>
                     <span class="hearth pull-right"><i class="glyphicon glyphicon-heart"></i></span>
 
                 </div>

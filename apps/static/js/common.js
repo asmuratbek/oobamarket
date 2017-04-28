@@ -14,6 +14,30 @@ $( document ).ready(function() {
 
 
 
+    $('.owl-carousel.shop-page').owlCarousel({
+        loop:true,
+        margin:0,
+        nav: false,
+        dots: true,
+        responsiveClass:true,
+        responsive:{
+            0:{
+                items:1,
+                nav:false
+            },
+            600:{
+                items:1,
+                nav:false
+            },
+            1000:{
+                items:1,
+                nav:false,
+                loop:true
+            }
+        }
+    })
+
+
 
 
     $('.owl-carousel').owlCarousel({
@@ -55,20 +79,23 @@ $( document ).ready(function() {
 
 
     //initiate the plugin and pass the id of the div containing gallery images
-    $("#zoom_03").elevateZoom({
-        gallery:'gallery_01',
-        cursor: 'pointer',
-        easing : true,
-        galleryActiveClass: 'active',
-        imageCrossfade: true,
-        loadingIcon: 'http://www.elevateweb.co.uk/spinner.gif'
-    });
+    if ($('#zoom_03').length > 0){
+        $("#zoom_03").elevateZoom({
+            gallery:'gallery_01',
+            cursor: 'pointer',
+            easing : true,
+            galleryActiveClass: 'active',
+            imageCrossfade: true,
+            loadingIcon: 'http://www.elevateweb.co.uk/spinner.gif'
+        });
 
-    //pass the images to Fancybox
-    // $("#zoom_03").bind("click", function(e) {
-    //     var ez = $('#zoom_03').data('elevateZoom');
-    //     $.fancybox(ez.getGalleryList());
-    //     return false;
-    // });
+        //pass the images to Fancybox
+        // $("#zoom_03").bind("click", function(e) {
+        //     var ez = $('#zoom_03').data('elevateZoom');
+        //     $.fancybox(ez.getGalleryList());
+        //     return false;
+        // });
+    }
+
 
 }); // end document ready

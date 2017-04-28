@@ -5,7 +5,8 @@ from django.views.generic import ListView
 from .models import *
 # Create your views here.
 
-class UserFavoriteListView(LoginRequiredMixin, ListView):
+
+class UserFavoritesListView(LoginRequiredMixin, ListView):
     model = FavoriteProduct
     template_name = 'users/favorites.html'
 

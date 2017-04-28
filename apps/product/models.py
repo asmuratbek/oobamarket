@@ -54,8 +54,10 @@ class Product(models.Model):
         return "{shop} - {category} - {title}".format(shop=self.shop.title, category=self.category, title=self.title)
 
     def get_main_image(self):
-        if self.productimage_set:
+        if self.productimage_set.all():
             return self.productimage_set.first().image.url
+        else:
+            return None
 
     def get_shop_title(self):
         return self.shop.title
@@ -70,12 +72,44 @@ class Product(models.Model):
         return self.get_delivery_type_display()
 
 
-class FavoriteProduct(Product):
-    product = models.ForeignKey(Product, related_name='related_product')
+class FavoriteProduct(models.Model):
+
+    class Meta:
+        verbose_name_plural = "Избранные продукты"
+        verbose_name = "Избранный продукт"
+
+    product = models.OneToOneField(Product, related_name='related_product')
     user = models.ForeignKey(User)
 
+    def __str__(self):
+        return self.product.__str__()
 
+    def get_main_image(self):
+        return self.product.get_main_image()
 
+    def get_shop_title(self):
+        return self.product.get_shop_title()
+
+    def get_price(self):
+        return self.product.get_price()
+
+    def get_delivery_type(self):
+        return self.product.delivery_type
+
+    def get_delivery_type_display(self):
+        return self.product.get_delivery_type()
+
+    def is_discount(self):
+        return self.product.discount
+
+    def get_currency(self):
+        return self.product.currency
+
+    def get_old_price(self):
+        return self.product.price
+
+    def get_title(self):
+        return self.product.title
 
 
 class ProductImage(models.Model):
