@@ -43,7 +43,6 @@ $( document ).ready(function() {
 
 
 
-
     $('.owl-carousel').owlCarousel({
         loop:true,
         margin:20,
@@ -110,6 +109,9 @@ $( document ).ready(function() {
             lessLink: '<a href="#">Скрыть</a>'
         });
     }
+
+
+
 
 
 }); // end document ready
