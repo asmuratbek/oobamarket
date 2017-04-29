@@ -7,6 +7,11 @@ from django.utils.translation import ugettext as _
 
 
 class Cart(models.Model):
+
+    class Meta:
+        verbose_name = "Корзина"
+        verbose_name_plural = "Корзины"
+
     user = models.ForeignKey(User, null=True, blank=True, verbose_name="Владелец")
     created_at = models.DateTimeField(auto_now_add=True, auto_now=False)
     updated = models.DateTimeField(auto_now_add=False, auto_now=True)
@@ -26,6 +31,11 @@ class Cart(models.Model):
 
 
 class CartItem(models.Model):
+
+    class Meta:
+        verbose_name = "Продукт в корзине"
+        verbose_name_plural = "Продукты в корзине"
+
     cart = models.ForeignKey(Cart, verbose_name='Корзина')
     product = models.ForeignKey(Product, verbose_name='Продукт')
     quantity = models.PositiveIntegerField(_("Количество"), default=1)
