@@ -108,7 +108,13 @@
             <div class="cover">
                 <a class="url-item" href="{{ product.get_absolute_url }}"></a>
                 <div class="top-line">
-                    <h2>{{ product.get_shop_title }}</h2>
+
+                    <h2>
+                        <a href="{{ product.shop.get_absolute_url }}">
+                        {{ product.get_shop_title }}
+                        </a>
+                    </h2>
+
                 </div>
                 <div class="img-wrapper">
                     <img src="{{ product.get_main_image }}" alt="">
