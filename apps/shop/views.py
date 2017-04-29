@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views import generic
-from .models import Shop
+from .models import Shop, Banners
 # Create your views here.
 
 
