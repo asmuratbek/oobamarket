@@ -19,3 +19,18 @@ def is_in_cart(product, user):
         return 'Удалить из корзины'
     else:
         return 'Добавить в корзину'
+
+@register.assignment_tag
+def is_in_cart_block(product, user):
+    if product.cartitem_set.filter(cart__user=user).exists():
+        return '''
+            <a href="#" class="add-basket">
+                        <span class="glyphicon glyphicon-shopping-cart"></span>
+                        Добавить в корзину
+                    </a>
+        '''
+    else:
+        return '''<a href="#" class="add-basket">
+                        <span class="glyphicon glyphicon-shopping-cart"></span>
+                        Добавить в корзину
+                    </a>'''
