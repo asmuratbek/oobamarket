@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from django.views import generic
+
+from apps.product.models import Product
 from .models import Shop, Banners
 # Create your views here.
 
@@ -7,6 +9,10 @@ from .models import Shop, Banners
 class ShopDetailView(generic.DetailView):
     model = Shop
 
+    def get_context_data(self, **kwargs):
+        context = super(ShopDetailView, self).get_context_data(**kwargs)
+        context["products"] = Product.objects.all()[:6]
+        return context
 
 def create(request):
 
