@@ -98,4 +98,12 @@ $( document ).ready(function() {
     }
 
 
+
+    $('.see-more-toogle').readmore({
+        speed: 500,
+        collapsedHeight: 40,
+        moreLink: '<a href="#">Прочитать</a>',
+        lessLink: '<a href="#">Скрыть</a>'
+    });
+
 }); // end document ready
