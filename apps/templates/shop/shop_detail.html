@@ -1,307 +1,193 @@
 {% extends 'base-1.html' %}
-{% load staticfiles %}
-
+{% load staticfiles product_tags %}
 {% block fixed_categories %}
     {% include 'fixed_categories.html' %}
 {% endblock %}
 
 {% block content %}
 
-<section class="category-link">
-    <div class="container">
-        <div class="clearfix"></div>
-        <div class="pull-left">
-            <div class="dropdown">
-                <a class="enter btn" type="button" data-toggle="dropdown" aria-haspopup="true"
-                   aria-expanded="false">
-                    Магазин
-                    <span class="glyphicon glyphicon-menu-down"></span>
-                </a>
+    <section class="category-link">
+        <div class="container">
+            <div class="clearfix"></div>
+            <div class="pull-left">
+                <div class="dropdown">
+                    <a class="enter btn" type="button" data-toggle="dropdown" aria-haspopup="true"
+                       aria-expanded="false">
+                        Магазин
+                        <span class="glyphicon glyphicon-menu-down"></span>
+                    </a>
 
-                <ul class="dropdown-menu" aria-labelledby="dLabel">
-                    <li><a href="">Мой магазин</a></li>
-                    <li><a href="">Редактировать</a></li>
-                    <li><a href="">Выйти</a></li>
-                </ul>
-            </div>
-            <div class="dropdown">
-                <a class="enter btn" type="button" data-toggle="dropdown" aria-haspopup="true"
-                   aria-expanded="false">
-                    Магазин большой
-                    <span class="glyphicon glyphicon-menu-down"></span>
-                </a>
-
-                <ul class="dropdown-menu" aria-labelledby="dLabel">
-                    <li><a href="">Мой магазин</a></li>
-                    <li><a href="">Редактировать Редактировать Редактировать</a></li>
-                    <li><a href="">Выйти</a></li>
-                </ul>
-            </div>
-            <div class="dropdown">
-                <a href="" class="enter btn">
-                    Магазин
-                </a>
-            </div>
-            <!--<a href="">Одежда для мужчин</a>-->
-            <!--<a href="">Всё для детей</a>-->
-            <!--<a href="">Электроника</a>-->
-            <!--<a href="">Компьютеры</a>-->
-        </div>
-        <div class="pull-right">
-            <a href="">
-                <span class="glyphicon glyphicon-menu-left"></span>
-                Назад</a>
-        </div>
-        <div class="clearfix"></div>
-    </div>
-</section>
-
-<div class="shop-page-page">
-    <div class="container">
-        <div class="col-md-3">
-            <div class="img-wrapper">
-                <img src="{{ object.get_logo }}" alt="">
-            </div>
-            <h2>{{ object.title }}</h2>
-            <p>{{ object.description }}</p>
-        </div>
-        <div class="col-md-9">
-            <div class="cover">
-                <div class="owl-carousel shop-page">
-                    {% for banner in object.banners_set.all %}
-                    <div class="item">
-                        <a href="">
-                            <img src="{{ banner.image.url }}" alt="">
-                        </a>
-                    </div>
-                    {% endfor %}
+                    <ul class="dropdown-menu" aria-labelledby="dLabel">
+                        <li><a href="">Мой магазин</a></li>
+                        <li><a href="">Редактировать</a></li>
+                        <li><a href="">Выйти</a></li>
+                    </ul>
                 </div>
-                <div class="bottom-line">
-                    <div class="pull-left edit">
-                        <a href="">Редактировать</a>
-                    </div>
-                    <div class="pull-right">
-                        {% for link in object.sociallinks_set.all %}
-                        <a href="{{ link.link }}">
-                            <img src="" alt="">
-                        </a>
-                        {% endfor %}
-                    </div>
+                <div class="dropdown">
+                    <a class="enter btn" type="button" data-toggle="dropdown" aria-haspopup="true"
+                       aria-expanded="false">
+                        Магазин большой
+                        <span class="glyphicon glyphicon-menu-down"></span>
+                    </a>
+
+                    <ul class="dropdown-menu" aria-labelledby="dLabel">
+                        <li><a href="">Мой магазин</a></li>
+                        <li><a href="">Редактировать Редактировать Редактировать</a></li>
+                        <li><a href="">Выйти</a></li>
+                    </ul>
                 </div>
+                <div class="dropdown">
+                    <a href="" class="enter btn">
+                        Магазин
+                    </a>
+                </div>
+                <!--<a href="">Одежда для мужчин</a>-->
+                <!--<a href="">Всё для детей</a>-->
+                <!--<a href="">Электроника</a>-->
+                <!--<a href="">Компьютеры</a>-->
             </div>
+            <div class="pull-right">
+                <a href="">
+                    <span class="glyphicon glyphicon-menu-left"></span>
+                    Назад</a>
+            </div>
+            <div class="clearfix"></div>
         </div>
-    </div>
-</div>
+    </section>
 
-<section class="shop-category">
-    <div class="container">
-        <ul class="category-tab">
-            <li class="active"><a href="">Товары</a></li>
-            <li><a href="">Акции</a></li>
-            <li><a href="">Отзывы</a></li>
-            <li><a href="">Контакты</a></li>
-        </ul>
-
-        <div class="filter">
+    <div class="shop-page-page">
+        <div class="container">
             <div class="col-md-3">
-                <ul>
-
-                    <li>Все категории</li>
-                        {% for category in object.category_set.all %}
-                    <li class="active"><a href="{{ category.get_absolute_url }}">{{ category.title }}</a></li>
-                        {% endfor %}
-                </ul>
+                <div class="img-wrapper">
+                    <img src="{{ object.get_logo }}" alt="">
+                </div>
+                <h2>{{ object.title }}</h2>
+                <p>{{ object.description }}</p>
             </div>
             <div class="col-md-9">
-                <div class="form-filter">
-
-                    <form class="form-inline">
-
-                        <div class="form-group select">
-                            <select class="form-control">
-                                <option>Сортировка</option>
-                                <option>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Maiores, modi?</option>
-                                <option>3</option>
-                                <option>4</option>
-                                <option>5</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group input">
-                            <label><span>Цена</span>  от</label>
-                            <input type="text" class="form-control" placeholder="2000 сом">
-                        </div>
-
-                        <div class="form-group input end">
-                            <label>до</label>
-                            <input type="text" class="form-control" placeholder="4000 сом">
-                        </div>
-
-                        <div class="form-group search">
-                            <input type="search" class="form-control" placeholder="Поиск товара...">
-                            <button type="submit" class="btn btn-default glyphicon glyphicon-search"></button>
-
-                        </div>
-
-                    </form>
-
-                </div>
-                <div class="goods-of-week">
-                    <div class="col-md-4 col-sm-8">
-                        <div class="cover">
-                            <a class="url-item" href=""></a>
-                            <div class="top-line">
-                                <h2>mango</h2>
-                            </div>
-                            <div class="img-wrapper">
-                                <img src="img/img/t10.jpg" alt="">
-                            </div>
-                            <div class="title">
-                                <p>Женская куртка Жакет с меховыми лацканами</p>
-                                <span>300011сом</span>
-                                <span class="old-price"><strike>200011сом</strike></span>
-                            </div>
-                            <div class="bottom-line">
-                                <a href="#" class="add-basket">
-                                    <span class="glyphicon glyphicon-shopping-cart"></span>
-                                    Добавить в корзину
+                <div class="cover">
+                    <div class="owl-carousel shop-page">
+                        {% for banner in object.banners_set.all %}
+                            <div class="item">
+                                <a href="">
+                                    <img src="{{ banner.image.url }}" alt="">
                                 </a>
-                                <span class="truck pull-right" data-toggle="tooltip" title="" data-placement="top" data-original-title="Доставка 1"><i class="fa fa-truck" aria-hidden="true"></i></span>
-                                <span class="hearth pull-right"><i class="glyphicon glyphicon-heart"></i></span>
-
                             </div>
-                        </div>
+                        {% endfor %}
                     </div>
-                    <div class="col-md-4 col-sm-8">
-                        <div class="cover">
-                            <a class="url-item" href=""></a>
-                            <div class="top-line">
-                                <h2>mango</h2>
-                            </div>
-                            <div class="img-wrapper">
-                                <img src="img/img/t10.jpg" alt="">
-                            </div>
-                            <div class="title">
-                                <p>Женская куртка Жакет с меховыми лацканами</p>
-                                <span>3000сом</span>
-                                <span class="old-price"><strike>200011сом</strike></span>
-                            </div>
-                            <div class="bottom-line">
-                                <a href="#" class="add-basket">
-                                    <span class="glyphicon glyphicon-shopping-cart"></span>
-                                    Добавить в корзину
-                                </a>
-                                <span class="truck pull-right yellow" data-toggle="tooltip" title="" data-placement="top" data-original-title="Доставка 2"><i class="fa fa-truck" aria-hidden="true"></i></span>
-                                <span class="hearth pull-right"><i class="glyphicon glyphicon-heart"></i></span>
-
-                            </div>
+                    <div class="bottom-line">
+                        <div class="pull-left edit">
+                            <a href="">Редактировать</a>
                         </div>
-                    </div>
-                    <div class="col-md-4 col-sm-8">
-                        <div class="cover">
-                            <a class="url-item" href=""></a>
-                            <div class="top-line">
-                                <h2>mango</h2>
-                            </div>
-                            <div class="img-wrapper">
-                                <img src="img/img/t10.jpg" alt="">
-                            </div>
-                            <div class="title">
-                                <p>Женская куртка Жакет с меховыми лацканами</p>
-                                <span>30000сом</span>
-
-                            </div>
-                            <div class="bottom-line">
-                                <a href="" class="add-basket in-the-basket">
-                                    <span class="glyphicon glyphicon-shopping-cart"></span>
-                                    В корзине
+                        <div class="pull-right">
+                            {% for link in object.sociallinks_set.all %}
+                                <a href="{{ link.link }}">
+                                    <img src="" alt="">
                                 </a>
-                                <span class="truck pull-right green" data-toggle="tooltip" title="" data-placement="top" data-original-title="Доставка 3"><i class="fa fa-truck" aria-hidden="true"></i></span>
-                                <span class="hearth pull-right "><i class="glyphicon glyphicon-heart"></i></span>
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4 col-sm-8">
-                        <div class="cover">
-                            <a class="url-item" href=""></a>
-                            <div class="top-line">
-                                <h2>mango</h2>
-                            </div>
-                            <div class="img-wrapper">
-                                <img src="img/img/t10.jpg" alt="">
-                            </div>
-                            <div class="title">
-                                <p>Женская куртка Жакет с меховыми лацканами</p>
-                                <span>30000сом</span>
-
-                            </div>
-                            <div class="bottom-line">
-                                <a href="" class="add-basket in-the-basket">
-                                    <span class="glyphicon glyphicon-shopping-cart"></span>
-                                    В корзине
-                                </a>
-                                <span class="truck pull-right green" data-toggle="tooltip" title="" data-placement="top" data-original-title="Доставка 3"><i class="fa fa-truck" aria-hidden="true"></i></span>
-                                <span class="hearth pull-right "><i class="glyphicon glyphicon-heart"></i></span>
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4 col-sm-8">
-                        <div class="cover">
-                            <a class="url-item" href=""></a>
-                            <div class="top-line">
-                                <h2>mango</h2>
-                            </div>
-                            <div class="img-wrapper">
-                                <img src="img/img/t10.jpg" alt="">
-                            </div>
-                            <div class="title">
-                                <p>Женская куртка Жакет с меховыми лацканами</p>
-                                <span>30000сом</span>
-
-                            </div>
-                            <div class="bottom-line">
-                                <a href="" class="add-basket in-the-basket">
-                                    <span class="glyphicon glyphicon-shopping-cart"></span>
-                                    В корзине
-                                </a>
-                                <span class="truck pull-right green" data-toggle="tooltip" title="" data-placement="top" data-original-title="Доставка 3"><i class="fa fa-truck" aria-hidden="true"></i></span>
-                                <span class="hearth pull-right "><i class="glyphicon glyphicon-heart"></i></span>
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4 col-sm-8">
-                        <div class="cover">
-                            <a class="url-item" href=""></a>
-                            <div class="top-line">
-                                <h2> mango mango mango mango</h2>
-                            </div>
-                            <div class="img-wrapper">
-                                <img src="img/img/t10.jpg" alt="">
-                            </div>
-                            <div class="title">
-                                <p>ограничение в 2 строки</p>
-                                <span>30000сом</span>
-
-                            </div>
-                            <div class="bottom-line">
-                                <a href="" class="add-basket in-the-basket">
-                                    <span class="glyphicon glyphicon-shopping-cart"></span>
-                                    В корзине
-                                </a>
-                                <span class="truck pull-right green" data-toggle="tooltip" title="" data-placement="top" data-original-title="Доставка 3"><i class="fa fa-truck" aria-hidden="true"></i></span>
-                                <span class="hearth pull-right "><i class="glyphicon glyphicon-heart"></i></span>
-
-                            </div>
+                            {% endfor %}
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</section>
+
+    <section class="shop-category">
+        <div class="container">
+            <ul class="category-tab">
+                <li class="active"><a href="">Товары</a></li>
+                <li><a href="">Акции</a></li>
+                <li><a href="">Отзывы</a></li>
+                <li><a href="">Контакты</a></li>
+            </ul>
+
+            <div class="filter">
+                <div class="col-md-3">
+                    <ul>
+
+                        <li>Все категории</li>
+                        {% for category in object.category_set.all %}
+                            <li class="active"><a href="{{ category.get_absolute_url }}">{{ category.title }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="col-md-9">
+                    <div class="form-filter">
+
+                        <form class="form-inline">
+
+                            <div class="form-group select">
+                                <select class="form-control">
+                                    <option>Сортировка</option>
+                                    <option>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Maiores, modi?
+                                    </option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                    <option>5</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group input">
+                                <label><span>Цена</span> от</label>
+                                <input type="text" class="form-control" placeholder="2000 сом">
+                            </div>
+
+                            <div class="form-group input end">
+                                <label>до</label>
+                                <input type="text" class="form-control" placeholder="4000 сом">
+                            </div>
+
+                            <div class="form-group search">
+                                <input type="search" class="form-control" placeholder="Поиск товара...">
+                                <button type="submit" class="btn btn-default glyphicon glyphicon-search"></button>
+
+                            </div>
+
+                        </form>
+
+                    </div>
+                    <div class="goods-of-week">
+
+                            {% for product in products %}
+                                <div class="col-md-4 col-sm-6">
+                                    <div class="cover">
+                                        <a class="url-item" href="{{ product.get_absolute_url }}"></a>
+                                        <div class="top-line">
+                                            <h2>{{ product.get_shop_title }}</h2>
+                                        </div>
+                                        <div class="img-wrapper">
+                                            <img src="{{ product.get_main_image }}" alt="">
+                                        </div>
+                                        <div class="title">
+                                            <p>{{ product.title }}</p>
+                                            {% if product.discount %}
+                                                <span>{{ product.get_price }} {{ product.currency }}</span>
+                                                <span class="old-price"><strike>{{ product.price }} {{ product.currency }}</strike></span>
+                                            {% else %}
+                                                <span>{{ product.get_price }} {{ product.currency }}</span>
+                                            {% endif %}
+                                        </div>
+                                        <div class="bottom-line">
+                                            {% is_in_cart_block product request.user %}
+                                            <span class="truck pull-right {% if product.delivery_type == 'paid' %} yellow
+                    {% elif product.delivery_type == 'free' %} green {% endif %}" data-toggle="tooltip" title=""
+                                                  data-placement="top"
+                                                  data-original-title="{{ product.get_delivery_type }}"><i
+                                                    class="fa fa-truck" aria-hidden="true"></i></span>
+                                            <span class="hearth pull-right {% is_favorite_for_like product request.user %}"><i
+                                                    class="glyphicon glyphicon-heart"></i></span>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
 
 
 {% endblock %}
