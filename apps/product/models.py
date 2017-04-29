@@ -79,6 +79,9 @@ class Product(models.Model):
     def get_absolute_url(self):
         return reverse("product:detail", kwargs={'slug': self.slug})
 
+    # def is_in_cart(self, user):
+
+
 
 class FavoriteProduct(models.Model):
 
