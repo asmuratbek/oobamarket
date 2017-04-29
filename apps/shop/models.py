@@ -1,9 +1,13 @@
 # coding=utf-8
 from __future__ import unicode_literals
-from django.urls import reverse
-from apps.users.models import User
+
 from django.db import models
+from django.urls import reverse
 from django.utils.translation import ugettext as _
+
+from apps.users.models import User
+
+
 # Create your models here.
 
 
@@ -23,9 +27,7 @@ class Shop(models.Model):
     created_at = models.DateTimeField(auto_now=True, verbose_name='Создано')
     updated_ad = models.DateTimeField(auto_now_add=True, verbose_name='Обновленно')
     logo = models.ImageField(upload_to='images/shop/logo/', null=True,
-                                verbose_name='Логотип')
-
-
+                             verbose_name='Логотип')
 
     def __str__(self):
         return self.title
@@ -47,7 +49,7 @@ class Banners(models.Model):
 
     title = models.CharField(max_length=255, verbose_name='Название баннера', blank=True, null=True)
     image = models.ImageField(upload_to='images/shop/banners/', verbose_name='Изображение банера')
-    banner = models.ForeignKey(Shop, on_delete=models.CASCADE, null=True, blank=True)
+    shop = models.ForeignKey(Shop, on_delete=models.CASCADE, null=True, blank=True)
 
     def save(self, *args, **kwargs):
         super(Banners, self).save(*args, **kwargs)
@@ -56,5 +58,11 @@ class Banners(models.Model):
     def __str__(self):
         return self.title
 
-class SocialIcons(models.Model):
-    class Meta
+
+class SocialLinks(models.Model):
+    class Meta:
+        verbose_name = 'Социальная ссылка'
+        verbose_name_plural = 'Социальные ссылки'
+
+    link = models.CharField(max_length=255, verbose_name='Ссылка на страницу соц.сети')
+    shop = models.ForeignKey(Shop, on_delete=models.CASCADE)
