@@ -7,9 +7,13 @@ from django.utils.translation import ugettext as _
 
 from apps.users.models import User
 
-
 # Create your models here.
-
+SOCIAL_LINKS = (
+    ('facebook', u'Facebook.com'),
+    ('vk', u'Vk.com'),
+    ('ok', u'Odnoklassniki.ru'),
+    ('instagram', u'Instagram.com')
+)
 
 
 class Shop(models.Model):
@@ -65,4 +69,11 @@ class SocialLinks(models.Model):
         verbose_name_plural = 'Социальные ссылки'
 
     link = models.CharField(max_length=255, verbose_name='Ссылка на страницу соц.сети')
+    icon = models.CharField(max_length=255, choices=SOCIAL_LINKS, verbose_name='Выбор соц. иконки', default=None)
     shop = models.ForeignKey(Shop, on_delete=models.CASCADE)
+
+    def get_icon(self):
+        return self.get_icon_display()
+
+    def __str__(self):
+        return self.shop

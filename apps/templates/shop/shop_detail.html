@@ -6,6 +6,7 @@
 {% endblock %}
 
 {% block content %}
+
 <section class="category-link">
     <div class="container">
         <div class="clearfix"></div>
@@ -80,18 +81,11 @@
                         <a href="">Редактировать</a>
                     </div>
                     <div class="pull-right">
-                        <a href="">
-                            <img src="img/png/mai.png" alt="">
+                        {% for link in object.sociallinks_set.all %}
+                        <a href="{{ link.link }}">
+                            <img src="" alt="">
                         </a>
-                        <a href="">
-                            <img src="img/png/mai.png" alt="">
-                        </a>
-                        <a href="">
-                            <img src="img/png/mai.png" alt="">
-                        </a>
-                        <a href="">
-                            <img src="img/png/mai.png" alt="">
-                        </a>
+                        {% endfor %}
                     </div>
                 </div>
             </div>
@@ -111,13 +105,11 @@
         <div class="filter">
             <div class="col-md-3">
                 <ul>
+
                     <li>Все категории</li>
-                    <li class="active"><a href="">Аудио и видео</a></li>
-                    <li><a href="">Мобильные телефоны</a></li>
-                    <li><a href="">Мобильные телефоны</a></li>
-                    <li><a href="">Мобильные телефоны</a></li>
-                    <li><a href="">Мобильные телефоны</a></li>
-                    <li><a href="">Мобильные телефоны</a></li>
+                        {% for category in object.category_set.all %}
+                    <li class="active"><a href="{{ category.get_absolute_url }}">{{ category.title }}</a></li>
+                        {% endfor %}
                 </ul>
             </div>
             <div class="col-md-9">
