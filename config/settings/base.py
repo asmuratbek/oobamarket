@@ -64,7 +64,8 @@ LOCAL_APPS = [
     'apps.filters',
     'apps.product',
     'apps.shop',
-    'apps.cart'
+    'apps.cart',
+    'apps.global_category'
 ]
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
@@ -176,7 +177,7 @@ TEMPLATES = [
                 'django.template.context_processors.static',
                 'django.template.context_processors.tz',
                 'django.contrib.messages.context_processors.messages',
-                'apps.category.context_processors.fixed_categories'
+                'apps.global_category.context_processors.fixed_categories'
                 # Your stuff: custom template context processors go here
             ],
         },

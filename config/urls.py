@@ -5,12 +5,13 @@ from django.contrib import admin
 from django.views.generic import TemplateView
 from django.views import defaults as default_views
 
-from apps.category.views import IndexView, fixtures
+from apps.global_category.views import IndexView, fixtures
 from apps.shop.views import create, agreement
 
 urlpatterns = [
     url(r'^$', IndexView.as_view(), name='home'),
-    url(r'^categories/', include('apps.category.urls', namespace='categories')),
+    url(r'^global_category/', include('apps.global_category.urls', namespace='global_category')),
+    url(r'^category/', include('apps.category.urls', namespace='categories')),
     url(r'^shops/', include('apps.shop.urls', namespace='shops')),
     url(r'^product/', include('apps.product.urls', namespace='product')),
     url(r'^about/$', TemplateView.as_view(template_name='pages/about.html'), name='about'),

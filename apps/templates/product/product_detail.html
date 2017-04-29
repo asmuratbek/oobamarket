@@ -1,4 +1,5 @@
 {% extends 'base-1.html' %}
+{% load staticfiles %}
 
 {% block fixed_categories %}
     {% include 'fixed_categories.html' %}
@@ -58,54 +59,27 @@
 <section class="single-product">
     <div class="container">
         <div class="zoom-left">
-            <img style="border:1px solid #e8e8e6;" id="zoom_03" src="http://www.elevateweb.co.uk/wp-content/themes/radial/zoom/images/small/image3.png"
-            data-zoom-image="http://www.elevateweb.co.uk/wp-content/themes/radial/zoom/images/large/image3.jpg"
+            <img style="border:1px solid #e8e8e6;" id="zoom_03" src="{{ object.get_main_image }}"
+            data-zoom-image="{{ object.get_main_image }}"
             />
 
             <div class="clearfix"></div>
 
             <div id="gallery_01">
-
-                <a  href="#" class="elevatezoom-gallery active" data-update="" data-image="http://www.elevateweb.co.uk/wp-content/themes/radial/zoom/images/small/image1.png"
-                data-zoom-image="http://www.elevateweb.co.uk/wp-content/themes/radial/zoom/images/large/image1.jpg">
-                    <img src="http://www.elevateweb.co.uk/wp-content/themes/radial/zoom/images/small/image1.png"   />
+                {% for image in object.productimage_set.all %}
+                <a  href="#" class="elevatezoom-gallery slide-content {% if forloop.first %}active{% endif %}" data-update="" data-image="{{ image.image.url }}"
+                data-zoom-image="{{ image.image.url }}">
+                    <img src="{{ image.image.url }}"   />
                 </a>
-
-                <a  href="#" class="elevatezoom-gallery"
-                data-image="http://www.elevateweb.co.uk/wp-content/themes/radial/zoom/images/small/image2.png"
-                data-zoom-image="http://www.elevateweb.co.uk/wp-content/themes/radial/zoom/images/large/image2.jpg"
-                >
-                    <img src="http://www.elevateweb.co.uk/wp-content/themes/radial/zoom/images/small/image2.png"   />
-                </a>
-
-                <a href="tester" class="elevatezoom-gallery"
-                data-image="http://www.elevateweb.co.uk/wp-content/themes/radial/zoom/images/small/image3.png"
-                data-zoom-image="http://www.elevateweb.co.uk/wp-content/themes/radial/zoom/images/large/image3.jpg">
-                    <img src="http://www.elevateweb.co.uk/wp-content/themes/radial/zoom/images/small/image3.png"   />
-                </a>
-
-                <a href="tester" class="elevatezoom-gallery"
-                data-image="http://www.elevateweb.co.uk/wp-content/themes/radial/zoom/images/small/image4.png"
-                data-zoom-image="http://www.elevateweb.co.uk/wp-content/themes/radial/zoom/images/large/image4.jpg"
-                class="slide-content"
-                >
-                    <img src="http://www.elevateweb.co.uk/wp-content/themes/radial/zoom/images/small/image4.png"   />
-                </a>
-
-                <a href="tester" class="elevatezoom-gallery"
-                data-image="http://www.elevateweb.co.uk/wp-content/themes/radial/zoom/images/small/image4.png"
-                data-zoom-image="http://www.elevateweb.co.uk/wp-content/themes/radial/zoom/images/large/image4.jpg"
-                class="slide-content"
-                >
-                    <img src="http://www.elevateweb.co.uk/wp-content/themes/radial/zoom/images/small/image4.png"   />
-                </a>
+                {% endfor %}
             </div>
         </div>
 
         <div class="about-product">
             <ol class="breadcrumb">
-                <li><a href="#">Комплектующие</a></li>
-                <li class="active">Внешние жесткие диски</li>
+                <li><a href="{{ object.category.section.get_absolute_url }}">{{ object.category.section.title }}</a></li>
+                <li><a href="{{ object.shop.get_absolute_url }}">{{ object.get_shop_title }}</a></li>
+                <li class="active">{{ object.title }}</li>
             </ol>
             <h1>Внешний жесткий диск 2.5" 500GB ADATA HC500 SATA (Golden) USB 3.0</h1>
             <span>2100 сом</span>
@@ -196,5 +170,5 @@
     <script src="libs/respond/respond.min.js"></script>
     <![endif]-->
     {{ block.super }}
-    <script src=js/elecatrozoom.js></script>
+    <script src={% static 'js/elecatrozoom.js' %}></script>
 {% endblock %}

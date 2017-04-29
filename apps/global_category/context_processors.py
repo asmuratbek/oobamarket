@@ -1,4 +1,4 @@
-from .models import  GlobalCategory
+from .models import GlobalCategory
 
 def fixed_categories(request):
     return {
