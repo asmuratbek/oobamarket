@@ -79,8 +79,11 @@ class Product(models.Model):
     def get_absolute_url(self):
         return reverse("product:detail", kwargs={'slug': self.slug})
 
-    # def is_in_cart(self, user):
+    def is_in_cart(self, user):
+        return self.cartitem_set.filter(cart__user=user).exists()
 
+    def is_favorite(self, user):
+        return self.favorite.filter(user=user).exists()
 
 
 class FavoriteProduct(models.Model):
@@ -89,7 +92,7 @@ class FavoriteProduct(models.Model):
         verbose_name_plural = "Избранные продукты"
         verbose_name = "Избранный продукт"
 
-    product = models.OneToOneField(Product, related_name='related_product')
+    product = models.ForeignKey(Product, related_name='favorite')
     user = models.ForeignKey(User)
 
     def __str__(self):

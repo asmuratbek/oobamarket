@@ -1,4 +1,5 @@
 {% extends 'base-1.html' %}
+{% load product_tags %}
 {% load staticfiles %}
 
 {% block fixed_categories %}
@@ -110,14 +111,14 @@
             </div>
 
             <div class="add basket favorite">
-                <a href=""><span class="glyphicon glyphicon-shopping-cart"></span>Добавить в корзину</a>
-                <a href=""><span class="glyphicon glyphicon-heart"></span>Добавить в избранное</a>
+                    <a href=""><span class="glyphicon glyphicon-shopping-cart"></span>{% is_in_cart object request.user %}</a>
+                    <a href=""><span class="glyphicon glyphicon-heart"></span>{% is_favorite object request.user %}</a>
             </div>
         </div>
         <div class="single-magazin">
             <h3>Магазин / Продавец:</h3>
             <div class="cover">
-                <a class="url-item" href=""></a>
+                <a class="url-item" href="{{ object.shop.get_absolute_url }}"></a>
                 <div class="top-line">
                     <h2>{{ object.shop.title }}</h2>
                 </div>
