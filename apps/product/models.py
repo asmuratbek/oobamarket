@@ -17,6 +17,12 @@ DELIVERY_TYPES = (
     ('free', u'Бесплатная доставка')
 )
 
+AVAILABILITY_TYPES = (
+    ('available', u'В наличии'),
+    ('waiting', u'Ожидается'),
+    ('not_available', u'Нет в наличии')
+)
+
 
 class ProductPublishedManager(models.Manager):
     def get_query_set(self):
@@ -42,7 +48,7 @@ class Product(models.Model):
     delivery_cost = models.FloatField(verbose_name='Стоимость доставки', null=True)
     delivery_currency = models.CharField(null=True, max_length=255, verbose_name='Валюта доставки')
     # settings = models.ManyToManyField('ProductSettings', verbose_name='Характеристика')
-    in_stock = models.BooleanField(default=False, verbose_name='В наличии?')
+    availability = models.CharField(_("Наличие"), max_length=100, choices=AVAILABILITY_TYPES, default='not_available')
     published = models.BooleanField(default=True)
     objects = ProductPublishedManager()
 
@@ -66,6 +72,9 @@ class Product(models.Model):
 
     def get_delivery_type(self):
         return self.get_delivery_type_display()
+
+    def get_availability(self):
+        return self.get_availability_display()
 
     def get_absolute_url(self):
         return reverse("product:detail", kwargs={'slug': self.slug})

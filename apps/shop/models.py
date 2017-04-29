@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 from django.urls import reverse
 from apps.users.models import User
 from django.db import models
+from django.utils.translation import ugettext as _
 # Create your models here.
 
 
@@ -15,6 +16,7 @@ class Shop(models.Model):
     user = models.ManyToManyField(to=User, verbose_name='Администратор магазина')
     title = models.CharField(max_length=255, verbose_name='Название магазина')
     slug = models.CharField(max_length=32, verbose_name='Название на транслите')
+    phone = models.CharField(_("Телефон"), max_length=20, default='')
     email = models.EmailField(verbose_name='E-mail магазина')
     short_decription = models.TextField(max_length=300, verbose_name='Короткое описание магазина')
     description = models.TextField(max_length=1500, verbose_name='Полное описание магазина')
@@ -35,6 +37,7 @@ class Shop(models.Model):
 
     def get_shop_user(self):
         return str(self.user.username)
+
 
 class Banners(models.Model):
     class Meta:
