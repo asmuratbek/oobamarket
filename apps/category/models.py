@@ -7,6 +7,7 @@ from mptt.models import MPTTModel, TreeForeignKey
 from apps.global_category.models import GlobalCategory
 
 # Create your models here.
+from apps.shop.models import Shop
 
 
 class Category(MPTTModel):
@@ -21,6 +22,7 @@ class Category(MPTTModel):
     section = models.ForeignKey(GlobalCategory, verbose_name='Раздел', null=True, blank=True)
     created_at = models.DateTimeField(auto_now=True, verbose_name="Создано")
     updated_at = models.DateTimeField(auto_now_add=True, verbose_name="Обновлено")
+    shop = models.ForeignKey(Shop, verbose_name='Магазин', null=True, blank=True)
 
     def __str__(self):
         return self.title

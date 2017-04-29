@@ -1,5 +1,5 @@
 {% extends 'base-1.html' %}
-{% load staticfiles %}
+{% load staticfiles product_tags %}
 
 {% block header %}
     <header class="navbar-fixed-top">
@@ -108,7 +108,13 @@
             <div class="cover">
                 <a class="url-item" href="{{ product.get_absolute_url }}"></a>
                 <div class="top-line">
-                    <h2>{{ product.get_shop_title }}</h2>
+
+                    <h2>
+                        <a href="{{ product.shop.get_absolute_url }}">
+                        {{ product.get_shop_title }}
+                        </a>
+                    </h2>
+
                 </div>
                 <div class="img-wrapper">
                     <img src="{{ product.get_main_image }}" alt="">
@@ -123,14 +129,11 @@
                     {% endif %}
                 </div>
                 <div class="bottom-line">
-                    <a href="#" class="add-basket">
-                        <span class="glyphicon glyphicon-shopping-cart"></span>
-                        Добавить в корзину
-                    </a>
+                    {% is_in_cart_block product request.user %}
                     <span class="truck pull-right {% if product.delivery_type == 'paid' %} yellow
                     {% elif product.delivery_type == 'free' %} green {% endif %}" data-toggle="tooltip" title=""
                           data-placement="top" data-original-title="{{ product.get_delivery_type }}"><i class="fa fa-truck" aria-hidden="true"></i></span>
-                    <span class="hearth pull-right"><i class="glyphicon glyphicon-heart"></i></span>
+                    <span class="hearth pull-right {% is_favorite_for_like product request.user %}"><i class="glyphicon glyphicon-heart"></i></span>
 
                 </div>
             </div>

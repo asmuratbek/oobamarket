@@ -111,8 +111,8 @@
             </div>
 
             <div class="add basket favorite">
-                    <a href=""><span class="glyphicon glyphicon-shopping-cart"></span>{% is_in_cart object request.user %}</a>
-                    <a href=""><span class="glyphicon glyphicon-heart"></span>{% is_favorite object request.user %}</a>
+                    <a class="basket-btn" href=""><span class="glyphicon glyphicon-shopping-cart"></span>{% is_in_cart object request.user %}</a>
+                    {% is_favorite object request.user %}
             </div>
         </div>
         <div class="single-magazin">

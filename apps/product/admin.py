@@ -1,5 +1,8 @@
 from django.contrib import admin
+
 from .models import Product, ProductImage, FavoriteProduct
+
+
 # Register your models here.
 
 
@@ -9,7 +12,7 @@ class ProductImagesInline(admin.StackedInline):
 
 
 class ProductAdmin(admin.ModelAdmin):
-    inlines = [ProductImagesInline,]
+    inlines = [ProductImagesInline, ]
     prepopulated_fields = {'slug': ('title',)}
 
 
