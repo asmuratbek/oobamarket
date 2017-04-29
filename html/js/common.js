@@ -12,6 +12,10 @@ $( document ).ready(function() {
         $( this ).toggleClass( "like" );
     });
 
+    $( ".add.basket.favorite a " ).click(function() {
+        $( this ).toggleClass( "active" );
+    });
+
 
 
     $('.owl-carousel.shop-page').owlCarousel({
@@ -98,12 +102,14 @@ $( document ).ready(function() {
     }
 
 
+    if ($('.see-more-toogle').length > 0){
+        $('.see-more-toogle').readmore({
+            speed: 500,
+            collapsedHeight: 40,
+            moreLink: '<a href="#">Прочитать</a>',
+            lessLink: '<a href="#">Скрыть</a>'
+        });
+    }
 
-    $('.see-more-toogle').readmore({
-        speed: 500,
-        collapsedHeight: 40,
-        moreLink: '<a href="#">Прочитать</a>',
-        lessLink: '<a href="#">Скрыть</a>'
-    });
 
 }); // end document ready
