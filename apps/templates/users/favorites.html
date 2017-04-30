@@ -23,18 +23,18 @@
                 </div>
                 <div class="title">
                     <p>{{ product.title }}</p>
-                    {% if product.discount %}
-                        <span>{{ product.get_price }} {{ product.currency }}</span>
-                        <span class="old-price"><strike>{{ product.price }} {{ product.currency }}</strike></span>
+                    {% if product.product.discount %}
+                        <span>{{ product.get_price }} {{ product.product.currency }}</span>
+                        <span class="old-price"><strike>{{ product.product.price }} {{ product.product.currency }}</strike></span>
                         {% else %}
-                        <span>{{ product.get_price }} {{ product.currency }}</span>
+                        <span>{{ product.get_price }} {{ product.product.currency }}</span>
                     {% endif %}
                 </div>
                 <div class="bottom-line">
                     {% is_in_cart_block product.product request.user %}
-                    <span class="truck pull-right {% if product.delivery_type == 'paid' %} yellow
-                    {% elif product.delivery_type == 'free' %} green {% endif %}" data-toggle="tooltip" title=""
-                          data-placement="top" data-original-title="{{ product.get_delivery_type }}"><i class="fa fa-truck" aria-hidden="true"></i></span>
+                    <span class="truck pull-right {% if product.product.delivery_type == 'paid' %} yellow
+                    {% elif product.product.delivery_type == 'free' %} green {% endif %}" data-toggle="tooltip" title=""
+                          data-placement="top" data-original-title="{{ product.product.get_delivery_type }}"><i class="fa fa-truck" aria-hidden="true"></i></span>
                     <span class="hearth pull-right {% is_favorite_for_like product.product request.user %}"><i class="glyphicon glyphicon-heart"></i></span>
 
                 </div>

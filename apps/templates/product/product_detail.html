@@ -56,8 +56,9 @@
                                                 {% else %} not-stock {% endif %}">{{ object.get_availability }}</span></span>
 
                 <span class="truck">
-                    <i class="fa fa-truck" aria-hidden="true"></i>
-                    Самовывоз
+                    <i class="fa fa-truck {% if product.delivery_type == 'paid' %} yellow
+                    {% elif product.delivery_type == 'free' %} green {% endif %}" aria-hidden="true"></i>
+                    {{ object.get_delivery_type }}
                 </span>
             </div>
 

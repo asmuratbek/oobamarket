@@ -1,0 +1,162 @@
+{% extends 'base-1.html' %}
+
+{% block content %}
+
+
+
+<section class="category-link">
+    <div class="container">
+        <div class="clearfix"></div>
+        <div class="pull-left">
+            <div class="dropdown">
+                <a class="enter btn" type="button" data-toggle="dropdown" aria-haspopup="true"
+                   aria-expanded="false">
+                    Магазин
+                    <span class="glyphicon glyphicon-menu-down"></span>
+                </a>
+
+                <ul class="dropdown-menu" aria-labelledby="dLabel">
+                    <li><a href="">Мой магазин</a></li>
+                    <li><a href="">Редактировать</a></li>
+                    <li><a href="">Выйти</a></li>
+                </ul>
+            </div>
+            <div class="dropdown">
+                <a class="enter btn" type="button" data-toggle="dropdown" aria-haspopup="true"
+                   aria-expanded="false">
+                    Магазин большой
+                    <span class="glyphicon glyphicon-menu-down"></span>
+                </a>
+
+                <ul class="dropdown-menu" aria-labelledby="dLabel">
+                    <li><a href="">Мой магазин</a></li>
+                    <li><a href="">Редактировать Редактировать Редактировать</a></li>
+                    <li><a href="">Выйти</a></li>
+                </ul>
+            </div>
+            <div class="dropdown">
+                <a href="" class="enter btn">
+                    Магазин
+                </a>
+            </div>
+            <!--<a href="">Одежда для мужчин</a>-->
+            <!--<a href="">Всё для детей</a>-->
+            <!--<a href="">Электроника</a>-->
+            <!--<a href="">Компьютеры</a>-->
+        </div>
+        <div class="pull-right">
+            <a href="">
+                <span class="glyphicon glyphicon-menu-left"></span>
+                Назад</a>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</section>
+
+<div class="basket-page">
+    <div class="container">
+        <h1>Моя корзина</h1>
+        <div class="cover">
+
+        </div>
+        <div class="thead">
+            <div class="col-md-6">
+                Товар
+            </div>
+            <div class="col-md-2">
+                Продавец
+            </div>
+            <div class="col-md-2">
+                Количество
+            </div>
+            <div class="col-md-2">
+                Цена
+            </div>
+        </div>
+        <div class="tbody">
+
+            {% for product in object.cartitem_set.all %}
+
+            <div class="cover">
+                <div class="col-md-2">
+                    <div class="img-wrapper">
+                        <img src="{{ product.product.get_main_image }}" alt="{{ product.product.title }}" class="img-responsive">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <h2><a href="{{ product.product.get_absolute_url }}">{{ product.product.title }}</a></h2>
+                    <div class="availability">
+                        <span>Наличие: <span class="{% if product.product.availability == "available" %} stock
+                                                {% elif product.product.availability == "waiting" %} expectation
+                                                {% else %} not-stock {% endif %}">{{ product.product.get_availability }}</span></span>
+
+                        <span class="truck">
+                    <i class="fa fa-truck" aria-hidden="true" {% if product.product.delivery_type == 'paid' %} yellow
+                    {% elif product.product.delivery_type == 'free' %} green {% endif %}></i>
+                    {{ product.product.get_delivery_type }}
+                </span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="img-wrapper">
+                        <img src="{{ product.product.shop.get_logo }}" alt="{{ product.product.shop.title }}" class="img-responsive">
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="quantity">
+                        <a href="" class="up"></a>
+                        <input type="text" value="1">
+                        <a href="" class="down"></a>
+                    </div>
+
+                </div>
+                <div class="col-md-2 price">
+                    <strike>8360 сом</strike>
+                    <p>4180 сом</p>
+                    <a href="" class="close">X</a>
+                </div>
+            </div>
+            {% endfor %}
+
+            <div class="total">
+                <div class="col-md-offset-8 col-md-3">
+                    <p>Доставка: <span>200 сом</span></p>
+                    <p>Итого: <span class="red">8460  сом</span></p>
+                </div>
+                <div class="clearfix"></div>
+                <a href="" class="btn-modal" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">Оформить покупку</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade basket-modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Имя">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Фамилия">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Номер телефона">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Ваш адрес">
+                    </div>
+                    <button type="submit" class="btn btn-default">Отправить</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
