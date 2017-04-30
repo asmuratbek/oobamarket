@@ -56,6 +56,9 @@ class Shop(models.Model):
         categories = Category.objects.filter(id__in=category_ids)
         return categories
 
+    def get_global_category(self):
+        return self.product_set.first().category.section
+
 
 class Banners(models.Model):
     class Meta:

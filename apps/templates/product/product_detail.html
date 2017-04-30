@@ -6,6 +6,10 @@
     {% include 'fixed_categories.html' %}
 {% endblock %}
 
+{% block categories %}
+    {% include 'categories.html' with object=object.shop %}
+{% endblock %}
+
 {% block content %}
 
 <section class="single-product">

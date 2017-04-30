@@ -3,15 +3,13 @@
         <div class="container">
             <div class="clearfix"></div>
             <div class="pull-left">
-                {% for categories in fixed_categories %}
+                {% for category in object.get_global_category.category_set.all %}
                 <div class="dropdown">
-                    {% for category in categories %}
                     <a class="enter btn" type="button" data-toggle="dropdown" aria-haspopup="true"
                        aria-expanded="false">
                         {{ category.title }}
                         <span class="glyphicon glyphicon-menu-down"></span>
                     </a>
-                        {% endfor %}
                     {% if category.is_parent %}
                     <ul class="dropdown-menu" aria-labelledby="dLabel">
                         {% for subcategory in category.get_descendants %}
