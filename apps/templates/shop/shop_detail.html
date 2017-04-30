@@ -6,55 +6,6 @@
 
 {% block content %}
 
-    <section class="category-link">
-        <div class="container">
-            <div class="clearfix"></div>
-            <div class="pull-left">
-                <div class="dropdown">
-                    <a class="enter btn" type="button" data-toggle="dropdown" aria-haspopup="true"
-                       aria-expanded="false">
-                        Магазин
-                        <span class="glyphicon glyphicon-menu-down"></span>
-                    </a>
-
-                    <ul class="dropdown-menu" aria-labelledby="dLabel">
-                        <li><a href="">Мой магазин</a></li>
-                        <li><a href="">Редактировать</a></li>
-                        <li><a href="">Выйти</a></li>
-                    </ul>
-                </div>
-                <div class="dropdown">
-                    <a class="enter btn" type="button" data-toggle="dropdown" aria-haspopup="true"
-                       aria-expanded="false">
-                        Магазин большой
-                        <span class="glyphicon glyphicon-menu-down"></span>
-                    </a>
-
-                    <ul class="dropdown-menu" aria-labelledby="dLabel">
-                        <li><a href="">Мой магазин</a></li>
-                        <li><a href="">Редактировать Редактировать Редактировать</a></li>
-                        <li><a href="">Выйти</a></li>
-                    </ul>
-                </div>
-                <div class="dropdown">
-                    <a href="" class="enter btn">
-                        Магазин
-                    </a>
-                </div>
-                <!--<a href="">Одежда для мужчин</a>-->
-                <!--<a href="">Всё для детей</a>-->
-                <!--<a href="">Электроника</a>-->
-                <!--<a href="">Компьютеры</a>-->
-            </div>
-            <div class="pull-right">
-                <a href="">
-                    <span class="glyphicon glyphicon-menu-left"></span>
-                    Назад</a>
-            </div>
-            <div class="clearfix"></div>
-        </div>
-    </section>
-
     <div class="shop-page-page">
         <div class="container">
             <div class="col-md-3">
@@ -124,8 +75,8 @@
                                 <a  role="button" data-toggle="collapse" href="#{{ forloop.counter }}" aria-expanded="false" aria-controls="collapseExample">{{ category.title }}</a>
                                 {% if category.is_parent %}
                                     <div class="collapse category-in-category" id="{{ forloop.counter }}">
-                                        {% for leaf in category.get_descendants %}
-                                            <a href="{{ leaf.get_absolute_url }}" class="{% if forloop.first %}active{% endif %}">{{ leaf.title }}</a>
+                                        {% for subcategory in category.get_descendants %}
+                                            <a href="{{ subcategory.get_absolute_url }}" class="{% if forloop.first %}active{% endif %}">{{ subcategory.title }}</a>
                                         {% endfor %}
                                     </div>
                                 {% endif %}

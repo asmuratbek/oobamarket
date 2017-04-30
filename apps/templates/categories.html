@@ -1,0 +1,36 @@
+
+<section class="category-link">
+        <div class="container">
+            <div class="clearfix"></div>
+            <div class="pull-left">
+                {% for categories in fixed_categories %}
+                <div class="dropdown">
+                    {% for category in categories %}
+                    <a class="enter btn" type="button" data-toggle="dropdown" aria-haspopup="true"
+                       aria-expanded="false">
+                        {{ category.title }}
+                        <span class="glyphicon glyphicon-menu-down"></span>
+                    </a>
+                        {% endfor %}
+                    {% if category.is_parent %}
+                    <ul class="dropdown-menu" aria-labelledby="dLabel">
+                        {% for subcategory in category.get_descendants %}
+                        <li><a href="{{ subcategory.get_absolute_url }}">{{ subcategory.title }}</a></li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+
+                </div>
+                {% endfor %}
+            </div>
+            <div class="pull-right">
+                <a href="">
+                    <span class="glyphicon glyphicon-menu-left"></span>
+                    Назад</a>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </section>
+
+
+

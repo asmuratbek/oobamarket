@@ -47,7 +47,7 @@ class Shop(models.Model):
         return str(self.user.username)
 
     def get_shop_products(self):
-        return self.product_set.all()
+        return self.product_set.all()[:6]
 
     def get_used_categories(self):
         category_ids = list()
