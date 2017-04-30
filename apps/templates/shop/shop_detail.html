@@ -6,55 +6,6 @@
 
 {% block content %}
 
-    <section class="category-link">
-        <div class="container">
-            <div class="clearfix"></div>
-            <div class="pull-left">
-                <div class="dropdown">
-                    <a class="enter btn" type="button" data-toggle="dropdown" aria-haspopup="true"
-                       aria-expanded="false">
-                        Магазин
-                        <span class="glyphicon glyphicon-menu-down"></span>
-                    </a>
-
-                    <ul class="dropdown-menu" aria-labelledby="dLabel">
-                        <li><a href="">Мой магазин</a></li>
-                        <li><a href="">Редактировать</a></li>
-                        <li><a href="">Выйти</a></li>
-                    </ul>
-                </div>
-                <div class="dropdown">
-                    <a class="enter btn" type="button" data-toggle="dropdown" aria-haspopup="true"
-                       aria-expanded="false">
-                        Магазин большой
-                        <span class="glyphicon glyphicon-menu-down"></span>
-                    </a>
-
-                    <ul class="dropdown-menu" aria-labelledby="dLabel">
-                        <li><a href="">Мой магазин</a></li>
-                        <li><a href="">Редактировать Редактировать Редактировать</a></li>
-                        <li><a href="">Выйти</a></li>
-                    </ul>
-                </div>
-                <div class="dropdown">
-                    <a href="" class="enter btn">
-                        Магазин
-                    </a>
-                </div>
-                <!--<a href="">Одежда для мужчин</a>-->
-                <!--<a href="">Всё для детей</a>-->
-                <!--<a href="">Электроника</a>-->
-                <!--<a href="">Компьютеры</a>-->
-            </div>
-            <div class="pull-right">
-                <a href="">
-                    <span class="glyphicon glyphicon-menu-left"></span>
-                    Назад</a>
-            </div>
-            <div class="clearfix"></div>
-        </div>
-    </section>
-
     <div class="shop-page-page">
         <div class="container">
             <div class="col-md-3">
@@ -62,7 +13,21 @@
                     <img src="{{ object.get_logo }}" alt="">
                 </div>
                 <h2>{{ object.title }}</h2>
-                <p>{{ object.description }}</p>
+                <p class="see-more-toogle">{{ object.description }}</p>
+                <div class="bottom-line">
+                <div>
+                    <a href="tel: 0312 89 53 33" class="">
+                        <span class="glyphicon glyphicon-earphone"></span>
+                        {{ object.phone }}
+                    </a>
+                </div>
+                <div>
+                    <a href="#" class="">
+                        <span class="glyphicon glyphicon-envelope"></span>
+                        {{ object.email }}
+                    </a>
+                </div>
+            </div>
             </div>
             <div class="col-md-9">
                 <div class="cover">
@@ -76,17 +41,16 @@
                         {% endfor %}
                     </div>
                     <div class="bottom-line">
-                        <div class="pull-left edit">
-                            <a href="">Редактировать</a>
-                        </div>
-                        <div class="pull-right">
-                            {% for link in object.sociallinks_set.all %}
-                                <a href="{{ link.link }}">
-                                    <img src="" alt="">
-                                </a>
-                            {% endfor %}
-                        </div>
+                    <div class="pull-left edit">
+                        <a href="">Сохранить и Выйти</a>
                     </div>
+                    <div class="pull-right">
+                        <a href="" class="facebook"></a>
+                        <a href="" class="tweet"></a>
+                        <a href="" class="google"></a>
+                        <a href="" class="instagram"></a>
+                    </div>
+                </div>
                 </div>
             </div>
         </div>
@@ -105,9 +69,18 @@
                 <div class="col-md-3">
                     <ul>
 
-                        <li>Все категории</li>
-                        {% for category in object.category_set.all %}
-                            <li class="active"><a href="{{ category.get_absolute_url }}">{{ category.title }}</a></li>
+                    <li>Все категории</li>
+                        {% for category in object.get_used_categories %}
+                            <li class="{% if forloop.first %}active{% endif %}">
+                                <a  role="button" data-toggle="collapse" href="#{{ forloop.counter }}" aria-expanded="false" aria-controls="collapseExample">{{ category.title }}</a>
+                                {% if category.is_parent %}
+                                    <div class="collapse category-in-category" id="{{ forloop.counter }}">
+                                        {% for subcategory in category.get_descendants %}
+                                            <a href="{{ subcategory.get_absolute_url }}" class="{% if forloop.first %}active{% endif %}">{{ subcategory.title }}</a>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </li>
                         {% endfor %}
                     </ul>
                 </div>
@@ -148,7 +121,7 @@
                     </div>
                     <div class="goods-of-week">
 
-                            {% for product in products %}
+                            {% for product in object.get_shop_products %}
                                 <div class="col-md-4 col-sm-6">
                                     <div class="cover">
                                         <a class="url-item" href="{{ product.get_absolute_url }}"></a>
@@ -190,4 +163,10 @@
     </section>
 
 
+{% endblock %}
+
+
+{% block js %}
+{{ block.super }}
+    <script src="{% static 'js/readmore.min.js' %}"></script>
 {% endblock %}

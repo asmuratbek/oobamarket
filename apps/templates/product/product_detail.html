@@ -6,56 +6,11 @@
     {% include 'fixed_categories.html' %}
 {% endblock %}
 
+{% block categories %}
+    {% include 'categories.html' with object=object.shop %}
+{% endblock %}
+
 {% block content %}
-
-<section class="category-link">
-    <div class="container">
-        <div class="clearfix"></div>
-        <div class="pull-left">
-            <div class="dropdown">
-                <a class="enter btn" type="button" data-toggle="dropdown" aria-haspopup="true"
-                   aria-expanded="false">
-                    Магазин
-                    <span class="glyphicon glyphicon-menu-down"></span>
-                </a>
-
-                <ul class="dropdown-menu" aria-labelledby="dLabel">
-                    <li><a href="">Мой магазин</a></li>
-                    <li><a href="">Редактировать</a></li>
-                    <li><a href="">Выйти</a></li>
-                </ul>
-            </div>
-            <div class="dropdown">
-                <a class="enter btn" type="button" data-toggle="dropdown" aria-haspopup="true"
-                   aria-expanded="false">
-                    Магазин большой
-                    <span class="glyphicon glyphicon-menu-down"></span>
-                </a>
-
-                <ul class="dropdown-menu" aria-labelledby="dLabel">
-                    <li><a href="">Мой магазин</a></li>
-                    <li><a href="">Редактировать Редактировать Редактировать</a></li>
-                    <li><a href="">Выйти</a></li>
-                </ul>
-            </div>
-            <div class="dropdown">
-                <a href="" class="enter btn">
-                    Магазин
-                </a>
-            </div>
-            <!--<a href="">Одежда для мужчин</a>-->
-            <!--<a href="">Всё для детей</a>-->
-            <!--<a href="">Электроника</a>-->
-            <!--<a href="">Компьютеры</a>-->
-        </div>
-        <div class="pull-right">
-            <a href="">
-                <span class="glyphicon glyphicon-menu-left"></span>
-                Назад</a>
-        </div>
-        <div class="clearfix"></div>
-    </div>
-</section>
 
 <section class="single-product">
     <div class="container">
@@ -105,8 +60,9 @@
                                                 {% else %} not-stock {% endif %}">{{ object.get_availability }}</span></span>
 
                 <span class="truck">
-                    <i class="fa fa-truck" aria-hidden="true"></i>
-                    Самовывоз
+                    <i class="fa fa-truck {% if product.delivery_type == 'paid' %} yellow
+                    {% elif product.delivery_type == 'free' %} green {% endif %}" aria-hidden="true"></i>
+                    {{ object.get_delivery_type }}
                 </span>
             </div>
 
