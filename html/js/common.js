@@ -1,7 +1,9 @@
 $( document ).ready(function() {
 
-
-
+    $('.js-select').selectize({
+        create: true,
+        sortField: 'text'
+    });
 
     $('[data-toggle="tooltip"]').tooltip();
 
@@ -119,9 +121,7 @@ $( document ).ready(function() {
     });
 
 
-    $(".js-select").select2({
 
-    });
 
 
 
