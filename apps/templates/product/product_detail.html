@@ -6,6 +6,10 @@
     {% include 'fixed_categories.html' %}
 {% endblock %}
 
+{% block header %}
+    {% include 'header.html' with global_title=object.shop.get_global_category.title %}
+{% endblock %}
+
 {% block categories %}
     {% include 'categories.html' with object=object.shop %}
 {% endblock %}

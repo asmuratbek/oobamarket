@@ -26,3 +26,11 @@ class User(AbstractUser):
 
     def get_favorites_link(self):
         return reverse("users:favorites", kwargs={'pk': self.pk})
+
+    def get_original_products(self):
+        from apps.product.models import Product
+        product_ids = list()
+        for product in self.favoriteproduct_set.all():
+            product_ids.append(product.product.id)
+        products = Product.objects.filter(id__in=product_ids)
+        return products
