@@ -1,0 +1,37 @@
+{% load product_tags %}
+{% for product in object_list %}
+        <div class="col-md-{{ col }} col-sm-6">
+            <div class="cover">
+                <a class="url-item" href="{{ product.get_absolute_url }}"></a>
+                <div class="top-line">
+
+                    <h2>
+                        <a href="{{ product.shop.get_absolute_url }}">
+                        {{ product.get_shop_title }}
+                        </a>
+                    </h2>
+
+                </div>
+                <div class="img-wrapper">
+                    <img src="{{ product.get_main_image }}" alt="">
+                </div>
+                <div class="title">
+                    <p>{{ product.title }}</p>
+                    {% if product.discount %}
+                        <span>{{ product.get_price }} {{ product.currency }}</span>
+                        <span class="old-price"><strike>{{ product.price }} {{ product.currency }}</strike></span>
+                        {% else %}
+                        <span>{{ product.get_price }} {{ product.currency }}</span>
+                    {% endif %}
+                </div>
+                <div class="bottom-line">
+                    {% is_in_cart_block product request.user %}
+                    <span class="truck pull-right {% if product.delivery_type == 'paid' %} yellow
+                    {% elif product.delivery_type == 'free' %} green {% endif %}" data-toggle="tooltip" title=""
+                          data-placement="top" data-original-title="{{ product.get_delivery_type }}"><i class="fa fa-truck" aria-hidden="true"></i></span>
+                    <span class="hearth pull-right {% is_favorite_for_like product request.user %}"><i class="glyphicon glyphicon-heart"></i></span>
+
+                </div>
+            </div>
+        </div>
+        {% endfor %}

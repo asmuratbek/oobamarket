@@ -47,4 +47,3 @@ class UserListView(LoginRequiredMixin, ListView):
 class UsersFavoritesListView(DetailView):
     model = User
     template_name = 'users/favorites.html'
-
