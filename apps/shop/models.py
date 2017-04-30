@@ -5,6 +5,7 @@ from django.db import models
 from django.urls import reverse
 from django.utils.translation import ugettext as _
 
+from apps.category.models import Category
 from apps.users.models import User
 
 # Create your models here.
@@ -44,6 +45,16 @@ class Shop(models.Model):
 
     def get_shop_user(self):
         return str(self.user.username)
+
+    def get_shop_products(self):
+        return self.product_set.all()
+
+    def get_used_categories(self):
+        category_ids = list()
+        for product in self.product_set.all():
+            category_ids.append(product.category.id)
+        categories = Category.objects.filter(id__in=category_ids)
+        return categories
 
 
 class Banners(models.Model):

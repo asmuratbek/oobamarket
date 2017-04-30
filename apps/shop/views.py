@@ -9,10 +9,6 @@ from .models import Shop, Banners
 class ShopDetailView(generic.DetailView):
     model = Shop
 
-    def get_context_data(self, **kwargs):
-        context = super(ShopDetailView, self).get_context_data(**kwargs)
-        context["products"] = Product.objects.all()[:6]
-        return context
 
 def create(request):
 
