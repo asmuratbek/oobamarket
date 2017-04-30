@@ -119,7 +119,9 @@ $( document ).ready(function() {
     });
 
 
-    $(".js-select").select2();
+    $(".js-select").select2({
+
+    });
 
 
 
