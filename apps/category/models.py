@@ -28,3 +28,6 @@ class Category(MPTTModel):
 
     def is_parent(self):
         return self.get_descendants().exists()
+
+    def get_products(self):
+        return self.product_set.all()

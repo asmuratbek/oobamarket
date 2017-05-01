@@ -11,7 +11,7 @@
 {% endblock %}
 
 {% block categories %}
-    {% include 'categories.html' with object=object.shop %}
+    {% include 'categories.html' with object=object.shop.get_global_category %}
 {% endblock %}
 
 {% block content %}

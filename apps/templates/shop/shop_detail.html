@@ -8,6 +8,10 @@
     {% include 'header.html' with global_title=object.get_global_category.title %}
 {% endblock %}
 
+{% block categories %}
+    {% include 'categories.html' with object=shop.get_global_category %}
+{% endblock %}
+
 {% block content %}
 
     <div class="shop-page-page">

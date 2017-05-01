@@ -3,7 +3,7 @@
         <div class="container">
             <div class="clearfix"></div>
             <div class="pull-left">
-                {% for category in object.get_global_category.category_set.all %}
+                {% for category in object.category_set.all %}
                 <div class="dropdown">
                     <a class="enter btn" type="button" data-toggle="dropdown" aria-haspopup="true"
                        aria-expanded="false">

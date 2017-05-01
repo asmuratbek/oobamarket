@@ -24,3 +24,12 @@ class GlobalCategory(models.Model):
 
     def get_icon(self):
         return self.icon.url if self.icon else None
+
+    def get_products(self):
+        from apps.product.models import Product
+        categories = self.category_set.all()
+        product_ids = list()
+        for category in categories:
+            product_ids += [product.id for product in category.get_products()]
+        products = Product.objects.filter(id__in=product_ids)
+        return products

@@ -1,0 +1,14 @@
+{% extends 'base-1.html' %}
+
+{% block categories %}
+    {% include 'categories.html' with object=object %}
+{% endblock %}
+
+{% block content %}
+    <section class="goods-of-week">
+    <div class="container">
+        {% include 'product/product_list.html' with object_list=object.get_products col=3 %}
+    </div>
+    </section>
+
+{% endblock %}
