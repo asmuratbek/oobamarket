@@ -34,3 +34,6 @@ class User(AbstractUser):
             product_ids.append(product.product.id)
         products = Product.objects.filter(id__in=product_ids)
         return products
+
+    def get_cart_count(self):
+        return self.cart.cartitem_set.count()

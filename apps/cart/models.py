@@ -12,7 +12,7 @@ class Cart(models.Model):
         verbose_name = "Корзина"
         verbose_name_plural = "Корзины"
 
-    user = models.ForeignKey(User, null=True, blank=True, verbose_name="Владелец")
+    user = models.OneToOneField(User, null=True, blank=True, verbose_name="Владелец")
     created_at = models.DateTimeField(auto_now_add=True, auto_now=False)
     updated = models.DateTimeField(auto_now_add=False, auto_now=True)
     subtotal = models.DecimalField(max_digits=50, decimal_places=2, default=25.00)
