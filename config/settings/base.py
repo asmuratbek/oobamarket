@@ -45,6 +45,7 @@ DJANGO_APPS = [
 
     # Admin
     'suit',
+    'mptt',
     'django.contrib.admin',
 ]
 THIRD_PARTY_APPS = [
@@ -53,7 +54,6 @@ THIRD_PARTY_APPS = [
     'allauth.account',  # registration
     'allauth.socialaccount',  # registration
     'tabbed_admin',
-    'django_mptt_admin',
     'allauth.socialaccount.providers.facebook',
     'allauth.socialaccount.providers.vk',
 ]
@@ -64,7 +64,7 @@ LOCAL_APPS = [
     'apps.users.apps.UsersConfig',
     # Your stuff: custom apps go here
     'apps.category',
-    'apps.filters',
+    'apps.properties',
     'apps.product',
     'apps.shop',
     'apps.cart',
