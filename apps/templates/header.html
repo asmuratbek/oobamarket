@@ -51,13 +51,15 @@
                             <li><a href="">Редактировать</a></li>
                             <li><a href="{% url 'account_logout' %}">Выйти</a></li>
                         </ul>
-                </div>
+
                         {% else %}
                         <a href="{% url 'account_login' %}" class="enter btn" type="button">
                             Войти</a>
                     {% endif %}
+                    </div>
             </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
+        </div>
     </nav>
     <div class="clearfix"></div>
 </header>
