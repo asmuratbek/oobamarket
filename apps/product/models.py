@@ -77,7 +77,9 @@ class Product(models.Model):
         return self.get_availability_display()
 
     def get_absolute_url(self):
-        return reverse("product:detail", kwargs={'slug': self.slug})
+        return reverse("categories:product_detail", kwargs={'slug': self.slug,
+                                                 'category_slug': self.category.slug,
+                                                 'global_slug': self.category.section.slug})
 
 
 class FavoriteProduct(models.Model):

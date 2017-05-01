@@ -12,7 +12,7 @@ urlpatterns = [
     url(r'^$', IndexView.as_view(), name='home'),
     url(r'^shops/', include('apps.shop.urls', namespace='shops')),
     url(r'^cart/', include('apps.cart.urls', namespace='cart')),
-    url(r'^product/', include('apps.product.urls', namespace='product')),
+    # url(r'^product/', include('apps.product.urls', namespace='product')),
     url(r'^about/$', TemplateView.as_view(template_name='pages/about.html'), name='about'),
     url(r'^create/$', create, name='create'),
     url(r'^agreement/$', agreement, name='agreement'),

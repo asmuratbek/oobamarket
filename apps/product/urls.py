@@ -1,7 +1,7 @@
 from django.conf.urls import url
-from .views import ProductDetailView
+from .views import product_detail
 
 
 urlpatterns = [
-    url(r'^(?P<slug>[\w-]+)/$', ProductDetailView.as_view(), name='detail'),
+    url(r'^$', product_detail, name='product_detail'),
 ]
