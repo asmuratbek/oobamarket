@@ -1,5 +1,5 @@
 {% extends 'base-1.html' %}
-{% load staticfiles i18n %}
+{% load staticfiles i18n account socialaccount %}
 <!--</ul>-->
 
 {% block header %}
@@ -65,9 +65,23 @@
         <div class="col-md-6">
             <h2>Войти</h2>
 
-             {% load socialaccount %}
-                {% providers_media_js %}
-            <a href="{% provider_login_url "facebook" method="js_sdk" %}">Facebook Connect</a>
+                {% get_providers as socialaccount_providers %}
+
+                {% if socialaccount_providers %}
+
+                <div class="socialaccount_ballot">
+
+                  <ul class="socialaccount_providers">
+                    {% include "socialaccount/snippets/provider_list.html" with process="login" %}
+                  </ul>
+
+                  <div class="login-or">{% trans 'or' %}</div>
+
+                </div>
+
+                {% include "socialaccount/snippets/login_extra.html" %}
+
+                {% endif %}
 
             <form method="POST" action="{% url 'account_login' %}">
                 {% csrf_token %}
