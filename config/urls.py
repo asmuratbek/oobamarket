@@ -10,8 +10,6 @@ from apps.shop.views import create, agreement
 
 urlpatterns = [
     url(r'^$', IndexView.as_view(), name='home'),
-    url(r'^global_category/', include('apps.global_category.urls', namespace='global_category')),
-    url(r'^category/', include('apps.category.urls', namespace='categories')),
     url(r'^shops/', include('apps.shop.urls', namespace='shops')),
     url(r'^cart/', include('apps.cart.urls', namespace='cart')),
     url(r'^product/', include('apps.product.urls', namespace='product')),
@@ -26,6 +24,7 @@ urlpatterns = [
     # User management
     url(r'^users/', include('apps.users.urls', namespace='users')),
     url(r'^accounts/', include('allauth.urls')),
+    url(r'^', include('apps.category.urls', namespace='categories')),
 
     # Your stuff: custom urls includes go here
 

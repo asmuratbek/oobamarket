@@ -20,7 +20,7 @@ class GlobalCategory(models.Model):
         return self.title
 
     def get_absolute_url(self):
-        return reverse("global_category:detail", kwargs={'slug': self.slug})
+        return reverse("categories:global_detail", kwargs={'slug': self.slug})
 
     def get_icon(self):
         return self.icon.url if self.icon else None

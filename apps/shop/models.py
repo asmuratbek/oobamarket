@@ -57,7 +57,8 @@ class Shop(models.Model):
         return categories
 
     def get_global_category(self):
-        return self.product_set.first().category.section
+        if self.product_set.exists():
+            return self.product_set.first().category.section
 
 
 class Banners(models.Model):
