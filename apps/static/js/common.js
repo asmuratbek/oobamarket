@@ -1,7 +1,9 @@
 $( document ).ready(function() {
 
-
-
+    $('.js-select').selectize({
+        create: true,
+        sortField: 'text'
+    });
 
     $('[data-toggle="tooltip"]').tooltip();
 
@@ -109,6 +111,15 @@ $( document ).ready(function() {
             lessLink: '<a href="#">Скрыть</a>'
         });
     }
+
+
+    $('.left-scroll-mouse .overflow').mousewheel(function(e, delta) {
+        // multiplying by 40 is the sensitivity,
+        // increase to scroll faster.
+        this.scrollLeft -= (delta * 40);
+        e.preventDefault();
+    });
+
 
 
 

@@ -114,13 +114,7 @@
     <h2>Магазины</h2>
 
     <div class="owl-carousel">
-        {% for shop in shops %}
-        <div class="item">
-            <a href="{{ shop.get_absolute_url }}">
-                <img src="{{ shop.get_logo }}" alt="{{ shop.title }}">
-            </a>
-        </div>
-        {% endfor %}
+        {% include 'shop/shops.html' with shops=shops %}
     </div>
 
 </section>

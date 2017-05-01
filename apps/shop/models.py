@@ -4,8 +4,6 @@ from __future__ import unicode_literals
 from django.db import models
 from django.urls import reverse
 from django.utils.translation import ugettext as _
-
-from apps.category.models import Category
 from apps.users.models import User
 
 # Create your models here.
@@ -50,6 +48,7 @@ class Shop(models.Model):
         return self.product_set.all()[:6]
 
     def get_used_categories(self):
+        from apps.category.models import Category
         category_ids = list()
         for product in self.product_set.all():
             category_ids.append(product.category.id)

@@ -6,12 +6,15 @@ from django.urls import reverse
 from mptt.models import MPTTModel
 from mptt.fields import  TreeForeignKey
 from apps.global_category.models import GlobalCategory
+from apps.shop.models import Shop
+
 
 class Ordering(models.Model):
     class Meta:
         abstract = True
 
     order = models.PositiveIntegerField(verbose_name='Очередь')
+
 
 class Category(MPTTModel):
 
@@ -23,7 +26,7 @@ class Category(MPTTModel):
     parent = TreeForeignKey('self', verbose_name='Родительская категория', max_length=10, null=True, blank=True)
     title = models.CharField(max_length=255, verbose_name='Название категории')
     slug = models.CharField(max_length=32,verbose_name='Название на транслите', unique=True, blank=True, null=True)
-    section = models.ForeignKey(GlobalCategory, verbose_name='Раздел', null=True, blank=True)
+    section = models.ForeignKey(GlobalCategory, verbose_name='Раздел', default='1')
     created_at = models.DateTimeField(auto_now=True, verbose_name="Создано")
     updated_at = models.DateTimeField(auto_now_add=True, verbose_name="Обновлено")
     order = models.PositiveIntegerField(verbose_name='Очередь', default=0)
@@ -48,3 +51,6 @@ class Category(MPTTModel):
 
     def get_products(self):
         return self.product_set.all()
+
+    def get_shops(self):
+        return Shop.objects.filter(product__category=self)

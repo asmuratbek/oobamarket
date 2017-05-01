@@ -1,7 +1,270 @@
 {% extends 'base-1.html' %}
+{% load staticfiles %}
 
+{% block head %}
+    {{ block.super }}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/selectize.css' %}">
+{% endblock %}
+
+
+{% block header %}
+    {% include 'header.html' with global_title=object.section.title %}
+{% endblock %}
+
+
+{% block categories %}
+    {% include 'categories.html' with object=object.section %}
+{% endblock %}
 
 {% block content %}
 
-<h1>dasdfafsas</h1>
+
+<section class="magazin">
+    <h2>Магазины</h2>
+    <div class="owl-carousel">
+        {% include 'shop/shops.html' with shops=object.get_shops %}
+    </div>
+</section>
+
+
+<section class="shop-category">
+    <div class="container">
+        <h2>Магазины</h2>
+        <ul class="category-tab">
+            <li class="active"><a href="">Товары</a></li>
+            <li><a href="">Акции</a></li>
+            <li><a href="">Отзывы</a></li>
+            <li><a href="">Контакты</a></li>
+        </ul>
+
+        <div class="filter">
+
+            <div class="col-md-9">
+                <div class="form-filter">
+
+                    <form class="form-inline">
+
+                        <div class="form-group select">
+                            <select class="form-control">
+                                <option>Сортировка</option>
+                                <option>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Maiores, modi?</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group input">
+                            <label><span>Цена</span>  от</label>
+                            <input type="text" class="form-control" placeholder="2000 сом">
+                        </div>
+
+                        <div class="form-group input end">
+                            <label>до</label>
+                            <input type="text" class="form-control" placeholder="4000 сом">
+                        </div>
+
+                        <div class="form-group select">
+                            <select class="form-control">
+                                <option>Доставка</option>
+                                <option>Платная</option>
+                                <option>3бесплатная</option>
+                                <option>4</option>
+                                <option>5</option>
+                            </select>
+                        </div>
+
+                    </form>
+
+                </div>
+                <div class="goods-of-week">
+                    <div class="col-md-4 col-sm-8">
+                        <div class="cover">
+                            <a class="url-item" href=""></a>
+                            <div class="top-line">
+                                <h2><a href="">mango</a></h2>
+                            </div>
+                            <div class="img-wrapper">
+                                <img src="img/img/t10.jpg" alt="">
+                            </div>
+                            <div class="title">
+                                <p>Женская куртка Жакет с меховыми лацканами</p>
+                                <span>300011сом</span>
+                                <span class="old-price"><strike>200011сом</strike></span>
+                            </div>
+                            <div class="bottom-line">
+                                <a href="#" class="add-basket">
+                                    <span class="glyphicon glyphicon-shopping-cart"></span>
+                                    Добавить в корзину
+                                </a>
+                                <span class="truck pull-right" data-toggle="tooltip" title="" data-placement="top" data-original-title="Доставка 1"><i class="fa fa-truck" aria-hidden="true"></i></span>
+                                <span class="hearth pull-right"><i class="glyphicon glyphicon-heart"></i></span>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-8">
+                        <div class="cover">
+                            <a class="url-item" href=""></a>
+                            <div class="top-line">
+                                <h2><a href="">mango</a></h2>
+                            </div>
+                            <div class="img-wrapper">
+                                <img src="img/img/t10.jpg" alt="">
+                            </div>
+                            <div class="title">
+                                <p>Женская куртка Жакет с меховыми лацканами</p>
+                                <span>3000сом</span>
+                                <span class="old-price"><strike>200011сом</strike></span>
+                            </div>
+                            <div class="bottom-line">
+                                <a href="#" class="add-basket">
+                                    <span class="glyphicon glyphicon-shopping-cart"></span>
+                                    Добавить в корзину
+                                </a>
+                                <span class="truck pull-right yellow" data-toggle="tooltip" title="" data-placement="top" data-original-title="Доставка 2"><i class="fa fa-truck" aria-hidden="true"></i></span>
+                                <span class="hearth pull-right"><i class="glyphicon glyphicon-heart"></i></span>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-8">
+                        <div class="cover">
+                            <a class="url-item" href=""></a>
+                            <div class="top-line">
+                                <h2><a href="">mango</a></h2>
+                            </div>
+                            <div class="img-wrapper">
+                                <img src="img/img/t10.jpg" alt="">
+                            </div>
+                            <div class="title">
+                                <p>Женская куртка Жакет с меховыми лацканами</p>
+                                <span>30000сом</span>
+
+                            </div>
+                            <div class="bottom-line">
+                                <a href="" class="add-basket in-the-basket">
+                                    <span class="glyphicon glyphicon-shopping-cart"></span>
+                                    В корзине
+                                </a>
+                                <span class="truck pull-right green" data-toggle="tooltip" title="" data-placement="top" data-original-title="Доставка 3"><i class="fa fa-truck" aria-hidden="true"></i></span>
+                                <span class="hearth pull-right "><i class="glyphicon glyphicon-heart"></i></span>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-8">
+                        <div class="cover">
+                            <a class="url-item" href=""></a>
+                            <div class="top-line">
+                                <h2><a href="">mango</a></h2>
+                            </div>
+                            <div class="img-wrapper">
+                                <img src="img/img/t10.jpg" alt="">
+                            </div>
+                            <div class="title">
+                                <p>Женская куртка Жакет с меховыми лацканами</p>
+                                <span>30000сом</span>
+
+                            </div>
+                            <div class="bottom-line">
+                                <a href="" class="add-basket in-the-basket">
+                                    <span class="glyphicon glyphicon-shopping-cart"></span>
+                                    В корзине
+                                </a>
+                                <span class="truck pull-right green" data-toggle="tooltip" title="" data-placement="top" data-original-title="Доставка 3"><i class="fa fa-truck" aria-hidden="true"></i></span>
+                                <span class="hearth pull-right "><i class="glyphicon glyphicon-heart"></i></span>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-8">
+                        <div class="cover">
+                            <a class="url-item" href=""></a>
+                            <div class="top-line">
+                                <h2><a href="">mango</a></h2>
+                            </div>
+                            <div class="img-wrapper">
+                                <img src="img/img/t10.jpg" alt="">
+                            </div>
+                            <div class="title">
+                                <p>Женская куртка Жакет с меховыми лацканами</p>
+                                <span>30000сом</span>
+
+                            </div>
+                            <div class="bottom-line">
+                                <a href="" class="add-basket in-the-basket">
+                                    <span class="glyphicon glyphicon-shopping-cart"></span>
+                                    В корзине
+                                </a>
+                                <span class="truck pull-right green" data-toggle="tooltip" title="" data-placement="top" data-original-title="Доставка 3"><i class="fa fa-truck" aria-hidden="true"></i></span>
+                                <span class="hearth pull-right "><i class="glyphicon glyphicon-heart"></i></span>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-8">
+                        <div class="cover">
+                            <a class="url-item" href=""></a>
+                            <div class="top-line">
+                                <h2><a href="">mango</a></h2>
+                            </div>
+                            <div class="img-wrapper">
+                                <img src="img/img/t10.jpg" alt="">
+                            </div>
+                            <div class="title">
+                                <p>ограничение в 2 строки</p>
+                                <span>30000сом</span>
+
+                            </div>
+                            <div class="bottom-line">
+                                <a href="" class="add-basket in-the-basket">
+                                    <span class="glyphicon glyphicon-shopping-cart"></span>
+                                    В корзине
+                                </a>
+                                <span class="truck pull-right green" data-toggle="tooltip" title="" data-placement="top" data-original-title="Доставка 3"><i class="fa fa-truck" aria-hidden="true"></i></span>
+                                <span class="hearth pull-right "><i class="glyphicon glyphicon-heart"></i></span>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <h4>Параметры</h4>
+                <select class="js-select" style="width: 100%;">
+                    <option value="qqqqq">qqqqq</option>
+                    <option value="qqqqq1">qqqqq1</option>
+                    <option value="qqqqq2">qqqqq2</option>
+                    <option value="qqqqq3">qqqqq3</option>
+                    <option value="qqqqq4">qqqqq4</option>
+                </select>
+                <select class="js-select" style="width: 100%;">
+                    <option >ttttt</option>
+                    <option>yyyyy</option>
+                    <option>uuuuuu</option>
+                    <option>iiiiii</option>
+                </select>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+<!--[if lt IE 9]>
+    <script src="libs/html5shiv/es5-shim.min.js"></script>
+    <script src="libs/html5shiv/html5shiv.min.js"></script>
+    <script src="libs/html5shiv/html5shiv-printshiv.min.js"></script>
+    <script src="libs/respond/respond.min.js"></script>
+<![endif]-->
+{% endblock %}
+
+{% block js %}
+
+{{ block.super }}
+<script src="{% static 'js/mouse-scroll.js' %}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.1/js/standalone/selectize.min.js"></script>
 {% endblock %}
