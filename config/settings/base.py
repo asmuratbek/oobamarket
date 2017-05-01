@@ -46,6 +46,7 @@ DJANGO_APPS = [
     # Admin
     'suit',
     'mptt',
+    'django_mptt_admin',
     'django.contrib.admin',
 ]
 THIRD_PARTY_APPS = [

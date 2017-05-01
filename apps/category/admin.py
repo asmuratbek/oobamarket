@@ -1,12 +1,13 @@
 from django.contrib import admin
 from .models import Category, GlobalCategory
 from mptt.admin import MPTTModelAdmin
+from django_mptt_admin.admin import DjangoMpttAdmin
 from suit.admin import SortableModelAdmin
 
 # Register your models here.
 
 
-class CategoryAdmin(MPTTModelAdmin, SortableModelAdmin ):
+class CategoryAdmin(DjangoMpttAdmin, SortableModelAdmin ):
     list_display = ('title', 'parent', 'slug', 'section', 'is_active', 'order',)
     prepopulated_fields = {'slug': ('title',)}
     list_editable = ('is_active', 'order')
