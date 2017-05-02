@@ -35,8 +35,8 @@ def fixtures(request, name):
             post = Product()
             post.shop = Shop.objects.first()
             post.category = Category.objects.first()
-            post.title = 'Продукт ' + str(random.randrange(1000, 9999))
-            post.slug = 'slug' + str(random.randrange(1000, 9999))
+            post.title = 'Продукт ' + str(random.randrange(100, 999))
+            post.slug = 'slug' + str(random.randrange(100, 999))
             post.sell_count = 0
             post.discount = 0
             post.currency = 'сом'
@@ -63,8 +63,8 @@ def fixtures(request, name):
     elif name == 'shop':
         for i in range(0, 21):
             post = Shop()
-            post.title = 'Shop '+ str(random.randrange(1000, 9999))
-            post.slug = 'slug'+ str(random.randrange(1000, 9999))
+            post.title = 'Shop '+ str(random.randrange(100, 999))
+            post.slug = 'slug'+ str(random.randrange(100, 999))
             post.email = 'admin@gmail.com'
             post.short_decription = 'lorem ipsum dolor sit amet'
             post.description = 'lorem description'
@@ -77,7 +77,7 @@ def fixtures(request, name):
         for i in range(0, 21):
             post = Category()
             post.parent = None
-            post.title = 'Категория' + str(random.randrange(1000, 9999))
+            post.title = 'Категория' + str(random.randrange(100, 999))
             post.slug = 'slug' + str(random.randrange(1000, 9999))
             post.section = GlobalCategory.objects.first()
             post.created_at = datetime.date.today()
@@ -86,7 +86,7 @@ def fixtures(request, name):
     elif name == 'globalc':
         for i in range(0, 7):
             post = GlobalCategory()
-            post.title = 'Гл. Категория ' + str(random.randrange(1000, 9999))
+            post.title = 'Гл.Катег.' + str(random.randrange(100, 999))
             post.slug = 'slug' + str(random.randrange(1000, 9999))
             post.created_at = datetime.date.today()
             post.updated_at = datetime.date.today()

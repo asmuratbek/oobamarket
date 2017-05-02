@@ -10,7 +10,7 @@ class GlobalCategory(models.Model):
         verbose_name = 'Глобальная категория'
         verbose_name_plural = 'Глобальные категории'
 
-    title = models.CharField(max_length=255, verbose_name='Название категории')
+    title = models.CharField(max_length=14, verbose_name='Название категории')
     slug = models.CharField(max_length=32, verbose_name='Название на транслите')
     icon = models.ImageField(upload_to="category/icons", default=None)
     created_at = models.DateTimeField(auto_now=True, verbose_name="Создано")

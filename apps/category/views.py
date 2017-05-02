@@ -9,7 +9,7 @@ def category_detail(request, global_slug, slug):
     global_category = get_object_or_404(GlobalCategory, slug=global_slug)
     template = "category/category_detail.html"
     context = {
-        "object": category
+        "object": category,
     }
     return render(request, template, context)
 
