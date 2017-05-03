@@ -18,14 +18,14 @@
 
 {% block content %}
 
-{% if shops%}
+
 <section class="magazin">
     <h2>Магазины</h2>
     <div class="owl-carousel">
         {% include 'shop/shops.html' with shops=object.get_shops %}
     </div>
 </section>
-{% endif %}
+
 
 <section class="shop-category">
     <div class="container">
@@ -114,7 +114,8 @@
 
 {% block js %}
 
-{{ block.super }}
-<script src="{% static 'js/mouse-scroll.js' %}"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.1/js/standalone/selectize.min.js"></script>
+    {{ block.super }}
+    <script src="{% static 'js/mouse-scroll.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.1/js/standalone/selectize.min.js"></script>
+
 {% endblock %}

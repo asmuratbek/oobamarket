@@ -71,7 +71,7 @@
                         {% else %}
                         <p>{{ product.product.price }} {{ product.currency }}</p>
                     {% endif %}
-                    <a href="" class="close">X</a>
+                    <a href="{% url 'cart:detail' %}?item={{ product.product.pk }}&delete=True" class="close">X</a>
                 </div>
             </div>
             {% endfor %}

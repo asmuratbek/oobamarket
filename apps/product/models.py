@@ -81,6 +81,12 @@ class Product(models.Model):
                                                  'category_slug': self.category.slug,
                                                  'global_slug': self.category.section.slug})
 
+    def add_to_cart(self):
+        return "%s?item=%s&qty=1" % (reverse("cart:detail"), self.id)
+
+    def remove_from_cart(self):
+        return "%s?item=%s&qty=1&delete=True" % (reverse("cart:detail"), self.id)
+
 
 class FavoriteProduct(models.Model):
 

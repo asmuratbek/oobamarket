@@ -25,7 +25,10 @@
                     {% endif %}
                 </div>
                 <div class="bottom-line">
-                    {% is_in_cart_block product request.user %}
+                    <a href="{{ product.add_to_cart }}" class="add-basket">
+                             <span class="glyphicon glyphicon-shopping-cart"></span>
+                             Добавить в корзину
+                         </a>
                     <span class="truck pull-right {% if product.delivery_type == 'paid' %} yellow
                     {% elif product.delivery_type == 'free' %} green {% endif %}" data-toggle="tooltip" title=""
                           data-placement="top" data-original-title="{{ product.get_delivery_type }}"><i class="fa fa-truck" aria-hidden="true"></i></span>

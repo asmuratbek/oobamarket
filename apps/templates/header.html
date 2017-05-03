@@ -29,11 +29,11 @@
                     </form>
                  {% if user.is_authenticated %}
                     <a href="{{ user.get_favorites_link }}"  class="favorites btn"><span class="glyphicon glyphicon-heart"></span> Избранные ({{ user.get_favorites_count }})</a>
-                    <a href=""  class="basket btn"><span class="glyphicon glyphicon-shopping-cart"></span> Корзина ({{ user.get_cart_count }})</a>
+                    <a href="{% url 'cart:detail' %}"  class="basket btn"><span class="glyphicon glyphicon-shopping-cart"></span> Корзина ({{ user.get_cart_count }})</a>
                     <!-- <a href=""  class="enter btn">Войти</a> -->
                     {% else %}
                     <a href="{% url 'account_login' %}"  class="favorites btn"><span class="glyphicon glyphicon-heart"></span> Избранные</a>
-                    <a href=""  class="basket btn"><span class="glyphicon glyphicon-shopping-cart"></span> Корзина ()</a>
+                    <a href="{% url 'cart:detail' %}"  class="basket btn"><span class="glyphicon glyphicon-shopping-cart"></span> Корзина ()</a>
                     <!-- <a href=""  class="enter btn">Войти</a> -->
                 {% endif %}
                     <!--
