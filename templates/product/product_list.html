@@ -32,8 +32,9 @@
                     <span class="truck pull-right {% if product.delivery_type == 'paid' %} yellow
                     {% elif product.delivery_type == 'free' %} green {% endif %}" data-toggle="tooltip" title=""
                           data-placement="top" data-original-title="{{ product.get_delivery_type }}"><i class="fa fa-truck" aria-hidden="true"></i></span>
+                    <a href="{{ product.add_to_favorite }}">
                     <span class="hearth pull-right {% is_favorite_for_like product request.user %}" data-url=""><i class="glyphicon glyphicon-heart"></i></span>
-
+                    </a>
                 </div>
             </div>
         </div>

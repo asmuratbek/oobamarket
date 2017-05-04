@@ -12,9 +12,9 @@ from .models import *
 # Create your views here.
 
 
-# class UserFavoritesListView(LoginRequiredMixin, ListView):
-#     model = FavoriteProduct
-#     template_name = 'users/favorites.html'
+class UserFavoritesListView(LoginRequiredMixin, ListView):
+    model = FavoriteProduct
+    template_name = 'users/favorites.html'
 
 
 # class ProductDetailView(DetailView):
