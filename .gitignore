@@ -76,3 +76,4 @@ media/
 staticfiles/
 
 .cache/
+!/dump/media/
