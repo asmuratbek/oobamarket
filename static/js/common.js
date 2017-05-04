@@ -122,7 +122,9 @@ $( document ).ready(function() {
 
 
 
-
+    $('.item-qty').change(function () {
+        $(this).next(".btn-update").fadeIn();
+    });
 
 
 }); // end document ready

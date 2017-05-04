@@ -1,6 +1,9 @@
+from decimal import Decimal
 from django.db import models
 
 # Create your models here.
+from django.db.models.signals import pre_save
+
 from apps.product.models import Product
 from apps.users.models import User
 from django.utils.translation import ugettext as _
@@ -43,3 +46,13 @@ class CartItem(models.Model):
 
     def __str__(self):
         return self.product.title
+
+
+def cart_item_pre_save_receiver(sender, instance, *args, **kwargs):
+    qty = instance.quantity
+    if int(qty) >= 1:
+        price = instance.product.get_price()
+        total = Decimal(qty) * Decimal(price)
+        instance.total = total
+
+pre_save.connect(cart_item_pre_save_receiver, sender=CartItem)
