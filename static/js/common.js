@@ -126,5 +126,11 @@ $( document ).ready(function() {
         $(this).next(".btn-update").fadeIn();
     });
 
+    $('.add-to-cart-submit').click(function (event) {
+        event.preventDefault();
+        var formData = $(this).closest('.add-to-cart-form').serialize();
+        console.log(formData);
+    })
+
 
 }); // end document ready
