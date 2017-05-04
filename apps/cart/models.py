@@ -2,7 +2,7 @@ from decimal import Decimal
 from django.db import models
 
 # Create your models here.
-from django.db.models.signals import pre_save
+from django.db.models.signals import pre_save, post_save, post_delete
 
 from apps.product.models import Product
 from apps.users.models import User
@@ -56,3 +56,11 @@ def cart_item_pre_save_receiver(sender, instance, *args, **kwargs):
         instance.total = total
 
 pre_save.connect(cart_item_pre_save_receiver, sender=CartItem)
+
+
+def cart_item_post_save_receiver(sender, instance, *args, **kwargs):
+    instance.cart.update_subtotal()
+
+post_save.connect(cart_item_post_save_receiver, sender=CartItem)
+
+post_delete.connect(cart_item_post_save_receiver, sender=CartItem)
