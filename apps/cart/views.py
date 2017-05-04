@@ -44,7 +44,8 @@ class CartDetailView(SingleObjectMixin, View):
                     delete_item = True
             except:
                 raise Http404
-            cart_item, created = CartItem.objects.get_or_create(cart=cart, product=item_instance, total=200)
+
+            cart_item, created = CartItem.objects.get_or_create(cart=cart, product=item_instance)
             if created:
                 flash_message = "Successfully added to the cart"
                 item_added = True

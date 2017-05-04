@@ -61,7 +61,7 @@
                 <div class="col-md-2">
                     <div class="quantity">
 
-                        <input type="number" value="1" name="qty" class="item-qty">
+                        <input type="number" value="{{ product.quantity }}" name="qty" class="item-qty">
                         <input type="submit" value="Update" class="btn-update" style="display: none;">
 
                     </div>
@@ -73,9 +73,9 @@
                 <div class="col-md-2 price">
                     {% if product.product.discount %}
                     <strike>{{ product.product.price }} {{ product.product.currency }}</strike>
-                    <p>{{ product.product.get_price }} {{ product.currency }}</p>
+                    <p>{{ product.total }} {{ product.currency }}</p>
                         {% else %}
-                        <p>{{ product.product.price }} {{ product.currency }}</p>
+                        <p>{{ product.total }} {{ product.currency }}</p>
                     {% endif %}
                     <a href="{{ product.product.remove_from_cart }}" class="close">X</a>
                 </div>
