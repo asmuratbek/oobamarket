@@ -72,6 +72,9 @@ class Product(models.Model):
     def get_delivery_type(self):
         return self.get_delivery_type_display()
 
+    def get_delivery_cost(self):
+        return self.get_delivery_cost()
+
     def get_availability(self):
         return self.get_availability_display()
 

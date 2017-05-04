@@ -110,15 +110,16 @@ $( document ).ready(function() {
             moreLink: '<a href="#">Прочитать</a>',
             lessLink: '<a href="#">Скрыть</a>'
         });
+
     }
 
 
-    $('.left-scroll-mouse .overflow').mousewheel(function(e, delta) {
-        // multiplying by 40 is the sensitivity,
-        // increase to scroll faster.
-        this.scrollLeft -= (delta * 40);
-        e.preventDefault();
-    });
+    // $('.left-scroll-mouse .overflow').mousewheel(function(e, delta) {
+    //     // multiplying by 40 is the sensitivity,
+    //     // increase to scroll faster.
+    //     this.scrollLeft -= (delta * 40);
+    //     e.preventDefault();
+    // });
 
 
 

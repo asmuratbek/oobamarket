@@ -3,4 +3,39 @@
 <script src="{% static 'js/bootstrap.min.js' %}"></script>
 <script src="{% static 'js/owl.carousel.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/common.js' %}"></script>
- <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.1/js/standalone/selectize.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.1/js/standalone/selectize.min.js"></script>
+
+
+<script>
+    $(document).ready(function () {
+        var hearts = $('.hearth');
+        $(hearts).each(function (i, obj) {
+            $(obj).on('click', function (event) {
+                event.preventDefault();
+                console.log($(this));
+                $.ajax({
+                    method: 'POST',
+                    dataType: 'JSON',
+                    url:
+
+                });
+            });
+        });
+    });
+</script>
+
+$.ajax({
+method: 'GET',
+dataType: 'HTML',
+url: link,
+success: function (response) {
+$('#ajax-modal-body').html(response);
+initReviewsCarousel();
+initForm();
+$('#application-form').append("{% csrf_token %}");
+$('#review-form').append("{% csrf_token %}");
+},
+error: function () {
+
+}
+});
