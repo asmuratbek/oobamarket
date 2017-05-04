@@ -69,7 +69,7 @@ node_modules/
 .env
 
 # User-uploaded media
-ooba/media/
+media/
 
 
 
