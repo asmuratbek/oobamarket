@@ -181,7 +181,8 @@ TEMPLATES = [
                 'django.template.context_processors.static',
                 'django.template.context_processors.tz',
                 'django.contrib.messages.context_processors.messages',
-                'apps.global_category.context_processors.fixed_categories'
+                'apps.global_category.context_processors.fixed_categories',
+                'apps.cart.context_processors.cart_count'
                 # Your stuff: custom template context processors go here
             ],
         },

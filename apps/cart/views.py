@@ -16,19 +16,19 @@ class CartDetailView(SingleObjectMixin, View):
     template_name = "cart/cart_detail.html"
 
     def get_object(self, *args, **kwargs):
-        self.request.session.set_expiry(0)  # 5 minutes
-        cart_id = self.request.session.get("cart_id")
-        if cart_id == None:
-            cart = Cart()
-            cart.tax_percentage = 0.075
-            cart.save()
-            cart_id = cart.id
-            self.request.session["cart_id"] = cart_id
-        cart = Cart.objects.get(id=cart_id)
         if self.request.user.is_authenticated():
-            cart.user = self.request.user
-            cart.save()
-        return cart
+            cart, created = Cart.objects.get_or_create(user=self.request.user)
+            return cart
+        else:
+            self.request.session.set_expiry(0)  # 5 minutes
+            cart_id = self.request.session.get("cart_id")
+            if cart_id == None:
+                cart = Cart()
+                cart.save()
+                cart_id = cart.id
+                self.request.session["cart_id"] = cart_id
+            cart = Cart.objects.get(id=cart_id)
+            return cart
 
     def get(self, request, *args, **kwargs):
         cart = self.get_object()
@@ -63,7 +63,7 @@ class CartDetailView(SingleObjectMixin, View):
 
         if request.is_ajax():
             try:
-                total = cart_item.line_item_total
+                total = cart_item.total
             except:
                 total = None
             try:
@@ -77,12 +77,7 @@ class CartDetailView(SingleObjectMixin, View):
                 cart_total = None
 
             try:
-                tax_total = cart_item.cart.tax_total
-            except:
-                tax_total = None
-
-            try:
-                total_items = cart_item.cart.items.count()
+                total_items = cart_item.cart.cartitem_set.count()
             except:
                 total_items = 0
 
@@ -92,7 +87,6 @@ class CartDetailView(SingleObjectMixin, View):
                 "line_total": total,
                 "subtotal": subtotal,
                 "cart_total": cart_total,
-                "tax_total": tax_total,
                 "flash_message": flash_message,
                 "total_items": total_items
             }

@@ -136,6 +136,8 @@ $( document ).ready(function() {
             data: formData,
             success: function (data) {
                 console.log(data);
+                console.log(data.total_items);
+                $('.cart-count').text(data.total_items);
             },
             error: function (response, error) {
                 console.log(response);
