@@ -130,6 +130,18 @@ $( document ).ready(function() {
         event.preventDefault();
         var formData = $(this).closest('.add-to-cart-form').serialize();
         console.log(formData);
+        $.ajax({
+            type: "GET",
+            url: "/cart/",
+            data: formData,
+            success: function (data) {
+                console.log(data);
+            },
+            error: function (response, error) {
+                console.log(response);
+                console.log(error);
+            }
+        })
     })
 
 
