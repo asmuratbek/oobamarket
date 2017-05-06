@@ -1,0 +1,53 @@
+{% extends 'base-1.html' %}
+
+
+{% block content %}
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-4"></div>
+            <div class="col-md-4"><h1 class="create">Создайте свой магазин</h1></div>
+            <div class="col-md-4"></div>
+        </div>
+        <div class="inputs">
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
+{#                <form class="create_form">#}
+{#                     <div class="form-group">#}
+{#                        <label for="exampleInputFile">Логотип магазина</label>#}
+{#                        <input type="file" id="exampleInputFile">#}
+{#                        <p class="help-block">Выберитие размер 500х300 пикселей</p>#}
+{#                    </div>#}
+{#                    <div class="form-group">#}
+{#                        <label for="exampleInputPassword1">Название магазина</label>#}
+{#                        <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Название магазина">#}
+{#                    </div>#}
+{#                    <div class="form-group">#}
+{#                        <label for="exampleInputEmail1">Email магазина для уведомлений</label>#}
+{#                        <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email магазина">#}
+{#                    </div>#}
+{#                    <div class="form-group">#}
+{#                        <label for="exampleInputEmail1">Короткое описание магазина</label>#}
+{#                        <textarea class="form-control" rows="3" placeholder="Короткое описание магазина"></textarea>#}
+{#                    </div>#}
+{#                    <div class="form-group">#}
+{#                        <label for="exampleInputFile">Банеры магазина</label>#}
+{#                        <input type="file" input multiple>#}
+{#                        <p class="help-block">Можно загрузить до 3 рекламных банеров на страницу размером 500х300</p>#}
+{#                    </div>#}
+{##}
+{#                    <div class="checkbox">#}
+{#                        <label>#}
+{#                            <input type="checkbox"> Согласен с  <a href="">условиями оферты</a>#}
+{#                        </label>#}
+{#                    </div>#}
+{#                    <button type="submit" class="btn btn-success">Создать магазин</button>#}
+{#                </form>#}
+                {{ form }}
+                <button type="submit" class="btn btn-success">Создать магазин</button>
+            </div>
+            <div class="col-md-2"></div>
+        </div>
+    </div>
+
+{% endblock %}

@@ -47,6 +47,9 @@ class Shop(models.Model):
     def get_shop_products(self):
         return self.product_set.all()[:6]
 
+    def create_shop(self):
+        return reverse('shops:create')
+
     def get_used_categories(self):
         from apps.category.models import Category
         category_ids = list()
