@@ -1,4 +1,6 @@
 from django import template
+
+from apps.cart.models import Cart
 from ..models import Product
 from apps.users.models import User
 from django.utils.html import mark_safe
@@ -20,12 +22,15 @@ def is_favorite(product, user):
 
 
 @register.assignment_tag
-def is_in_cart(product, user):
-    if user.is_authenticated:
-        if product.cartitem_set.filter(cart__user=user).exists():
-            return 'Удалить из корзины'
+def cart_message(request, product):
+    if request.session.get("cart_id"):
+        cart_id = request.session.get("cart_id")
+        cart, created = Cart.objects.get_or_create(id=cart_id)
+        if cart.cartitem_set.filter(product=product).exists():
+            cart_message = "Удалить из корзины"
         else:
-            return 'Добавить в корзину'
+            cart_message = "Добавить в корзину"
+    return cart_message
 
 # @register.assignment_tag
 # def is_in_cart_block(product, user):

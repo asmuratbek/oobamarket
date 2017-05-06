@@ -129,6 +129,7 @@ $( document ).ready(function() {
     $('.add-to-cart-submit').click(function (event) {
         event.preventDefault();
         var formData = $(this).closest('.add-to-cart-form').serialize();
+        var button = $(this).closest('.add-to-cart-submit');
         console.log(formData);
         $.ajax({
             type: "GET",
@@ -138,6 +139,12 @@ $( document ).ready(function() {
                 console.log(data);
                 console.log(data.total_items);
                 $('.cart-count').text(data.total_items);
+                if (data.item_added) {
+                    button.val("Удалить из корзины");
+                }
+                else if (data.deleted) {
+                    button.val("Добавить в корзину");
+                }
             },
             error: function (response, error) {
                 console.log(response);
