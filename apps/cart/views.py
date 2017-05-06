@@ -16,19 +16,18 @@ class CartDetailView(SingleObjectMixin, View):
     template_name = "cart/cart_detail.html"
 
     def get_object(self, *args, **kwargs):
+        self.request.session.set_expiry(0)  # 5 minutes
+        cart_id = self.request.session.get("cart_id")
+        if cart_id == None:
+            cart = Cart()
+            cart.save()
+            cart_id = cart.id
+            self.request.session["cart_id"] = cart_id
+        cart = Cart.objects.get(id=cart_id)
         if self.request.user.is_authenticated():
-            cart, created = Cart.objects.get_or_create(user=self.request.user)
-            return cart
-        else:
-            self.request.session.set_expiry(0)  # 5 minutes
-            cart_id = self.request.session.get("cart_id")
-            if cart_id == None:
-                cart = Cart()
-                cart.save()
-                cart_id = cart.id
-                self.request.session["cart_id"] = cart_id
-            cart = Cart.objects.get(id=cart_id)
-            return cart
+            cart.user = self.request.user
+            cart.save()
+        return cart
 
     def get(self, request, *args, **kwargs):
         cart = self.get_object()
