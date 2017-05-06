@@ -36,4 +36,7 @@ class User(AbstractUser):
         return products
 
     def get_cart_count(self):
-        return self.cart.cartitem_set.count()
+        if self.cart_set.exists():
+            return self.cart_set.last().cartitem_set.count()
+        else:
+            return 0
