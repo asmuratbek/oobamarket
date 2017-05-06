@@ -30,6 +30,9 @@ def cart_message(request, product):
             cart_message = "Удалить из корзины"
         else:
             cart_message = "Добавить в корзину"
+    else:
+        cart_message = "Добавить в корзину"
+
     return cart_message
 
 # @register.assignment_tag
