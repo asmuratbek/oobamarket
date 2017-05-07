@@ -48,7 +48,7 @@ class CartDetailView(SingleObjectMixin, View):
             if created:
                 flash_message = "Successfully added to the cart"
                 item_added = True
-            else:
+            elif not created and cart_item.quantity == qty:
                 delete_item = True
             if delete_item:
                 flash_message = "Item removed successfully."
