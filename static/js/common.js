@@ -10,8 +10,31 @@ $( document ).ready(function() {
 
 
 
-    $( ".hearth.pull-right" ).click(function() {
-        $( this ).toggleClass( "like" );
+    $( ".hearth.pull-right" ).click(function(event) {
+        event.preventDefault();
+        var thisIcon = $(this);
+        var formData = $(this).closest('.favorite-add').serialize();
+        console.log(formData);
+        $.ajax({
+            type: "GET",
+            url: "/favorite/add",
+            data: formData,
+            success: function (data) {
+                console.log(data);
+                if (data.created) {
+                    thisIcon.toggleClass("like")
+                }
+                else {
+                    thisIcon.removeClass("like")
+                }
+                $('.favorites_count').text(data.favorites_count)
+            },
+            error: function (response, error) {
+                console.log(response);
+                console.log(error);
+            }
+        })
+
     });
 
     $( ".add.basket.favorite a " ).click(function() {

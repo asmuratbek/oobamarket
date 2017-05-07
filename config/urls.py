@@ -6,10 +6,12 @@ from django.views.generic import TemplateView
 from django.views import defaults as default_views
 
 from apps.global_category.views import IndexView, fixtures
+from apps.product.views import FavoriteCreateView
 from apps.shop.views import create, agreement
 
 urlpatterns = [
     url(r'^$', IndexView.as_view(), name='home'),
+    url(r'favorite/add/', FavoriteCreateView.as_view(), name="create_favorite"),
     url(r'^shops/', include('apps.shop.urls', namespace='shops')),
     url(r'^cart/', include('apps.cart.urls', namespace='cart')),
     # url(r'^product/', include('apps.product.urls', namespace='product')),
