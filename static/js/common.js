@@ -7,11 +7,56 @@ $( document ).ready(function() {
 
     $('[data-toggle="tooltip"]').tooltip();
 
+    $('.favorite-btn').click(function (event) {
+        event.preventDefault();
+        var item = $('#prod_id').val();
+        $.ajax({
+            type: "GET",
+            url: "/favorite/add",
+            data: item,
+            success: function (data) {
+                console.log(data);
+                if (data.created) {
+                    thisIcon.toggleClass("like")
+                }
+                else {
+                    thisIcon.removeClass("like")
+                }
+                $('.favorites_count').text(data.favorites_count)
+            },
+            error: function (response, error) {
+                console.log(response);
+                console.log(error);
+            }
+        })
+    });
 
 
+    $( ".hearth.pull-right" ).click(function(event) {
+        event.preventDefault();
+        var thisIcon = $(this);
+        var formData = $(this).closest('.favorite-add').serialize();
+        console.log(formData);
+        $.ajax({
+            type: "GET",
+            url: "/favorite/add",
+            data: formData,
+            success: function (data) {
+                console.log(data);
+                if (data.created) {
+                    thisIcon.toggleClass("like")
+                }
+                else {
+                    thisIcon.removeClass("like")
+                }
+                $('.favorites_count').text(data.favorites_count)
+            },
+            error: function (response, error) {
+                console.log(response);
+                console.log(error);
+            }
+        })
 
-    $( ".hearth.pull-right" ).click(function() {
-        $( this ).toggleClass( "like" );
     });
 
     $( ".add.basket.favorite a " ).click(function() {
@@ -122,7 +167,38 @@ $( document ).ready(function() {
 
 
 
+    $('.item-qty').change(function () {
+        $(this).next(".btn-update").fadeIn();
+    });
 
+    $('.add-to-cart-submit').click(function (event) {
+        event.preventDefault();
+        var formData = $(this).closest('.add-to-cart-form').serialize();
+        var button = $(this).closest('.add-to-cart-submit');
+        console.log(formData);
+        $.ajax({
+            type: "GET",
+            url: "/cart/",
+            data: formData,
+            success: function (data) {
+                console.log(data);
+                console.log(data.total_items);
+                $('.cart-count').text(data.total_items);
+                if (data.item_added) {
+                    button.val("В корзине");
+                    button.toggleClass("in-the-basket");
+                }
+                else if (data.deleted) {
+                    button.val("Добавить в корзину");
+                    button.removeClass("in-the-basket");
+                }
+            },
+            error: function (response, error) {
+                console.log(response);
+                console.log(error);
+            }
+        })
+    })
 
 
 }); // end document ready
