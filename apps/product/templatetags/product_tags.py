@@ -28,13 +28,19 @@ def cart_message(request, product):
         cart_id = request.session.get("cart_id")
         cart, created = Cart.objects.get_or_create(id=cart_id)
         if cart.cartitem_set.filter(product=product).exists():
-            cart_message = "Удалить из корзины"
+            cart_message = """
+                <input type="submit" value="Удалить из корзины" class="add-basket in-the-basket add-to-cart-submit">
+            """
         else:
-            cart_message = "Добавить в корзину"
+            cart_message = """
+                <input type="submit" value="Добавить в корзину" class="add-basket add-to-cart-submit">
+            """
     else:
-        cart_message = "Добавить в корзину"
+        cart_message = """
+                        <input type="submit" value="Добавить в корзину" class="add-basket add-to-cart-submit">
+                    """
 
-    return cart_message
+    return mark_safe(cart_message)
 
 # @register.assignment_tag
 # def is_in_cart_block(product, user):
