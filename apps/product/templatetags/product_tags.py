@@ -8,6 +8,7 @@ from django.utils.html import mark_safe
 
 register = template.Library()
 
+
 @register.assignment_tag
 def is_favorite(product, user):
     if user.is_authenticated:

@@ -141,9 +141,11 @@ $( document ).ready(function() {
                 $('.cart-count').text(data.total_items);
                 if (data.item_added) {
                     button.val("Удалить из корзины");
+                    button.toggleClass("in-the-basket");
                 }
                 else if (data.deleted) {
                     button.val("Добавить в корзину");
+                    button.removeClass("in-the-basket");
                 }
             },
             error: function (response, error) {
