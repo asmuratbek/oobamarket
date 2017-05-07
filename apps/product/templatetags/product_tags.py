@@ -29,7 +29,7 @@ def cart_message(request, product):
         cart, created = Cart.objects.get_or_create(id=cart_id)
         if cart.cartitem_set.filter(product=product).exists():
             cart_message = """
-                <input type="submit" value="Удалить из корзины" class="add-basket in-the-basket add-to-cart-submit">
+                <input type="submit" value="В корзине" class="add-basket in-the-basket add-to-cart-submit">
             """
         else:
             cart_message = """
@@ -38,6 +38,27 @@ def cart_message(request, product):
     else:
         cart_message = """
                         <input type="submit" value="Добавить в корзину" class="add-basket add-to-cart-submit">
+                    """
+
+    return mark_safe(cart_message)
+
+
+@register.assignment_tag
+def is_in_cart(request, product):
+    if request.session.get("cart_id"):
+        cart_id = request.session.get("cart_id")
+        cart, created = Cart.objects.get_or_create(id=cart_id)
+        if cart.cartitem_set.filter(product=product).exists():
+            cart_message = """
+                <a class="basket-btn in-the-basket" href=""><span class="glyphicon glyphicon-shopping-cart"></span>В корзине</a>
+            """
+        else:
+            cart_message = """
+                 <a class="basket-btn" href=""><span class="glyphicon glyphicon-shopping-cart"></span>Добавить в корзину</a>
+            """
+    else:
+        cart_message = """
+                         <a class="basket-btn" href=""><span class="glyphicon glyphicon-shopping-cart"></span>Добавить в корзину</a>
                     """
 
     return mark_safe(cart_message)
