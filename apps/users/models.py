@@ -15,6 +15,9 @@ class User(AbstractUser):
     def __str__(self):
         return self.username
 
+    def get_username(self):
+        return self.username
+
     def get_absolute_url(self):
         return reverse('users:detail', kwargs={'username': self.username})
 
@@ -40,3 +43,6 @@ class User(AbstractUser):
             return self.cart_set.last().cartitem_set.count()
         else:
             return 0
+
+    def shops_name(self):
+        return self.shop_set.all()
