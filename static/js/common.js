@@ -9,18 +9,21 @@ $( document ).ready(function() {
 
     $('.favorite-btn').click(function (event) {
         event.preventDefault();
-        var item = $('#prod_id').val();
+        var span = $(this).next();
+        var formData = $('#favorite-form').serialize();
         $.ajax({
             type: "GET",
             url: "/favorite/add",
-            data: item,
+            data: formData,
             success: function (data) {
                 console.log(data);
                 if (data.created) {
-                    thisIcon.toggleClass("like")
+                    $(this).toggleClass("active");
+                    $('.favorite-btn').html('<span class="glyphicon glyphicon-heart"></span>Удалить из избранного');
                 }
                 else {
-                    thisIcon.removeClass("like")
+                    $(this).removeClass("active");
+                    $('.favorite-btn').html('<span class="glyphicon glyphicon-heart"></span>Добавить в избранное</a>');
                 }
                 $('.favorites_count').text(data.favorites_count)
             },

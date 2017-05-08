@@ -69,7 +69,9 @@
                     {{ object.get_delivery_type }}
                 </span>
             </div>
-
+            <form action="" id="favorite-form" style="display: none;">
+                <input type="hidden" name="item" value="{{ object.id }}">
+            </form>
             <div class="add basket favorite">
                     {% is_in_cart request object %}
                     {% is_favorite object request.user %}

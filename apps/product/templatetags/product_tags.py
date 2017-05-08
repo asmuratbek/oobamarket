@@ -20,6 +20,10 @@ def is_favorite(product, user):
             return mark_safe('''<a class="favorite-btn" href="">
                         <span class="glyphicon glyphicon-heart"></span>
                         Добавить в избранное</a>''')
+    else:
+        return mark_safe('''<a class="favorite" href="/accounts/login/">
+                        <span class="glyphicon glyphicon-heart"></span>
+                        Добавить в избранное</a>''')
 
 
 @register.assignment_tag
