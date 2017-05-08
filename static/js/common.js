@@ -189,8 +189,9 @@ $( document ).ready(function() {
         })
     });
 
-    $('.add-basket').click(function (event) {
+    $('.add-to-cart-submit').click(function (event) {
         event.preventDefault();
+        var formData = $(this).closest('.add-to-cart-form').serialize();
         var button = $(this).closest('.add-to-cart-submit');
         console.log(formData);
         $.ajax({

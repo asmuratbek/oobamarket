@@ -25,28 +25,22 @@
                     {% endif %}
                 </div>
                 <div class="bottom-line">
-{#                    <form class="add-to-cart-form">#}
-{#                        <input type="hidden" value="{{ product.id }}" name="item">#}
+                    <form class="add-to-cart-form">
+                        <input type="hidden" value="{{ product.id }}" name="item">
 {#                    <a  href="{{ product.add_to_cart }}" class="add-basket">#}
 {#                             <span class="glyphicon glyphicon-shopping-cart"></span>#}
-{#                             {% cart_message request product %}#}
+{#                             Добавить в корзину#}
 {#                         </a>#}
-{#                    <span class="glyphicon glyphicon-shopping-cart"></span>#}
-{#                    {% cart_message request product %}#}
-{#                    </form>#}
-
-                    <a href="/cart/" class="add-basket">
-                        <span class="glyphicon glyphicon-shopping-cart"></span>
-                        {% cart_message request product %}
-                    </a>
+                    <span class="glyphicon glyphicon-shopping-cart"></span>
+                    {% cart_message request product %}
+                    </form>
                     <span class="truck pull-right {% if product.delivery_type == 'paid' %} yellow
                     {% elif product.delivery_type == 'free' %} green {% endif %}" data-toggle="tooltip" title=""
                           data-placement="top" data-original-title="{{ product.get_delivery_type }}"><i class="fa fa-truck" aria-hidden="true"></i></span>
-{#                    <form class="favorite-add">#}
-{#                        <input type="hidden" value="{{ product.id }}" name="item">#}
-{#                        <span class="hearth pull-right {% is_favorite_for_like product request.user %}"><i class="glyphicon glyphicon-heart"></i></span>#}
-{#                    </form>#}
-                    <span class="hearth pull-right"><i class="glyphicon glyphicon-heart"></i></span>
+                    <form class="favorite-add">
+                        <input type="hidden" value="{{ product.id }}" name="item">
+                        <span class="hearth pull-right {% is_favorite_for_like product request.user %}"><i class="glyphicon glyphicon-heart"></i></span>
+                    </form>
 
                 </div>
             </div>
