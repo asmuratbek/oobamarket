@@ -33,15 +33,15 @@ def cart_message(request, product):
         cart, created = Cart.objects.get_or_create(id=cart_id)
         if cart.cartitem_set.filter(product=product).exists():
             cart_message = """
-                <input type="submit" value="В корзине" class="add-basket in-the-basket add-to-cart-submit">
+                В корзине
             """
         else:
             cart_message = """
-                <input type="submit" value="Добавить в корзину" class="add-basket add-to-cart-submit">
+                Добавить в корзину
             """
     else:
         cart_message = """
-                        <input type="submit" value="Добавить в корзину" class="add-basket add-to-cart-submit">
+                        Добавить в корзину
                     """
 
     return mark_safe(cart_message)
