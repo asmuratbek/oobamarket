@@ -171,7 +171,22 @@ $( document ).ready(function() {
 
 
     $('.item-qty').change(function () {
-        $(this).next(".btn-update").fadeIn();
+        var formData = $('#cart-form').serialize();
+        $.ajax({
+            type: "GET",
+            url: "/cart/",
+            data: formData,
+            success: function (data) {
+                console.log(data);
+                console.log(data.total_items);
+                $('.cart-count').text(data.total_items);
+                $(this).closest('.line-total').text(data.line_total);
+            },
+            error: function (response, error) {
+                console.log(response);
+                console.log(error);
+            }
+        })
     });
 
     $('.add-basket').click(function (event) {
