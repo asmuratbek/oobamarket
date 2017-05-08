@@ -52,12 +52,12 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
     template_name = 'shop/product_form.html'
 
     def get_success_url(self):
-        return reverse('shops:detail', args=(self.object.slug,))
+        return reverse('shops:detail', args=(self.object.shop.slug,))
 
 
     def form_valid(self, form):
         form.instance.slug = slugify(form.instance.title)
-        form.save(commit=False)
+        form.save( )
         return super(ProductCreateView, self).form_valid(form)
 
     # def post(self, form):
