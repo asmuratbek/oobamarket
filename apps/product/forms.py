@@ -6,3 +6,5 @@ class ProductForm(ModelForm):
     class Meta:
         model = Product
         exclude = ['slug', 'objects', 'shop']
+
+

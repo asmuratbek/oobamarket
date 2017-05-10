@@ -10,11 +10,21 @@
                         {{ product.get_shop_title }}
                         </a>
                     </h2>
+                    {% if user.is_authenticated %}
+                        {% if user in product.shop.user.all %}
+                            <h2>
+                                <a href="{% url 'product:update_product' slug=product.slug %}">
+                                Редактировать
+                                </a>
+                            </h2>
+                        {% endif %}
+                    {% endif %}
 
                 </div>
                 <div class="img-wrapper">
                     <img src="{{ product.get_main_image }}" alt="">
                 </div>
+
                 <div class="title">
                     <p>{{ product.title }}</p>
                     {% if product.discount %}

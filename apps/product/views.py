@@ -1,9 +1,13 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, get_object_or_404
+from django.views.generic import CreateView
 from django.views.generic import ListView, DetailView, View
+from django.views.generic import UpdateView
+from slugify import slugify
 
 from apps.global_category.models import GlobalCategory
+from apps.product.forms import ProductForm
 from .models import *
 # Create your views here.
 
@@ -40,3 +44,23 @@ def product_detail(request, global_slug, category_slug, slug):
         "object": product
     }
     return render(request, template, context)
+
+
+class ProductCreateView(LoginRequiredMixin, CreateView):
+    form_class = ProductForm
+    template_name = 'product/product_form.html'
+
+    def get_success_url(self):
+        return reverse('shops:detail', args=(self.object.shop.slug,))
+
+    def form_valid(self, form, **kwargs):
+        form.instance.slug = slugify(form.instance.title)
+        form.instance.shop = Shop.objects.get(slug=self.kwargs['slug'])
+        form.save()
+        return super(ProductCreateView, self).form_valid(form)
+
+
+class ProductUpdateView(LoginRequiredMixin, UpdateView):
+    model = Product
+    form_class = ProductForm
+    template_name = 'product/product_update.html'

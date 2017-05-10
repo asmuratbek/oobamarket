@@ -87,6 +87,7 @@ class Product(models.Model):
         return "%s?item=%s&qty=1&delete=True" % (reverse("cart:detail"), self.id)
 
 
+
 class FavoriteProduct(models.Model):
 
     class Meta:

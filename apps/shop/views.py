@@ -5,6 +5,7 @@ from django.urls import reverse
 from django.views import generic
 from django.views.generic import CreateView
 from django.views.generic import FormView
+from django.views.generic import UpdateView
 from slugify import slugify
 
 from apps.product.forms import ProductForm
@@ -27,10 +28,16 @@ class ShopCreateView(LoginRequiredMixin,CreateView):
         return reverse('shops:detail', args=(self.object.slug,))
 
     def form_valid(self, form):
+        form.instance.slug = slugify(form.instance.title)
         form.save(commit=False)
         form.save()
         form.instance.user.add(self.request.user)
         return super(ShopCreateView, self).form_valid(form)
+
+class ShopUpdateView(LoginRequiredMixin, UpdateView):
+    model = Shop
+    form_class = ShopForm
+    template_name = 'shop/shop_update.html'
 
 
 class ShopBannersView(LoginRequiredMixin, CreateView):
@@ -46,18 +53,8 @@ class ShopBannersView(LoginRequiredMixin, CreateView):
         return super(ShopBannersView, self).form_valid(form)
 
 
-class ProductCreateView(LoginRequiredMixin, CreateView):
-    form_class = ProductForm
-    template_name = 'shop/product_form.html'
 
-    def get_success_url(self):
-        return reverse('shops:detail', args=(self.object.shop.slug,))
 
-    def form_valid(self, form, **kwargs):
-        form.instance.slug = slugify(form.instance.title)
-        form.instance.shop = Shop.objects.get(slug=self.kwargs['slug'])
-        form.save()
-        return super(ProductCreateView, self).form_valid(form)
 
 
 def create(request):

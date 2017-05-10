@@ -50,7 +50,13 @@
                     </div>
                     <div class="bottom-line">
                     <div class="pull-left edit">
-                        <a href="">Сохранить и Выйти</a>
+                        <a href="{% url 'shops:update' slug=object.slug %}">Настройки магазина</a>
+                    </div>
+                        <div class="pull-left edit">
+                        <a href="">Редактировать баннера</a>
+                    </div>
+                        <div class="pull-left edit">
+                        <a href="">Редактировать соц иконки</a>
                     </div>
                     <div class="pull-right">
                         <a href="" class="facebook"></a>
@@ -67,7 +73,7 @@
     <section class="shop-category">
         <div class="container">
             <ul class="category-tab">
-                <li class="active"><a href="{% url 'shops:add_product' slug=shop.slug %}">Товары</a></li>
+                <li class="active"><a href="{% url 'product:add_product' slug=product.slug %}">Товары</a></li>
                 <li><a href="">Акции</a></li>
                 <li><a href="">Отзывы</a></li>
                 <li><a href="">Контакты</a></li>

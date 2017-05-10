@@ -3,8 +3,7 @@ from django import template
 from apps.cart.models import Cart
 from ..models import Product
 from apps.users.models import User
-from django.utils.html import mark_safe
-
+from django.utils.html import mark_safe, format_html
 
 register = template.Library()
 
@@ -97,3 +96,16 @@ def is_favorite_for_like(product, user):
             return 'like'
         else:
             return ''
+
+
+# @register.assignment_tag
+# def update_product_link(user, product):
+#     if user.is_authenticated:
+#         if user in product.shop.user.all():
+#             return format_html('''<h2>
+#                                 <a href="/products/{}/update_product">
+#                                 Редактировать
+#                                 </a>
+#                             </h2>''').format(product.slug)
+#         else:
+#             return ''

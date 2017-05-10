@@ -65,6 +65,9 @@ class Shop(models.Model):
         if self.product_set.exists():
             return self.product_set.first().category.section
 
+    def get_update_url(self):
+        return reverse('shops:update', kwargs={'slug': self.slug})
+
 
 class Banners(models.Model):
     class Meta:

@@ -5,6 +5,7 @@ from .models import *
 
 class ShopAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('title',)}
+    filter_horizontal = ('user',)
 
 admin.site.register(Shop, ShopAdmin)
 admin.site.register(Banners)

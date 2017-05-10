@@ -14,7 +14,7 @@ urlpatterns = [
     url(r'favorite/add/', FavoriteCreateView.as_view(), name="create_favorite"),
     url(r'^shops/', include('apps.shop.urls', namespace='shops')),
     url(r'^cart/', include('apps.cart.urls', namespace='cart')),
-    # url(r'^product/', include('apps.product.urls', namespace='product')),
+    url(r'^product/', include('apps.product.urls', namespace='product')),
     url(r'^about/$', TemplateView.as_view(template_name='pages/about.html'), name='about'),
     url(r'^agreement/$', agreement, name='agreement'),
     url(r'^fixtures/(?P<name>\w+)$', fixtures, name='fixtures'),

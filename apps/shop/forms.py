@@ -11,7 +11,7 @@ from .models import Shop, Banners
 class ShopForm(ModelForm):
     class Meta:
         model = Shop
-        exclude = ['user', ]
+        exclude = ['user', 'slug']
 
 
 class ShopBannersForm(ModelForm):
