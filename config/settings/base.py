@@ -107,7 +107,11 @@ FIXTURE_DIRS = (
 
 # EMAIL CONFIGURATION
 # ------------------------------------------------------------------------------
-EMAIL_BACKEND = env('DJANGO_EMAIL_BACKEND', default='django.core.mail.backends.smtp.EmailBackend')
+# EMAIL_BACKEND = env('DJANGO_EMAIL_BACKEND', default='django.core.mail.backends.smtp.EmailBackend')
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'  # Например, smtp.gmail.com
+EMAIL_HOST_USER = 'asmnotifications@gmail.com'
+EMAIL_HOST_PASSWORD = "amanatay123"
 
 # MANAGER CONFIGURATION
 # ------------------------------------------------------------------------------
