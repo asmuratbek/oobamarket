@@ -26,12 +26,16 @@ SECRET_KEY = env('DJANGO_SECRET_KEY', default='4~l:gOw5sSuthmTiKh14hw`.N>jrh>Ix*
 # Mail settings
 # ------------------------------------------------------------------------------
 
-EMAIL_PORT = 1025
+# EMAIL_PORT = 1025
+#
+# EMAIL_HOST = 'localhost'
+# EMAIL_BACKEND = env('DJANGO_EMAIL_BACKEND',
+#                     default='django.core.mail.backends.console.EmailBackend')
 
-EMAIL_HOST = 'localhost'
-EMAIL_BACKEND = env('DJANGO_EMAIL_BACKEND',
-                    default='django.core.mail.backends.console.EmailBackend')
-
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'  # Например, smtp.gmail.com
+EMAIL_HOST_USER = 'asmnotifications@gmail.com'
+EMAIL_HOST_PASSWORD = "amanatay123"
 
 # CACHING
 # ------------------------------------------------------------------------------
