@@ -181,8 +181,8 @@ $( document ).ready(function() {
                 console.log(data);
                 console.log(data.line_total);
                 $('.cart-count').text(data.total_items);
-                $('.line-total-' + data.id).text(data.line_total);
-                $('#subtotal').text(data.subtotal);
+                $('#line-total-' + data.id).text(data.line_total + ' сом');
+                $('#subtotal').text(data.subtotal + ' сом');
             },
             error: function (response, error) {
                 console.log(response);

@@ -53,7 +53,7 @@ def cart_item_pre_save_receiver(sender, instance, *args, **kwargs):
     if int(qty) >= 1:
         price = instance.product.get_price()
         total = Decimal(qty) * Decimal(price)
-        instance.total = total
+        instance.total = "%.2f" % (total)
 
 pre_save.connect(cart_item_pre_save_receiver, sender=CartItem)
 

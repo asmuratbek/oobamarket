@@ -76,9 +76,9 @@
                 <div class="col-md-2 price">
                     {% if product.product.discount %}
                     <strike>{{ product.product.price }} {{ product.product.currency }}</strike>
-                    <p class="line-total-{{ product.product.id }}">{{ product.total }} {{ product.currency }}</p>
+                    <p id="line-total-{{ product.product.id }}">{{ product.total }} {{ product.product.currency }}</p>
                         {% else %}
-                        <p class="line-total-{{ product.product.id }}">{{ product.total }} {{ product.currency }}</p>
+                        <p id="line-total-{{ product.product.id }}">{{ product.total }} {{ product.product.currency }}</p>
                     {% endif %}
                     <a href="{{ product.product.remove_from_cart }}" class="close">X</a>
                 </div>
