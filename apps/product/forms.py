@@ -5,4 +5,4 @@ from .models import Product
 class ProductForm(ModelForm):
     class Meta:
         model = Product
-        exclude = ['slug', 'objects']
+        exclude = ['slug', 'objects', 'shop']

@@ -18,11 +18,11 @@ class ShopDetailView(generic.DetailView):
     model = Shop
 
 
-
 class ShopCreateView(LoginRequiredMixin,CreateView):
     form_class = ShopForm
     template_name = 'shop/shop_form.html'
     # fields = ['title', 'logo', 'email', 'phone', 'short_description', 'description', 'user', 'slug',]
+
     def get_success_url(self):
         return reverse('shops:detail', args=(self.object.slug,))
 
@@ -53,9 +53,9 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
     def get_success_url(self):
         return reverse('shops:detail', args=(self.object.shop.slug,))
 
-
-    def form_valid(self, form):
+    def form_valid(self, form, **kwargs):
         form.instance.slug = slugify(form.instance.title)
+        form.instance.shop = Shop.objects.get(slug=self.kwargs['slug'])
         form.save()
         return super(ProductCreateView, self).form_valid(form)
 
@@ -67,6 +67,7 @@ def create(request):
     }
 
     return render(request, 'shop/create.html', params)
+
 
 def agreement(request):
 

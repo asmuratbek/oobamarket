@@ -11,9 +11,10 @@ from .models import Shop, Banners
 class ShopForm(ModelForm):
     class Meta:
         model = Shop
-        exclude = ['user',]
+        exclude = ['user', ]
+
 
 class ShopBannersForm(ModelForm):
     class Meta:
         model = Banners
-        fields = ['shop','title','image']
+        fields = ['title', 'image']
