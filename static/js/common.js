@@ -171,16 +171,18 @@ $( document ).ready(function() {
 
 
     $('.item-qty').change(function () {
-        var formData = $('#cart-form').serialize();
+        var formData = $(this).closest('.cart-form').serialize();
+        console.log(formData);
         $.ajax({
             type: "GET",
             url: "/cart/",
             data: formData,
             success: function (data) {
                 console.log(data);
-                console.log(data.total_items);
+                console.log(data.line_total);
                 $('.cart-count').text(data.total_items);
-                $(this).closest('.line-total').text(data.line_total);
+                $('.line-total-' + data.id).text(data.line_total);
+                $('#subtotal').text(data.subtotal);
             },
             error: function (response, error) {
                 console.log(response);

@@ -89,7 +89,8 @@ class CartDetailView(SingleObjectMixin, View):
                 "subtotal": subtotal,
                 "cart_total": cart_total,
                 "flash_message": flash_message,
-                "total_items": total_items
+                "total_items": total_items,
+                "id": cart_item.product.id
             }
 
             return JsonResponse(data)

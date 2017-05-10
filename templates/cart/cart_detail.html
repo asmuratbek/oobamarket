@@ -59,7 +59,7 @@
                         <img src="{{ product.product.shop.get_logo }}" alt="{{ product.product.shop.title }}" class="img-responsive">
                     </div>
                 </div>
-                <form action=".">
+                <form action="." class="cart-form">
                 <input type="hidden" name="item" value="{{ product.product.id }}">
                 <div class="col-md-2">
                     <div class="quantity">
@@ -71,25 +71,24 @@
 
                 </div>
 
-
+                </form>
 
                 <div class="col-md-2 price">
                     {% if product.product.discount %}
                     <strike>{{ product.product.price }} {{ product.product.currency }}</strike>
-                    <p>{{ product.total }} {{ product.currency }}</p>
+                    <p class="line-total-{{ product.product.id }}">{{ product.total }} {{ product.currency }}</p>
                         {% else %}
-                        <p>{{ product.total }} {{ product.currency }}</p>
+                        <p class="line-total-{{ product.product.id }}">{{ product.total }} {{ product.currency }}</p>
                     {% endif %}
                     <a href="{{ product.product.remove_from_cart }}" class="close">X</a>
                 </div>
-                </form>
             </div>
             {% endfor %}
 
             <div class="total">
                 <div class="col-md-offset-8 col-md-3">
                     <p>Доставка: <span>0 сом</span></p>
-                    <p>Итого: <span class="red">{{ object.subtotal }} сом </span></p>
+                    <p>Итого: <span class="red" id="subtotal">{{ object.subtotal }} сом </span></p>
                 </div>
                 <div class="clearfix"></div>
                 <a href=""  class="btn-modal" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">Оформить покупку</a>
