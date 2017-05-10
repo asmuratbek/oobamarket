@@ -38,9 +38,10 @@ class ShopBannersView(LoginRequiredMixin, CreateView):
     template_name = 'shop/shop_banner.html'
 
     def get_success_url(self):
-        return reverse('shops:detail', args=(self.object.shop.slug,))
+        return reverse('shops:detail', kwargs={'slug': self.kwargs['slug']})
 
-    def form_valid(self, form):
+    def form_valid(self, form, **kwargs):
+        form.instance.shop = Shop.objects.get(slug=self.kwargs['slug'])
         form.save()
         return super(ShopBannersView, self).form_valid(form)
 
