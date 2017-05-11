@@ -34,6 +34,7 @@ class ShopCreateView(LoginRequiredMixin,CreateView):
         form.instance.user.add(self.request.user)
         return super(ShopCreateView, self).form_valid(form)
 
+
 class ShopUpdateView(LoginRequiredMixin, UpdateView):
     model = Shop
     form_class = ShopForm
@@ -46,6 +47,9 @@ class ShopBannersView(LoginRequiredMixin, CreateView):
 
     def get_success_url(self):
         return reverse('shops:detail', kwargs={'slug': self.kwargs['slug']})
+
+    def get_initial(self):
+        return {'shop': Shop.objects.get(slug=self.kwargs['slug'])}
 
     def form_valid(self, form, **kwargs):
         form.instance.shop = Shop.objects.get(slug=self.kwargs['slug'])
