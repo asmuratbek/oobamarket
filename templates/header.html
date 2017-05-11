@@ -39,23 +39,7 @@
                     <!--
                     Когда вход выполнен!
                     -->
-                    {% if user.is_authenticated %}
-                    <div class="dropdown">
-                        <a class="enter btn" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Магазин
-                            <span class="glyphicon glyphicon-menu-down"></span>
-                        </a>
-
-                        <ul class="dropdown-menu" aria-labelledby="dLabel">
-                            <li><a href="">Мой магазин</a></li>
-                            <li><a href="">Редактировать</a></li>
-                            <li><a href="{% url 'account_logout' %}">Выйти</a></li>
-                        </ul>
-
-                        {% else %}
-                        <a href="{% url 'account_login' %}" class="enter btn" type="button">
-                            Войти</a>
-                    {% endif %}
+                    {% include 'dropdown.html' %}
                     </div>
             </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
