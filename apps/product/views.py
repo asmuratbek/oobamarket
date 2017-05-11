@@ -53,6 +53,9 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
     def get_success_url(self):
         return reverse('shops:detail', args=(self.object.shop.slug,))
 
+    def get_initial(self):
+        return {'shop': Shop.objects.get(slug=self.kwargs['slug'])}
+
     def form_valid(self, form, **kwargs):
         form.instance.slug = slugify(form.instance.title)
         form.instance.shop = Shop.objects.get(slug=self.kwargs['slug'])
