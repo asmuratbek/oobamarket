@@ -1,0 +1,20 @@
+{% if user.is_authenticated %}
+    <div class="dropdown">
+        <a class="enter btn" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            {{ request.user.get_username }}
+            <span class="glyphicon glyphicon-menu-down"></span>
+        </a>
+
+        <ul class="dropdown-menu" aria-labelledby="dLabel">
+            <li><a href="{% url 'account_login' %}"><strong>Кабинет</strong></a></li>
+            <li><a href="{% url 'shops:create' %}"><strong>Создать магазин</strong></a></li>
+            {% for shop in request.user.shops_name %}
+                <li><a href="{{ shop.get_absolute_url }}">{{ shop.title }}</a></li>
+            {% endfor %}
+            <li><a href="{% url 'account_logout' %}"><strong>Выйти</strong></a></li>
+        </ul>
+    </div>
+{% else %}
+    <a href="{% url 'account_login' %}" class="enter btn" type="button">
+        Войти</a>
+{% endif %}
