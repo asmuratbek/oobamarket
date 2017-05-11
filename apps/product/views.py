@@ -28,10 +28,14 @@ class FavoriteCreateView(LoginRequiredMixin, View):
         favorite, created = FavoriteProduct.objects.get_or_create(product_id=item_id, user=request.user)
         if not created:
             favorite.delete()
+            flash_message = "Продукт успешно удален из избранных"
+        else:
+            flash_message = "Продукт успешно добавлен в избранное"
         favorites_count = request.user.get_favorites_count()
         data = {
             "created": created,
             "favorites_count": favorites_count,
+            "flash_message": flash_message
         }
         return JsonResponse(data)
 

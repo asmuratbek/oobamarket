@@ -18,15 +18,27 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
 
     <!-- Your stuff: Third-party CSS libraries go here -->
-    
+
     <!-- This file stores project-specific CSS -->
     <link href="{% static 'css/project.css' %}" rel="stylesheet">
-    
+
     {% endblock %}
 
   </head>
 
   <body>
+
+  <style>
+      .container-alert-flash {
+	        position: absolute;
+            top: 10px;
+            z-index: 50000;
+            width: 100%;
+            right: 0%;
+            margin: 0px;
+            display:none;
+    }
+  </style>
 
     <div class="m-b-1">
       <nav class="navbar navbar-toggleable-md navbar-light bg-faded">
@@ -96,11 +108,11 @@
       <!-- Your stuff: Third-party javascript libraries go here -->
 
       <!-- place project specific Javascript in this file -->
-      
+
       <script src="{% static 'js/project.js' %}"></script>
-      
+
 
     {% endblock javascript %}
   </body>
 </html>
- 
+

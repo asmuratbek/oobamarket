@@ -46,16 +46,16 @@ class CartDetailView(SingleObjectMixin, View):
 
             cart_item, created = CartItem.objects.get_or_create(cart=cart, product=item_instance)
             if created:
-                flash_message = "Successfully added to the cart"
+                flash_message = "Продукт успешно добавлен в корзину"
                 item_added = True
             elif not created and cart_item.quantity == qty:
                 delete_item = True
             if delete_item:
-                flash_message = "Item removed successfully."
+                flash_message = "Продукт успешно удален из корзины"
                 cart_item.delete()
             else:
                 if not created:
-                    flash_message = "Quantity has been updated successfully."
+                    flash_message = "Количество продукта изменено"
                 cart_item.quantity = qty
                 cart_item.save()
             if not request.is_ajax():

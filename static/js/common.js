@@ -45,6 +45,7 @@ $( document ).ready(function() {
             url: "/favorite/add",
             data: formData,
             success: function (data) {
+                showFlashMessage(data.flash_message)
                 console.log(data);
                 if (data.created) {
                     thisIcon.toggleClass("like")
@@ -178,6 +179,7 @@ $( document ).ready(function() {
             url: "/cart/",
             data: formData,
             success: function (data) {
+                showFlashMessage(data.flash_message);
                 console.log(data);
                 console.log(data.line_total);
                 $('.cart-count').text(data.total_items);
@@ -201,6 +203,7 @@ $( document ).ready(function() {
             url: "/cart/",
             data: formData,
             success: function (data) {
+                showFlashMessage(data.flash_message);
                 console.log(data);
                 console.log(data.total_items);
                 $('.cart-count').text(data.total_items);
@@ -218,7 +221,25 @@ $( document ).ready(function() {
                 console.log(error);
             }
         })
-    })
+    });
+
+    function showFlashMessage(message) {
+
+        console.log('yeah');
+	// var template = "{% include 'alert.html' with message='" + message + "' %}"
+	var template = "<div class='container container-alert-flash'>" +
+	"<div class='col-sm-3 col-sm-offset-8'> " +
+	"<div class='alert alert-success alert-dismissible' role='alert'>" +
+	"<button type='button' class='close' data-dismiss='alert' aria-label='Close'>" +
+	"<span aria-hidden='true'>&times;</span></button>"
+	+ message + "</div></div></div>";
+	$("body").append(template);
+	$(".container-alert-flash").fadeIn();
+	setTimeout(function(){
+		$(".container-alert-flash").fadeOut();
+	}, 1800);
+
+}
 
 
 }); // end document ready
