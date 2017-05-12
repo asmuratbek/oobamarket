@@ -82,3 +82,10 @@ CELERY_ALWAYS_EAGER = True
 
 # Your local stuff: Below this line define 3rd party library settings
 # ------------------------------------------------------------------------------
+
+
+# Braintree sandbox
+
+BRAINTREE_MERCHANT_ID = "9spk2t7jt6xcgy9p"
+BRAINTREE_PUBLIC = "t2sxn5r5jx8knbcd"
+BRAINTREE_PRIVATE = "a5324df2de5e4da5331f91551bdee1c7"
