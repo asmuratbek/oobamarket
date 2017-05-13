@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth import get_user_model
 
-from .models import UserAddress
+from .models import UserAddress, SimpleOrder
 
 User = get_user_model()
 
@@ -44,4 +44,15 @@ class UserAddressForm(forms.ModelForm):
             'street',
             'city',
             'type'
+        ]
+
+
+class SimpleOrderForm(forms.ModelForm):
+    class Meta:
+        model = SimpleOrder
+        fields = [
+            'name',
+            'last_name',
+            'phone',
+            'address',
         ]

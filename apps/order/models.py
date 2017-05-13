@@ -5,6 +5,7 @@ from django.db import models
 from django.db.models.signals import pre_save, post_save
 # Create your models here.
 from apps.cart.models import Cart
+from apps.product.models import Product
 from apps.users.models import User
 
 
@@ -115,3 +116,28 @@ def order_pre_save(sender, instance, *args, **kwargs):
     instance.order_total = order_total
 
 pre_save.connect(order_pre_save, sender=Order)
+
+
+class SimpleOrder(models.Model):
+
+    class Meta:
+        verbose_name = "Заказ"
+        verbose_name_plural = "Заказы"
+
+    name = models.CharField(max_length=100, blank=True, null=True)
+    last_name = models.CharField(max_length=100, blank=True, null=True)
+    phone = models.CharField(max_length=20)
+    address = models.CharField(max_length=255)
+    user = models.ForeignKey(User, blank=True, null=True)
+    cart = models.ForeignKey(Cart)
+    created_at = models.DateTimeField(auto_now_add=True, auto_now=False)
+    updated = models.DateTimeField(auto_now_add=False, auto_now=True)
+
+    def __str__(self):
+        return str(self.cart.id)
+
+
+def send_email_to_shop_owner(sender, instance, *args, **kwargs):
+    print('Heeey')
+
+post_save.connect(send_email_to_shop_owner, sender=SimpleOrder)
