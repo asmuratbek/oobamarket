@@ -1,0 +1,265 @@
+************* Module django.contrib.auth
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/auth/__init__.py:68: [W1505(deprecated-method), authenticate] Using deprecated method getcallargs()
+************* Module django.contrib.auth.password_validation
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/auth/password_validation.py:144: [W1401(anomalous-backslash-in-string), ] Anomalous backslash in string: '\W'. String constant might be missing an r prefix.
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/auth/password_validation.py:65: [W0621(redefined-outer-name), password_changed] Redefining name 'password_changed' from outer scope (line 57)
+************* Module django.contrib.auth.tokens
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/auth/tokens.py:29: [W0622(redefined-builtin), PasswordResetTokenGenerator.check_token] Redefining built-in 'hash'
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/auth/tokens.py:29: [W0612(unused-variable), PasswordResetTokenGenerator.check_token] Unused variable 'hash'
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/auth/tokens.py:60: [W0622(redefined-builtin), PasswordResetTokenGenerator._make_token_with_timestamp] Redefining built-in 'hash'
+************* Module django.contrib.auth.hashers
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/auth/hashers.py:343: [C0330(bad-continuation), ] Wrong continued indentation (remove 3 spaces).
+            salt, data) = self._decode(encoded)
+         |  ^
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/auth/hashers.py:358: [C0330(bad-continuation), ] Wrong continued indentation (remove 3 spaces).
+            salt, data) = self._decode(encoded)
+         |  ^
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/auth/hashers.py:1: [C0302(too-many-lines), ] Too many lines in module (653/500)
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/auth/hashers.py:157: [W0622(redefined-builtin), mask_hash] Redefining built-in 'hash'
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/auth/hashers.py:182: [W0612(unused-variable), BasePasswordHasher._load_library] Unused variable 'name'
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/auth/hashers.py:258: [W0622(redefined-builtin), PBKDF2PasswordHasher.encode] Redefining built-in 'hash'
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/auth/hashers.py:253: [W0221(arguments-differ), PBKDF2PasswordHasher.encode] Parameters differ from overridden 'encode' method
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/auth/hashers.py:263: [W0622(redefined-builtin), PBKDF2PasswordHasher.verify] Redefining built-in 'hash'
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/auth/hashers.py:263: [W0612(unused-variable), PBKDF2PasswordHasher.verify] Unused variable 'hash'
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/auth/hashers.py:269: [W0622(redefined-builtin), PBKDF2PasswordHasher.safe_summary] Redefining built-in 'hash'
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/auth/hashers.py:279: [W0622(redefined-builtin), PBKDF2PasswordHasher.must_update] Redefining built-in 'hash'
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/auth/hashers.py:279: [W0612(unused-variable), PBKDF2PasswordHasher.must_update] Unused variable 'salt'
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/auth/hashers.py:279: [W0612(unused-variable), PBKDF2PasswordHasher.must_update] Unused variable 'algorithm'
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/auth/hashers.py:279: [W0612(unused-variable), PBKDF2PasswordHasher.must_update] Unused variable 'hash'
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/auth/hashers.py:283: [W0622(redefined-builtin), PBKDF2PasswordHasher.harden_runtime] Redefining built-in 'hash'
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/auth/hashers.py:283: [W0612(unused-variable), PBKDF2PasswordHasher.harden_runtime] Unused variable 'algorithm'
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/auth/hashers.py:283: [W0612(unused-variable), PBKDF2PasswordHasher.harden_runtime] Unused variable 'hash'
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/auth/hashers.py:358: [W0612(unused-variable), Argon2PasswordHasher.must_update] Unused variable 'salt'
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/auth/hashers.py:358: [W0612(unused-variable), Argon2PasswordHasher.must_update] Unused variable 'data'
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/auth/hashers.py:357: [W0612(unused-variable), Argon2PasswordHasher.must_update] Unused variable 'variety'
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/auth/hashers.py:440: [W0612(unused-variable), BCryptSHA256PasswordHasher.safe_summary] Unused variable 'empty'
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/auth/hashers.py:440: [W0612(unused-variable), BCryptSHA256PasswordHasher.safe_summary] Unused variable 'algostr'
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/auth/hashers.py:451: [W0612(unused-variable), BCryptSHA256PasswordHasher.must_update] Unused variable 'algostr'
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/auth/hashers.py:451: [W0612(unused-variable), BCryptSHA256PasswordHasher.must_update] Unused variable 'empty'
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/auth/hashers.py:451: [W0612(unused-variable), BCryptSHA256PasswordHasher.must_update] Unused variable 'algorithm'
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/auth/hashers.py:451: [W0612(unused-variable), BCryptSHA256PasswordHasher.must_update] Unused variable 'data'
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/auth/hashers.py:493: [W0622(redefined-builtin), SHA1PasswordHasher.encode] Redefining built-in 'hash'
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/auth/hashers.py:497: [W0622(redefined-builtin), SHA1PasswordHasher.verify] Redefining built-in 'hash'
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/auth/hashers.py:497: [W0612(unused-variable), SHA1PasswordHasher.verify] Unused variable 'hash'
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/auth/hashers.py:503: [W0622(redefined-builtin), SHA1PasswordHasher.safe_summary] Redefining built-in 'hash'
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/auth/hashers.py:524: [W0622(redefined-builtin), MD5PasswordHasher.encode] Redefining built-in 'hash'
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/auth/hashers.py:528: [W0622(redefined-builtin), MD5PasswordHasher.verify] Redefining built-in 'hash'
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/auth/hashers.py:528: [W0612(unused-variable), MD5PasswordHasher.verify] Unused variable 'hash'
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/auth/hashers.py:534: [W0622(redefined-builtin), MD5PasswordHasher.safe_summary] Redefining built-in 'hash'
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/auth/hashers.py:562: [W0622(redefined-builtin), UnsaltedSHA1PasswordHasher.encode] Redefining built-in 'hash'
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/auth/hashers.py:571: [W0622(redefined-builtin), UnsaltedSHA1PasswordHasher.safe_summary] Redefining built-in 'hash'
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/auth/hashers.py:639: [W0612(unused-variable), CryptPasswordHasher.verify] Unused variable 'salt'
+************* Module django.contrib.auth.forms
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/auth/forms.py:27: [W0222(signature-differs), ReadOnlyPasswordHashWidget.render] Signature differs from overridden 'render' method
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/auth/forms.py:260: [R0914(too-many-locals), PasswordResetForm.save] Too many local variables (16/15)
+************* Module django.contrib.auth.base_user
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/auth/base_user.py:65: [E1101(no-member), AbstractBaseUser.get_username] Instance of 'AbstractBaseUser' has no 'USERNAME_FIELD' member
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/auth/base_user.py:77: [E1101(no-member), AbstractBaseUser.clean] Instance of 'AbstractBaseUser' has no 'USERNAME_FIELD' member
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/auth/base_user.py:79: [W0221(arguments-differ), AbstractBaseUser.save] Parameters differ from overridden 'save' method
+************* Module django.contrib.auth.backends
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/auth/backends.py:128: [W0221(arguments-differ), RemoteUserBackend.authenticate] Parameters differ from overridden 'authenticate' method
+************* Module django.contrib.auth.decorators
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/auth/decorators.py:9: [E0611(no-name-in-module), ] No name 'urllib' in module '_MovedItems'
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/auth/decorators.py:9: [E0401(import-error), ] Unable to import 'django.utils.six.moves.urllib.parse'
+************* Module django.contrib.auth.views
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/auth/views.py:23: [E0611(no-name-in-module), ] No name 'urllib' in module '_MovedItems'
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/auth/views.py:23: [E0401(import-error), ] Unable to import 'django.utils.six.moves.urllib.parse'
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/auth/views.py:152: [W0622(redefined-builtin), redirect_to_login] Redefining built-in 'next'
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/auth/views.py:177: [R0913(too-many-arguments), password_reset] Too many arguments (11/10)
+************* Module django.contrib.auth.models
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/auth/models.py:81: [E1101(no-member), Permission.__str__] Instance of 'ForeignKey' has no 'app_label' member
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/auth/models.py:86: [E1101(no-member), Permission.natural_key] Instance of 'ForeignKey' has no 'natural_key' member
+************* Module django.contrib.auth.admin
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/auth/admin.py:131: [W0622(redefined-builtin), UserAdmin.user_change_password] Redefining built-in 'id'
+************* Module django.contrib.auth.management
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/auth/management/__init__.py:40: [R0914(too-many-locals), create_permissions] Too many local variables (16/15)
+************* Module django.contrib.auth.management.commands.createsuperuser
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/auth/management/commands/createsuperuser.py:115: [C0330(bad-continuation), ] Wrong continued indentation (add 21 spaces).
+                    )
+                    ^                    |
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/auth/management/commands/createsuperuser.py:16: [W0622(redefined-builtin), ] Redefining built-in 'input'
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/auth/management/commands/createsuperuser.py:16: [E0401(import-error), ] Unable to import 'django.utils.six.moves'
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/auth/management/commands/createsuperuser.py:65: [R0914(too-many-locals), Command.handle] Too many local variables (19/15)
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/auth/management/commands/createsuperuser.py:65: [R0912(too-many-branches), Command.handle] Too many branches (25/12)
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/auth/management/commands/createsuperuser.py:65: [R0915(too-many-statements), Command.handle] Too many statements (75/50)
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/auth/management/commands/createsuperuser.py:62: [W0201(attribute-defined-outside-init), Command.execute] Attribute 'stdin' defined outside __init__
+************* Module django.contrib.auth.migrations.0001_initial
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/auth/migrations/0001_initial.py:98: [C0330(bad-continuation), ] Wrong continued indentation (remove 1 space).
+                 ),
+                |^
+************* Module django.contrib.contenttypes.fields
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/contenttypes/fields.py:1: [C0302(too-many-lines), ] Too many lines in module (657/500)
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/contenttypes/fields.py:20: [R0902(too-many-instance-attributes), GenericForeignKey] Too many instance attributes (9/7)
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/contenttypes/fields.py:86: [R1705(no-else-return), GenericForeignKey._check_field_name] Unnecessary "else" after "return"
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/contenttypes/fields.py:129: [R1705(no-else-return), GenericForeignKey._check_content_type_field] Unnecessary "else" after "return"
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/contenttypes/fields.py:160: [W0622(redefined-builtin), GenericForeignKey.get_content_type] Redefining built-in 'id'
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/contenttypes/fields.py:199: [R1705(no-else-return), GenericForeignKey.get_prefetch_queryset.gfk_key] Unnecessary "else" after "return"
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/contenttypes/fields.py:55: [W0201(attribute-defined-outside-init), GenericForeignKey.contribute_to_class] Attribute 'cache_attr' defined outside __init__
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/contenttypes/fields.py:54: [W0201(attribute-defined-outside-init), GenericForeignKey.contribute_to_class] Attribute 'model' defined outside __init__
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/contenttypes/fields.py:53: [W0201(attribute-defined-outside-init), GenericForeignKey.contribute_to_class] Attribute 'name' defined outside __init__
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/contenttypes/fields.py:276: [W0223(abstract-method), GenericRelation] Method 'get_transform' is abstract in class 'ForeignObject' but is not overridden
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/contenttypes/fields.py:335: [R1705(no-else-return), GenericRelation._check_generic_foreign_key_existence] Unnecessary "else" after "return"
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/contenttypes/fields.py:337: [R1705(no-else-return), GenericRelation._check_generic_foreign_key_existence] Unnecessary "else" after "return"
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/contenttypes/fields.py:392: [R1705(no-else-return), GenericRelation.get_path_info] Unnecessary "else" after "return"
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/contenttypes/fields.py:407: [W0221(arguments-differ), GenericRelation.contribute_to_class] Parameters differ from overridden 'contribute_to_class' method
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/contenttypes/fields.py:437: [W0221(arguments-differ), GenericRelation.get_extra_restriction] Parameters differ from overridden 'get_extra_restriction' method
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/contenttypes/fields.py:410: [W0201(attribute-defined-outside-init), GenericRelation.contribute_to_class] Attribute 'model' defined outside __init__
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/contenttypes/fields.py:484: [R0902(too-many-instance-attributes), create_generic_related_manager.GenericRelatedObjectManager] Too many instance attributes (8/7)
+************* Module django.contrib.contenttypes.forms
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/contenttypes/forms.py:20: [E1101(no-member), BaseGenericInlineFormSet.__init__] Instance of 'BaseGenericInlineFormSet' has no 'ct_field' member
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/contenttypes/forms.py:20: [E1101(no-member), BaseGenericInlineFormSet.__init__] Instance of 'BaseGenericInlineFormSet' has no 'ct_fk_field' member
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/contenttypes/forms.py:28: [E1101(no-member), BaseGenericInlineFormSet.__init__] Instance of 'BaseGenericInlineFormSet' has no 'ct_field' member
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/contenttypes/forms.py:29: [E1101(no-member), BaseGenericInlineFormSet.__init__] Instance of 'BaseGenericInlineFormSet' has no 'for_concrete_model' member
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/contenttypes/forms.py:30: [E1101(no-member), BaseGenericInlineFormSet.__init__] Instance of 'BaseGenericInlineFormSet' has no 'ct_fk_field' member
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/contenttypes/forms.py:41: [E1101(no-member), BaseGenericInlineFormSet.get_default_prefix] Class 'BaseGenericInlineFormSet' has no 'ct_field' member
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/contenttypes/forms.py:41: [E1101(no-member), BaseGenericInlineFormSet.get_default_prefix] Class 'BaseGenericInlineFormSet' has no 'ct_fk_field' member
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/contenttypes/forms.py:44: [E1101(no-member), BaseGenericInlineFormSet.save_new] Instance of 'BaseGenericInlineFormSet' has no 'ct_field' member
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/contenttypes/forms.py:45: [E1101(no-member), BaseGenericInlineFormSet.save_new] Instance of 'BaseGenericInlineFormSet' has no 'ct_fk_field' member
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/contenttypes/forms.py:49: [R0913(too-many-arguments), generic_inlineformset_factory] Too many arguments (16/10)
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/contenttypes/forms.py:49: [R0914(too-many-locals), generic_inlineformset_factory] Too many local variables (18/15)
+************* Module django.contrib.contenttypes.management
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/contenttypes/management.py:66: [C0325(superfluous-parens), ] Unnecessary parens after 'if' keyword
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/contenttypes/management.py:5: [W0622(redefined-builtin), ] Redefining built-in 'input'
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/contenttypes/management.py:5: [E0401(import-error), ] Unable to import 'django.utils.six.moves'
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/contenttypes/management.py:89: [R0912(too-many-branches), update_contenttypes] Too many branches (14/12)
+************* Module django.contrib.contenttypes.views
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/contenttypes/views.py:87: [R1705(no-else-return), shortcut] Unnecessary "else" after "return"
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/contenttypes/views.py:11: [R0912(too-many-branches), shortcut] Too many branches (20/12)
+************* Module django.contrib.contenttypes.models
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/contenttypes/models.py:56: [W0612(unused-variable), ContentTypeManager.get_for_model] Unused variable 'created'
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/contenttypes/models.py:63: [W0621(redefined-outer-name), ContentTypeManager.get_for_models] Redefining name 'models' from outer scope (line 4)
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/contenttypes/models.py:105: [W0622(redefined-builtin), ContentTypeManager.get_for_id] Redefining built-in 'id'
+************* Module django.contrib.contenttypes.admin
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/contenttypes/admin.py:30: [R1705(no-else-return), GenericInlineModelAdminChecks._check_relation] Unnecessary "else" after "return"
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/contenttypes/admin.py:30: [C1801(len-as-condition), GenericInlineModelAdminChecks._check_relation] Do not use `len(SEQUENCE)` as condition value
+************* Module django.contrib.sessions.middleware
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/sessions/middleware.py:13: [W0231(super-init-not-called), SessionMiddleware.__init__] __init__ method from base class 'MiddlewareMixin' is not called
+************* Module django.contrib.sessions.backends.signed_cookies
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/sessions/backends/signed_cookies.py:22: [W0703(broad-except), SessionStore.load] Catching too general exception Exception
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/sessions/backends/signed_cookies.py:59: [W0201(attribute-defined-outside-init), SessionStore.delete] Attribute '_session_cache' defined outside __init__
+************* Module django.contrib.sessions.backends.db
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/sessions/backends/db.py:17: [W0235(useless-super-delegation), SessionStore.__init__] Useless super delegation in method '__init__'
+************* Module django.contrib.sessions.backends.file
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/sessions/backends/file.py:159: [W0622(redefined-builtin), SessionStore.save] Redefining built-in 'dir'
+************* Module django.contrib.sessions.backends.cached_db
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/sessions/backends/cached_db.py:34: [W0703(broad-except), SessionStore.load] Catching too general exception Exception
+************* Module django.contrib.sessions.backends.base
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/sessions/backends/base.py:76: [R1705(no-else-return), SessionBase.setdefault] Unnecessary "else" after "return"
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/sessions/backends/base.py:99: [W0622(redefined-builtin), SessionBase.encode] Redefining built-in 'hash'
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/sessions/backends/base.py:106: [W0622(redefined-builtin), SessionBase.decode] Redefining built-in 'hash'
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/sessions/backends/base.py:112: [W0703(broad-except), SessionBase.decode] Catching too general exception Exception
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/sessions/backends/base.py:149: [W0201(attribute-defined-outside-init), SessionBase.clear] Attribute '_session_cache' defined outside __init__
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/sessions/backends/base.py:205: [W0201(attribute-defined-outside-init), SessionBase._get_session] Attribute '_session_cache' defined outside __init__
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/sessions/backends/base.py:207: [W0201(attribute-defined-outside-init), SessionBase._get_session] Attribute '_session_cache' defined outside __init__
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/sessions/backends/base.py:312: [W0201(attribute-defined-outside-init), SessionBase.cycle_key] Attribute '_session_cache' defined outside __init__
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/sessions/backends/base.py:188: [W0201(attribute-defined-outside-init), SessionBase._set_session_key] Attribute '__session_key' defined outside __init__
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/sessions/backends/base.py:190: [W0201(attribute-defined-outside-init), SessionBase._set_session_key] Attribute '__session_key' defined outside __init__
+************* Module django.contrib.sessions.backends.cache
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/sessions/backends/cache.py:6: [W0622(redefined-builtin), ] Redefining built-in 'range'
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/sessions/backends/cache.py:6: [E0401(import-error), ] Unable to import 'django.utils.six.moves'
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/sessions/backends/cache.py:28: [W0703(broad-except), SessionStore.load] Catching too general exception Exception
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/sessions/backends/cache.py:43: [W0612(unused-variable), SessionStore.create] Unused variable 'i'
+************* Module django.contrib.sessions.management.commands.clearsessions
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/sessions/management/commands/clearsessions.py:13: [W0221(arguments-differ), Command.handle] Parameters differ from overridden 'handle' method
+************* Module django.contrib.sites.shortcuts
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/sites/shortcuts.py:13: [R1705(no-else-return), get_current_site] Unnecessary "else" after "return"
+************* Module django.contrib.sites.models
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/sites/models.py:78: [W0603(global-statement), SiteManager.clear_cache] Using the global statement
+************* Module django.contrib.messages
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/messages/__init__.py:1: [W0401(wildcard-import), ] Wildcard import django.contrib.messages.api
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/messages/__init__.py:2: [W0401(wildcard-import), ] Wildcard import django.contrib.messages.constants
+************* Module django.contrib.messages.storage.base
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/messages/storage/base.py:92: [W0612(unused-variable), BaseStorage._loaded_messages] Unused variable 'all_retrieved'
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/messages/storage/base.py:93: [W0201(attribute-defined-outside-init), BaseStorage._loaded_messages] Attribute '_loaded_data' defined outside __init__
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/messages/storage/base.py:170: [W0201(attribute-defined-outside-init), BaseStorage._get_level] Attribute '_level' defined outside __init__
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/messages/storage/base.py:183: [W0201(attribute-defined-outside-init), BaseStorage._set_level] Attribute '_level' defined outside __init__
+************* Module django.contrib.messages.storage.cookie
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/messages/storage/cookie.py:17: [W0221(arguments-differ), MessageEncoder.default] Parameters differ from overridden 'default' method
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/messages/storage/cookie.py:17: [E0202(method-hidden), MessageEncoder.default] An attribute defined in json.encoder line 158 hides this method
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/messages/storage/cookie.py:48: [W0221(arguments-differ), MessageDecoder.decode] Parameters differ from overridden 'decode' method
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/messages/storage/cookie.py:94: [W0221(arguments-differ), CookieStorage._store] Parameters differ from overridden '_store' method
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/messages/storage/cookie.py:155: [W0622(redefined-builtin), CookieStorage._decode] Redefining built-in 'hash'
+************* Module django.contrib.staticfiles.utils
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/staticfiles/utils.py:35: [W0622(redefined-builtin), get_files] Redefining built-in 'dir'
+************* Module django.contrib.staticfiles.finders
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/staticfiles/finders.py:25: [W0622(redefined-builtin), BaseFinder.find] Redefining built-in 'all'
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/staticfiles/finders.py:76: [W0622(redefined-builtin), FileSystemFinder.find] Redefining built-in 'all'
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/staticfiles/finders.py:110: [W0612(unused-variable), FileSystemFinder.list] Unused variable 'prefix'
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/staticfiles/finders.py:151: [W0622(redefined-builtin), AppDirectoriesFinder.find] Redefining built-in 'all'
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/staticfiles/finders.py:199: [W0622(redefined-builtin), BaseStorageFinder.find] Redefining built-in 'all'
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/staticfiles/finders.py:240: [W0622(redefined-builtin), find] Redefining built-in 'all'
+************* Module django.contrib.staticfiles.storage
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/staticfiles/storage.py:21: [E0611(no-name-in-module), ] No name 'urllib' in module '_MovedItems'
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/staticfiles/storage.py:21: [E0401(import-error), ] Unable to import 'django.utils.six.moves.urllib.parse'
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/staticfiles/storage.py:200: [R0914(too-many-locals), HashedFilesMixin.post_process] Too many local variables (23/15)
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/staticfiles/storage.py:329: [W0221(arguments-differ), ManifestFilesMixin.post_process] Parameters differ from overridden 'post_process' method
+************* Module django.contrib.staticfiles.views
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/staticfiles/views.py:12: [E0611(no-name-in-module), ] No name 'urllib' in module '_MovedItems'
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/staticfiles/views.py:12: [E0401(import-error), ] Unable to import 'django.utils.six.moves.urllib.parse'
+************* Module django.contrib.staticfiles.handlers
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/staticfiles/handlers.py:5: [E0611(no-name-in-module), ] No name 'urllib' in module '_MovedItems'
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/staticfiles/handlers.py:5: [E0401(import-error), ] Unable to import 'django.utils.six.moves.urllib.parse'
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/staticfiles/handlers.py:6: [E0611(no-name-in-module), ] No name 'urllib' in module '_MovedItems'
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/staticfiles/handlers.py:6: [E0401(import-error), ] Unable to import 'django.utils.six.moves.urllib.request'
+************* Module django.contrib.staticfiles.management.commands.collectstatic
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/staticfiles/management/commands/collectstatic.py:278: [C0325(superfluous-parens), ] Unnecessary parens after 'not' keyword
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/staticfiles/management/commands/collectstatic.py:14: [W0622(redefined-builtin), ] Redefining built-in 'input'
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/staticfiles/management/commands/collectstatic.py:14: [E0401(import-error), ] Unable to import 'django.utils.six.moves'
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/staticfiles/management/commands/collectstatic.py:17: [R0902(too-many-instance-attributes), Command] Too many instance attributes (13/7)
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/staticfiles/management/commands/collectstatic.py:96: [R0912(too-many-branches), Command.collect] Too many branches (15/12)
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/staticfiles/management/commands/collectstatic.py:159: [W0221(arguments-differ), Command.handle] Parameters differ from overridden 'handle' method
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/staticfiles/management/commands/collectstatic.py:94: [W0201(attribute-defined-outside-init), Command.set_options] Attribute 'post_process' defined outside __init__
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/staticfiles/management/commands/collectstatic.py:86: [W0201(attribute-defined-outside-init), Command.set_options] Attribute 'verbosity' defined outside __init__
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/staticfiles/management/commands/collectstatic.py:88: [W0201(attribute-defined-outside-init), Command.set_options] Attribute 'clear' defined outside __init__
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/staticfiles/management/commands/collectstatic.py:93: [W0201(attribute-defined-outside-init), Command.set_options] Attribute 'ignore_patterns' defined outside __init__
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/staticfiles/management/commands/collectstatic.py:89: [W0201(attribute-defined-outside-init), Command.set_options] Attribute 'dry_run' defined outside __init__
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/staticfiles/management/commands/collectstatic.py:87: [W0201(attribute-defined-outside-init), Command.set_options] Attribute 'symlink' defined outside __init__
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/staticfiles/management/commands/collectstatic.py:85: [W0201(attribute-defined-outside-init), Command.set_options] Attribute 'interactive' defined outside __init__
+************* Module django.contrib.staticfiles.management.commands.findstatic
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/staticfiles/management/commands/findstatic.py:22: [W0221(arguments-differ), Command.handle_label] Parameters differ from overridden 'handle_label' method
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/django/contrib/staticfiles/management/commands/findstatic.py:37: [R1705(no-else-return), Command.handle_label] Unnecessary "else" after "return"
+************* Module suit.watch_less
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/suit/watch_less.py:5: [E0401(import-error), ] Unable to import 'watchdog.observers'
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/suit/watch_less.py:6: [E0401(import-error), ] Unable to import 'watchdog.events'
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/suit/watch_less.py:11: [W0621(redefined-outer-name), LessCompiler.__init__] Redefining name 'source' from outer scope (line 36)
+************* Module suit.compat
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/suit/compat.py:17: [E0611(no-name-in-module), ] No name 'future' in module 'django.templatetags'
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/suit/compat.py:17: [E0401(import-error), ] Unable to import 'django.templatetags.future'
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/suit/compat.py:12: [W0611(unused-import), ] Unused import_module imported from importlib
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/suit/compat.py:17: [W0611(unused-import), ] Unused url imported from django.templatetags.future
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/suit/compat.py:22: [W0611(unused-import), ] Unused admin imported from django.contrib.contenttypes as ct_admin
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/suit/compat.py:24: [W0611(unused-import), ] Unused generic imported from django.contrib.contenttypes as ct_admin
+************* Module suit.admin
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/suit/admin.py:200: [C0305(trailing-newlines), ] Trailing newlines
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/suit/admin.py:59: [E1101(no-member), SortableTabularInlineBase.formfield_for_dbfield] Super of 'SortableTabularInlineBase' has no 'formfield_for_dbfield' member
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/suit/admin.py:86: [E1101(no-member), SortableStackedInlineBase.get_fieldsets] Super of 'SortableStackedInlineBase' has no 'get_fieldsets' member
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/suit/admin.py:122: [E1101(no-member), SortableStackedInlineBase.formfield_for_dbfield] Super of 'SortableStackedInlineBase' has no 'formfield_for_dbfield' member
+************* Module suit.widgets
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/suit/widgets.py:103: [W0622(redefined-builtin), SuitDateWidget.__init__] Redefining built-in 'format'
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/suit/widgets.py:117: [W0622(redefined-builtin), SuitTimeWidget.__init__] Redefining built-in 'format'
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/suit/widgets.py:137: [W0233(non-parent-init-called), SuitSplitDateTimeWidget.__init__] __init__ method from a non direct base class 'MultiWidget' is called
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/suit/widgets.py:135: [W0231(super-init-not-called), SuitSplitDateTimeWidget.__init__] __init__ method from base class 'SplitDateTimeWidget' is not called
+************* Module suit.config
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/suit/config.py:61: [E0401(import-error), setup_filer] Unable to import 'filer.admin.imageadmin'
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/suit/config.py:62: [E0401(import-error), setup_filer] Unable to import 'filer.admin.fileadmin'
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/suit/config.py:63: [E0401(import-error), setup_filer] Unable to import 'filer.admin'
+************* Module suit.templatetags.suit_menu
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/suit/templatetags/suit_menu.py:11: [R1707(trailing-comma-tuple), ] Disallow trailing comma tuple
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/suit/templatetags/suit_menu.py:36: [C0303(trailing-whitespace), ] Trailing whitespace
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/suit/templatetags/suit_menu.py:279: [C0326(bad-whitespace), ] Exactly one space required after comma
+        prefix = self.get_model_name(app_name,prefix)
+                                             ^
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/suit/templatetags/suit_menu.py:283: [C0326(bad-whitespace), ] Exactly one space required after comma
+                self.convert_native_model(native_model,app_name)
+                                                      ^
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/suit/templatetags/suit_menu.py:338: [C0326(bad-whitespace), ] Exactly one space required after comma
+            'perms': model.get('perms',None),
+                                      ^
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/suit/templatetags/suit_menu.py:339: [C0326(bad-whitespace), ] Exactly one space required after comma
+            'add_url': model.get('add_url',None),
+                                          ^
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/suit/templatetags/suit_menu.py:1: [C0302(too-many-lines), ] Too many lines in module (522/500)
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/suit/templatetags/suit_menu.py:11: [E0602(undefined-variable), ] Undefined variable 'basestring'
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/suit/templatetags/suit_menu.py:43: [W0703(broad-except), get_menu] Catching too general exception Exception
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/suit/templatetags/suit_menu.py:69: [R0902(too-many-instance-attributes), Menu] Too many instance attributes (11/7)
+/home/chyngyz/Work/venvs/ooba/lib/python3.5/site-packages/suit/templatetags/suit_menu.py:80: [W0703(broad-except), Menu.__init__] Catching too general exception Exception

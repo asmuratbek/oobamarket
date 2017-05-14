@@ -58,8 +58,15 @@ THIRD_PARTY_APPS = [
     'allauth.socialaccount.providers.facebook',
     'allauth.socialaccount.providers.vk',
     'raven.contrib.django.raven_compat',
+    'django_jenkins'
 
 ]
+
+
+JENKINS_TASKS = ('django_jenkins.tasks.run_pylint',
+                 'django_jenkins.tasks.run_pep8',
+                 'django_jenkins.tasks.run_pyflakes',)
+
 
 # Apps specific for this project go here.
 LOCAL_APPS = [
