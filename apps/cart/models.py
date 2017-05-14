@@ -5,6 +5,7 @@ from django.db import models
 from django.db.models.signals import pre_save, post_save, post_delete
 
 from apps.product.models import Product
+from apps.shop.models import Shop
 from apps.users.models import User
 from django.utils.translation import ugettext as _
 
@@ -31,6 +32,16 @@ class Cart(models.Model):
             subtotal += item.total
         self.subtotal = "%.2f" % (subtotal)
         self.save()
+
+    def get_shops(self):
+        products = self.cartitem_set.all()
+        product_ids = [product.product.id for product in products]
+        shops = Shop.objects.filter(product__id__in=product_ids).distinct()
+        return shops
+
+    def empty(self):
+        for item in self.cartitem_set.all():
+            item.delete()
 
 
 class CartItem(models.Model):

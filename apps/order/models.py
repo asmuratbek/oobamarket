@@ -138,6 +138,19 @@ class SimpleOrder(models.Model):
 
 
 def send_email_to_shop_owner(sender, instance, *args, **kwargs):
-    print('Heeey')
+    name = str(instance.name) + "\n" if instance.name else ""
+    last_name = str(instance.last_name) + "\n" if instance.last_name else ""
+    phone = str(instance.phone) + "\n"
+    address = str(instance.address) + "\n"
+    shops = instance.cart.get_shops()
+    for shop in shops:
+        products = Product.objects.filter(shop=shop, cartitem__cart=instance.cart)
+        message = ""
+        for product in products:
+            message += str(product.title) + " Количество: " + str(product.cartitem_set.get(cart=instance.cart).quantity) + "\n"
+
+        shop.send_email("Вам поступил новый заказ в магазин " + shop.title,
+                        name + last_name + phone + address + message
+                        )
 
 post_save.connect(send_email_to_shop_owner, sender=SimpleOrder)

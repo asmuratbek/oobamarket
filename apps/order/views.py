@@ -119,7 +119,7 @@ class SimpleOrderCreateView(View):
         cart = Cart.objects.get(id=data['cart'])
         order.cart = cart
         order.save()
-        cart.delete()
+        cart.empty()
         return HttpResponseRedirect(reverse("order:thanks"))
 
 

@@ -1,6 +1,7 @@
 # coding=utf-8
 from __future__ import unicode_literals
 
+from django.core.mail import send_mail
 from django.db import models
 from django.urls import reverse
 from django.utils.translation import ugettext as _
@@ -67,6 +68,9 @@ class Shop(models.Model):
 
     def get_update_url(self):
         return reverse('shops:update', kwargs={'slug': self.slug})
+
+    def send_email(self, subject, message):
+        send_mail(subject, message, 'asmnotifications@gmail.com', [self.email,])
 
 
 class Banners(models.Model):
