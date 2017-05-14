@@ -57,7 +57,6 @@ THIRD_PARTY_APPS = [
     'tabbed_admin',
     'allauth.socialaccount.providers.facebook',
     'allauth.socialaccount.providers.vk',
-    'raven.contrib.django.raven_compat',
     'django_jenkins'
 
 ]
