@@ -125,3 +125,12 @@ class SimpleOrderCreateView(View):
 
 class ThankYouView(TemplateView):
     template_name = 'thanks.html'
+
+
+class SimpleOrderListView(ListView):
+    model = SimpleOrder
+    slug_field = 'username'
+    slug_url_kwarg = 'username'
+
+    def get_queryset(self):
+        return SimpleOrder.objects.filter(user__username=self.kwargs['username'])
