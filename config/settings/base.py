@@ -58,7 +58,6 @@ THIRD_PARTY_APPS = [
     'allauth.socialaccount.providers.facebook',
     'allauth.socialaccount.providers.vk',
     'django_jenkins'
-
 ]
 
 
