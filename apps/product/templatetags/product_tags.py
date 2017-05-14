@@ -53,7 +53,7 @@ def is_in_cart(request, product):
         cart, created = Cart.objects.get_or_create(id=cart_id)
         if cart.cartitem_set.filter(product=product).exists():
             cart_message = """
-                <a class="basket-btn in-the-basket" href=""><span class="glyphicon glyphicon-shopping-cart"></span>В корзине</a>
+                <a class="basket-btn in-the-basket active" href=""><span class="glyphicon glyphicon-shopping-cart"></span>В корзине</a>
             """
         else:
             cart_message = """

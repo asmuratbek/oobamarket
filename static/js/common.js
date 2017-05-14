@@ -34,6 +34,34 @@ $( document ).ready(function() {
         })
     });
 
+    $('.basket-btn').click(function(event){
+        event.preventDefault();
+        var formData = $('#favorite-form').serialize();
+        $.ajax({
+            type: "GET",
+            url: "/cart/",
+            data: formData,
+            success: function (data) {
+                showFlashMessage(data.flash_message);
+                console.log(data);
+                console.log(data.total_items);
+                $('.cart-count').text(data.total_items);
+                if (data.item_added) {
+                    $(this).toggleClass("active");
+                    $('.basket-btn').html('<span class="glyphicon glyphicon-shopping-cart"></span>В корзине');
+                }
+                else {
+                    $(this).removeClass("active");
+                    $('.basket-btn').html('<span class="glyphicon glyphicon-shopping-cart"></span>Добавить в корзину');
+                }
+            },
+            error: function (response, error) {
+                console.log(response);
+                console.log(error);
+            }
+        })
+    });
+
 
     $( ".hearth.pull-right" ).click(function(event) {
         event.preventDefault();
