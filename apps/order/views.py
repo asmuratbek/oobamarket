@@ -115,7 +115,7 @@ class SimpleOrderCreateView(View):
         order.last_name = data['last_name']
         order.phone = data['phone']
         order.address = data['address']
-        order.user = request.user
+        order.user = request.user if request.user.is_authenticated else None
         cart = Cart.objects.get(id=data['cart'])
         order.cart = cart
         order.save()
