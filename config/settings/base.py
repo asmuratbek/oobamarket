@@ -59,13 +59,8 @@ THIRD_PARTY_APPS = [
     'tabbed_admin',
     'allauth.socialaccount.providers.facebook',
     'allauth.socialaccount.providers.vk',
-    'django_jenkins',
-    'rest_framework'
+    'rest_framework',
 ]
-
-
-JENKINS_TASKS = ('django_jenkins.tasks.run_pep8',
-                 'django_jenkins.tasks.run_pyflakes',)
 
 
 # Apps specific for this project go here.
@@ -81,6 +76,17 @@ LOCAL_APPS = [
     'apps.global_category',
     'apps.order'
 ]
+
+# CHANNEL_LAYERS = {
+#     'default': {
+#         'BACKEND': 'asgi_redis.RedisChannelLayer',
+#         'CONFIG': {
+#             'hosts': [('localhost', 6379)],
+#         },
+#         'ROUTING': 'example_channels.routing.channel_routing',
+#     }
+# }
+
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS

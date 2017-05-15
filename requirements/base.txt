@@ -23,6 +23,10 @@ django-mptt==0.8.7
 django-mptt-admin==0.4.5
 django-tabbed-admin==1.0.1
 djangorestframework
+channels==1.0.2
+asgi_redis==1.0.0
+django-haystack
+elasticsearch==2.4.1
 
 
 # Images
