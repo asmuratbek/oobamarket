@@ -90,4 +90,5 @@ class ProductIndexCreateView(LoginRequiredMixin, CreateView):
 def notes(request):
     form = ProductSearchForm(request.GET)
     notes = form.search()
+
     return render(request, 'search/search.html', {'notes': notes})
