@@ -8,6 +8,7 @@ from django.views import defaults as default_views
 from apps.global_category.views import IndexView, fixtures
 from apps.product.views import FavoriteCreateView
 from apps.shop.views import create, agreement
+from apps.product.views import notes
 
 urlpatterns = [
     url(r'^$', IndexView.as_view(), name='home'),
@@ -19,7 +20,8 @@ urlpatterns = [
     url(r'^about/$', TemplateView.as_view(template_name='pages/about.html'), name='about'),
     url(r'^agreement/$', agreement, name='agreement'),
     url(r'^fixtures/(?P<name>\w+)$', fixtures, name='fixtures'),
-    url(r'^search/', include('haystack.urls')),
+    # url(r'^search/', include('haystack.urls')),
+    url(r'^search/', notes),
 
     # Django Admin, use {% url 'admin:index' %}
     url(settings.ADMIN_URL, admin.site.urls),
