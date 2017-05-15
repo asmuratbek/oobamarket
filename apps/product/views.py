@@ -7,7 +7,7 @@ from django.views.generic import UpdateView
 from slugify import slugify
 
 from apps.global_category.models import GlobalCategory
-from apps.product.forms import ProductForm
+from apps.product.forms import ProductForm, ProductSearchForm
 from .models import *
 # Create your views here.
 
@@ -72,3 +72,22 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
     model = Product
     form_class = ProductForm
     template_name = 'product/product_update.html'
+
+
+
+class ProductIndexCreateView(LoginRequiredMixin, CreateView):
+    form_class = ProductForm
+    template_name = 'product/product_form.html'
+
+    def get_success_url(self):
+        return reverse('shops:detail', args=(self.object.shop.slug,))
+
+    def form_valid(self, form, **kwargs):
+        form.instance.slug = slugify(form.instance.title)
+        form.save()
+        return super(ProductIndexCreateView, self).form_valid(form)
+
+def notes(request):
+    form = ProductSearchForm(request.GET)
+    notes = form.search()
+    return render(request, 'search/search.html', {'notes': notes})

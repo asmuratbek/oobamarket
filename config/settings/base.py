@@ -45,6 +45,8 @@ DJANGO_APPS = [
 
     # Admin
     'suit',
+    'haystack',
+    'elasticsearch',
     'mptt',
     'django_mptt_admin',
     'django.contrib.admin',
@@ -82,6 +84,16 @@ LOCAL_APPS = [
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
+
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        'ENGINE': 'haystack.backends.elasticsearch_backend.ElasticsearchSearchEngine',
+        'URL': 'http://127.0.0.1:9200/',
+        'INDEX_NAME': 'haystack',
+    },
+}
+
+HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
 
 # MIDDLEWARE CONFIGURATION
 # ------------------------------------------------------------------------------

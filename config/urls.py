@@ -19,6 +19,7 @@ urlpatterns = [
     url(r'^about/$', TemplateView.as_view(template_name='pages/about.html'), name='about'),
     url(r'^agreement/$', agreement, name='agreement'),
     url(r'^fixtures/(?P<name>\w+)$', fixtures, name='fixtures'),
+    url(r'^search/', include('haystack.urls')),
 
     # Django Admin, use {% url 'admin:index' %}
     url(settings.ADMIN_URL, admin.site.urls),
