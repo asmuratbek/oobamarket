@@ -1,5 +1,4 @@
 {% extends 'base-1.html' %}
-{% load render_bundle from webpack_loader %}
 
     {% block content %}
 <form type="get" action=".">
@@ -8,7 +7,6 @@
 </form>
 
         <div id="container">
-            {% render_bundle 'main' %}
         </div>
 
 

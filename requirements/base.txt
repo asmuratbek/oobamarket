@@ -31,7 +31,6 @@ elasticsearch==2.4.1
 
 # Images
 Pillow==4.1.0
-django-webpack-loader
 
 
 # Password storage
