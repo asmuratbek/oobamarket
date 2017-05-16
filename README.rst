@@ -90,4 +90,9 @@ Deployment
 The following details how to deploy this application.
 
 
+Webpack build
+-------------
+
+
+ ./node_modules/.bin/webpack --progress
 
