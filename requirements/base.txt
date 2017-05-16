@@ -31,6 +31,8 @@ elasticsearch==2.4.1
 
 # Images
 Pillow==4.1.0
+django-webpack-loader
+
 
 # Password storage
 argon2-cffi==16.3.0

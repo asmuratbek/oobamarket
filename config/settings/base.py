@@ -60,6 +60,7 @@ THIRD_PARTY_APPS = [
     'allauth.socialaccount.providers.facebook',
     'allauth.socialaccount.providers.vk',
     'rest_framework',
+    'webpack_loader'
 ]
 
 
@@ -369,3 +370,12 @@ RAVEN_CONFIG = {
     # release based on the git info.
     'release': raven.fetch_git_sha(os.path.dirname(os.pardir)),
 }
+
+
+WEBPACK_LOADER = {
+    'DEFAULT': {
+        'BUNDLE_DIR_NAME': 'bundles/',
+        'STATS_FILE': os.path.join(str(ROOT_DIR.path('static')), 'webpack-stats.json'),
+    }
+}
+# /home/chyngyz/Work/ooba/static/webpack.config.js

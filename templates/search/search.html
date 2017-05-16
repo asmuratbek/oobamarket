@@ -1,11 +1,16 @@
 {% extends 'base-1.html' %}
-
+{% load render_bundle from webpack_loader %}
 
     {% block content %}
 <form type="get" action=".">
     <input type="text" name="q">
     <button type="submit">Search</button>
 </form>
+
+        <div id="container">
+            {% render_bundle 'main' %}
+        </div>
+
 
 {% for note in notes %}
 <h1>{{ note.title }}</h1>
