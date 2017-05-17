@@ -83,6 +83,9 @@ class ProductIndexCreateView(LoginRequiredMixin, AddProductMixin, CreateView):
     def get_success_url(self):
         return reverse('shops:detail', args=(self.object.shop.slug,))
 
+    def get_initial(self):
+        return {'shop': Shop.objects.filter(user__in=[self.request.user])}
+
     def form_valid(self, form, **kwargs):
         form.instance.slug = slugify(form.instance.title)
         form.save()
