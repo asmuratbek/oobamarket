@@ -1,5 +1,5 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse, JsonResponse, request
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import CreateView
 from django.views.generic import ListView, DetailView, View
@@ -8,6 +8,7 @@ from slugify import slugify
 
 from apps.global_category.models import GlobalCategory
 from apps.product.forms import ProductForm, ProductSearchForm
+from apps.users.mixins import AddProductMixin
 from .models import *
 # Create your views here.
 
@@ -75,7 +76,7 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
 
 
 
-class ProductIndexCreateView(LoginRequiredMixin, CreateView):
+class ProductIndexCreateView(LoginRequiredMixin, CreateView, AddProductMixin):
     form_class = ProductForm
     template_name = 'product/product_form.html'
 
