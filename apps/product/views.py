@@ -76,7 +76,7 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
 
 
 
-class ProductIndexCreateView(LoginRequiredMixin, CreateView, AddProductMixin):
+class ProductIndexCreateView(LoginRequiredMixin, AddProductMixin, CreateView):
     form_class = ProductForm
     template_name = 'product/product_form.html'
 
