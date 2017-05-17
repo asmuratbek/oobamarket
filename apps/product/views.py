@@ -52,7 +52,7 @@ def product_detail(request, global_slug, category_slug, slug):
     return render(request, template, context)
 
 
-class ProductCreateView(LoginRequiredMixin, CreateView):
+class ProductCreateView(LoginRequiredMixin, AddProductMixin, CreateView):
     form_class = ProductForm
     template_name = 'product/product_form.html'
 
