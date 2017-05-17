@@ -60,7 +60,9 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
         return reverse('shops:detail', args=(self.object.shop.slug,))
 
     def get_initial(self):
-        return {'shop': Shop.objects.get(slug=self.kwargs['slug'])}
+        return {'shop': Shop.objects.get(slug=self.kwargs['slug']),
+                'user': self.request.user
+                }
 
     def form_valid(self, form, **kwargs):
         form.instance.slug = slugify(form.instance.title)
@@ -77,14 +79,16 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
 
 
 class ProductIndexCreateView(LoginRequiredMixin, AddProductMixin, CreateView):
-    form_class = ProductForm
     template_name = 'product/product_form.html'
+
+    def get_form_class(self):
+        return ProductForm
 
     def get_success_url(self):
         return reverse('shops:detail', args=(self.object.shop.slug,))
 
     def get_initial(self):
-        return {'shop': Shop.objects.filter(user__in=[self.request.user])}
+        return {'user': self.request.user}
 
     def form_valid(self, form, **kwargs):
         form.instance.slug = slugify(form.instance.title)

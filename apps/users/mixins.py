@@ -9,7 +9,6 @@ class AddProductMixin(object):
     def dispatch(self, request, *args, **kwargs):
         user = request.user
         shop = Shop.objects.filter(user__id__in=[user.id]).first()
-        if shop:
-            return super(AddProductMixin, self).dispatch(request, *args, **kwargs)
-        else:
+        if not shop:
             return HttpResponseRedirect(reverse('shops:create'))
+        return super(AddProductMixin, self).dispatch(request, *args, **kwargs)
