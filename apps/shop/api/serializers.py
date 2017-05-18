@@ -1,24 +1,13 @@
 from rest_framework.serializers import (
     ModelSerializer,
     HyperlinkedIdentityField,
-    SerializerMethodField
+    SerializerMethodField,
 )
+from slugify import slugify
+
 from apps.product.models import Shop
 
-"""
-    user = models.ManyToManyField(to=User, verbose_name='Администратор магазина')
-    title = models.CharField(max_length=255, verbose_name='Название магазина')
-    slug = models.CharField(max_length=32, verbose_name='Название на транслите', unique=True)
-    phone = models.CharField(_("Телефон"), max_length=20, default='')
-    email = models.EmailField(verbose_name='E-mail магазина')
-    short_description = models.TextField(max_length=300, verbose_name='Короткое описание магазина')
-    description = models.TextField(max_length=1500, verbose_name='Полное описание магазина')
-    created_at = models.DateTimeField(auto_now=True, verbose_name='Создано')
-    updated_ad = models.DateTimeField(auto_now_add=True, verbose_name='Обновленно')
-    logo = models.ImageField(upload_to='images/shop/logo/', null=True,
-                             verbose_name='Логотип')
 
-"""
 class ShopSerializer(ModelSerializer):
     detail_url = HyperlinkedIdentityField(
         view_name='shop_api:detail',
@@ -62,6 +51,7 @@ class ShopCreateSerializer(ModelSerializer):
         fields = (
             'id',
             'title',
+            'slug',
             'user',
             'phone',
             'email',
@@ -71,3 +61,8 @@ class ShopCreateSerializer(ModelSerializer):
             'updated_at',
             'logo'
         )
+
+    slug = SerializerMethodField()
+
+    def get_slug(self, obj):
+        return slugify(obj.title)
