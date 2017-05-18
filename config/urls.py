@@ -19,6 +19,8 @@ urlpatterns = [
     url(r'^product/', include('apps.product.urls', namespace='product')),
     url(r'^about/$', TemplateView.as_view(template_name='pages/about.html'), name='about'),
     url(r'^agreement/$', agreement, name='agreement'),
+    url(r'^api/product/', include('apps.product.api.urls', namespace="product_api")),
+    url(r'^api/shop/', include('apps.shop.api.urls', namespace="shop_api")),
     url(r'^fixtures/(?P<name>\w+)$', fixtures, name='fixtures'),
     # url(r'^search/', include('haystack.urls')),
     url(r'^search/', notes),

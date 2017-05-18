@@ -29,7 +29,7 @@ class Shop(models.Model):
     short_description = models.TextField(max_length=300, verbose_name='Короткое описание магазина')
     description = models.TextField(max_length=1500, verbose_name='Полное описание магазина')
     created_at = models.DateTimeField(auto_now=True, verbose_name='Создано')
-    updated_ad = models.DateTimeField(auto_now_add=True, verbose_name='Обновленно')
+    updated_at = models.DateTimeField(auto_now_add=True, verbose_name='Обновленно')
     logo = models.ImageField(upload_to='images/shop/logo/', null=True,
                              verbose_name='Логотип')
 
