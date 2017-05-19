@@ -236,11 +236,11 @@ $( document ).ready(function() {
                 console.log(data.total_items);
                 $('.cart-count').text(data.total_items);
                 if (data.item_added) {
-                    button.val("В корзине");
+                    button.text("В корзине");
                     button.toggleClass("in-the-basket");
                 }
                 else if (data.deleted) {
-                    button.val("Добавить в корзину");
+                    button.text("Добавить в корзину");
                     button.removeClass("in-the-basket");
                 }
             },
