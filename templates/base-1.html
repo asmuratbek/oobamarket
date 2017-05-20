@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
     {% block head %}
-    {% include 'head.html' %}
+    {% include 'layout/head.html' %}
     {% endblock %}
 </head>
 
@@ -13,17 +13,17 @@
 {% endblock %}
 
 {% block header %}
-    {% include 'header.html' %}
+    {% include 'layout/header.html' %}
 {% endblock %}
 {% block categories %}
-   {% include 'categories.html' %}
+   {% include 'layout/categories.html' %}
 {% endblock %}
 
 {% block content %}
 {% endblock %}
 
 {% block js %}
-    {% include 'js.html' %}
+    {% include 'layout/js.html' %}
 {% endblock %}
 
 </body>

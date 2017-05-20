@@ -3,15 +3,15 @@
 {% load staticfiles %}
 
 {% block fixed_categories %}
-    {% include 'fixed_categories.html' %}
+    {% include 'layout/fixed_categories.html' %}
 {% endblock %}
 
 {% block header %}
-    {% include 'header.html' with global_title=object.shop.get_global_category.title %}
+    {% include 'layout/header.html' with global_title=object.shop.get_global_category.title %}
 {% endblock %}
 
 {% block categories %}
-    {% include 'categories.html' with object=object.shop.get_global_category %}
+    {% include 'layout/categories.html' with object=object.shop.get_global_category %}
 {% endblock %}
 
 {% block content %}

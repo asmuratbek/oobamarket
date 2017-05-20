@@ -2,12 +2,12 @@
 
 
 {% block header %}
-    {% include 'header.html' with global_title=object.title %}
+    {% include 'layout/header.html' with global_title=object.title %}
 {% endblock %}
 
 
 {% block categories %}
-    {% include 'categories.html' with object=object %}
+    {% include 'layout/categories.html' with object=object %}
 {% endblock %}
 
 {% block content %}
