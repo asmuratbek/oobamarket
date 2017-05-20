@@ -40,6 +40,98 @@ h1, h2, h3, h4, h5, h6, p, span, b, i, ul, li, button, input, select, a
     opacity: 0.5
 .js-select
   margin-bottom: 5px !important
+.search-index .col-md-6
+  position: relative
+.auto-complite.active
+  display: block
+.auto-complite
+  position: absolute
+  left: 0
+  right: 0
+  top: 240px
+  padding: 50px 20%
+  background-color: #fff
+  overflow: hidden
+  z-index: 100
+  display: none
+  .goods
+    p
+      width: 100px
+  .child-goods
+    ul
+      border-left: 1px solid #CCCCCC
+      margin-left: 50px
+      margin-bottom: 20px
+      li:hover
+        background-color: #F7F7F7
+      li
+        position: relative
+        padding: 10px 50px
+        a
+          position: absolute
+          top: 0
+          bottom: 0
+          right: 0
+          left: 0
+          z-index: 1
+        .img-wrapper
+          float: left
+          width: 40px
+          height: 40px
+          overflow: hidden
+          position: relative
+          margin-right: 20px
+          img
+            position: absolute
+            top: -9999px
+            bottom: -9999px
+            right: -9999px
+            left: -9999px
+            margin: auto
+            display: block
+            max-width: 100%
+        .discript
+          overflow: hidden
+          .name
+            float: left
+            h3
+              font-size: 15px
+            a
+              font-size: 12px
+              color: #999999
+              text-transform: uppercase
+              position: relative
+              z-index: 10
+              display: inline-block
+              margin-bottom: 0
+              &:hover
+                color: #000
+          .price
+            padding: 10px 0
+            float: right
+            span
+    .see-more
+      color: #F3481C
+      font-weight: bold
+      position: relative
+      transition: 0.3s
+      &:before
+        position: absolute
+        transition: 0.3s
+        content: ''
+        bottom: 0
+        left: 0
+        right: 0
+        width: 0
+        height: 1px
+        background-color: transparent
+      i
+        color: #F3481C
+    .see-more:hover
+      &:before
+        width: 100%
+        height: 1px
+        background-color: #F3481C
 .basket-modal
   .modal-dialog
     width: 500px
@@ -268,12 +360,14 @@ header
         a
           padding: 8px 20px
           font-weight: 300
+          white-space: normal
   .dropdown.open
     .glyphicon
       transform: rotate(180deg)
       color: #808080
 .search-index
   padding: 90px 0
+  position: relative
   img.center-block
     width: 200px
     margin-bottom: 30px
@@ -640,14 +734,14 @@ header
         bottom: -9999px
         right: -9999px
         left: -9999px
-        margin: auto 
+        margin: auto
         max-width 100%
         display: block
         width: 100%!important
 
     #gallery_01
       margin-top: 10px
-      img 
+      img
         width: 19%
         margin-right: 1px
         display: inline-block
@@ -1067,7 +1161,7 @@ ul.category-tab
       a
         background-color: #F3481C
         color: #fff
-    li:hover 
+    li:hover
       a
         background-color: transparent
         color: #333
