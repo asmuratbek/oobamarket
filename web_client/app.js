@@ -52,9 +52,3 @@ var BooksList = createClass({
 
 ReactDOM.render(<BooksList url='/api/product/' pollInterval={1000} />,
     document.getElementById('container'))
-
-
-$.ajax({
-    data: {'csrfmiddlewaretoken': csrf, 'id': $(this).attr('data-id')}
-
-});

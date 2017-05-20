@@ -76,6 +76,11 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
     form_class = ProductForm
     template_name = 'product/product_update.html'
 
+    def get_initial(self):
+        return {
+                'user': self.request.user
+                }
+
 
 
 class ProductIndexCreateView(LoginRequiredMixin, AddProductMixin, CreateView):
