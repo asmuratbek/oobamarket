@@ -1,7 +1,7 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse, JsonResponse, request
 from django.shortcuts import render, get_object_or_404
-from django.views.generic import CreateView
+from django.views.generic import CreateView, TemplateView
 from django.views.generic import ListView, DetailView, View
 from django.views.generic import UpdateView
 from slugify import slugify
@@ -105,3 +105,8 @@ def notes(request):
     notes = form.search()
 
     return render(request, 'search/search.html', {'notes': notes})
+
+
+class SearchResultsView(ListView):
+    model = Product
+    template_name = 'pages/search_results.html'
