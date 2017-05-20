@@ -8,12 +8,12 @@
 
 
 {% block header %}
-    {% include 'header.html' with global_title=object.section.title %}
+    {% include 'layout/header.html' with global_title=object.section.title %}
 {% endblock %}
 
 
 {% block categories %}
-    {% include 'categories.html' with object=object.section %}
+    {% include 'layout/categories.html' with object=object.section %}
 {% endblock %}
 
 {% block content %}
