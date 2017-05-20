@@ -9,7 +9,42 @@ market
 
 
 :License: MIT
+Install project
+--------
 
+1. Download the project
+
+ $ git clone https://<your_username>@bitbucket.org/monokbaev/ooba.git
+
+2. Create virtual enviroment(python-3.5)
+
+ $ sudo apt-get install -y python3-pip
+   this command install python-3 on your system
+ $ sudo apt-get install build-essential libssl-dev libffi-dev python-dev
+   install dependencies
+ $ sudo apt-get install -y python3-venv
+   install library for virtual enviroment
+ $ pyvenv my_env
+   create virtual enviroment for project
+3. Activate your enviroment, open /requirements/ dir and install all required libraries
+  $ pip install -r local.txt
+
+  $ pip install -r test.txt
+4. If you don`t have elasticsearch in your system, install it.
+  $ wget https://download.elastic.co/elasticsearch/release/org/elasticsearch/distribution/deb/elasticsearch/2.3.1/elasticsearch-2.3.1.deb
+    download elasticsearch
+  $ sudo dpkg -i elasticsearch-2.3.1.deb
+    install command
+  $ sudo systemctl enable elasticsearch.service
+    to make sure elasticsearch starts and stops automatically with the server, add its init script to the default runlevels
+  $ sudo systemctl start elasticsearch
+    start elasticsearch
+5. Run this command for create database
+  $ ./manage.py migrate
+6. Now you can loaded database content from dump dir
+  $ ./manage.py loaddata db.json
+If all commands done successfully you can run the server with command
+  $ ./manage.py runserver
 
 Settings
 --------
@@ -95,4 +130,3 @@ Webpack build
 
 
  ./node_modules/.bin/webpack --progress
-
