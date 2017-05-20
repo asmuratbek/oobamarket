@@ -32,25 +32,25 @@ def cart_message(request, product):
         cart, created = Cart.objects.get_or_create(id=cart_id)
         if cart.cartitem_set.filter(product=product).exists():
             cart_message = """
-                <a href="#" class="add-basket in-the-basket">
+                <a href="#" class="add-basket in-the-basket" data-product-id="{product}">
                         <span class="glyphicon glyphicon-shopping-cart"></span>
                         В корзине
                     </a>
-            """
+            """.format(product=product.id)
         else:
             cart_message = """
-                <a href="#" class="add-basket">
+                <a href="#" class="add-basket" data-product-id="{product}">
                         <span class="glyphicon glyphicon-shopping-cart"></span>
                         Добавить в корзину
                     </a>
-            """
+            """.format(product=product.id)
     else:
         cart_message = """
-                    <a href="#" class="add-basket">
+                    <a href="#" class="add-basket" data-product-id="{product}">
                         <span class="glyphicon glyphicon-shopping-cart"></span>
                         Добавить в корзину
                     </a>
-                    """
+            """.format(product=product.id)
 
     return mark_safe(cart_message)
 
