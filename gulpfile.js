@@ -1,10 +1,15 @@
 var gulp         	= require('gulp'),
+    gutil           = require('gulp-util'),
+    browserify      = require('browserify'),
+    babelify        = require('babelify'),
     sass         	= require('gulp-sass'),
+    source          = require('vinyl-source-stream'),
     autoprefixer 	= require('gulp-autoprefixer'),
     cleanCSS    	= require('gulp-clean-css'),
     rename       	= require('gulp-rename'),
     browserSync  	= require('browser-sync').create(),
     uglify       	= require('gulp-uglify'),
+
     del 			= require('del');
 
 gulp.task('styles', function () {
@@ -17,6 +22,26 @@ gulp.task('styles', function () {
         .pipe(cleanCSS())
         .pipe(gulp.dest('static/css'))
         .pipe(browserSync.stream());
+});
+
+gulp.task('js', function(){
+   return browserify({
+            entries: './web_client/app.js',
+            extensions: ['.js'],
+            debug: true
+        })
+        .transform('babelify', {
+            presets: ['es2015', 'react'],
+            plugins: ['transform-class-properties']
+        })
+        .bundle()
+        .on('error', function(err){
+            gutil.log(gutil.colors.red.bold('[browserify error]'));
+            gutil.log(err.message);
+            this.emit('end');
+        })
+        .pipe(source('app.js'))
+        .pipe(gulp.dest('static/js'));
 });
 
 gulp.task('watch', function () {
