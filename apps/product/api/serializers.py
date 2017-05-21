@@ -34,6 +34,7 @@ class ProductSerializer(ModelSerializer):
     is_favorite = SerializerMethodField()
     detail_view = SerializerMethodField()
     update_view = SerializerMethodField()
+    get_price_function = SerializerMethodField()
 
     class Meta:
         model = Product
@@ -61,11 +62,15 @@ class ProductSerializer(ModelSerializer):
             'delivery_type_display',
             'is_favorite',
             'detail_view',
-            'update_view'
+            'update_view',
+            'get_price_function'
         )
 
     def get_shop(self, obj):
         return str(obj.shop)
+
+    def get_get_price_function(self, obj):
+        return obj.get_price()
 
     def get_shop_title(self, obj):
         return str(obj.get_shop_title())
@@ -90,28 +95,11 @@ class ProductSerializer(ModelSerializer):
             cart_id = request.session.get("cart_id")
             cart, created = Cart.objects.get_or_create(id=cart_id)
             if cart.cartitem_set.filter(product=product).exists():
-                cart_message = """
-                    <a href="#" class="add-basket in-the-basket" data-product-id="{product}">
-                            <span class="glyphicon glyphicon-shopping-cart"></span>
-                            В корзине
-                        </a>
-                """.format(product=product.id)
+                return True
             else:
-                cart_message = """
-                    <a href="#" class="add-basket" data-product-id="{product}">
-                            <span class="glyphicon glyphicon-shopping-cart"></span>
-                            Добавить в корзину
-                        </a>
-                """.format(product=product.id)
+               return False
         else:
-            cart_message = """
-                        <a href="#" class="add-basket" data-product-id="{product}">
-                            <span class="glyphicon glyphicon-shopping-cart"></span>
-                            Добавить в корзину
-                        </a>
-                """.format(product=product.id)
-
-        return mark_safe(cart_message)
+            return False
 
     def get_is_favorite(self, product):
         user = None

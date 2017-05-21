@@ -41,15 +41,26 @@ var Products = createClass ({
         }
     },
 
+    isInCart : function (product) {
+        if (product.is_in_cart) {
+            return (
+                <a href="#" className="add-basket in-the-basket" data-product-id={product.id}>
+                        <span class="glyphicon glyphicon-shopping-cart"></span>
+                        В корзине
+                    </a>
+            ) else {
+
+            }
+        }
+    },
+
   render() {
 
     return (
-    <section className="goods-of-week">
         <div className="container">
-        <h1>Products List</h1>
           {this.state.products.map(product =>
 
-                <div className="col-md-4 col-sm-6" key={product.id}>
+                <div className="col-md-3 col-sm-6" key={product.id}>
             <div className="cover">
                 <a className="url-item" href={product.detail_view}></a>
                 <div className="top-line">
@@ -74,22 +85,23 @@ var Products = createClass ({
                 </div>
 
 
-                    <p>{product.title}</p>
+
                     {product.discount ? (
                         <div className="title">
-                            <span>{product.get_price} {product.currency}</span>
+                             <p>{product.title}</p>
+                            <span>{product.get_price_function} {product.currency}</span>
                             <span className="old-price"><strike>{product.price} {product.currency}</strike></span>
                         </div>
                         ) : (
                             <div className="title">
-                                <span>{product.get_price} {product.currency}</span>
+                                <span>{product.get_price_function} {product.currency}</span>
                             </div>
                         )
                     }
                 <div className="bottom-line">
-                    {product.is_is_cart}
+                    {product.is_in_cart}
                     {this.deliveryColor(product)}
-                    <span className="hearth pull-right {product.is_favorite && like}" data-product-id={product.id}><i className="glyphicon glyphicon-heart"></i></span>
+                    <span className={`hearth pull-right ${product.is_favorite && `like`}`} data-product-id={product.id}><i className="glyphicon glyphicon-heart"></i></span>
 
                 </div>
             </div>
@@ -97,7 +109,6 @@ var Products = createClass ({
 
           )}
           </div>
-    </section>
     );
   }
 });
