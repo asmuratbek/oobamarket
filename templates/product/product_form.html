@@ -3,24 +3,138 @@
 
 {% block content %}
 
-    <div class="row">
-        <div class="col-md-12">
-            <div class="col-md-4"></div>
-            <div class="col-md-4"><h1 class="create">Разместите свои продукты в магазине</h1></div>
-            <div class="col-md-4"></div>
-        </div>
-        <div class="inputs">
-            <div class="col-md-2"></div>
-            <div class="col-md-8">
-                 <form action="" method="post" enctype="multipart/form-data">
-                     {% csrf_token %}
-                    {{ form }}
-                    <input type="submit" value="Save" />
-                </form>
+    <section class="add-product">
+        <div class="container">
+            <div class="form-filter">
+                <form class="form-inline">
+                    <div class="col-md-8">
 
+                        <div class="step_1">
+                            <h3><span>1.</span> Основные данные</h3>
+                        </div>
+
+                        <div class="form-group select col-md-6">
+                            <select class="form-control">
+                                <option>Категория</option>
+                                <option>сначала дорогие</option>
+                                <option>сначала акции</option>
+                                <option>новые товары</option>
+                                <option>5</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group select col-md-6">
+                            <select class="form-control">
+                                <option>Подкатегория</option>
+                                <option>Бесплатная</option>
+                                <option>Платная</option>
+                                <option>Самовывоз</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group input col-md-12">
+                            <input type="text" class="form-control" placeholder="Название товара">
+                        </div>
+
+                        <div class="form-group input col-md-12">
+                            <input type="text" class="form-control mini" placeholder="Цена">
+
+                            <label class="switch">
+                                <input type="checkbox" class="switch__input">
+                                <div class="switch__toggle">
+                                    <div class="switch__handle"></div>
+                                </div>
+                            </label>
+
+                            <span class="discount">Скидка</span>
+                            <div class="discount">
+                                <label>Размер скидки</label>
+                                <input type="text" class="form-control" placeholder="0%">
+                            </div>
+                        </div>
+
+                        <div class="form-group input col-md-12">
+                            <input type="text" class="form-control mini" placeholder="Количество">
+                        </div>
+
+                        <div class="form-group input col-md-12">
+
+                            <label class="switch">
+                                <input type="checkbox" class="switch__input">
+                                <div class="switch__toggle">
+                                    <div class="switch__handle"></div>
+                                </div>
+
+                            </label>
+                            <label>В наличии</label>
+                        </div>
+
+                        <div class="form-group input col-md-12">
+                            <label class="switch">
+                                <input type="checkbox" class="switch__input">
+                                <div class="switch__toggle">
+                                    <div class="switch__handle"></div>
+                                </div>
+                            </label>
+                            <label>Кнопка «обратный вызов»</label>
+                            <i class="glyphicon glyphicon-info-sign" data-toggle="tooltip" title="" data-placement="top" data-original-title="при включение кнопки будет отображатся кнопка обратной связи" aria-describedby="tooltip200612"></i>
+                        </div>
+
+                        <div class="step_2">
+                            <h3><span>2.</span> Доставка</h3>
+                            <div class="form-group input col-md-12">
+                                <label class="radio-button radio-button--material">
+                                    <input type="radio" class="radio-button__input radio-button--material__input" name="1" checked="checked">
+                                    <div class="radio-button__checkmark radio-button--material__checkmark"></div>
+                                Бесплатная доставка
+                                </label>
+                            </div>
+                            <div class="form-group input col-md-12">
+                                <label class="radio-button radio-button--material">
+                                    <input type="radio" class="radio-button__input radio-button--material__input" name="1">
+                                    <div class="radio-button__checkmark radio-button--material__checkmark"></div>
+                                Платная доставка
+                                </label>
+                            </div>
+                            <div class="form-group input col-md-12">
+                                <label class="radio-button radio-button--material">
+                                    <input type="radio" class="radio-button__input radio-button--material__input" name="1">
+                                    <div class="radio-button__checkmark radio-button--material__checkmark"></div>
+                                Без доставка
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="step_3">
+                            <h3><span>3.</span> Параметры товара</h3>
+                            <p>Параметры для данной категории отсутствуют.</p>
+                        </div>
+
+                        <div class="step_4">
+                            <input type="file" multiple id="get-files">
+                            <label for="get-files">Select images</label>
+                        </div>
+
+
+                        <div class="form-group search">
+                            <button type="submit" class="btn btn-default"> ПОКАЗАТЬ</button>
+                        </div>
+                    </div>
+
+
+                </form>
             </div>
-            <div class="col-md-2"></div>
+
+
         </div>
-    </div>
+    </section>
+
+
+
+{#    <form action="" method="post" enctype="multipart/form-data">#}
+{#                    {% csrf_token %}#}
+{#                    {{ form }}#}
+{#                    <input type="submit" value="Save" />#}
+{#                </form>#}
 
 {% endblock %}
