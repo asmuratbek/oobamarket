@@ -41,16 +41,31 @@ var Products = createClass ({
         }
     },
 
+    addOrRemoveFromCart : function (product) {
+        console.log("here");
+        if (product.is_in_cart) {
+            product.is_in_cart = false
+        }
+        else {
+            product.is_in_cart = true
+        }
+    },
+
     isInCart : function (product) {
         if (product.is_in_cart) {
             return (
-                <a href="#" className="add-basket in-the-basket" data-product-id={product.id}>
-                        <span class="glyphicon glyphicon-shopping-cart"></span>
+                <a href="#" className="add-basket in-the-basket" data-product-id={product.id} onClick={() => this.addOrRemoveFromCart(product)}>
+                        <span className="glyphicon glyphicon-shopping-cart"></span>
                         В корзине
                     </a>
-            ) else {
-
-            }
+            )
+        } else {
+            return (
+                <a href="#" className="add-basket" data-product-id={product.id} onClick={() => this.addOrRemoveFromCart(product)}>
+                        <span className="glyphicon glyphicon-shopping-cart"></span>
+                        Добавить в корзину
+                    </a>
+            )
         }
     },
 
@@ -94,12 +109,13 @@ var Products = createClass ({
                         </div>
                         ) : (
                             <div className="title">
+                                <p>{product.title}</p>
                                 <span>{product.get_price_function} {product.currency}</span>
                             </div>
                         )
                     }
                 <div className="bottom-line">
-                    {product.is_in_cart}
+                    {this.isInCart(product)}
                     {this.deliveryColor(product)}
                     <span className={`hearth pull-right ${product.is_favorite && `like`}`} data-product-id={product.id}><i className="glyphicon glyphicon-heart"></i></span>
 
