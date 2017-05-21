@@ -86,6 +86,8 @@ class Product(models.Model):
     def remove_from_cart(self):
         return "%s?item=%s&qty=1&delete=True" % (reverse("cart:detail"), self.id)
 
+    def get_update_url(self):
+        return reverse("product:update_product", kwargs={'slug': self.slug})
 
 
 class FavoriteProduct(models.Model):
