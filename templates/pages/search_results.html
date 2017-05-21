@@ -12,10 +12,82 @@
 
 {% block content %}
 
-    <section class="goods-of-week">
+    <section class="goods-of-week search_results">
         <div class="container">
-            <h1>Товары</h1>
+
+            <div class="search_query">
+                <h3>Рекомендуемые продавцы</h3>
+                <p>Магазины, в которых найден ваш товар</p>
+            </div>
+
+            <div class="recommended_sellers">
+                <div class="img-wrapper">
+                    <a href=""></a>
+                    <img src="http://placehold.it/200x190" alt="">
+                </div>
+                <div class="img-wrapper">
+                    <a href=""></a>
+                    <img src="http://placehold.it/85x85" alt="">
+                </div>
+                <div class="img-wrapper">
+                    <a href=""></a>
+                    <img src="http://placehold.it/85x30" alt="">
+                </div>
+            </div>
+
+            <div class="search_query">
+                <h3>Результаты поиска</h3>
+                <p>По вашему запросу найдено 13 товаров в следующих категориях</p>
+            </div>
+
+            <ul class="category-tab">
+                <li class="active"><a href="">Коляски</a></li>
+                <li><a href="">Автокресла</a></li>
+                <li><a href="">Кровати</a></li>
+            </ul>
+
+            <div class="form-filter">
+                <form class="form-inline">
+
+                    <div class="form-group select">
+                        <select class="form-control">
+                            <option>Сортировка</option>
+                            <option>сначала дорогие</option>
+                            <option>сначала акции</option>
+                            <option>новые товары</option>
+                            <option>5</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group input">
+                        <label><span>Цена</span> от</label>
+                        <input type="text" class="form-control" placeholder="2000 сом">
+                    </div>
+
+                    <div class="form-group input end">
+                        <label>до</label>
+                        <input type="text" class="form-control" placeholder="4000 сом">
+                    </div>
+
+                     <div class="form-group select">
+                        <select class="form-control">
+                            <option>Доставка</option>
+                            <option>Бесплатная</option>
+                            <option>Платная</option>
+                            <option>Самовывоз</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group search">
+{#                        <input type="search" class="form-control" placeholder="Поиск товара...">#}
+                        <button type="submit" class="btn btn-default"> ПОКАЗАТЬ</button>
+                    </div>
+
+                </form>
+            </div>
+
             {% include 'product/product_list.html' with object_list=object_list col=3 %}
+
         </div>
     </section>
 

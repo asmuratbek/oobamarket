@@ -10,6 +10,10 @@ h1, h2, h3, h4, h5, h6, p, span, b, i, ul, li, button, input, select, a
   list-style: none!important
   outline: none!important
   transition: all 0.3s ease
+.container
+  width: 1200px
+  margin: 0 auto
+  padding: 0 15px
 .facebook
   background: url(../img/social.png) -31px 0 no-repeat
   width: 28px
@@ -210,7 +214,6 @@ body
       transform: rotateY(360deg)
   li
     .img-wrapper
-
       width: 100%
       height: 40px
       position: relative
@@ -251,7 +254,7 @@ header
       width: 140px
       margin: 2px 0
       float: left
-    span
+  .navbar-brand + a
       font-size: 18px
       font-weight: 700
       color: #808080
@@ -1125,16 +1128,20 @@ ul.category-tab
       font-weight: 400
       border: 1px solid transparent
 
+  li.active:hover
+    a
+      background-color: #F3481C
+      color: #fff
+      border-color: #F3481C
   li.active
     a
       background-color: #F3481C
       color: #fff
-      border-color: transparent
   li:hover
     a
-      border-color: #E6E6E6
       background-color: transparent
-      color: #fff
+      color: #333
+      border-color: #E6E6E6
 
 .shop-category
   margin-bottom: 200px
@@ -1262,7 +1269,7 @@ ul.category-tab
           input
             width: 145px
         .form-group.search
-          width: 231px
+          width: 249px
           position: relative
           input
             position: relative
@@ -1572,7 +1579,6 @@ ul.category-tab
       color: grey
       height: 40px
       font-weight: 300
-      color: #333
     label
       font-weight: 400
     button
@@ -1591,5 +1597,120 @@ ul.category-tab
         -webkit-box-shadow: 0px 0px 10px 2px rgba(243, 72, 28, 0.1) /* WebKit */
         -moz-box-shadow: 0px 0px 10px 2px rgba(243, 72, 28, 0.1) /* Firefox */
         box-shadow: 0px 0px 10px 2px rgba(243, 72, 28, 0.1) /* Standard */
+.search_results
+  .form-filter
+    background-color: #fff
+    margin: 0 11px 20px 11px
+    overflow: hidden
+    .form-group
+      float: left
+    .form-group.select
+      width: 20%
+      height: 46px
+      position: relative
+      &:before
+        position: absolute
+        content: ''
+        right: 8px
+        top: 15px
+        width: 10px
+        height: 13px
+        background:  url(../img/png/arrow0.png) 0 0 no-repeat
+        transform: rotate(-90deg)
+        background-size: 35px
+      select
+        width: 100%
+        border-radius: 0
+        height: 46px
+        border-color: #EEEEEE
+        box-shadow: none!important
+        cursor: pointer
+        -webkit-appearance: none
+        -moz-appearance: none
+        -ms-appearance: none
+        appearance: none
+        padding-right: 25px
+    .form-group.input
+      padding: 5px 0
+      width: 239px
+      border-top: 1px solid #EEEEEE
+      border-bottom: 1px solid #EEEEEE
+      label
+        margin: 0 10px
+        font-size: 16px
+        font-weight: 300
+        span
+          display: inline-block
+          margin-right: 10px
+      input
+        border-radius: 0
+        box-shadow: none!important
+        width: 129px
+    .form-group.input.end
+      width: 190px
+      label
+        margin-left: 11px
+        margin-right: 2px
+      input
+        width: 145px
+    .form-group.search
+      margin-left: 10px
+      width: 249px
+      position: relative
+      float: right
+      input
+        position: relative
+        height: 46px
+        border-color: #EEEEEE
+        border-radius: 0
+        box-shadow: none!important
+        width: 100%
+      button
+        position: static
+        border-radius: 0
+        height: 46px
+        width: 100%
+        background-color: #F3481C
+        color: #fff
+        border-color: #F3481C
+        z-index: 1
+        &:hover
+          background-color: #d63f19
+  .search_query
+    margin-bottom: 20px
+    h3
+    p
+  .recommended_sellers
+    margin-bottom: 20px
+    overflow: hidden
+    .img-wrapper:hover
+      border-color: #f3481c
+    .img-wrapper
+      float: left
+      margin: 0 15px 15px 0
+      width: 85px
+      height: 85px
+      overflow: hidden
+      padding: 5px
+      background-color: #fff
+      position: relative
+      border: 1px solid #EEEEEE
+      transition: 0.3s
+      a
+        position: absolute
+        top: 0
+        bottom: 0
+        right: 0
+        left: 0
+        z-index: 1
+      img
+        position: absolute
+        top: -9999px
+        bottom: -9999px
+        right: -9999px
+        left: -9999px
+        margin: auto
+        display: block
+        max-width: 90%
 //ALWAYS END
 @import "media"
