@@ -280,6 +280,7 @@ $( document ).ready(function() {
     });
 
     $('#global_category').on('change', function () {
+        var categoryList = $('#category_list');
        console.log("Here");
        $.ajax({
            type: "GET",
@@ -290,10 +291,18 @@ $( document ).ready(function() {
                 },
             success: function (data) {
                 console.log(data);
-                $('#category_list').removeAttr('disabled');
-                $.each(data.category_list, function (index, value) {
-                   $('#category_list').append('<option>' + value + '</option>')
-                });
+                if (data.category_list.length > 0) {
+                    categoryList.removeAttr('disabled');
+                    categoryList.html('<option>Выберите категорию</option>');
+                    $.each(data.category_list, function (index, value) {
+                        categoryList.append('<option>' + value + '</option>')
+                    });
+                }
+
+                else {
+                    console.log('Noooo');
+                    categoryList.html("").attr('disabled', "");
+                }
             },
             error: function (response, error) {
                 console.log(response);
@@ -315,6 +324,7 @@ $( document ).ready(function() {
                 console.log(data)
                 if (data.category_list.length > 0) {
                     subcategoryList.removeAttr('disabled');
+                    subcategoryList.html('<option>Выберите подкатегорию</option>');
                     $.each(data.category_list, function (index, value) {
                         subcategoryList.append('<option>' + value + '</option>')
                     });
