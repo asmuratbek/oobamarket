@@ -129,17 +129,29 @@
                             <div class="form-group search">
                                 <input type="search" class="form-control" placeholder="Поиск товара...">
                                 <button type="submit" class="btn btn-default glyphicon glyphicon-search"></button>
-
                             </div>
 
                         </form>
 
                     </div>
                     <div class="goods-of-week">
+                        <div class="col-md-4 col-sm-6">
+                            <div class="cover">
+                                <a class="url-item" href=""></a>
+                                <div class="add-product">
+                                    <i class="glyphicon glyphicon-plus-sign"></i>
+                                    <p>Добавить новый товар</p>
+                                </div>
 
+                                <div class="stock">
+                                    <a href="">Добавить акцию</a>
+                                </div>
+                            </div>
+                        </div>
                             {% include 'product/product_list.html' with object_list=object.get_shop_products col=4 %}
 
                     </div>
+
 
                 </div>
             </div>

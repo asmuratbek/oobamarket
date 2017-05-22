@@ -12,11 +12,9 @@
                     </h2>
                     {% if user.is_authenticated %}
                         {% if user in product.shop.user.all %}
-                            <h2>
-                                <a href="{% url 'product:update_product' slug=product.slug %}">
-                                Редактировать
-                                </a>
-                            </h2>
+                            <a class="edited glyphicon glyphicon-cog" href="{% url 'product:update_product' slug=product.slug %}" data-toggle="tooltip" title="" data-placement="bottom" data-original-title="Редактировать"></a>
+                            <a href="" class="eye glyphicon glyphicon-eye-open" data-toggle="tooltip" title="" data-placement="bottom" data-original-title="Скрыть" data-status="false"></a>
+{#                            <a href="" class=" hidden glyphicon glyphicon-eye-close" data-toggle="tooltip" title="" data-placement="bottom" data-original-title="Скрытый"></a>#}
                         {% endif %}
                     {% endif %}
 
@@ -56,7 +54,7 @@
                     <span class="truck pull-right {% if product.delivery_type == 'paid' %} yellow
                     {% elif product.delivery_type == 'free' %} green {% endif %}" data-toggle="tooltip" title=""
                           data-placement="top" data-original-title="{{ product.get_delivery_type }}"><i class="fa fa-truck" aria-hidden="true"></i></span>
-                    <span class="hearth pull-right {% is_favorite_for_like product request.user %}" data-product-id="{{ product.id }}"><i class="glyphicon glyphicon-heart"></i></span>
+                    <span class="hearth pull-right {% is_favorite_for_like product request.user %}" data-product-id="{{ product.id }}"  data-toggle="tooltip" title="" data-placement="top" data-original-title="Добавить в избранное"><i class="glyphicon glyphicon-heart"></i></span>
 
                 </div>
             </div>

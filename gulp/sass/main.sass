@@ -1,6 +1,9 @@
 @import "bourbon"
 
 //Load Libs SASS
+.custom-scroll
+  position: relative
+  overflow: hidden
 
 h1, h2, h3, h4, h5, h6, p, span, b, i, ul, li, button, input, select, a
   text-decoration: none !important
@@ -467,14 +470,53 @@ header
     text-align: center
     margin-bottom: 30px
     font-weight: 400
-  .col-md-3:hover
+  .add-product
+    padding: 112px 30px
+    background-color: #fff
+    text-align: center
+    i
+      font-size: 40px
+      color: #CCCCCC
+    p
+      margin: 10px
+  .stock:hover
+    background-color: #005d9a
+  .stock
+    z-index: 10
+    text-align: center
+    background-color: #0071BC
+    position: relative
+    transition: 0.3s
+    a
+      font-weight: 300
+      color: #fff
+      padding: 20px 50px
+      display: inline-block
+  .col-md-3:hover, .col-md-4:hover
     .cover
       border-color: #cecece
       .top-line
         background-color: #e1dfdf
-  .col-md-3
+  .col-md-3, .col-md-4
     padding: 0 10px
     margin-bottom: 20px
+    .cover.active
+      &:before
+        position: absolute
+        content: ''
+        top: 0
+        bottom: 0
+        right: 0
+        left: 0
+        z-index: 1
+        background: rgba(253, 123, 123, 0.8)
+        transition: 0.3s
+      .bottom-line
+        z-index: 0
+      .top-line
+        h2
+          a
+            z-index: 0
     .cover
       border: 1px solid #eee
       background-color: #fff
@@ -505,6 +547,26 @@ header
           display: block
           &:hover
             color: #F3481C
+      .edited
+        position: absolute
+        right: 30px
+        top: 3px
+        font-size: 17px
+        z-index: 10
+      .glyphicon-eye-open
+        color: #808080 !important
+        position: absolute
+        right: 5px
+        top: 3px
+        font-size: 17px
+        z-index: 10
+      .glyphicon-eye-close
+        color: #F3481C !important
+        position: absolute
+        top: 3px
+        font-size: 17px
+        right: 5px
+        z-index: 10
     .img-wrapper
       width: 85%
       height: 300px
@@ -1713,13 +1775,23 @@ ul.category-tab
         display: block
         max-width: 90%
 .add-product
+  .step_1, .step_2, .step_3, .step_4
+    margin-bottom: 50px
+    overflow: hidden
+  input::-webkit-input-placeholder
+    color: #555
+  input::-moz-placeholder
+    color: #555
+  input:-moz-placeholder
+    color: #555
+  input:-ms-input-placeholder
+    color: #555
   h3
     margin-bottom: 20px
     font-weight: 300
     span
       color: #CCCCCC
   p
-    margin-top: -10px
     color: #808080
     font-size: 18px
     font-weight: 300
@@ -1761,6 +1833,13 @@ ul.category-tab
     .mini
       width: 150px
       margin-right: 20px
+    .price + .select
+      width: 100px
+      margin-left: -25px
+      margin-right: 20px
+      display: inline-block
+      &:before
+        right: 10px
     .switch
       position: relative
       display: inline-block
@@ -2098,7 +2177,6 @@ ul.category-tab
       display: inline-block
       left: 5px
       font-weight: 300
-
     div.discount
       display: inline-block
       margin-left: 20px
@@ -2110,5 +2188,61 @@ ul.category-tab
       input
         width: 100px
         text-align: center
+  .btn-group-form
+    text-align: center
+    margin-bottom: 50px
+    button.btn
+      display: inline-block
+      padding: 15px 60px
+      border-radius: 50px
+      margin: 0 10px
+      color: #fff
+    .add
+      background-color: #F3481C
+      &:hover
+        background-color: #d03e19
+    .cancel
+      background-color: #808080
+      &:hover
+        background-color: #636363
+  .col-md-4
+    .upload:hover
+      i
+        color: #f3481c
+    .upload
+      transition: 0.3s
+      width: 100%
+      height: 360px
+      background-color: #CCCCCC
+      position: relative
+      cursor: pointer
+      overflow: hidden
+      i
+        position: absolute
+        top: -10060px
+        bottom: -9999px
+        right: -9999px
+        left: -9999px
+        margin: auto
+        display: block
+        font-size: 60px
+        width: 60px
+        height: 60px
+        color: #fff
+      .add-photo
+        position: absolute
+        bottom: 115px
+        left: 20px
+        right: 20px
+        text-align: center
+        font-size: 16px
+        color: #fff
+        font-weight: 300
+    .info
+      text-align: center
+      span
+        color: #808080
+        display: inline-block
+        margin-bottom: 10px
 //ALWAYS END
 @import "media"

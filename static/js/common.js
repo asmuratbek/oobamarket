@@ -97,6 +97,26 @@ $( document ).ready(function() {
         $( this ).toggleClass( "active" );
     });
 
+    $.fn.hasAttr = function (value) {
+        return this.attr(value) !== undefined;
+    };
+
+
+    $( "a.eye " ).click(function(e) {
+        e.preventDefault();
+        $( this ).toggleClass( "glyphicon-eye-open glyphicon-eye-close" );
+        if(!$(this).hasAttr('data-status')) $(this).attr('data-status', 'false');
+        if($(this).attr('data-status') === 'false') {
+            $(this).attr('data-original-title', 'Скрытый');
+            $(this).attr('data-status', 'true');
+            $(this).parent().parent().addClass('active');
+        } else {
+            $(this).attr('data-original-title', 'Скрыть');
+            $(this).attr('data-status', 'false');
+            $(this).parent().parent().removeClass('active');
+        }
+    });
+
 
 
     $('.owl-carousel.shop-page').owlCarousel({
@@ -182,7 +202,7 @@ $( document ).ready(function() {
     }
 
 
-    if ($('.see-more-toogle').length > 0){
+    if ($('.see-more-toogle') !== undefined){
         $('.see-more-toogle').readmore({
             speed: 500,
             collapsedHeight: 40,
@@ -274,5 +294,27 @@ $( document ).ready(function() {
 
 }
 
+// input=type=file
+
+var fileInput = $('#id_images');
+var helpText = $('#file-counter');
+$(fileInput).on('change', function (event) {
+    var fileReader = new FileReader();
+    fileReader.readAsDataURL(this.files[0]);
+    var count = this.files.length;
+    var result = '';
+    if (count == 1 || count % 10 == 1) {
+        result = '<b>Выбран ' + count + ' файл</b>';
+    } else if ((count >= 2 && count <= 4) || (count % 10 >= 2 && count % 10 <= 4)) {
+        result = '<b>Выбрано ' + count + ' файла</b>';
+    } else if (count >= 5) {
+        result = '<b>Выбрано ' + count + ' файлов</b>';
+    }
+    helpText.html(result);
+});
+
+
+// custom scrollbar
+$('.custom-scroll').perfectScrollbar();
 
 }); // end document ready
