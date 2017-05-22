@@ -279,6 +279,60 @@ $( document ).ready(function() {
         })
     });
 
+    $('#global_category').on('change', function () {
+       console.log("Here");
+       $.ajax({
+           type: "GET",
+            url: "/get_category_list/",
+            data:
+                {
+                    "global_category":  $("#global_category option:selected").text()
+                },
+            success: function (data) {
+                console.log(data);
+                $('#category_list').removeAttr('disabled');
+                $.each(data.category_list, function (index, value) {
+                   $('#category_list').append('<option>' + value + '</option>')
+                });
+            },
+            error: function (response, error) {
+                console.log(response);
+                console.log(error);
+            }
+       });
+    });
+
+    $('#category_list').on('change', function () {
+        var subcategoryList = $('#subcategory_list')
+       $.ajax({
+           type: "GET",
+            url: "/get_subcategory_list/",
+            data:
+                {
+                    "category":  $("#category_list option:selected").text()
+                },
+            success: function (data) {
+                console.log(data)
+                if (data.category_list.length > 0) {
+                    subcategoryList.removeAttr('disabled');
+                    $.each(data.category_list, function (index, value) {
+                        subcategoryList.append('<option>' + value + '</option>')
+                    });
+                }
+
+                else {
+                    console.log('Noooo');
+                    subcategoryList.html("").attr('disabled', "");
+                }
+
+            },
+            error: function (response, error) {
+                console.log(response);
+                console.log(error);
+            }
+       });
+    });
+
     function showFlashMessage(message) {
 
         console.log('yeah');

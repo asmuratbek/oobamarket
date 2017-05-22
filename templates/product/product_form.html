@@ -17,29 +17,20 @@
                             </div>
 
                             <div class="form-group select col-md-6">
-                                <select class="form-control">
+                                <select class="form-control" id="global_category">
                                     {% for cat in fixed_categories %}
                                      <option>{{ cat.title }}</option>
                                 {% endfor %}
                                 </select>
                             </div>
-                            {% for obj in form.category %}
+
                             <div class="form-group select col-md-6">
-                                <select class="form-control">
-                                    <option>Категория</option>
-                                    <option>сначала дорогие</option>
-                                    <option>сначала акции</option>
-                                    <option>новые товары</option>
-                                    <option>5</option>
+                                <select class="form-control" id="category_list" disabled>
                                 </select>
                             </div>
-                            {% endfor %}
+
                             <div class="form-group select col-md-6">
-                                <select class="form-control">
-                                    <option>Подкатегория</option>
-                                    <option>Бесплатная</option>
-                                    <option>Платная</option>
-                                    <option>Самовывоз</option>
+                                <select class="form-control" id="subcategory_list" disabled>
                                 </select>
                             </div>
 
