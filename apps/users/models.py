@@ -46,3 +46,5 @@ class User(AbstractUser):
 
     def shops_name(self):
         return self.shop_set.all()
+
+
