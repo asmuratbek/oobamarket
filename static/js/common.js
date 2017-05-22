@@ -202,7 +202,7 @@ $( document ).ready(function() {
     }
 
 
-    if ($('.see-more-toogle') !== undefined){
+    if ($('.see-more-toogle').length > 0){
         $('.see-more-toogle').readmore({
             speed: 500,
             collapsedHeight: 40,

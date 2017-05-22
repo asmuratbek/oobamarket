@@ -503,7 +503,12 @@ header
     .cover.active
       &:before
         position: absolute
-        content: ''
+        text-align: center
+        padding: 120px 20px
+        color: #fff
+        font-weight: 300
+        font-size: 24px
+        content: 'Товар скрыт'
         top: 0
         bottom: 0
         right: 0
@@ -512,11 +517,11 @@ header
         background: rgba(253, 123, 123, 0.8)
         transition: 0.3s
       .bottom-line
-        z-index: 0
+        z-index: 0!important
       .top-line
         h2
           a
-            z-index: 0
+            z-index: 0!important
     .cover
       border: 1px solid #eee
       background-color: #fff
@@ -1774,7 +1779,7 @@ ul.category-tab
         margin: auto
         display: block
         max-width: 90%
-.add-product
+.add-product, .edit-shop-detail
   .step_1, .step_2, .step_3, .step_4
     margin-bottom: 50px
     overflow: hidden
@@ -1799,6 +1804,8 @@ ul.category-tab
     width: 100%
   .form-group
     margin-bottom: 20px
+    label
+      font-weight: 300
     select
       -webkit-border-radius: 0
       border-radius: 0
