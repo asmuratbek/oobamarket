@@ -22,34 +22,51 @@ def get_seo_data(request, object):
                 'seo_text': seo_data.seo_text
             }
 
-
     except MetaData.DoesNotExist:
         if isinstance(object, Shop):
-            seo_data = MetaData.objects.get(shop=object)
-            return {
-                'title': seo_data.title,
-                'description': seo_data.description,
-                'keywords': seo_data.keywords,
-                'h1': seo_data.h1,
-                'seo_text': seo_data.seo_text
-            }
+            seo_data = MetaData.objects.filter(shop=object).first()
+            if seo_data:
+                return {
+                    'title': seo_data.title,
+                    'description': seo_data.description,
+                    'keywords': seo_data.keywords,
+                    'h1': seo_data.h1,
+                    'seo_text': seo_data.seo_text
+                }
+            else:
+                return {
+                    'title': "Ооба интернет магазин",
+                    'description': "Ооба интернет магазин",
+                    'keywords': "Ооба интернет магазин",
+                    'h1': "Ооба интернет магазин",
+                    'seo_text': "Ооба интернет магазин"
+                }
         elif isinstance(object, Product):
             print(object)
-            seo_data = MetaData.objects.get(product=object)
-            return {
-                'title': seo_data.title,
-                'description': seo_data.description,
-                'keywords': seo_data.keywords,
-                'h1': seo_data.h1,
-                'seo_text': seo_data.seo_text
-            }
+            seo_data = MetaData.objects.filter(product=object).first()
+            if seo_data:
+                return {
+                    'title': seo_data.title,
+                    'description': seo_data.description,
+                    'keywords': seo_data.keywords,
+                    'h1': seo_data.h1,
+                    'seo_text': seo_data.seo_text
+                }
+            else:
+                return {
+                    'title': "Ооба интернет магазин",
+                    'description': "Ооба интернет магазин",
+                    'keywords': "Ооба интернет магазин",
+                    'h1': "Ооба интернет магазин",
+                    'seo_text': "Ооба интернет магазин"
+                }
         else:
             return {
-                'title': "Ооба интеренет магазин",
-                'description': "Ооба интеренет магазин",
-                'keywords': "Ооба интеренет магазин",
-                'h1': "Ооба интеренет магазин",
-                'seo_text': "Ооба интеренет магазин"
+                'title': "Ооба интернет магазин",
+                'description': "Ооба интернет магазин",
+                'keywords': "Ооба интернет магазин",
+                'h1': "Ооба интернет магазин",
+                'seo_text': "Ооба интернет магазин"
             }
 
     return data
