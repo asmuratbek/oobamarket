@@ -74,7 +74,7 @@
     <section class="shop-category">
         <div class="container">
             <ul class="category-tab">
-                {% show_add_product_button shop request.user %}
+
 {#                <li class="active"><a href="{% url 'product:add_product' slug=object.slug %}">Товары</a></li>#}
                 <li><a href="">Акции</a></li>
                 <li><a href="">Отзывы</a></li>
@@ -135,19 +135,7 @@
 
                     </div>
                     <div class="goods-of-week">
-                        <div class="col-md-4 col-sm-6">
-                            <div class="cover">
-                                <a class="url-item" href=""></a>
-                                <div class="add-product">
-                                    <i class="glyphicon glyphicon-plus-sign"></i>
-                                    <p>Добавить новый товар</p>
-                                </div>
-
-                                <div class="stock">
-                                    <a href="">Добавить акцию</a>
-                                </div>
-                            </div>
-                        </div>
+                            {% show_add_product_button shop request.user %}
                             {% include 'product/product_list.html' with object_list=object.get_shop_products col=4 %}
 
                     </div>

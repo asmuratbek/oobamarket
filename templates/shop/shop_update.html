@@ -1,35 +1,37 @@
 {% extends 'base-1.html' %}
-
+{% load widget_tweaks %}
 
 {% block content %}
 <section class="edit-shop-detail">
     <div class="container">
-        <h3>Создайте свой магазин</h3>
+        <h3>Редактирование магазина</h3>
         <div class="form-filter">
-            <form class="form-inline">
+            <form class="form-inline" method="post" action="{% url 'shops:update' slug=object.slug%}" enctype="multipart/form-data">
+                        {% csrf_token %}
                 <div class="col-md-8">
                     <div class="form-group input col-md-6">
                         <label for="">Название магазина</label>
-                        <input type="text" class="form-control" placeholder="Название магазина">
+                        {% render_field form.title|attr:"type:text" placeholder="Название магазина" %}
                     </div>
                     <div class="form-group input col-md-6">
                         <label for="">Телефон:</label>
-                        <input type="text" class="form-control" placeholder="Телефон:">
+                        {% render_field form.phone|attr:"type:text" placeholder="Телефон магазина" %}
                     </div>
                     <div class="form-group input col-md-6">
                         <label for="">E-mail магазина:</label>
-                        <input type="text" class="form-control" placeholder="E-mail магазина:">
+                        {% render_field form.email|attr:"type:text" placeholder="E-mail магазина:" %}
                     </div>
                     <div class="form-group input col-md-12">
                         <label for="">Короткое описание магазина:</label>
-                        <textarea class="form-control" rows="6"></textarea>
+                        {% render_field form.short_description|attr:"rows:6" placeholder="Введите до 300 символов" %}
                     </div>
                     <div class="form-group input col-md-12">
                         <label for="">Полное описание магазина:</label>
-                        <textarea class="form-control" rows="6"></textarea>
+{#                        <textarea class="form-control" rows="6"></textarea>#}
+                        {% render_field form.description|attr:"rows:6" placeholder="Введите полное описание" %}
                     </div>
                     <div class="form-group btn-group-form col-md-12">
-                            <button type="submit" class="btn cancel"> Отменить</button>
+{#                            <button type="submit" class="btn cancel"> Отменить</button>#}
                             <button type="submit" class="btn add">Сохранить</button>
                         </div>
                 </div>
@@ -49,17 +51,11 @@
                             <br>
                             <span id="file-counter" style="color: red;"></span>
                         </div>
-                        <input type="file" id="id_images" style="display: none;" multiple="">
+                        {% render_field form.logo|attr:"type:file"|attr:"style:display:none;"|attr:"id:id_images" %}
                     </div>
             </form>
         </div>
     </div>
 </section>
-
-    <form method="post" action="{% url 'shops:update' slug=object.slug%}" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value="Save" />
-    </form>
 
 {% endblock %}
