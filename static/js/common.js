@@ -243,6 +243,9 @@ $( document ).ready(function() {
         })
     });
 
+
+    $
+
     $('.add-basket').click(function (event) {
         event.preventDefault();
         var thisItem = $(this);

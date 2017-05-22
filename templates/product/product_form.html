@@ -1,5 +1,5 @@
 {% extends 'base-1.html' %}
-
+{% load widget_tweaks %}
 {% block content %}
 
     <section class="add-product">
@@ -11,25 +11,19 @@
                         <div class="step_1">
                             <h3><span>1.</span> Основные данные</h3>
                             <div class="form-group select col-md-6">
-                                <select class="form-control">
-                                    <option>Название магазина</option>
-                                    <option>сначала дорогие</option>
-                                    <option>сначала акции</option>
-                                    <option>новые товары</option>
-                                    <option>5</option>
-                                </select>
+
+                                    {% render_field form.shop %}
+
                             </div>
 
                             <div class="form-group select col-md-6">
                                 <select class="form-control">
-                                    <option>Глобальная категория</option>
-                                    <option>сначала дорогие</option>
-                                    <option>сначала акции</option>
-                                    <option>новые товары</option>
-                                    <option>5</option>
+                                    {% for cat in fixed_categories %}
+                                     <option>{{ cat.title }}</option>
+                                {% endfor %}
                                 </select>
                             </div>
-
+                            {% for obj in form.category %}
                             <div class="form-group select col-md-6">
                                 <select class="form-control">
                                     <option>Категория</option>
@@ -39,7 +33,7 @@
                                     <option>5</option>
                                 </select>
                             </div>
-
+                            {% endfor %}
                             <div class="form-group select col-md-6">
                                 <select class="form-control">
                                     <option>Подкатегория</option>
@@ -226,8 +220,14 @@
                         {{ form }}
                         <input type="submit" value="Save" />
                     </form>
+    <script>
+
+
+    </script>
 
 {% endblock %}
+
+
 
 {#{% block js %}#}
 {#    {{ block.super }}#}
