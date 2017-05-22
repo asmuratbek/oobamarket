@@ -16,6 +16,8 @@ django-suit==0.2.25
 # Forms
 django-braces==1.11.0
 django-crispy-forms==1.6.1
+django-widget-tweaks==1.4.1
+
 
 # Models
 django-model-utils==3.0.0

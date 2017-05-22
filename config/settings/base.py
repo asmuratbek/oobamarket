@@ -60,6 +60,7 @@ THIRD_PARTY_APPS = [
     'allauth.socialaccount.providers.facebook',
     'allauth.socialaccount.providers.vk',
     'rest_framework',
+    'widget_tweaks',
 ]
 
 
@@ -74,7 +75,8 @@ LOCAL_APPS = [
     'apps.shop',
     'apps.cart',
     'apps.global_category',
-    'apps.order'
+    'apps.order',
+    'apps.meta',
 ]
 
 # CHANNEL_LAYERS = {
