@@ -69,6 +69,7 @@
                             <div class="form-group input col-md-12">
 {#                                <input type="text" class="form-control mini" placeholder="Количество">#}
                                 {% render_field form.quantity|attr:"class:form-control mini" placeholder="Количество" %}
+                                <label for="">Количество</label>
                             </div>
 
                             <div class="form-group select col-md-6">
@@ -80,7 +81,7 @@
                                 <div class="form-group input col-md-12">
                                 <label class="switch">
 {#                                    <input type="checkbox" class="switch__input">#}
-                                    {% render_field form.published|attr:"class:switch_input" %}
+                                    {% render_field form.published|attr:"class:switch__input" %}
                                     <div class="switch__toggle">
                                         <div class="switch__handle"></div>
                                     </div>
