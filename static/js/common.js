@@ -183,23 +183,43 @@ $( document ).ready(function() {
 
 
     //initiate the plugin and pass the id of the div containing gallery images
-    if ($('#zoom_03').length > 0){
-        $("#zoom_03").elevateZoom({
-            gallery:'gallery_01',
+    // if ($('#zoom_03').length > 0){
+    //     $("#zoom_03").elevateZoom({
+    //         gallery:'gallery_01',
+    //         cursor: 'pointer',
+    //         easing : true,
+    //         galleryActiveClass: 'active',
+    //         imageCrossfade: true
+    //     });
+    //
+    //     //pass the images to Fancybox
+    //     // $("#zoom_03").bind("click", function(e) {
+    //     //     var ez = $('#zoom_03').data('elevateZoom');
+    //     //     $.fancybox(ez.getGalleryList());
+    //     //     return false;
+    //     // });
+    // }
+
+    if ($('#img_01').length > 0) {
+        //initiate the plugin and pass the id of the div containing gallery images
+        $("#img_01").elevateZoom({
+            zoomType: "lens",
+            lensShape: "round",
+            gallery: 'gal1',
+            lensSize    : 200,
             cursor: 'pointer',
-            easing : true,
-            galleryActiveClass: 'active',
-            imageCrossfade: true,
-            loadingIcon: 'http://www.elevateweb.co.uk/spinner.gif'
+            galleryActiveClass: "active"
         });
 
         //pass the images to Fancybox
-        // $("#zoom_03").bind("click", function(e) {
-        //     var ez = $('#zoom_03').data('elevateZoom');
+        // $("#img_01").bind("click", function (e) {
+        //     var ez = $('#img_01').data('elevateZoom');
         //     $.fancybox(ez.getGalleryList());
         //     return false;
         // });
     }
+
+
 
 
     if ($('.see-more-toogle').length > 0){
