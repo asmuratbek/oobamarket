@@ -75,7 +75,7 @@
                     {% include "socialaccount/snippets/provider_list.html" with process="login" %}
                   </ul>
 
-                  <div class="login-or">{% trans 'or' %}</div>
+                  <div class="login-or">{% trans 'или' %}</div>
 
                 </div>
 
@@ -85,7 +85,7 @@
 
             <form method="POST" action="{% url 'account_login' %}">
                 {% csrf_token %}
-                <p>У вас нет аккаунта? жмякай сюда <a href="{{ signup_url }}">Регистрация</a></p>
+{#                <p>У вас нет аккаунта? жмякай сюда <a href="{{ signup_url }}">Регистрация</a></p>#}
                 <div class="form-group">
                     <label>E-mail*</label>
                     <input type="email" class="form-control" name="login" placeholder="Ваша почта" required>
@@ -102,7 +102,7 @@
             <h2>Регистрация</h2>
             <form id="signup_form" method="post" action="{% url 'account_signup' %}">
                 {% csrf_token %}
-                <p>Уже есть аккаунт? Заходи братан <a href="">Войти</a></p>
+{#                <p>Уже есть аккаунт? Заходи братан <a href="">Войти</a></p>#}
                 <div class="form-group">
                     <label>Имя*</label>
                     <input type="text" class="form-control" placeholder="Имя" name="username" required>

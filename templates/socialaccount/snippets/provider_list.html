@@ -17,6 +17,14 @@
 {% endif %}
 <li style="list-style: none">
   <a title="{{provider.name}}" class="socialaccount_provider {{provider.id}}"
-     href="{% provider_login_url provider.id process=process scope=scope auth_params=auth_params %}"><img src="{% if provider.name == "Google" %}{% static 'static/img/icons/1.png' %}{% elif provider.name == 'Facebook' %}{% static 'static/img/face.png' %}{% else %}{% static 'static/img/icons/3.png' %}{% endif %}" alt=""></a>
+     href="{% provider_login_url provider.id process=process scope=scope auth_params=auth_params %}">
+      {% if provider.name == "Facebook" %}
+      <i class="fa fa-facebook-square" aria-hidden="true"></i>
+          Войти через Facebook
+      {% else %}
+      <i  class="fa fa-vk" aria-hidden="true"></i>
+          Войти через ВКонтакте
+      {% endif %}
+  </a>
 </li>
 {% endfor %}

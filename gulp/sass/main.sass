@@ -17,34 +17,34 @@ h1, h2, h3, h4, h5, h6, p, span, b, i, ul, li, button, input, select, a
   width: 1200px
   margin: 0 auto
   padding: 0 15px
-.facebook
-  background: url(../img/social.png) -31px 0 no-repeat
-  width: 28px
-  height: 25px
-  display: inline-block
-  &:hover
-    opacity: 0.5
-.tweet
-  background: url(../img/social.png) -61px 0 no-repeat
-  width: 28px
-  height: 25px
-  display: inline-block
-  &:hover
-    opacity: 0.5
-.google
-  background: url(../img/social.png) -92px 0 no-repeat
-  width: 28px
-  height: 25px
-  display: inline-block
-  &:hover
-    opacity: 0.5
-.instagram
-  background: url(../img/social.png) -216px 0 no-repeat
-  width: 28px
-  height: 25px
-  display: inline-block
-  &:hover
-    opacity: 0.5
+//.facebook
+//  background: url(../img/social.png) -31px 0 no-repeat
+//  width: 28px
+//  height: 25px
+//  display: inline-block
+//  &:hover
+//    opacity: 0.5
+//.tweet
+//  background: url(../img/social.png) -61px 0 no-repeat
+//  width: 28px
+//  height: 25px
+//  display: inline-block
+//  &:hover
+//    opacity: 0.5
+//.google
+//  background: url(../img/social.png) -92px 0 no-repeat
+//  width: 28px
+//  height: 25px
+//  display: inline-block
+//  &:hover
+//    opacity: 0.5
+//.instagram
+//  background: url(../img/social.png) -216px 0 no-repeat
+//  width: 28px
+//  height: 25px
+//  display: inline-block
+//  &:hover
+//    opacity: 0.5
 .js-select
   margin-bottom: 5px !important
 .search-index .col-md-6
@@ -1623,13 +1623,35 @@ ul.category-tab
 .registration
   overflow: hidden
   text-align: center
-  padding: 90px 0
+  padding: 0 0 90px 0
   .container
     background-color: #fff
+  .socialaccount_providers
+    li
+      margin-bottom: 10px
+      overflow: hidden
+      padding: 0 40px
+      a
+        display: block
+        text-align: center
+        padding: 10px
+        color: #fff
+        border-radius: 5px
+        font-weight: 300
+        i
+          color: #fff
+          font-size: 20px
+          float: left
+      a.facebook
+        background-color: #3B5998
+      a.vk
+        background-color: #45668E
   h2
     font-weight: 300
     padding: 40px 0
     margin-bottom: 20px
+  .login-or
+    margin: 15px 0
   form
     text-align: left
     padding: 0 40px 40px 40px
@@ -1779,7 +1801,7 @@ ul.category-tab
         margin: auto
         display: block
         max-width: 90%
-.add-product, .edit-shop-detail
+.add-product, .edit-shop-detail, .sing-out
   .step_1, .step_2, .step_3, .step_4
     margin-bottom: 50px
     overflow: hidden
@@ -2251,5 +2273,29 @@ ul.category-tab
         color: #808080
         display: inline-block
         margin-bottom: 10px
+.sing-out
+  .container
+    background-color: #fff
+    text-align: center
+    padding: 50px 15px 300px 15px
+  h1, h2
+    font-weight: 300
+    margin-bottom: 30px
+  p
+    font-weight: 300
+    margin-bottom: 30px
+  button
+    display: inline-block
+    padding: 15px 60px
+    -webkit-border-radius: 50px
+    border-radius: 50px
+    margin: 0 10px
+    color: #fff
+    background-color: #f3481c
+    &:hover
+      background-color: #d03e19
+      color: #fff
+  .blockLabels
+    margin-bottom: 50px
 //ALWAYS END
 @import "media"

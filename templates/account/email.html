@@ -7,37 +7,44 @@
 {% block head_title %}{% trans "Account" %}{% endblock %}
 
 {% block inner %}
-<h1>{% trans "E-mail Addresses" %}</h1>
+<h1>{% trans "Адреса электронной почты" %}</h1>
 
 {% if user.emailaddress_set.all %}
-<p>{% trans 'The following e-mail addresses are associated with your account:' %}</p>
+<p>{% trans 'К вашему аккаунту привязаны следующие адреса электронной почты:' %}</p>
 
 <form action="{% url 'account_email' %}" class="email_list" method="post">
 {% csrf_token %}
 <fieldset class="blockLabels">
 
   {% for emailaddress in user.emailaddress_set.all %}
-<div class="radio">
-  <label for="email_radio_{{forloop.counter}}" class="{% if emailaddress.primary %}primary_email{%endif%}">
+{#      <div class="form-group input col-md-12">#}
+{#                                <label class="radio-button radio-button--material">#}
+{#                                    <input type="radio" class="radio-button__input radio-button--material__input" name="1" checked="checked">#}
+{#                                    <div class="radio-button__checkmark radio-button--material__checkmark"></div>#}
+{#                                    Бесплатная доставка#}
+{#                                </label>#}
+{#                            </div>#}
+        <div class="radio form-group input col-md-12">
+          <label for="email_radio_{{forloop.counter}}" class="{% if emailaddress.primary %}primary_email radio-button radio-button--material{%endif%}">
 
-    <input id="email_radio_{{forloop.counter}}" type="radio" name="email" {% if emailaddress.primary or user.emailaddress_set.count == 1 %}checked="checked"{%endif %} value="{{emailaddress.email}}"/>
-
-    {{ emailaddress.email }}
-    {% if emailaddress.verified %}
-    <span class="verified">{% trans "Verified" %}</span>
-    {% else %}
-    <span class="unverified">{% trans "Unverified" %}</span>
-    {% endif %}
-    {% if emailaddress.primary %}<span class="primary">{% trans "Primary" %}</span>{% endif %}
-  </label>
-</div>
+            <input class="radio-button__input radio-button--material__input" id="email_radio_{{forloop.counter}}" type="radio" name="email" {% if emailaddress.primary or user.emailaddress_set.count == 1 %}checked="checked"{%endif %} value="{{emailaddress.email}}"/>
+            <div class="radio-button__checkmark radio-button--material__checkmark"></div>
+            {{ emailaddress.email }}
+            {% if emailaddress.verified %}
+            <span class="verified">{% trans "Основной" %}</span>
+            {% else %}
+            <span class="unverified">{% trans "Unverified" %}</span>
+            {% endif %}
+            {% if emailaddress.primary %}<span class="primary">{% trans "Primary" %}</span>{% endif %}
+          </label>
+        </div>
   {% endfor %}
 
-<div class="form-group">
-      <button class="secondaryAction btn btn-primary" type="submit" name="action_primary" >{% trans 'Make Primary' %}</button>
-      <button class="secondaryAction btn btn-primary" type="submit" name="action_send" >{% trans 'Re-send Verification' %}</button>
-      <button class="primaryAction btn btn-primary" type="submit" name="action_remove" >{% trans 'Remove' %}</button>
-</div>
+    <div class="form-group">
+          <button class="secondaryAction btn" type="submit" name="action_primary" >{% trans 'Сделать основным' %}</button>
+          <button class="secondaryAction btn" type="submit" name="action_send" >{% trans 'Отравить письмо с проверкой ' %}</button>
+          <button class="primaryAction btn" type="submit" name="action_remove" >{% trans 'Удалить' %}</button>
+    </div>
 
 </fieldset>
 </form>
@@ -48,12 +55,12 @@
 {% endif %}
 
 
-    <h2>{% trans "Add E-mail Address" %}</h2>
+    <h2>{% trans "Добавить E-mail адрес" %}</h2>
 
     <form method="post" action="{% url 'account_email' %}" class="add_email">
         {% csrf_token %}
         {{ form|crispy }}
-        <button class="btn btn-primary" name="action_add" type="submit">{% trans "Add E-mail" %}</button>
+        <button class="btn" name="action_add" type="submit">{% trans "Добавить" %}</button>
     </form>
 
 {% endblock %}
