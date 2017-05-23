@@ -343,6 +343,28 @@ $( document ).ready(function() {
        });
     });
 
+
+    $('#dis_id').change(function () {
+        var discount_id = $('#discount_id')
+        if ($(this).is(':checked')){
+            discount_id.removeAttr('disabled');
+        }else {
+            discount_id.html("").attr('disabled', "").val('');
+        }
+
+    });
+
+
+    $('#id_delivery_type').on('change',function () {
+        var delivery_cost = $('#id_delivery_cost');
+        if ($(this).val() == 'paid'){
+            $(delivery_cost).removeAttr('disabled');
+        }else {
+            $(delivery_cost).html("").attr('disabled', true).val('0');
+        }
+
+    });
+
     function showFlashMessage(message) {
 
         console.log('yeah');

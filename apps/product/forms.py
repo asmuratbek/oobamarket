@@ -1,11 +1,11 @@
-from django.forms import ModelForm
+from django import forms
 
 from apps.shop.models import Shop
 from .models import Product
 from haystack.forms import SearchForm
 
 
-class ProductForm(ModelForm):
+class ProductForm(forms.ModelForm):
     class Meta:
         model = Product
         exclude = ['slug', 'objects']
@@ -18,6 +18,7 @@ class ProductForm(ModelForm):
             self.fields[field].widget.attrs.update({
                 'class': 'form-control'
             })
+
 
 
 class ProductSearchForm(SearchForm):
