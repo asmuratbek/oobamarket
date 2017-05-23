@@ -8,7 +8,7 @@ from haystack.forms import SearchForm
 class ProductForm(forms.ModelForm):
     class Meta:
         model = Product
-        exclude = ['slug', 'objects']
+        exclude = ['slug', 'objects', 'sell_count']
 
     def __init__(self, *args, **kwargs):
         self.user = kwargs['initial']['user']

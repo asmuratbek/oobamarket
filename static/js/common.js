@@ -315,7 +315,7 @@ $( document ).ready(function() {
                     categoryList.removeAttr('disabled');
                     categoryList.html('<option>Выберите категорию</option>');
                     $.each(data.category_list, function (index, value) {
-                        categoryList.append('<option>' + value + '</option>')
+                        categoryList.append('<option selected="selected">' + value + '</option>')
                     });
                 }
 
