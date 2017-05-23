@@ -1,36 +1,29 @@
-{% extends "base.html" %}
+{% extends "base-1.html" %}
 {% load static %}
 
 {% block title %}User: {{ object.username }}{% endblock %}
 
 {% block content %}
-<div class="container">
+    <section class="user-detail">
+        <div class="container">
 
-  <div class="row">
-    <div class="col-sm-12">
+          <h2>{{ object.username }}</h2>
+          {% if object.name %}
+            <p>{{ object.name }}</p>
+          {% endif %}
 
-      <h2>{{ object.username }}</h2>
-      {% if object.name %}
-        <p>{{ object.name }}</p>
-      {% endif %}
-    </div>
-  </div>
+        {% if object == request.user %}
+        <!-- Action buttons -->
 
-{% if object == request.user %}
-<!-- Action buttons -->
-<div class="row">
+            <a class="btn" href="{% url 'users:update' %}" role="button">My Info</a>
+            <a class="btn" href="{% url 'account_email' %}" role="button">E-Mail</a>
+            <!-- Your Stuff: Custom user template urls -->
 
-  <div class="col-sm-12">
-    <a class="btn btn-primary" href="{% url 'users:update' %}" role="button">My Info</a>
-    <a class="btn btn-primary" href="{% url 'account_email' %}" role="button">E-Mail</a>
-    <!-- Your Stuff: Custom user template urls -->
-  </div>
+        <!-- End Action buttons -->
+        {% endif %}
 
-</div>
-<!-- End Action buttons -->
-{% endif %}
+        </div>
+    </section>
 
-
-</div>
 {% endblock content %}
 
