@@ -2,7 +2,7 @@
 
 //Load Libs SASS
 body
-  animation: fade 1s ease
+  animation: fade 1.2s ease
   transform-origin: 50% 50%
 
 
@@ -229,16 +229,35 @@ body
 .fixed-category:hover
   left: 0
   background: rgba(0, 0, 0, 0.7)
+  animation: fade-fixed-category 0s ease
+  transform-origin: 50% 50%
+  opacity: 1
+  @keyframes fade-fixed-category
+    0%
+      transform: translateX(0)
+    50%
+      transform: translateX(0)
+    100%
+      transform: translateX(0)
 .fixed-category
   height: 100vh
   width: 40px
   background: rgba(0, 0, 0, 0)
-  transition: 0.3s
   position: fixed
   left: -20px
   top: 0
   z-index: 9999
   padding-top: 85px
+  animation: fade-fixed-category 3s ease infinite
+  transform-origin: 50% 50%
+  opacity: 1
+  @keyframes fade-fixed-category
+    0%
+      transform: translateX(0)
+    50%
+      transform: translateX(5px)
+    100%
+      transform: translateX(0)
   .tooltip
     z-index: 999
   li:hover
@@ -522,6 +541,19 @@ header
   .col-md-3:hover, .col-md-4:hover
     .cover
       border-color: #cecece
+      &:hover
+        -webkit-box-shadow: 0px 0px 40px -15px rgba(0,0,0,0.75)
+        -moz-box-shadow: 0px 0px 40px -15px rgba(0,0,0,0.75)
+        box-shadow: 0px 0px 40px -15px rgba(0,0,0,0.75)
+      &:before
+        transition: 0.3s
+        position: absolute
+        top: 0
+        bottom: 0
+        right: 0
+        left: 0
+        content: ''
+        background: rgba(253, 123, 123, 0)
       .top-line
         background-color: #e1dfdf
   .col-md-3, .col-md-4
@@ -581,10 +613,22 @@ header
             color: #F3481C
       .edited
         position: absolute
+        width: 17px
+        height: 15px
+        overflow: hidden
         right: 30px
         top: 3px
         font-size: 17px
         z-index: 10
+        &:hover
+          animation: rotate 1s linear infinite
+          transform-origin: 50% 50%
+          @keyframes rotate
+            0%
+              transform: rotate(0deg)
+            100%
+              transform: rotate(360deg)
+
       .glyphicon-eye-open
         color: #808080 !important
         position: absolute
@@ -592,6 +636,20 @@ header
         top: 3px
         font-size: 17px
         z-index: 10
+        &:hover
+          animation: fade-yes 1.6s ease infinite
+          transform-origin: 50% 50%
+          @keyframes fade-yes
+            0%
+              opacity: 1
+            25%
+              opacity: 0
+            50%
+              opacity: 1
+            75%
+              opacity: 0
+            100%
+              opacity: 1
       .glyphicon-eye-close
         color: #F3481C !important
         position: absolute
@@ -1517,7 +1575,7 @@ ul.category-tab
             .truck.green
               background-color: #39B54A
 .basket-page
-  padding-top: 90px
+  padding-top: 40px
   h1
     text-align: center
     margin-bottom: 30px
@@ -1554,12 +1612,12 @@ ul.category-tab
         color: #333
       .quantity
         position: relative
-        padding-right: 20px
+        padding-right: 0
         margin-top: 57px
         width: 60px
         margin: 60px auto
       input
-        width: 40px
+        width: 65px
         height: 40px
         position: relative
         border: 1px solid #ccc
