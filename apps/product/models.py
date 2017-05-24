@@ -1,14 +1,13 @@
 # coding=utf-8
 from __future__ import unicode_literals
 
-from django.urls import reverse
-
-from apps.shop.models import Shop
-from apps.category.models import Category
-from django.db import models
-from django.utils.translation import ugettext as _
 from ckeditor_uploader.fields import RichTextUploadingField
-# Create your models here.
+from django.db import models
+from django.urls import reverse
+from django.utils.translation import ugettext as _
+
+from apps.category.models import Category
+from apps.shop.models import Shop
 from apps.users.models import User
 
 DELIVERY_TYPES = (
@@ -30,7 +29,6 @@ class ProductPublishedManager(models.Manager):
 
 
 class Product(models.Model):
-
     class Meta:
         verbose_name = 'Продукт'
         verbose_name_plural = 'Продукты'
@@ -44,13 +42,16 @@ class Product(models.Model):
     discount = models.PositiveIntegerField(null=True, blank=True, verbose_name='Скидка')
     currency = models.CharField(null=True, max_length=255, verbose_name='Валюта', default='сом')
     quantity = models.IntegerField(verbose_name='Количество', default=0)
-    delivery_type = models.CharField(verbose_name='Вид доставки', choices=DELIVERY_TYPES, default='self', max_length=255)
+    delivery_type = models.CharField(verbose_name='Вид доставки', choices=DELIVERY_TYPES, default='self',
+                                     max_length=255)
     delivery_cost = models.FloatField(verbose_name='Стоимость доставки', default=0, null=True, blank=True)
     # settings = models.ManyToManyField('ProductSettings', verbose_name='Характеристика')
     availability = models.CharField(_("Наличие"), max_length=100, choices=AVAILABILITY_TYPES, default='available')
     published = models.BooleanField(default=True)
-    short_description = models.TextField(max_length=300, null=True, blank=True, verbose_name='Короткое описание товара до 300 символов')
+    short_description = models.TextField(max_length=300, null=True, blank=True,
+                                         verbose_name='Короткое описание товара до 300 символов')
     long_description = RichTextUploadingField(null=True, blank=True, verbose_name='Полное описание')
+    images = models.ManyToManyField('Media', verbose_name='Изображения продукта', blank=True)
     objects = ProductPublishedManager()
 
     def __str__(self):
@@ -79,8 +80,8 @@ class Product(models.Model):
 
     def get_absolute_url(self):
         return reverse("categories:product_detail", kwargs={'slug': self.slug,
-                                                 'category_slug': self.category.slug,
-                                                 'global_slug': self.category.section.slug})
+                                                            'category_slug': self.category.slug,
+                                                            'global_slug': self.category.section.slug})
 
     def add_to_cart(self):
         return "%s?item=%s&qty=1" % (reverse("cart:detail"), self.id)
@@ -93,7 +94,6 @@ class Product(models.Model):
 
 
 class FavoriteProduct(models.Model):
-
     class Meta:
         verbose_name_plural = "Избранные продукты"
         verbose_name = "Избранный продукт"
@@ -136,10 +136,17 @@ class FavoriteProduct(models.Model):
 
 
 class ProductImage(models.Model):
-
     class Meta:
         verbose_name = "Изображение товара"
         verbose_name_plural = "Изображения товара"
 
     product = models.ForeignKey(Product, verbose_name="Товар")
     image = models.ImageField(upload_to="products/image")
+
+
+class Media(models.Model):
+    class Meta:
+        verbose_name = "Изображение"
+        verbose_name_plural = "Изображения"
+
+    image = models.ImageField(upload_to='images')

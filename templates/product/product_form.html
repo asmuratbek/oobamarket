@@ -212,9 +212,9 @@
         <div class="container">
 
             <div class="form-filter">
-                <form class="form-inline" method="post" enctype="multipart/form-data">
+                <form class="form-inline" method="post" enctype="multipart/form-data" data-media-upload-url="{% url 'product:upload_images' %}" data-remove-uploaded-media-url="{% url 'product:remove_images' %}" id="form">
                     <div class="col-md-4">
-                        <label class="upload" for="id_images">
+                        <label class="upload" for="uploading-images">
                             <i class="glyphicon glyphicon-plus-sign"></i>
                             <div class="add-photo">
                                 Добавить<br>фотографии
@@ -228,7 +228,15 @@
                             <br>
                             <span id="file-counter" style="color: red;"></span>
                         </div>
-                        <input type="file" id="id_images" style="display: none;" multiple>
+                        <input type="file" id="uploading-images" style="display: none;" multiple>
+                        {% render_field form.image %}
+                        {% render_field form.removed_images type='hidden' %}
+                        {% render_field form.uploaded_images type='hidden' %}
+                    </div>
+                    <div class="col-md-4">
+                        <div id="wrapper-files">
+
+                        </div>
                     </div>
                 </form>
             </div>
@@ -253,46 +261,19 @@
     {{ block.super }}
     <script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
     <script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
+    <script src="{% static 'js/image.uploading.multiple.js' %}"></script>
     <script>
-{#        $(document).ready(function () {#}
-{#            $('#get-files').on('change', function (event) {#}
-{#                const wrapper = $('#image-wrapper');#}
-{#                const that = this;#}
-{#                $(wrapper).html('');#}
-{#                for(let i=0; i < this.files.length; ++i) {#}
-{#                    const fileReader = new FileReader();#}
-{#                    fileReader.onload = function (e) {#}
-{#                        wrapper.append('<div class="image-wrap" data-id="' + i + '"><span>X</span><img src="' + e.target.result + '"><input type="file" style="opacity: 0; width: 0; height: 0;" name="upload-file-id-' + i + '" class="image-wrap-inputs"></div>');#}
-{#                        applyDeleteButtons(that);#}
-{#                    };#}
-{#                    fileReader.readAsDataURL(this.files[i]);#}
-{#                }#}
-{#                setTimeout(function () {#}
-{#                    applyFilesToInput(that.files);#}
-{#                }, 500);#}
-{#            });#}
-{##}
-{#            function applyFilesToInput(files) {#}
-{#                $('.image-wrap').each(function (i, obj) {#}
-{#                    console.log(i);#}
-{#                     $(obj).find('input').files.push(files[i]);#}
-{#                    console.log($(obj).find('input').files);#}
-{#                });#}
-{#            }#}
-{##}
-{#            function applyDeleteButtons(input) {#}
-{#                var buttons = $('.image-wrap span');#}
-{#                $(buttons).each(function (i, obj) {#}
-{#                    $(obj).on('click', function () {#}
-{#                        $(obj).parent().fadeOut('slow', function () {#}
-{#                            $(obj).parent().remove();#}
-{#                        });#}
-{#                    });#}
-{#                });#}
-{#            }#}
-{#        });#}
-{##}
-{##}
-{#    </script>#}
-{##}
+        $(document).ready(function () {
+            var upload = new MultipleUpload({
+                uploadInput: '#uploading-images',
+                helpText: '#file-counter',
+                wrapper: '#wrapper-files',
+                form: '#form',
+                removedImagesInput: '#id_removed_images',
+                trueFileInput: '#id_uploaded_images'
+            });
+
+            upload.init();
+        });
+    </script>
 {% endblock %}

@@ -1,4 +1,5 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.exceptions import ObjectDoesNotExist
 from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import CreateView
@@ -10,7 +11,8 @@ from apps.global_category.models import GlobalCategory
 from apps.product.forms import ProductForm, ProductSearchForm
 from apps.users.mixins import AddProductMixin
 from .models import *
-
+from config.settings.base import MEDIA_ROOT
+import os
 
 # Create your views here.
 
@@ -69,6 +71,23 @@ class ProductCreateView(LoginRequiredMixin, AddProductMixin, CreateView):
         form.instance.slug = slugify(form.instance.title)
         form.instance.shop = Shop.objects.get(slug=self.kwargs['slug'])
         form.save()
+        if form.cleaned_data['uploaded_images']:
+            for item in form.cleaned_data['uploaded_images'].split(','):
+                try:
+                    media = Media.objects.get(id=int(item))
+                    form.images.add(media)
+                except ObjectDoesNotExist:
+                    pass
+
+        if form.cleaned_data['removed_images']:
+            for item in form.cleaned_data['removed_images'].split(','):
+                try:
+                    media = Media.objects.get(id=int(item))
+                    image_path = MEDIA_ROOT + '/' + media.image.name
+                    os.remove(image_path)
+                    media.delete()
+                except ObjectDoesNotExist:
+                    pass
         return super(ProductCreateView, self).form_valid(form)
 
 
@@ -99,6 +118,41 @@ class ProductIndexCreateView(LoginRequiredMixin, AddProductMixin, CreateView):
         form.instance.slug = slugify(form.instance.title)
         form.save()
         return super(ProductIndexCreateView, self).form_valid(form)
+
+
+
+
+def upload_images(request):
+    if request.method == 'POST':
+        result = list()
+        image_count = len(request.FILES)
+        for i in range(0, image_count):
+            image_file = request.FILES.get('file-' + str(i))
+            media = Media()
+            media.image = image_file
+            media.save()
+            result.append({'id':media.id, 'url':media.image.url})
+
+        return JsonResponse(dict(uploaded_files=result))
+
+
+def remove_uploaded_image(request):
+    if request.method == 'POST':
+        ids = request.POST.get('media_ids')
+        if ids:
+            for item in ids.split(","):
+                try:
+                    r_media = Media.objects.get(id=int(item))
+                    image_path = MEDIA_ROOT+'/'+r_media.image.name
+                    os.remove(image_path)
+                    r_media.delete()
+                except ObjectDoesNotExist:
+                    pass
+
+            return JsonResponse(dict(done=True))
+        return JsonResponse(dict(done=False))
+    return JsonResponse(dict(done=False))
+
 
 
 def notes(request):
