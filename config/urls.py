@@ -25,6 +25,7 @@ urlpatterns = [
     # url(r'^search/', include('haystack.urls')),
     url(r'^search_results', SearchResultsView.as_view(), name='search'),
     url(r'^search/', notes),
+    url(r'^ckeditor/', include('ckeditor_uploader.urls')),
 
     # Django Admin, use {% url 'admin:index' %}
     url(settings.ADMIN_URL, admin.site.urls),

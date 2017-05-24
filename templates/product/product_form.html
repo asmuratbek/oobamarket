@@ -1,4 +1,5 @@
 {% extends 'base-1.html' %}
+{% load staticfiles %}
 {% load widget_tweaks %}
 {% block content %}
 
@@ -165,10 +166,17 @@
                             <p>Параметры для данной категории отсутствуют. (выводится если нет формы)</p>
                         </div>
 
-{#                        <div class="step_4">#}
-{#                            <h3><span>4.</span> Описание товара <span>(Опционально)</span></h3>#}
+                        <div class="step_4">
+                            <h3><span>4.</span>Короткое описание товара <span>(Опционально)</span></h3>
 {#                            <textarea class="form-control" rows="6"></textarea>#}
-{#                        </div>#}
+                            {% render_field form.short_description|attr:"rows:6"%}
+                        </div>
+
+                        <div class="step_4">
+                            <h3><span>4.</span>Полное описание товара <span>(Опционально)</span></h3>
+{#                            <textarea class="form-control" rows="6"></textarea>#}
+                            {% render_field form.long_description|attr:"rows:6"%}
+                        </div>
 
                         <div class="form-group btn-group-form col-md-12">
 {#                            <button type="submit" class="btn cancel"> Отменить</button>#}
@@ -214,10 +222,11 @@
 
 
 
-{#{% block js %}#}й
-{#    {{ block.super }}#}
-{##}
-{#    <script>#}
+{% block js %}
+    {{ block.super }}
+    <script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
+    <script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
+    <script>
 {#        $(document).ready(function () {#}
 {#            $('#get-files').on('change', function (event) {#}
 {#                const wrapper = $('#image-wrapper');#}
@@ -259,4 +268,4 @@
 {##}
 {#    </script>#}
 {##}
-{#{% endblock %}#}
+{% endblock %}
