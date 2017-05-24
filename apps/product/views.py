@@ -1,8 +1,8 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import HttpResponse, JsonResponse, request
+from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404
-from django.views.generic import CreateView, TemplateView
-from django.views.generic import ListView, DetailView, View
+from django.views.generic import CreateView
+from django.views.generic import ListView, View
 from django.views.generic import UpdateView
 from slugify import slugify
 
@@ -10,6 +10,8 @@ from apps.global_category.models import GlobalCategory
 from apps.product.forms import ProductForm, ProductSearchForm
 from apps.users.mixins import AddProductMixin
 from .models import *
+
+
 # Create your views here.
 
 
@@ -23,7 +25,6 @@ class UserFavoritesListView(LoginRequiredMixin, ListView):
 
 
 class FavoriteCreateView(LoginRequiredMixin, View):
-
     def get(self, request):
         item_id = request.GET.get("item")
         favorite, created = FavoriteProduct.objects.get_or_create(product_id=item_id, user=request.user)
@@ -78,9 +79,8 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
 
     def get_initial(self):
         return {
-                'user': self.request.user
-                }
-
+            'user': self.request.user
+        }
 
 
 class ProductIndexCreateView(LoginRequiredMixin, AddProductMixin, CreateView):
@@ -99,6 +99,7 @@ class ProductIndexCreateView(LoginRequiredMixin, AddProductMixin, CreateView):
         form.instance.slug = slugify(form.instance.title)
         form.save()
         return super(ProductIndexCreateView, self).form_valid(form)
+
 
 def notes(request):
     form = ProductSearchForm(request.GET)

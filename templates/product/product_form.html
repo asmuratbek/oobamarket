@@ -13,45 +13,45 @@
                             <h3><span>1.</span> Основные данные</h3>
                             <div class="form-group select col-md-6">
 
-                                    {% render_field form.shop %}
+                                    {% render_field form.shop|add_error_attr:"aria-invalid:true" %}
 
                             </div>
 
-                            <div class="form-group select col-md-6">
-                                <select class="form-control" id="global_category" required>
-                                    <option>Выберите раздел</option>
-                                    {% for cat in fixed_categories %}
-                                     <option>{{ cat.title }}</option>
-                                {% endfor %}
-                                </select>
-                            </div>
+{#                            <div class="form-group select col-md-6">#}
+{#                                <select class="form-control" id="global_category" required>#}
+{#                                    <option>Выберите раздел</option>#}
+{#                                    {% for cat in fixed_categories %}#}
+{#                                     <option>{{ cat.title }}</option>#}
+{#                                {% endfor %}#}
+{#                                </select>#}
+{#                            </div>#}
 
                             <div class="form-group select col-md-6">
 {#                                <select class="form-control" id="category_list" disabled>#}
 {#                                </select>#}
-                                {% render_field form.category|attr:"id:category_list"|attr:"disabled"|attr:"required" %}
+                                {% render_field form.category %}
                             </div>
 
-                            <div class="form-group select col-md-6">
-                                <select class="form-control" id="subcategory_list" disabled>
-                                </select>
-
-                            </div>
+{#                            <div class="form-group select col-md-6">#}
+{#                                <select class="form-control" id="subcategory_list" disabled>#}
+{#                                </select>#}
+{##}
+{#                            </div>#}
 
                             <div class="form-group input col-md-12">
 {#                                <input type="text" data-toggle="tooltip" title=""#}
 {#                                   data-placement="top"#}
 {#                                   data-original-title="Рекомендация: для лучшего поиска, пишите тип товара в начале названия. Автомобильные шины MAXXIS AT-771 Bravo"#}
 {#                                   aria-describedby="tooltip200612" class="form-control" placeholder="Название товара">#}
-                                {% render_field form.title|attr:"data-toggle:tooltip"|attr:"data-placement:top"|attr:"aria-describedby:tooltip200612"|attr:"required"|attr:"data-original-title:Рекомендация - для лучшего поиска, пишите тип товара в начале названия. Автомобильные шины MAXXIS AT-771 Bravo" placeholder="Название товара"%}
+                                {% render_field form.title|add_error_attr:"aria-invalid:true"|attr:"data-toggle:tooltip"|attr:"data-placement:top"|attr:"aria-describedby:tooltip200612"|attr:"required"|attr:"data-original-title:Рекомендация - для лучшего поиска, пишите тип товара в начале названия. Автомобильные шины MAXXIS AT-771 Bravo" placeholder="Название товара"%}
                             </div>
 
                             <div class="form-group input col-md-12">
 {#                                <input type="text" class="form-control mini price" placeholder="Цена">#}
-                                {% render_field form.price|attr:"required"|attr:"class:form-control mini price" placeholder="Цена" %}
+                                {% render_field form.price|add_error_attr:"aria-invalid:true"|attr:"required"|attr:"class:form-control mini price" placeholder="Цена" %}
 
                                 <div class="select">
-                                   {% render_field  form.currency|attr:"required" %}
+                                   {% render_field  form.currency|add_error_attr:"aria-invalid:true"|attr:"required" %}
                                 </div>
 
                                 <label class="switch">
@@ -65,26 +65,26 @@
                                 <div class="discount">
                                     <label>Размер скидки</label>
 {#                                    <input type="text" class="form-control" id="discount_id" placeholder="0%" disabled>#}
-                                    {% render_field form.discount|attr:"id:discount_id"|attr:"disabled" placeholder="0%"%}
+                                    {% render_field form.discount|add_error_attr:"aria-invalid:true"|attr:"id:discount_id"|attr:"disabled" placeholder="0%"%}
                                 </div>
                             </div>
 
                             <div class="form-group input col-md-12">
 {#                                <input type="text" class="form-control mini" placeholder="Количество">#}
-                                {% render_field form.quantity|attr:"class:form-control mini" placeholder="Количество" %}
+                                {% render_field form.quantity|add_error_attr:"aria-invalid:true"|attr:"class:form-control mini" placeholder="Количество" %}
                                 <label for="">Количество</label>
                             </div>
 
                             <div class="form-group select col-md-6">
 
-                                    {% render_field form.availability %}
+                                    {% render_field form.availability|add_error_attr:"aria-invalid:true" %}
 
                             </div>
 
                                 <div class="form-group input col-md-12">
                                 <label class="switch">
 {#                                    <input type="checkbox" class="switch__input">#}
-                                    {% render_field form.published|attr:"class:switch__input" %}
+                                    {% render_field form.published|add_error_attr:"aria-invalid:true"|attr:"class:switch__input" %}
                                     <div class="switch__toggle">
                                         <div class="switch__handle"></div>
                                     </div>
@@ -125,11 +125,11 @@
 
 
                             <div class="form-group select col-md-6">
-                                {% render_field form.delivery_type %}
+                                {% render_field form.delivery_type|add_error_attr:"aria-invalid:true" %}
                             </div>
 
                             <div class="form-group input col-md-6">
-                                {% render_field form.delivery_cost|attr:"class:form-control mini"|attr:"disabled" placeholder="Стоимость доставки" %}
+                                {% render_field form.delivery_cost|add_error_attr:"aria-invalid:true"|attr:"class:form-control mini"|attr:"disabled" placeholder="Стоимость доставки" %}
                             </div>
                         </div>
 
@@ -203,18 +203,18 @@
 
 
 
-        <form action="" method="post" enctype="multipart/form-data">
-                        {% csrf_token %}
-                        {{ form }}
-                        <input type="submit" value="Save" />
-                    </form>
+{#        <form action="" method="post" enctype="multipart/form-data">#}
+{#                        {% csrf_token %}#}
+{#                        {{ form }}#}
+{#                        <input type="submit" value="Save" />#}
+{#                    </form>#}
 
 
 {% endblock %}
 
 
 
-{#{% block js %}#}
+{#{% block js %}#}й
 {#    {{ block.super }}#}
 {##}
 {#    <script>#}
