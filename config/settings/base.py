@@ -7,8 +7,9 @@ https://docs.djangoproject.com/en/dev/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/dev/ref/settings/
 """
-import environ
 import os
+
+import environ
 
 DB_DIR = os.path.split(os.path.split(os.path.abspath(os.path.dirname(__file__)))[0])[0]
 ROOT_DIR = environ.Path(__file__) - 3  # (apps/config/settings/base.py - 3 = ooba/)
@@ -61,8 +62,9 @@ THIRD_PARTY_APPS = [
     'allauth.socialaccount.providers.vk',
     'rest_framework',
     'widget_tweaks',
+    'ckeditor',
+    'ckeditor_uploader',
 ]
-
 
 # Apps specific for this project go here.
 LOCAL_APPS = [
@@ -158,7 +160,6 @@ DATABASES = {
     'default': env.db('DATABASE_URL', default='postgres:///ooba'),
 }
 DATABASES['default']['ATOMIC_REQUESTS'] = True
-
 
 # GENERAL CONFIGURATION
 # ------------------------------------------------------------------------------
@@ -354,13 +355,11 @@ SOCIALACCOUNT_PROVIDERS = {
     }
 }
 
-
 # Braintree sandbox
 
 BRAINTREE_MERCHANT_ID = "9spk2t7jt6xcgy9p"
 BRAINTREE_PUBLIC = "t2sxn5r5jx8knbcd"
 BRAINTREE_PRIVATE = "a5324df2de5e4da5331f91551bdee1c7"
-
 
 import os
 import raven
@@ -370,4 +369,15 @@ RAVEN_CONFIG = {
     # If you are using git, you can also automatically configure the
     # release based on the git info.
     'release': raven.fetch_git_sha(os.path.dirname(os.pardir)),
+}
+
+CKEDITOR_JQUERY_URL = '//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js'
+CKEDITOR_UPLOAD_PATH = "uploads/"
+CKEDITOR_IMAGE_BACKEND = 'Pillow'
+
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'full',
+        'language': 'ru',
+    },
 }

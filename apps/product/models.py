@@ -7,7 +7,7 @@ from apps.shop.models import Shop
 from apps.category.models import Category
 from django.db import models
 from django.utils.translation import ugettext as _
-
+from ckeditor_uploader.fields import RichTextUploadingField
 # Create your models here.
 from apps.users.models import User
 
@@ -49,6 +49,8 @@ class Product(models.Model):
     # settings = models.ManyToManyField('ProductSettings', verbose_name='Характеристика')
     availability = models.CharField(_("Наличие"), max_length=100, choices=AVAILABILITY_TYPES, default='available')
     published = models.BooleanField(default=True)
+    short_description = models.TextField(max_length=300, null=True, blank=True, verbose_name='Короткое описание товара до 300 символов')
+    long_description = RichTextUploadingField(null=True, blank=True, verbose_name='Полное описание')
     objects = ProductPublishedManager()
 
     def __str__(self):
