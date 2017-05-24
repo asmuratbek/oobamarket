@@ -172,7 +172,7 @@
 
                         <div class="form-group btn-group-form col-md-12">
 {#                            <button type="submit" class="btn cancel"> Отменить</button>#}
-                            <input type="submit" class="btn add"> Добавить товар</input>
+                            <button type="submit" class="btn add"> Добавить товар</button>
                         </div>
                     </div>
 
@@ -200,6 +200,43 @@
 
         </div>
     </section>
+
+
+
+    <section class="upload_images add-product">
+        <div class="container">
+
+            <div class="form-filter">
+                <form class="form-inline" method="post" enctype="multipart/form-data" data-media-upload-url="" data-remove-uploaded-media-url="">
+                    <div class="col-md-4">
+                        <label class="upload" for="id_images">
+                            <i class="glyphicon glyphicon-plus-sign"></i>
+                            <div class="add-photo">
+                                Добавить<br>фотографии
+                            </div>
+                        </label>
+
+                        <div class="info">
+                            <span>Рекомендация для фото:</span>
+                            <p>Размер: 380x380 или больше</p>
+                            <p>Фон: белый или прозрачный</p>
+                            <br>
+                            <span id="file-counter" style="color: red;"></span>
+                        </div>
+                        <input type="hidden" id="id_images">
+                        <input type="hidden" id="removed-images">
+                        <input type="file" id="uploading-images-input" multiple class="hidden">
+
+                    </div>
+                    <div id="upload-images-row">
+
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </section>
+
 
 {#    <div class="row">#}
 {#        <div class="col-md-12">#}

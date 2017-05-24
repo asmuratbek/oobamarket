@@ -205,6 +205,33 @@
                 </form>
             </div>
 
+        </div>
+    </section>
+
+    <section class="upload_images add-product">
+        <div class="container">
+
+            <div class="form-filter">
+                <form class="form-inline" method="post" enctype="multipart/form-data">
+                    <div class="col-md-4">
+                        <label class="upload" for="id_images">
+                            <i class="glyphicon glyphicon-plus-sign"></i>
+                            <div class="add-photo">
+                                Добавить<br>фотографии
+                            </div>
+                        </label>
+
+                        <div class="info">
+                            <span>Рекомендация для фото:</span>
+                            <p>Размер: 380x380 или больше</p>
+                            <p>Фон: белый или прозрачный</p>
+                            <br>
+                            <span id="file-counter" style="color: red;"></span>
+                        </div>
+                        <input type="file" id="id_images" style="display: none;" multiple>
+                    </div>
+                </form>
+            </div>
 
         </div>
     </section>
