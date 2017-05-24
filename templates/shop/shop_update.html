@@ -36,23 +36,23 @@
                         </div>
                 </div>
 
-                <div class="col-md-4">
-                        <label class="upload" for="id_images">
-                            <i class="glyphicon glyphicon-plus-sign"></i>
-                            <div class="add-photo">
-                                Добавить<br>фотографии
-                             </div>
-                        </label>
-
-                        <div class="info">
-                            <span>Рекомендация для фото:</span>
-                            <p>Размер: 380x380 или больше</p>
-                            <p>Фон: белый или прозрачный</p>
-                            <br>
-                            <span id="file-counter" style="color: red;"></span>
-                        </div>
-                        {% render_field form.logo|attr:"type:file"|attr:"style:display:none;"|attr:"id:id_images" %}
-                    </div>
+{#                <div class="col-md-4">#}
+{#                        <label class="upload" for="id_images">#}
+{#                            <i class="glyphicon glyphicon-plus-sign"></i>#}
+{#                            <div class="add-photo">#}
+{#                                Добавить<br>фотографии#}
+{#                             </div>#}
+{#                        </label>#}
+{##}
+{#                        <div class="info">#}
+{#                            <span>Рекомендация для фото:</span>#}
+{#                            <p>Размер: 380x380 или больше</p>#}
+{#                            <p>Фон: белый или прозрачный</p>#}
+{#                            <br>#}
+{#                            <span id="file-counter" style="color: red;"></span>#}
+{#                        </div>#}
+{#                        {% render_field form.logo|attr:"type:file"|attr:"style:display:none;"|attr:"id:id_images" %}#}
+{#                    </div>#}
             </form>
         </div>
     </div>

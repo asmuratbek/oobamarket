@@ -42,7 +42,6 @@ def get_seo_data(request, object):
                     'seo_text': "Ооба интернет магазин"
                 }
         elif isinstance(object, Product):
-            print(object)
             seo_data = MetaData.objects.filter(product=object).first()
             if seo_data:
                 return {
