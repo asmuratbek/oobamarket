@@ -59,6 +59,11 @@
 {#                    <button type="submit" class="btn btn-default">Отправить</button>#}
 {#                </div>#}
 {#            </form>#}
+            {% if object.short_description %}
+            <p>
+                Короткое описание:{{ object.short_description }}
+            </p>
+            {% endif %}
             <div class="availability">
                     <span>Наличие: <span class="{% if object.availability == "available" %} stock
                                                 {% elif object.availability == "waiting" %} expectation
