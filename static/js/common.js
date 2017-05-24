@@ -1,3 +1,8 @@
+$(window).load(function(){
+    $(".search-index").addClass('animated fade')
+
+});
+
 $( document ).ready(function() {
 
     $('.js-select').selectize({

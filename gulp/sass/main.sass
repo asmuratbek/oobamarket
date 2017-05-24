@@ -1,6 +1,35 @@
 @import "bourbon"
 
 //Load Libs SASS
+body
+  animation: fade 1s ease
+  transform-origin: 50% 50%
+
+
+  @keyframes fade
+    0%
+      opacity: 0
+
+    100%
+      opacity: 1
+
+.search-index
+  transition: 1s
+  opacity: 0
+.search-index.animated.fade
+  animation: passing_6354 1s linear
+  transform-origin: 50% 50%
+  opacity: 1
+
+  @keyframes passing_6354
+    0%
+      transform: translateY(5%)
+      opacity: 0
+    100%
+      transform: translateY(0%)
+      opacity: 1
+
+
 .custom-scroll
   position: relative
   overflow: hidden
@@ -1488,6 +1517,7 @@ ul.category-tab
             .truck.green
               background-color: #39B54A
 .basket-page
+  padding-top: 90px
   h1
     text-align: center
     margin-bottom: 30px
