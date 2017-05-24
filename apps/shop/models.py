@@ -5,6 +5,7 @@ from django.core.mail import send_mail
 from django.db import models
 from django.urls import reverse
 from django.utils.translation import ugettext as _
+
 from apps.users.models import User
 
 # Create your models here.
@@ -70,7 +71,7 @@ class Shop(models.Model):
         return reverse('shops:update', kwargs={'slug': self.slug})
 
     def send_email(self, subject, message):
-        send_mail(subject, message, 'asmnotifications@gmail.com', [self.email,])
+        send_mail(subject, message, 'asmnotifications@gmail.com', [self.email, ])
 
     def is_owner(self, user):
         return True if len(self.user.filter(id=user.id)) > 0  else False
