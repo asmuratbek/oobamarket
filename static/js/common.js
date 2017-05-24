@@ -1,6 +1,5 @@
 $(window).load(function(){
     $(".search-index").addClass('animated fade')
-
 });
 
 $( document ).ready(function() {

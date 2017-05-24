@@ -54,7 +54,7 @@
                         <a href="{% url 'shops:update' slug=object.slug %}">Настройки магазина</a>
                     </div>
                         <div class="pull-left edit">
-                        <a href="">Редактировать баннера</a>
+                        <a href="{% url 'shops:add_banner' slug=object.slug %}">Редактировать баннера</a>
                     </div>
                         <div class="pull-left edit">
                         <a href="">Редактировать соц иконки</a>
