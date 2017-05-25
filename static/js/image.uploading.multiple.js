@@ -70,9 +70,9 @@ function MultipleUpload(options) {
                 success: function (response) {
                     response.uploaded_files.forEach(function (obj, index, element) {
                         $(uploadedImagesRow).append('<div class="one-image" data-id="' + obj.id + '">' +
-                            '<span class="remove-image">X</span>' +
-                            '<img src="' + obj.url + '">' +
-                            '</div>');
+                                                        '<span class="remove-image">X</span>' +
+                                                        '<img src="' + obj.url + '">' +
+                                                    '</div>');
                         initRemoveButtons();
                         newFileArray.push(obj.id);
                     });
@@ -85,7 +85,7 @@ function MultipleUpload(options) {
             });
 
         });
-
+        console.log($(form));
         $(form).on('submit', function (e) {
             e.preventDefault();
             var trueFileInput = $(options.trueFileInput);
@@ -93,6 +93,7 @@ function MultipleUpload(options) {
                 var value = $(trueFileInput).val();
                 $(trueFileInput).val(value !== '' ? value + ',' + obj : obj);
             });
+            console.log(newFileArray);
             this.submit();
         });
     }

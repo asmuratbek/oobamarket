@@ -1,3 +1,5 @@
+import os
+
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import JsonResponse
@@ -10,9 +12,9 @@ from slugify import slugify
 from apps.global_category.models import GlobalCategory
 from apps.product.forms import ProductForm, ProductSearchForm
 from apps.users.mixins import AddProductMixin
-from .models import *
 from config.settings.base import MEDIA_ROOT
-import os
+from .models import *
+
 
 # Create your views here.
 
@@ -68,17 +70,26 @@ class ProductCreateView(LoginRequiredMixin, AddProductMixin, CreateView):
                 }
 
     def form_valid(self, form, **kwargs):
-        form.instance.slug = slugify(form.instance.title)
-        form.instance.shop = Shop.objects.get(slug=self.kwargs['slug'])
+        product = form.instance
+        product.slug = slugify(form.instance.title)
+        product.shop = Shop.objects.get(slug=self.kwargs['slug'])
         form.save()
+        print(form.cleaned_data['uploaded_images'])
         if form.cleaned_data['uploaded_images']:
-            for item in form.cleaned_data['uploaded_images'].split(','):
+            if ',' in form.cleaned_data['uploaded_images']:
+                for item in form.cleaned_data['uploaded_images'].split(','):
+                    try:
+                        media = Media.objects.get(id=int(item))
+                        product.images.add(media)
+                    except ObjectDoesNotExist:
+                        pass
+            else:
                 try:
-                    media = Media.objects.get(id=int(item))
-                    form.images.add(media)
+                    media = Media.objects.get(id=int(form.cleaned_data['uploaded_images']))
+                    product.images.add(media)
                 except ObjectDoesNotExist:
-                    pass
-
+                    print('error')
+        form.save()
         if form.cleaned_data['removed_images']:
             for item in form.cleaned_data['removed_images'].split(','):
                 try:
@@ -88,6 +99,7 @@ class ProductCreateView(LoginRequiredMixin, AddProductMixin, CreateView):
                     media.delete()
                 except ObjectDoesNotExist:
                     pass
+
         return super(ProductCreateView, self).form_valid(form)
 
 
@@ -120,8 +132,6 @@ class ProductIndexCreateView(LoginRequiredMixin, AddProductMixin, CreateView):
         return super(ProductIndexCreateView, self).form_valid(form)
 
 
-
-
 def upload_images(request):
     if request.method == 'POST':
         result = list()
@@ -131,7 +141,7 @@ def upload_images(request):
             media = Media()
             media.image = image_file
             media.save()
-            result.append({'id':media.id, 'url':media.image.url})
+            result.append({'id': media.id, 'url': media.image.url})
 
         return JsonResponse(dict(uploaded_files=result))
 
@@ -143,7 +153,7 @@ def remove_uploaded_image(request):
             for item in ids.split(","):
                 try:
                     r_media = Media.objects.get(id=int(item))
-                    image_path = MEDIA_ROOT+'/'+r_media.image.name
+                    image_path = MEDIA_ROOT + '/' + r_media.image.name
                     os.remove(image_path)
                     r_media.delete()
                 except ObjectDoesNotExist:
@@ -152,7 +162,6 @@ def remove_uploaded_image(request):
             return JsonResponse(dict(done=True))
         return JsonResponse(dict(done=False))
     return JsonResponse(dict(done=False))
-
 
 
 def notes(request):
