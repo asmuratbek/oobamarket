@@ -345,8 +345,6 @@ $( document ).ready(function() {
                 console.log(data);
                 if (data.count > 0) {
                     subcategoryList.removeAttr('disabled');
-                    var categoryList = $('#category_list');
-                    categoryList.removeAttr('name');
                     subcategoryList.html('<option>Выберите подкатегорию</option>');
                     $.each(data.category_list, function (key, value) {
                         subcategoryList.append('<option value=' + key + '>' + value + '</option>')
@@ -364,6 +362,19 @@ $( document ).ready(function() {
                 console.log(error);
             }
        });
+    });
+
+    $('#subcategory_list').on('change', function () {
+        var categoryList = $('#category_list');
+        var selected = $(this).find(":selected");
+        if (selected.hasAttr('value')) {
+            categoryList.removeAttr('name')
+            $(this).attr('name', 'category');
+        } else {
+            $(this).removeAttr('name')
+            categoryList.attr('name', 'category');
+        }
+
     });
 
 
