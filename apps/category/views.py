@@ -18,9 +18,10 @@ def category_detail(request, global_slug, slug):
 def get_category_from_global_category(request):
     global_category = get_object_or_404(GlobalCategory, title=request.GET.get('global_category'))
     categories = Category.objects.filter(section=global_category)
-    category_list = [category.title for category in categories]
+    category_list = {'{}'.format(category.id) : '{}'.format(category.title) for category in categories}
     data = {
-        'category_list': category_list
+        'category_list': category_list,
+        'count': len(category_list)
     }
     return JsonResponse(data)
 
@@ -28,8 +29,9 @@ def get_category_from_global_category(request):
 def get_subcategory_from_category(request):
     category = get_object_or_404(Category, title=request.GET.get('category'))
     categories = Category.objects.filter(parent=category)
-    category_list = [category.title for category in categories]
+    category_list = {'{}'.format(category.id) : '{}'.format(category.title) for category in categories}
     data = {
-        'category_list': category_list
+        'category_list': category_list,
+        'count': len(category_list)
     }
     return JsonResponse(data)
