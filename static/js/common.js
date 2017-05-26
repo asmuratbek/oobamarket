@@ -267,9 +267,6 @@ $( document ).ready(function() {
         })
     });
 
-
-    $
-
     $('.add-basket').click(function (event) {
         event.preventDefault();
         var thisItem = $(this);
@@ -304,8 +301,8 @@ $( document ).ready(function() {
     });
 
     $('#global_category').on('change', function () {
-        var categoryList = $('#id_category');
-       console.log(categoryList);
+        var categoryList = $('#category_list');
+       console.log("Here");
        $.ajax({
            type: "GET",
             url: "/get_category_list/",
@@ -315,11 +312,11 @@ $( document ).ready(function() {
                 },
             success: function (data) {
                 console.log(data);
-                if (data.category_list.length > 0) {
-                    $(categoryList).fadeIn('slow');
-                    $(categoryList).html('<option selected>Выберите категорию</option>');
-                    $.each(data.category_list, function (index, value) {
-                        $(categoryList).append('<option>' + value + '</option>')
+                if (data.count > 0) {
+                    categoryList.removeAttr('disabled');
+                    categoryList.html('<option>Выберите категорию</option>');
+                    $.each(data.category_list, function (key, value) {
+                        categoryList.append('<option value=' + key + '>' + value + '</option>')
                     });
                 }
 
@@ -345,12 +342,12 @@ $( document ).ready(function() {
                     "category":  $("#category_list option:selected").text()
                 },
             success: function (data) {
-                console.log(data)
-                if (data.category_list.length > 0) {
+                console.log(data);
+                if (data.count > 0) {
                     subcategoryList.removeAttr('disabled');
                     subcategoryList.html('<option>Выберите подкатегорию</option>');
-                    $.each(data.category_list, function (index, value) {
-                        subcategoryList.append('<option>' + value + '</option>')
+                    $.each(data.category_list, function (key, value) {
+                        subcategoryList.append('<option value=' + key + '>' + value + '</option>')
                     });
                 }
 
@@ -365,6 +362,19 @@ $( document ).ready(function() {
                 console.log(error);
             }
        });
+    });
+
+    $('#subcategory_list').on('change', function () {
+        var categoryList = $('#category_list');
+        var selected = $(this).find(":selected");
+        if (selected.hasAttr('value')) {
+            categoryList.removeAttr('name')
+            $(this).attr('name', 'category');
+        } else {
+            $(this).removeAttr('name')
+            categoryList.attr('name', 'category');
+        }
+
     });
 
 

@@ -58,8 +58,8 @@ class Product(models.Model):
         return "{shop} - {category} - {title}".format(shop=self.shop.title, category=self.category, title=self.title)
 
     def get_main_image(self):
-        if self.productimage_set.all():
-            return self.productimage_set.first().image.url
+        if self.media_set.all():
+            return self.media_set.first().image.url
         else:
             return None
 

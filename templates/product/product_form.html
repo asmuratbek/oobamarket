@@ -18,26 +18,26 @@
 
                             </div>
 
-{#                            <div class="form-group select col-md-6">#}
-{#                                <select class="form-control" id="global_category" required>#}
-{#                                    <option>Выберите раздел</option>#}
-{#                                    {% for cat in fixed_categories %}#}
-{#                                     <option>{{ cat.title }}</option>#}
-{#                                {% endfor %}#}
-{#                                </select>#}
-{#                            </div>#}
-
                             <div class="form-group select col-md-6">
-{#                                <select class="form-control" id="category_list" disabled>#}
-{#                                </select>#}
-                                {% render_field form.category %}
+                                <select class="form-control" id="global_category" required>
+                                    <option>Выберите раздел</option>
+                                    {% for cat in fixed_categories %}
+                                         <option>{{ cat.title }}</option>
+                                    {% endfor %}
+                                </select>
                             </div>
 
-{#                            <div class="form-group select col-md-6">#}
-{#                                <select class="form-control" id="subcategory_list" disabled>#}
-{#                                </select>#}
-{##}
-{#                            </div>#}
+                            <div class="form-group select col-md-6">
+                                <select class="form-control" id="category_list" name="category" disabled>
+                                </select>
+
+                            </div>
+
+                            <div class="form-group select col-md-6">
+                                <select class="form-control" id="subcategory_list" disabled>
+                                </select>
+
+                            </div>
 
                             <div class="form-group input col-md-12">
 {#                                <input type="text" data-toggle="tooltip" title=""#}
