@@ -11,10 +11,16 @@ class ProductImagesInline(admin.StackedInline):
     extra = 1
 
 
+class MediaInline(admin.StackedInline):
+    model = Product.media_set.through
+    verbose_name_plural = "Изображения товара"
+    extra = 0
+
+
 class ProductAdmin(admin.ModelAdmin):
-    inlines = [ProductImagesInline, ]
+    inlines = [ProductImagesInline, MediaInline]
     prepopulated_fields = {'slug': ('title',)}
-    filter_horizontal = ('images',)
+    # filter_horizontal = ('images',)
 
 
 admin.site.register(Product, ProductAdmin)

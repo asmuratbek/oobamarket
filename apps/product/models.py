@@ -51,7 +51,7 @@ class Product(models.Model):
     short_description = models.TextField(max_length=300, null=True, blank=True,
                                          verbose_name='Короткое описание товара до 300 символов')
     long_description = RichTextUploadingField(null=True, blank=True, verbose_name='Полное описание')
-    images = models.ManyToManyField('Media', verbose_name='Изображения продукта', blank=True)
+    # images = models.ManyToManyField('Media', verbose_name='Изображения продукта', blank=True)
     objects = ProductPublishedManager()
 
     def __str__(self):
@@ -150,3 +150,7 @@ class Media(models.Model):
         verbose_name_plural = "Изображения"
 
     image = models.ImageField(upload_to='images')
+    products = models.ManyToManyField(Product)
+
+    def __str__(self):
+        return self.image.url

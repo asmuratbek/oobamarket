@@ -80,16 +80,16 @@ class ProductCreateView(LoginRequiredMixin, AddProductMixin, CreateView):
                 for item in form.cleaned_data['uploaded_images'].split(','):
                     try:
                         media = Media.objects.get(id=int(item))
-                        product.images.add(media)
+                        product.media_set.add(media)
                     except ObjectDoesNotExist:
                         pass
             else:
                 try:
                     media = Media.objects.get(id=int(form.cleaned_data['uploaded_images']))
-                    product.images.add(media)
+                    product.media_set.add(media)
                 except ObjectDoesNotExist:
                     print('error')
-        form._save_m2m()
+        form.save()
         if form.cleaned_data['removed_images']:
             for item in form.cleaned_data['removed_images'].split(','):
                 try:
