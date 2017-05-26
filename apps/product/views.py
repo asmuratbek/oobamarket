@@ -170,59 +170,6 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
 #
 #    return HttpResponseRedirect(reverse('index'))
 
-def create_product(request):
-    form = ProductForm(request.POST, files=request.FILES)
-    if request.method == 'POST':
-        if form.is_valid():
-            product = Product()
-            product.shop = form.cleaned_data['shop']
-            product.category = form.cleaned_data['category']
-            product.title = form.cleaned_data['title']
-            product.slug = slugify(form.cleaned_data['title'])
-            product.price = form.cleaned_data['price'] if form.cleaned_data['price'] else 'Договорная'
-            product.short_description = form.cleaned_data['short_description']
-            product.long_description = form.cleaned_data['long_description']
-            product.discount = form.cleaned_data['discount']
-            product.quantity = form.cleaned_data['quantity']
-            product.delivery_type = form.cleaned_data['delivery_type']
-            product.delivery_cost = form.cleaned_data['delivery_cost']
-            product.availability = form.cleaned_data['availability']
-            product.published = form.cleaned_data['published'] if form.cleaned_data['published'] else True
-            product.save()
-
-        if form.cleaned_data['uploaded_images']:
-            if ',' in form.cleaned_data['uploaded_images']:
-                for item in form.cleaned_data['uploaded_images'].split(','):
-                    try:
-                        media = Media.objects.get(id=int(item))
-                        product.images.add(media)
-                    except ObjectDoesNotExist:
-                        pass
-            else:
-                try:
-                    media = Media.objects.get(id=int(form.cleaned_data['uploaded_images']))
-                    product.images.add(media)
-                except ObjectDoesNotExist:
-                    print('error')
-        form.save()
-        if form.cleaned_data['removed_images']:
-            for item in form.cleaned_data['removed_images'].split(','):
-                try:
-                    media = Media.objects.get(id=int(item))
-                    image_path = MEDIA_ROOT + '/' + media.image.name
-                    os.remove(image_path)
-                    media.delete()
-                except ObjectDoesNotExist:
-                    pass
-
-
-            return HttpResponseRedirect(reverse('shops:detail', args=(object.shop.slug,)))
-        else:
-            return HttpResponseRedirect(reverse('index'))
-
-
-    return HttpResponseRedirect(reverse('index'))
-
 class ProductIndexCreateView(LoginRequiredMixin, AddProductMixin, CreateView):
     template_name = 'product/product_form.html'
 
