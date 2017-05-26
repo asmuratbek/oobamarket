@@ -63,6 +63,11 @@ class Product(models.Model):
         else:
             return None
 
+    def delete(self, *args, **kwargs):
+        if self.media_set.count() > 0:
+            del_media = [item.delete() for item in self.media_set.all()]
+        super(Product, self).delete(*args, **kwargs)
+
     def get_shop_title(self):
         return self.shop.title
 
@@ -152,5 +157,5 @@ class Media(models.Model):
     image = models.ImageField(upload_to='images')
     products = models.ManyToManyField(Product)
 
-    def __str__(self):
-        return self.image.url
+    # def __str__(self):
+    #     return self.image.url

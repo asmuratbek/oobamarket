@@ -62,6 +62,7 @@ THIRD_PARTY_APPS = [
     'allauth.socialaccount.providers.vk',
     'rest_framework',
     'widget_tweaks',
+    'django_cleanup',
     'ckeditor',
     'ckeditor_uploader',
 ]
