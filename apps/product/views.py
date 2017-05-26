@@ -2,6 +2,7 @@ import os
 
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import ObjectDoesNotExist
+from django.http import HttpResponseRedirect
 from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import CreateView
@@ -73,8 +74,122 @@ class ProductCreateView(LoginRequiredMixin, AddProductMixin, CreateView):
         product = form.instance
         product.slug = slugify(form.instance.title)
         product.shop = Shop.objects.get(slug=self.kwargs['slug'])
-        form.save()
-        print(form.cleaned_data['uploaded_images'])
+        product.save()
+        if form.cleaned_data['uploaded_images']:
+            if ',' in form.cleaned_data['uploaded_images']:
+                for item in form.cleaned_data['uploaded_images'].split(','):
+                    try:
+                        media = Media.objects.get(id=int(item))
+                        product.images.add(media)
+                    except ObjectDoesNotExist:
+                        pass
+            else:
+                try:
+                    media = Media.objects.get(id=int(form.cleaned_data['uploaded_images']))
+                    product.images.add(media)
+                except ObjectDoesNotExist:
+                    print('error')
+        form._save_m2m()
+        if form.cleaned_data['removed_images']:
+            for item in form.cleaned_data['removed_images'].split(','):
+                try:
+                    media = Media.objects.get(id=int(item))
+                    image_path = MEDIA_ROOT + '/' + media.image.name
+                    os.remove(image_path)
+                    media.delete()
+                except ObjectDoesNotExist:
+                    pass
+
+        return super(ProductCreateView, self).form_valid(form)
+
+
+class ProductUpdateView(LoginRequiredMixin, UpdateView):
+    model = Product
+    form_class = ProductForm
+    template_name = 'product/product_update.html'
+
+    def get_initial(self):
+        return {
+            'user': self.request.user
+        }
+
+# def create_new_ad(request):
+#     form = AdCreationForm(request.POST, files=request.FILES)
+#     if request.POST:
+#         if form.is_valid():
+#             new_ad = Ad()
+#             new_ad.title = form.cleaned_data['title']
+#             new_ad.description = form.cleaned_data['description']
+#             new_ad.category = form.cleaned_data['category']
+#             new_ad.city = form.cleaned_data['city']
+#             new_ad.metro = form.cleaned_data['metro']
+#             new_ad.phone = form.cleaned_data['phone']
+#             new_ad.user = request.user if request.user and not request.user.is_anonymous else None
+#             new_ad.price = form.cleaned_data['price'] if form.cleaned_data['price'] else 'Договорная'
+#             temp_location = json.loads(form.cleaned_data['location'])
+#             location = Coordinates()
+#             position = Geoposition(temp_location['lat'], temp_location['lng'])
+#             location.position = position
+#             location.save()
+#             new_ad.location = location
+#             new_ad.is_active = True
+#             new_ad.save()
+#
+#            if form.cleaned_data['removed_images']:
+#                 removed_images = form.cleaned_data['removed_images'].split(',')
+#                 for item in removed_images:
+#                     try:
+#                         r_media = Media.objects.get(id=int(item))
+#                         file_path = settings.MEDIA_ROOT + '/' + r_media.media_file.name
+#                         os.remove(file_path)
+#                         r_media.delete()
+#                     except ObjectDoesNotExist:
+#                         pass
+#
+#            if form.cleaned_data['images']:
+#                 images = form.cleaned_data['images'].split(',')
+#                 for item in images:
+#                     try:
+#                         media = Media.objects.get(id=int(item))
+#                         new_ad.media.add(media)
+#                     except ObjectDoesNotExist:
+#                         pass
+#
+#            link_to_ad = SITE_PROTOCOL + SITE_URL + '/admin/ad_app/ad/' + str(new_ad.id) + '/change'
+#             message = '<b>Пользователь:</b>' + str(new_ad.user) if new_ad.user else '<b>Пользователь:</b> Аноним'
+#             message += '<br>' + '<b>Дата:</b>' + str(
+#                 datetime.date.today()) + '<br>' + '<b>Ссылка:</b> <a href="' + link_to_ad + '" target="_blank">' + link_to_ad + '</a>'
+#             thread = threading.Thread(target=send_email_notification, args=('Новое объявление',
+#                                                                             mark_safe(message),
+#                                                                             ADMIN_EMAIL))
+#             thread.start()
+#             return HttpResponseRedirect(reverse('ad:one_ad', kwargs={'ad_id': new_ad.id}))
+#         else:
+#             print form.errors
+#             return HttpResponseRedirect(reverse('index'))
+#
+#    return HttpResponseRedirect(reverse('index'))
+
+def create_product(request):
+    form = ProductForm(request.POST, files=request.FILES)
+    if request.method == 'POST':
+        if form.is_valid():
+            product = Product()
+            product.shop = form.cleaned_data['shop']
+            product.category = form.cleaned_data['category']
+            product.title = form.cleaned_data['title']
+            product.slug = slugify(form.cleaned_data['title'])
+            product.price = form.cleaned_data['price'] if form.cleaned_data['price'] else 'Договорная'
+            product.short_description = form.cleaned_data['short_description']
+            product.long_description = form.cleaned_data['long_description']
+            product.discount = form.cleaned_data['discount']
+            product.quantity = form.cleaned_data['quantity']
+            product.delivery_type = form.cleaned_data['delivery_type']
+            product.delivery_cost = form.cleaned_data['delivery_cost']
+            product.availability = form.cleaned_data['availability']
+            product.published = form.cleaned_data['published'] if form.cleaned_data['published'] else True
+            product.save()
+
         if form.cleaned_data['uploaded_images']:
             if ',' in form.cleaned_data['uploaded_images']:
                 for item in form.cleaned_data['uploaded_images'].split(','):
@@ -100,19 +215,13 @@ class ProductCreateView(LoginRequiredMixin, AddProductMixin, CreateView):
                 except ObjectDoesNotExist:
                     pass
 
-        return super(ProductCreateView, self).form_valid(form)
+
+            return HttpResponseRedirect(reverse('shops:detail', args=(object.shop.slug,)))
+        else:
+            return HttpResponseRedirect(reverse('index'))
 
 
-class ProductUpdateView(LoginRequiredMixin, UpdateView):
-    model = Product
-    form_class = ProductForm
-    template_name = 'product/product_update.html'
-
-    def get_initial(self):
-        return {
-            'user': self.request.user
-        }
-
+    return HttpResponseRedirect(reverse('index'))
 
 class ProductIndexCreateView(LoginRequiredMixin, AddProductMixin, CreateView):
     template_name = 'product/product_form.html'
