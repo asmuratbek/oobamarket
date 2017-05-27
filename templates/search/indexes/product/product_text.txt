@@ -3,3 +3,5 @@
 {{ object.get_shop_title }}
 {{ object.get_main_image }}
 {{ object.get_absolute_url }}
+{{ object.get_shop_url }}
+{{ object.currency }}

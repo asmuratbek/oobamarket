@@ -1,0 +1,54 @@
+<div class="auto-complite" style="display: block">
+        <div class="media">
+            <div class="media-left media-middle goods">
+                <p>Товары</p>
+            </div>
+            <div class="media-body child-goods">
+                <ul id="prod_list">
+                    {% for product in products %}
+                    <li>
+                        <a href="{{ product.get_absolute_url }}"> </a>
+                        <div class="img-wrapper">
+                            <img src="{{ product.get_main_image }}" alt="{{ product.title }}">
+                        </div>
+                        <div class="discript">
+                            <div class="name">
+                                <p>{{ product.title }}</p>
+                                <a href="{{ product.get_shop_url }}" class="magazin">{{ product.get_shop_title }}</a>
+                            </div>
+                            <div class="price">
+                                <span>{{ product.price }} {{ product.currency }}</span>
+                            </div>
+                        </div>
+                    </li>
+                    {% endfor %}
+
+                </ul>
+                <a href="" class="pull-right see-more">Больше товаров <i class="glyphicon glyphicon-chevron-right"></i></a>
+            </div>
+        </div>
+
+        <div class="media">
+            <div class="media-left media-middle goods">
+                <p>Магазины</p>
+            </div>
+            <div class="media-body child-goods">
+                <ul id="shop_list">
+                    <li>
+                        <a href=""> </a>
+                        <div class="img-wrapper">
+                            <img src="http://placehold.it/40x40" alt="">
+                        </div>
+                        <div class="discript">
+                            <div class="name">
+                                <p>Tulpar.kg</p>
+                                <a href="" class="magazin">13 товаров</a>
+                            </div>
+                        </div>
+                    </li>
+
+                </ul>
+                <a href="" class="pull-right see-more">Больше товаров <i class="glyphicon glyphicon-chevron-right"></i></a>
+            </div>
+        </div>
+    </div>

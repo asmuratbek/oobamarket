@@ -222,13 +222,10 @@ def remove_uploaded_image(request):
     return JsonResponse(dict(done=False))
 
 
-def notes(request):
+def search_predict_html(request):
     form = ProductSearchForm(request.GET)
-    notes = form.search()
-    for i in notes:
-        print(i)
-
-    return render(request, 'search/search.html', {'notes': notes})
+    products = form.search()
+    return render(request, 'search/home_page_search.html', {'products': products })
 
 
 class SearchResultsView(ListView):

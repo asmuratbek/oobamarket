@@ -97,6 +97,9 @@ class Product(models.Model):
     def get_update_url(self):
         return reverse("product:update_product", kwargs={'slug': self.slug})
 
+    def get_shop_url(self):
+        return self.shop.get_absolute_url()
+
 
 class FavoriteProduct(models.Model):
     class Meta:

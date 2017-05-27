@@ -441,8 +441,6 @@ var _search = function (apiUrl, query) {
 
       if (query.length < 3) return;
 
-      $('.auto-complite').fadeIn();
-
       $.ajax({
         url: apiUrl,
         type: 'GET',
@@ -450,8 +448,7 @@ var _search = function (apiUrl, query) {
             q: query,
         },
         success: function (data) {
-          console.log(data);
-
+          $('.search-index').append(data);
         }
       });
     };
