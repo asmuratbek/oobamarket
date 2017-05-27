@@ -48,7 +48,7 @@ def show_add_social_button(shop, user):
                             <div class="pull-left edit">
                             <a href="%s">Редактировать соц. иконки</a>
                             </div>
-                                ''' % reverse('shops:add_social', kwargs={'slug': shop.slug}))
+                                ''' % reverse('shops:update_social', kwargs={'slug': shop.slug }))
         else:
             return mark_safe('')
 

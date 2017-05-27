@@ -55,12 +55,22 @@
                     </div>
                         {% show_add_banner_button shop request.user %}
                         {% show_add_social_button shop request.user %}
+                    {% if object.sociallinks %}
                     <div class="pull-right">
-                        <a href="" class="facebook"></a>
-                        <a href="" class="tweet"></a>
-                        <a href="" class="google"></a>
-                        <a href="" class="instagram"></a>
+                        {% if object.sociallinks.facebook %}
+                        <a href="{{ object.sociallinks.facebook }}" class="facebook"></a>
+                            {% endif %}
+                        {% if object.sociallinks.twitter %}
+                        <a href="{{ object.sociallinks.twitter }}" class="tweet"></a>
+                            {% endif %}
+                    {% if object.sociallinks.vk %}
+                        <a href="{{ object.sociallinks.vk }}" class="google"></a>
+                        {% endif %}
+                    {% if object.sociallinks.instagram %}
+                        <a href="{{ object.sociallinks.instagram }}" class="instagram"></a>
+                        {% endif %}
                     </div>
+                    {% endif %}
                 </div>
                 </div>
             </div>

@@ -1,6 +1,6 @@
 from django.conf.urls import url
 
-from apps.shop.views import ShopDetailView, ShopCreateView, ShopBannersView, ShopUpdateView, ShopSocialLinksView
+from apps.shop.views import ShopDetailView, ShopCreateView, ShopBannersView, ShopUpdateView, ShopSocialLinksUpdateView
 
 # ProductFormView
 
@@ -12,6 +12,6 @@ urlpatterns = [
     url(r'^(?P<slug>[\w-]+)/$', ShopDetailView.as_view(), name='detail'),
     url(r'^(?P<slug>[\w-]+)/update/$', ShopUpdateView.as_view(), name='update'),
     url(r'^(?P<slug>[\w-]+)/add-banners/$', ShopBannersView.as_view(), name='add_banner'),
-    url(r'^(?P<slug>[\w-]+)/add-social/$', ShopSocialLinksView.as_view(), name='add_social'),
+    url(r'^(?P<slug>[\w-]+)/update-social/$', ShopSocialLinksUpdateView.as_view(), name='update_social'),
 
 ]

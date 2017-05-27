@@ -13,7 +13,9 @@ from apps.product.forms import ProductForm
 from apps.product.models import Product
 from apps.shop.forms import ShopForm, ShopBannersForm, ShopSocialLinksForm
 from apps.users.mixins import AddProductMixin, AddBannerMixin, AddSocialLinksMixin
-from .models import Shop
+from .models import Shop, SocialLinks
+
+
 # Create your views here.
 
 
@@ -64,9 +66,29 @@ class ShopBannerDeleteView(LoginRequiredMixin, AddBannerMixin, DeleteView):
     pass
 
 
-class ShopSocialLinksView(LoginRequiredMixin, AddSocialLinksMixin, CreateView):
+# class ShopSocialLinksView(LoginRequiredMixin, AddSocialLinksMixin, CreateView):
+#     form_class = ShopSocialLinksForm
+#     template_name = 'shop/shop_social_update.html'
+#
+#     def get_success_url(self):
+#         return reverse('shops:detail', kwargs={'slug': self.kwargs['slug']})
+#
+#     def get_initial(self):
+#         return {'user': self.request.user,
+#                 'shop': Shop.objects.get(slug=self.kwargs['slug'])}
+#
+#     def form_valid(self, form, **kwargs):
+#         form.instance.shop = Shop.objects.get(slug=self.kwargs['slug'])
+#         form.save()
+#         return super(ShopSocialLinksView, self).form_valid(form)
+
+class ShopSocialLinksUpdateView(LoginRequiredMixin, AddSocialLinksMixin, UpdateView):
+    model = SocialLinks
     form_class = ShopSocialLinksForm
-    template_name = 'shop/shop_social.html'
+    template_name = 'shop/shop_social_update.html'
+
+    def get_object(self, queryset=None):
+        return SocialLinks.objects.get(shop__slug=self.kwargs['slug'])
 
     def get_success_url(self):
         return reverse('shops:detail', kwargs={'slug': self.kwargs['slug']})
@@ -78,9 +100,7 @@ class ShopSocialLinksView(LoginRequiredMixin, AddSocialLinksMixin, CreateView):
     def form_valid(self, form, **kwargs):
         form.instance.shop = Shop.objects.get(slug=self.kwargs['slug'])
         form.save()
-        return super(ShopSocialLinksView, self).form_valid(form)
-
-
+        return super(ShopSocialLinksUpdateView, self).form_valid(form)
 
 def create(request):
 

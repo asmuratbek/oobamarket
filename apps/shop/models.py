@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 
 from django.core.mail import send_mail
 from django.db import models
+from django.db.models.signals import post_save
 from django.urls import reverse
 from django.utils.translation import ugettext as _
 
@@ -76,8 +77,6 @@ class Shop(models.Model):
     def is_owner(self, user):
         return True if len(self.user.filter(id=user.id)) > 0  else False
 
-    def get_shop_social_links(self):
-        return self.sociallinks_set.all()
 
 
 
@@ -111,4 +110,11 @@ class SocialLinks(models.Model):
 
 
     def __str__(self):
-        return self.shop
+        return str(self.shop)
+
+
+def create_social_links(sender, **kwargs):
+    if kwargs['created']:
+        social_links = SocialLinks.objects.create(shop=kwargs['instance'])
+
+post_save.connect(create_social_links, sender=Shop)
