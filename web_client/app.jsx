@@ -13,7 +13,7 @@ var Products = createClass ({
     },
 
     componentDidMount() {
-    axios.get(`http://localhost:8000/api/product/`)
+    axios.get(`http://localhost:8000/product/api/?limit=10`)
       .then(res => {
         const products = res.data.results.map(obj => obj);
         this.setState({ products });
@@ -42,29 +42,51 @@ var Products = createClass ({
     },
 
     addOrRemoveFromCart : function (product) {
-        console.log("here");
-        if (product.is_in_cart) {
-            product.is_in_cart = false
-        }
-        else {
-            product.is_in_cart = true
-        }
+
+        $.ajax({
+            type: "GET",
+            url: "/cart/",
+            data:
+                {
+                    "item":  product.id
+                },
+            success: function (data) {
+                this.showFlashMessage(data.flash_message)
+
+            },
+            error: function (response, error) {
+                console.log(response);
+                console.log(error);
+            }
+        });
+    },
+
+    inCart : function (product) {
+      return (
+          <a className="add-basket in-the-basket" data-product-id={product.id} onClick={() => this.addOrRemoveFromCart(product)}>
+                        <span className="glyphicon glyphicon-shopping-cart"></span>
+                        В корзине
+                    </a>
+      )
+    },
+
+    notInCart : function (product) {
+      return (
+          <a className="add-basket" data-product-id={product.id} onClick={() => this.addOrRemoveFromCart(product)}>
+                        <span className="glyphicon glyphicon-shopping-cart"></span>
+                        Добавить в корзину
+                    </a>
+      )
     },
 
     isInCart : function (product) {
         if (product.is_in_cart) {
             return (
-                <a href="#" className="add-basket in-the-basket" data-product-id={product.id} onClick={() => this.addOrRemoveFromCart(product)}>
-                        <span className="glyphicon glyphicon-shopping-cart"></span>
-                        В корзине
-                    </a>
+                this.inCart(product)
             )
         } else {
             return (
-                <a href="#" className="add-basket" data-product-id={product.id} onClick={() => this.addOrRemoveFromCart(product)}>
-                        <span className="glyphicon glyphicon-shopping-cart"></span>
-                        Добавить в корзину
-                    </a>
+                this.notInCart(product)
             )
         }
     },
@@ -86,12 +108,10 @@ var Products = createClass ({
                         </a>
                     </h2>
                     {product.is_owner ?
-                            <h2>
-                                <a href={product.update_view}>
-                                Редактировать
-                                </a>
-                            </h2>
-
+                        <div>
+                            <a className="edited glyphicon glyphicon-cog" href={`/products/${product.slug}/update_product/`} data-toggle="tooltip" title="" data-placement="bottom" data-original-title="Редактировать"></a>
+                            <a className="eye glyphicon glyphicon-eye-open" data-toggle="tooltip" title="" data-placement="bottom" data-original-title="Скрыть" data-status="false"></a>
+                        </div>
                     :null}
 
                 </div>
