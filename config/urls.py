@@ -23,8 +23,8 @@ urlpatterns = [
     url(r'^api/shop/', include('apps.shop.api.urls', namespace="shop_api")),
     url(r'^fixtures/(?P<name>\w+)$', fixtures, name='fixtures'),
     # url(r'^search/', include('haystack.urls')),
-    url(r'^search_results', SearchResultsView.as_view(), name='search'),
-    url(r'^search/', notes),
+    url(r'^search_results', notes),
+    url(r'^search/', SearchResultsView.as_view(), name='search'),
     url(r'^ckeditor/', include('ckeditor_uploader.urls')),
 
     # Django Admin, use {% url 'admin:index' %}

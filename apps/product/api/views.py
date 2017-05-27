@@ -26,7 +26,7 @@ from .serializers import ProductSerializer, ProductCreateSerializer
 class ProductListApiView(ListAPIView):
     serializer_class = ProductSerializer
     filter_backends = [SearchFilter, OrderingFilter]
-    search_fields = ['title', 'description']
+    search_fields = ['title', 'short_description']
     pagination_class = ProductLimitPagination#PageNumberPagination
     permission_classes = [AllowAny]
 
@@ -37,12 +37,12 @@ class ProductListApiView(ListAPIView):
             q = self.request.GET.get('search')
             objects = Product.objects.filter(
                 Q(title__icontains=q)|
-                Q(text__icontains=q)
+                Q(short_description__icontains=q)
             ).distinct()
-            return objects
         else:
             objects = Product.objects.all()
-            return objects
+        print(objects)
+        return objects
 
 
 class ProductDetailApiView(RetrieveAPIView):

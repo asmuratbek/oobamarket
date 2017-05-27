@@ -417,6 +417,7 @@ $( document ).ready(function() {
 
 }
 
+
 // input=type=file
 
 var fileInput = $('#id_images');
@@ -434,6 +435,29 @@ $(fileInput).on('change', function (event) {
         result = '<b>Выбрано ' + count + ' файлов</b>';
     }
     helpText.html(result);
+});
+
+var _search = function (apiUrl, query) {
+
+      if (query.length < 3) return;
+
+      $('.auto-complite').fadeIn();
+
+      $.ajax({
+        url: apiUrl,
+        type: 'GET',
+        data: {
+            q: query,
+        },
+        success: function (data) {
+          console.log(data);
+
+        }
+      });
+    };
+
+$('#search-form').bind('keyup paste', function () {
+    _search('/search_results/', $(this).val())
 });
 
 

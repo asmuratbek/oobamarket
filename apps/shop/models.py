@@ -53,6 +53,9 @@ class Shop(models.Model):
     def get_shop_products(self):
         return self.product_set.all()[:6]
 
+    def get_products_count(self):
+        return self.product_set.count()
+
     def create_shop(self):
         return reverse('shops:create')
 

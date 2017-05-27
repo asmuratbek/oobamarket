@@ -225,6 +225,8 @@ def remove_uploaded_image(request):
 def notes(request):
     form = ProductSearchForm(request.GET)
     notes = form.search()
+    for i in notes:
+        print(i)
 
     return render(request, 'search/search.html', {'notes': notes})
 
@@ -232,3 +234,19 @@ def notes(request):
 class SearchResultsView(ListView):
     model = Product
     template_name = 'pages/search_results.html'
+
+    def post(self, request, *args, **kwargs):
+        import operator
+        from django.db.models import Q
+        from functools import reduce
+
+        query = request.POST.get('keyword')
+        if query:
+            query_list = query.split()
+            result = self.get_queryset().filter(
+                reduce(operator.and_,
+                       (Q(title__icontains=q) for q in query_list)) |
+                reduce(operator.and_,
+                       (Q(short_description__icontains=q) for q in query_list))
+            )
+        return result
