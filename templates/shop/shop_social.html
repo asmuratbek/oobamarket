@@ -1,0 +1,26 @@
+{% extends 'base-1.html' %}
+{% load widget_tweaks %}
+
+{% block content %}
+
+<section class="add-banner">
+    <div class="container">
+        <h1 class="create">Вставьте ссылки с социальных сетей</h1>
+        <div class="col-md-offset-3 col-md-6">
+             <form action="" method="post" enctype="multipart/form-data">
+                 {% csrf_token %}
+                {% render_field form.facebook %}<br>
+                {% render_field form.instagram %}<br>
+                {% render_field form.twitter %}<br>
+                {% render_field form.vk %}<br>
+                 <div class="form-group btn-group-form col-md-12">
+                 <button type="submit" class="btn add">Сохранить</button>
+                 </div>
+             </form>
+        </div>
+    </div>
+</section>
+
+
+
+{% endblock %}

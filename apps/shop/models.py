@@ -76,6 +76,10 @@ class Shop(models.Model):
     def is_owner(self, user):
         return True if len(self.user.filter(id=user.id)) > 0  else False
 
+    def get_shop_social_links(self):
+        return self.sociallinks_set.all()
+
+
 
 class Banners(models.Model):
     class Meta:
@@ -99,12 +103,12 @@ class SocialLinks(models.Model):
         verbose_name = 'Социальная ссылка'
         verbose_name_plural = 'Социальные ссылки'
 
-    link = models.CharField(max_length=255, verbose_name='Ссылка на страницу соц.сети')
-    icon = models.CharField(max_length=255, choices=SOCIAL_LINKS, verbose_name='Выбор соц. иконки', default=None)
-    shop = models.ForeignKey(Shop, on_delete=models.CASCADE)
+    facebook = models.CharField(max_length=255, verbose_name='Facebook', null=True, blank=True)
+    vk = models.CharField(max_length=255, verbose_name='VK', null=True, blank=True)
+    instagram = models.CharField(max_length=255, verbose_name='Instagram', null=True, blank=True)
+    twitter =  models.CharField(max_length=255, verbose_name='Twitter', null=True, blank=True)
+    shop = models.OneToOneField(Shop, on_delete=models.CASCADE)
 
-    def get_icon(self):
-        return self.get_icon_display()
 
     def __str__(self):
         return self.shop

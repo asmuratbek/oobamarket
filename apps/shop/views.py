@@ -4,13 +4,15 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.views import generic
 from django.views.generic import CreateView
+from django.views.generic import DeleteView
 from django.views.generic import FormView
 from django.views.generic import UpdateView
 from slugify import slugify
 
 from apps.product.forms import ProductForm
 from apps.product.models import Product
-from apps.shop.forms import ShopForm, ShopBannersForm
+from apps.shop.forms import ShopForm, ShopBannersForm, ShopSocialLinksForm
+from apps.users.mixins import AddProductMixin, AddBannerMixin, AddSocialLinksMixin
 from .models import Shop
 # Create your views here.
 
@@ -41,7 +43,7 @@ class ShopUpdateView(LoginRequiredMixin, UpdateView):
     template_name = 'shop/shop_update.html'
 
 
-class ShopBannersView(LoginRequiredMixin, CreateView):
+class ShopBannersView(LoginRequiredMixin, AddBannerMixin, CreateView):
     form_class = ShopBannersForm
     template_name = 'shop/shop_banner.html'
 
@@ -49,7 +51,8 @@ class ShopBannersView(LoginRequiredMixin, CreateView):
         return reverse('shops:detail', kwargs={'slug': self.kwargs['slug']})
 
     def get_initial(self):
-        return {'shop': Shop.objects.get(slug=self.kwargs['slug'])}
+        return {'user': self.request.user,
+                'shop': Shop.objects.get(slug=self.kwargs['slug'])}
 
     def form_valid(self, form, **kwargs):
         form.instance.shop = Shop.objects.get(slug=self.kwargs['slug'])
@@ -57,7 +60,25 @@ class ShopBannersView(LoginRequiredMixin, CreateView):
         return super(ShopBannersView, self).form_valid(form)
 
 
+class ShopBannerDeleteView(LoginRequiredMixin, AddBannerMixin, DeleteView):
+    pass
 
+
+class ShopSocialLinksView(LoginRequiredMixin, AddSocialLinksMixin, CreateView):
+    form_class = ShopSocialLinksForm
+    template_name = 'shop/shop_social.html'
+
+    def get_success_url(self):
+        return reverse('shops:detail', kwargs={'slug': self.kwargs['slug']})
+
+    def get_initial(self):
+        return {'user': self.request.user,
+                'shop': Shop.objects.get(slug=self.kwargs['slug'])}
+
+    def form_valid(self, form, **kwargs):
+        form.instance.shop = Shop.objects.get(slug=self.kwargs['slug'])
+        form.save()
+        return super(ShopSocialLinksView, self).form_valid(form)
 
 
 

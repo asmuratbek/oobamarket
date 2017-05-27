@@ -53,12 +53,8 @@
                     <div class="pull-left edit">
                         <a href="{% url 'shops:update' slug=object.slug %}">Настройки магазина</a>
                     </div>
-                        <div class="pull-left edit">
-                        <a href="{% url 'shops:add_banner' slug=object.slug %}">Редактировать баннера</a>
-                    </div>
-                        <div class="pull-left edit">
-                        <a href="">Редактировать соц иконки</a>
-                    </div>
+                        {% show_add_banner_button shop request.user %}
+                        {% show_add_social_button shop request.user %}
                     <div class="pull-right">
                         <a href="" class="facebook"></a>
                         <a href="" class="tweet"></a>

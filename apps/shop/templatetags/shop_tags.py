@@ -27,3 +27,31 @@ def show_add_product_button(shop, user):
         else:
             return mark_safe('')
 
+@register.assignment_tag
+def show_add_banner_button(shop, user):
+    if user.is_authenticated:
+        if shop.is_owner(user):
+            return mark_safe('''
+                            <div class="pull-left edit">
+                            <a href="%s">Редактировать баннера</a>
+                            </div>
+                                ''' % reverse('shops:add_banner', kwargs={'slug': shop.slug}))
+        else:
+            return mark_safe('')
+
+
+@register.assignment_tag
+def show_add_social_button(shop, user):
+    if user.is_authenticated:
+        if shop.is_owner(user):
+            return mark_safe('''
+                            <div class="pull-left edit">
+                            <a href="%s">Редактировать соц. иконки</a>
+                            </div>
+                                ''' % reverse('shops:add_social', kwargs={'slug': shop.slug}))
+        else:
+            return mark_safe('')
+
+
+
+

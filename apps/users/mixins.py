@@ -16,3 +16,30 @@ class AddProductMixin(object):
         if not my_shop:
             return HttpResponseRedirect(reverse('product:add_product', kwargs={'slug': shop.slug}))
         return super(AddProductMixin, self).dispatch(request, *args, **kwargs)
+
+
+class AddBannerMixin(object):
+
+    def dispatch(self, request, *args, **kwargs):
+        user = request.user
+        shop = Shop.objects.filter(user__id__in=[user.id]).first()
+        if not shop:
+            return HttpResponseRedirect(reverse('shops:create'))
+        my_shop = user.shop_set.filter(slug=self.kwargs.get('slug', None))
+
+        if not my_shop:
+            return HttpResponseRedirect(reverse('shops:detail', kwargs={'slug': shop.slug}))
+        return super(AddBannerMixin, self).dispatch(request, *args, **kwargs)
+
+class AddSocialLinksMixin(object):
+
+    def dispatch(self, request, *args, **kwargs):
+        user = request.user
+        shop = Shop.objects.filter(user__id__in=[user.id]).first()
+        if not shop:
+            return HttpResponseRedirect(reverse('shops:create'))
+        my_shop = user.shop_set.filter(slug=self.kwargs.get('slug', None))
+
+        if not my_shop:
+            return HttpResponseRedirect(reverse('shops:detail', kwargs={'slug': shop.slug}))
+        return super(AddSocialLinksMixin, self).dispatch(request, *args, **kwargs)
