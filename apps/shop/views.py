@@ -88,7 +88,11 @@ class ShopSocialLinksUpdateView(LoginRequiredMixin, AddSocialLinksMixin, UpdateV
     template_name = 'shop/shop_social_update.html'
 
     def get_object(self, queryset=None):
-        return SocialLinks.objects.get(shop__slug=self.kwargs['slug'])
+        try:
+            social = SocialLinks.objects.get(shop__slug=self.kwargs['slug'])
+        except SocialLinks.DoesNotExist:
+            social = SocialLinks.objects.create(shop=Shop.objects.get(slug=self.kwargs['slug']))
+        return social
 
     def get_success_url(self):
         return reverse('shops:detail', kwargs={'slug': self.kwargs['slug']})
