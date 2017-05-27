@@ -79,24 +79,26 @@ class ProductCreateView(LoginRequiredMixin, AddProductMixin, CreateView):
             if ',' in form.cleaned_data['uploaded_images']:
                 for item in form.cleaned_data['uploaded_images'].split(','):
                     try:
-                        media = Media.objects.get(id=int(item))
-                        product.media_set.add(media)
+                        product_image = ProductImage.objects.get(id=int(item))
+                        product_image.product = product
+                        product_image.save()
                     except ObjectDoesNotExist:
                         pass
             else:
                 try:
-                    media = Media.objects.get(id=int(form.cleaned_data['uploaded_images']))
-                    product.media_set.add(media)
+                    product_image = ProductImage.objects.get(id=int(form.cleaned_data['uploaded_images']))
+                    product_image.product = product
+                    product_image.save()
                 except ObjectDoesNotExist:
                     print('error')
         form.save()
         if form.cleaned_data['removed_images']:
             for item in form.cleaned_data['removed_images'].split(','):
                 try:
-                    media = Media.objects.get(id=int(item))
-                    image_path = MEDIA_ROOT + '/' + media.image.name
+                    product_image = ProductImage.objects.get(id=int(item))
+                    image_path = MEDIA_ROOT + '/' + product_image.image.name
                     os.remove(image_path)
-                    media.delete()
+                    product_image.delete()
                 except ObjectDoesNotExist:
                     pass
 
@@ -194,7 +196,7 @@ def upload_images(request):
         image_count = len(request.FILES)
         for i in range(0, image_count):
             image_file = request.FILES.get('file-' + str(i))
-            media = Media()
+            media = ProductImage()
             media.image = image_file
             media.save()
             result.append({'id': media.id, 'url': media.image.url})
@@ -208,7 +210,7 @@ def remove_uploaded_image(request):
         if ids:
             for item in ids.split(","):
                 try:
-                    r_media = Media.objects.get(id=int(item))
+                    r_media = ProductImage.objects.get(id=int(item))
                     image_path = MEDIA_ROOT + '/' + r_media.image.name
                     os.remove(image_path)
                     r_media.delete()

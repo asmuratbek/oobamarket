@@ -58,15 +58,15 @@ class Product(models.Model):
         return "{shop} - {category} - {title}".format(shop=self.shop.title, category=self.category, title=self.title)
 
     def get_main_image(self):
-        if self.media_set.all():
-            return self.media_set.first().image.url
+        if self.productimage_set.all():
+            return self.productimage_set.first().image.url
         else:
             return None
 
-    def delete(self, *args, **kwargs):
-        if self.media_set.count() > 0:
-            del_media = [item.delete() for item in self.media_set.all()]
-        super(Product, self).delete(*args, **kwargs)
+    # def delete(self, *args, **kwargs):
+    #     if self.media_set.count() > 0:
+    #         del_media = [item.delete() for item in self.media_set.all()]
+    #     super(Product, self).delete(*args, **kwargs)
 
     def get_shop_title(self):
         return self.shop.title
@@ -145,17 +145,6 @@ class ProductImage(models.Model):
         verbose_name = "Изображение товара"
         verbose_name_plural = "Изображения товара"
 
-    product = models.ForeignKey(Product, verbose_name="Товар")
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name="Товар", null=True)
     image = models.ImageField(upload_to="products/image")
 
-
-class Media(models.Model):
-    class Meta:
-        verbose_name = "Изображение"
-        verbose_name_plural = "Изображения"
-
-    image = models.ImageField(upload_to='images')
-    products = models.ManyToManyField(Product)
-
-    # def __str__(self):
-    #     return self.image.url
