@@ -4,7 +4,7 @@ from apps.product.models import Product
 
 
 class ProductIndex(indexes.SearchIndex, indexes.Indexable):
-    text = indexes.CharField(document=True, use_template=True)
+    text = indexes.EdgeNgramField(document=True, use_template=True)
     title = indexes.CharField(model_attr='title')
     price = indexes.CharField(model_attr='price')
     currency = indexes.CharField(model_attr='currency')
