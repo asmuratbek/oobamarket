@@ -7,3 +7,7 @@
   margin: 0px;
   display:none;
 }
+
+.highlighted {
+  background-color: yellow;
+}

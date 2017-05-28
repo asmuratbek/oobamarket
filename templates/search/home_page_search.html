@@ -1,3 +1,4 @@
+{% load highlight %}
 {% if products or shops %}
 <div class="auto-complite" style="display: block">
         {% if products %}
@@ -16,8 +17,8 @@
                         </div>
                         <div class="discript">
                             <div class="name">
-                                <p>{{ product.title }}</p>
-                                <a href="{{ product.get_shop_url }}" class="magazin">{{ product.get_shop_title }}</a>
+                                <p>{% highlight product.title with query %}</p>
+                                <a href="{{ product.get_shop_url }}" class="magazin">{% highlight product.get_shop_title with query %}</a>
                             </div>
                             <div class="price">
                                 <span>{{ product.price }} {{ product.currency }}</span>
@@ -51,7 +52,7 @@
                         </div>
                         <div class="discript">
                             <div class="name">
-                                <p>{{ shop.title }}</p>
+                                <p>{% highlight shop.title with query %}</p>
                                 <a href="{{ shop.get_absolute_title }}" class="magazin">{{ shop.get_products_count }} товаров</a>
                             </div>
                         </div>

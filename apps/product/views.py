@@ -223,13 +223,17 @@ def remove_uploaded_image(request):
 
 
 def search_predict_html(request):
+    from haystack.utils import Highlighter
+    highlighter = Highlighter(request.GET.get('q'))
     product_form = ProductSearchForm(request.GET)
     shop_form = ShopSearchForm(request.GET)
     products = product_form.search()
+    print(highlighter.highlight(products))
     shops = shop_form.search()
     return render(request, 'search/home_page_search.html', {
         'products': products,
-        'shops': shops
+        'shops': shops,
+        'query': request.GET.get('q')
     })
 
 
