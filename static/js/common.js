@@ -451,15 +451,20 @@ var _search = function (apiUrl, query) {
             q: query,
         },
         success: function (data) {
-          $('.search-index').append(data);
+            if ($('.search-index').length) {
+                $('.search-index').append(data);
+            }
+            else {
+                $('header').append(data);
+            }
+
         }
       });
     };
 
-$('#search-form').bind('keyup paste', function () {
+$('#search-form-index').bind('keyup paste', function () {
     _search('/search_results/', $(this).val())
 });
-
 
 // custom scrollbar
 $('.custom-scroll').perfectScrollbar();

@@ -227,7 +227,8 @@ def search_predict_html(request):
     shop_form = ShopSearchForm(request.GET)
     products = product_form.search()
     shops = shop_form.search()
-    return render(request, 'search/home_page_search.html', {
+    template = 'search/home_page_search.html'
+    return render(request, template, {
         'products': products,
         'shops': shops,
         'query': request.GET.get('q')
