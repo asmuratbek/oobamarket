@@ -439,7 +439,10 @@ $(fileInput).on('change', function (event) {
 
 var _search = function (apiUrl, query) {
 
-      if (query.length < 3) return;
+      if (query.length < 3) {
+          $('.auto-complite').fadeOut();
+      }
+
 
       $.ajax({
         url: apiUrl,

@@ -1,4 +1,6 @@
+{% if products or shops %}
 <div class="auto-complite" style="display: block">
+        {% if products %}
         <div class="media">
             <div class="media-left media-middle goods">
                 <p>Товары</p>
@@ -6,6 +8,7 @@
             <div class="media-body child-goods">
                 <ul id="prod_list">
                     {% for product in products %}
+                        {% if forloop.counter < 4 %}
                     <li>
                         <a href="{{ product.get_absolute_url }}"> </a>
                         <div class="img-wrapper">
@@ -21,12 +24,17 @@
                             </div>
                         </div>
                     </li>
+                        {% endif %}
                     {% endfor %}
 
                 </ul>
-                <a href="" class="pull-right see-more">Больше товаров <i class="glyphicon glyphicon-chevron-right"></i></a>
+                <a href="/search/" class="pull-right see-more">Больше товаров <i class="glyphicon glyphicon-chevron-right"></i></a>
             </div>
         </div>
+
+        {% endif %}
+
+        {% if shops %}
 
         <div class="media">
             <div class="media-left media-middle goods">
@@ -34,21 +42,28 @@
             </div>
             <div class="media-body child-goods">
                 <ul id="shop_list">
+                    {% for shop in shops %}
+                        {% if forloop.counter < 4 %}
                     <li>
-                        <a href=""> </a>
+                        <a href="{{ shop.get_absolute_url }}"> </a>
                         <div class="img-wrapper">
-                            <img src="http://placehold.it/40x40" alt="">
+                            <img src="{{ shop.get_logo }}" alt="{{ shop.title }}">
                         </div>
                         <div class="discript">
                             <div class="name">
-                                <p>Tulpar.kg</p>
-                                <a href="" class="magazin">13 товаров</a>
+                                <p>{{ shop.title }}</p>
+                                <a href="{{ shop.get_absolute_title }}" class="magazin">{{ shop.get_products_count }} товаров</a>
                             </div>
                         </div>
                     </li>
+                        {% endif %}
+                    {% endfor %}
 
                 </ul>
-                <a href="" class="pull-right see-more">Больше товаров <i class="glyphicon glyphicon-chevron-right"></i></a>
+                <a href="/search/" class="pull-right see-more">Больше товаров <i class="glyphicon glyphicon-chevron-right"></i></a>
             </div>
         </div>
+
+        {% endif %}
     </div>
+{% endif %}

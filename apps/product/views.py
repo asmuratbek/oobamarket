@@ -11,7 +11,7 @@ from django.views.generic import UpdateView
 from slugify import slugify
 
 from apps.global_category.models import GlobalCategory
-from apps.product.forms import ProductForm, ProductSearchForm
+from apps.product.forms import ProductForm, ProductSearchForm, ShopSearchForm
 from apps.users.mixins import AddProductMixin
 from config.settings.base import MEDIA_ROOT
 from .models import *
@@ -223,9 +223,14 @@ def remove_uploaded_image(request):
 
 
 def search_predict_html(request):
-    form = ProductSearchForm(request.GET)
-    products = form.search()
-    return render(request, 'search/home_page_search.html', {'products': products })
+    product_form = ProductSearchForm(request.GET)
+    shop_form = ShopSearchForm(request.GET)
+    products = product_form.search()
+    shops = shop_form.search()
+    return render(request, 'search/home_page_search.html', {
+        'products': products,
+        'shops': shops
+    })
 
 
 class SearchResultsView(ListView):

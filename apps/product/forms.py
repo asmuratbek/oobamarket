@@ -24,5 +24,22 @@ class ProductForm(forms.ModelForm):
 
 
 class ProductSearchForm(SearchForm):
-    def no_query_found(self):
-        return self.searchqueryset.all()
+    models = [Product]
+
+    def get_models(self):
+        return self.models
+
+    def search(self):
+        sqs = super(ProductSearchForm, self).search().models(*self.get_models())
+        return sqs
+
+
+class ShopSearchForm(SearchForm):
+    models = [Shop]
+
+    def get_models(self):
+        return self.models
+
+    def search(self):
+        sqs = super(ShopSearchForm, self).search().models(*self.get_models())
+        return sqs
