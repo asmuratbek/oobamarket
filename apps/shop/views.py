@@ -62,6 +62,7 @@ class ShopBannersView(LoginRequiredMixin, AddBannerMixin, CreateView):
         return super(ShopBannersView, self).form_valid(form)
 
 
+
 class ShopBannerDeleteView(LoginRequiredMixin, AddBannerMixin, DeleteView):
     pass
 
