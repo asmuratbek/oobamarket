@@ -441,6 +441,7 @@ var _search = function (apiUrl, query) {
 
       if (query.length < 3) {
           $('.auto-complite').fadeOut();
+          return
       }
 
 
