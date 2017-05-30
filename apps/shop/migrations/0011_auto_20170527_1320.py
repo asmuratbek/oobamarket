@@ -13,14 +13,6 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RemoveField(
-            model_name='sociallinks',
-            name='icon',
-        ),
-        migrations.RemoveField(
-            model_name='sociallinks',
-            name='link',
-        ),
         migrations.AddField(
             model_name='sociallinks',
             name='facebook',
