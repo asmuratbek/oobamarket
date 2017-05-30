@@ -13,21 +13,6 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.AddField(
-            model_name='sociallinks',
-            name='instagram',
-            field=models.CharField(blank=True, max_length=255, null=True, verbose_name='Instagram'),
-        ),
-        migrations.AddField(
-            model_name='sociallinks',
-            name='twitter',
-            field=models.CharField(blank=True, max_length=255, null=True, verbose_name='Twitter'),
-        ),
-        migrations.AddField(
-            model_name='sociallinks',
-            name='vk',
-            field=models.CharField(blank=True, max_length=255, null=True, verbose_name='VK'),
-        ),
         migrations.AlterField(
             model_name='sociallinks',
             name='shop',
