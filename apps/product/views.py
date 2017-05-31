@@ -259,3 +259,17 @@ class ProductDeleteView(DeleteView):
 
     def get_success_url(self):
         return reverse("shops:detail", kwargs={'slug': self.object.shop.slug})
+
+
+def change_publish_status(request):
+    product = get_object_or_404(Product, id=request.GET.get('item'))
+    if product.published:
+        product.published = False
+    else:
+        product.published = True
+    product.save()
+    data = {
+        "item": product.id,
+        "message": "Продукт успешно опубликован" if product.published else "Продукт успешно скрыт"
+    }
+    return JsonResponse(data)

@@ -467,6 +467,46 @@ $('#search-form-index').bind('keyup paste', function () {
     _search('/search_results/', $(this).val())
 });
 
+$('.glyphicon-eye-open').click(function (e) {
+    e.preventDefault();
+    var thisIcon = $(this);
+    $.ajax({
+        url: '/product/change_publish_status/',
+        type: 'GET',
+        data: {
+            item: thisIcon.attr('data-item'),
+        },
+        success: function (data) {
+            showFlashMessage(data.message);
+            thisIcon.removeClass('glyphicon-eye-open');
+            thisIcon.addClass('glyphicon-eye-close');
+            $('.cover').addClass('active');
+            console.log(data)
+
+        }
+    });
+});
+
+$('.glyphicon-eye-close').click(function (e) {
+    e.preventDefault();
+    var thisIcon = $(this);
+    $.ajax({
+        url: '/product/change_publish_status/',
+        type: 'GET',
+        data: {
+            item: thisIcon.attr('data-item'),
+        },
+        success: function (data) {
+            showFlashMessage(data.message);
+            thisIcon.removeClass('glyphicon-eye-close');
+            thisIcon.addClass('glyphicon-eye-open');
+            $('.cover').removeClass('active');
+            console.log(data)
+
+        }
+    });
+});
+
 // custom scrollbar
 $('.custom-scroll').perfectScrollbar();
 

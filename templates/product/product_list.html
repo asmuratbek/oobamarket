@@ -1,7 +1,7 @@
 {% load product_tags %}
 {% for product in object_list %}
         <div class="col-md-{{ col }} col-sm-6">
-            <div class="cover">
+            <div class="cover {% if not product.published %} active{% endif %}">
                 <a class="url-item" href="{{ product.get_absolute_url }}"></a>
                 <div class="top-line">
 
@@ -13,7 +13,7 @@
                     {% if user.is_authenticated %}
                         {% if user in product.shop.user.all %}
                             <a class="edited glyphicon glyphicon-cog" href="{% url 'product:update_product' slug=product.slug %}" data-toggle="tooltip" title="" data-placement="bottom" data-original-title="Редактировать"></a>
-                            <a href="" class="eye glyphicon glyphicon-eye-open" data-toggle="tooltip" title="" data-placement="bottom" data-original-title="Скрыть" data-status="false"></a>
+                            <a href="" class="eye glyphicon glyphicon-eye-{% if product.published %}open{% else %}close{% endif %}" data-toggle="tooltip" title="" data-placement="bottom" data-original-title="Скрыть" data-status="false" data-item="{{ product.id }}"></a>
 {#                            <a href="" class=" hidden glyphicon glyphicon-eye-close" data-toggle="tooltip" title="" data-placement="bottom" data-original-title="Скрытый"></a>#}
                         {% endif %}
                     {% endif %}
