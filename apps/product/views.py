@@ -5,9 +5,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponseRedirect
 from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404
-from django.views.generic import CreateView
-from django.views.generic import ListView, View
-from django.views.generic import UpdateView
+from django.views.generic import ListView, View, UpdateView, CreateView, DeleteView
 from slugify import slugify
 
 from apps.global_category.models import GlobalCategory
@@ -254,3 +252,10 @@ class SearchResultsView(ListView):
                        (Q(short_description__icontains=q) for q in query_list))
             )
         return result
+
+
+class ProductDeleteView(DeleteView):
+    model = Product
+
+    def get_success_url(self):
+        return reverse("shops:detail", kwargs={'slug': self.object.shop.slug})
