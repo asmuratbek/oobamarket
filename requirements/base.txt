@@ -51,7 +51,7 @@ django-ckeditor==5.2.2
 # Unicode slugification
 awesome-slugify==1.6.5
 
-# Time zones support
+# Time zones
 pytz==2017.2
 
 # Delete media files

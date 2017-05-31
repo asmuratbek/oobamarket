@@ -39,6 +39,10 @@ Install project
     to make sure elasticsearch starts and stops automatically with the server, add its init script to the default runlevels
   $ sudo systemctl start elasticsearch
     start elasticsearch
+  $ check for runnig elasticsearch is runnin correct
+    localhost:9200
+  $ if status code is 503 write nano /ect/elasticsearch/elasticsearch.yml and type: discovery.zen.ping.multicast.enabled: false
+    check localhost:9200 if status code is 200 it OK
 5. Run this command for create database
   $ ./manage.py migrate
 6. Now you can loaded database content from dump dir
