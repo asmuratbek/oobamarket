@@ -1,1 +1,872 @@
-[{"model": "sessions.session", "pk": "7rgzjoi95f1eju0a27jefkhu10ky0aje", "fields": {"session_data": "ZWQwMWQ3YmQ3ZDg5NDMwODQ3YmY3NDdhMjQyNzk4NzlkYTkzNDk0ZDp7Il9hdXRoX3VzZXJfYmFja2VuZCI6ImRqYW5nby5jb250cmliLmF1dGguYmFja2VuZHMuTW9kZWxCYWNrZW5kIiwiX2F1dGhfdXNlcl9pZCI6IjEiLCJfYXV0aF91c2VyX2hhc2giOiJkNDdkNWUxODMyNTljYjc0NjM5OTgwZjdlN2RjZTdmZTRhZDU3NzUzIn0=", "expire_date": "2017-06-14T12:30:11.193Z"}}, {"model": "sites.site", "pk": 1, "fields": {"domain": "ooba.market", "name": "Ooba Market"}}, {"model": "users.user", "pk": 1, "fields": {"password": "argon2$argon2i$v=19$m=512,t=2,p=2$MWZSMVc5cHVwZTNa$3ITe5i+jbPJvf5byu5QoUA", "last_login": "2017-05-31T12:30:11.176Z", "is_superuser": true, "username": "admin", "first_name": "", "last_name": "", "email": "admin@localhost", "is_staff": true, "is_active": true, "date_joined": "2017-05-31T12:27:11.100Z", "name": "", "groups": [], "user_permissions": []}}, {"model": "category.category", "pk": 1, "fields": {"parent": null, "title": "\u041f\u0430\u043b\u044c\u0442\u043e", "slug": "palto", "section": 6, "created_at": "2017-05-31T13:08:15.495Z", "updated_at": "2017-05-31T13:08:15.495Z", "order": 1, "is_active": true, "lft": 1, "rght": 2, "tree_id": 1, "level": 0}}, {"model": "category.category", "pk": 2, "fields": {"parent": null, "title": "Power Bank Super", "slug": "power-bank-super", "section": 10, "created_at": "2017-05-31T13:09:31.212Z", "updated_at": "2017-05-31T13:09:31.212Z", "order": 2, "is_active": true, "lft": 1, "rght": 2, "tree_id": 2, "level": 0}}, {"model": "product.product", "pk": 1, "fields": {"shop": 2, "category": 1, "title": "\u0421\u0443\u043f\u0435\u0440 \u0427\u0435\u0440\u043d\u043e\u0435 \u041f\u0430\u043b\u044c\u0442\u043e", "slug": "super-chernoe-palto", "price": "1200", "sell_count": 0, "discount": 5, "currency": "\u0441\u043e\u043c", "quantity": 10, "delivery_type": "self", "delivery_cost": 0.0, "availability": "available", "published": true, "short_description": "123123", "long_description": ""}}, {"model": "product.product", "pk": 2, "fields": {"shop": 4, "category": 2, "title": "Power Bank Super", "slug": "power-bank-super", "price": "1200", "sell_count": 0, "discount": 10, "currency": "\u0441\u043e\u043c", "quantity": 12, "delivery_type": "self", "delivery_cost": 0.0, "availability": "available", "published": true, "short_description": "123", "long_description": ""}}, {"model": "product.productimage", "pk": 1, "fields": {"product": 1, "image": "products/image/t10.jpg"}}, {"model": "product.productimage", "pk": 2, "fields": {"product": 1, "image": "products/image/t10_LqLKqbE.jpg"}}, {"model": "product.productimage", "pk": 3, "fields": {"product": 2, "image": "products/image/sin.jpg"}}, {"model": "product.productimage", "pk": 4, "fields": {"product": 2, "image": "products/image/sin_mAQhbkJ.jpg"}}, {"model": "shop.shop", "pk": 1, "fields": {"title": "Amway", "slug": "amway", "phone": "0778778778", "email": "asmuratbek@gmail.com", "short_description": "123", "description": "123", "created_at": "2017-05-31T13:02:10.022Z", "updated_at": "2017-05-31T12:32:44.869Z", "logo": "images/shop/logo/o5.jpeg", "user": [1]}}, {"model": "shop.shop", "pk": 2, "fields": {"title": "\u0418\u0433\u0440\u043e\u043b\u0435\u043d\u0434", "slug": "igrolend", "phone": "0778778778", "email": "asmuratbek@gmail.com", "short_description": "123", "description": "123", "created_at": "2017-05-31T13:02:49.280Z", "updated_at": "2017-05-31T13:02:49.280Z", "logo": "images/shop/logo/o1.jpeg", "user": [1]}}, {"model": "shop.shop", "pk": 3, "fields": {"title": "Kidsmart", "slug": "kidsmart", "phone": "0778778778", "email": "asmuratbek@gmail.com", "short_description": "123", "description": "123", "created_at": "2017-05-31T13:03:14.710Z", "updated_at": "2017-05-31T13:03:14.710Z", "logo": "images/shop/logo/o2.png", "user": [1]}}, {"model": "shop.shop", "pk": 4, "fields": {"title": "Mexx", "slug": "mexx", "phone": "0778778778", "email": "asmuratbek@gmail.com", "short_description": "213", "description": "123", "created_at": "2017-05-31T13:03:42.420Z", "updated_at": "2017-05-31T13:03:42.421Z", "logo": "images/shop/logo/o3.jpeg", "user": [1]}}, {"model": "shop.shop", "pk": 5, "fields": {"title": "Koton", "slug": "koton", "phone": "0778778778", "email": "asmuratbek@gmail.com", "short_description": "123", "description": "123", "created_at": "2017-05-31T13:04:19.124Z", "updated_at": "2017-05-31T13:04:19.124Z", "logo": "images/shop/logo/o4.jpeg", "user": [1]}}, {"model": "shop.shop", "pk": 6, "fields": {"title": "StepUp", "slug": "stepup", "phone": "0778778778", "email": "asmuratbek@gmail.com", "short_description": "123", "description": "123", "created_at": "2017-05-31T13:04:56.273Z", "updated_at": "2017-05-31T13:04:56.273Z", "logo": "images/shop/logo/o7.png", "user": [1]}}, {"model": "shop.shop", "pk": 7, "fields": {"title": "Campio Marcio", "slug": "campio-marcio", "phone": "0778778778", "email": "asmuratbek@gmail.com", "short_description": "123", "description": "123", "created_at": "2017-05-31T13:05:50.571Z", "updated_at": "2017-05-31T13:05:50.571Z", "logo": "images/shop/logo/o6.gif", "user": [1]}}, {"model": "shop.shop", "pk": 8, "fields": {"title": "KomodKg", "slug": "komodkg", "phone": "0778778778", "email": "asmuratbek@gmail.com", "short_description": "23", "description": "123", "created_at": "2017-05-31T13:06:16.190Z", "updated_at": "2017-05-31T13:06:16.190Z", "logo": "images/shop/logo/o8.png", "user": [1]}}, {"model": "shop.shop", "pk": 9, "fields": {"title": "Fashion.kg", "slug": "fashionkg", "phone": "0778778778", "email": "asmuratbek@gmail.com", "short_description": "123123", "description": "123123", "created_at": "2017-05-31T13:06:50.347Z", "updated_at": "2017-05-31T13:06:50.347Z", "logo": "images/shop/logo/o10.gif", "user": [1]}}, {"model": "shop.shop", "pk": 10, "fields": {"title": "Carters", "slug": "carters", "phone": "0778778778", "email": "asmuratbek@gmail.com", "short_description": "123", "description": "123", "created_at": "2017-05-31T13:07:25.436Z", "updated_at": "2017-05-31T13:07:25.436Z", "logo": "images/shop/logo/o11.jpeg", "user": [1]}}, {"model": "shop.sociallinks", "pk": 1, "fields": {"facebook": null, "vk": null, "instagram": null, "twitter": null, "shop": 1}}, {"model": "shop.sociallinks", "pk": 2, "fields": {"facebook": null, "vk": null, "instagram": null, "twitter": null, "shop": 2}}, {"model": "shop.sociallinks", "pk": 3, "fields": {"facebook": null, "vk": null, "instagram": null, "twitter": null, "shop": 3}}, {"model": "shop.sociallinks", "pk": 4, "fields": {"facebook": null, "vk": null, "instagram": null, "twitter": null, "shop": 4}}, {"model": "shop.sociallinks", "pk": 5, "fields": {"facebook": null, "vk": null, "instagram": null, "twitter": null, "shop": 5}}, {"model": "shop.sociallinks", "pk": 6, "fields": {"facebook": null, "vk": null, "instagram": null, "twitter": null, "shop": 6}}, {"model": "shop.sociallinks", "pk": 7, "fields": {"facebook": null, "vk": null, "instagram": null, "twitter": null, "shop": 7}}, {"model": "shop.sociallinks", "pk": 8, "fields": {"facebook": null, "vk": null, "instagram": null, "twitter": null, "shop": 8}}, {"model": "shop.sociallinks", "pk": 9, "fields": {"facebook": null, "vk": null, "instagram": null, "twitter": null, "shop": 9}}, {"model": "shop.sociallinks", "pk": 10, "fields": {"facebook": null, "vk": null, "instagram": null, "twitter": null, "shop": 10}}, {"model": "global_category.globalcategory", "pk": 1, "fields": {"title": "\u041a\u0440\u0430\u0441\u043e\u0442\u0430", "slug": "krasota", "icon": "category/icons/li1.png", "created_at": "2017-05-31T12:31:41.992Z", "updated_at": "2017-05-31T12:31:41.992Z"}}, {"model": "global_category.globalcategory", "pk": 2, "fields": {"title": "\u0410\u0432\u0442\u043e", "slug": "avto", "icon": "category/icons/li2.png", "created_at": "2017-05-31T12:59:27.457Z", "updated_at": "2017-05-31T12:59:27.457Z"}}, {"model": "global_category.globalcategory", "pk": 3, "fields": {"title": "\u0414\u043b\u044f \u0434\u0435\u0442\u0435\u0439", "slug": "dlya-detej", "icon": "category/icons/li3.png", "created_at": "2017-05-31T12:59:53.787Z", "updated_at": "2017-05-31T12:59:53.787Z"}}, {"model": "global_category.globalcategory", "pk": 4, "fields": {"title": "\u0414\u043b\u044f \u0434\u043e\u043c\u0430", "slug": "dlya-doma", "icon": "category/icons/li4.png", "created_at": "2017-05-31T13:00:07.075Z", "updated_at": "2017-05-31T13:00:07.075Z"}}, {"model": "global_category.globalcategory", "pk": 5, "fields": {"title": "\u0421\u043f\u043e\u0440\u0442 \u0438 \u043e\u0442\u0434\u044b\u0445", "slug": "sport-i-otdyh", "icon": "category/icons/li5.png", "created_at": "2017-05-31T13:00:17.018Z", "updated_at": "2017-05-31T13:00:17.018Z"}}, {"model": "global_category.globalcategory", "pk": 6, "fields": {"title": "\u041e\u0434\u0435\u0436\u0434\u0430 \u0438 \u043e\u0431\u0443\u0432\u044c", "slug": "odezhda-i-obuv", "icon": "category/icons/li6.png", "created_at": "2017-05-31T13:00:27.012Z", "updated_at": "2017-05-31T13:00:27.013Z"}}, {"model": "global_category.globalcategory", "pk": 7, "fields": {"title": "\u041a\u0430\u043d\u0441\u0435\u043b\u044f\u0440\u0438\u044f", "slug": "kanselyariya", "icon": "category/icons/li7.png", "created_at": "2017-05-31T13:00:42.354Z", "updated_at": "2017-05-31T13:00:42.354Z"}}, {"model": "global_category.globalcategory", "pk": 8, "fields": {"title": "\u041f\u0440\u043e\u0434\u0443\u043a\u0442\u044b", "slug": "produkty", "icon": "category/icons/li8.png", "created_at": "2017-05-31T13:00:56.434Z", "updated_at": "2017-05-31T13:00:56.434Z"}}, {"model": "global_category.globalcategory", "pk": 9, "fields": {"title": "\u041f\u043e\u0434\u0430\u0440\u043a\u0438", "slug": "podarki", "icon": "category/icons/li9.png", "created_at": "2017-05-31T13:01:10.343Z", "updated_at": "2017-05-31T13:01:10.343Z"}}, {"model": "global_category.globalcategory", "pk": 10, "fields": {"title": "\u042d\u043b\u0435\u043a\u0442\u0440\u043e\u043d\u0438\u043a\u0430", "slug": "elektronika", "icon": "category/icons/li10.png", "created_at": "2017-05-31T13:01:28.585Z", "updated_at": "2017-05-31T13:01:28.585Z"}}, {"model": "admin.logentry", "pk": 1, "fields": {"action_time": "2017-05-31T12:31:41.998Z", "user": 1, "content_type": 24, "object_id": "1", "object_repr": "\u041a\u0440\u0430\u0441\u043e\u0442\u0430", "action_flag": 1, "change_message": "[{\"added\": {}}]"}}, {"model": "admin.logentry", "pk": 2, "fields": {"action_time": "2017-05-31T12:32:44.947Z", "user": 1, "content_type": 20, "object_id": "1", "object_repr": "123", "action_flag": 1, "change_message": "[{\"added\": {}}]"}}, {"model": "admin.logentry", "pk": 3, "fields": {"action_time": "2017-05-31T12:59:27.463Z", "user": 1, "content_type": 24, "object_id": "2", "object_repr": "\u0410\u0432\u0442\u043e", "action_flag": 1, "change_message": "[{\"added\": {}}]"}}, {"model": "admin.logentry", "pk": 4, "fields": {"action_time": "2017-05-31T12:59:53.793Z", "user": 1, "content_type": 24, "object_id": "3", "object_repr": "\u0414\u043b\u044f \u0434\u0435\u0442\u0435\u0439", "action_flag": 1, "change_message": "[{\"added\": {}}]"}}, {"model": "admin.logentry", "pk": 5, "fields": {"action_time": "2017-05-31T13:00:07.081Z", "user": 1, "content_type": 24, "object_id": "4", "object_repr": "\u0414\u043b\u044f \u0434\u043e\u043c\u0430", "action_flag": 1, "change_message": "[{\"added\": {}}]"}}, {"model": "admin.logentry", "pk": 6, "fields": {"action_time": "2017-05-31T13:00:17.023Z", "user": 1, "content_type": 24, "object_id": "5", "object_repr": "\u0421\u043f\u043e\u0440\u0442 \u0438 \u043e\u0442\u0434\u044b\u0445", "action_flag": 1, "change_message": "[{\"added\": {}}]"}}, {"model": "admin.logentry", "pk": 7, "fields": {"action_time": "2017-05-31T13:00:27.019Z", "user": 1, "content_type": 24, "object_id": "6", "object_repr": "\u041e\u0434\u0435\u0436\u0434\u0430 \u0438 \u043e\u0431\u0443\u0432\u044c", "action_flag": 1, "change_message": "[{\"added\": {}}]"}}, {"model": "admin.logentry", "pk": 8, "fields": {"action_time": "2017-05-31T13:00:42.359Z", "user": 1, "content_type": 24, "object_id": "7", "object_repr": "\u041a\u0430\u043d\u0441\u0435\u043b\u044f\u0440\u0438\u044f", "action_flag": 1, "change_message": "[{\"added\": {}}]"}}, {"model": "admin.logentry", "pk": 9, "fields": {"action_time": "2017-05-31T13:00:56.439Z", "user": 1, "content_type": 24, "object_id": "8", "object_repr": "\u041f\u0440\u043e\u0434\u0443\u043a\u0442\u044b", "action_flag": 1, "change_message": "[{\"added\": {}}]"}}, {"model": "admin.logentry", "pk": 10, "fields": {"action_time": "2017-05-31T13:01:10.351Z", "user": 1, "content_type": 24, "object_id": "9", "object_repr": "\u041f\u043e\u0434\u0430\u0440\u043a\u0438", "action_flag": 1, "change_message": "[{\"added\": {}}]"}}, {"model": "admin.logentry", "pk": 11, "fields": {"action_time": "2017-05-31T13:01:28.591Z", "user": 1, "content_type": 24, "object_id": "10", "object_repr": "\u042d\u043b\u0435\u043a\u0442\u0440\u043e\u043d\u0438\u043a\u0430", "action_flag": 1, "change_message": "[{\"added\": {}}]"}}, {"model": "admin.logentry", "pk": 12, "fields": {"action_time": "2017-05-31T13:02:10.069Z", "user": 1, "content_type": 20, "object_id": "1", "object_repr": "Amway", "action_flag": 2, "change_message": "[{\"changed\": {\"fields\": [\"title\", \"slug\", \"phone\"]}}]"}}, {"model": "admin.logentry", "pk": 13, "fields": {"action_time": "2017-05-31T13:02:49.367Z", "user": 1, "content_type": 20, "object_id": "2", "object_repr": "\u0418\u0433\u0440\u043e\u043b\u0435\u043d\u0434", "action_flag": 1, "change_message": "[{\"added\": {}}]"}}, {"model": "admin.logentry", "pk": 14, "fields": {"action_time": "2017-05-31T13:03:14.770Z", "user": 1, "content_type": 20, "object_id": "3", "object_repr": "Kidsmart", "action_flag": 1, "change_message": "[{\"added\": {}}]"}}, {"model": "admin.logentry", "pk": 15, "fields": {"action_time": "2017-05-31T13:03:42.481Z", "user": 1, "content_type": 20, "object_id": "4", "object_repr": "Mexx", "action_flag": 1, "change_message": "[{\"added\": {}}]"}}, {"model": "admin.logentry", "pk": 16, "fields": {"action_time": "2017-05-31T13:04:19.220Z", "user": 1, "content_type": 20, "object_id": "5", "object_repr": "Koton", "action_flag": 1, "change_message": "[{\"added\": {}}]"}}, {"model": "admin.logentry", "pk": 17, "fields": {"action_time": "2017-05-31T13:04:56.334Z", "user": 1, "content_type": 20, "object_id": "6", "object_repr": "StepUp", "action_flag": 1, "change_message": "[{\"added\": {}}]"}}, {"model": "admin.logentry", "pk": 18, "fields": {"action_time": "2017-05-31T13:05:50.622Z", "user": 1, "content_type": 20, "object_id": "7", "object_repr": "Campio Marcio", "action_flag": 1, "change_message": "[{\"added\": {}}]"}}, {"model": "admin.logentry", "pk": 19, "fields": {"action_time": "2017-05-31T13:06:16.239Z", "user": 1, "content_type": 20, "object_id": "8", "object_repr": "KomodKg", "action_flag": 1, "change_message": "[{\"added\": {}}]"}}, {"model": "admin.logentry", "pk": 20, "fields": {"action_time": "2017-05-31T13:06:50.437Z", "user": 1, "content_type": 20, "object_id": "9", "object_repr": "Fashion.kg", "action_flag": 1, "change_message": "[{\"added\": {}}]"}}, {"model": "admin.logentry", "pk": 21, "fields": {"action_time": "2017-05-31T13:07:25.490Z", "user": 1, "content_type": 20, "object_id": "10", "object_repr": "Carters", "action_flag": 1, "change_message": "[{\"added\": {}}]"}}, {"model": "admin.logentry", "pk": 22, "fields": {"action_time": "2017-05-31T13:08:15.511Z", "user": 1, "content_type": 13, "object_id": "1", "object_repr": "\u041f\u0430\u043b\u044c\u0442\u043e", "action_flag": 1, "change_message": "[{\"added\": {}}]"}}, {"model": "admin.logentry", "pk": 23, "fields": {"action_time": "2017-05-31T13:09:08.694Z", "user": 1, "content_type": 16, "object_id": "1", "object_repr": "\u0418\u0433\u0440\u043e\u043b\u0435\u043d\u0434 - \u041f\u0430\u043b\u044c\u0442\u043e - \u0421\u0443\u043f\u0435\u0440 \u0427\u0435\u0440\u043d\u043e\u0435 \u041f\u0430\u043b\u044c\u0442\u043e", "action_flag": 1, "change_message": "[{\"added\": {}}, {\"added\": {\"object\": \"ProductImage object\", \"name\": \"\\u0418\\u0437\\u043e\\u0431\\u0440\\u0430\\u0436\\u0435\\u043d\\u0438\\u0435 \\u0442\\u043e\\u0432\\u0430\\u0440\\u0430\"}}, {\"added\": {\"object\": \"ProductImage object\", \"name\": \"\\u0418\\u0437\\u043e\\u0431\\u0440\\u0430\\u0436\\u0435\\u043d\\u0438\\u0435 \\u0442\\u043e\\u0432\\u0430\\u0440\\u0430\"}}]"}}, {"model": "admin.logentry", "pk": 24, "fields": {"action_time": "2017-05-31T13:09:31.234Z", "user": 1, "content_type": 13, "object_id": "2", "object_repr": "Power Bank Super", "action_flag": 1, "change_message": "[{\"added\": {}}]"}}, {"model": "admin.logentry", "pk": 25, "fields": {"action_time": "2017-05-31T13:10:15.229Z", "user": 1, "content_type": 16, "object_id": "2", "object_repr": "Mexx - Power Bank Super - Power Bank Super", "action_flag": 1, "change_message": "[{\"added\": {}}, {\"added\": {\"object\": \"ProductImage object\", \"name\": \"\\u0418\\u0437\\u043e\\u0431\\u0440\\u0430\\u0436\\u0435\\u043d\\u0438\\u0435 \\u0442\\u043e\\u0432\\u0430\\u0440\\u0430\"}}, {\"added\": {\"object\": \"ProductImage object\", \"name\": \"\\u0418\\u0437\\u043e\\u0431\\u0440\\u0430\\u0436\\u0435\\u043d\\u0438\\u0435 \\u0442\\u043e\\u0432\\u0430\\u0440\\u0430\"}}]"}}]
+[
+  {
+    "model": "sessions.session",
+    "pk": "7rgzjoi95f1eju0a27jefkhu10ky0aje",
+    "fields": {
+      "session_data": "ZWQwMWQ3YmQ3ZDg5NDMwODQ3YmY3NDdhMjQyNzk4NzlkYTkzNDk0ZDp7Il9hdXRoX3VzZXJfYmFja2VuZCI6ImRqYW5nby5jb250cmliLmF1dGguYmFja2VuZHMuTW9kZWxCYWNrZW5kIiwiX2F1dGhfdXNlcl9pZCI6IjEiLCJfYXV0aF91c2VyX2hhc2giOiJkNDdkNWUxODMyNTljYjc0NjM5OTgwZjdlN2RjZTdmZTRhZDU3NzUzIn0=",
+      "expire_date": "2017-06-14T12:30:11.193Z"
+    }
+  },
+  {
+    "model": "sites.site",
+    "pk": 1,
+    "fields": {
+      "domain": "ooba.market",
+      "name": "Ooba Market"
+    }
+  },
+  {
+    "model": "users.user",
+    "pk": 1,
+    "fields": {
+      "password": "argon2$argon2i$v=19$m=512,t=2,p=2$MWZSMVc5cHVwZTNa$3ITe5i+jbPJvf5byu5QoUA",
+      "last_login": "2017-05-31T12:30:11.176Z",
+      "is_superuser": true,
+      "username": "admin",
+      "first_name": "",
+      "last_name": "",
+      "email": "admin@localhost",
+      "is_staff": true,
+      "is_active": true,
+      "date_joined": "2017-05-31T12:27:11.100Z",
+      "name": "",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "category.category",
+    "pk": 1,
+    "fields": {
+      "parent": null,
+      "title": "\u041f\u0430\u043b\u044c\u0442\u043e",
+      "slug": "palto",
+      "section": 6,
+      "created_at": "2017-05-31T13:08:15.495Z",
+      "updated_at": "2017-05-31T13:08:15.495Z",
+      "order": 1,
+      "is_active": true,
+      "lft": 1,
+      "rght": 2,
+      "tree_id": 1,
+      "level": 0
+    }
+  },
+  {
+    "model": "category.category",
+    "pk": 2,
+    "fields": {
+      "parent": null,
+      "title": "Power Bank Super",
+      "slug": "power-bank-super",
+      "section": 10,
+      "created_at": "2017-05-31T13:09:31.212Z",
+      "updated_at": "2017-05-31T13:09:31.212Z",
+      "order": 2,
+      "is_active": true,
+      "lft": 1,
+      "rght": 2,
+      "tree_id": 2,
+      "level": 0
+    }
+  },
+  {
+    "model": "product.product",
+    "pk": 1,
+    "fields": {
+      "shop": 2,
+      "category": 1,
+      "title": "\u0421\u0443\u043f\u0435\u0440 \u0427\u0435\u0440\u043d\u043e\u0435 \u041f\u0430\u043b\u044c\u0442\u043e",
+      "slug": "super-chernoe-palto",
+      "price": "1200",
+      "sell_count": 0,
+      "discount": 5,
+      "currency": "\u0441\u043e\u043c",
+      "quantity": 10,
+      "delivery_type": "self",
+      "delivery_cost": 0.0,
+      "availability": "available",
+      "published": true,
+      "short_description": "123123",
+      "long_description": ""
+    }
+  },
+  {
+    "model": "product.product",
+    "pk": 2,
+    "fields": {
+      "shop": 4,
+      "category": 2,
+      "title": "Power Bank Super",
+      "slug": "power-bank-super",
+      "price": "1200",
+      "sell_count": 0,
+      "discount": 10,
+      "currency": "\u0441\u043e\u043c",
+      "quantity": 12,
+      "delivery_type": "self",
+      "delivery_cost": 0.0,
+      "availability": "available",
+      "published": true,
+      "short_description": "123",
+      "long_description": ""
+    }
+  },
+  {
+    "model": "product.productimage",
+    "pk": 1,
+    "fields": {
+      "product": 1,
+      "image": "products/image/t10.jpg"
+    }
+  },
+  {
+    "model": "product.productimage",
+    "pk": 2,
+    "fields": {
+      "product": 1,
+      "image": "products/image/t10_LqLKqbE.jpg"
+    }
+  },
+  {
+    "model": "product.productimage",
+    "pk": 3,
+    "fields": {
+      "product": 2,
+      "image": "products/image/sin.jpg"
+    }
+  },
+  {
+    "model": "product.productimage",
+    "pk": 4,
+    "fields": {
+      "product": 2,
+      "image": "products/image/sin_mAQhbkJ.jpg"
+    }
+  },
+  {
+    "model": "shop.shop",
+    "pk": 1,
+    "fields": {
+      "title": "Amway",
+      "slug": "amway",
+      "phone": "0778778778",
+      "email": "asmuratbek@gmail.com",
+      "short_description": "123",
+      "description": "123",
+      "created_at": "2017-05-31T13:02:10.022Z",
+      "updated_at": "2017-05-31T12:32:44.869Z",
+      "logo": "images/shop/logo/o5.jpeg",
+      "user": [
+        1
+      ]
+    }
+  },
+  {
+    "model": "shop.shop",
+    "pk": 2,
+    "fields": {
+      "title": "\u0418\u0433\u0440\u043e\u043b\u0435\u043d\u0434",
+      "slug": "igrolend",
+      "phone": "0778778778",
+      "email": "asmuratbek@gmail.com",
+      "short_description": "123",
+      "description": "123",
+      "created_at": "2017-05-31T13:02:49.280Z",
+      "updated_at": "2017-05-31T13:02:49.280Z",
+      "logo": "images/shop/logo/o1.jpeg",
+      "user": [
+        1
+      ]
+    }
+  },
+  {
+    "model": "shop.shop",
+    "pk": 3,
+    "fields": {
+      "title": "Kidsmart",
+      "slug": "kidsmart",
+      "phone": "0778778778",
+      "email": "asmuratbek@gmail.com",
+      "short_description": "123",
+      "description": "123",
+      "created_at": "2017-05-31T13:03:14.710Z",
+      "updated_at": "2017-05-31T13:03:14.710Z",
+      "logo": "images/shop/logo/o2.png",
+      "user": [
+        1
+      ]
+    }
+  },
+  {
+    "model": "shop.shop",
+    "pk": 4,
+    "fields": {
+      "title": "Mexx",
+      "slug": "mexx",
+      "phone": "0778778778",
+      "email": "asmuratbek@gmail.com",
+      "short_description": "213",
+      "description": "123",
+      "created_at": "2017-05-31T13:03:42.420Z",
+      "updated_at": "2017-05-31T13:03:42.421Z",
+      "logo": "images/shop/logo/o3.jpeg",
+      "user": [
+        1
+      ]
+    }
+  },
+  {
+    "model": "shop.shop",
+    "pk": 5,
+    "fields": {
+      "title": "Koton",
+      "slug": "koton",
+      "phone": "0778778778",
+      "email": "asmuratbek@gmail.com",
+      "short_description": "123",
+      "description": "123",
+      "created_at": "2017-05-31T13:04:19.124Z",
+      "updated_at": "2017-05-31T13:04:19.124Z",
+      "logo": "images/shop/logo/o4.jpeg",
+      "user": [
+        1
+      ]
+    }
+  },
+  {
+    "model": "shop.shop",
+    "pk": 6,
+    "fields": {
+      "title": "StepUp",
+      "slug": "stepup",
+      "phone": "0778778778",
+      "email": "asmuratbek@gmail.com",
+      "short_description": "123",
+      "description": "123",
+      "created_at": "2017-05-31T13:04:56.273Z",
+      "updated_at": "2017-05-31T13:04:56.273Z",
+      "logo": "images/shop/logo/o7.png",
+      "user": [
+        1
+      ]
+    }
+  },
+  {
+    "model": "shop.shop",
+    "pk": 7,
+    "fields": {
+      "title": "Campio Marcio",
+      "slug": "campio-marcio",
+      "phone": "0778778778",
+      "email": "asmuratbek@gmail.com",
+      "short_description": "123",
+      "description": "123",
+      "created_at": "2017-05-31T13:05:50.571Z",
+      "updated_at": "2017-05-31T13:05:50.571Z",
+      "logo": "images/shop/logo/o6.gif",
+      "user": [
+        1
+      ]
+    }
+  },
+  {
+    "model": "shop.shop",
+    "pk": 8,
+    "fields": {
+      "title": "KomodKg",
+      "slug": "komodkg",
+      "phone": "0778778778",
+      "email": "asmuratbek@gmail.com",
+      "short_description": "23",
+      "description": "123",
+      "created_at": "2017-05-31T13:06:16.190Z",
+      "updated_at": "2017-05-31T13:06:16.190Z",
+      "logo": "images/shop/logo/o8.png",
+      "user": [
+        1
+      ]
+    }
+  },
+  {
+    "model": "shop.shop",
+    "pk": 9,
+    "fields": {
+      "title": "Fashion.kg",
+      "slug": "fashionkg",
+      "phone": "0778778778",
+      "email": "asmuratbek@gmail.com",
+      "short_description": "123123",
+      "description": "123123",
+      "created_at": "2017-05-31T13:06:50.347Z",
+      "updated_at": "2017-05-31T13:06:50.347Z",
+      "logo": "images/shop/logo/o10.gif",
+      "user": [
+        1
+      ]
+    }
+  },
+  {
+    "model": "shop.shop",
+    "pk": 10,
+    "fields": {
+      "title": "Carters",
+      "slug": "carters",
+      "phone": "0778778778",
+      "email": "asmuratbek@gmail.com",
+      "short_description": "123",
+      "description": "123",
+      "created_at": "2017-05-31T13:07:25.436Z",
+      "updated_at": "2017-05-31T13:07:25.436Z",
+      "logo": "images/shop/logo/o11.jpeg",
+      "user": [
+        1
+      ]
+    }
+  },
+  {
+    "model": "shop.sociallinks",
+    "pk": 1,
+    "fields": {
+      "facebook": null,
+      "vk": null,
+      "instagram": null,
+      "twitter": null,
+      "shop": 1
+    }
+  },
+  {
+    "model": "shop.sociallinks",
+    "pk": 2,
+    "fields": {
+      "facebook": null,
+      "vk": null,
+      "instagram": null,
+      "twitter": null,
+      "shop": 2
+    }
+  },
+  {
+    "model": "shop.sociallinks",
+    "pk": 3,
+    "fields": {
+      "facebook": null,
+      "vk": null,
+      "instagram": null,
+      "twitter": null,
+      "shop": 3
+    }
+  },
+  {
+    "model": "shop.sociallinks",
+    "pk": 4,
+    "fields": {
+      "facebook": null,
+      "vk": null,
+      "instagram": null,
+      "twitter": null,
+      "shop": 4
+    }
+  },
+  {
+    "model": "shop.sociallinks",
+    "pk": 5,
+    "fields": {
+      "facebook": null,
+      "vk": null,
+      "instagram": null,
+      "twitter": null,
+      "shop": 5
+    }
+  },
+  {
+    "model": "shop.sociallinks",
+    "pk": 6,
+    "fields": {
+      "facebook": null,
+      "vk": null,
+      "instagram": null,
+      "twitter": null,
+      "shop": 6
+    }
+  },
+  {
+    "model": "shop.sociallinks",
+    "pk": 7,
+    "fields": {
+      "facebook": null,
+      "vk": null,
+      "instagram": null,
+      "twitter": null,
+      "shop": 7
+    }
+  },
+  {
+    "model": "shop.sociallinks",
+    "pk": 8,
+    "fields": {
+      "facebook": null,
+      "vk": null,
+      "instagram": null,
+      "twitter": null,
+      "shop": 8
+    }
+  },
+  {
+    "model": "shop.sociallinks",
+    "pk": 9,
+    "fields": {
+      "facebook": null,
+      "vk": null,
+      "instagram": null,
+      "twitter": null,
+      "shop": 9
+    }
+  },
+  {
+    "model": "shop.sociallinks",
+    "pk": 10,
+    "fields": {
+      "facebook": null,
+      "vk": null,
+      "instagram": null,
+      "twitter": null,
+      "shop": 10
+    }
+  },
+  {
+    "model": "global_category.globalcategory",
+    "pk": 1,
+    "fields": {
+      "title": "\u041a\u0440\u0430\u0441\u043e\u0442\u0430",
+      "slug": "krasota",
+      "icon": "category/icons/li1.png",
+      "created_at": "2017-05-31T12:31:41.992Z",
+      "updated_at": "2017-05-31T12:31:41.992Z"
+    }
+  },
+  {
+    "model": "global_category.globalcategory",
+    "pk": 2,
+    "fields": {
+      "title": "\u0410\u0432\u0442\u043e",
+      "slug": "avto",
+      "icon": "category/icons/li2.png",
+      "created_at": "2017-05-31T12:59:27.457Z",
+      "updated_at": "2017-05-31T12:59:27.457Z"
+    }
+  },
+  {
+    "model": "global_category.globalcategory",
+    "pk": 3,
+    "fields": {
+      "title": "\u0414\u043b\u044f \u0434\u0435\u0442\u0435\u0439",
+      "slug": "dlya-detej",
+      "icon": "category/icons/li3.png",
+      "created_at": "2017-05-31T12:59:53.787Z",
+      "updated_at": "2017-05-31T12:59:53.787Z"
+    }
+  },
+  {
+    "model": "global_category.globalcategory",
+    "pk": 4,
+    "fields": {
+      "title": "\u0414\u043b\u044f \u0434\u043e\u043c\u0430",
+      "slug": "dlya-doma",
+      "icon": "category/icons/li4.png",
+      "created_at": "2017-05-31T13:00:07.075Z",
+      "updated_at": "2017-05-31T13:00:07.075Z"
+    }
+  },
+  {
+    "model": "global_category.globalcategory",
+    "pk": 5,
+    "fields": {
+      "title": "\u0421\u043f\u043e\u0440\u0442 \u0438 \u043e\u0442\u0434\u044b\u0445",
+      "slug": "sport-i-otdyh",
+      "icon": "category/icons/li5.png",
+      "created_at": "2017-05-31T13:00:17.018Z",
+      "updated_at": "2017-05-31T13:00:17.018Z"
+    }
+  },
+  {
+    "model": "global_category.globalcategory",
+    "pk": 6,
+    "fields": {
+      "title": "\u041e\u0434\u0435\u0436\u0434\u0430 \u0438 \u043e\u0431\u0443\u0432\u044c",
+      "slug": "odezhda-i-obuv",
+      "icon": "category/icons/li6.png",
+      "created_at": "2017-05-31T13:00:27.012Z",
+      "updated_at": "2017-05-31T13:00:27.013Z"
+    }
+  },
+  {
+    "model": "global_category.globalcategory",
+    "pk": 7,
+    "fields": {
+      "title": "\u041a\u0430\u043d\u0441\u0435\u043b\u044f\u0440\u0438\u044f",
+      "slug": "kanselyariya",
+      "icon": "category/icons/li7.png",
+      "created_at": "2017-05-31T13:00:42.354Z",
+      "updated_at": "2017-05-31T13:00:42.354Z"
+    }
+  },
+  {
+    "model": "global_category.globalcategory",
+    "pk": 8,
+    "fields": {
+      "title": "\u041f\u0440\u043e\u0434\u0443\u043a\u0442\u044b",
+      "slug": "produkty",
+      "icon": "category/icons/li8.png",
+      "created_at": "2017-05-31T13:00:56.434Z",
+      "updated_at": "2017-05-31T13:00:56.434Z"
+    }
+  },
+  {
+    "model": "global_category.globalcategory",
+    "pk": 9,
+    "fields": {
+      "title": "\u041f\u043e\u0434\u0430\u0440\u043a\u0438",
+      "slug": "podarki",
+      "icon": "category/icons/li9.png",
+      "created_at": "2017-05-31T13:01:10.343Z",
+      "updated_at": "2017-05-31T13:01:10.343Z"
+    }
+  },
+  {
+    "model": "global_category.globalcategory",
+    "pk": 10,
+    "fields": {
+      "title": "\u042d\u043b\u0435\u043a\u0442\u0440\u043e\u043d\u0438\u043a\u0430",
+      "slug": "elektronika",
+      "icon": "category/icons/li10.png",
+      "created_at": "2017-05-31T13:01:28.585Z",
+      "updated_at": "2017-05-31T13:01:28.585Z"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 1,
+    "fields": {
+      "action_time": "2017-05-31T12:31:41.998Z",
+      "user": 1,
+      "content_type": 24,
+      "object_id": "1",
+      "object_repr": "\u041a\u0440\u0430\u0441\u043e\u0442\u0430",
+      "action_flag": 1,
+      "change_message": "[{\"added\": {}}]"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 2,
+    "fields": {
+      "action_time": "2017-05-31T12:32:44.947Z",
+      "user": 1,
+      "content_type": 20,
+      "object_id": "1",
+      "object_repr": "123",
+      "action_flag": 1,
+      "change_message": "[{\"added\": {}}]"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 3,
+    "fields": {
+      "action_time": "2017-05-31T12:59:27.463Z",
+      "user": 1,
+      "content_type": 24,
+      "object_id": "2",
+      "object_repr": "\u0410\u0432\u0442\u043e",
+      "action_flag": 1,
+      "change_message": "[{\"added\": {}}]"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 4,
+    "fields": {
+      "action_time": "2017-05-31T12:59:53.793Z",
+      "user": 1,
+      "content_type": 24,
+      "object_id": "3",
+      "object_repr": "\u0414\u043b\u044f \u0434\u0435\u0442\u0435\u0439",
+      "action_flag": 1,
+      "change_message": "[{\"added\": {}}]"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 5,
+    "fields": {
+      "action_time": "2017-05-31T13:00:07.081Z",
+      "user": 1,
+      "content_type": 24,
+      "object_id": "4",
+      "object_repr": "\u0414\u043b\u044f \u0434\u043e\u043c\u0430",
+      "action_flag": 1,
+      "change_message": "[{\"added\": {}}]"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 6,
+    "fields": {
+      "action_time": "2017-05-31T13:00:17.023Z",
+      "user": 1,
+      "content_type": 24,
+      "object_id": "5",
+      "object_repr": "\u0421\u043f\u043e\u0440\u0442 \u0438 \u043e\u0442\u0434\u044b\u0445",
+      "action_flag": 1,
+      "change_message": "[{\"added\": {}}]"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 7,
+    "fields": {
+      "action_time": "2017-05-31T13:00:27.019Z",
+      "user": 1,
+      "content_type": 24,
+      "object_id": "6",
+      "object_repr": "\u041e\u0434\u0435\u0436\u0434\u0430 \u0438 \u043e\u0431\u0443\u0432\u044c",
+      "action_flag": 1,
+      "change_message": "[{\"added\": {}}]"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 8,
+    "fields": {
+      "action_time": "2017-05-31T13:00:42.359Z",
+      "user": 1,
+      "content_type": 24,
+      "object_id": "7",
+      "object_repr": "\u041a\u0430\u043d\u0441\u0435\u043b\u044f\u0440\u0438\u044f",
+      "action_flag": 1,
+      "change_message": "[{\"added\": {}}]"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 9,
+    "fields": {
+      "action_time": "2017-05-31T13:00:56.439Z",
+      "user": 1,
+      "content_type": 24,
+      "object_id": "8",
+      "object_repr": "\u041f\u0440\u043e\u0434\u0443\u043a\u0442\u044b",
+      "action_flag": 1,
+      "change_message": "[{\"added\": {}}]"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 10,
+    "fields": {
+      "action_time": "2017-05-31T13:01:10.351Z",
+      "user": 1,
+      "content_type": 24,
+      "object_id": "9",
+      "object_repr": "\u041f\u043e\u0434\u0430\u0440\u043a\u0438",
+      "action_flag": 1,
+      "change_message": "[{\"added\": {}}]"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 11,
+    "fields": {
+      "action_time": "2017-05-31T13:01:28.591Z",
+      "user": 1,
+      "content_type": 24,
+      "object_id": "10",
+      "object_repr": "\u042d\u043b\u0435\u043a\u0442\u0440\u043e\u043d\u0438\u043a\u0430",
+      "action_flag": 1,
+      "change_message": "[{\"added\": {}}]"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 12,
+    "fields": {
+      "action_time": "2017-05-31T13:02:10.069Z",
+      "user": 1,
+      "content_type": 20,
+      "object_id": "1",
+      "object_repr": "Amway",
+      "action_flag": 2,
+      "change_message": "[{\"changed\": {\"fields\": [\"title\", \"slug\", \"phone\"]}}]"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 13,
+    "fields": {
+      "action_time": "2017-05-31T13:02:49.367Z",
+      "user": 1,
+      "content_type": 20,
+      "object_id": "2",
+      "object_repr": "\u0418\u0433\u0440\u043e\u043b\u0435\u043d\u0434",
+      "action_flag": 1,
+      "change_message": "[{\"added\": {}}]"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 14,
+    "fields": {
+      "action_time": "2017-05-31T13:03:14.770Z",
+      "user": 1,
+      "content_type": 20,
+      "object_id": "3",
+      "object_repr": "Kidsmart",
+      "action_flag": 1,
+      "change_message": "[{\"added\": {}}]"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 15,
+    "fields": {
+      "action_time": "2017-05-31T13:03:42.481Z",
+      "user": 1,
+      "content_type": 20,
+      "object_id": "4",
+      "object_repr": "Mexx",
+      "action_flag": 1,
+      "change_message": "[{\"added\": {}}]"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 16,
+    "fields": {
+      "action_time": "2017-05-31T13:04:19.220Z",
+      "user": 1,
+      "content_type": 20,
+      "object_id": "5",
+      "object_repr": "Koton",
+      "action_flag": 1,
+      "change_message": "[{\"added\": {}}]"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 17,
+    "fields": {
+      "action_time": "2017-05-31T13:04:56.334Z",
+      "user": 1,
+      "content_type": 20,
+      "object_id": "6",
+      "object_repr": "StepUp",
+      "action_flag": 1,
+      "change_message": "[{\"added\": {}}]"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 18,
+    "fields": {
+      "action_time": "2017-05-31T13:05:50.622Z",
+      "user": 1,
+      "content_type": 20,
+      "object_id": "7",
+      "object_repr": "Campio Marcio",
+      "action_flag": 1,
+      "change_message": "[{\"added\": {}}]"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 19,
+    "fields": {
+      "action_time": "2017-05-31T13:06:16.239Z",
+      "user": 1,
+      "content_type": 20,
+      "object_id": "8",
+      "object_repr": "KomodKg",
+      "action_flag": 1,
+      "change_message": "[{\"added\": {}}]"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 20,
+    "fields": {
+      "action_time": "2017-05-31T13:06:50.437Z",
+      "user": 1,
+      "content_type": 20,
+      "object_id": "9",
+      "object_repr": "Fashion.kg",
+      "action_flag": 1,
+      "change_message": "[{\"added\": {}}]"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 21,
+    "fields": {
+      "action_time": "2017-05-31T13:07:25.490Z",
+      "user": 1,
+      "content_type": 20,
+      "object_id": "10",
+      "object_repr": "Carters",
+      "action_flag": 1,
+      "change_message": "[{\"added\": {}}]"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 22,
+    "fields": {
+      "action_time": "2017-05-31T13:08:15.511Z",
+      "user": 1,
+      "content_type": 13,
+      "object_id": "1",
+      "object_repr": "\u041f\u0430\u043b\u044c\u0442\u043e",
+      "action_flag": 1,
+      "change_message": "[{\"added\": {}}]"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 23,
+    "fields": {
+      "action_time": "2017-05-31T13:09:08.694Z",
+      "user": 1,
+      "content_type": 16,
+      "object_id": "1",
+      "object_repr": "\u0418\u0433\u0440\u043e\u043b\u0435\u043d\u0434 - \u041f\u0430\u043b\u044c\u0442\u043e - \u0421\u0443\u043f\u0435\u0440 \u0427\u0435\u0440\u043d\u043e\u0435 \u041f\u0430\u043b\u044c\u0442\u043e",
+      "action_flag": 1,
+      "change_message": "[{\"added\": {}}, {\"added\": {\"object\": \"ProductImage object\", \"name\": \"\\u0418\\u0437\\u043e\\u0431\\u0440\\u0430\\u0436\\u0435\\u043d\\u0438\\u0435 \\u0442\\u043e\\u0432\\u0430\\u0440\\u0430\"}}, {\"added\": {\"object\": \"ProductImage object\", \"name\": \"\\u0418\\u0437\\u043e\\u0431\\u0440\\u0430\\u0436\\u0435\\u043d\\u0438\\u0435 \\u0442\\u043e\\u0432\\u0430\\u0440\\u0430\"}}]"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 24,
+    "fields": {
+      "action_time": "2017-05-31T13:09:31.234Z",
+      "user": 1,
+      "content_type": 13,
+      "object_id": "2",
+      "object_repr": "Power Bank Super",
+      "action_flag": 1,
+      "change_message": "[{\"added\": {}}]"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 25,
+    "fields": {
+      "action_time": "2017-05-31T13:10:15.229Z",
+      "user": 1,
+      "content_type": 16,
+      "object_id": "2",
+      "object_repr": "Mexx - Power Bank Super - Power Bank Super",
+      "action_flag": 1,
+      "change_message": "[{\"added\": {}}, {\"added\": {\"object\": \"ProductImage object\", \"name\": \"\\u0418\\u0437\\u043e\\u0431\\u0440\\u0430\\u0436\\u0435\\u043d\\u0438\\u0435 \\u0442\\u043e\\u0432\\u0430\\u0440\\u0430\"}}, {\"added\": {\"object\": \"ProductImage object\", \"name\": \"\\u0418\\u0437\\u043e\\u0431\\u0440\\u0430\\u0436\\u0435\\u043d\\u0438\\u0435 \\u0442\\u043e\\u0432\\u0430\\u0440\\u0430\"}}]"
+    }
+  }
+]
