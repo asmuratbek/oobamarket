@@ -2,7 +2,53 @@ $(window).load(function(){
     $(".search-index").addClass('animated fade')
 });
 
+
+
+
 $( document ).ready(function() {
+
+    function initForm() {
+    $('#ProductDelete').on('submit', function (event) {
+        event.preventDefault();
+        var that = this;
+        $(that).addClass('hidden');
+        $.ajax({
+            method: 'POST',
+            dataType: 'JSON',
+            data: $(that).serialize(),
+            url: $(that).attr('action'),
+            success: function (response) {
+                console.log(response)
+            },
+            error: function (error) {
+                console.log(error)
+            }
+        });
+    });
+    }
+
+    var trigger = $('.model-trigger');
+
+    $(trigger).each(function (i, obj) {
+        $(obj).on('click', function (event) {
+            var link = $(this).attr('data-url');
+            $.ajax({
+                method: 'GET',
+                dataType: 'HTML',
+                url: link,
+                success: function (response) {
+                    $('#ajax-modal-body').html(response);
+                    initReviewsCarousel();
+                    initForm();
+                    $('#application-form').append("{% csrf_token %}");
+                },
+                error: function () {
+
+                }
+            });
+        });
+    });
+
 
 
     $('.js-select').selectize({
@@ -534,3 +580,4 @@ $('#search-form-index').bind('keyup paste', function () {
 
 
 }); // end document ready
+

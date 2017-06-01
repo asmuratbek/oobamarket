@@ -256,6 +256,7 @@ class SearchResultsView(ListView):
 
 class ProductDeleteView(LoginRequiredMixin, DeleteProductMixin, DeleteView):
     model = Product
+    template_name = 'layout/modal_product_delete_confirm.html'
 
     def get_success_url(self):
         return reverse("shops:detail", kwargs={'slug': self.object.shop.slug})
