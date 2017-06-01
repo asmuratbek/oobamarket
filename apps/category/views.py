@@ -17,7 +17,7 @@ def category_detail(request, global_slug, slug):
 
 def get_category_from_global_category(request):
     global_category = get_object_or_404(GlobalCategory, title=request.GET.get('global_category'))
-    categories = Category.objects.filter(section=global_category)
+    categories = Category.objects.filter(section=global_category, parent=None)
     category_list = {'{}'.format(category.id) : '{}'.format(category.title) for category in categories}
     data = {
         'category_list': category_list,
