@@ -10,7 +10,7 @@ from slugify import slugify
 
 from apps.global_category.models import GlobalCategory
 from apps.product.forms import ProductForm, ProductSearchForm, ShopSearchForm
-from apps.users.mixins import AddProductMixin
+from apps.users.mixins import AddProductMixin, DeleteProductMixin
 from config.settings.base import MEDIA_ROOT
 from .models import *
 
@@ -254,7 +254,7 @@ class SearchResultsView(ListView):
         return result
 
 
-class ProductDeleteView(DeleteView):
+class ProductDeleteView(LoginRequiredMixin, DeleteProductMixin, DeleteView):
     model = Product
 
     def get_success_url(self):
