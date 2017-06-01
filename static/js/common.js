@@ -4,6 +4,7 @@ $(window).load(function(){
 
 $( document ).ready(function() {
 
+
     $('.js-select').selectize({
         create: true,
         sortField: 'text'
@@ -507,7 +508,11 @@ $('.glyphicon-eye-close').click(function (e) {
     });
 });
 
-// custom scrollbar
-$('.custom-scroll').perfectScrollbar();
+$.uploadPreview({
+    input_field: "#image-upload",
+    preview_box: "#image-preview",
+    label_field: "#image-label"
+  });
+
 
 }); // end document ready

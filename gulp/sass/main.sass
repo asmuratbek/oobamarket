@@ -1275,6 +1275,15 @@ header
         right: 0
         left: 0
         z-index: 10
+        a:hover
+          i
+            animation: wrench 1.875s ease infinite
+
+            @keyframes wrench
+              0%
+                transform: rotate(0deg)
+              100%
+                transform: rotate(360deg)
         a
           position: absolute
           top: 0
@@ -1349,6 +1358,36 @@ header
       .bottom-line
         padding: 20px
         overflow: hidden
+        position: relative
+        .auch-edit
+          position: absolute
+          top: 0
+          bottom: 0
+          right: 0
+          left: 0
+          z-index: 10
+          a
+            position: absolute
+            top: 0
+            bottom: 0
+            right: 0
+            left: 0
+            z-index: 1
+            text-align: center
+            padding: 27px 0
+            background: rgba(0, 0, 0, 0.5)
+          a:hover
+            i
+              animation: wrench 1.875s ease infinite
+
+              @keyframes wrench
+                0%
+                  transform: rotate(0deg)
+                100%
+                  transform: rotate(360deg)
+            i
+              font-size: 30px
+              color: #fff
         .pull-left
           a
             color: #808080
@@ -2558,6 +2597,84 @@ form.add_email
   h1
     font-weight: 300
     margin-bottom: 30px
-
+.edit-banner
+  .container
+    background-color: #fff
+    text-align: center
+    padding: 50px 15px 300px 15px
+  label
+    font-weight: 300
+    margin-bottom: 5px
+    display: block
+  h1
+    font-weight: 300
+    margin-bottom: 30px
+  .upload-image
+    width: 100px
+    height: 100px
+    background-color: red
+    display: block
+    margin: 20px auto
+    input
+      display: none
+  #image-preview
+    margin: 20px 0
+    transition: .3s
+    width: 100%
+    height: 360px
+    background-color: #ccc
+    position: relative
+    cursor: pointer
+    overflow: hidden
+    background-repeat: no-repeat !important
+    -webkit-background-size: 100% !important
+    background-size: 100% !important
+    i
+      position: absolute
+      top: -10060px
+      bottom: -9999px
+      right: -9999px
+      left: -9999px
+      margin: auto
+      display: block
+      font-size: 60px
+      width: 60px
+      height: 60px
+      color: #fff
+    input
+      line-height: 200px
+      font-size: 200px
+      position: absolute
+      opacity: 0
+      z-index: 10
+      display: none
+    label:hover + i
+      color: #f3481c
+    label
+      position: absolute
+      top: 0
+      bottom: 0
+      right: 0
+      left: 0
+      z-index: 10
+      cursor: pointer
+      font-size: 0
+    .place
+      position: absolute
+      top: 55%
+      left: 50%
+      margin-left: -125px
+      font-weight: 300
+      font-size: 24px
+      color: #fff
+  .info
+    span
+      color: grey
+      display: inline-block
+      margin-bottom: 10px
+    p
+      color: grey
+      font-size: 18px
+      font-weight: 300
 //ALWAYS END
 @import "media"

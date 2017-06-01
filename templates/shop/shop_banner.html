@@ -1,21 +1,48 @@
 {% extends 'base-1.html' %}
-
-
+{% load widget_tweaks %}
+{% load staticfiles %}
 {% block content %}
 
-<section class="add-banner">
-    <div class="container">
-        <h1 class="create">Разместите свои продукты в магазине</h1>
-        <div class="col-md-offset-3 col-md-6">
-             <form action="" method="post" enctype="multipart/form-data">
-                 {% csrf_token %}
-                {{ form }}
-                <input type="submit" value="Save" />
-             </form>
+    <section class="edit-banner">
+        <div class="container">
+            <h1 class="create">Разместите свои продукты в магазине</h1>
+            <div class="col-md-offset-2 col-md-8">
+                <form action="" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <label>Название баннера</label>
+                    {% render_field form.title %}
+                    <div id="image-preview">
+                        <label for="image-upload" id="image-label"></label>
+                        <i class="glyphicon glyphicon-plus-sign"></i>
+                        <span class="place">Добавить фотографию</span>
+                        {% render_field form.image id="image-upload" name="image"%}
+                    </div>
+                    <div class="info">
+                        <span>Рекомендация для фото:</span>
+                        <p>Размер: 1200x380 или больше</p>
+                        <p>Фон: белый или прозрачный</p>
+                        <br>
+                        <span id="file-counter" style="color: red;"></span>
+                    </div>
+
+
+
+                    <div class="clearfix"></div>
+
+
+                    <button class="btn add" type="submit">Сохранить</button>
+                </form>
+            </div>
         </div>
-    </div>
-</section>
+    </section>
 
 
+
+{% endblock %}
+
+{% block js %}
+
+{{ block.super }}
+    <script src="{% static 'js/jquery.uploadPreview.js' %}"></script>
 
 {% endblock %}
