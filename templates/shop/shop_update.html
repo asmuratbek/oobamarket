@@ -2,60 +2,70 @@
 {% load widget_tweaks %}
 
 {% block content %}
-<section class="edit-shop-detail">
-    <div class="container">
-        <h3>Редактирование магазина</h3>
-        <div class="form-filter">
-            <form class="form-inline" method="post" action="{% url 'shops:update' slug=object.slug%}" enctype="multipart/form-data">
-                        {% csrf_token %}
-                <div class="col-md-8">
-                    <div class="form-group input col-md-6">
-                        <label for="">Название магазина</label>
-                        {% render_field form.title|attr:"type:text" placeholder="Название магазина" %}
-                    </div>
-                    <div class="form-group input col-md-6">
-                        <label for="">Телефон:</label>
-                        {% render_field form.phone|attr:"type:text" placeholder="Телефон магазина" %}
-                    </div>
-                    <div class="form-group input col-md-6">
-                        <label for="">E-mail магазина:</label>
-                        {% render_field form.email|attr:"type:text" placeholder="E-mail магазина:" %}
-                    </div>
-                    <div class="form-group input col-md-12">
-                        <label for="">Короткое описание магазина:</label>
-                        {% render_field form.short_description|attr:"rows:6" placeholder="Введите до 300 символов" %}
-                    </div>
-                    <div class="form-group input col-md-12">
-                        <label for="">Полное описание магазина:</label>
-{#                        <textarea class="form-control" rows="6"></textarea>#}
-                        {% render_field form.description|attr:"rows:6" placeholder="Введите полное описание" %}
-                    </div>
-                    <div class="form-group btn-group-form col-md-12">
-{#                            <button type="submit" class="btn cancel"> Отменить</button>#}
+    <section class="edit-shop-detail">
+        <div class="container">
+            <h3>Редактирование магазина</h3>
+            <div class="form-filter">
+                <form class="form-inline" method="post" action="{% url 'shops:update' slug=object.slug %}"
+                      enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="col-md-8">
+                        <div class="form-group input col-md-6">
+                            <label for="">Название магазина</label>
+                            {% render_field form.title|attr:"type:text" placeholder="Название магазина" %}
+                        </div>
+                        <div class="form-group input col-md-6">
+                            <label for="">Телефон:</label>
+                            {% render_field form.phone|attr:"type:text" placeholder="Телефон магазина" %}
+                        </div>
+                        <div class="form-group input col-md-6">
+                            <label for="">E-mail магазина:</label>
+                            {% render_field form.email|attr:"type:text" placeholder="E-mail магазина:" %}
+                        </div>
+                        <div class="form-group input col-md-12">
+                            <label class="switch">
+                                <input class="switch__input" id="" name="" type="checkbox">
+                                <div class="switch__toggle">
+                                    <div class="switch__handle"></div>
+                                </div>
+                            </label>
+                            <label>Удалить магазин</label>
+                        </div>
+                        <div class="form-group input col-md-12">
+                            <label for="">Короткое описание магазина:</label>
+                            {% render_field form.short_description|attr:"rows:6" placeholder="Введите до 300 символов" %}
+                        </div>
+                        <div class="form-group input col-md-12">
+                            <label for="">Полное описание магазина:</label>
+                            {#                        <textarea class="form-control" rows="6"></textarea>#}
+                            {% render_field form.description|attr:"rows:6" placeholder="Введите полное описание" %}
+                        </div>
+                        <div class="form-group btn-group-form col-md-12">
+                            {#                            <button type="submit" class="btn cancel"> Отменить</button>#}
                             <button type="submit" class="btn add">Сохранить</button>
                         </div>
-                </div>
+                    </div>
 
-{#                <div class="col-md-4">#}
-{#                        <label class="upload" for="id_images">#}
-{#                            <i class="glyphicon glyphicon-plus-sign"></i>#}
-{#                            <div class="add-photo">#}
-{#                                Добавить<br>фотографии#}
-{#                             </div>#}
-{#                        </label>#}
-{##}
-{#                        <div class="info">#}
-{#                            <span>Рекомендация для фото:</span>#}
-{#                            <p>Размер: 380x380 или больше</p>#}
-{#                            <p>Фон: белый или прозрачный</p>#}
-{#                            <br>#}
-{#                            <span id="file-counter" style="color: red;"></span>#}
-{#                        </div>#}
-{#                        {% render_field form.logo|attr:"type:file"|attr:"style:display:none;"|attr:"id:id_images" %}#}
-{#                    </div>#}
-            </form>
+                    {#                <div class="col-md-4">#}
+                    {#                        <label class="upload" for="id_images">#}
+                    {#                            <i class="glyphicon glyphicon-plus-sign"></i>#}
+                    {#                            <div class="add-photo">#}
+                    {#                                Добавить<br>фотографии#}
+                    {#                             </div>#}
+                    {#                        </label>#}
+                    {##}
+                    {#                        <div class="info">#}
+                    {#                            <span>Рекомендация для фото:</span>#}
+                    {#                            <p>Размер: 380x380 или больше</p>#}
+                    {#                            <p>Фон: белый или прозрачный</p>#}
+                    {#                            <br>#}
+                    {#                            <span id="file-counter" style="color: red;"></span>#}
+                    {#                        </div>#}
+                    {#                        {% render_field form.logo|attr:"type:file"|attr:"style:display:none;"|attr:"id:id_images" %}#}
+                    {#                    </div>#}
+                </form>
+            </div>
         </div>
-    </div>
-</section>
+    </section>
 
 {% endblock %}

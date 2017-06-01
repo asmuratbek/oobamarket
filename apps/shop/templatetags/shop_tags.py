@@ -32,8 +32,10 @@ def show_add_banner_button(shop, user):
     if user.is_authenticated:
         if shop.is_owner(user):
             return mark_safe('''
-                            <div class="pull-left edit">
-                            <a href="%s">Редактировать баннера</a>
+                            <div class="auch-edit">
+                                <a href="%s" >
+                                    <i class="glyphicon glyphicon-cog" data-toggle="tooltip" title="" data-placement="top" data-original-title="Редактировать"></i>
+                                </a>
                             </div>
                                 ''' % reverse('shops:add_banner', kwargs={'slug': shop.slug}))
         else:
@@ -45,8 +47,10 @@ def show_add_social_button(shop, user):
     if user.is_authenticated:
         if shop.is_owner(user):
             return mark_safe('''
-                            <div class="pull-left edit">
-                            <a href="%s">Редактировать соц. иконки</a>
+                            <div class="auch-edit">
+                                <a href="%s">
+                                    <i class="glyphicon glyphicon-cog" data-toggle="tooltip" title="" data-placement="top" data-original-title="Редактировать"></i>
+                                </a>
                             </div>
                                 ''' % reverse('shops:update_social', kwargs={'slug': shop.slug }))
         else:

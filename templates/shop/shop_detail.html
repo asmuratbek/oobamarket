@@ -18,6 +18,11 @@
     <div class="shop-page-page">
         <div class="container">
             <div class="col-md-3">
+                <div class="auch-edit">
+                    <a href="{% url 'shops:update' slug=object.slug %}" data-toggle="tooltip" title="" data-placement="top" data-original-title="Редактировать" >
+                        <i class="glyphicon glyphicon-cog"></i>
+                    </a>
+                </div>
                 <div class="img-wrapper">
                     <img src="{{ object.get_logo }}" alt="">
                 </div>
@@ -40,7 +45,11 @@
             </div>
             <div class="col-md-9">
                 <div class="cover">
+
+                <div class="wrapper">
+                {% show_add_banner_button shop request.user %}
                     <div class="owl-carousel shop-page">
+
                         {% for banner in object.banners_set.all %}
                             <div class="item">
                                 <a href="">
@@ -49,11 +58,9 @@
                             </div>
                         {% endfor %}
                     </div>
+                </div>
+
                     <div class="bottom-line">
-                    <div class="pull-left edit">
-                        <a href="{% url 'shops:update' slug=object.slug %}">Настройки магазина</a>
-                    </div>
-                        {% show_add_banner_button shop request.user %}
                         {% show_add_social_button shop request.user %}
                     {% if object.sociallinks %}
                     <div class="pull-right">

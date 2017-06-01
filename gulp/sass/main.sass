@@ -29,7 +29,16 @@ body
       transform: translateY(0%)
       opacity: 1
 
-
+button.btn.add
+  display: inline-block
+  padding: 15px 60px
+  border-radius: 50px
+  margin: 0 10px
+  color: #fff
+button.btn.add
+  background-color: #F3481C
+  &:hover
+    background-color: #d03e19
 .custom-scroll
   position: relative
   overflow: hidden
@@ -616,13 +625,12 @@ header
         width: 17px
         height: 15px
         overflow: hidden
-        right: 30px
+        right: 44px
         top: 3px
         font-size: 17px
         z-index: 10
         &:hover
-          animation: rotate 1s linear infinite
-          transform-origin: 50% 50%
+          animation: rotate 1.875s linear infinite
           @keyframes rotate
             0%
               transform: rotate(0deg)
@@ -633,6 +641,27 @@ header
         color: #808080 !important
         position: absolute
         right: 5px
+        top: 3px
+        font-size: 17px
+        z-index: 10
+        &:hover
+          animation: fade-yes 1.6s ease infinite
+          transform-origin: 50% 50%
+          @keyframes fade-yes
+            0%
+              opacity: 1
+            25%
+              opacity: 0
+            50%
+              opacity: 1
+            75%
+              opacity: 0
+            100%
+              opacity: 1
+      .glyphicon-remove-circle
+        color: #f3481c !important
+        position: absolute
+        right: 25px
         top: 3px
         font-size: 17px
         z-index: 10
@@ -917,6 +946,12 @@ header
       color: #333
       margin-bottom: 5px
       line-height: 27px
+      margin-bottom: 5px
+    p
+      font-size: 14px
+      font-weight: 300
+      color: #333
+      margin-bottom: 5px
     span
       font-size: 30px
       font-weight: bold
@@ -1110,6 +1145,39 @@ header
     -webkit-box-shadow: 0px 0px 25px -9px rgba(0,0,0,0.75)
     -moz-box-shadow: 0px 0px 25px -9px rgba(0,0,0,0.75)
     box-shadow: 0px 0px 25px -9px rgba(0,0,0,0.75)
+    .auch-edit
+      position: absolute
+      top: 0
+      bottom: 0
+      right: 0
+      left: 0
+      z-index: 1
+      background: rgba(0, 0, 0, 0.6)
+      padding: 100px 0
+
+      a
+        position: absolute
+        top: 0
+        bottom: 0
+        right: 0
+        left: 0
+      i
+        position: absolute
+        top: 25%
+        left: 50%
+        margin-left: -15px
+        font-size: 30px
+        color: #fff
+      a:hover
+        i
+          animation: wrench 1.875s ease infinite
+
+          @keyframes wrench
+            0%
+              transform: rotate(0deg)
+            100%
+              transform: rotate(360deg)
+
     .bottom-line
       width: 100%
       z-index: 2
@@ -1200,6 +1268,48 @@ header
       z-index: 99
       background-color: #fff
       position: relative
+      .auch-edit
+        position: absolute
+        top: 0
+        bottom: 0
+        right: 0
+        left: 0
+        z-index: 10
+        a
+          position: absolute
+          top: 0
+          bottom: 0
+          right: 0
+          left: 0
+          z-index: 1
+          text-align: center
+          padding: 100px 0
+          background: rgba(0, 0, 0, 0.5)
+        i
+          font-size: 30px
+          color: #fff
+      .wrapper
+        position: relative
+        .auch-edit
+          position: absolute
+          top: 0
+          bottom: 0
+          right: 0
+          left: 0
+          z-index: 10
+          a
+            position: absolute
+            top: 0
+            bottom: 0
+            right: 0
+            left: 0
+            z-index: 1
+            text-align: center
+            padding: 100px 0
+            background: rgba(0, 0, 0, 0.5)
+            i
+              font-size: 30px
+              color: #fff
       .item
         width: 100%
         height: 330px
