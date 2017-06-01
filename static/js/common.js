@@ -507,12 +507,13 @@ $('.glyphicon-eye-close').click(function (e) {
         }
     });
 });
-
-$.uploadPreview({
-    input_field: "#image-upload",
-    preview_box: "#image-preview",
-    label_field: "#image-label"
-  });
+if ($('#image-upload').length > 0) {
+    $.uploadPreview({
+        input_field: "#image-upload",
+        preview_box: "#image-preview",
+        label_field: "#image-label"
+    });
+}
 
 
 }); // end document ready

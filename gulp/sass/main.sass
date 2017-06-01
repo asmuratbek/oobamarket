@@ -87,9 +87,15 @@ h1, h2, h3, h4, h5, h6, p, span, b, i, ul, li, button, input, select, a
   margin-bottom: 5px !important
 .search-index .col-md-6
   position: relative
+header
+  .auto-complite
+    top: 92px !important
 .auto-complite.active
   display: block
 .auto-complite
+  -webkit-box-shadow: 0 6px 58px -30px rgba(0,0,0,.75)
+  -moz-box-shadow: 0 6px 58px -30px rgba(0,0,0,.75)
+  box-shadow: 0 6px 58px -30px rgba(0,0,0,.75)
   position: absolute
   left: 0
   right: 0
@@ -625,7 +631,7 @@ header
         width: 17px
         height: 15px
         overflow: hidden
-        right: 44px
+        right: 24px
         top: 3px
         font-size: 17px
         z-index: 10
@@ -640,7 +646,7 @@ header
       .glyphicon-eye-open
         color: #808080 !important
         position: absolute
-        right: 5px
+        right: 44px
         top: 3px
         font-size: 17px
         z-index: 10
@@ -661,7 +667,7 @@ header
       .glyphicon-remove-circle
         color: #f3481c !important
         position: absolute
-        right: 25px
+        right: 5px
         top: 3px
         font-size: 17px
         z-index: 10
@@ -1147,36 +1153,23 @@ header
     box-shadow: 0px 0px 25px -9px rgba(0,0,0,0.75)
     .auch-edit
       position: absolute
-      top: 0
-      bottom: 0
-      right: 0
-      left: 0
+      top: 5px
+      right: 5px
       z-index: 1
-      background: rgba(0, 0, 0, 0.6)
-      padding: 100px 0
-
       a
-        position: absolute
-        top: 0
-        bottom: 0
-        right: 0
-        left: 0
+        display: block
       i
-        position: absolute
-        top: 25%
-        left: 50%
-        margin-left: -15px
-        font-size: 30px
-        color: #fff
-      a:hover
-        i
-          animation: wrench 1.875s ease infinite
-
-          @keyframes wrench
-            0%
-              transform: rotate(0deg)
-            100%
-              transform: rotate(360deg)
+        font-size: 17px
+        color: #337ab7
+      //a:hover
+      //  i
+      //    animation: wrench 1.875s ease infinite
+      //
+      //    @keyframes wrench
+      //      0%
+      //        transform: rotate(0deg)
+      //      100%
+      //        transform: rotate(360deg)
 
     .bottom-line
       width: 100%
@@ -1268,57 +1261,49 @@ header
       z-index: 99
       background-color: #fff
       position: relative
+      .wrapper
+        height: 330px
+        overflow: hidden
       .auch-edit
         position: absolute
-        top: 0
-        bottom: 0
-        right: 0
-        left: 0
-        z-index: 10
-        a:hover
-          i
-            animation: wrench 1.875s ease infinite
-
-            @keyframes wrench
-              0%
-                transform: rotate(0deg)
-              100%
-                transform: rotate(360deg)
+        top: 5px
+        right: 5px
+        height: 17px
+        width: 17px
+        //a:hover
+        //  i
+        //    animation: wrench 1.875s ease infinite
+        //
+        //    @keyframes wrench
+        //      0%
+        //        transform: rotate(0deg)
+        //      100%
+        //        transform: rotate(360deg)
         a
-          position: absolute
-          top: 0
-          bottom: 0
-          right: 0
-          left: 0
-          z-index: 1
-          text-align: center
-          padding: 100px 0
-          background: rgba(0, 0, 0, 0.5)
+          display: block
+
         i
-          font-size: 30px
-          color: #fff
+          font-size: 17px
+          color: #337ab7
+          width: 17px
+          height: 17px
       .wrapper
         position: relative
         .auch-edit
           position: absolute
-          top: 0
-          bottom: 0
-          right: 0
-          left: 0
+          top: 5px
+          right: 5px
+          height: 17px
+          width: 17px
           z-index: 10
           a
-            position: absolute
-            top: 0
-            bottom: 0
-            right: 0
-            left: 0
-            z-index: 1
-            text-align: center
-            padding: 100px 0
-            background: rgba(0, 0, 0, 0.5)
+            display: block
+
             i
-              font-size: 30px
-              color: #fff
+              font-size: 17px
+              width: 17px
+              height: 17px
+              color: #337ab7
       .item
         width: 100%
         height: 330px
@@ -1361,33 +1346,28 @@ header
         position: relative
         .auch-edit
           position: absolute
-          top: 0
-          bottom: 0
-          right: 0
-          left: 0
+          top: 5px
+          right: 5px
+          height: 17px
+          width: 17px
           z-index: 10
           a
-            position: absolute
-            top: 0
-            bottom: 0
-            right: 0
-            left: 0
-            z-index: 1
-            text-align: center
-            padding: 27px 0
-            background: rgba(0, 0, 0, 0.5)
-          a:hover
+            display: block
             i
-              animation: wrench 1.875s ease infinite
+              font-size: 17px
+              color: #337ab7
+              width: 17px
+              height: 17px
+          //a:hover
+          //  i
+          //    animation: wrench 1.875s ease infinite
+          //
+          //    @keyframes wrench
+          //      0%
+          //        transform: rotate(0deg)
+          //      100%
+          //        transform: rotate(360deg)
 
-              @keyframes wrench
-                0%
-                  transform: rotate(0deg)
-                100%
-                  transform: rotate(360deg)
-            i
-              font-size: 30px
-              color: #fff
         .pull-left
           a
             color: #808080
