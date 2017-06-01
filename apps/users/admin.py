@@ -13,7 +13,7 @@ class MyUserChangeForm(UserChangeForm):
 class MyUserCreationForm(UserCreationForm):
 
     error_message = UserCreationForm.error_messages.update({
-        'duplicate_username': 'This username has already been taken.'
+        'duplicate_username': 'Такое имя пользователя уже есть'
     })
 
     class Meta(UserCreationForm.Meta):
