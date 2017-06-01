@@ -1,11 +1,12 @@
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponseForbidden
+from django.shortcuts import get_object_or_404
 from django.urls import reverse
 
+from apps.product.models import Product
 from apps.shop.models import Shop
 
 
 class AddProductMixin(object):
-
     def dispatch(self, request, *args, **kwargs):
         user = request.user
         shop = Shop.objects.filter(user__id__in=[user.id]).first()
@@ -18,8 +19,17 @@ class AddProductMixin(object):
         return super(AddProductMixin, self).dispatch(request, *args, **kwargs)
 
 
-class AddBannerMixin(object):
+class DeleteProductMixin(object):
+    def dispatch(self, request, *args, **kwargs):
+        user = request.user
+        product = get_object_or_404(Product, slug=self.kwargs.get('slug'))
+        if not user in product.shop.user.all():
+            return HttpResponseForbidden()
 
+        return super(DeleteProductMixin, self).dispatch(request, *args, **kwargs)
+
+
+class AddBannerMixin(object):
     def dispatch(self, request, *args, **kwargs):
         user = request.user
         shop = Shop.objects.filter(user__id__in=[user.id]).first()
@@ -31,8 +41,8 @@ class AddBannerMixin(object):
             return HttpResponseRedirect(reverse('shops:detail', kwargs={'slug': shop.slug}))
         return super(AddBannerMixin, self).dispatch(request, *args, **kwargs)
 
-class AddSocialLinksMixin(object):
 
+class AddSocialLinksMixin(object):
     def dispatch(self, request, *args, **kwargs):
         user = request.user
         shop = Shop.objects.filter(user__id__in=[user.id]).first()

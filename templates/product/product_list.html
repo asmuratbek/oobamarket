@@ -13,8 +13,8 @@
                     {% if user.is_authenticated %}
                         {% if user in product.shop.user.all %}
                             <a class="edited glyphicon glyphicon-cog" href="{% url 'product:update_product' slug=product.slug %}" data-toggle="tooltip" title="" data-placement="bottom" data-original-title="Редактировать"></a>
-                            <a href="" class="eye glyphicon glyphicon-eye-{% if product.published %}open{% else %}close{% endif %}" data-toggle="tooltip" title="" data-placement="bottom" data-original-title="Скрыть" data-status="false" data-item="{{ product.id }}"></a>
-                            <a href="" class="remove glyphicon glyphicon-remove-circle" data-toggle="tooltip" title="" data-placement="bottom" data-original-title="Удалить"></a>
+                            <a href="" class="eye glyphicon glyphicon-eye-{% if product.published %}open{% else %}close{% endif %}" data-toggle="tooltip" title="" data-placement="bottom" data-original-title="Скрыть" data-status="{% if product.published %}false{% else %}true {% endif %}" data-item="{{ product.id }}"></a>
+                            <a href="{% url 'product:delete_product' slug=product.slug %}" class="remove glyphicon glyphicon-remove-circle" data-toggle="tooltip" title="" data-placement="bottom" data-original-title="Удалить"></a>
                         {% endif %}
                     {% endif %}
 

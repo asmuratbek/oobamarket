@@ -115,10 +115,34 @@ $( document ).ready(function() {
             $(this).attr('data-original-title', 'Скрытый');
             $(this).attr('data-status', 'true');
             $(this).parent().parent().addClass('active');
+            $.ajax({
+                url: '/product/change_publish_status/',
+                type: 'GET',
+                data: {
+                    item: $(this).attr('data-item'),
+                },
+                success: function (data) {
+                    showFlashMessage(data.message);
+                    console.log(data)
+
+                }
+        });
         } else {
             $(this).attr('data-original-title', 'Скрыть');
             $(this).attr('data-status', 'false');
             $(this).parent().parent().removeClass('active');
+            $.ajax({
+                url: '/product/change_publish_status/',
+                type: 'GET',
+                data: {
+                    item: $(this).attr('data-item'),
+                },
+                success: function (data) {
+                    showFlashMessage(data.message);
+                    console.log(data)
+
+                }
+            });
         }
     });
 
@@ -468,45 +492,45 @@ $('#search-form-index').bind('keyup paste', function () {
     _search('/search_results/', $(this).val())
 });
 
-$('.glyphicon-eye-open').click(function (e) {
-    e.preventDefault();
-    var thisIcon = $(this);
-    $.ajax({
-        url: '/product/change_publish_status/',
-        type: 'GET',
-        data: {
-            item: thisIcon.attr('data-item'),
-        },
-        success: function (data) {
-            showFlashMessage(data.message);
-            thisIcon.removeClass('glyphicon-eye-open');
-            thisIcon.addClass('glyphicon-eye-close');
-            thisIcon.closest('.cover').addClass('active');
-            console.log(data)
-
-        }
-    });
-});
-
-$('.glyphicon-eye-close').click(function (e) {
-    e.preventDefault();
-    var thisIcon = $(this);
-    $.ajax({
-        url: '/product/change_publish_status/',
-        type: 'GET',
-        data: {
-            item: thisIcon.attr('data-item'),
-        },
-        success: function (data) {
-            showFlashMessage(data.message);
-            thisIcon.removeClass('glyphicon-eye-close');
-            thisIcon.addClass('glyphicon-eye-open');
-            thisIcon.closest('.cover').removeClass('active');
-            console.log(data)
-
-        }
-    });
-});
+// $('.glyphicon-eye-open').click(function (e) {
+//     e.preventDefault();
+//     var thisIcon = $(this);
+//     $.ajax({
+//         url: '/product/change_publish_status/',
+//         type: 'GET',
+//         data: {
+//             item: thisIcon.attr('data-item'),
+//         },
+//         success: function (data) {
+//             showFlashMessage(data.message);
+//             thisIcon.removeClass('glyphicon-eye-open');
+//             thisIcon.addClass('glyphicon-eye-close');
+//             thisIcon.closest('.cover').addClass('active');
+//             console.log(data)
+//
+//         }
+//     });
+// });
+//
+// $('.glyphicon-eye-close').click(function (e) {
+//     e.preventDefault();
+//     var thisIcon = $(this);
+//     $.ajax({
+//         url: '/product/change_publish_status/',
+//         type: 'GET',
+//         data: {
+//             item: thisIcon.attr('data-item'),
+//         },
+//         success: function (data) {
+//             showFlashMessage(data.message);
+//             thisIcon.removeClass('glyphicon-eye-close');
+//             thisIcon.addClass('glyphicon-eye-open');
+//             thisIcon.closest('.cover').removeClass('active');
+//             console.log(data)
+//
+//         }
+//     });
+// });
 if ($('#image-upload').length > 0) {
     $.uploadPreview({
         input_field: "#image-upload",
