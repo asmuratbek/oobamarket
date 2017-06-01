@@ -481,7 +481,7 @@ $('.glyphicon-eye-open').click(function (e) {
             showFlashMessage(data.message);
             thisIcon.removeClass('glyphicon-eye-open');
             thisIcon.addClass('glyphicon-eye-close');
-            $('.cover').addClass('active');
+            thisIcon.closest('.cover').addClass('active');
             console.log(data)
 
         }
@@ -501,7 +501,7 @@ $('.glyphicon-eye-close').click(function (e) {
             showFlashMessage(data.message);
             thisIcon.removeClass('glyphicon-eye-close');
             thisIcon.addClass('glyphicon-eye-open');
-            $('.cover').removeClass('active');
+            thisIcon.closest('.cover').removeClass('active');
             console.log(data)
 
         }
