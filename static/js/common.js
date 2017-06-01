@@ -531,13 +531,6 @@ $('#search-form-index').bind('keyup paste', function () {
 //         }
 //     });
 // });
-if ($('#image-upload').length > 0) {
-    $.uploadPreview({
-        input_field: "#image-upload",
-        preview_box: "#image-preview",
-        label_field: "#image-label"
-    });
-}
 
 
 }); // end document ready

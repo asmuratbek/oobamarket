@@ -7,31 +7,32 @@
         <div class="container">
             <h1 class="create">Разместите свои продукты в магазине</h1>
             <div class="col-md-offset-2 col-md-8">
-                <form action="" method="post" enctype="multipart/form-data">
-                    {% csrf_token %}
-                    <label>Название баннера</label>
-                    {% render_field form.title %}
-                    <div id="image-preview">
-                        <label for="image-upload" id="image-label"></label>
-                        <i class="glyphicon glyphicon-plus-sign"></i>
-                        <span class="place">Добавить фотографию</span>
-                        {% render_field form.image id="image-upload" name="image"%}
+                <section class="add-banner">
+                    <div class="container">
+                        <div class="col-md-offset-3 col-md-6" id="form-div">
+                        <input id="fileupload" type="file" name="image" multiple
+                        data-url="{% url 'shops:add_banner' slug=slug %}"
+                        data-form-data='{"csrfmiddlewaretoken": "{{ csrf_token }}"}'/>
+                            <input id="shop_slug" type="text" style="display: none" value="{{ slug }}"/>
+                            <input id="csrf_token" type="hidden" value="{{ csrf_token }}">
+                        </div>
+                        <table id="gallery" class="table table-bordered">
+                        <thead>
+                        <tr>
+                        <th>Баннеры</th>
+                        </tr>
+                        </thead>
+                        <tbody class="banners-list">
+                        {% for banner in banners %}
+                        <tr>
+                        <td><a href="{{ banner.image.url }}">{{ banner.image.name }}</a>
+                            <span class="delete-banner" data-banner-id="{{ banner.id }}">Удалить</span></td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                        </table>
                     </div>
-                    <div class="info">
-                        <span>Рекомендация для фото:</span>
-                        <p>Размер: 1200x380 или больше</p>
-                        <p>Фон: белый или прозрачный</p>
-                        <br>
-                        <span id="file-counter" style="color: red;"></span>
-                    </div>
-
-
-
-                    <div class="clearfix"></div>
-
-
-                    <button class="btn add" type="submit">Сохранить</button>
-                </form>
+                </section>
             </div>
         </div>
     </section>
@@ -43,6 +44,10 @@
 {% block js %}
 
 {{ block.super }}
+    <script src="{% static 'js/jquery.ui.widget.js' %}"></script>
+  <script src="{% static 'js/jquery.iframe-transport.js' %}"></script>
+  <script src="{% static 'js/jquery.fileupload.js' %}"></script>
+  <script src="{% static 'js/banner_upload.js' %}"></script>
     <script src="{% static 'js/jquery.uploadPreview.js' %}"></script>
 
 {% endblock %}
