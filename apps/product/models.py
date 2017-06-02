@@ -63,10 +63,6 @@ class Product(models.Model):
         else:
             return None
 
-    # def delete(self, *args, **kwargs):
-    #     if self.media_set.count() > 0:
-    #         del_media = [item.delete() for item in self.media_set.all()]
-    #     super(Product, self).delete(*args, **kwargs)
 
     def get_shop_title(self):
         return self.shop.title
@@ -150,4 +146,9 @@ class ProductImage(models.Model):
 
     product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name="Товар", null=True)
     image = models.ImageField(upload_to="products/image")
+
+    def delete(self, *args, **kwargs):
+        storage, path = self.image.storage, self.image.path
+        super(ProductImage, self).delete(*args, **kwargs)
+        storage.delete(path)
 
