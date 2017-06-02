@@ -7,7 +7,7 @@ from django.views import defaults as default_views
 
 from apps.global_category.views import IndexView, fixtures
 from apps.product.views import FavoriteCreateView
-from apps.shop.views import create, agreement
+from apps.shop.views import agreement
 from apps.product.views import SearchResultsView, search_predict_html
 
 urlpatterns = [

@@ -53,3 +53,29 @@ class AddSocialLinksMixin(object):
         if not my_shop:
             return HttpResponseRedirect(reverse('shops:detail', kwargs={'slug': shop.slug}))
         return super(AddSocialLinksMixin, self).dispatch(request, *args, **kwargs)
+
+
+class UpdateShopMixin(object):
+    def dispatch(self, request, *args, **kwargs):
+        user = request.user
+        shop = Shop.objects.filter(user__id__in=[user.id]).first()
+        if not shop:
+            return HttpResponseRedirect(reverse('shops:create'))
+        my_shop = user.shop_set.filter(slug=self.kwargs.get('slug', None))
+
+        if not my_shop:
+            return HttpResponseForbidden()
+        return super(UpdateShopMixin, self).dispatch(request, *args, **kwargs)
+
+
+class DeleteShopMixin(object):
+    def dispatch(self, request, *args, **kwargs):
+        user = request.user
+        shop = Shop.objects.filter(user__id__in=[user.id]).first()
+        if not shop:
+            return HttpResponseRedirect(reverse('shops:create'))
+        my_shop = user.shop_set.filter(slug=self.kwargs.get('slug', None))
+
+        if not my_shop:
+            return HttpResponseForbidden()
+        return super(DeleteShopMixin, self).dispatch(request, *args, **kwargs)

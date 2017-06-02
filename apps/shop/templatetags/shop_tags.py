@@ -57,5 +57,17 @@ def show_add_social_button(shop, user):
             return mark_safe('')
 
 
-
+@register.assignment_tag
+def show_edit_shop_button(shop, user):
+    if user.is_authenticated:
+        if shop.is_owner(user):
+            return mark_safe('''
+                            <div class="auch-edit" data-toggle="tooltip" title="" data-placement="left" data-original-title="Редактировать настройки магазина">
+                                <a href="%s" >
+                                    <i class="glyphicon glyphicon-cog" ></i>
+                                </a>
+                            </div>
+                                ''' % reverse('shops:update', kwargs={'slug': shop.slug}))
+        else:
+            return mark_safe('')
 
