@@ -578,6 +578,10 @@ $('#search-form-index').bind('keyup paste', function () {
 //     });
 // });
 
+    $(".back-page").click(function () {
+        window.history.back();
+        return false;
+    })
 
 }); // end document ready
 
