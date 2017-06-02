@@ -27,5 +27,4 @@ urlpatterns = [
         view=views.UsersFavoritesListView.as_view(),
         name='favorites'
     ),
-
 ]
