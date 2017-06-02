@@ -1,4 +1,3 @@
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import Http404
 from django.http import HttpResponse
@@ -16,7 +15,6 @@ from slugify import slugify
 
 from apps.product.forms import ProductForm
 from apps.product.models import Product
-from apps.shop.decorators import delete_decorator
 from apps.shop.forms import ShopForm, ShopBannersForm, ShopSocialLinksForm
 from apps.users.mixins import AddProductMixin, AddBannerMixin, AddSocialLinksMixin, UpdateShopMixin, DeleteShopMixin
 from .models import Shop, SocialLinks, Banners
@@ -140,16 +138,14 @@ class CreateBanners(LoginRequiredMixin, AddBannerMixin, View):
         return JsonResponse(data)
 
 
-@login_required
 @csrf_exempt
-@delete_decorator
 def delete_banners(request):
     if request.method == 'POST' and request.is_ajax():
         banner_id = request.POST.get('banner_id', '')
         if banner_id:
             try:
                 banner = Banners.objects.get(id=banner_id)
-            except Banners.DoesNotExist:
+            except Shop.DoesNowExist:
                 return JsonResponse({'message': 'Shop Does Not Exist'})
             banner.delete()
             return JsonResponse({'message': 'Banner is succefully delete.'})
