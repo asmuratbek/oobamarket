@@ -4,23 +4,29 @@
 {% block title %}User: {{ object.username }}{% endblock %}
 
 {% block content %}
+
     <section class="user-detail">
         <div class="container">
-
-          <h2>{{ object.username }}</h2>
-          {% if object.name %}
-            <p>{{ object.name }}</p>
-          {% endif %}
-
+        <h1>Личный кабинет</h1>
         {% if object == request.user %}
         <!-- Action buttons -->
 
-            <a class="btn" href="{% url 'users:update' %}" role="button">My Info</a>
+            <a class="btn" href="{% url 'users:update' %}" role="button">Профиль</a>
             <a class="btn" href="{% url 'account_email' %}" role="button">E-Mail</a>
             <!-- Your Stuff: Custom user template urls -->
 
         <!-- End Action buttons -->
         {% endif %}
+
+        <h2>{{ object.get_full_name }} </h2>
+          {% if object.name %}
+            <p>{{ object.name }}</p>
+            <p>{{ object.first_name }}</p>
+            <p>{{ object.last_name }}</p>
+            <p>{{ object.date_joined }}</p>
+          {% endif %}
+
+
 
         </div>
     </section>

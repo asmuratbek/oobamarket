@@ -1,5 +1,4 @@
 from django.conf.urls import url
-from apps.order.views import SimpleOrderListView
 from . import views
 
 urlpatterns = [
@@ -28,4 +27,5 @@ urlpatterns = [
         view=views.UsersFavoritesListView.as_view(),
         name='favorites'
     ),
+
 ]
