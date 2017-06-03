@@ -130,10 +130,8 @@ class SimpleOrder(models.Model):
     last_name = models.CharField(max_length=100, blank=True, null=True)
     phone = models.CharField(max_length=20)
     address = models.CharField(max_length=255)
-    subtotal = models.PositiveIntegerField(default=0)
-    quantity = models.PositiveIntegerField(default=0)
     user = models.ForeignKey(User, blank=True, null=True)
-    products = models.ManyToManyField(Product)
+    cart = models.ForeignKey(Cart, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True, auto_now=False)
     updated = models.DateTimeField(auto_now_add=False, auto_now=True)
 
@@ -141,19 +139,13 @@ class SimpleOrder(models.Model):
         return  str(self.name) + str(self.last_name)
 
 
-    def get_shops(self):
-        shops = []
-        for item in self.products.all():
-            shops.append(item.get_shop())
-        return shops
-
 
 def send_email_to_shop_owner(sender, instance, *args, **kwargs):
     name = str(instance.name) + "\n" if instance.name else ""
     last_name = str(instance.last_name) + "\n" if instance.last_name else ""
     phone = str(instance.phone) + "\n"
     address = str(instance.address) + "\n"
-    shops = instance.get_shops()
+    shops = instance.cart.get_shops()
     for shop in shops:
         products = Product.objects.filter(shop=shop, cartitem__cart=instance.cart)
         message = ""

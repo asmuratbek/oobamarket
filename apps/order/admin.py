@@ -2,7 +2,6 @@ from django.contrib import admin
 from .models import UserCheckout, UserAddress, Order, SimpleOrder
 
 class SimpleOrderAdmin(admin.ModelAdmin):
-    filter_horizontal = ['products']
     list_display = ['name', 'last_name', 'created_at']
 
 admin.site.register(UserCheckout)

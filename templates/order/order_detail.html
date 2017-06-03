@@ -30,41 +30,38 @@
         </div>
         <div class="tbody">
 
-            {% for product in object.products.all %}
+            {% for product in object.cart.cartitem_set.all %}
 
             <div class="cover">
                 <div class="col-md-2">
                     <div class="img-wrapper">
-                        <img src="{{ product.get_main_image }}" alt="{{ product.title }}" class="img-responsive">
+                        <img src="{{ product.product.get_main_image }}" alt="{{ product.product.title }}" class="img-responsive">
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <h2><a href="{{ product.get_absolute_url }}">{{ product.title }}</a></h2>
+                    <h2><a href="{{ product.product.get_absolute_url }}">{{ product.product.title }}</a></h2>
                     <div class="availability">
-                        <span>Наличие: <span class="{% if product.availability == "available" %} stock
-                                                {% elif product.availability == "waiting" %} expectation
-                                                {% else %} not-stock {% endif %}">{{ product.get_availability }}</span></span>
+                        <span>Наличие: <span class="{% if product.product.availability == "available" %} stock
+                                                {% elif product.product.availability == "waiting" %} expectation
+                                                {% else %} not-stock {% endif %}">{{ product.product.get_availability }}</span></span>
 
                         <span class="truck">
-                    <i class="fa fa-truck" aria-hidden="true" {% if product.delivery_type == 'paid' %} yellow
-                    {% elif product.delivery_type == 'free' %} green {% endif %}></i>
-                    {{ product.get_delivery_type }}
+                    <i class="fa fa-truck" aria-hidden="true" {% if product.product.delivery_type == 'paid' %} yellow
+                    {% elif product.product.delivery_type == 'free' %} green {% endif %}></i>
+                    {{ product.product.get_delivery_type }}
                 </span>
                     </div>
                 </div>
                 <div class="col-md-2">
                     <div class="img-wrapper">
-                        <img src="{{ product.shop.get_logo }}" alt="{{ product.shop.title }}" class="img-responsive">
+                        <img src="{{ product.product.shop.get_logo }}" alt="{{ product.product.shop.title }}" class="img-responsive">
                     </div>
                 </div>
                 <form action="." class="cart-form">
-                <input type="hidden" name="item" value="{{ product.id }}">
+                <input type="hidden" name="item" value="{{ product.product.id }}">
                 <div class="col-md-2">
                     <div class="quantity">
-
-                        <input type="number" value="{{ product.quantity }}" name="qty" class="item-qty">
-                        <input type="submit" value="Update" class="btn-update" style="display: none;">
-
+                        {{ product.quantity }}
                     </div>
 
                 </div>
@@ -72,13 +69,13 @@
                 </form>
 
                 <div class="col-md-2 price">
-                    {% if product.discount %}
-                    <strike>{{ product.price }} {{ product.currency }}</strike>
-                    <p id="line-total-{{ product.id }}">{{ product.total }} {{ product.currency }}</p>
+                    {% if product.product.discount %}
+                    <strike>{{ product.product.price }} {{ product.product.currency }}</strike>
+                    <p id="line-total-{{ product.product.id }}">{{ product.total }} {{ product.product.currency }}</p>
                         {% else %}
-                        <p id="line-total-{{ product.id }}">{{ product.total }} {{ product.currency }}</p>
+                        <p id="line-total-{{ product.product.id }}">{{ product.total }} {{ product.product.currency }}</p>
                     {% endif %}
-{#                    <a href="{{ product.remove_from_cart }}" class="close">X</a>#}
+{#                    <a href="{{ product.product.remove_from_cart }}" class="close">X</a>#}
                 </div>
             </div>
             {% endfor %}
@@ -86,11 +83,10 @@
             <div class="total">
                 <div class="col-md-offset-8 col-md-3">
                     <p>Доставка: <span>0 сом</span></p>
-                    <p>Итого: <span class="red" id="subtotal">{{ object.subtotal }} сом </span></p>
+                    <p>Итого: <span class="red" id="subtotal">{{ object.cart.subtotal }} сом </span></p>
                 </div>
-{#                <div class="clearfix"></div>#}
-{#                <a href=""  class="btn-modal" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">Оформить покупку</a>#}
-{#            </div>#}
+                <div class="clearfix"></div>
+            </div>
         </div>
     </div>
 </div>

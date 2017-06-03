@@ -21,6 +21,7 @@ class Cart(models.Model):
     updated = models.DateTimeField(auto_now_add=False, auto_now=True)
     subtotal = models.DecimalField(max_digits=50, decimal_places=2, default=25.00)
     total = models.DecimalField(max_digits=50, decimal_places=2, default=25.00)
+    completed = models.BooleanField(default=False)
 
     def __str__(self):
         return str(self.id)

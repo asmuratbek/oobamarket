@@ -55,5 +55,4 @@ class SimpleOrderForm(forms.ModelForm):
             'last_name',
             'phone',
             'address',
-            'subtotal'
         ]

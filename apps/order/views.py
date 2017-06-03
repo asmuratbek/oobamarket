@@ -117,13 +117,12 @@ class SimpleOrderCreateView(View):
         order.address = data['address']
         order.user = request.user if request.user.is_authenticated else None
         cart = Cart.objects.get(id=data['cart'])
-        cartitem = cart.cartitem_set.all()
-        order.subtotal = cart.subtotal
+        cart.completed = True
+        cart.save()
+        order.cart = cart
         order.save()
-        for item in cartitem:
-            order.products.add(item.product)
-
-        cart.empty()
+        cart = Cart.objects.create(user=request.user)
+        request.session["cart_id"] = cart.id
         return HttpResponseRedirect(reverse("order:thanks"))
 
 
