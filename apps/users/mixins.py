@@ -22,8 +22,9 @@ class AddProductMixin(object):
 class UpdateProductMixin(object):
     def dispatch(self, request, *args, **kwargs):
         user = request.user
-        my_shop = user.shop_set.filter(slug=self.kwargs.get('slug'))
-        if not my_shop:
+        my_product = get_object_or_404(Product, slug=kwargs.get('slug'))
+        my_shop = user.shop_set.all()
+        if my_product.shop not in my_shop:
             return HttpResponseForbidden()
         return super(UpdateProductMixin, self).dispatch(request, *args, **kwargs)
 
