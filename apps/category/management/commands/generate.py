@@ -43,14 +43,14 @@ class Command(BaseCommand):
                             try:
                                 parents = Category.objects.filter(parent=None).order_by('created_at')
                                 last_parent = parents.last()
-                                slug = slugify(field.internal_value)
+                                slug = slugify(field.internal_value) + '-' + str(last_parent.id)
                                 Category.objects.create(title=field.internal_value, slug=slug, section=section, parent=last_parent)
                                 self.stdout.write(self.style.SUCCESS('Создана категория "%s"' % field.internal_value))
                             except IntegrityError:
                                 parents = Category.objects.filter(parent=None).order_by('created_at')
                                 last_parent = parents.last()
                                 random_int = random.randrange(0, 1010)
-                                slug = slugify(field.internal_value) + str(random_int)
+                                slug = slugify(field.internal_value) + '-' + str(last_parent.id)
                                 Category.objects.create(title=field.internal_value, slug=slug, section=section,
                                                         parent=last_parent)
                                 self.stdout.write(self.style.SUCCESS('Создана категория "%s"' % field.internal_value))
