@@ -117,8 +117,12 @@ class SimpleOrderCreateView(View):
         order.address = data['address']
         order.user = request.user if request.user.is_authenticated else None
         cart = Cart.objects.get(id=data['cart'])
-        order.cart = cart
+        cartitem = cart.cartitem_set.all()
+        order.subtotal = cart.subtotal
         order.save()
+        for item in cartitem:
+            order.products.add(item.product)
+
         cart.empty()
         return HttpResponseRedirect(reverse("order:thanks"))
 
@@ -131,6 +135,7 @@ class SimpleOrderListView(ListView):
     model = SimpleOrder
     slug_field = 'username'
     slug_url_kwarg = 'username'
+
 
     def get_queryset(self):
         return SimpleOrder.objects.filter(user__username=self.kwargs['username'])

@@ -58,6 +58,11 @@ class CartItem(models.Model):
     def __str__(self):
         return self.product.title
 
+    def get_shops(self):
+        products = self.product.all()
+        product_ids = [product.product.id for product in products]
+        shops = Shop.objects.filter(product__id__in=product_ids).distinct()
+        return shops
 
 def cart_item_pre_save_receiver(sender, instance, *args, **kwargs):
     qty = instance.quantity

@@ -67,6 +67,9 @@ class Product(models.Model):
     def get_shop_title(self):
         return self.shop.title
 
+    def get_shop(self):
+        return self.shop
+
     def get_price(self):
         if self.discount:
             return (self.price * self.discount) / 100
