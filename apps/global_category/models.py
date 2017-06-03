@@ -33,3 +33,6 @@ class GlobalCategory(models.Model):
             product_ids += [product.id for product in category.get_products()]
         products = Product.objects.filter(id__in=product_ids)
         return products
+
+    def get_parent_categories(self):
+        return self.category_set.filter(parent=None)
