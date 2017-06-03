@@ -4,6 +4,7 @@ from django.db import models
 from django.urls import reverse
 
 
+
 class GlobalCategory(models.Model):
 
     class Meta:
