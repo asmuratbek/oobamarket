@@ -130,6 +130,7 @@ class SimpleOrder(models.Model):
     address = models.CharField(max_length=255)
     user = models.ForeignKey(User, blank=True, null=True)
     cart = models.ForeignKey(Cart)
+    products = models.ManyToManyField(Product)
     created_at = models.DateTimeField(auto_now_add=True, auto_now=False)
     updated = models.DateTimeField(auto_now_add=False, auto_now=True)
 

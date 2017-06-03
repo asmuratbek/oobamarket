@@ -1,0 +1,16 @@
+{% extends 'base-1.html' %}
+
+{% block content %}
+
+        <h3>Заказ от {{ object.created_at|date:"d.m.y H:i" }}</h3>
+    <p><strong>ФИО</strong>: {{ object.name }} {{ object.last_name }} <strong>Телефон</strong>: {{ object.phone }} <strong>Адрес</strong>:{{ object.address }}</p>
+
+
+    {% for product in object.cart.cartitem_set.all %}
+        <h1>{{ product }}</h1>>
+    {% endfor %}
+
+
+
+
+{% endblock %}

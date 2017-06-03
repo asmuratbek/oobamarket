@@ -124,7 +124,7 @@ class SimpleOrderCreateView(View):
 
 
 class ThankYouView(TemplateView):
-    template_name = 'thanks.html'
+    template_name = 'order/thanks.html'
 
 
 class SimpleOrderListView(ListView):
@@ -134,3 +134,9 @@ class SimpleOrderListView(ListView):
 
     def get_queryset(self):
         return SimpleOrder.objects.filter(user__username=self.kwargs['username'])
+
+
+class SimpleOrderDetailView(DetailView):
+    model = SimpleOrder
+    template_name = 'order/order_detail.html'
+
