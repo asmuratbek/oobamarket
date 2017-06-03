@@ -7,7 +7,6 @@ from apps.category.models import Category
 from apps.global_category.models import GlobalCategory
 from django.conf import settings
 import openpyxl as px
-from multiprocessing import Pool
 
 
 class Command(BaseCommand):

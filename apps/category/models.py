@@ -25,7 +25,7 @@ class Category(MPTTModel):
 
     parent = TreeForeignKey('self', verbose_name='Родительская категория', null=True, blank=True)
     title = models.CharField(max_length=255, verbose_name='Название категории')
-    slug = models.CharField(max_length=32,verbose_name='Название на транслите', unique=True, blank=True, null=True)
+    slug = models.CharField(max_length=255,verbose_name='Название на транслите', unique=True, blank=True, null=True)
     section = models.ForeignKey(GlobalCategory, verbose_name='Раздел', default='1')
     created_at = models.DateTimeField(auto_now=True, verbose_name="Создано")
     updated_at = models.DateTimeField(auto_now_add=True, verbose_name="Обновлено")
