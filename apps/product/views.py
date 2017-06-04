@@ -163,12 +163,13 @@ class ProductUpdateView(LoginRequiredMixin, UpdateProductMixin, UpdateView):
 #                                                                             mark_safe(message),
 #                                                                             ADMIN_EMAIL))
 #             thread.start()
-#             return HttpResponseRedirect(reverse('ad:one_ad', kwargs={'ad_id': new_ad.id}))
+#             returnreturnreturn HttpResponseRedirect(reverse('ad:one_ad', kwargs={'ad_id': new_ad.id}))
 #         else:
 #             print form.errors
 #             return HttpResponseRedirect(reverse('index'))
 #
 #    return HttpResponseRedirect(reverse('index'))
+
 
 class ProductIndexCreateView(LoginRequiredMixin, AddProductMixin, CreateView):
     template_name = 'product/product_form.html'
@@ -233,25 +234,18 @@ def search_predict_html(request):
     })
 
 
-class SearchResultsView(ListView):
-    model = Product
-    template_name = 'pages/search_results.html'
-
-    def post(self, request, *args, **kwargs):
-        import operator
-        from django.db.models import Q
-        from functools import reduce
-
-        query = request.POST.get('keyword')
-        if query:
-            query_list = query.split()
-            result = self.get_queryset().filter(
-                reduce(operator.and_,
-                       (Q(title__icontains=q) for q in query_list)) |
-                reduce(operator.and_,
-                       (Q(short_description__icontains=q) for q in query_list))
-            )
-        return result
+def search(request):
+    product_form = ProductSearchForm(request.GET)
+    shop_form = ShopSearchForm(request.GET)
+    products = product_form.search()
+    for product in products:
+        print(product.favorite)
+    shops = shop_form.search()
+    template = 'pages/search_results.html'
+    return render(request, template, {
+        'products': products,
+        'shops': shops
+    })
 
 
 class ProductDeleteView(LoginRequiredMixin, DeleteProductMixin, DeleteView):

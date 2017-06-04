@@ -14,30 +14,25 @@
 
     <section class="goods-of-week search_results">
         <div class="container">
-
+            {% if shops %}
             <div class="search_query">
                 <h3>Рекомендуемые продавцы</h3>
                 <p>Магазины, в которых найден ваш товар</p>
             </div>
 
             <div class="recommended_sellers">
+                {% for shop in shops %}
                 <div class="img-wrapper">
-                    <a href=""></a>
-                    <img src="http://placehold.it/200x190" alt="">
+                    <a href="{{ shop.get_absolute_url }}"></a>
+                    <img src="{{ shop.get_logo }}" alt="{{ shop.title }}">
                 </div>
-                <div class="img-wrapper">
-                    <a href=""></a>
-                    <img src="http://placehold.it/85x85" alt="">
-                </div>
-                <div class="img-wrapper">
-                    <a href=""></a>
-                    <img src="http://placehold.it/85x30" alt="">
-                </div>
+                {% endfor %}
             </div>
+            {% endif %}
 
             <div class="search_query">
                 <h3>Результаты поиска</h3>
-                <p>По вашему запросу найдено 13 товаров в следующих категориях</p>
+                <p>По вашему запросу найдено {{ products.count }} товаров в следующих категориях</p>
             </div>
 
             <ul class="category-tab">
@@ -86,7 +81,7 @@
                 </form>
             </div>
 
-            {% include 'product/product_list.html' with object_list=object_list col=3 %}
+            {% include 'product/product_list.html' with object_list=products col=3 %}
 
         </div>
     </section>

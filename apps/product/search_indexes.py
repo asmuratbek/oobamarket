@@ -7,6 +7,7 @@ class ProductIndex(indexes.SearchIndex, indexes.Indexable):
     text = indexes.EdgeNgramField(document=True, use_template=True)
     title = indexes.CharField(model_attr='title')
     price = indexes.CharField(model_attr='price')
+    favorite = indexes.FacetMultiValueField()
     currency = indexes.CharField(model_attr='currency')
     get_shop_title = indexes.CharField(model_attr='get_shop_title')
     get_shop_url = indexes.CharField(model_attr='get_shop_url')
@@ -15,3 +16,6 @@ class ProductIndex(indexes.SearchIndex, indexes.Indexable):
 
     def get_model(self):
         return Product
+
+    def prepare_favorite(self, obj):
+        return obj.favorite

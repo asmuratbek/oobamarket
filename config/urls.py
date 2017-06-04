@@ -8,7 +8,7 @@ from django.views import defaults as default_views
 from apps.global_category.views import IndexView
 from apps.product.views import FavoriteCreateView
 from apps.shop.views import agreement
-from apps.product.views import SearchResultsView, search_predict_html
+from apps.product.views import search, search_predict_html
 
 urlpatterns = [
     url(r'^$', IndexView.as_view(), name='home'),
@@ -24,7 +24,7 @@ urlpatterns = [
     url(r'^search_predict_html', search_predict_html, name='search_predict_html'),
     # url(r'^search/', include('haystack.urls')),
     url(r'^search_results', search_predict_html),
-    url(r'^search/', SearchResultsView.as_view(), name='search'),
+    url(r'^search/', search, name='search'),
     url(r'^ckeditor/', include('ckeditor_uploader.urls')),
 
     # Django Admin, use {% url 'admin:index' %}
