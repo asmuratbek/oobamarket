@@ -1,4 +1,6 @@
+from django.contrib.auth.decorators import login_required
 from django.core import serializers
+from django.http import HttpResponseBadRequest
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, render
 from django.views import generic
@@ -35,3 +37,15 @@ def get_subcategory_from_category(request):
         'count': len(category_list)
     }
     return JsonResponse(data)
+
+
+@login_required
+def get_category(request):
+    if request.user.is_superuser and request.is_ajax:
+        cat_id = request.GET.get('cat_id', '')
+        try:
+            category = Category.objects.get(id=cat_id)
+        except ValueError:
+            return JsonResponse({'parent_id': GlobalCategory.objects.first().id , 'cat_null': True})
+        return JsonResponse({'parent_id': category.section.id})
+    return HttpResponseBadRequest
