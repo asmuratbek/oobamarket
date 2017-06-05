@@ -8,8 +8,8 @@
         <p>Если возникли проблемы с работой магазина свяжитесь с нами по email: asmuratbek@gmail.com</p>
         <h2>Вы оформили корзину товара</h2>
         <div class="go">
-            <a class="btn add" href="">Посетить историю покупок</a>
-            <a class="btn add" href="">Продолжить покупку</a>
+            <a class="btn add" href="{% url 'order:order-history' username=request.user.username %}">Посетить историю покупок</a>
+            <a class="btn add" href="/">Продолжить покупку</a>
         </div>
     </div>
 </section>
