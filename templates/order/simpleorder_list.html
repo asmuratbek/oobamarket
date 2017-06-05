@@ -6,11 +6,13 @@
         <div class="container">
             <h1>Заказы</h1>
             {% for order in object_list %}
-            <h3><a href="{% url 'order:simple_detail' pk=order.id %}">Заказ от {{ order.created_at|date:"d.m.y H:i" }}</a></h3>
-                <p>{{ order.name }}</p>
-                <p>{{ order.last_name }}</p>
-                <p>{{ order.phone }}</p>
-                <p>{{ order.address }}</p>
+                <div class="border">
+                    <h3><a href="{% url 'order:simple_detail' pk=order.id %}">Заказ от {{ order.created_at|date:"d.m.y H:i" }}</a></h3>
+                    <p>{{ order.name }}</p>
+                    <p>{{ order.last_name }}</p>
+                    <p>{{ order.phone }}</p>
+                    <p>{{ order.address }}</p>
+                </div>
             {% endfor %}
         </div>
     </div>
