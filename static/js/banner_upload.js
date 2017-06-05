@@ -17,7 +17,7 @@ $(function () {
       }
     }
   });
-  $('.banners-list').on("click", ".delete-banner", function () {
+  $(document).on('click', '.delete-banner', function () {
     var banner_id = this.getAttribute('data-banner-id');
     var slug = $('#shop_slug').val();
     var that = $(this);
