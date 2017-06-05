@@ -22,26 +22,21 @@
                             <label for="">E-mail магазина:</label>
                             {% render_field form.email|attr:"type:text" placeholder="E-mail магазина:" %}
                         </div>
-                        <div class="form-group input col-md-12">
-                            <label class="switch">
-                                <input class="switch__input" id="" name="" type="checkbox">
-                                <div class="switch__toggle">
-                                    <div class="switch__handle"></div>
-                                </div>
-                            </label>
-                            <label>Удалить магазин</label>
-                        </div>
+
                         <div class="form-group input col-md-12">
                             <label for="">Короткое описание магазина:</label>
                             {% render_field form.short_description|attr:"rows:6" placeholder="Введите до 300 символов" %}
                         </div>
                         <div class="form-group input col-md-12">
                             <label for="">Полное описание магазина:</label>
-                            {#                        <textarea class="form-control" rows="6"></textarea>#}
+
                             {% render_field form.description|attr:"rows:6" placeholder="Введите полное описание" %}
                         </div>
+                        <div class="form-group input col-md-6">
+                            <label for="">Название магазина</label>
+                            {% render_field form.logo|attr:"type:file" placeholder="Название магазина" %}
+                        </div>
                         <div class="form-group btn-group-form col-md-12">
-                            {#                            <button type="submit" class="btn cancel"> Отменить</button>#}
                             <button type="submit" class="btn add">Сохранить</button>
                         </div>
                     </div>
@@ -63,6 +58,16 @@
                     {#                        </div>#}
                     {#                        {% render_field form.logo|attr:"type:file"|attr:"style:display:none;"|attr:"id:id_images" %}#}
                     {#                    </div>#}
+
+                    {#                        <div class="form-group input col-md-12">#}
+{#                            <label class="switch">#}
+{#                                <input class="switch__input" id="" name="" type="checkbox">#}
+{#                                <div class="switch__toggle">#}
+{#                                    <div class="switch__handle"></div>#}
+{#                                </div>#}
+{#                            </label>#}
+{#                            <label>Удалить магазин</label>#}
+{#                        </div>#}
                 </form>
             </div>
         </div>
