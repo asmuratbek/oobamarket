@@ -1,7 +1,5 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import Http404
-from django.http import HttpResponse
 from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
@@ -10,15 +8,13 @@ from django.views import generic
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import CreateView
 from django.views.generic import DeleteView
-from django.views.generic import FormView
+
 from django.views.generic import UpdateView
 from slugify import slugify
 
-from apps.product.forms import ProductForm
-from apps.product.models import Product
 from apps.shop.decorators import delete_decorator
 from apps.shop.forms import ShopForm, ShopBannersForm, ShopSocialLinksForm
-from apps.users.mixins import AddProductMixin, AddBannerMixin, AddSocialLinksMixin, UpdateShopMixin, DeleteShopMixin
+from apps.users.mixins import AddBannerMixin, AddSocialLinksMixin, UpdateShopMixin, DeleteShopMixin
 from .models import Shop, SocialLinks, Banners
 
 
@@ -29,10 +25,10 @@ class ShopDetailView(generic.DetailView):
     model = Shop
 
 
-class ShopCreateView(LoginRequiredMixin,CreateView):
+class ShopCreateView(LoginRequiredMixin, CreateView):
     form_class = ShopForm
     template_name = 'shop/shop_form.html'
-    # fields = ['title', 'logo', 'email', 'phone', 'short_description', 'description', 'user', 'slug',]
+
 
     def get_success_url(self):
         return reverse('shops:detail', args=(self.object.slug,))
@@ -50,12 +46,12 @@ class ShopUpdateView(LoginRequiredMixin, UpdateShopMixin, UpdateView):
     form_class = ShopForm
     template_name = 'shop/shop_update.html'
 
+
 class ShopDeleteView(LoginRequiredMixin, DeleteShopMixin, DeleteView):
     model = Shop
-    template_name = 'layout/modal_product_delete_confirm.html'
+    template_name = 'layout/modal_shop_delete_confirm.html'
+    success_url = '/'
 
-    def get_success_url(self):
-        return reverse("index")
 
 
 class ShopBannersView(LoginRequiredMixin, AddBannerMixin, CreateView):
@@ -150,7 +146,7 @@ def delete_banners(request):
             try:
                 banner = Banners.objects.get(id=banner_id)
             except Banners.DoesNotExist:
-                return JsonResponse({'message': 'Shop Does Not Exist'})
+                return JsonResponse({'message': 'Banner does not exist'})
             banner.delete()
             return JsonResponse({'message': 'Banner is succefully delete.'})
         return JsonResponse({'message': 'banner field must not be null.'})

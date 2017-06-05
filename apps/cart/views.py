@@ -5,7 +5,7 @@ from django.views.generic.detail import SingleObjectMixin
 
 from apps.product.models import Product
 from .models import Cart, CartItem
-from django.views import generic, View
+from django.views import View
 
 
 # Create your views here.

@@ -10,7 +10,7 @@ from slugify import slugify
 
 from apps.global_category.models import GlobalCategory
 from apps.product.forms import ProductForm, ProductSearchForm, ShopSearchForm
-from apps.users.mixins import AddProductMixin, DeleteProductMixin
+from apps.users.mixins import AddProductMixin, DeleteProductMixin, UpdateProductMixin
 from config.settings.base import MEDIA_ROOT
 from .models import *
 
@@ -103,7 +103,7 @@ class ProductCreateView(LoginRequiredMixin, AddProductMixin, CreateView):
         return super(ProductCreateView, self).form_valid(form)
 
 
-class ProductUpdateView(LoginRequiredMixin, UpdateView):
+class ProductUpdateView(LoginRequiredMixin, UpdateProductMixin, UpdateView):
     model = Product
     form_class = ProductForm
     template_name = 'product/product_update.html'

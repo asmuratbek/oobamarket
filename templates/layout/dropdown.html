@@ -8,6 +8,7 @@
         <ul class="dropdown-menu" aria-labelledby="dLabel">
             <li><a href="{% url 'account_login' %}"><strong>Кабинет</strong></a></li>
             <li><a href="{% url 'shops:create' %}"><strong>Создать магазин</strong></a></li>
+            <li><a href="{% url 'order:order-history' username=request.user %}"><strong>История заказов</strong></a></li>
             {% if request.get_full_path == "/" %}
                 <li><a href="{% url 'product:add_product_index' %}">
                     <strong>Добавить товар</strong>

@@ -5,7 +5,7 @@ from django.contrib import admin
 from django.views.generic import TemplateView
 from django.views import defaults as default_views
 
-from apps.global_category.views import IndexView, fixtures
+from apps.global_category.views import IndexView
 from apps.product.views import FavoriteCreateView
 from apps.shop.views import agreement
 from apps.product.views import SearchResultsView, search_predict_html
@@ -21,7 +21,6 @@ urlpatterns = [
     url(r'^agreement/$', agreement, name='agreement'),
     url(r'^api/product/', include('apps.product.api.urls', namespace="product_api")),
     url(r'^api/shop/', include('apps.shop.api.urls', namespace="shop_api")),
-    url(r'^fixtures/(?P<name>\w+)$', fixtures, name='fixtures'),
     url(r'^search_predict_html', search_predict_html, name='search_predict_html'),
     # url(r'^search/', include('haystack.urls')),
     url(r'^search_results', search_predict_html),

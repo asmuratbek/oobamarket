@@ -7,6 +7,7 @@ $(window).load(function(){
 
 $( document ).ready(function() {
 
+    //Функция инициализации оправки формы для удаления товара
     function initForm() {
     $('#ProductDelete').on('submit', function (event) {
         event.preventDefault();
@@ -27,6 +28,7 @@ $( document ).ready(function() {
     });
     }
 
+    //Функция вызова модального окана на главной для удаления товара
     var trigger = $('.model-trigger');
 
     $(trigger).each(function (i, obj) {
@@ -58,6 +60,7 @@ $( document ).ready(function() {
 
     $('[data-toggle="tooltip"]').tooltip();
 
+    //Функция добавления товара в избранное
     $('.favorite-btn').click(function (event) {
         event.preventDefault();
         var span = $(this).next();
@@ -85,6 +88,7 @@ $( document ).ready(function() {
         })
     });
 
+    //Функция добавления товара в корзину
     $('.basket-btn').click(function(event){
         event.preventDefault();
         var formData = $('#favorite-form').serialize();

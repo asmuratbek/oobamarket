@@ -19,6 +19,17 @@ class AddProductMixin(object):
         return super(AddProductMixin, self).dispatch(request, *args, **kwargs)
 
 
+class UpdateProductMixin(object):
+    def dispatch(self, request, *args, **kwargs):
+        user = request.user
+        my_product = get_object_or_404(Product, slug=kwargs.get('slug'))
+        my_shop = user.shop_set.all()
+        if my_product.shop not in my_shop:
+            return HttpResponseForbidden()
+        return super(UpdateProductMixin, self).dispatch(request, *args, **kwargs)
+
+
+
 class DeleteProductMixin(object):
     def dispatch(self, request, *args, **kwargs):
         user = request.user

@@ -53,10 +53,16 @@
 
                         {% for banner in object.banners_set.all %}
                             <div class="item">
+
                                 <a href="">
                                     <img src="{{ banner.image.url }}" alt="">
                                 </a>
+
                             </div>
+                            {% empty %}
+                            <a href="">
+                                <img  src="http://via.placeholder.com/827x330" alt="">
+                            </a>
                         {% endfor %}
                     </div>
                 </div>
