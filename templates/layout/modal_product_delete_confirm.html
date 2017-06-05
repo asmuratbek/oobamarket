@@ -1,4 +1,4 @@
 <form action="{% url 'product:delete_product' slug=object.slug %}" method="post" id="ProductDelete">{% csrf_token %}
     <p>Вы уверены что хотите удалить "{{ object }}"?</p>
-    <input type="submit" value="Подтвердить" />
+    <button class="btn" type="submit">Подтвердить</button>
 </form>

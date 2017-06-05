@@ -10,9 +10,9 @@ $(function () {
     dataType: 'json',
     done: function (e, data) {
       if (data.result.is_valid) {
-        $("#gallery tbody").prepend(
-          "<tr><td><a href='" + data.result.url + "'>" + data.result.name + "</a>" +
-          "<span class='delete-banner' data-banner-id='" + data.result.banner_id + "'>Удалить</span></td></tr>"
+        $("#gallery").prepend(
+          "<div class='img-wrapper'><div><img class='img-responsive' src='" + data.result.url + "'>" +
+          "<span class='delete-banner' data-banner-id='" + data.result.banner_id + "'>X</span></div></div>"
         )
       }
     }
@@ -28,7 +28,7 @@ $(function () {
                   'shop_slug': slug,
                   'csrfmiddlewaretoken': $('#csrf_token').val()},
           success:  function () {
-              that.parents('tr').remove();
+              that.parents('.img-wrapper').remove();
           }
       })
   })
