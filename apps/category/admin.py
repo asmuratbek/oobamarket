@@ -14,6 +14,7 @@ class CategoryAdmin(DjangoMpttAdmin, SortableModelAdmin ):
     sortable = 'order'
 
 
+
 admin.site.register(Category, CategoryAdmin)
 
 

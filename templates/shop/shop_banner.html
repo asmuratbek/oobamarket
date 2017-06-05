@@ -5,34 +5,45 @@
 
     <section class="edit-banner">
         <div class="container">
-            <h1 class="create">Разместите свои продукты в магазине</h1>
+            <h1 class="create">Редактировать Баннер</h1>
             <div class="col-md-offset-2 col-md-8">
-                <section class="add-banner">
-                    <div class="container">
-                        <div class="col-md-offset-3 col-md-6" id="form-div">
-                        <input id="fileupload" type="file" name="image" multiple
-                        data-url="{% url 'shops:add_banner' slug=slug %}"
-                        data-form-data='{"csrfmiddlewaretoken": "{{ csrf_token }}"}'/>
-                            <input id="shop_slug" type="text" style="display: none" value="{{ slug }}"/>
-                            <input id="csrf_token" type="hidden" value="{{ csrf_token }}">
+
+                <div id="form-div">
+                    <input class="hidden" id="fileupload" type="file" name="image" multiple
+                    data-url="{% url 'shops:add_banner' slug=slug %}"
+                    data-form-data='{"csrfmiddlewaretoken": "{{ csrf_token }}"}'/>
+                    <label class="image-preview" for="fileupload">
+                        <i class="glyphicon glyphicon-plus-sign"></i>
+                        <div class="add-photo">
+                            Добавить<br>фотографии
                         </div>
-                        <table id="gallery" class="table table-bordered">
-                        <thead>
-                        <tr>
-                        <th>Баннеры</th>
-                        </tr>
-                        </thead>
-                        <tbody class="banners-list">
-                        {% for banner in banners %}
-                        <tr>
-                        <td><a href="{{ banner.image.url }}">{{ banner.image.name }}</a>
-                            <span class="delete-banner" data-banner-id="{{ banner.id }}">Удалить</span></td>
-                        </tr>
-                        {% endfor %}
-                        </tbody>
-                        </table>
+                    </label>
+
+                    <input id="shop_slug" class="hidden" type="text" value="{{ slug }}"/>
+                    <input id="csrf_token" type="hidden" value="{{ csrf_token }}">
+                    <div class="info">
+                        <span>Рекомендация для фото:</span>
+                        <p>Размер: 830x330 или больше</p>
+                        <p>Фон: белый или прозрачный</p>
+                        <br>
+                        <span id="file-counter" style="color: red;"><b>Выбрано 3 файла</b></span>
                     </div>
-                </section>
+                </div>
+                <div id="gallery" class="table">
+
+                    <div class="banners-list">
+                        {% for banner in banners %}
+                        <div class="img-wrapper">
+                            <div>
+                                <img src="{{ banner.image.url }}" class="img-responsive" />
+{#                                <p>{{ banner.image.name }}</p>#}
+                                <span class="delete-banner" data-banner-id="{{ banner.id }}">X</span>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
             </div>
         </div>
     </section>

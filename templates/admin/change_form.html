@@ -1,0 +1,22 @@
+{% extends 'admin/change_form.html' %}
+{% load static %}
+
+{% block admin_change_form_document_ready %}
+{{ block.super }}
+    <script src="http://code.jquery.com/jquery-1.8.3.js"></script>
+<script type="text/javascript">
+    $('#id_parent').live('change', function () {
+        var parent = parseInt($(this).val());
+        $.get('/get-category/', {'cat_id':  parent}, function (data) {
+            $('#id_section option').each(function () {
+                if($(this).val() == data.parent_id){
+                    $(this).attr('selected', 'selected');
+                    $(this).parent().attr('disabled', 'disabled');
+                }else if(data.cat_null)
+                    $(this).parent().removeAttr('disabled');
+            })
+        });
+        return false;
+    })
+</script>
+{% endblock %}
