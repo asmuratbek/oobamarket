@@ -2,14 +2,18 @@
 
 
 {% block content %}
-    <h1>Заказы</h1>
+    <div class="simpleorder">
+        <div class="container">
+            <h1>Заказы</h1>
+            {% for order in object_list %}
+            <h3><a href="{% url 'order:simple_detail' pk=order.id %}">Заказ от {{ order.created_at|date:"d.m.y H:i" }}</a></h3>
+                <p>{{ order.name }}</p>
+                <p>{{ order.last_name }}</p>
+                <p>{{ order.phone }}</p>
+                <p>{{ order.address }}</p>
+            {% endfor %}
+        </div>
+    </div>
 
-    {% for order in object_list %}
-    <h3><a href="{% url 'order:simple_detail' pk=order.id %}">Заказ от {{ order.created_at|date:"d.m.y H:i" }}</a></h3>
-        <p>{{ order.name }}</p>
-        <p>{{ order.last_name }}</p>
-        <p>{{ order.phone }}</p>
-        <p>{{ order.address }}</p>
-    {% endfor %}
 
 {% endblock %}

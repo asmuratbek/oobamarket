@@ -2,14 +2,27 @@
 
 {% block content %}
 
-        <h3>Заказ от {{ object.created_at|date:"d.m.y H:i" }}</h3>
-    <p><strong>ФИО</strong>: {{ object.name }} {{ object.last_name }} <strong>Телефон</strong>: {{ object.phone }} <strong>Адрес</strong>:{{ object.address }}</p>
+
+
+
 
 
 
 
     <div class="basket-page">
     <div class="container">
+        <div class="history-order">
+            <h3>Заказ от {{ object.created_at|date:"d.m.y H:i" }}</h3>
+            <p>
+                <strong>ФИО</strong>: {{ object.name }} {{ object.last_name }}
+            </p>
+            <p>
+                <strong>Телефон</strong>: {{ object.phone }}
+            </p>
+            <p>
+                <strong>Адрес</strong>:{{ object.address }}
+            </p>
+        </div>
         <h1>Корзина</h1>
         <div class="cover">
 
