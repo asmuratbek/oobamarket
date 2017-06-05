@@ -28,7 +28,16 @@ body
     100%
       transform: translateY(0%)
       opacity: 1
-
+a.btn.add
+  display: inline-block
+  padding: 15px 60px
+  border-radius: 50px
+  margin: 0 10px
+  color: #fff
+a.btn.add
+  background-color: #F3481C
+  &:hover
+    background-color: #d03e19
 button.btn.add
   display: inline-block
   padding: 15px 60px
@@ -1705,6 +1714,13 @@ ul.category-tab
               background-color: #39B54A
 .basket-page
   padding-top: 40px
+  .history-order
+    text-align: center
+    margin-bottom: 50px
+    h3
+      margin-bottom: 10px
+    p
+      margin-bottom: 5px
   h1
     text-align: center
     margin-bottom: 30px
@@ -2546,12 +2562,17 @@ form.add_email
   .container
     background-color: #fff
     padding: 50px 15px 300px 15px
+  h1
+    font-weight: 300
+    margin-bottom: 15px
   h2
     font-weight: 300
-    margin-bottom: 30px
+
     text-transform: capitalize
+    margin: 40px 0 15px 0
   p
     font-weight: 300
+    margin-bottom: 5px
   a
     display: inline-block
     padding: 15px 60px
@@ -2733,6 +2754,45 @@ form.add_email
     background-color: #f3481c
     &:hover
       background-color: #d03e19
-
+.thanks
+  text-align: center
+  .container
+    background-color: #fff
+    padding: 50px 15px 300px 15px
+  h1
+    margin-bottom: 15px
+    font-weight: 300
+  p
+    margin-bottom: 5px
+    font-weight: 300
+  .go
+    a
+  h2
+    font-weight: 300
+    margin-bottom: 50px
+    margin-top: 10px
+.simpleorder
+  text-align: center
+  .container
+    background-color: #fff
+    padding: 50px 15px 300px 15px
+  .border
+    margin-bottom: 40px
+    padding-bottom: 40px
+  h1
+    margin-bottom: 15px
+    font-weight: 300
+  h3
+    font-weight: 300
+    a
+      color: #333
+      text-decoration: underline !important
+      display: inline-block
+      margin-bottom: 15px
+    a:visited
+      color: #1f5ca1
+  p
+    margin-bottom: 5px
+    font-weight: 300
 //ALWAYS END
 @import "media"
