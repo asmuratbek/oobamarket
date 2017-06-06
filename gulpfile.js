@@ -26,7 +26,7 @@ gulp.task('styles', function () {
 
 gulp.task('js', function(){
    return browserify({
-            entries: './web_client/app.jsx',
+            entries: './web_client/app.js',
             extensions: ['.jsx'],
             debug: true
         })
