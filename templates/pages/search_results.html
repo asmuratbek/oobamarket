@@ -80,10 +80,15 @@
 
                 </form>
             </div>
-
-            {% include 'product/product_list.html' with object_list=products col=3 %}
-
+            <div id="container">
+{#            {% include 'product/product_list.html' with object_list=products col=3 %}#}
+            </div>
         </div>
     </section>
 
 {% endblock content %}
+
+{% block js %}
+    {{ block.super }}
+    <script type="text/javascript" src="{% static 'js/app.js' %}"></script>
+{% endblock %}

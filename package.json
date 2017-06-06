@@ -57,6 +57,7 @@
     "webpack": "^2.1.0-beta.21"
   },
   "dependencies": {
-    "gulp-install": "^1.1.0"
+    "gulp-install": "^1.1.0",
+    "gulp-react": "^3.1.0"
   }
 }

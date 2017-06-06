@@ -27,7 +27,7 @@ gulp.task('styles', function () {
 gulp.task('js', function(){
    return browserify({
             entries: './web_client/app.jsx',
-            extensions: ['.js'],
+            extensions: ['.jsx'],
             debug: true
         })
         .transform('babelify', {
@@ -42,6 +42,24 @@ gulp.task('js', function(){
         })
         .pipe(source('app.js'))
         .pipe(gulp.dest('static/js'));
+
+//     return browserify({
+//             entries: './web_client/app.jsx',
+//             extensions: ['.js'],
+//             debug: true
+//         })
+//         .transform('babelify', {
+//             presets: ['es2015', 'react'],
+//             plugins: ['transform-class-properties']
+//         })
+//         .bundle()
+//         .on('error', function(err){
+//             gutil.log(gutil.colors.red.bold('[browserify error]'));
+//             gutil.log(err.message);
+//             this.emit('end');
+//         })
+//         .pipe(source('app.js'))
+//         .pipe(gulp.dest('static/js'));
 });
 
 gulp.task('watch', function () {
