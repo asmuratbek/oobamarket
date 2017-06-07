@@ -1,8 +1,8 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
-import createClass from 'create-react-class'
-import Product from './components/Product'
-import axios from 'axios'
+import React from 'react';
+import ReactDOM from 'react-dom';
+import createClass from 'create-react-class';
+import Product from './components/Product';
+import axios from 'axios';
 
 
 
@@ -19,7 +19,6 @@ var MainInterface = createClass({
   axios.get(`http://localhost:8000/product/api/?limit=10`)
     .then(res => {
       const products = res.data.results.map(obj => obj);
-      console.log(products)
       this.setState({
          products: products
        });
@@ -42,7 +41,6 @@ var MainInterface = createClass({
 
     return (
       <div>
-      <h1>Heere</h1>
       {filteredProducts}
       </div>
     )
