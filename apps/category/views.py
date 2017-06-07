@@ -14,6 +14,7 @@ def category_detail(request, global_slug, slug):
     category = get_object_or_404(Category, slug=slug)
     global_category = get_object_or_404(GlobalCategory, slug=global_slug)
     property = Properties.objects.filter(category=category.id)
+    value = []
     for prop in property:
         prop.value = Values.objects.filter(properties=prop.id)
         value = prop.value
