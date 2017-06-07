@@ -149,19 +149,22 @@ $(document).ready(function () {
         });
     });
 
-    $('#props').on('change', function () {
-        $.ajax({
-            type: 'GET',
-            dataType: 'HTML',
-            url: "get_product",
-            data: {
-                'value': $('#props option:selected').text()
-            },
-            success: function (data) {
-                console.log(data);
-            },
+    $('.props').each(function (i, obj) {
+        $(obj).on('change', function () {
+            let that = this;
+            $.ajax({
+                type: 'GET',
+                dataType: 'HTML',
+                url: "get_product",
+                data: {
+                    'value': $(that).val()
+                },
+                success: function (data) {
+                    console.log(data);
+                },
+            });
         });
-    })
+    });
 
 
     $('#global_category').on('change', function () {
