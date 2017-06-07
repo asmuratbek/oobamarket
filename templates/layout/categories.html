@@ -2,25 +2,37 @@
 <section class="category-link">
         <div class="container-fluid">
             <div class="clearfix"></div>
-            <div class="pull-left col-md-11">
-                {% for category in object.get_parent_categories %}
-                <div class="dropdown">
-                    <a class="enter btn" type="button" data-toggle="dropdown" aria-haspopup="true"
-                       aria-expanded="false">
-                        {{ category.title }}
-                        <span class="glyphicon glyphicon-menu-down"></span>
-                    </a>
 
-                    <ul class="dropdown-menu" aria-labelledby="dLabel">
-                        {% for subcategory in category.get_descendants %}
-                        <li><a href="{{ subcategory.get_absolute_url }}">{{ subcategory.title }}</a></li>
-                        {% endfor %}
-                    </ul>
+            <div class="pull-left col-md-11 parent">
+                <div class="owl-carousel-category-link">
+                     {% for category in object.get_parent_categories %}
+                    <div class="item">
 
+                            <div class="dropdown" data-id="#dropdown-{{ category.id }}">
+                                <a class="enter btn"  type="button" data-toggle="dropdown" aria-haspopup="true"
+                                aria-expanded="false">
+                                {{ category.title }}
+                                <span class="glyphicon glyphicon-menu-down"></span>
+                                </a>
+                            </div>
 
+                    </div>
+                     {% endfor %}
                 </div>
+
+
+            </div>
+
+            <div class="child">
+                {% for category in object.get_parent_categories %}
+                        <ul class="dropdown-menu"  id="dropdown-{{ category.id }}" aria-labelledby="dLabel">
+                            {% for subcategory in category.get_descendants %}
+                            <li><a href="{{ subcategory.get_absolute_url }}">{{ subcategory.title }}</a></li>
+                            {% endfor %}
+                        </ul>
                 {% endfor %}
             </div>
+
             <div class="pull-right col-md-1">
                 <a href="" class="back-page">
                     <span class="glyphicon glyphicon-menu-left"></span>

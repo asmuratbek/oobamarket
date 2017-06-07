@@ -848,25 +848,64 @@ header
         font-size: 0
         background:  url(../img/png/arrow0.png) -40px 2px no-repeat
         float: left
+.wrapper
+    position: relative
+    margin: 0 auto
+    overflow: hidden
+    padding: 5px
+    height: 50px
+
+.list
+    position: absolute
+    left: 0px
+    top: 0px
+    min-width: 3000px
+    margin-left: 12px
+    margin-top: 0px
+
+.list li
+    display: table-cell
+    position: relative
+    text-align: center
+    cursor: grab
+    cursor: -webkit-grab
+    color: #efefef
+    vertical-align: middle
+
+.scroller
+  text-align: center
+  cursor: pointer
+  display: none
+  padding: 7px
+  padding-top: 11px
+  white-space: no-wrap
+  vertical-align: middle
+  background-color: #fff
+
+
+.scroller-right
+  float: right
+
+.scroller-left
+  float: left
+  overflow-x: auto
+  -webkit-overflow-scrolling: touch
 .category-link
   background-color: #333
   margin-bottom: 40px
-  .left-scroll-mouse
-    max-width: 800px
-
-  .overflow
-    list-style: none
-    white-space: nowrap
-
-    overflow-x: auto
-    -webkit-overflow-scrolling: touch
+  position: relative
+  .owl-item
+    float: left
+  .pull-left
+    overflow: hidden
+    height: 50px
   .nav .open>a, .nav .open>a:focus, .nav .open>a:hover
     background-color: #eee
     border-color: transparent!important
-
   .dropdown
     display: inline-block
     margin-left: 10px
+    overflow: hidden
     .enter.btn:hover
       border-color: transparent!important
       &:before
@@ -883,21 +922,33 @@ header
       right: 0
       top: 0
       color: #CCCCCC
-    ul.dropdown-menu
+  @keyframes appear
+    from
+      top: 35%
+      opacity: 0
+    to
+      opacity: 1
+      top: 100%
+  ul.dropdown-menu.open
+    display: block
+    top: 100%
+    animation-name: appear
+    animation-duration: 0.5s
+  ul.dropdown-menu
+    transition: 0.3s all
+    border-top: 0
+    border-radius: 0
+    padding: 0
+    margin: 0
+    min-width: 300px
 
-      border-top: 0
-      border-radius: 0
-      padding: 0
-      margin: 0
-      min-width: 300px
-
-      -webkit-box-shadow: 0px 6px 16px -5px rgba(0,0,0,0.75) !important
-      -moz-box-shadow: 0px 6px 16px -5px rgba(0,0,0,0.75) !important
-      box-shadow: 0px 6px 16px -5px rgba(0,0,0,0.75) !important
-      li
-        a
-          padding: 3px 20px
-          font-weight: 300
+    -webkit-box-shadow: 0px 6px 16px -5px rgba(0,0,0,0.75) !important
+    -moz-box-shadow: 0px 6px 16px -5px rgba(0,0,0,0.75) !important
+    box-shadow: 0px 6px 16px -5px rgba(0,0,0,0.75) !important
+    li
+      a
+        padding: 3px 20px
+        font-weight: 300
   .dropdown.open
     .glyphicon
       transform: rotate(180deg)
@@ -1467,6 +1518,35 @@ ul.category-tab
   .filter
     .col-md-3
       padding: 0
+      h3
+        font-size: 16px
+        font-weight: 300
+        margin-bottom: 15px
+      .parametrs
+        margin-bottom: 30px
+        h4
+
+
+      .selectize-input
+        height: 40px
+        line-height: 22px
+        input
+          position: relative
+        input:before
+          position: absolute
+          content: ''
+          right: 8px
+          top: 15px
+          width: 10px
+          height: 13px
+          background: url(../img/png/arrow0.png) 0 0 no-repeat
+          -webkit-transform: rotate(-90deg)
+          -ms-transform: rotate(-90deg)
+          transform: rotate(-90deg)
+          background-size: 35px
+        input:after
+          display: none
+
       ul
         background-color: #fff
         li:first-child

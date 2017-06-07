@@ -84,13 +84,15 @@
             <div class="col-md-3">
                 <h3>Параметры</h3><br>
                 {% for prop in property %}
-                <h4>{{ prop.title }}</h4><br>
-                <select class="js-select" id="props" style="width: 100%;">
-                    {% for val in value %}
-                    <option value="--------">---------</option>
-                    <option value="{{ val.value }}">{{ val.value }}</option>
-                    {% endfor %}
-                </select>
+                <div class="parametrs">
+                    <h4>{{ prop.title }}</h4>
+                    <select class="js-example-placeholder-single" placeholder="---------" id="props" style="width: 100%;">
+                        {% for val in value %}
+                        <option value="---------">---------</option>
+                        <option value="{{ val.value }}">{{ val.value }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
                 {% endfor %}
             </div>
         </div>
