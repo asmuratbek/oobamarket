@@ -30,56 +30,11 @@
             </div>
             {% endif %}
 
-            <div class="search_query">
-                <h3>Результаты поиска</h3>
-                <p>По вашему запросу найдено {{ products.count }} товаров в следующих категориях</p>
-            </div>
 
-            <ul class="category-tab">
-                <li class="active"><a href="">Коляски</a></li>
-                <li><a href="">Автокресла</a></li>
-                <li><a href="">Кровати</a></li>
-            </ul>
 
-            <div class="form-filter">
-                <form class="form-inline">
 
-                    <div class="form-group select">
-                        <select class="form-control">
-                            <option>Сортировка</option>
-                            <option>сначала дорогие</option>
-                            <option>сначала акции</option>
-                            <option>новые товары</option>
-                            <option>5</option>
-                        </select>
-                    </div>
 
-                    <div class="form-group input">
-                        <label><span>Цена</span> от</label>
-                        <input type="text" class="form-control" placeholder="2000 сом">
-                    </div>
-
-                    <div class="form-group input end">
-                        <label>до</label>
-                        <input type="text" class="form-control" placeholder="4000 сом">
-                    </div>
-
-                     <div class="form-group select">
-                        <select class="form-control">
-                            <option>Доставка</option>
-                            <option>Бесплатная</option>
-                            <option>Платная</option>
-                            <option>Самовывоз</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group search">
-{#                        <input type="search" class="form-control" placeholder="Поиск товара...">#}
-                        <button type="submit" class="btn btn-default"> ПОКАЗАТЬ</button>
-                    </div>
-
-                </form>
-            </div>
+            {# search_form here #}
             <div id="container">
 {#            {% include 'product/product_list.html' with object_list=products col=3 %}#}
             </div>

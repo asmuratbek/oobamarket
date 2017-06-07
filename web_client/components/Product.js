@@ -3,7 +3,7 @@ import createClass from 'create-react-class'
 
 
 var ProductList = createClass({
-  displayName: 'ProductList',
+  displayName: 'Product',
 
   deliveryColor: function(product) {
       if (this.props.product.delivery_type == 'paid') {

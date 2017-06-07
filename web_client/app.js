@@ -2,6 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import createClass from 'create-react-class';
 import Product from './components/Product';
+import SearchForm from './components/SearchForm';
+import CategoryList from './components/CategoryList';
+import ProductsCount from './components/ProductsCount';
 import axios from 'axios';
 
 
@@ -19,6 +22,7 @@ var MainInterface = createClass({
   axios.get(`http://localhost:8000/product/api/?limit=10`)
     .then(res => {
       const products = res.data.results.map(obj => obj);
+      console.log(products)
       this.setState({
          products: products
        });
@@ -41,6 +45,9 @@ var MainInterface = createClass({
 
     return (
       <div>
+      <ProductsCount />
+      <CategoryList />
+      <SearchForm />
       {filteredProducts}
       </div>
     )

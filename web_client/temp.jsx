@@ -149,4 +149,3 @@ var Products = createClass ({
   }
 });
 ReactDOM.render(<Products />, document.getElementById('container'));
-
