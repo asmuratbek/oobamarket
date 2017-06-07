@@ -160,7 +160,9 @@ $(document).ready(function () {
                     'value': $(that).val()
                 },
                 success: function (data) {
-                    console.log(data);
+                    console.log(data)
+                    $('.goods-of-week').html(data)
+
                 },
             });
         });

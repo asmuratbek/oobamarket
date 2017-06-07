@@ -2,7 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.core import serializers
 from django.http import HttpResponseBadRequest
 from django.http import JsonResponse
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, render_to_response
 from django.views import generic
 from apps.category.models import Category
 from apps.global_category.models import GlobalCategory
@@ -30,15 +30,18 @@ def category_detail(request, global_slug, slug):
 
 
 def get_product_by_filter(request):
-    value = get_object_or_404(Values, value=request.GET.get('value'))
-    products = Product.objects.filter(values__products__values__in=[value])
-    product_list = {'{}'.format(product.id): '{}'.format(product.title) for product in products}
+    if request.GET.get('value')[0] == "-":
+        products = Product.objects.all()
+    else:
+        value = get_object_or_404(Values, value=request.GET.get('value'))
+        products = Product.objects.filter(values__products__values__in=[value]).distinct()
 
     data = {
-        'product': product_list,
+        'object_list': products,
+        'col': 4,
     }
 
-    return JsonResponse(data)
+    return render(request, 'product/product_list.html', data)
 
 
 def get_category_from_global_category(request):
