@@ -29,12 +29,12 @@
 
 <section class="shop-category">
     <div class="container">
-        <ul class="category-tab">
-            <li class="active"><a href="">Товары</a></li>
-            <li><a href="">Акции</a></li>
-            <li><a href="">Отзывы</a></li>
-            <li><a href="">Контакты</a></li>
-        </ul>
+{#        <ul class="category-tab">#}
+{#            <li class="active"><a href="">Товары</a></li>#}
+{#            <li><a href="">Акции</a></li>#}
+{#            <li><a href="">Отзывы</a></li>#}
+{#            <li><a href="">Контакты</a></li>#}
+{#        </ul>#}
 
         <div class="filter">
 
@@ -82,20 +82,16 @@
             </div>
 
             <div class="col-md-3">
-                <h4>Параметры</h4>
-                <select class="js-select" style="width: 100%;">
-                    <option value="qqqqq">qqqqq</option>
-                    <option value="qqqqq1">qqqqq1</option>
-                    <option value="qqqqq2">qqqqq2</option>
-                    <option value="qqqqq3">qqqqq3</option>
-                    <option value="qqqqq4">qqqqq4</option>
+                <h3>Параметры</h3><br>
+                {% for prop in property %}
+                <h4>{{ prop.title }}</h4><br>
+                <select class="js-select" id="props" style="width: 100%;">
+                    {% for val in value %}
+                    <option value="--------">---------</option>
+                    <option value="{{ val.value }}">{{ val.value }}</option>
+                    {% endfor %}
                 </select>
-                <select class="js-select" style="width: 100%;">
-                    <option >ttttt</option>
-                    <option>yyyyy</option>
-                    <option>uuuuuu</option>
-                    <option>iiiiii</option>
-                </select>
+                {% endfor %}
             </div>
         </div>
     </div>

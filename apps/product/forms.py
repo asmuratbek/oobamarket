@@ -13,6 +13,7 @@ class ProductForm(forms.ModelForm):
     removed_images = forms.CharField(required=False)
     uploaded_images = forms.CharField(required=False)
 
+
     def __init__(self, *args, **kwargs):
         self.user = kwargs['initial']['user']
         super(ProductForm, self).__init__(*args, **kwargs)

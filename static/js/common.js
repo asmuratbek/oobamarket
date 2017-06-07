@@ -51,6 +51,98 @@ $( document ).ready(function() {
         });
     });
 
+    $('#props').on('change', function () {
+        $.ajax({
+            type: 'GET',
+            dataType: 'HTML',
+            url: "get_product",
+            data:
+                {
+                  'value':$('#props option:selected').text()
+                },
+            success: function (data) {
+              console.log(data);
+            },
+        });
+    })
+
+
+        $('#global_category').on('change', function () {
+        var categoryList = $('#category_list');
+       console.log("Here");
+       $.ajax({
+           type: "GET",
+            url: "/get_category_list/",
+            data:
+                {
+                    "global_category":  $("#global_category option:selected").text()
+                },
+            success: function (data) {
+                console.log(data);
+                if (data.count > 0) {
+                    categoryList.removeAttr('disabled');
+                    categoryList.html('<option>Выберите категорию</option>');
+                    $.each(data.category_list, function (key, value) {
+                        categoryList.append('<option value=' + key + '>' + value + '</option>')
+                    });
+                }
+
+                else {
+                    console.log('Noooo');
+                    categoryList.html("").attr('disabled', "");
+                }
+            },
+            error: function (response, error) {
+                console.log(response);
+                console.log(error);
+            }
+       });
+    });
+
+    $('#category_list').on('change', function () {
+        var subcategoryList = $('#subcategory_list')
+       $.ajax({
+           type: "GET",
+            url: "/get_subcategory_list/",
+            data:
+                {
+                    "category":  $("#category_list option:selected").text()
+                },
+            success: function (data) {
+                console.log(data);
+                if (data.count > 0) {
+                    subcategoryList.removeAttr('disabled');
+                    subcategoryList.html('<option>Выберите подкатегорию</option>');
+                    $.each(data.category_list, function (key, value) {
+                        subcategoryList.append('<option value=' + key + '>' + value + '</option>')
+                    });
+                }
+
+                else {
+                    console.log('Noooo');
+                    subcategoryList.html("").attr('disabled', "");
+                }
+
+            },
+            error: function (response, error) {
+                console.log(response);
+                console.log(error);
+            }
+       });
+    });
+
+    $('#subcategory_list').on('change', function () {
+        var categoryList = $('#category_list');
+        var selected = $(this).find(":selected");
+        if (selected.hasAttr('value')) {
+            categoryList.removeAttr('name')
+            $(this).attr('name', 'category');
+        } else {
+            $(this).removeAttr('name')
+            categoryList.attr('name', 'category');
+        }
+
+    });
 
 
     $('.js-select').selectize({
@@ -312,8 +404,6 @@ $( document ).ready(function() {
 
 
     $('.left-scroll-mouse .overflow').mousewheel(function(e, delta) {
-        // multiplying by 40 is the sensitivity,
-        // increase to scroll faster.
         this.scrollLeft -= (delta * 40);
         e.preventDefault();
     });
@@ -375,82 +465,7 @@ $( document ).ready(function() {
         })
     });
 
-    $('#global_category').on('change', function () {
-        var categoryList = $('#category_list');
-       console.log("Here");
-       $.ajax({
-           type: "GET",
-            url: "/get_category_list/",
-            data:
-                {
-                    "global_category":  $("#global_category option:selected").text()
-                },
-            success: function (data) {
-                console.log(data);
-                if (data.count > 0) {
-                    categoryList.removeAttr('disabled');
-                    categoryList.html('<option>Выберите категорию</option>');
-                    $.each(data.category_list, function (key, value) {
-                        categoryList.append('<option value=' + key + '>' + value + '</option>')
-                    });
-                }
 
-                else {
-                    console.log('Noooo');
-                    categoryList.html("").attr('disabled', "");
-                }
-            },
-            error: function (response, error) {
-                console.log(response);
-                console.log(error);
-            }
-       });
-    });
-
-    $('#category_list').on('change', function () {
-        var subcategoryList = $('#subcategory_list')
-       $.ajax({
-           type: "GET",
-            url: "/get_subcategory_list/",
-            data:
-                {
-                    "category":  $("#category_list option:selected").text()
-                },
-            success: function (data) {
-                console.log(data);
-                if (data.count > 0) {
-                    subcategoryList.removeAttr('disabled');
-                    subcategoryList.html('<option>Выберите подкатегорию</option>');
-                    $.each(data.category_list, function (key, value) {
-                        subcategoryList.append('<option value=' + key + '>' + value + '</option>')
-                    });
-                }
-
-                else {
-                    console.log('Noooo');
-                    subcategoryList.html("").attr('disabled', "");
-                }
-
-            },
-            error: function (response, error) {
-                console.log(response);
-                console.log(error);
-            }
-       });
-    });
-
-    $('#subcategory_list').on('change', function () {
-        var categoryList = $('#category_list');
-        var selected = $(this).find(":selected");
-        if (selected.hasAttr('value')) {
-            categoryList.removeAttr('name')
-            $(this).attr('name', 'category');
-        } else {
-            $(this).removeAttr('name')
-            categoryList.attr('name', 'category');
-        }
-
-    });
 
 
     $('#dis_id').change(function () {
