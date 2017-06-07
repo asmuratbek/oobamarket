@@ -1,9 +1,6 @@
 {% extends 'base-1.html' %}
 {% load staticfiles product_tags %}
 {% load shop_tags %}
-{% block fixed_categories %}
-    {% include 'layout/fixed_categories.html' %}
-{% endblock %}
 
 {% block header %}
     {% include 'layout/header.html' with global_title=object.get_global_category.title %}

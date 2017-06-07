@@ -2,10 +2,6 @@
 {% load product_tags %}
 {% load staticfiles %}
 
-{% block fixed_categories %}
-    {% include 'layout/fixed_categories.html' %}
-{% endblock %}
-
 {% block header %}
     {% include 'layout/header.html' with global_title=object.shop.get_global_category.title %}
 {% endblock %}
