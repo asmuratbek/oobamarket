@@ -14,7 +14,10 @@ def category_detail(request, global_slug, slug):
     category = get_object_or_404(Category, slug=slug)
     global_category = get_object_or_404(GlobalCategory, slug=global_slug)
     property = Properties.objects.filter(category=category.id)
-    value = Values.objects.filter(properties=property)
+    for prop in property:
+        prop.value = Values.objects.filter(properties=prop.id)
+        value = prop.value
+
 
     template = "category/category_detail.html"
     context = {
@@ -27,7 +30,6 @@ def category_detail(request, global_slug, slug):
 
 def get_product_by_filter(request):
     value = get_object_or_404(Values, value=request.GET.get('value'))
-
     products = Product.objects.filter(values__products__values__in=[value])
     product_list = {'{}'.format(product.id): '{}'.format(product.title) for product in products}
 
