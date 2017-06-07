@@ -63,6 +63,8 @@ class Product(models.Model):
         else:
             return None
 
+    def get_all_images(self):
+        return self.productimage_set.all()
 
     def get_shop_title(self):
         return self.shop.title

@@ -113,62 +113,7 @@ class ProductUpdateView(LoginRequiredMixin, UpdateProductMixin, UpdateView):
             'user': self.request.user
         }
 
-# def create_new_ad(request):
-#     form = AdCreationForm(request.POST, files=request.FILES)
-#     if request.POST:
-#         if form.is_valid():
-#             new_ad = Ad()
-#             new_ad.title = form.cleaned_data['title']
-#             new_ad.description = form.cleaned_data['description']
-#             new_ad.category = form.cleaned_data['category']
-#             new_ad.city = form.cleaned_data['city']
-#             new_ad.metro = form.cleaned_data['metro']
-#             new_ad.phone = form.cleaned_data['phone']
-#             new_ad.user = request.user if request.user and not request.user.is_anonymous else None
-#             new_ad.price = form.cleaned_data['price'] if form.cleaned_data['price'] else 'Договорная'
-#             temp_location = json.loads(form.cleaned_data['location'])
-#             location = Coordinates()
-#             position = Geoposition(temp_location['lat'], temp_location['lng'])
-#             location.position = position
-#             location.save()
-#             new_ad.location = location
-#             new_ad.is_active = True
-#             new_ad.save()
-#
-#            if form.cleaned_data['removed_images']:
-#                 removed_images = form.cleaned_data['removed_images'].split(',')
-#                 for item in removed_images:
-#                     try:
-#                         r_media = Media.objects.get(id=int(item))
-#                         file_path = settings.MEDIA_ROOT + '/' + r_media.media_file.name
-#                         os.remove(file_path)
-#                         r_media.delete()
-#                     except ObjectDoesNotExist:
-#                         pass
-#
-#            if form.cleaned_data['images']:
-#                 images = form.cleaned_data['images'].split(',')
-#                 for item in images:
-#                     try:
-#                         media = Media.objects.get(id=int(item))
-#                         new_ad.media.add(media)
-#                     except ObjectDoesNotExist:
-#                         pass
-#
-#            link_to_ad = SITE_PROTOCOL + SITE_URL + '/admin/ad_app/ad/' + str(new_ad.id) + '/change'
-#             message = '<b>Пользователь:</b>' + str(new_ad.user) if new_ad.user else '<b>Пользователь:</b> Аноним'
-#             message += '<br>' + '<b>Дата:</b>' + str(
-#                 datetime.date.today()) + '<br>' + '<b>Ссылка:</b> <a href="' + link_to_ad + '" target="_blank">' + link_to_ad + '</a>'
-#             thread = threading.Thread(target=send_email_notification, args=('Новое объявление',
-#                                                                             mark_safe(message),
-#                                                                             ADMIN_EMAIL))
-#             thread.start()
-#             returnreturnreturn HttpResponseRedirect(reverse('ad:one_ad', kwargs={'ad_id': new_ad.id}))
-#         else:
-#             print form.errors
-#             return HttpResponseRedirect(reverse('index'))
-#
-#    return HttpResponseRedirect(reverse('index'))
+
 
 
 class ProductIndexCreateView(LoginRequiredMixin, AddProductMixin, CreateView):
