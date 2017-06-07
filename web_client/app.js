@@ -5,6 +5,7 @@ import Product from './components/Product';
 import SearchForm from './components/SearchForm';
 import CategoryList from './components/CategoryList';
 import ProductsCount from './components/ProductsCount';
+import ShopList from './components/ShopList';
 import axios from 'axios';
 
 
@@ -45,6 +46,7 @@ var MainInterface = createClass({
 
     return (
       <div>
+      <ShopList />
       <ProductsCount />
       <CategoryList />
       <SearchForm />
@@ -54,4 +56,4 @@ var MainInterface = createClass({
   }
 });
 
-ReactDOM.render(<MainInterface />, document.getElementById('container'));
+ReactDOM.render(<MainInterface />, document.getElementById('root'));

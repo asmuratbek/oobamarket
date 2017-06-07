@@ -6,38 +6,13 @@
     {% include 'layout/fixed_categories.html' %}
 {% endblock %}
 
-{% block categories %}
-    {% include 'layout/categories.html' with object=object.shop.get_global_category %}
-{% endblock %}
-
 {% block content %}
 
     <section class="goods-of-week search_results">
-        <div class="container">
-            {% if shops %}
-            <div class="search_query">
-                <h3>Рекомендуемые продавцы</h3>
-                <p>Магазины, в которых найден ваш товар</p>
-            </div>
-
-            <div class="recommended_sellers">
-                {% for shop in shops %}
-                <div class="img-wrapper">
-                    <a href="{{ shop.get_absolute_url }}"></a>
-                    <img src="{{ shop.get_logo }}" alt="{{ shop.title }}">
-                </div>
-                {% endfor %}
-            </div>
-            {% endif %}
+        <div class="container" id="root">
 
 
 
-
-
-            {# search_form here #}
-            <div id="container">
-{#            {% include 'product/product_list.html' with object_list=products col=3 %}#}
-            </div>
         </div>
     </section>
 
