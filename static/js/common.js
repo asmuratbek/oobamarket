@@ -247,7 +247,7 @@ $(document).ready(function () {
 
 
     $('.js-example-placeholder-single').selectize({
-        create: true,
+        create: false,
         sortField: 'text'
     });
 
