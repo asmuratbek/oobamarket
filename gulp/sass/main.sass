@@ -1525,27 +1525,23 @@ ul.category-tab
       .parametrs
         margin-bottom: 30px
         h4
-
-
       .selectize-input
         height: 40px
         line-height: 22px
-        input
-          position: relative
-        input:before
-          position: absolute
-          content: ''
-          right: 8px
-          top: 15px
-          width: 10px
-          height: 13px
-          background: url(../img/png/arrow0.png) 0 0 no-repeat
-          -webkit-transform: rotate(-90deg)
-          -ms-transform: rotate(-90deg)
-          transform: rotate(-90deg)
-          background-size: 35px
-        input:after
-          display: none
+      .selectize-input.items + div + input:before
+        position: absolute
+        content: ''
+        right: 8px
+        top: 15px
+        width: 10px
+        height: 13px
+        background: url(../img/png/arrow0.png) 0 0 no-repeat
+        -webkit-transform: rotate(-90deg)
+        -ms-transform: rotate(-90deg)
+        transform: rotate(-90deg)
+        background-size: 35px
+      .selectize-input + div + input:after
+        display: none
 
       ul
         background-color: #fff
