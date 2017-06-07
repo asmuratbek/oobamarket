@@ -86,9 +86,9 @@
                 {% for prop in property %}
                 <div class="parametrs">
                     <h4>{{ prop.title }}</h4>
-                    <select class="js-example-placeholder-single" placeholder="---------" id="props" style="width: 100%;">
+                    <select class="js-example-placeholder-single props" id="props" style="width: 100%;">
                         {% for val in prop.value %}
-                        <option value="----------">---------</option>
+                        <option value>---------</option>
                         <option value="{{ val.value }}">{{ val.value }}</option>
                         {% endfor %}
 
