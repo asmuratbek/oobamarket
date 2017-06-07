@@ -6,7 +6,7 @@ $(window).load(function () {
 $(document).ready(function () {
 
 
-    var dropParents = $('.dropdown');
+    var dropParents = $('.category-link .dropdown');
 
     $(dropParents).each(function (i, obj) {
         $(obj).on('click', function (event) {
@@ -21,7 +21,7 @@ $(document).ready(function () {
     });
 
     function openDropdown(target, parent) {
-        var dropChildren = $('.dropdown-menu');
+        var dropChildren = $('.category-link .dropdown-menu');
         $(dropChildren).each(function (i, obj) {
             if (target !== null) {
                 if ($(obj).attr('id') === $(target).attr('id')) {
@@ -392,37 +392,38 @@ $(document).ready(function () {
         }
     });
 
-
+if ($('owlCarousel').length > 0) {
     var owl = $('.owl-carousel-category-link');
     owl.owlCarousel({
-        loop:false,
-        nav:true,
-        margin:10,
+        loop: false,
+        nav: true,
+        margin: 10,
         mouseDrag: false,
         autoWidth: true,
-        responsive:{
-            0:{
-                items:1
+        responsive: {
+            0: {
+                items: 1
             },
-            600:{
-                items:3
+            600: {
+                items: 3
             },
-            960:{
-                items:5
+            960: {
+                items: 5
             },
-            1200:{
-                items:6
+            1200: {
+                items: 6
             }
         }
     });
     owl.on('mousewheel', '.owl-stage', function (e) {
-        if (e.deltaY>0) {
+        if (e.deltaY > 0) {
             owl.trigger('next.owl');
         } else {
             owl.trigger('prev.owl');
         }
         e.preventDefault();
     });
+}
 
 
 
