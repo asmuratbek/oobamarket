@@ -1,9 +1,8 @@
 
 
-
             <div class="pull-left col-md-11 parent">
                 <div class="owl-carousel-category-link">
-                     {% for category in object.get_parent_categories %}
+                     {% for category in object_list %}
                     <div class="item">
 
                             <div class="dropdown" data-id="#dropdown-{{ category.id }}">
@@ -37,7 +36,3 @@
                     Назад</a>
             </div>
             <div class="clearfix"></div>
-
-
-
-

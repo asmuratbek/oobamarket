@@ -18,9 +18,15 @@
 {% block header %}
     {% include 'layout/header.html' %}
 {% endblock %}
+
+<section class="category-link">
+    <div class="container-fluid">
+        <div class="clearfix"></div>
 {% block categories %}
-   {% include 'layout/categories.html' %}
+
 {% endblock %}
+    </div>
+</section>
 
 {% block content %}
 

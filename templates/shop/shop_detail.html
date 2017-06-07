@@ -10,7 +10,7 @@
 {% endblock %}
 
 {% block categories %}
-    {% include 'layout/categories.html' with object=shop.get_global_category %}
+    {% include 'layout/categories_without_global.html' with object_list=shop.get_used_categories %}
 {% endblock %}
 
 {% block content %}
