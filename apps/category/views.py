@@ -18,8 +18,8 @@ def category_detail(request, global_slug, slug):
         prop.value = Values.objects.filter(properties=prop.id)
         value = prop.value
 
-
     template = "category/category_detail.html"
+
     context = {
         "object": category,
         "property": property,
@@ -32,7 +32,6 @@ def get_product_by_filter(request):
     value = get_object_or_404(Values, value=request.GET.get('value'))
     products = Product.objects.filter(values__products__values__in=[value])
     product_list = {'{}'.format(product.id): '{}'.format(product.title) for product in products}
-
 
     data = {
         'product': product_list,
