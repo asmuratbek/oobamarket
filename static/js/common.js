@@ -394,7 +394,7 @@ $(document).ready(function () {
         }
     });
 
-if ($('owlCarousel').length > 0) {
+if ($('.owl-carousel-category-link').length > 0) {
     var owl = $('.owl-carousel-category-link');
     owl.owlCarousel({
         loop: false,
