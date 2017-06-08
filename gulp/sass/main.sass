@@ -252,7 +252,7 @@ body
   margin-top: 90px
 .fixed-category:hover
   left: 0
-  background: rgba(0, 0, 0, 0.7)
+  background: rgba(255, 255, 255, 0.7)
   animation: fade-fixed-category 0s ease
   transform-origin: 50% 50%
   opacity: 1
@@ -1527,13 +1527,10 @@ ul.category-tab
         h4
           font-size: 16px
           font-weight: 300
-
           margin-bottom: 10px
-      .selectize-input
-        height: 40px
-        border-color: #ccc
-        line-height: 22px
-        &:before
+      .selectize-control
+        position: relative
+      .selectize-control:before
           position: absolute
           content: ''
           right: 8px
@@ -1545,6 +1542,12 @@ ul.category-tab
           -ms-transform: rotate(-90deg)
           transform: rotate(-90deg)
           background-size: 35px
+          z-index: 2
+      .selectize-input
+        height: 40px
+        border-color: #ccc
+        line-height: 22px
+
         &:after
           display: none
 
@@ -1640,7 +1643,7 @@ ul.category-tab
           input
             width: 145px
         .form-group.search
-          width: 249px
+          width: 207px
           position: relative
           input
             position: relative

@@ -7,7 +7,19 @@
         <div class="container">
             <h1 class="create">Редактировать Баннер</h1>
             <div class="col-md-offset-2 col-md-8">
-
+             <div id="gallery" class="table">
+                    <div class="banners-list">
+                        {% for banner in banners %}
+                        <div class="img-wrapper">
+                            <div>
+                                <img src="{{ banner.image.url }}" class="img-responsive" />
+{#                                <p>{{ banner.image.name }}</p>#}
+                                <span class="delete-banner" data-banner-id="{{ banner.id }}">X</span>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
                 <div id="form-div">
                     <input class="hidden" id="fileupload" type="file" name="image" multiple
                     data-url="{% url 'shops:add_banner' slug=slug %}"
@@ -26,23 +38,10 @@
                         <p>Размер: 830x330 или больше</p>
                         <p>Фон: белый или прозрачный</p>
                         <br>
-                        <span id="file-counter" style="color: red;"><b>Выбрано 3 файла</b></span>
+{#                        <span id="file-counter" style="color: red;"><b>Выбрано 3 файла</b></span>#}
                     </div>
                 </div>
-                <div id="gallery" class="table">
 
-                    <div class="banners-list">
-                        {% for banner in banners %}
-                        <div class="img-wrapper">
-                            <div>
-                                <img src="{{ banner.image.url }}" class="img-responsive" />
-{#                                <p>{{ banner.image.name }}</p>#}
-                                <span class="delete-banner" data-banner-id="{{ banner.id }}">X</span>
-                            </div>
-                        </div>
-                        {% endfor %}
-                    </div>
-                </div>
 
             </div>
         </div>
