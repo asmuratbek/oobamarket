@@ -373,31 +373,33 @@ $(document).ready(function () {
         });
     }
 
-
-    $('.owl-carousel.shop-page').owlCarousel({
-        loop: true,
-        margin: 0,
-        nav: false,
-        dots: true,
-        responsiveClass: true,
-        responsive: {
-            0: {
-                items: 1,
-                nav: false
-            },
-            600: {
-                items: 1,
-                nav: false
-            },
-            1000: {
-                items: 1,
-                nav: false,
-                loop: true
+    if ($('.owl-carousel.shop-page').length > 0) {
+        $('.owl-carousel.shop-page').owlCarousel({
+            loop: true,
+            margin: 0,
+            nav: false,
+            dots: true,
+            responsiveClass: true,
+            responsive: {
+                0: {
+                    items: 1,
+                    nav: false
+                },
+                600: {
+                    items: 1,
+                    nav: false
+                },
+                1000: {
+                    items: 1,
+                    nav: false,
+                    loop: true
+                }
             }
-        }
-    });
+        });
+    }
 
 
+if ($('.owl-carousel').length > 0) {
     $('.owl-carousel').owlCarousel({
         loop: true,
         margin: 20,
@@ -418,6 +420,8 @@ $(document).ready(function () {
             }
         }
     });
+}
+
 
 
     $(window).scroll(function () {

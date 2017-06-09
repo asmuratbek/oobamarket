@@ -45,9 +45,15 @@
                 <div class="cover">
 
                 <div class="wrapper">
-                {% show_add_banner_button shop request.user %}
-                    <div class="owl-carousel shop-page">
 
+                {% show_add_banner_button shop request.user %}
+
+                {% if not object.banners_set.all %}
+                <a href="">
+                    <img  src="http://via.placeholder.com/827x330" alt="">
+                </a>
+                {% else %}
+                    <div class="owl-carousel shop-page">
                         {% for banner in object.banners_set.all %}
                             <div class="item">
 
@@ -56,13 +62,13 @@
                                 </a>
 
                             </div>
-                            {% empty %}
-                            <a href="">
-                                <img  src="http://via.placeholder.com/827x330" alt="">
-                            </a>
+
                         {% endfor %}
                     </div>
+                {% endif %}
+
                 </div>
+
 
                     <div class="bottom-line">
                         {% show_add_social_button shop request.user %}
