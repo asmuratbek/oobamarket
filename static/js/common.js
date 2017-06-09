@@ -11,16 +11,20 @@ $(document).ready(function () {
             var reader = new FileReader();
 
             reader.onload = function (e) {
-                $('#update-magazin').attr('src', e.target.result);
+                $('#shop-update-form > .img-upload > a').attr('src', e.target.result);
             }
 
             reader.readAsDataURL(input.files[0]);
         }
     }
 
-    $("#id_logo").change(function () {
+    $("#id_logo2").change(function () {
         readURL(this);
     });
+
+    let wrapper = $('#shop-update-form');
+    let link = $(wrapper).find('.form-group > .img-upload > a').attr('href');
+    $(wrapper).append('<img class="img-responsive" src="' + link + '">');
 
 
     var dropParents = $('.category-link .dropdown');
