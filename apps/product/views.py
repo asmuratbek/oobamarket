@@ -60,6 +60,8 @@ class ProductCreateView(LoginRequiredMixin, AddProductMixin, CreateView):
     form_class = ProductForm
     template_name = 'product/product_form.html'
 
+
+
     def get_success_url(self):
         return reverse('shops:detail', args=(self.object.shop.slug,))
 

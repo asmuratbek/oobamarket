@@ -7,8 +7,8 @@ from apps.product.models import Product
 
 class Properties(Ordering):
     class Meta:
-        verbose_name = ''
-        verbose_name_plural = ''
+        verbose_name = 'Свойство'
+        verbose_name_plural = 'Свойства'
 
     category = models.ManyToManyField(Category, verbose_name='Категория')
     title = models.CharField(max_length=255, verbose_name='Название параметра')
@@ -31,8 +31,3 @@ class Values(Ordering):
 
     def __str__(self):
         return self.value
-
-    def get_values_of_property(self):
-        value = self.objects.filter(self.properties).filter(self.products)
-        return value
-

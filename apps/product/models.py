@@ -32,6 +32,7 @@ class Product(models.Model):
     class Meta:
         verbose_name = 'Продукт'
         verbose_name_plural = 'Продукты'
+        ordering = ('-created_at',)
 
     shop = models.ForeignKey(Shop, verbose_name='Название магазина')
     category = models.ForeignKey(Category, verbose_name='Название категории')
@@ -54,6 +55,8 @@ class Product(models.Model):
     # images = models.ManyToManyField('Media', verbose_name='Изображения продукта', blank=True)
     objects = ProductPublishedManager()
     values = models.ManyToManyField('properties.Values', verbose_name='Характеристики', blank=True)
+    created_at = models.DateTimeField(auto_now_add=True, auto_now=False)
+    updated_at = models.DateTimeField(auto_now_add=False, auto_now=True)
 
     def __str__(self):
         return "{shop} - {category} - {title}".format(shop=self.shop.title, category=self.category, title=self.title)
