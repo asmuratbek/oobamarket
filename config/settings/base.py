@@ -380,5 +380,6 @@ CKEDITOR_CONFIGS = {
     'default': {
         'toolbar': 'full',
         'language': 'ru',
+        'width': '100%'
     },
 }
