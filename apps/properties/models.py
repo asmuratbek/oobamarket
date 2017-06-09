@@ -12,6 +12,7 @@ class Properties(Ordering):
 
     category = models.ManyToManyField(Category, verbose_name='Категория')
     title = models.CharField(max_length=255, verbose_name='Название параметра')
+    slug = models.CharField(max_length=255, verbose_name='Slug', null=True)
 
     def __str__(self):
         return self.title
@@ -26,7 +27,6 @@ class Values(Ordering):
         verbose_name_plural = 'Значения'
 
     properties = models.ForeignKey(Properties, verbose_name='Параметр')
-    products = models.ManyToManyField(Product, verbose_name='Товары')
     value = models.CharField(max_length=255, verbose_name='Значение')
 
     def __str__(self):
