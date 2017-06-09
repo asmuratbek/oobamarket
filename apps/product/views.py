@@ -113,7 +113,9 @@ class ProductUpdateView(LoginRequiredMixin, UpdateProductMixin, UpdateView):
             'user': self.request.user
         }
 
-
+    def get_form_kwargs(self):
+        kwargs = super(ProductUpdateView, self).get_form_kwargs()
+        return kwargs
 
 
 class ProductIndexCreateView(LoginRequiredMixin, AddProductMixin, CreateView):

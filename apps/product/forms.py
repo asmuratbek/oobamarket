@@ -13,10 +13,10 @@ class ProductForm(forms.ModelForm):
     removed_images = forms.CharField(required=False)
     uploaded_images = forms.CharField(required=False)
 
-
     def __init__(self, *args, **kwargs):
         self.user = kwargs['initial']['user']
         super(ProductForm, self).__init__(*args, **kwargs)
+        print(dir(self.fields['category']))
         self.fields['shop'].queryset = Shop.objects.filter(user__in=[self.user.id])
         for field in iter(self.fields):
             self.fields[field].widget.attrs.update({
