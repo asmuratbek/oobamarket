@@ -9,7 +9,7 @@ from django.views.generic import ListView, View, UpdateView, CreateView, DeleteV
 from slugify import slugify
 
 from apps.global_category.models import GlobalCategory
-from apps.product.forms import ProductForm, ProductSearchForm, ShopSearchForm
+from apps.product.forms import ProductForm, ProductSearchForm, ShopSearchForm, ProductUpdateForm
 from apps.users.mixins import AddProductMixin, DeleteProductMixin, UpdateProductMixin
 from config.settings.base import MEDIA_ROOT
 from .models import *
@@ -105,13 +105,15 @@ class ProductCreateView(LoginRequiredMixin, AddProductMixin, CreateView):
 
 class ProductUpdateView(LoginRequiredMixin, UpdateProductMixin, UpdateView):
     model = Product
-    form_class = ProductForm
+    form_class = ProductUpdateForm
     template_name = 'product/product_update.html'
 
     def get_initial(self):
-        return {
-            'user': self.request.user
-        }
+        initial = super(ProductUpdateView, self).get_initial()
+        initial['user'] = self.request.user
+        initial['parent_categories'] = self.object.category.parent.id
+        initial['section'] = self.object.category.section.id
+        return initial
 
     def get_form_kwargs(self):
         kwargs = super(ProductUpdateView, self).get_form_kwargs()

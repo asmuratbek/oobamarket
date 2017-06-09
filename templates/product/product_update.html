@@ -22,17 +22,11 @@
                             </div>
 
                             <div class="form-group select col-md-6">
-                                <select class="form-control" id="global_category" required>
-                                    <option>Выберите раздел</option>
-                                    {% for cat in fixed_categories %}
-                                         <option>{{ cat.title }}</option>
-                                    {% endfor %}
-                                </select>
+                                {{ form.section }}
                             </div>
 
                             <div class="form-group select col-md-6">
-                                <select class="form-control" id="category_list" name="category" disabled>
-                                </select>
+                                {{ form.parent_categories }}
 
                             </div>
 
