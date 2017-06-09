@@ -6,6 +6,23 @@ $(window).load(function () {
 $(document).ready(function () {
 
 
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#update-magazin').attr('src', e.target.result);
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    $("#id_logo").change(function () {
+        readURL(this);
+    });
+
+
     var dropParents = $('.category-link .dropdown');
 
     $(dropParents).each(function (i, obj) {
@@ -23,7 +40,7 @@ $(document).ready(function () {
     function openDropdown(target, parent) {
         var dropChildren = $('.category-link .dropdown-menu');
         $(dropParents).each(function () {
-            if($(this).attr('data-id') === $(parent).attr('data-id')) {
+            if ($(this).attr('data-id') === $(parent).attr('data-id')) {
                 $(this).toggleClass('open');
             } else {
                 $(this).removeClass('open');
@@ -98,7 +115,7 @@ $(document).ready(function () {
             let formData = {};
             let selects = $('.props');
             $(selects).each(function (i, _obj) {
-                if($(_obj).val() !== '') {
+                if ($(_obj).val() !== '') {
                     formData[$(_obj).attr('name')] = $(_obj).val()
                 }
             });
@@ -399,29 +416,28 @@ $(document).ready(function () {
     }
 
 
-if ($('.owl-carousel').length > 0) {
-    $('.owl-carousel').owlCarousel({
-        loop: true,
-        margin: 20,
-        responsiveClass: true,
-        responsive: {
-            0: {
-                items: 1,
-                nav: true
-            },
-            600: {
-                items: 4,
-                nav: true
-            },
-            1000: {
-                items: 9,
-                nav: true,
-                loop: true
+    if ($('.owl-carousel').length > 0) {
+        $('.owl-carousel').owlCarousel({
+            loop: true,
+            margin: 20,
+            responsiveClass: true,
+            responsive: {
+                0: {
+                    items: 1,
+                    nav: true
+                },
+                600: {
+                    items: 4,
+                    nav: true
+                },
+                1000: {
+                    items: 9,
+                    nav: true,
+                    loop: true
+                }
             }
-        }
-    });
-}
-
+        });
+    }
 
 
     $(window).scroll(function () {
