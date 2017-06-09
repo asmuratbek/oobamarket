@@ -151,19 +151,26 @@ $(document).ready(function () {
 
     $('.props').each(function (i, obj) {
         $(obj).on('change', function () {
+            let formData = {};
+            let selects = $('.props');
+            $(selects).each(function (i, _obj) {
+                if($(_obj).val() !== '') {
+                    formData[$(_obj).attr('name')] = $(_obj).val()
+                }
+            });
             let that = this;
+
             $.ajax({
                 type: 'GET',
                 dataType: 'HTML',
                 url: "get_product",
-                data: {
-                    'value': $(that).val()
-                },
+                data: formData,
                 success: function (data) {
-                    console.log(data)
                     $('.goods-of-week').html(data)
-
                 },
+                error: function () {
+                    console.log();
+                }
             });
         });
     });
