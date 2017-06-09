@@ -1,6 +1,7 @@
 
 
             <div class="pull-left col-md-11 parent">
+                {% if object_list %}
                 <div class="owl-carousel-category-link">
                      {% for category in object_list %}
                     <div class="item">
@@ -16,7 +17,7 @@
                     </div>
                      {% endfor %}
                 </div>
-
+                {% endif %}
 
             </div>
 

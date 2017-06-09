@@ -41,7 +41,7 @@ def get_product_by_filter(request):
             "value": request.GET.get(item)
         }
         data.append(prop)
-
+    
     values = []
     for item in data:
         prop = get_object_or_404(Properties, slug=item['property'])
