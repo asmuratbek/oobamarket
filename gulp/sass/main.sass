@@ -247,7 +247,6 @@ header
       font-size: 20px
       display: inline-block
       margin-right: 5px
-
 body
   background-color: #F6F6F6
   font-family: 'Roboto', sans-serif
@@ -273,7 +272,7 @@ body
   left: -20px
   top: 0
   z-index: 9999
-  padding-top: 85px
+  padding:  12% 0
   animation: fade-fixed-category 3s ease infinite
   transform-origin: 50% 50%
   opacity: 1
@@ -976,6 +975,20 @@ header
     width: 380px
     float: left
     margin-right: 35px
+    position: relative
+    .help
+      position: absolute
+      z-index: 99
+      left: 10px
+      top: 10px
+      font-size: 18px
+      color: #f3481c
+    .zoomWrapper
+      width: 100% !important
+      position: relative
+
+      img
+        width: 100% !important
     #gal1
       a.elevatezoom-gallery.slide-content.active
         border-color: #f3481c!important
@@ -1675,7 +1688,7 @@ ul.category-tab
             &:hover
               background-color: #8a8a8a
       .goods-of-week
-        overflow: hidden
+
         .col-md-4:hover
           .cover
             border-color: #cecece

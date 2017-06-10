@@ -9,15 +9,17 @@
     <section class="add-product">
         <div class="container">
             <div class="form-filter">
-                <form class="form-inline" action="{% url 'product:update_product' slug=object.slug %}" method="post" enctype="multipart/form-data" data-media-upload-url="{% url 'product:upload_images' %}" data-remove-uploaded-media-url="{% url 'product:remove_images' %}" id="form">
-                {% csrf_token %}
+                <form class="form-inline" action="{% url 'product:update_product' slug=object.slug %}" method="post"
+                      enctype="multipart/form-data" data-media-upload-url="{% url 'product:upload_images' %}"
+                      data-remove-uploaded-media-url="{% url 'product:remove_images' %}" id="form">
+                    {% csrf_token %}
                     <div class="col-md-8">
 
                         <div class="step_1">
                             <h3><span>1.</span> Основные данные</h3>
                             <div class="form-group select col-md-6">
 
-                                    {% render_field form.shop|add_error_attr:"aria-invalid:true" %}
+                                {% render_field form.shop|add_error_attr:"aria-invalid:true" %}
 
                             </div>
 
@@ -35,19 +37,19 @@
                             </div>
 
                             <div class="form-group input col-md-12">
-{#                                <input type="text" data-toggle="tooltip" title=""#}
-{#                                   data-placement="top"#}
-{#                                   data-original-title="Рекомендация: для лучшего поиска, пишите тип товара в начале названия. Автомобильные шины MAXXIS AT-771 Bravo"#}
-{#                                   aria-describedby="tooltip200612" class="form-control" placeholder="Название товара">#}
-                                {% render_field form.title|add_error_attr:"aria-invalid:true"|attr:"data-toggle:tooltip"|attr:"data-placement:top"|attr:"aria-describedby:tooltip200612"|attr:"required"|attr:"data-original-title:Рекомендация - для лучшего поиска, пишите тип товара в начале названия. Автомобильные шины MAXXIS AT-771 Bravo" placeholder="Название товара"%}
+                                {#                                <input type="text" data-toggle="tooltip" title=""#}
+                                {#                                   data-placement="top"#}
+                                {#                                   data-original-title="Рекомендация: для лучшего поиска, пишите тип товара в начале названия. Автомобильные шины MAXXIS AT-771 Bravo"#}
+                                {#                                   aria-describedby="tooltip200612" class="form-control" placeholder="Название товара">#}
+                                {% render_field form.title|add_error_attr:"aria-invalid:true"|attr:"data-toggle:tooltip"|attr:"data-placement:top"|attr:"aria-describedby:tooltip200612"|attr:"required"|attr:"data-original-title:Рекомендация - для лучшего поиска, пишите тип товара в начале названия. Автомобильные шины MAXXIS AT-771 Bravo" placeholder="Название товара" %}
                             </div>
 
                             <div class="form-group input col-md-12">
-{#                                <input type="text" class="form-control mini price" placeholder="Цена">#}
+                                {#                                <input type="text" class="form-control mini price" placeholder="Цена">#}
                                 {% render_field form.price|add_error_attr:"aria-invalid:true"|attr:"required"|attr:"class:form-control mini price" placeholder="Цена" %}
 
                                 <div class="select">
-                                   {% render_field  form.currency|add_error_attr:"aria-invalid:true"|attr:"required" %}
+                                    {% render_field form.currency|add_error_attr:"aria-invalid:true"|attr:"required" %}
                                 </div>
 
                                 <label class="switch">
@@ -60,26 +62,26 @@
                                 <span class="discount">Скидка</span>
                                 <div class="discount">
                                     <label>Размер скидки</label>
-{#                                    <input type="text" class="form-control" id="discount_id" placeholder="0%" disabled>#}
-                                    {% render_field form.discount|add_error_attr:"aria-invalid:true"|attr:"id:discount_id"|attr:"disabled" placeholder="0%"%}
+                                    {#                                    <input type="text" class="form-control" id="discount_id" placeholder="0%" disabled>#}
+                                    {% render_field form.discount|add_error_attr:"aria-invalid:true"|attr:"id:discount_id"|attr:"disabled" placeholder="0%" %}
                                 </div>
                             </div>
 
                             <div class="form-group input col-md-12">
-{#                                <input type="text" class="form-control mini" placeholder="Количество">#}
+                                {#                                <input type="text" class="form-control mini" placeholder="Количество">#}
                                 {% render_field form.quantity|add_error_attr:"aria-invalid:true"|attr:"class:form-control mini" placeholder="Количество" %}
                                 <label for="">Количество</label>
                             </div>
 
                             <div class="form-group select col-md-6">
 
-                                    {% render_field form.availability|add_error_attr:"aria-invalid:true" %}
+                                {% render_field form.availability|add_error_attr:"aria-invalid:true" %}
 
                             </div>
 
-                                <div class="form-group input col-md-12">
+                            <div class="form-group input col-md-12">
                                 <label class="switch">
-{#                                    <input type="checkbox" class="switch__input">#}
+                                    {#                                    <input type="checkbox" class="switch__input">#}
                                     {% render_field form.published|add_error_attr:"aria-invalid:true"|attr:"class:switch__input" %}
                                     <div class="switch__toggle">
                                         <div class="switch__handle"></div>
@@ -89,16 +91,16 @@
                                 <label>Опубликовать</label>
                             </div>
 
-{#                            <div class="form-group input col-md-12">#}
-{#                                <label class="switch">#}
-{#                                    <input type="checkbox" class="switch__input">#}
-{#                                    <div class="switch__toggle">#}
-{#                                        <div class="switch__handle"></div>#}
-{#                                    </div>#}
-{##}
-{#                                </label>#}
-{#                                <label>В наличии</label>#}
-{#                            </div>#}
+                            {#                            <div class="form-group input col-md-12">#}
+                            {#                                <label class="switch">#}
+                            {#                                    <input type="checkbox" class="switch__input">#}
+                            {#                                    <div class="switch__toggle">#}
+                            {#                                        <div class="switch__handle"></div>#}
+                            {#                                    </div>#}
+                            {##}
+                            {#                                </label>#}
+                            {#                                <label>В наличии</label>#}
+                            {#                            </div>#}
 
 
                             <div class="form-group input col-md-12">
@@ -132,30 +134,36 @@
                         <div class="step_3">
                             <h3><span>3.</span> Параметры товара</h3>
                             <div class="form-group select col-md-6">
-                                <select class="form-control">
-                                    <option>Сезонность</option>
-                                    <option>Бесплатная</option>
-                                    <option>Платная</option>
-                                    <option>Самовывоз</option>
-                                </select>
+                                <div class="cover">
+                                    <select class="form-control">
+                                        <option>Сезонность</option>
+                                        <option>Бесплатная</option>
+                                        <option>Платная</option>
+                                        <option>Самовывоз</option>
+                                    </select>
+                                </div>
                             </div>
                             <div class="clearfix"></div>
                             <div class="form-group select col-md-6">
-                                <select class="form-control">
-                                    <option>Производитель</option>
-                                    <option>Бесплатная</option>
-                                    <option>Платная</option>
-                                    <option>Самовывоз</option>
-                                </select>
+                                <div class="cover">
+                                    <select class="form-control">
+                                        <option>Сезонность</option>
+                                        <option>Бесплатная</option>
+                                        <option>Платная</option>
+                                        <option>Самовывоз</option>
+                                    </select>
+                                </div>
                             </div>
                             <div class="clearfix"></div>
                             <div class="form-group select col-md-6">
-                                <select class="form-control">
-                                    <option>Диаметр</option>
-                                    <option>Бесплатная</option>
-                                    <option>Платная</option>
-                                    <option>Самовывоз</option>
-                                </select>
+                                <div class="cover">
+                                    <select class="form-control">
+                                        <option>Сезонность</option>
+                                        <option>Бесплатная</option>
+                                        <option>Платная</option>
+                                        <option>Самовывоз</option>
+                                    </select>
+                                </div>
                             </div>
                             <div class="clearfix"></div>
                             <p>Параметры для данной категории отсутствуют. (выводится если нет формы)</p>
@@ -163,39 +171,39 @@
 
                         <div class="step_4">
                             <h3><span>4.</span> Короткое описание товара <span>(Опционально)</span></h3>
-{#                            <textarea class="form-control" rows="6"></textarea>#}
-                            {% render_field form.short_description|attr:"rows:6"%}
+                            {#                            <textarea class="form-control" rows="6"></textarea>#}
+                            {% render_field form.short_description|attr:"rows:6" %}
                         </div>
 
                         <div class="step_5">
                             <h3><span>5.</span> Полное описание товара <span>(Опционально)</span></h3>
-{#                            <textarea class="form-control" rows="6"></textarea>#}
-                            {% render_field form.long_description|attr:"rows:6"%}
+                            {#                            <textarea class="form-control" rows="6"></textarea>#}
+                            {% render_field form.long_description|attr:"rows:6" %}
                         </div>
 
                         <div class="form-group btn-group-form col-md-12">
-{#                            <button type="submit" class="btn cancel"> Отменить</button>#}
+                            {#                            <button type="submit" class="btn cancel"> Отменить</button>#}
                             <button type="submit" class="btn add">Добавить товар</button>
                         </div>
                     </div>
 
-{#                    <div class="col-md-4">#}
-{#                        <label class="upload" for="id_images">#}
-{#                            <i class="glyphicon glyphicon-plus-sign"></i>#}
-{#                            <div class="add-photo">#}
-{#                                Добавить<br>фотографии#}
-{#                             </div>#}
-{#                        </label>#}
-{##}
-{#                        <div class="info">#}
-{#                            <span>Рекомендация для фото:</span>#}
-{#                            <p>Размер: 380x380 или больше</p>#}
-{#                            <p>Фон: белый или прозрачный</p>#}
-{#                            <br>#}
-{#                            <span id="file-counter" style="color: red;"></span>#}
-{#                        </div>#}
-{#                        <input type="file" id="id_images" style="display: none;" multiple>#}
-{#                    </div>#}
+                    {#                    <div class="col-md-4">#}
+                    {#                        <label class="upload" for="id_images">#}
+                    {#                            <i class="glyphicon glyphicon-plus-sign"></i>#}
+                    {#                            <div class="add-photo">#}
+                    {#                                Добавить<br>фотографии#}
+                    {#                             </div>#}
+                    {#                        </label>#}
+                    {##}
+                    {#                        <div class="info">#}
+                    {#                            <span>Рекомендация для фото:</span>#}
+                    {#                            <p>Размер: 380x380 или больше</p>#}
+                    {#                            <p>Фон: белый или прозрачный</p>#}
+                    {#                            <br>#}
+                    {#                            <span id="file-counter" style="color: red;"></span>#}
+                    {#                        </div>#}
+                    {#                        <input type="file" id="id_images" style="display: none;" multiple>#}
+                    {#                    </div>#}
 
 
                     <div class="col-md-4">
@@ -221,8 +229,8 @@
                     <div class="col-md-4">
                         <div id="wrapper-files">
                             {% for i in product.get_all_images %}
-                            <h6>{{ i.image.name }}</h6> x
-                            <img src="{{ i.image.url }}" style="width: 200px; height: auto;">
+                                <h6>{{ i.image.name }}</h6> x
+                                <img src="{{ i.image.url }}" style="width: 200px; height: auto;">
                             {% endfor %}
                         </div>
                     </div>
@@ -234,170 +242,170 @@
     </section>
 
 
-{#    <section class="add-product">#}
-{#        <div class="container">#}
-{#            <div class="form-filter">#}
-{#                <form class="form-inline" action="{% url 'product:update_product' slug=object.slug %}" method="post"#}
-{#                      enctype="multipart/form-data">#}
-{#                    {% csrf_token %}#}
-{#                    <div class="col-md-8">#}
-{##}
-{#                        <div class="step_1">#}
-{#                            <h3><span>1.</span> Основные данные</h3>#}
-{#                            <div class="form-group select col-md-6">#}
-{##}
-{#                                {% render_field form.shop|add_error_attr:"aria-invalid:true" %}#}
-{##}
-{#                            </div>#}
-{##}
-{##}
-{##}
-{#                            <div class="form-group select col-md-6">#}
-{##}
-{##}
-{#                                {% render_field form.category %}#}
-{#                            </div>#}
-{##}
-{##}
-{#                            <div class="form-group input col-md-12">#}
-{##}
-{#                                {% render_field form.title|add_error_attr:"aria-invalid:true"|attr:"data-toggle:tooltip"|attr:"data-placement:top"|attr:"aria-describedby:tooltip200612"|attr:"required"|attr:"data-original-title:Рекомендация - для лучшего поиска, пишите тип товара в начале названия. Автомобильные шины MAXXIS AT-771 Bravo" placeholder="Название товара" %}#}
-{#                            </div>#}
-{##}
-{#                            <div class="form-group input col-md-12">#}
-                                {#                                <input type="text" class="form-control mini price" placeholder="Цена">#}
-{#                                {% render_field form.price|add_error_attr:"aria-invalid:true"|attr:"required"|attr:"class:form-control mini price" placeholder="Цена" %}#}
-{##}
-{#                                <div class="select">#}
-{#                                    {% render_field form.currency|add_error_attr:"aria-invalid:true"|attr:"required" %}#}
-{#                                </div>#}
-{##}
-{#                                <label class="switch">#}
-{#                                    <input type="checkbox" class="switch__input" id="dis_id">#}
-{#                                    <div class="switch__toggle">#}
-{#                                        <div class="switch__handle"></div>#}
-{#                                    </div>#}
-{#                                </label>#}
-{##}
-{#                                <span class="discount">Скидка</span>#}
-{#                                <div class="discount">#}
-{#                                    <label>Размер скидки</label>#}
-{##}
-{#                                    {% render_field form.discount|add_error_attr:"aria-invalid:true"|attr:"id:discount_id"|attr:"disabled" placeholder="0%" %}#}
-{#                                </div>#}
-{#                            </div>#}
-{##}
-{#                            <div class="form-group input col-md-12">#}
-{##}
-{#                                {% render_field form.quantity|add_error_attr:"aria-invalid:true"|attr:"class:form-control mini" placeholder="Количество" %}#}
-{#                                <label for="">Количество</label>#}
-{#                            </div>#}
-{##}
-{#                            <div class="form-group select col-md-6">#}
-{##}
-{#                                {% render_field form.availability|add_error_attr:"aria-invalid:true" %}#}
-{##}
-{#                            </div>#}
-{##}
-{#                            <div class="form-group input col-md-12">#}
-{#                                <label class="switch">#}
-{##}
-{#                                    {% render_field form.published|add_error_attr:"aria-invalid:true"|attr:"class:switch__input" %}#}
-{#                                    <div class="switch__toggle">#}
-{#                                        <div class="switch__handle"></div>#}
-{#                                    </div>#}
-{##}
-{#                                </label>#}
-{#                                <label>Опубликовать</label>#}
-{#                            </div>#}
-{##}
-{##}
-{#                            <div class="form-group input col-md-12">#}
-{#                                <label class="switch">#}
-{#                                    <input type="checkbox" class="switch__input">#}
-{#                                    <div class="switch__toggle">#}
-{#                                        <div class="switch__handle"></div>#}
-{#                                    </div>#}
-{#                                </label>#}
-{#                                <label>Кнопка «обратный вызов»</label>#}
-{#                                <i class="glyphicon glyphicon-info-sign" data-toggle="tooltip" title=""#}
-{#                                   data-placement="top"#}
-{#                                   data-original-title="при включение кнопки будет отображатся кнопка обратной связи"#}
-{#                                   aria-describedby="tooltip200612"></i>#}
-{#                            </div>#}
-{#                        </div>#}
-{##}
-{#                        <div class="step_2">#}
-{#                            <h3><span>2.</span> Доставка</h3>#}
-{##}
-{##}
-{#                            <div class="form-group select col-md-6">#}
-{#                                {% render_field form.delivery_type|add_error_attr:"aria-invalid:true"  %}#}
-{#                            </div>#}
-{##}
-{#                            <div class="form-group input col-md-6">#}
-{#                                {% render_field form.delivery_cost|add_error_attr:"aria-invalid:true"|attr:"class:form-control mini"|attr:"disabled" data-toggle="tooltip" title="" data-placement="top" data-original-title="Стоимость доставки" %}#}
-{#                            </div>#}
-{#                        </div>#}
-{##}
-{#                        <div class="step_3">#}
-{#                            <h3><span>3.</span> Параметры товара</h3>#}
-{#                            <div class="form-group select col-md-6">#}
-{#                                <select class="form-control">#}
-{#                                    <option>Сезонность</option>#}
-{#                                    <option>Бесплатная</option>#}
-{#                                    <option>Платная</option>#}
-{#                                    <option>Самовывоз</option>#}
-{#                                </select>#}
-{#                            </div>#}
-{#                            <div class="clearfix"></div>#}
-{#                            <div class="form-group select col-md-6">#}
-{#                                <select class="form-control">#}
-{#                                    <option>Производитель</option>#}
-{#                                    <option>Бесплатная</option>#}
-{#                                    <option>Платная</option>#}
-{#                                    <option>Самовывоз</option>#}
-{#                                </select>#}
-{#                            </div>#}
-{#                            <div class="clearfix"></div>#}
-{#                            <div class="form-group select col-md-6">#}
-{#                                <select class="form-control">#}
-{#                                    <option>Диаметр</option>#}
-{#                                    <option>Бесплатная</option>#}
-{#                                    <option>Платная</option>#}
-{#                                    <option>Самовывоз</option>#}
-{#                                </select>#}
-{#                            </div>#}
-{#                            <div class="clearfix"></div>#}
-{#                            <p>Параметры для данной категории отсутствуют. (выводится если нет формы)</p>#}
-{#                        </div>#}
-{##}
-{#                        <div class="step_4">#}
-{#                            <h3><span>4.</span>Короткое описание товара <span>(Опционально)</span></h3>#}
-                            {#                            <textarea class="form-control" rows="6"></textarea>#}
-{#                            {% render_field form.short_description|attr:"rows:6" %}#}
-{#                        </div>#}
-{##}
-{#                        <div class="step_4">#}
-{#                            <h3><span>5.</span>Полное описание товара <span>(Опционально)</span></h3>#}
-                            {#                            <textarea class="form-control" rows="6"></textarea>#}
-{#                            {% render_field form.long_description|attr:"rows:6" %}#}
-{#                        </div>#}
-{##}
-{#                        <div class="form-group btn-group-form col-md-12">#}
-                            {#                            <button type="submit" class="btn cancel"> Отменить</button>#}
-{#                            <button type="submit" class="btn add">Сохранить</button>#}
-{#                        </div>#}
-{#                    </div>#}
-{##}
-{##}
-{##}
-{#                </form>#}
-{#            </div>#}
-{##}
-{##}
-{#        </div>#}
-{#    </section>#}
+    {#    <section class="add-product">#}
+    {#        <div class="container">#}
+    {#            <div class="form-filter">#}
+    {#                <form class="form-inline" action="{% url 'product:update_product' slug=object.slug %}" method="post"#}
+    {#                      enctype="multipart/form-data">#}
+    {#                    {% csrf_token %}#}
+    {#                    <div class="col-md-8">#}
+    {##}
+    {#                        <div class="step_1">#}
+    {#                            <h3><span>1.</span> Основные данные</h3>#}
+    {#                            <div class="form-group select col-md-6">#}
+    {##}
+    {#                                {% render_field form.shop|add_error_attr:"aria-invalid:true" %}#}
+    {##}
+    {#                            </div>#}
+    {##}
+    {##}
+    {##}
+    {#                            <div class="form-group select col-md-6">#}
+    {##}
+    {##}
+    {#                                {% render_field form.category %}#}
+    {#                            </div>#}
+    {##}
+    {##}
+    {#                            <div class="form-group input col-md-12">#}
+    {##}
+    {#                                {% render_field form.title|add_error_attr:"aria-invalid:true"|attr:"data-toggle:tooltip"|attr:"data-placement:top"|attr:"aria-describedby:tooltip200612"|attr:"required"|attr:"data-original-title:Рекомендация - для лучшего поиска, пишите тип товара в начале названия. Автомобильные шины MAXXIS AT-771 Bravo" placeholder="Название товара" %}#}
+    {#                            </div>#}
+    {##}
+    {#                            <div class="form-group input col-md-12">#}
+    {#                                <input type="text" class="form-control mini price" placeholder="Цена">#}
+    {#                                {% render_field form.price|add_error_attr:"aria-invalid:true"|attr:"required"|attr:"class:form-control mini price" placeholder="Цена" %}#}
+    {##}
+    {#                                <div class="select">#}
+    {#                                    {% render_field form.currency|add_error_attr:"aria-invalid:true"|attr:"required" %}#}
+    {#                                </div>#}
+    {##}
+    {#                                <label class="switch">#}
+    {#                                    <input type="checkbox" class="switch__input" id="dis_id">#}
+    {#                                    <div class="switch__toggle">#}
+    {#                                        <div class="switch__handle"></div>#}
+    {#                                    </div>#}
+    {#                                </label>#}
+    {##}
+    {#                                <span class="discount">Скидка</span>#}
+    {#                                <div class="discount">#}
+    {#                                    <label>Размер скидки</label>#}
+    {##}
+    {#                                    {% render_field form.discount|add_error_attr:"aria-invalid:true"|attr:"id:discount_id"|attr:"disabled" placeholder="0%" %}#}
+    {#                                </div>#}
+    {#                            </div>#}
+    {##}
+    {#                            <div class="form-group input col-md-12">#}
+    {##}
+    {#                                {% render_field form.quantity|add_error_attr:"aria-invalid:true"|attr:"class:form-control mini" placeholder="Количество" %}#}
+    {#                                <label for="">Количество</label>#}
+    {#                            </div>#}
+    {##}
+    {#                            <div class="form-group select col-md-6">#}
+    {##}
+    {#                                {% render_field form.availability|add_error_attr:"aria-invalid:true" %}#}
+    {##}
+    {#                            </div>#}
+    {##}
+    {#                            <div class="form-group input col-md-12">#}
+    {#                                <label class="switch">#}
+    {##}
+    {#                                    {% render_field form.published|add_error_attr:"aria-invalid:true"|attr:"class:switch__input" %}#}
+    {#                                    <div class="switch__toggle">#}
+    {#                                        <div class="switch__handle"></div>#}
+    {#                                    </div>#}
+    {##}
+    {#                                </label>#}
+    {#                                <label>Опубликовать</label>#}
+    {#                            </div>#}
+    {##}
+    {##}
+    {#                            <div class="form-group input col-md-12">#}
+    {#                                <label class="switch">#}
+    {#                                    <input type="checkbox" class="switch__input">#}
+    {#                                    <div class="switch__toggle">#}
+    {#                                        <div class="switch__handle"></div>#}
+    {#                                    </div>#}
+    {#                                </label>#}
+    {#                                <label>Кнопка «обратный вызов»</label>#}
+    {#                                <i class="glyphicon glyphicon-info-sign" data-toggle="tooltip" title=""#}
+    {#                                   data-placement="top"#}
+    {#                                   data-original-title="при включение кнопки будет отображатся кнопка обратной связи"#}
+    {#                                   aria-describedby="tooltip200612"></i>#}
+    {#                            </div>#}
+    {#                        </div>#}
+    {##}
+    {#                        <div class="step_2">#}
+    {#                            <h3><span>2.</span> Доставка</h3>#}
+    {##}
+    {##}
+    {#                            <div class="form-group select col-md-6">#}
+    {#                                {% render_field form.delivery_type|add_error_attr:"aria-invalid:true"  %}#}
+    {#                            </div>#}
+    {##}
+    {#                            <div class="form-group input col-md-6">#}
+    {#                                {% render_field form.delivery_cost|add_error_attr:"aria-invalid:true"|attr:"class:form-control mini"|attr:"disabled" data-toggle="tooltip" title="" data-placement="top" data-original-title="Стоимость доставки" %}#}
+    {#                            </div>#}
+    {#                        </div>#}
+    {##}
+    {#                        <div class="step_3">#}
+    {#                            <h3><span>3.</span> Параметры товара</h3>#}
+    {#                            <div class="form-group select col-md-6">#}
+    {#                                <select class="form-control">#}
+    {#                                    <option>Сезонность</option>#}
+    {#                                    <option>Бесплатная</option>#}
+    {#                                    <option>Платная</option>#}
+    {#                                    <option>Самовывоз</option>#}
+    {#                                </select>#}
+    {#                            </div>#}
+    {#                            <div class="clearfix"></div>#}
+    {#                            <div class="form-group select col-md-6">#}
+    {#                                <select class="form-control">#}
+    {#                                    <option>Производитель</option>#}
+    {#                                    <option>Бесплатная</option>#}
+    {#                                    <option>Платная</option>#}
+    {#                                    <option>Самовывоз</option>#}
+    {#                                </select>#}
+    {#                            </div>#}
+    {#                            <div class="clearfix"></div>#}
+    {#                            <div class="form-group select col-md-6">#}
+    {#                                <select class="form-control">#}
+    {#                                    <option>Диаметр</option>#}
+    {#                                    <option>Бесплатная</option>#}
+    {#                                    <option>Платная</option>#}
+    {#                                    <option>Самовывоз</option>#}
+    {#                                </select>#}
+    {#                            </div>#}
+    {#                            <div class="clearfix"></div>#}
+    {#                            <p>Параметры для данной категории отсутствуют. (выводится если нет формы)</p>#}
+    {#                        </div>#}
+    {##}
+    {#                        <div class="step_4">#}
+    {#                            <h3><span>4.</span>Короткое описание товара <span>(Опционально)</span></h3>#}
+    {#                            <textarea class="form-control" rows="6"></textarea>#}
+    {#                            {% render_field form.short_description|attr:"rows:6" %}#}
+    {#                        </div>#}
+    {##}
+    {#                        <div class="step_4">#}
+    {#                            <h3><span>5.</span>Полное описание товара <span>(Опционально)</span></h3>#}
+    {#                            <textarea class="form-control" rows="6"></textarea>#}
+    {#                            {% render_field form.long_description|attr:"rows:6" %}#}
+    {#                        </div>#}
+    {##}
+    {#                        <div class="form-group btn-group-form col-md-12">#}
+    {#                            <button type="submit" class="btn cancel"> Отменить</button>#}
+    {#                            <button type="submit" class="btn add">Сохранить</button>#}
+    {#                        </div>#}
+    {#                    </div>#}
+    {##}
+    {##}
+    {##}
+    {#                </form>#}
+    {#            </div>#}
+    {##}
+    {##}
+    {#        </div>#}
+    {#    </section>#}
 
 
 {% endblock %}

@@ -1,5 +1,6 @@
 {% load product_tags %}
 {% for product in object_list %}
+
         <div class="col-md-{{ col }} col-sm-6">
             <div class="cover {% if not product.published %} active{% endif %}">
             {% if product.discount %}

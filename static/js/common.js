@@ -210,20 +210,20 @@ $(document).ready(function () {
             categoryList.removeAttr('name')
             $(this).attr('name', 'category');
             $.ajax({
-               type: "GET",
+                type: "GET",
                 url: "/get_property_list/",
                 data: {
-                "category": $("#subcategory_list option:selected").val()
-            },
-            success: function (data) {
-                console.log(data);
-                $('#property_list').append(data);
+                    "category": $("#subcategory_list option:selected").val()
+                },
+                success: function (data) {
+                    console.log(data);
+                    $('#property_list').append(data);
 
-            },
-            error: function (response, error) {
-                console.log(response);
-                console.log(error);
-            }
+                },
+                error: function (response, error) {
+                    console.log(response);
+                    console.log(error);
+                }
             });
         } else {
             $(this).removeAttr('name')
@@ -492,13 +492,29 @@ $(document).ready(function () {
     if ($('#img_01').length > 0) {
         //initiate the plugin and pass the id of the div containing gallery images
         $("#img_01").elevateZoom({
-            zoomType: "lens",
-            lensShape: "round",
+            // zoomType: "lens",
+            // lensShape: "round",
             gallery: 'gal1',
-            lensSize: 200,
+            zoomWindowFadeIn: 500,
+			zoomWindowFadeOut: 500,
+			lensFadeIn: 500,
+			lensFadeOut: 500,
+            constrainType:"height",
+            zoomWindowWidth:500,
+            zoomWindowHeight:500,
+            scrollZoom : true,
             cursor: 'pointer',
-            galleryActiveClass: "active"
+            galleryActiveClass: "active",
+            imageCrossfade: true,
         });
+
+        // $("#zoom_03").elevateZoom({
+        //     gallery: 'gallery_01',
+        //     cursor: 'pointer',
+        //     galleryActiveClass: 'active',
+        //     imageCrossfade: true,
+        //     loadingIcon: 'http://www.elevateweb.co.uk/spinner.gif'
+        // });
 
         //pass the images to Fancybox
         // $("#img_01").bind("click", function (e) {

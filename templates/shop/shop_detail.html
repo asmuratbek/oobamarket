@@ -158,9 +158,10 @@
 
                     </div>
                     <div class="goods-of-week">
+                        <div class="clearfix"></div>
                             {% show_add_product_button shop request.user %}
                             {% include 'product/product_list.html' with object_list=object.get_shop_products col=4 %}
-
+                        <div class="clearfix"></div>
                     </div>
 
 
