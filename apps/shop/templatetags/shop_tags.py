@@ -5,6 +5,7 @@ from django.urls import reverse
 
 register = template.Library()
 
+
 @register.assignment_tag
 def show_add_product_button(shop, user):
     if not user.is_anonymous:
@@ -24,9 +25,12 @@ def show_add_product_button(shop, user):
                                     </div>
                                 </div>
                             </div>
-                                    ''' % reverse('product:add_product', kwargs={'slug':shop.slug}))
+                                    ''' % reverse('product:add_product', kwargs={'slug': shop.slug}))
+            elif not shop.is_owner(user):
+                return mark_safe('')
     else:
         return mark_safe('')
+
 
 @register.assignment_tag
 def show_add_banner_button(shop, user):
@@ -40,6 +44,8 @@ def show_add_banner_button(shop, user):
                                     </a>
                                 </div>
                                     ''' % reverse('shops:add_banner', kwargs={'slug': shop.slug}))
+            elif not shop.is_owner(user):
+                return mark_safe('')
     else:
         return mark_safe('')
 
@@ -55,7 +61,9 @@ def show_add_social_button(shop, user):
                                         <i class="glyphicon glyphicon-cog" ></i>
                                     </a>
                                 </div>
-                                    ''' % reverse('shops:update_social', kwargs={'slug': shop.slug }))
+                                    ''' % reverse('shops:update_social', kwargs={'slug': shop.slug}))
+            elif not shop.is_owner(user):
+                return mark_safe('')
     else:
         return mark_safe('')
 
@@ -72,6 +80,7 @@ def show_edit_shop_button(shop, user):
                                     </a>
                                 </div>
                                     ''' % reverse('shops:update', kwargs={'slug': shop.slug}))
+            elif not shop.is_owner(user):
+                return mark_safe('')
     else:
         return mark_safe('')
-
