@@ -108,7 +108,6 @@ $(document).ready(function () {
                 url: link,
                 success: function (response) {
                     $('#ajax-modal-body').html(response);
-                    initReviewsCarousel();
                     initForm();
                     $('#application-form').append("{% csrf_token %}");
                 },
