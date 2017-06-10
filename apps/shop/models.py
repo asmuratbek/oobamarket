@@ -29,8 +29,8 @@ class Shop(PublishBaseModel):
     slug = models.CharField(max_length=32, verbose_name='Название на транслите', unique=True)
     phone = models.CharField(_("Телефон"), max_length=20, default='')
     email = models.EmailField(verbose_name='E-mail магазина')
-    short_description = models.TextField(max_length=300, verbose_name='Короткое описание магазина')
-    description = models.TextField(max_length=1500, verbose_name='Полное описание магазина')
+    short_description = models.TextField(verbose_name='Короткое описание магазина')
+    description = models.TextField(verbose_name='Полное описание магазина')
     logo = models.ImageField(upload_to='images/shop/logo/', null=True,
                              verbose_name='Логотип')
 

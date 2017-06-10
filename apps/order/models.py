@@ -1,9 +1,12 @@
 from decimal import Decimal
 from django.conf import settings
+from django.core.mail import EmailMultiAlternatives
 from django.core.urlresolvers import reverse
 from django.db import models
 from django.db.models.signals import pre_save, post_save
 # Create your models here.
+from django.template.loader import get_template, render_to_string
+
 from apps.cart.models import Cart
 from apps.product.models import Product
 from apps.shop.models import Shop
@@ -140,19 +143,45 @@ class SimpleOrder(PublishBaseModel):
 
 
 def send_email_to_shop_owner(sender, instance, *args, **kwargs):
-    name = str(instance.name) + "\n" if instance.name else ""
-    last_name = str(instance.last_name) + "\n" if instance.last_name else ""
-    phone = str(instance.phone) + "\n"
-    address = str(instance.address) + "\n"
+    template_html = 'account/email/email_confirmation_signup_message.html'
+    template_text = 'account/email/email_confirmation_signup_message.txt'
+    # text = get_template(template_text)
+    # html = get_template(template_html)
+    # # d = Context({'n': '123131', 'email': 'asdasda'})
+    # text_content = text.render(d)
+    # html_content = html.render(d)
     shops = instance.cart.get_shops()
     for shop in shops:
         products = Product.objects.filter(shop=shop, cartitem__cart=instance.cart)
-        message = ""
-        for product in products:
-            message += str(product.title) + " Количество: " + str(product.cartitem_set.get(cart=instance.cart).quantity) + "\n"
+        text_content = render_to_string(template_text,
+                                        {"user": shop.user.first, "text": 'sdadsad', 'date': 'dsadad',
+                                         'email': 'dasda'})
+        html_content = render_to_string(template_html,
+                                        {"name": instance.name + ' ' + instance.last_name,
+                                         'date': instance.created_at, 'address': instance.address,
+                                         'phone': instance.phone,
+                                         'products': products,
+                                         })
 
-        shop.send_email("Вам поступил новый заказ в магазин " + shop.title,
-                        name + last_name + phone + address + message
-                        )
+        msg = EmailMultiAlternatives('Поступил новый заказ в магазин ' + shop.title, text_content, settings.EMAIL_HOST_USER, [shop.email])
+        msg.attach_alternative(html_content, "text/html")
+        msg.send()
+    # msg = EmailMultiAlternatives(subject, text_content, from_email, [to])
+    # msg.attach_alternative(html_content, "text/html")
+    # msg.send()
+    # name = str(instance.name) + "\n" if instance.name else ""
+    # last_name = str(instance.last_name) + "\n" if instance.last_name else ""
+    # phone = str(instance.phone) + "\n"
+    # address = str(instance.address) + "\n"
+    # shops = instance.cart.get_shops()
+    # for shop in shops:
+    #     products = Product.objects.filter(shop=shop, cartitem__cart=instance.cart)
+    #     message = ""
+    #     for product in products:
+    #         message += str(product.title) + " Количество: " + str(product.cartitem_set.get(cart=instance.cart).quantity) + "\n"
+    #
+    #     shop.send_email("Вам поступил новый заказ в магазин " + shop.title,
+    #                     name + last_name + phone + address + message
+    #                     )
 
 post_save.connect(send_email_to_shop_owner, sender=SimpleOrder)

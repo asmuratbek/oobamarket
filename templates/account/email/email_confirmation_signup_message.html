@@ -164,30 +164,30 @@
 
                     <td align="center" class="masthead">
 
-                        <h1>Имя фамилие отчество</h1>
-                        <a href="" class="logo"><img src="{% static 'img/logo.png' %}" alt=""></a>
+                        <a href="http://188.120.230.176/" class="logo"><img src="http://188.120.230.176/media/images/shop/logo/banner.jpg" alt=""></a>
 
                     </td>
                 </tr>
                 <tr>
                     <td class="content">
 
-                        <h2>Адрес:</h2>
-                        <h2>Телефон:</h2>
+                        <h2>Заказчик: {{ name }}</h2>
+                        <h2>Адрес: {{ address }}</h2>
+                        <h2>Дата: {{ date }}</h2>
+                        <h2>Телефон: {{ phone }}</h2>
                         <ul>
-                            <li>название товара цену</li>
-                            <li>название товара цену</li>
-                            <li>название товара цену</li>
-                            <li>название товара цену</li>
+                            {% for product in products %}
+                            <li>{{ product.title }}</li>
+                            {% endfor %}
                         </ul>
 
-                        <p>Спасибо за покупку траляля терлимбобом и т.д короче текст</p>
+                        <p>Спасибо за покупку</p>
 
                         <table>
                             <tr>
                                 <td align="center">
                                     <p>
-                                        <a href="#" class="button">Перейти на сайт</a>
+                                        <a href="http://188.120.230.176/" class="button">Перейти на сайт</a>
                                     </p>
                                 </td>
                             </tr>
