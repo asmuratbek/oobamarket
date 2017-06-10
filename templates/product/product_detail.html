@@ -47,7 +47,7 @@
             {% else %}
             <span>{{ object.get_price }} {{ object.currency }}</span>
             {% endif %}
-            <p>Количество: {{ object.quantity }}</p>
+            <p><strong>Количество:</strong> {{ object.quantity }}</p>
 {#            <form class="form-inline">#}
 {#                <div class="form-group">#}
 {#                    <label>Оставьте свой номер телефона и продавец с вами свяжится</label>#}
@@ -57,7 +57,7 @@
 {#            </form>#}
             {% if object.short_description %}
             <p>
-                Короткое описание: {{ object.short_description }}
+                <strong>Короткое описание:</strong><br> {{ object.short_description|safe }}
             </p>
             {% endif %}
             <div class="availability">
@@ -114,7 +114,7 @@
 <section class="about-product-text">
     <div class="container">
         <div class="col-md-12">
-
+            {{ object.long_description | safe }}
         </div>
     </div>
 </section>
