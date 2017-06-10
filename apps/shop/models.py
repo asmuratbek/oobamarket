@@ -77,7 +77,7 @@ class Shop(PublishBaseModel):
         send_mail(subject, message, 'asmnotifications@gmail.com', [self.email, ])
 
     def is_owner(self, user):
-        return True if len(self.user.filter(id=user.id)) > 0  else False
+        return True if len(self.user.filter(id=user.id)) > 0 else False
 
 
 

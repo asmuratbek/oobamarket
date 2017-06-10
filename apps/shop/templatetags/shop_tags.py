@@ -7,67 +7,71 @@ register = template.Library()
 
 @register.assignment_tag
 def show_add_product_button(shop, user):
-    if user.is_authenticated:
-        if shop.is_owner(user):
-            return mark_safe('''
-                            <div class="col-md-4 col-sm-6">
-                            <div class="cover">
-                                <a class="url-item" href="%s"></a>
-                                <div class="add-product">
-                                    <i class="glyphicon glyphicon-plus-sign"></i>
-                                    <p>Добавить новый товар</p>
-                                </div>
-
-                                <div class="stock">
-                                    <a href="#">Добавить акцию</a>
+    if not user.is_anonymous:
+        if user.is_authenticated:
+            if shop.is_owner(user):
+                return mark_safe('''
+                                <div class="col-md-4 col-sm-6">
+                                <div class="cover">
+                                    <a class="url-item" href="%s"></a>
+                                    <div class="add-product">
+                                        <i class="glyphicon glyphicon-plus-sign"></i>
+                                        <p>Добавить новый товар</p>
+                                    </div>
+    
+                                    <div class="stock">
+                                        <a href="#">Добавить акцию</a>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                                ''' % reverse('product:add_product', kwargs={'slug':shop.slug}))
-        else:
-            return mark_safe('')
+                                    ''' % reverse('product:add_product', kwargs={'slug':shop.slug}))
+    else:
+        return mark_safe('')
 
 @register.assignment_tag
 def show_add_banner_button(shop, user):
-    if user.is_authenticated:
-        if shop.is_owner(user):
-            return mark_safe('''
-                            <div class="auch-edit" data-toggle="tooltip" title="" data-placement="left" data-original-title="Редактировать баннер">
-                                <a href="%s" >
-                                    <i class="glyphicon glyphicon-cog" ></i>
-                                </a>
-                            </div>
-                                ''' % reverse('shops:add_banner', kwargs={'slug': shop.slug}))
-        else:
-            return mark_safe('')
+    if not user.is_anonymous:
+        if user.is_authenticated:
+            if shop.is_owner(user):
+                return mark_safe('''
+                                <div class="auch-edit" data-toggle="tooltip" title="" data-placement="left" data-original-title="Редактировать баннер">
+                                    <a href="%s" >
+                                        <i class="glyphicon glyphicon-cog" ></i>
+                                    </a>
+                                </div>
+                                    ''' % reverse('shops:add_banner', kwargs={'slug': shop.slug}))
+    else:
+        return mark_safe('')
 
 
 @register.assignment_tag
 def show_add_social_button(shop, user):
-    if user.is_authenticated:
-        if shop.is_owner(user):
-            return mark_safe('''
-                            <div class="auch-edit" data-toggle="tooltip" title="" data-placement="left" data-original-title="Редактировать соц.сети">
-                                <a href="%s" >
-                                    <i class="glyphicon glyphicon-cog" ></i>
-                                </a>
-                            </div>
-                                ''' % reverse('shops:update_social', kwargs={'slug': shop.slug }))
-        else:
-            return mark_safe('')
+    if not user.is_anonymous:
+        if user.is_authenticated:
+            if shop.is_owner(user):
+                return mark_safe('''
+                                <div class="auch-edit" data-toggle="tooltip" title="" data-placement="left" data-original-title="Редактировать соц.сети">
+                                    <a href="%s" >
+                                        <i class="glyphicon glyphicon-cog" ></i>
+                                    </a>
+                                </div>
+                                    ''' % reverse('shops:update_social', kwargs={'slug': shop.slug }))
+    else:
+        return mark_safe('')
 
 
 @register.assignment_tag
 def show_edit_shop_button(shop, user):
-    if user.is_authenticated:
-        if shop.is_owner(user):
-            return mark_safe('''
-                            <div class="auch-edit" data-toggle="tooltip" title="" data-placement="left" data-original-title="Редактировать настройки магазина">
-                                <a href="%s" >
-                                    <i class="glyphicon glyphicon-cog" ></i>
-                                </a>
-                            </div>
-                                ''' % reverse('shops:update', kwargs={'slug': shop.slug}))
-        else:
-            return mark_safe('')
+    if not user.is_anonymous:
+        if user.is_authenticated:
+            if shop.is_owner(user):
+                return mark_safe('''
+                                <div class="auch-edit" data-toggle="tooltip" title="" data-placement="left" data-original-title="Редактировать настройки магазина">
+                                    <a href="%s" >
+                                        <i class="glyphicon glyphicon-cog" ></i>
+                                    </a>
+                                </div>
+                                    ''' % reverse('shops:update', kwargs={'slug': shop.slug}))
+    else:
+        return mark_safe('')
 
