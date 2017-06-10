@@ -82,14 +82,19 @@ $(document).ready(function () {
                 data: $(that).serialize(),
                 url: $(that).attr('action'),
                 success: function (response) {
-                    console.log(response)
+                    console.log(response);
                 },
                 error: function (error) {
-                    console.log(error)
+                    console.log(error);
                 }
             });
         });
     }
+
+    $(".glyphicon-remove-circle").click(function() {
+    //открыть модальное окно с class="remove-product"
+    $(".remove-product").modal('show');
+  });
 
     //Функция вызова модального окана на главной для удаления товара
     var trigger = $('.model-trigger');

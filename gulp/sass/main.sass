@@ -611,6 +611,17 @@ header
       background-color: #fff
       transition: 0.3s
       position: relative
+      .discount
+        position: absolute
+        right: 0px
+        top: 35px
+        width: 50px
+        text-align: center
+        background: #f3481c
+        line-height: 27px
+        color: #fff
+        border-radius: 1px
+        z-index: 10
       a.url-item
         position: absolute
         top: 0
@@ -675,6 +686,7 @@ header
             100%
               opacity: 1
       .glyphicon-remove-circle
+        cursor: pointer
         color: #f3481c !important
         position: absolute
         right: 5px
@@ -986,7 +998,6 @@ header
     .zoomWrapper
       width: 100% !important
       position: relative
-
       img
         width: 100% !important
     #gal1

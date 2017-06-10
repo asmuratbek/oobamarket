@@ -4,7 +4,7 @@
         <div class="col-md-{{ col }} col-sm-6">
             <div class="cover {% if not product.published %} active{% endif %}">
             {% if product.discount %}
-            <span class="discount">{{ product.discount }}</span>
+            <span class="discount" data-toggle="tooltip" title="" data-placement="left" data-original-title="Скидка %" aria-describedby="tooltip409378">- {{ product.discount }} %</span>
             {% endif %}
                 <a class="url-item" href="{{ product.get_absolute_url }}"></a>
                 <div class="top-line">
@@ -18,7 +18,7 @@
                         {% if user in product.shop.user.all %}
                             <a class="edited glyphicon glyphicon-cog" href="{% url 'product:update_product' slug=product.slug %}" data-toggle="tooltip" title="" data-placement="bottom" data-original-title="Редактировать"></a>
                             <a href="" class="eye glyphicon glyphicon-eye-{% if product.published %}open{% else %}close{% endif %}" data-toggle="tooltip" title="" data-placement="bottom" data-original-title="Скрыть" data-status="{% if product.published %}false{% else %}true {% endif %}" data-item="{{ product.id }}"></a>
-                            <a href="" class="remove glyphicon glyphicon-remove-circle model-trigger"  data-url="{% url 'product:delete_product' slug=product.slug %}" data-toggle="modal" data-target="#DeleteModal" title="" data-placement="bottom" data-original-title="Удалить"></a>
+                            <a class="remove glyphicon glyphicon-remove-circle model-trigger"  data-url="{% url 'product:delete_product' slug=product.slug %}" data-toggle="tooltip"  title="" data-placement="bottom" data-original-title="Удалить"></a>
                         {% endif %}
                     {% endif %}
 
