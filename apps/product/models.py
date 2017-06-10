@@ -76,7 +76,7 @@ class Product(PublishBaseModel):
 
     def get_price(self):
         if self.discount:
-            return (self.price * self.discount) / 100
+            return self.price - ((self.price * self.discount) / 100)
         else:
             return self.price
 
@@ -158,4 +158,3 @@ class ProductImage(models.Model):
         storage, path = self.image.storage, self.image.path
         super(ProductImage, self).delete(*args, **kwargs)
         storage.delete(path)
-
