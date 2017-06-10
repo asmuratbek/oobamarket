@@ -121,7 +121,10 @@ class SimpleOrderCreateView(View):
         cart.save()
         order.cart = cart
         order.save()
-        cart = Cart.objects.create(user=request.user)
+        if request.user.is_authenticated():
+            cart = Cart.objects.create(user=request.user)
+        else:
+            cart = Cart.objects.create()
         request.session["cart_id"] = cart.id
         return HttpResponseRedirect(reverse("order:thanks"))
 
