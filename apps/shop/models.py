@@ -8,6 +8,7 @@ from django.urls import reverse
 from django.utils.translation import ugettext as _
 
 from apps.users.models import User
+from apps.utils.models import PublishBaseModel
 
 # Create your models here.
 SOCIAL_LINKS = (
@@ -18,7 +19,7 @@ SOCIAL_LINKS = (
 )
 
 
-class Shop(models.Model):
+class Shop(PublishBaseModel):
     class Meta:
         verbose_name = 'Магазин'
         verbose_name_plural = 'Магазины'
@@ -30,8 +31,6 @@ class Shop(models.Model):
     email = models.EmailField(verbose_name='E-mail магазина')
     short_description = models.TextField(max_length=300, verbose_name='Короткое описание магазина')
     description = models.TextField(max_length=1500, verbose_name='Полное описание магазина')
-    created_at = models.DateTimeField(auto_now=True, verbose_name='Создано')
-    updated_at = models.DateTimeField(auto_now_add=True, verbose_name='Обновленно')
     logo = models.ImageField(upload_to='images/shop/logo/', null=True,
                              verbose_name='Логотип')
 

@@ -2,10 +2,10 @@ from django.db import models
 
 # Create your models here.
 from django.urls import reverse
+from apps.utils.models import PublishBaseModel
 
 
-
-class GlobalCategory(models.Model):
+class GlobalCategory(PublishBaseModel):
 
     class Meta:
         verbose_name = 'Глобальная категория'
@@ -14,8 +14,6 @@ class GlobalCategory(models.Model):
     title = models.CharField(max_length=255, verbose_name='Название категории')
     slug = models.CharField(max_length=255, verbose_name='Название на транслите')
     icon = models.ImageField(upload_to="category/icons", default=None)
-    created_at = models.DateTimeField(auto_now=True, verbose_name="Создано")
-    updated_at = models.DateTimeField(auto_now_add=True, verbose_name="Обновлено")
 
     def __str__(self):
         return self.title

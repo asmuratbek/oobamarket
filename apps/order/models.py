@@ -8,6 +8,7 @@ from apps.cart.models import Cart
 from apps.product.models import Product
 from apps.shop.models import Shop
 from apps.users.models import User
+from apps.utils.models import PublishBaseModel
 
 
 import braintree
@@ -119,7 +120,7 @@ def order_pre_save(sender, instance, *args, **kwargs):
 pre_save.connect(order_pre_save, sender=Order)
 
 
-class SimpleOrder(models.Model):
+class SimpleOrder(PublishBaseModel):
 
     class Meta:
         verbose_name = "Заказ"
@@ -132,8 +133,6 @@ class SimpleOrder(models.Model):
     address = models.CharField(max_length=255)
     user = models.ForeignKey(User, blank=True, null=True)
     cart = models.ForeignKey(Cart, blank=True, null=True)
-    created_at = models.DateTimeField(auto_now_add=True, auto_now=False)
-    updated = models.DateTimeField(auto_now_add=False, auto_now=True)
 
     def __str__(self):
         return  str(self.name) + str(self.last_name)

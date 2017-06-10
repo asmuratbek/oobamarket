@@ -7,6 +7,7 @@ from mptt.models import MPTTModel
 from mptt.fields import  TreeForeignKey
 from apps.global_category.models import GlobalCategory
 from apps.shop.models import Shop
+from apps.utils.models import PublishBaseModel
 
 
 class Ordering(models.Model):
@@ -16,7 +17,7 @@ class Ordering(models.Model):
     order = models.PositiveIntegerField(verbose_name='Очередь')
 
 
-class Category(MPTTModel):
+class Category(MPTTModel, PublishBaseModel):
 
     class Meta:
         verbose_name = 'Категория'
@@ -27,10 +28,7 @@ class Category(MPTTModel):
     title = models.CharField(max_length=255, verbose_name='Название категории')
     slug = models.CharField(max_length=255,verbose_name='Название на транслите', unique=True, blank=True, null=True)
     section = models.ForeignKey(GlobalCategory, verbose_name='Раздел', default='1')
-    created_at = models.DateTimeField(auto_now=True, verbose_name="Создано")
-    updated_at = models.DateTimeField(auto_now_add=True, verbose_name="Обновлено")
     order = models.PositiveIntegerField(verbose_name='Очередь', default=0)
-    is_active = models.BooleanField(default=True, verbose_name='Активный')
 
     class MPTTMeta:
         order_insertion_by = ['order']

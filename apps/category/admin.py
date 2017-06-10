@@ -8,9 +8,9 @@ from suit.admin import SortableModelAdmin
 
 
 class CategoryAdmin(DjangoMpttAdmin, SortableModelAdmin ):
-    list_display = ('title', 'parent', 'slug', 'section', 'is_active', 'order',)
+    list_display = ('title', 'parent', 'slug', 'section', 'published', 'order',)
     prepopulated_fields = {'slug': ('title',)}
-    list_editable = ('is_active', 'order')
+    list_editable = ('published', 'order')
     sortable = 'order'
 
 

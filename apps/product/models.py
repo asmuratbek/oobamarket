@@ -9,6 +9,7 @@ from django.utils.translation import ugettext as _
 from apps.category.models import Category
 from apps.shop.models import Shop
 from apps.users.models import User
+from apps.utils.models import PublishBaseModel
 
 DELIVERY_TYPES = (
     ('self', u'Самовывоз'),
@@ -28,7 +29,7 @@ class ProductPublishedManager(models.Manager):
         return super(ProductPublishedManager, self).get_query_set().filter(published=True)
 
 
-class Product(models.Model):
+class Product(PublishBaseModel):
     class Meta:
         verbose_name = 'Продукт'
         verbose_name_plural = 'Продукты'
@@ -48,15 +49,12 @@ class Product(models.Model):
     delivery_cost = models.FloatField(verbose_name='Стоимость доставки', default=0, null=True, blank=True)
     # settings = models.ManyToManyField('ProductSettings', verbose_name='Характеристика')
     availability = models.CharField(_("Наличие"), max_length=100, choices=AVAILABILITY_TYPES, default='available')
-    published = models.BooleanField(default=True)
     short_description = models.TextField(max_length=300, null=True, blank=True,
                                          verbose_name='Короткое описание товара до 300 символов')
     long_description = RichTextUploadingField(null=True, blank=True, verbose_name='Полное описание')
     # images = models.ManyToManyField('Media', verbose_name='Изображения продукта', blank=True)
     objects = ProductPublishedManager()
     values = models.ManyToManyField('properties.Values', verbose_name='Характеристики', blank=True)
-    created_at = models.DateTimeField(auto_now_add=True, auto_now=False)
-    updated_at = models.DateTimeField(auto_now_add=False, auto_now=True)
 
     def __str__(self):
         return "{shop} - {category} - {title}".format(shop=self.shop.title, category=self.category, title=self.title)

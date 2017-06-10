@@ -8,17 +8,16 @@ from apps.product.models import Product
 from apps.shop.models import Shop
 from apps.users.models import User
 from django.utils.translation import ugettext as _
+from apps.utils.models import PublishBaseModel
 
 
-class Cart(models.Model):
+class Cart(PublishBaseModel):
 
     class Meta:
         verbose_name = "Корзина"
         verbose_name_plural = "Корзины"
 
     user = models.ForeignKey(User, null=True, blank=True, verbose_name="Владелец")
-    created_at = models.DateTimeField(auto_now_add=True, auto_now=False)
-    updated = models.DateTimeField(auto_now_add=False, auto_now=True)
     subtotal = models.DecimalField(max_digits=50, decimal_places=2, default=25.00)
     total = models.DecimalField(max_digits=50, decimal_places=2, default=25.00)
     completed = models.BooleanField(default=False)
