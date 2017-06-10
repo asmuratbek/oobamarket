@@ -209,6 +209,22 @@ $(document).ready(function () {
         if (selected.hasAttr('value')) {
             categoryList.removeAttr('name')
             $(this).attr('name', 'category');
+            $.ajax({
+               type: "GET",
+                url: "/get_property_list/",
+                data: {
+                "category": $("#subcategory_list option:selected").val()
+            },
+            success: function (data) {
+                console.log(data);
+                $('#property_list').append(data);
+
+            },
+            error: function (response, error) {
+                console.log(response);
+                console.log(error);
+            }
+            });
         } else {
             $(this).removeAttr('name')
             categoryList.attr('name', 'category');

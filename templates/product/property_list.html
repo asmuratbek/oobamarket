@@ -1,0 +1,14 @@
+<div class="form-group select col-md-6">
+
+    {% for property in properties %}
+        <label>{{ property.title }}</label>
+        <div class="cover">
+            <select class="form-control" id="subcategory_list">
+                {% for value in property.values_set.all %}
+                    <option value="{{ value.id }}">{{ value }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    {% endfor %}
+
+</div>

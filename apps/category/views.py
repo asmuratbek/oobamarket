@@ -32,6 +32,13 @@ def category_detail(request, global_slug, slug):
     return render(request, template, context)
 
 
+def get_property_list(request):
+    category = get_object_or_404(Category, id=request.GET.get('category'))
+    properties = category.properties_set.all()
+    template = 'product/property_list.html'
+    return render(request, template, {'properties': properties})
+
+
 def get_product_by_filter(request):
     data = list()
 
@@ -41,7 +48,7 @@ def get_product_by_filter(request):
             "value": request.GET.get(item)
         }
         data.append(prop)
-    
+
     values = []
     for item in data:
         prop = get_object_or_404(Properties, slug=item['property'])
