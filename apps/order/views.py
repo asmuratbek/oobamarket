@@ -76,13 +76,13 @@ class AddressSelectFormView(CartOrderMixin, FormView):
         user_check_id = self.request.session.get("user_checkout_id")
         user_checkout = UserCheckout.objects.get(id=user_check_id)
         b_address = UserAddress.objects.filter(
-                user=user_checkout,
-                type='billing',
-            )
+            user=user_checkout,
+            type='billing',
+        )
         s_address = UserAddress.objects.filter(
-                user=user_checkout,
-                type='shipping',
-            )
+            user=user_checkout,
+            type='shipping',
+        )
         return b_address, s_address
 
     def get_form(self, *args, **kwargs):
@@ -100,14 +100,13 @@ class AddressSelectFormView(CartOrderMixin, FormView):
         order.billing_address = billing_address
         order.shipping_address = shipping_address
         order.save()
-        return  super(AddressSelectFormView, self).form_valid(form, *args, **kwargs)
+        return super(AddressSelectFormView, self).form_valid(form, *args, **kwargs)
 
     def get_success_url(self, *args, **kwargs):
         return "/checkout/"
 
 
 class SimpleOrderCreateView(View):
-
     def post(self, request, *args, **kwargs):
         data = request.POST.copy()
         order = SimpleOrder()
@@ -138,7 +137,6 @@ class SimpleOrderListView(ListView):
     slug_field = 'username'
     slug_url_kwarg = 'username'
 
-
     def get_queryset(self):
         return SimpleOrder.objects.filter(user__username=self.kwargs['username'])
 
@@ -147,3 +145,16 @@ class SimpleOrderDetailView(DetailView):
     model = SimpleOrder
     template_name = 'order/order_detail.html'
 
+
+class SimpleOrderShopListView(ListView):
+    model = SimpleOrder
+    slug_field = 'slug'
+    slug_url_kwarg = 'slug'
+
+    def get_queryset(self):
+        return SimpleOrder.objects.filter(cart__cartitem__product__shop__slug=self.kwargs['slug'])
+
+
+class SimpleOrderShopDetailView(DetailView):
+    model = SimpleOrder
+    template_name = 'order/order_detail.html'
