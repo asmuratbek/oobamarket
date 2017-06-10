@@ -1,6 +1,6 @@
-<div class="form-group select col-md-6">
+{% for property in properties %}
+    <div class="form-group select">
 
-    {% for property in properties %}
         <label>{{ property.title }}</label>
         <div class="cover">
             <select class="form-control" id="subcategory_list">
@@ -9,6 +9,6 @@
                 {% endfor %}
             </select>
         </div>
-    {% endfor %}
 
-</div>
+    </div>
+{% endfor %}
