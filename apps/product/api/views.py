@@ -41,7 +41,6 @@ class ProductListApiView(ListAPIView):
             ).distinct()
         else:
             objects = Product.objects.all()
-        print(objects)
         return objects
 
 

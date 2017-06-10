@@ -21,7 +21,6 @@ class Command(BaseCommand):
         for worksheet in W.worksheets:
             slug = slugify(worksheet.title)
             section, created = GlobalCategory.objects.get_or_create(title=worksheet.title, slug=slug)
-            print(worksheet.title)
             worksheet = W.get_sheet_by_name(name=worksheet.title)
             for row in worksheet.iter_rows(max_col=1):
                 for field in row:

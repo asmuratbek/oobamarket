@@ -1,4 +1,5 @@
 {% load account %}
+{% load staticfiles %}
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -164,7 +165,7 @@
                     <td align="center" class="masthead">
 
                         <h1>Имя фамилие отчество</h1>
-                        <a href="" class="logo"><img src="http://188.120.230.176/static/img/logo.svg" alt=""></a>
+                        <a href="" class="logo"><img src="{% static 'img/logo.png' %}" alt=""></a>
 
                     </td>
                 </tr>

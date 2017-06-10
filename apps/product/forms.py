@@ -39,8 +39,6 @@ class ProductUpdateForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         self.user = kwargs['initial']['user']
         super(ProductUpdateForm, self).__init__(*args, **kwargs)
-        print(dir(self.fields['category'].queryset))
-        print(self.fields['category'].queryset)
         self.fields['shop'].queryset = Shop.objects.filter(user__in=[self.user.id])
         for field in iter(self.fields):
             self.fields[field].widget.attrs.update({
