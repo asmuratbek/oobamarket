@@ -1,6 +1,4 @@
 {% load account %}
-{% user_display user as user_display %}
-{% load i18n %}
 {% load staticfiles %}
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -172,17 +170,16 @@
                 </tr>
                 <tr>
                     <td class="content">
-{% blocktrans with site_name=current_site.name site_domain=current_site.domain %}
-                        <h2>Hello from {{ site_name }}!</h2>
 
-    <p>You're receiving this e-mail because user {{ user_display }} at {{ site_domain }} has given yours as an e-mail address to connect their account.</p>
-
-    <p>To confirm this is correct, go to {{ activate_url }}</p>
-{% endblocktrans %}
-{% blocktrans with site_name=current_site.name site_domain=current_site.domain %}Thank you from {{ site_name }}!
-{{ site_domain }}{% endblocktrans %}
-
-
+                        <h2>Заказчик: {{ name }}</h2>
+                        <h2>Адрес: {{ address }}</h2>
+                        <h2>Дата: {{ date }}</h2>
+                        <h2>Телефон: {{ phone }}</h2>
+                        <ul>
+                            {% for product in products %}
+                            <li>{{ product.title }}</li>
+                            {% endfor %}
+                        </ul>
 
                         <table>
                             <tr>
@@ -219,3 +216,4 @@
 </table>
 </body>
 </html>
+

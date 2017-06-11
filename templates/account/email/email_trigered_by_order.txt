@@ -1,0 +1,9 @@
+ <h2>Заказчик: {{ name }}</h2>
+                        <h2>Адрес: {{ address }}</h2>
+                        <h2>Дата: {{ date }}</h2>
+                        <h2>Телефон: {{ phone }}</h2>
+                        <ul>
+                            {% for product in products %}
+                            <li>{{ product.title }}</li>
+                            {% endfor %}
+                        </ul>
