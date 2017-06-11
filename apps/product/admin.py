@@ -14,7 +14,7 @@ class ProductImagesInline(admin.StackedInline):
 class ProductAdmin(admin.ModelAdmin):
     inlines = [ProductImagesInline]
     prepopulated_fields = {'slug': ('title',)}
-    # filter_horizontal = ('images',)
+    filter_horizontal = ('values',)
 
 
 admin.site.register(Product, ProductAdmin)

@@ -45,7 +45,6 @@ DJANGO_APPS = [
     # 'django.contrib.humanize',
 
     # Admin
-    'suit',
     'haystack',
     'elasticsearch',
     'mptt',

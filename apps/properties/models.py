@@ -28,6 +28,7 @@ class Values(Ordering):
 
     properties = models.ForeignKey(Properties, verbose_name='Параметр')
     value = models.CharField(max_length=255, verbose_name='Значение')
+    products = models.ManyToManyField(Product)
 
     def __str__(self):
         return self.value

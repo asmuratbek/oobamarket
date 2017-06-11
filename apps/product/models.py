@@ -54,7 +54,6 @@ class Product(PublishBaseModel):
     long_description = RichTextUploadingField(null=True, blank=True, verbose_name='Полное описание')
     # images = models.ManyToManyField('Media', verbose_name='Изображения продукта', blank=True)
     objects = ProductPublishedManager()
-    values = models.ManyToManyField('properties.Values', verbose_name='Характеристики', blank=True)
 
     def __str__(self):
         return "{shop} - {category} - {title}".format(shop=self.shop.title, category=self.category, title=self.title)

@@ -10,6 +10,7 @@ from slugify import slugify
 
 from apps.global_category.models import GlobalCategory
 from apps.product.forms import ProductForm, ProductSearchForm, ShopSearchForm, ProductUpdateForm
+from apps.properties.models import Values
 from apps.users.mixins import AddProductMixin, DeleteProductMixin, UpdateProductMixin
 from config.settings.base import MEDIA_ROOT
 from .models import *
@@ -75,6 +76,11 @@ class ProductCreateView(LoginRequiredMixin, AddProductMixin, CreateView):
         product.slug = slugify(form.instance.title)
         product.shop = Shop.objects.get(slug=self.kwargs['slug'])
         product.save()
+        for key, value in self.request.POST.items():
+            if key.startswith('property'):
+                # property_id = key.split('-')[-1]
+                value = get_object_or_404(Values, id=int(value))
+                value.products.add(product)
         if form.cleaned_data['uploaded_images']:
             if ',' in form.cleaned_data['uploaded_images']:
                 for item in form.cleaned_data['uploaded_images'].split(','):
