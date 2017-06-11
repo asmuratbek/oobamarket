@@ -33,7 +33,7 @@
                             </div>
 
                             <div class="form-group select col-md-6">
-                                {{ form.category }}
+                                {% render_field form.category|attr:"id:subcategory_list" %}
                             </div>
 
                             <div class="form-group input col-md-12">
@@ -133,40 +133,23 @@
 
                         <div class="step_3">
                             <h3><span>3.</span> Параметры товара</h3>
-                            <div class="form-group select col-md-6">
-                                <div class="cover">
-                                    <select class="form-control">
-                                        <option>Сезонность</option>
-                                        <option>Бесплатная</option>
-                                        <option>Платная</option>
-                                        <option>Самовывоз</option>
-                                    </select>
-                                </div>
+                            <div class="form-group select col-md-6" id="property_list">
+                                {% for property in properties %}
+                                    <div class="form-group select">
+
+                                        <label>{{ property.title }}</label>
+                                        <div class="cover">
+                                            <select class="form-control" id="subcategory_list" name="property-{{ property.id }}">
+                                                {% for value in property.values_set.all %}
+                                                    <option value="{{ value.id }}">{{ value }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+
+                                    </div>
+                                {% endfor %}
                             </div>
-                            <div class="clearfix"></div>
-                            <div class="form-group select col-md-6">
-                                <div class="cover">
-                                    <select class="form-control">
-                                        <option>Сезонность</option>
-                                        <option>Бесплатная</option>
-                                        <option>Платная</option>
-                                        <option>Самовывоз</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="clearfix"></div>
-                            <div class="form-group select col-md-6">
-                                <div class="cover">
-                                    <select class="form-control">
-                                        <option>Сезонность</option>
-                                        <option>Бесплатная</option>
-                                        <option>Платная</option>
-                                        <option>Самовывоз</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="clearfix"></div>
-                            <p>Параметры для данной категории отсутствуют. (выводится если нет формы)</p>
+                            <p id="empty_properties">Параметры для данной категории отсутствуют. (выводится если нет формы)</p>
                         </div>
 
                         <div class="step_4">
