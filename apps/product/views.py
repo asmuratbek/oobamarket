@@ -78,7 +78,6 @@ class ProductCreateView(LoginRequiredMixin, AddProductMixin, CreateView):
         product.save()
         for key, value in self.request.POST.items():
             if key.startswith('property'):
-                # property_id = key.split('-')[-1]
                 value = get_object_or_404(Values, id=int(value))
                 value.products.add(product)
         if form.cleaned_data['uploaded_images']:
