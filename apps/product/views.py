@@ -1,15 +1,17 @@
 import os
 
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponseRedirect
 from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404
+from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import ListView, View, UpdateView, CreateView, DeleteView
 from slugify import slugify
 
 from apps.global_category.models import GlobalCategory
-from apps.product.forms import ProductForm, ProductSearchForm, ShopSearchForm, ProductUpdateForm
+from apps.product.forms import ProductForm, ProductSearchForm, ShopSearchForm, ProductUpdateForm, ProductImagesForm
 from apps.properties.models import Values
 from apps.users.mixins import AddProductMixin, DeleteProductMixin, UpdateProductMixin
 from config.settings.base import MEDIA_ROOT
@@ -115,7 +117,7 @@ class ProductUpdateView(LoginRequiredMixin, UpdateProductMixin, UpdateView):
     form_class = ProductUpdateForm
     template_name = 'product/product_update.html'
 
-    def get_initial(self):
+    def get_initial(self, **kwargs):
         initial = super(ProductUpdateView, self).get_initial()
         initial['user'] = self.request.user
         initial['parent_categories'] = self.object.category.parent.id
@@ -224,3 +226,31 @@ def change_publish_status(request):
         "message": "Продукт успешно опубликован" if product.published else "Продукт успешно скрыт"
     }
     return JsonResponse(data)
+
+
+@login_required
+@csrf_exempt
+def upload_images_product_update(request, slug):
+    if request.method == "POST" and request.is_ajax():
+        form = ProductImagesForm(request.POST, request.FILES)
+        if form.is_valid():
+            product = get_object_or_404(Product, slug=slug)
+            form.instance.product = product
+            product_image = form.save()
+            data = {'is_valid': True, 'productimage_id': product_image.id, 'name': product_image.image.name, 'url': product_image.image.url}
+        else:
+            data = {'is_valid': False}
+        return JsonResponse(data)
+
+
+@login_required
+@csrf_exempt
+def delete_product_images(request):
+    if request.method == 'POST' and request.is_ajax():
+        product_image_id = request.POST.get('productimage_id', '')
+        if product_image_id:
+            product = get_object_or_404(ProductImage, id=product_image_id)
+            product.delete()
+            return JsonResponse({'message': 'Productimage is succefully delete.'})
+        return JsonResponse({'message': 'Product_image_id field must not be null.'})
+    return JsonResponse({'message': 'Request must be post.'})

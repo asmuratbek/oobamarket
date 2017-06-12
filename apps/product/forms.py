@@ -4,7 +4,7 @@ from haystack.forms import SearchForm
 from apps.category.models import Category
 from apps.global_category.models import GlobalCategory
 from apps.shop.models import Shop
-from .models import Product
+from .models import Product, ProductImage
 
 
 class ProductForm(forms.ModelForm):
@@ -29,7 +29,7 @@ class ProductForm(forms.ModelForm):
 class ProductUpdateForm(forms.ModelForm):
     class Meta:
         model = Product
-        exclude = ['slug', 'objects', 'sell_count']
+        exclude = ['objects', 'sell_count']
 
     section = forms.ModelChoiceField(queryset=GlobalCategory.objects.all())
     parent_categories = forms.ModelChoiceField(queryset=Category.objects.filter(parent=None))
@@ -66,3 +66,9 @@ class ShopSearchForm(SearchForm):
     def search(self):
         sqs = super(ShopSearchForm, self).search().models(*self.get_models())
         return sqs
+
+
+class ProductImagesForm(forms.ModelForm):
+    class Meta:
+        model = ProductImage
+        fields = ['image']
