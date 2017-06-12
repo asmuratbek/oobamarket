@@ -124,6 +124,11 @@ class ProductUpdateView(LoginRequiredMixin, UpdateProductMixin, UpdateView):
         initial['section'] = self.object.category.section.id
         return initial
 
+    def form_valid(self, form):
+        product = form.instance
+        product.slug = slugify(form.instance.title)
+        return super(ProductUpdateView, self).form_valid(form)
+
     def get_form_kwargs(self):
         kwargs = super(ProductUpdateView, self).get_form_kwargs()
         return kwargs

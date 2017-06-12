@@ -13,6 +13,7 @@ class User(AbstractUser):
     name = models.CharField(_('Name of User'), blank=True, max_length=255)
 
 
+
     def __str__(self):
         return self.username
 

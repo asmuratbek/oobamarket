@@ -1,5 +1,5 @@
 from apps.order.views import OrderDetail, SimpleOrderCreateView, ThankYouView, SimpleOrderListView, \
-    SimpleOrderDetailView, SimpleOrderShopListView
+    SimpleOrderDetailView, SimpleOrderShopListView, SimpleOrderShopDetailView
 from django.conf.urls import url
 
 urlpatterns = [
@@ -7,6 +7,7 @@ urlpatterns = [
     url(r'^thank-you/$', ThankYouView.as_view(), name="thanks"),
     url(r'^(?P<pk>\d+)/$', SimpleOrderDetailView.as_view(), name='simple_detail'),
     url(r'^(?P<slug>[\w.@+-]+)/order-list/$', SimpleOrderShopListView.as_view(), name='shop_order_list'),
+    url(r'^(?P<slug>[\w.@+-]+)/order-detail/(?P<pk>\d+)/$', SimpleOrderShopDetailView.as_view(), name='shop_order_detail'),
     url(r'^(?P<pk>\d+)/$', OrderDetail.as_view(), name='detail'),
 
     url(
