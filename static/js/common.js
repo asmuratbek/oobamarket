@@ -222,6 +222,7 @@ $(document).ready(function () {
                 success: function (data) {
                     console.log(data);
                     $('#property_list').append(data);
+                    $('#empty_properties').fadeOut();
 
                 },
                 error: function (response, error) {
