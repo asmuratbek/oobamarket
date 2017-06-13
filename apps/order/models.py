@@ -81,10 +81,11 @@ class UserAddress(models.Model):
 
 
 ORDER_STATUS_CHOICES = (
-    ('created', 'Created'),
-    ('paid', 'Paid'),
-    ('shipped', 'Shipped'),
-    ('refunded', 'Refunded'),
+    ('created', 'Новый'),
+    ('processed', 'Обработан'),
+    ('shipped', 'Доставлен'),
+    ('paid', 'Оплачен'),
+    ('refunded', 'Отказан'),
 )
 
 
@@ -136,6 +137,7 @@ class SimpleOrder(PublishBaseModel):
     address = models.CharField(max_length=255)
     user = models.ForeignKey(User, blank=True, null=True)
     cart = models.ForeignKey(Cart, blank=True, null=True)
+    status = models.CharField(max_length=120, choices=ORDER_STATUS_CHOICES, default='created')
 
     def __str__(self):
         return  str(self.name) + str(self.last_name)

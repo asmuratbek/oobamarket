@@ -151,6 +151,7 @@ class SimpleOrderShopListView(ListView):
     slug_field = 'slug'
     slug_url_kwarg = 'slug'
 
+
     def get_queryset(self):
         return SimpleOrder.objects.filter(cart__cartitem__product__shop__slug=self.kwargs['slug'])
 
