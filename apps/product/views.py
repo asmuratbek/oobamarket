@@ -138,7 +138,8 @@ class ProductUpdateView(LoginRequiredMixin, UpdateProductMixin, UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super(ProductUpdateView, self).get_context_data(**kwargs)
-        context['values'] = self.object.values_set.all()
+        context['props'] = self.object.category.properties_set.all()
+        context['values'] = [val.id for val in self.object.values_set.all()]
         return context
 
 
