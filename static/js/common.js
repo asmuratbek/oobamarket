@@ -221,7 +221,7 @@ $(document).ready(function () {
                 },
                 success: function (data) {
                     console.log(data);
-                    $('#property_list').append(data);
+                    $('#property_list').html(data);
                     $('#empty_properties').fadeOut();
 
                 },

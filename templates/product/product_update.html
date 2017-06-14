@@ -134,14 +134,14 @@
                         <div class="step_3">
                             <h3><span>3.</span> Параметры товара</h3>
                             <div class="form-group select col-md-6" id="property_list">
-                                {% for property in properties %}
+                                {% for value in values %}
                                     <div class="form-group select">
 
-                                        <label>{{ property.title }}</label>
+                                        <label>{{ value.properties.title }}</label>
                                         <div class="cover">
-                                            <select class="form-control" id="subcategory_list" name="property-{{ property.id }}">
-                                                {% for value in property.values_set.all %}
-                                                    <option value="{{ value.id }}">{{ value }}</option>
+                                            <select class="form-control" id="subcategory_list" name="property-{{ value.properties.id }}">
+                                                {% for val in value.properties.values_set.all %}
+                                                    <option value="{{ val.id }}" {% if val == value %}selected{% endif %}>{{ val }}</option>
                                                 {% endfor %}
                                             </select>
                                         </div>
@@ -149,7 +149,7 @@
                                     </div>
                                 {% endfor %}
                             </div>
-                            <p id="empty_properties">Параметры для данной категории отсутствуют. (выводится если нет формы)</p>
+                            <p id="empty_properties">Параметры для данной категории отсутствуют</p>
                         </div>
 
                         <div class="step_4">

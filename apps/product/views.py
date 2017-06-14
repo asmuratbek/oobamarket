@@ -12,7 +12,7 @@ from slugify import slugify
 
 from apps.global_category.models import GlobalCategory
 from apps.product.forms import ProductForm, ProductSearchForm, ShopSearchForm, ProductUpdateForm, ProductImagesForm
-from apps.properties.models import Values
+from apps.properties.models import Values, Properties
 from apps.users.mixins import AddProductMixin, DeleteProductMixin, UpdateProductMixin
 from config.settings.base import MEDIA_ROOT
 from .models import *
@@ -62,8 +62,6 @@ def product_detail(request, global_slug, category_slug, slug):
 class ProductCreateView(LoginRequiredMixin, AddProductMixin, CreateView):
     form_class = ProductForm
     template_name = 'product/product_form.html'
-
-
 
     def get_success_url(self):
         return reverse('shops:detail', args=(self.object.shop.slug,))
@@ -127,11 +125,21 @@ class ProductUpdateView(LoginRequiredMixin, UpdateProductMixin, UpdateView):
     def form_valid(self, form):
         product = form.instance
         product.slug = slugify(form.instance.title)
+        product.values_set.clear()
+        for key, value in self.request.POST.items():
+            if key.startswith('property'):
+                value = get_object_or_404(Values, id=int(value))
+                value.products.add(product)
         return super(ProductUpdateView, self).form_valid(form)
 
     def get_form_kwargs(self):
         kwargs = super(ProductUpdateView, self).get_form_kwargs()
         return kwargs
+
+    def get_context_data(self, **kwargs):
+        context = super(ProductUpdateView, self).get_context_data(**kwargs)
+        context['values'] = self.object.values_set.all()
+        return context
 
 
 class ProductIndexCreateView(LoginRequiredMixin, AddProductMixin, CreateView):
