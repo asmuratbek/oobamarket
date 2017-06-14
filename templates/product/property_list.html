@@ -4,6 +4,7 @@
         <label>{{ property.title }}</label>
         <div class="cover">
             <select class="form-control" id="subcategory_list" name="property-{{ property.id }}">
+                <option>------------</option>
                 {% for value in property.values_set.all %}
                     <option value="{{ value.id }}">{{ value }}</option>
                 {% endfor %}
