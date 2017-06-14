@@ -321,7 +321,10 @@ $(document).ready(function () {
                     thisIcon.toggleClass("like")
                 }
                 else {
-                    thisIcon.removeClass("like")
+                    thisIcon.removeClass("like");
+                    if (thisIcon.parent().parent().parent().parent().hasClass('favorite-products')) {
+                        thisIcon.parent().parent().parent().fadeOut();
+                    }
                 }
                 $('.favorites_count').text(data.favorites_count)
             },

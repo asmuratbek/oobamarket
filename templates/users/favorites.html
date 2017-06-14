@@ -5,8 +5,9 @@
 <section class="goods-of-week">
     <div class="container">
         <h1>Избранные товары</h1>
+        <div class="favorite-products">
         {% include 'product/product_list.html' with object_list=object.get_original_products col=3 %}
-
+        </div>
     </div>
 </section>
 
