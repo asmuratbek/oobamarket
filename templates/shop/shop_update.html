@@ -1,6 +1,6 @@
 {% extends 'base-1.html' %}
 {% load widget_tweaks %}
-
+{% load staticfiles %}
 {% block content %}
     <section class="edit-shop-detail">
         <div class="container">
@@ -54,11 +54,17 @@
                                 <span id="file-counter" style="color: red;"></span>
                             </div>
                             <div class="img-upload">
-                                 {% render_field form.logo|attr:"type:file" %}
+                                {% render_field form.logo|attr:"type:file" %}
                             </div>
 
                         </div>
-                        <img src="" alt="" id="id_logo2">
+                        {% if object.logo.name != "/default.jpg" %}
+                        <img src="{{ object.logo.url }}" alt="" id="id_logo2">
+                        <span class="remove-logo-update">X</span>
+                            {% else %}
+                            <img src="" alt="" id="id_logo2">
+                        {% endif %}
+                        <input type="hidden" id="slug" value="{{ object.get_slug }}"/>
                     </div>
 
                     {#                <div class="col-md-4">#}
@@ -93,4 +99,8 @@
         </div>
     </section>
 
+{% endblock %}
+{% block js %}
+    <script src="{% static 'js/jquery.2.2.4.js' %}"></script>
+    <script src="{% static 'js/previewLogos.js' %}"></script>
 {% endblock %}

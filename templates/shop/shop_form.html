@@ -1,6 +1,6 @@
 {% extends 'base-1.html' %}
 {% load widget_tweaks %}
-
+{% load staticfiles %}
 {% block content %}
 
     <section class="edit-shop-detail">
@@ -54,7 +54,7 @@
                             <span id="file-counter" style="color: red;"></span>
                         </div>
                         {% render_field form.logo|attr:"type:file"|attr:"style:display:none;"|attr:"id:id_images" %}
-                    <img id="logo_view" src=""/><span class="remove-logo">X</span>                    </div>
+                        <img id="logo_view" src=""/><span class="remove-logo">X</span>                    </div>
             </form>
         </div>
     </div>
@@ -62,29 +62,7 @@
 
 {% endblock %}
 {% block js %}
-    {{ block.super }}
-    <script>
-    var logo_view = $('#logo_view');
-    var remove_logo = $('.remove-logo');
-    logo_view.hide();
-    remove_logo.hide();
-        function previewImage(input) {
-            if (input.files && input.files[0]) {
-                var reader = new FileReader();
-                reader.onload = function (e) {
-                    logo_view.attr('src', e.target.result);
-                };
-                reader.readAsDataURL(input.files[0]);
-            }
-        }
-        $('#id_images').change(function () {
-            logo_view.show();
-            remove_logo.show();
-            previewImage(this)
-        });
-        remove_logo.click(function () {
-            logo_view.attr('src', '');
-            remove_logo.hide();
-        })
+    <script src="{% static 'js/jquery.2.2.4.js' %}"></script>
+    <script src="{% static 'js/previewLogos.js' %}">
     </script>
 {% endblock %}

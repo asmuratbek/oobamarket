@@ -61,7 +61,6 @@ THIRD_PARTY_APPS = [
     'allauth.socialaccount.providers.vk',
     'rest_framework',
     'widget_tweaks',
-    'django_cleanup',
     'ckeditor',
     'ckeditor_uploader',
 ]
@@ -252,7 +251,7 @@ MEDIA_ROOT = str(ROOT_DIR('media'))
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#media-url
 MEDIA_URL = '/media/'
-
+DEFAULT_IMAGE = '/default.jpg'
 # URL Configuration
 # ------------------------------------------------------------------------------
 ROOT_URLCONF = 'config.urls'

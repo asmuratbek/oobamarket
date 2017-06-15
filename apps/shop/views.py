@@ -11,7 +11,7 @@ from django.views.generic import DeleteView
 
 from django.views.generic import UpdateView
 from slugify import slugify
-
+from config.settings import base
 from apps.shop.decorators import delete_decorator
 from apps.shop.forms import ShopForm, ShopBannersForm, ShopSocialLinksForm
 from apps.users.mixins import AddBannerMixin, AddSocialLinksMixin, UpdateShopMixin, DeleteShopMixin
@@ -151,3 +151,15 @@ def delete_banners(request):
             return JsonResponse({'message': 'Banner is succefully delete.'})
         return JsonResponse({'message': 'banner field must not be null.'})
     return JsonResponse({'message': 'Request must be post.'})
+
+
+@csrf_exempt
+def remove_logo(request):
+    if request.method == 'POST' and request.is_ajax():
+        slug = request.POST.get('slug', '')
+        shop = get_object_or_404(Shop, slug=slug)
+        if shop.logo:
+            shop.logo = base.DEFAULT_IMAGE
+            shop.save()
+            return JsonResponse({'message': 'Logo removed'})
+        return JsonResponse({'message': 'Shop does not have logo'})
