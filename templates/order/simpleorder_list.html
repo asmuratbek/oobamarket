@@ -23,7 +23,12 @@
                     <p>{{ order.last_name }}</p>
                     <p>{{ order.phone }}</p>
                     <p>{{ order.address }}</p>
-
+                    <form method="post" action="">
+                        {% csrf_token %}
+                        {{ form.status }}
+                        <input type="hidden" name="id" value="{{ order.id }}">
+                        <button class="btn" type="submit">Подтвердить</button>
+                    </form>
 
                 </div>
             {% endfor %}

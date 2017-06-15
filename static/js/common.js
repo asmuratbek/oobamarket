@@ -209,9 +209,11 @@ $(document).ready(function () {
 
     $('#subcategory_list').on('change', function () {
         var categoryList = $('#category_list');
+        var title = $('#id_title');
         var selected = $(this).find(":selected");
         if (selected.hasAttr('value')) {
-            categoryList.removeAttr('name')
+            title.removeAttr('disabled');
+            categoryList.removeAttr('name');
             $(this).attr('name', 'category');
             $.ajax({
                 type: "GET",
@@ -233,6 +235,7 @@ $(document).ready(function () {
         } else {
             $(this).removeAttr('name')
             categoryList.attr('name', 'category');
+            title.attr('disabled');
         }
 
     });
@@ -653,7 +656,7 @@ $(document).ready(function () {
         fileReader.readAsDataURL(this.files[0]);
         var count = this.files.length;
         var result = '';
-        if (count == 1 || count % 10 == 1) {
+        if (count === 1 || count % 10 === 1) {
             result = '<b>Выбран ' + count + ' файл</b>';
         } else if ((count >= 2 && count <= 4) || (count % 10 >= 2 && count % 10 <= 4)) {
             result = '<b>Выбрано ' + count + ' файла</b>';
@@ -662,6 +665,7 @@ $(document).ready(function () {
         }
         helpText.html(result);
     });
+
 
     var _search = function (apiUrl, query) {
 

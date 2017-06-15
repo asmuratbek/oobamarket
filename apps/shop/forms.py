@@ -20,6 +20,12 @@ class ShopForm(ModelForm):
                 'class': 'form-control'
             })
 
+    def clean_logo(self):
+        logo = self.cleaned_data['logo']
+        if not logo:
+            raise forms.ValidationError("Логотип обязателен для заполнения")
+        return logo
+
 class ShopBannersForm(ModelForm):
     class Meta:
         model = Banners

@@ -165,4 +165,4 @@ def send_email_to_shop_owner(sender, instance, *args, **kwargs):
         msg.attach_alternative(html_content, "text/html")
         msg.send()
 
-post_save.connect(send_email_to_shop_owner, sender=SimpleOrder)
+# post_save.connect(send_email_to_shop_owner, sender=SimpleOrder)

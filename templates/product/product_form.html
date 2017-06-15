@@ -8,6 +8,7 @@
             <div class="form-filter">
                 <form class="form-inline" method="post" enctype="multipart/form-data" data-media-upload-url="{% url 'product:upload_images' %}" data-remove-uploaded-media-url="{% url 'product:remove_images' %}" id="form">
                 {% csrf_token %}
+                {{ form.errors }}
                     <div class="col-md-8">
 
                         <div class="step_1">
@@ -44,7 +45,7 @@
 {#                                   data-placement="top"#}
 {#                                   data-original-title="Рекомендация: для лучшего поиска, пишите тип товара в начале названия. Автомобильные шины MAXXIS AT-771 Bravo"#}
 {#                                   aria-describedby="tooltip200612" class="form-control" placeholder="Название товара">#}
-                                {% render_field form.title|add_error_attr:"aria-invalid:true"|attr:"data-toggle:tooltip"|attr:"data-placement:top"|attr:"aria-describedby:tooltip200612"|attr:"required"|attr:"data-original-title:Рекомендация - для лучшего поиска, пишите тип товара в начале названия. Автомобильные шины MAXXIS AT-771 Bravo" placeholder="Название товара"%}
+                                {% render_field form.title|add_error_attr:"aria-invalid:true"|attr:"data-toggle:tooltip"|attr:"data-placement:top"|attr:"aria-describedby:tooltip200612"|attr:"required"|attr:"data-original-title:Рекомендация - для лучшего поиска, пишите тип товара в начале названия. Автомобильные шины MAXXIS AT-771 Bravo"|attr:"disabled" placeholder="Название товара" %}
                             </div>
 
                             <div class="form-group input col-md-12">

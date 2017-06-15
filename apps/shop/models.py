@@ -32,7 +32,7 @@ class Shop(PublishBaseModel):
     short_description = models.TextField(verbose_name='Короткое описание магазина')
     description = models.TextField(verbose_name='Полное описание магазина')
     logo = models.ImageField(upload_to='images/shop/logo/', null=True,
-                             verbose_name='Логотип')
+                             verbose_name='Логотип', blank=True)
 
     def __str__(self):
         return self.title

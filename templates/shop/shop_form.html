@@ -3,31 +3,13 @@
 
 {% block content %}
 
-{#    <div class="row">#}
-{#        <div class="col-md-12">#}
-{#            <div class="col-md-4"></div>#}
-{#            <div class="col-md-4"><h1 class="create">Создайте свой магазин</h1></div>#}
-{#            <div class="col-md-4"></div>#}
-{#        </div>#}
-{#        <div class="inputs">#}
-{#            <div class="col-md-2"></div>#}
-{#            <div class="col-md-8">#}
-{#                 <form method="post" enctype="multipart/form-data">#}
-{#                     {% csrf_token %}#}
-{#                    {{ form }}#}
-{#                    <input type="submit" value="Save" />#}
-{#                </form>#}
-{#            <div class="col-md-2"></div>#}
-{#        </div>#}
-{#    </div>#}
-
-
     <section class="edit-shop-detail">
     <div class="container">
         <h3>Создание и редактирование магазина</h3>
         <div class="form-filter">
             <form class="form-inline" method="post" enctype="multipart/form-data">
                         {% csrf_token %}
+                {{ form.errors }}
                 <div class="col-md-8">
                     <div class="form-group input col-md-6">
                         <label for="">Название магазина</label>

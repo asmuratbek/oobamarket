@@ -55,4 +55,11 @@ class SimpleOrderForm(forms.ModelForm):
             'last_name',
             'phone',
             'address',
+            'status',
         ]
+    def __init__(self, *args, **kwargs):
+        super(SimpleOrderForm, self).__init__(*args, **kwargs)
+        # self.status = kwargs['initial']['status']
+
+
+

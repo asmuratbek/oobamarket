@@ -1,6 +1,6 @@
 from django.contrib import messages
 from django.http import Http404, HttpResponseRedirect
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.views import View
 from django.views.generic import TemplateView
@@ -9,7 +9,7 @@ from django.views.generic.detail import DetailView
 from  django.views.generic.list import ListView
 # Create your views here.
 from apps.cart.models import Cart
-from .forms import AddressForm, UserAddressForm
+from .forms import AddressForm, UserAddressForm, SimpleOrderForm
 from .mixins import CartOrderMixin, LoginRequiredMixin
 from .models import UserAddress, UserCheckout, Order, SimpleOrder
 
@@ -154,6 +154,19 @@ class SimpleOrderShopListView(ListView):
 
     def get_queryset(self):
         return SimpleOrder.objects.filter(cart__cartitem__product__shop__slug=self.kwargs['slug'])
+
+    def get_context_data(self, **kwargs):
+        context = super(SimpleOrderShopListView, self).get_context_data(**kwargs)
+        context['form'] = SimpleOrderForm()
+        return context
+
+    def post(self, request, *args, **kwargs):
+        data = request.POST.copy()
+        order = get_object_or_404(SimpleOrder, id=data['id'])
+        order.status = data['status']
+        order.save()
+        return HttpResponseRedirect(reverse("order:shop_order_list", kwargs={'slug': self.kwargs['slug']}))
+
 
 
 class SimpleOrderShopDetailView(DetailView):
