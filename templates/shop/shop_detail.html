@@ -107,7 +107,7 @@
 {#                <li class="active"><a href="{% url 'product:add_product' slug=object.slug %}">Товары</a></li>#}
                 <li><a href="">Акции</a></li>
                 <li><a href="">Отзывы</a></li>
-                <li><a href="">Контакты</a></li>
+                <li><a class="remove delete-object model-trigger" data-url="{% url 'shops:delete' slug=object.slug %}">Удалить магазин</a></li>
             </ul>
 
             <div class="filter">

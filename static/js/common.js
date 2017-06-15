@@ -91,7 +91,7 @@ $(document).ready(function () {
         });
     }
 
-    $(".glyphicon-remove-circle").click(function() {
+    $(".delete-object").click(function() {
     //открыть модальное окно с class="remove-product"
     $(".remove-product").modal('show');
   });
@@ -235,7 +235,7 @@ $(document).ready(function () {
         } else {
             $(this).removeAttr('name')
             categoryList.attr('name', 'category');
-            title.attr('disabled');
+
         }
 
     });
