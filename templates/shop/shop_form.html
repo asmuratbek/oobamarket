@@ -72,10 +72,37 @@
                             <span id="file-counter" style="color: red;"></span>
                         </div>
                         {% render_field form.logo|attr:"type:file"|attr:"style:display:none;"|attr:"id:id_images" %}
-                    </div>
+                    <img id="logo_view" src=""/><span class="remove-logo">X</span>                    </div>
             </form>
         </div>
     </div>
 </section>
 
+{% endblock %}
+{% block js %}
+    {{ block.super }}
+    <script>
+    var logo_view = $('#logo_view');
+    var remove_logo = $('.remove-logo');
+    logo_view.hide();
+    remove_logo.hide();
+        function previewImage(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    logo_view.attr('src', e.target.result);
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+        $('#id_images').change(function () {
+            logo_view.show();
+            remove_logo.show();
+            previewImage(this)
+        });
+        remove_logo.click(function () {
+            logo_view.attr('src', '');
+            remove_logo.hide();
+        })
+    </script>
 {% endblock %}
