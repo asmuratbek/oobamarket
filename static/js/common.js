@@ -83,6 +83,8 @@ $(document).ready(function () {
                 url: $(that).attr('action'),
                 success: function (response) {
                     console.log(response);
+                    console.log($("#DeleteModal"));
+                    console.log('hhhey')
                 },
                 error: function (error) {
                     console.log(error);
@@ -91,7 +93,7 @@ $(document).ready(function () {
         });
     }
 
-    $(".glyphicon-remove-circle").click(function() {
+    $(".delete-object").click(function() {
     //открыть модальное окно с class="remove-product"
     $(".remove-product").modal('show');
   });
@@ -147,8 +149,13 @@ $(document).ready(function () {
 
     $('#global_category').on('change', function () {
         var categoryList = $('#category_list');
-        console.log("Here");
-        $.ajax({
+        var subcategoryList = $('#subcategory_list');
+        if ($(this)[0].selectedIndex === 0){
+           categoryList.html("").attr('disabled', "");
+           subcategoryList.html("").attr('disabled', "");
+        }
+        else {
+            $.ajax({
             type: "GET",
             url: "/get_category_list/",
             data: {
@@ -174,11 +181,17 @@ $(document).ready(function () {
                 console.log(error);
             }
         });
+        }
+
     });
 
     $('#category_list').on('change', function () {
         var subcategoryList = $('#subcategory_list')
-        $.ajax({
+        if ($(this)[0].selectedIndex === 0){
+           subcategoryList.html("").attr('disabled', "");
+        }
+        else {
+            $.ajax({
             type: "GET",
             url: "/get_subcategory_list/",
             data: {
@@ -205,38 +218,47 @@ $(document).ready(function () {
                 console.log(error);
             }
         });
+        }
+
     });
 
     $('#subcategory_list').on('change', function () {
         var categoryList = $('#category_list');
         var title = $('#id_title');
         var selected = $(this).find(":selected");
-        if (selected.hasAttr('value')) {
-            title.removeAttr('disabled');
-            categoryList.removeAttr('name');
-            $(this).attr('name', 'category');
-            $.ajax({
-                type: "GET",
-                url: "/get_property_list/",
-                data: {
-                    "category": $("#subcategory_list option:selected").val()
-                },
-                success: function (data) {
-                    console.log(data);
-                    $('#property_list').html(data);
-                    $('#empty_properties').fadeOut();
-
-                },
-                error: function (response, error) {
-                    console.log(response);
-                    console.log(error);
-                }
-            });
-        } else {
-            $(this).removeAttr('name')
-            categoryList.attr('name', 'category');
-            title.attr('disabled');
+        if ($(this)[0].selectedIndex === 0){
+           $('#property_list').html("").attr('disabled', "");
+           $('#empty_properties').fadeIn();
         }
+        else {
+            if (selected.hasAttr('value')) {
+                title.removeAttr('disabled');
+                categoryList.removeAttr('name');
+                $(this).attr('name', 'category');
+                $.ajax({
+                    type: "GET",
+                    url: "/get_property_list/",
+                    data: {
+                        "category": $("#subcategory_list option:selected").val()
+                    },
+                    success: function (data) {
+                        console.log(data);
+                        $('#property_list').html(data);
+                        $('#empty_properties').fadeOut();
+
+                    },
+                    error: function (response, error) {
+                        console.log(response);
+                        console.log(error);
+                    }
+                });
+            } else {
+                $(this).removeAttr('name')
+                categoryList.attr('name', 'category');
+
+            }
+        }
+
 
     });
 

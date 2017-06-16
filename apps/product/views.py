@@ -77,7 +77,7 @@ class ProductCreateView(LoginRequiredMixin, AddProductMixin, CreateView):
         product.shop = Shop.objects.get(slug=self.kwargs['slug'])
         product.save()
         for key, value in self.request.POST.items():
-            if key.startswith('property'):
+            if key.startswith('property') and '---' not in value:
                 value = get_object_or_404(Values, id=int(value))
                 value.products.add(product)
         if form.cleaned_data['uploaded_images']:
@@ -127,7 +127,7 @@ class ProductUpdateView(LoginRequiredMixin, UpdateProductMixin, UpdateView):
         product.slug = slugify(form.instance.title)
         product.values_set.clear()
         for key, value in self.request.POST.items():
-            if key.startswith('property'):
+            if key.startswith('property') and '---' not in value:
                 value = get_object_or_404(Values, id=int(value))
                 value.products.add(product)
         return super(ProductUpdateView, self).form_valid(form)
