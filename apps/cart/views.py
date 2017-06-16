@@ -17,8 +17,8 @@ class CartDetailView(SingleObjectMixin, View):
 
     def get_object(self, *args, **kwargs):
         self.request.session.set_expiry(0)  # 5 minutes
-        cart_id = self.request.session.get("cart_id")
-        if cart_id == None:
+        cart_id = self.request.session.get("cart_id", "")
+        if cart_id == "":
             cart = Cart()
             cart.save()
             cart_id = cart.id
@@ -31,7 +31,7 @@ class CartDetailView(SingleObjectMixin, View):
 
     def get(self, request, *args, **kwargs):
         cart = self.get_object()
-        item_id = request.GET.get("item")
+        item_id = request.GET.get("item", "")
         delete_item = request.GET.get("delete", False)
         flash_message = ""
         item_added = False
