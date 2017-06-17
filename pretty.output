@@ -1,0 +1,19 @@
+Feature: Login form
+
+  Scenario: Access the login form 
+    Given an anonymous user
+    When I submit a valid login page
+    Then I am redirected to the login success page
+      Traceback (most recent call last):
+        File "/home/chyngyz/Work/ooba/.env/lib/python3.5/site-packages/behave/model.py", line 1456, in run
+          match.run(runner.context)
+        File "/home/chyngyz/Work/ooba/.env/lib/python3.5/site-packages/behave/model.py", line 1903, in run
+          self.func(context, *args, **kwargs)
+        File "apps/users/features/steps/login.py", line 33, in step_impl
+          assert '/localhost/' in br.current_url
+      AssertionError
+
+    Given an anonymous user
+    When I submit an invalid login page
+    Then I am redirected to the login fail page
+
