@@ -17,6 +17,7 @@ var MainInterface = createClass({
   getInitialState: function(){
     return {
       orderBy: 'title',
+      orderDir: 'asc',
       queryText: '',
       products: []
     }
@@ -40,9 +41,10 @@ var MainInterface = createClass({
     }); //setState
   },
 
-  reOrder: function(orderBy) {
+  reOrder: function(orderBy, orderDir) {
     this.setState({
       orderBy: orderBy,
+      orderDir: orderDir
     }); //setState
   }, //reOrder
 
@@ -58,6 +60,7 @@ var MainInterface = createClass({
     var allProducts = this.state.products;
     var orderBy = this.state.orderBy;
     var queryText = this.state.queryText;
+    var orderDir = this.state.orderDir;
 
 
     allProducts.forEach(function(item) {
@@ -75,11 +78,19 @@ var MainInterface = createClass({
     }.bind(this));
 
     filteredProducts = _.orderBy(filteredProducts, function(item) {
-      console.log(filteredProducts)
-      console.log(item)
-      console.log(item.props.product.title)
-      return item.title;
-    }, 'desc');//orderBy
+      if (orderBy == 'title'){
+          return item.props.product.title.toLowerCase();
+      }
+      else if (orderBy == 'priceAsc') {
+          return item.props.product.get_price_function;
+      }
+      else if (orderBy == 'priceDesc') {
+          return item.props.product.get_price_function;
+      }
+      else if (orderBy == 'newFirst') {
+          return item.props.product.created_at;
+      }
+    }, orderDir);//orderBy
 
 
 

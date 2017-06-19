@@ -6,7 +6,16 @@ var SearchForm = createClass({
   displayName: 'SearchForm',
 
   handleSort: function(e) {
-    this.props.onReOrder(e.target.value);
+    if (e.target.value == 'priceDesc') {
+      this.props.onReOrder(e.target.value, 'desc');
+    }
+    else if (e.target.value == 'newFirst') {
+      this.props.onReOrder(e.target.value, 'desc');
+    }
+    else {
+      this.props.onReOrder(e.target.value, 'asc');
+    }
+
   }, //handleSort
 
   render: function(){
