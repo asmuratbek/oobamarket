@@ -24,6 +24,14 @@ var MainInterface = createClass({
   },
 
   componentDidMount() {
+    var params = location.search.substr(1).split("&")
+    params.forEach(function(i){
+      if (i.split("=")[0] == "q"){
+        this.setState({
+          queryText: i.split("=")[1]
+        })
+      }
+    }.bind(this));
   axios.get(`http://localhost:8000/product/api/?limit=10`)
     .then(res => {
       const products = res.data.results.map(obj => obj);
