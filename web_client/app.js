@@ -7,6 +7,7 @@ import CategoryList from './components/CategoryList';
 import ProductsCount from './components/ProductsCount';
 import ShopList from './components/ShopList';
 import axios from 'axios';
+import _ from 'lodash';
 
 
 
@@ -15,6 +16,9 @@ var MainInterface = createClass({
 
   getInitialState: function(){
     return {
+      orderBy: 'title',
+      orderDir: 'asc',
+      queryText: '',
       products: []
     }
   },
@@ -23,33 +27,83 @@ var MainInterface = createClass({
   axios.get(`http://localhost:8000/product/api/?limit=10`)
     .then(res => {
       const products = res.data.results.map(obj => obj);
-      console.log(products)
       this.setState({
          products: products
        });
     });
   },
 
+  deleteMessage: function(item) {
+    var allProducts = this.state.products;
+    var newProducts = _.without(allProducts, item);
+    this.setState({
+      products: newProducts
+    }); //setState
+  },
+
+  reOrder: function(orderBy, orderDir) {
+    this.setState({
+      orderBy: orderBy,
+      orderDir: orderDir
+    }); //setState
+  }, //reOrder
+
+  searchApts(q) {
+    this.setState({
+      queryText: q
+    }); //setState
+  }, //searchApts
+
+
   render: function() {
     var filteredProducts = [];
+    var allProducts = this.state.products;
+    var orderBy = this.state.orderBy;
+    var queryText = this.state.queryText;
+    var orderDir = this.state.orderDir;
 
-    // filteredApts = _.orderBy(filteredApts, function(item) {
-    //   return item[orderBy].toLowerCase();
-    // }, orderDir);//orderBy
 
-    filteredProducts = this.state.products.map(function(item, index) {
+    allProducts.forEach(function(item) {
+      if(item.title.toLowerCase().indexOf(queryText)!=-1)
+      {
+        filteredProducts.push(item);
+      }
+    });
+
+    filteredProducts = filteredProducts.map(function(item, index) {
       return(
         <Product key = { index }
           product = { item } />
       ) //return
     }.bind(this));
 
+    filteredProducts = _.orderBy(filteredProducts, function(item) {
+      if (orderBy == 'title'){
+          return item.props.product.title.toLowerCase();
+      }
+      else if (orderBy == 'priceAsc') {
+          return item.props.product.get_price_function;
+      }
+      else if (orderBy == 'priceDesc') {
+          return item.props.product.get_price_function;
+      }
+      else if (orderBy == 'newFirst') {
+          return item.props.product.created_at;
+      }
+    }, orderDir);//orderBy
+
+
+
     return (
       <div>
       <ShopList />
       <ProductsCount />
       <CategoryList />
-      <SearchForm />
+      <SearchForm
+          orderBy = { this.state.orderBy }
+          onReOrder = { this.reOrder }
+          onSearch = { this.searchApts }
+       />
       {filteredProducts}
       </div>
     )
