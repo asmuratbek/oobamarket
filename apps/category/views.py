@@ -104,7 +104,9 @@ def get_category(request):
         cat_id = request.GET.get('cat_id', '')
         try:
             category = Category.objects.get(id=cat_id)
+        except Category.DoesNotExist:
+            return JsonResponse({'parent_id': GlobalCategory.objects.first().id, 'cat_null': True})
         except ValueError:
             return JsonResponse({'parent_id': GlobalCategory.objects.first().id, 'cat_null': True})
         return JsonResponse({'parent_id': category.section.id})
-    return HttpResponseBadRequest
+    return HttpResponseBadRequest('User is not a superuser.')
