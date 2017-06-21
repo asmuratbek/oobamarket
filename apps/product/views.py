@@ -1,4 +1,5 @@
 import os
+import random
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -72,8 +73,9 @@ class ProductCreateView(LoginRequiredMixin, AddProductMixin, CreateView):
                 }
 
     def form_valid(self, form, **kwargs):
+        random_int = random.randrange(0, 1010)
         product = form.instance
-        product.slug = slugify(form.instance.title)
+        product.slug = slugify(form.instance.title) + str(random_int)
         product.shop = Shop.objects.get(slug=self.kwargs['slug'])
         product.save()
         for key, value in self.request.POST.items():

@@ -114,7 +114,7 @@ class Contacts(PublishBaseModel):
 
     contact_type = models.CharField(choices=CONTACT_TYPES, verbose_name='Тип контактных данных', max_length=20)
     contact_value = models.CharField(max_length=700, verbose_name='Текст данных', null=True, blank=True)
-    shop = models.ForeignKey(Shop, verbose_name='Магазин')
+    shop = models.ForeignKey(Shop, verbose_name='Магазин', null=True)
 
     def __str__(self):
         return "{} - {}".format(self.contact_type, self.shop)

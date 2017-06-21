@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import JsonResponse
-from django.shortcuts import render, get_object_or_404
+from django.http import JsonResponse, HttpResponseRedirect
+from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 from django.views import View
 from django.views import generic
@@ -13,32 +13,91 @@ from django.views.generic import UpdateView
 from slugify import slugify
 from config.settings import base
 from apps.shop.decorators import delete_decorator
-from apps.shop.forms import ShopForm, ShopBannersForm, ShopSocialLinksForm
+from apps.shop.forms import ShopForm, ShopBannersForm, ShopSocialLinksForm, ShopContactInline, ShopInlineFormSet
 from apps.users.mixins import AddBannerMixin, AddSocialLinksMixin, UpdateShopMixin, DeleteShopMixin
-from .models import Shop, SocialLinks, Banners
+from .models import Shop, SocialLinks, Banners, Contacts
+import random
 
 
 # Create your views here.
+class FormsetMixin(object):
+    object = None
 
+    def get(self, request, *args, **kwargs):
+        if getattr(self, 'is_update_view', False):
+            self.object = self.get_object()
+        form_class = self.get_form_class()
+        form = self.get_form(form_class)
+        formset_class = self.get_formset_class()
+        formset = self.get_formset(formset_class)
+        return self.render_to_response(self.get_context_data(form=form, formset=formset))
+
+    def post(self, request, *args, **kwargs):
+        if getattr(self, 'is_update_view', False):
+            self.object = self.get_object()
+        form_class = self.get_form_class()
+        form = self.get_form(form_class)
+        formset_class = self.get_formset_class()
+        formset = self.get_formset(formset_class)
+        if form.is_valid() and formset.is_valid():
+            return self.form_valid(form, formset)
+        else:
+            return self.form_invalid(form, formset)
+
+    def get_formset_class(self):
+        return self.formset_class
+
+    def get_formset(self, formset_class):
+        return formset_class(**self.get_formset_kwargs())
+
+    def get_formset_kwargs(self):
+        kwargs = {
+            'instance': self.object
+        }
+        if self.request.method in ('POST', 'PUT'):
+            kwargs.update({
+                'data': self.request.POST,
+                'files': self.request.FILES,
+            })
+        return kwargs
+
+    def form_invalid(self, form, formset):
+        return self.render_to_response(self.get_context_data(form=form, formset=formset))
 
 class ShopDetailView(generic.DetailView):
     model = Shop
 
 
-class ShopCreateView(LoginRequiredMixin, CreateView):
+class ShopCreateView(LoginRequiredMixin, FormsetMixin, CreateView):
     form_class = ShopForm
+    formset_class = ShopInlineFormSet
+    model = Shop
     template_name = 'shop/shop_form.html'
-
 
     def get_success_url(self):
         return reverse('shops:detail', args=(self.object.slug,))
 
-    def form_valid(self, form):
-        form.instance.slug = slugify(form.instance.title)
-        form.save(commit=False)
-        form.save()
+    def form_valid(self, form, formset):
+        random_int = random.randrange(0, 1010)
+        form.instance.slug = slugify(form.instance.title) + str(random_int)
+        self.object = form.save()
         form.instance.user.add(self.request.user)
+        formset.instance = self.object
+        formset.save()
         return super(ShopCreateView, self).form_valid(form)
+
+
+    # # We populate the context with the forms. Here I'm sending
+    # # the inline forms in `inlines`
+    # def get_context_data(self, **kwargs):
+    #     ctx = super(ShopCreateView, self).get_context_data(**kwargs)
+    #     if self.request.POST:
+    #         ctx['inlines'] = ShopInlineFormSet(self.request.POST)
+    #         ctx['inlines'] = ShopInlineFormSet(self.request.POST)
+    #     else:
+    #         ctx['form'] = ShopForm()
+    #         ctx['inlines'] = ShopInlineFormSet()
+    #     return ctx
 
 
 class ShopUpdateView(LoginRequiredMixin, UpdateShopMixin, UpdateView):
@@ -51,7 +110,6 @@ class ShopDeleteView(LoginRequiredMixin, DeleteShopMixin, DeleteView):
     model = Shop
     template_name = 'layout/modal_shop_delete_confirm.html'
     success_url = '/'
-
 
 
 class ShopBannersView(LoginRequiredMixin, AddBannerMixin, CreateView):
@@ -76,10 +134,8 @@ class ShopBannersView(LoginRequiredMixin, AddBannerMixin, CreateView):
         return super(ShopBannersView, self).form_valid(form)
 
 
-
 class ShopBannerDeleteView(LoginRequiredMixin, AddBannerMixin, DeleteView):
     pass
-
 
 
 class ShopSocialLinksUpdateView(LoginRequiredMixin, AddSocialLinksMixin, UpdateView):
@@ -108,7 +164,6 @@ class ShopSocialLinksUpdateView(LoginRequiredMixin, AddSocialLinksMixin, UpdateV
 
 
 def agreement(request):
-
     params = {
         'shop': 'shop'
     }

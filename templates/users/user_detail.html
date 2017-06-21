@@ -20,10 +20,10 @@
 
         <h2>{{ object.get_full_name }} </h2>
           {% if object.name %}
-              <p>{{ object.name }}</p>
-            <p>{{ object.first_name }}</p>
-            <p>{{ object.last_name }}</p>
-            <p>{{ object.date_joined }}</p>
+              <p><strong>Логин:</strong> {{ object.name }}</p>
+            <p><strong>Имя:</strong> {{ object.first_name }}</p>
+            <p><strong>Фамилия:</strong> {{ object.last_name }}</p>
+            <p><strong>Дата регистрации:</strong> {{ object.date_joined }}</p>
           {% endif %}
 
 

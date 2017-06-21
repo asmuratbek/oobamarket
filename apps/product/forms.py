@@ -72,3 +72,4 @@ class ProductImagesForm(forms.ModelForm):
     class Meta:
         model = ProductImage
         fields = ['image']
+
