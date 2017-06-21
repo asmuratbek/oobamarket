@@ -18,6 +18,10 @@ var SearchForm = createClass({
 
   }, //handleSort
 
+  handleDeliveryType: function(e) {
+    this.props.onChangeDeliveryType(e.target.value)
+  },
+
   render: function(){
     return (
       <div className="form-filter">
@@ -43,11 +47,11 @@ var SearchForm = createClass({
                     </div>
 
                      <div className="form-group select">
-                        <select className="form-control">
-                            <option>Доставка</option>
-                            <option>Бесплатная</option>
-                            <option>Платная</option>
-                            <option>Самовывоз</option>
+                        <select className="form-control" value={this.props.deliveryType} onChange={this.handleDeliveryType}>
+                            <option value="all">Доставка</option>
+                            <option value="free">Бесплатная</option>
+                            <option value="paid">Платная</option>
+                            <option value="self">Самовывоз</option>
                         </select>
                     </div>
 

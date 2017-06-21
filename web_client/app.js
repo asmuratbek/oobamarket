@@ -19,6 +19,7 @@ var MainInterface = createClass({
       orderBy: 'title',
       orderDir: 'asc',
       queryText: '',
+      deliveryType: 'all',
       products: []
     }
   },
@@ -55,6 +56,19 @@ var MainInterface = createClass({
       orderDir: orderDir
     }); //setState
   }, //reOrder
+
+  changeDeliveryType: function(deliveryType) {
+    var filteredProducts = [];
+    this.state.products.forEach(function(item){
+      if (item.delivery_type == deliveryType){
+        filteredProducts.push(item)
+      }
+    });
+    this.setState({
+      deliveryType: deliveryType,
+      products: filteredProducts
+    });
+  },
 
   searchApts(q) {
     this.setState({
@@ -111,6 +125,8 @@ var MainInterface = createClass({
           orderBy = { this.state.orderBy }
           onReOrder = { this.reOrder }
           onSearch = { this.searchApts }
+          deliveryType = { this.state.deliveryType }
+          onChangeDeliveryType = { this.changeDeliveryType }
        />
       {filteredProducts}
       </div>
