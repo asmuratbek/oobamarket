@@ -7,7 +7,7 @@ class ShopFactory(factory.DjangoModelFactory):
         model = Shop
 
     title = "Some shop"
-    slug = "some-shop"
+    slug = factory.Sequence(lambda n: ''.join([random.choice(string.ascii_lowercase) for i in range(10)]))
     phone = "05552222444"
     email = "someshop@email.com"
     short_description = 'Some text'
