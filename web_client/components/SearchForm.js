@@ -48,7 +48,7 @@ var SearchForm = createClass({
 
                      <div className="form-group select">
                         <select className="form-control" value={this.props.deliveryType} onChange={this.handleDeliveryType}>
-                            <option value="all">Доставка</option>
+                            <option value="all">Доставка (все виды)</option>
                             <option value="free">Бесплатная</option>
                             <option value="paid">Платная</option>
                             <option value="self">Самовывоз</option>

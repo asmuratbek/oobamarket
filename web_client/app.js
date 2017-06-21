@@ -18,6 +18,8 @@ var MainInterface = createClass({
     return {
       orderBy: 'title',
       orderDir: 'asc',
+      priceFrom: '',
+      priceTo: '',
       queryText: '',
       deliveryType: 'all',
       products: []
@@ -58,15 +60,8 @@ var MainInterface = createClass({
   }, //reOrder
 
   changeDeliveryType: function(deliveryType) {
-    var filteredProducts = [];
-    this.state.products.forEach(function(item){
-      if (item.delivery_type == deliveryType){
-        filteredProducts.push(item)
-      }
-    });
     this.setState({
-      deliveryType: deliveryType,
-      products: filteredProducts
+      deliveryType: deliveryType
     });
   },
 
@@ -83,12 +78,15 @@ var MainInterface = createClass({
     var orderBy = this.state.orderBy;
     var queryText = this.state.queryText;
     var orderDir = this.state.orderDir;
+    var deliveryType = this.state.deliveryType;
 
 
     allProducts.forEach(function(item) {
       if(item.title.toLowerCase().indexOf(queryText)!=-1)
       {
-        filteredProducts.push(item);
+        if (item.delivery_type == deliveryType || deliveryType == 'all'){
+          filteredProducts.push(item)
+        }
       }
     });
 
