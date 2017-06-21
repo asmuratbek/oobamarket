@@ -19,11 +19,20 @@ var MainInterface = createClass({
       orderBy: 'title',
       orderDir: 'asc',
       queryText: '',
+      deliveryType: 'all',
       products: []
     }
   },
 
   componentDidMount() {
+    var params = location.search.substr(1).split("&")
+    params.forEach(function(i){
+      if (i.split("=")[0] == "q"){
+        this.setState({
+          queryText: i.split("=")[1]
+        })
+      }
+    }.bind(this));
   axios.get(`http://localhost:8000/product/api/?limit=10`)
     .then(res => {
       const products = res.data.results.map(obj => obj);
@@ -47,6 +56,19 @@ var MainInterface = createClass({
       orderDir: orderDir
     }); //setState
   }, //reOrder
+
+  changeDeliveryType: function(deliveryType) {
+    var filteredProducts = [];
+    this.state.products.forEach(function(item){
+      if (item.delivery_type == deliveryType){
+        filteredProducts.push(item)
+      }
+    });
+    this.setState({
+      deliveryType: deliveryType,
+      products: filteredProducts
+    });
+  },
 
   searchApts(q) {
     this.setState({
@@ -103,6 +125,8 @@ var MainInterface = createClass({
           orderBy = { this.state.orderBy }
           onReOrder = { this.reOrder }
           onSearch = { this.searchApts }
+          deliveryType = { this.state.deliveryType }
+          onChangeDeliveryType = { this.changeDeliveryType }
        />
       {filteredProducts}
       </div>

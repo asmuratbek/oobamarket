@@ -719,6 +719,13 @@ $(document).ready(function () {
         _search('/search_results/', $(this).val())
     });
 
+    var params = location.search.substr(1).split("&");
+    params.forEach(function(i){
+      if (i.split("=")[0] == "q"){
+        $('#search-form-index').val(i.split("=")[1]);
+      }
+    });
+
 // $('.glyphicon-eye-open').click(function (e) {
 //     e.preventDefault();
 //     var thisIcon = $(this);
