@@ -57,7 +57,7 @@ MIDDLEWARE = RAVEN_MIDDLEWARE + MIDDLEWARE
 # ------------------------------------------------------------------------------
 # Hosts/domain names that are valid for this site
 # See https://docs.djangoproject.com/en/dev/ref/settings/#allowed-hosts
-ALLOWED_HOSTS = env.list('DJANGO_ALLOWED_HOSTS', default=['ooba.market', '188.120.230.176'])
+ALLOWED_HOSTS = env.list('DJANGO_ALLOWED_HOSTS', default=['ooba.market', '176.31.28.85'])
 # END SITE CONFIGURATION
 
 INSTALLED_APPS += ['gunicorn', ]
