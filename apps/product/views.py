@@ -3,7 +3,7 @@ import os
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import ObjectDoesNotExist
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponseBadRequest
 from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
@@ -173,6 +173,7 @@ def upload_images(request):
             result.append({'id': media.id, 'url': media.image.url})
 
         return JsonResponse(dict(uploaded_files=result))
+    return HttpResponseBadRequest
 
 
 def remove_uploaded_image(request):
@@ -255,6 +256,7 @@ def upload_images_product_update(request, slug):
         else:
             data = {'is_valid': False}
         return JsonResponse(data)
+    return HttpResponseBadRequest
 
 
 @login_required
