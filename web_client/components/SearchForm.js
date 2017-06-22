@@ -22,6 +22,14 @@ var SearchForm = createClass({
     this.props.onChangeDeliveryType(e.target.value)
   },
 
+  handlePriceFromChange: function(e) {
+    this.props.onChangePriceFrom(e.target.value)
+  },
+
+  handlePriceToChange: function(e){
+    this.props.onChangePriceTo(e.target.value)
+  },
+
   render: function(){
     return (
       <div className="form-filter">
@@ -38,12 +46,12 @@ var SearchForm = createClass({
 
                     <div className="form-group input">
                         <label><span>Цена</span> от</label>
-                        <input type="text" className="form-control" placeholder="2000 сом" />
+                        <input type="text" className="form-control" placeholder="2000 сом" value={this.props.priceFrom} onChange={this.handlePriceFromChange} />
                     </div>
 
                     <div className="form-group input end">
                         <label>до</label>
-                        <input type="text" className="form-control" placeholder="4000 сом" />
+                        <input type="text" className="form-control" placeholder="4000 сом" value={this.props.priceTo} onChange={this.handlePriceToChange} />
                     </div>
 
                      <div className="form-group select">

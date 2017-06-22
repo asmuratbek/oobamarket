@@ -22,7 +22,9 @@ var MainInterface = createClass({
       priceTo: '',
       queryText: '',
       deliveryType: 'all',
-      products: []
+      productsCount: 0,
+      products: [],
+      shops: []
     }
   },
 
@@ -31,17 +33,24 @@ var MainInterface = createClass({
     params.forEach(function(i){
       if (i.split("=")[0] == "q"){
         this.setState({
-          queryText: i.split("=")[1]
+          queryText: i.split("=")[1].toLowerCase()
         })
       }
     }.bind(this));
-  axios.get(`http://localhost:8000/product/api/?limit=10`)
+  axios.get(`http://localhost:8000/product/api/`)
     .then(res => {
-      const products = res.data.results.map(obj => obj);
+      const products = res.data.map(obj => obj);
       this.setState({
          products: products
        });
     });
+  axios.get(`http://localhost:8000/shops/api/`)
+      .then(res => {
+        const shops = res.data.map(obj => obj);
+        this.setState({
+          shops: shops
+        });
+      });
   },
 
   deleteMessage: function(item) {
@@ -67,9 +76,21 @@ var MainInterface = createClass({
 
   searchApts(q) {
     this.setState({
-      queryText: q
+      queryText: q.toLowerCase()
     }); //setState
   }, //searchApts
+
+  changePriceFrom(price) {
+    this.setState({
+      priceFrom: parseInt(price)
+    })
+  },
+
+  changePriceTo(price) {
+    this.setState({
+      priceTo: parseInt(price)
+    })
+  },
 
 
   render: function() {
@@ -80,7 +101,6 @@ var MainInterface = createClass({
     var orderDir = this.state.orderDir;
     var deliveryType = this.state.deliveryType;
 
-
     allProducts.forEach(function(item) {
       if(item.title.toLowerCase().indexOf(queryText)!=-1)
       {
@@ -90,12 +110,28 @@ var MainInterface = createClass({
       }
     });
 
+    if (this.state.priceFrom > 0) {
+      console.log('heere')
+      filteredProducts = _.filter(filteredProducts, function(item){
+        console.log(item.price > parseInt(this.state.priceFrom))
+        return item.price > parseInt(this.state.priceFrom)
+      }.bind(this));
+    };
+
+    if (this.state.priceTo > 0) {
+      filteredProducts = _.filter(filteredProducts, function(item){
+        return item.price < parseInt(this.state.priceTo)
+      }.bind(this));
+    };
+
     filteredProducts = filteredProducts.map(function(item, index) {
       return(
         <Product key = { index }
           product = { item } />
       ) //return
     }.bind(this));
+
+    var productsCount = filteredProducts.length
 
     filteredProducts = _.orderBy(filteredProducts, function(item) {
       if (orderBy == 'title'){
@@ -117,7 +153,9 @@ var MainInterface = createClass({
     return (
       <div>
       <ShopList />
-      <ProductsCount />
+      <ProductsCount
+        count = {productsCount}
+      />
       <CategoryList />
       <SearchForm
           orderBy = { this.state.orderBy }
@@ -125,6 +163,10 @@ var MainInterface = createClass({
           onSearch = { this.searchApts }
           deliveryType = { this.state.deliveryType }
           onChangeDeliveryType = { this.changeDeliveryType }
+          priceFrom = { this.state.priceFrom }
+          priceTo = { this.state.priceTo }
+          onChangePriceFrom = { this.changePriceFrom }
+          onChangePriceTo = { this.changePriceTo }
        />
       {filteredProducts}
       </div>

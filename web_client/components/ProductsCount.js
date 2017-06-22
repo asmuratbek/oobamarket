@@ -9,7 +9,7 @@ var ProductsCount = createClass({
     return (
       <div className="search_query">
                 <h3>Результаты поиска</h3>
-                <p>По вашему запросу найдено 0 товаров в следующих категориях</p>
+                <p>По вашему запросу найдено {this.props.count} товаров в следующих категориях</p>
       </div>
     )
   }
