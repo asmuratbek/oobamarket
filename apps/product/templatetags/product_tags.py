@@ -1,9 +1,7 @@
 from django import template
 
 from apps.cart.models import Cart
-from ..models import Product
-from apps.users.models import User
-from django.utils.html import mark_safe, format_html
+from django.utils.html import mark_safe
 
 register = template.Library()
 

@@ -14,6 +14,7 @@ from slugify import slugify
 from apps.global_category.models import GlobalCategory
 from apps.product.forms import ProductForm, ProductSearchForm, ShopSearchForm, ProductUpdateForm, ProductImagesForm
 from apps.properties.models import Values, Properties
+from apps.reviews.models import ProductReviews
 from apps.users.mixins import AddProductMixin, DeleteProductMixin, UpdateProductMixin
 from config.settings.base import MEDIA_ROOT
 from .models import *
@@ -53,8 +54,10 @@ def product_detail(request, global_slug, category_slug, slug):
     product = get_object_or_404(Product, slug=slug)
     category = get_object_or_404(Category, slug=category_slug)
     global_category = get_object_or_404(GlobalCategory, slug=global_slug)
+    review = ProductReviews.objects.all()
     template = "product/product_detail.html"
     context = {
+        'review': review,
         "object": product
     }
     return render(request, template, context)

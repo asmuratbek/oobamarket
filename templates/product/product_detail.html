@@ -130,10 +130,13 @@
 
     <section class="reviews">
         <div class="container">
+            {% for r in review %}
             <div class="item">
                 <div class="name">
-                    <h4>Muratbek Kozl
-                        <span>06.06.3030  23:00</span>
+
+                    <h4>{{ r.user.username }}
+                        <span>{{ r.created_at|date:"d.m.y H:m" }}</span>
+                        {% if r.stars %}
                         <div class="star pull-right">
                             <div class="star default">
                                 <i class="fa fa-star-o" aria-hidden="true"></i>
@@ -142,92 +145,67 @@
                                 <i class="fa fa-star-o" aria-hidden="true"></i>
                                 <i class="fa fa-star-o" aria-hidden="true"></i>
                             </div>
+
                             <div class="star active">
-                                <i class="fa fa-star active" aria-hidden="true"></i>
-                                <i class="fa fa-star active" aria-hidden="true"></i>
-                                <i class="fa fa-star" aria-hidden="true"></i>
-                                <i class="fa fa-star" aria-hidden="true"></i>
-                                <i class="fa fa-star" aria-hidden="true"></i>
+                                {% for i in "*****" %}
+                                <i class="fa fa-star {% if forloop.counter <= r.stars|length %}active{% endif %}" aria-hidden="true"></i>
+                                {% endfor %}
                             </div>
 
                         </div>
+                        {% endif %}
                     </h4>
+
 
                 </div>
                 <div class="description">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deserunt ducimus earum id minima omnis
-                        velit voluptatibus? Atque commodi corporis ducimus eum ex in incidunt ipsum iure labore laborum
-                        minima modi nemo odit, officiis quia quisquam repellendus repudiandae totam ullam vero!</p>
+                    <p>{{ r.text }}</p>
                 </div>
             </div>
-            <div class="item">
-                <div class="name">
-                    <h4>Muratbek Kozl
-                        <span>06.06.3030  23:00</span>
-                        <div class="star pull-right">
-                            <div class="star default">
-                                <i class="fa fa-star-o" aria-hidden="true"></i>
-                                <i class="fa fa-star-o" aria-hidden="true"></i>
-                                <i class="fa fa-star-o" aria-hidden="true"></i>
-                                <i class="fa fa-star-o" aria-hidden="true"></i>
-                                <i class="fa fa-star-o" aria-hidden="true"></i>
-                            </div>
-                            <div class="star active">
-                                <i class="fa fa-star active" aria-hidden="true"></i>
-                                <i class="fa fa-star active" aria-hidden="true"></i>
-                                <i class="fa fa-star" aria-hidden="true"></i>
-                                <i class="fa fa-star" aria-hidden="true"></i>
-                                <i class="fa fa-star" aria-hidden="true"></i>
-                            </div>
+             {% endfor %}
 
-                        </div>
-                    </h4>
-
-                </div>
-                <div class="description">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deserunt ducimus earum id minima omnis
-                        velit voluptatibus? Atque commodi corporis ducimus eum ex in incidunt ipsum iure labore laborum
-                        minima modi nemo odit, officiis quia quisquam repellendus repudiandae totam ullam vero!</p>
-                </div>
-            </div>
         </div>
     </section>
 
     <section class="reviews edit">
         <div class="container">
             <div class="item">
-                <div class="name">
-                    <h5>Добавить отзыв</h5>
-                    <h4>
-                        <div class="star-wrapper">
-                            <div class="star default">
-                                <i class="fa fa-star-o" aria-hidden="true"></i>
-                                <i class="fa fa-star-o" aria-hidden="true"></i>
-                                <i class="fa fa-star-o" aria-hidden="true"></i>
-                                <i class="fa fa-star-o" aria-hidden="true"></i>
-                                <i class="fa fa-star-o" aria-hidden="true"></i>
-                            </div>
-                            <div class="star active star-behaviour" data-save-stars="false" data-stars-count="0">
-                                <i class="fa fa-star" aria-hidden="true"></i>
-                                <i class="fa fa-star" aria-hidden="true"></i>
-                                <i class="fa fa-star" aria-hidden="true"></i>
-                                <i class="fa fa-star" aria-hidden="true"></i>
-                                <i class="fa fa-star" aria-hidden="true"></i>
-                            </div>
-                        </div>
+                <form action="">
+                    <div class="name">
+                        <h5>Добавить отзыв</h5>
 
-                    </h4>
+                        <h4>
 
-                </div>
-                <div class="description">
-                    <form action="">
+                            <div class="star-wrapper">
+                                <div class="star default">
+                                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                                </div>
+                                <div class="star active star-behaviour" data-save-stars="false" data-stars-count="0">
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                </div>
+                            </div>
+
+                        </h4>
+
+                    </div>
+                    <div class="description">
+
                         <div class="form-group">
                             <textarea name="" id="" cols="30" rows="10" class="form-control"></textarea>
                         </div>
                         <button type="submit">Отправить</button>
-                    </form>
-                </div>
+                    </div>
+                </form>
             </div>
+
         </div>
     </section>
 
