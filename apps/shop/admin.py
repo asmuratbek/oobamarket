@@ -15,3 +15,4 @@ class ShopAdmin(admin.ModelAdmin):
 admin.site.register(Shop, ShopAdmin)
 admin.site.register(Banners)
 admin.site.register(SocialLinks)
+admin.site.register(Contacts)

@@ -36,4 +36,4 @@ exec gunicorn ${DJANGO_WSGI_MODULE}:application \
         --workers $NUM_WORKERS \
         --user=$USER --group=$GROUP \
         --log-level=debug \
-        --bind=188.120.230.176:8000
+        --bind=176.31.28.85:8000

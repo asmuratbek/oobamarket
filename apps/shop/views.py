@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import JsonResponse
-from django.shortcuts import render, get_object_or_404
+from django.http import JsonResponse, HttpResponseRedirect
+from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 from django.views import View
 from django.views import generic
@@ -11,11 +11,14 @@ from django.views.generic import DeleteView
 
 from django.views.generic import UpdateView
 from slugify import slugify
+
+from apps.shop.mixin import FormsetMixin
 from config.settings import base
 from apps.shop.decorators import delete_decorator
-from apps.shop.forms import ShopForm, ShopBannersForm, ShopSocialLinksForm
+from apps.shop.forms import ShopForm, ShopBannersForm, ShopSocialLinksForm, ShopInlineFormSet
 from apps.users.mixins import AddBannerMixin, AddSocialLinksMixin, UpdateShopMixin, DeleteShopMixin
 from .models import Shop, SocialLinks, Banners
+import random
 
 
 # Create your views here.
@@ -25,25 +28,30 @@ class ShopDetailView(generic.DetailView):
     model = Shop
 
 
-class ShopCreateView(LoginRequiredMixin, CreateView):
+class ShopCreateView(LoginRequiredMixin, FormsetMixin, CreateView):
     form_class = ShopForm
+    formset_class = ShopInlineFormSet
+    model = Shop
     template_name = 'shop/shop_form.html'
-
 
     def get_success_url(self):
         return reverse('shops:detail', args=(self.object.slug,))
 
-    def form_valid(self, form):
-        form.instance.slug = slugify(form.instance.title)
-        form.save(commit=False)
-        form.save()
+    def form_valid(self, form, formset):
+        random_int = random.randrange(0, 1010)
+        form.instance.slug = slugify(form.instance.title) + str(random_int)
+        self.object = form.save()
         form.instance.user.add(self.request.user)
+        formset.instance = self.object
+        formset.save()
         return super(ShopCreateView, self).form_valid(form)
 
 
-class ShopUpdateView(LoginRequiredMixin, UpdateShopMixin, UpdateView):
+class ShopUpdateView(LoginRequiredMixin, FormsetMixin, UpdateShopMixin, UpdateView):
     model = Shop
+    is_update_view = True
     form_class = ShopForm
+    formset_class = ShopInlineFormSet
     template_name = 'shop/shop_update.html'
 
 
@@ -51,7 +59,6 @@ class ShopDeleteView(LoginRequiredMixin, DeleteShopMixin, DeleteView):
     model = Shop
     template_name = 'layout/modal_shop_delete_confirm.html'
     success_url = '/'
-
 
 
 class ShopBannersView(LoginRequiredMixin, AddBannerMixin, CreateView):
@@ -76,10 +83,8 @@ class ShopBannersView(LoginRequiredMixin, AddBannerMixin, CreateView):
         return super(ShopBannersView, self).form_valid(form)
 
 
-
 class ShopBannerDeleteView(LoginRequiredMixin, AddBannerMixin, DeleteView):
     pass
-
 
 
 class ShopSocialLinksUpdateView(LoginRequiredMixin, AddSocialLinksMixin, UpdateView):
@@ -108,7 +113,6 @@ class ShopSocialLinksUpdateView(LoginRequiredMixin, AddSocialLinksMixin, UpdateV
 
 
 def agreement(request):
-
     params = {
         'shop': 'shop'
     }
