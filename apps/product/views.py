@@ -269,6 +269,6 @@ def delete_product_images(request):
         if product_image_id:
             product = get_object_or_404(ProductImage, id=product_image_id)
             product.delete()
-            return JsonResponse({'message': 'Productimage is succefully delete.'})
-        return JsonResponse({'message': 'Product_image_id field must not be null.'})
-    return JsonResponse({'message': 'Request must be post.'})
+            return JsonResponse({'status': 0, 'message': 'Productimage is succefully delete.'})
+        return JsonResponse({'status': 1, 'message': 'Product_image_id field must not be null.'})
+    return JsonResponse({'status': 2, 'message': 'Request must be post.'})

@@ -199,3 +199,39 @@ class ChangePublishStatus(TestCase):
         self.assertEqual(response.status_code, 404)
 
 
+class ProductImagesUpdateTest(TestCase):
+    def setUp(self):
+        self.client = Client()
+        self.user = UserFactory()
+
+    def test_should_upload_image(self):
+        im = Image.new(mode='RGB', size=(200, 200,))
+        im_io = BytesIO()
+        im.save(im_io, 'JPEG')
+        im_io.seek(0)
+        image = InMemoryUploadedFile(im_io, None, 'some-name.jpg', 'image/jpeg', 3204, None)
+        img = dict(image=image)
+        product = ProductFactory(price=1500)
+        self.client.login(username=self.user.username, password='password')
+        response = self.client.post(reverse('product:upload_product_images', kwargs={'slug': product.slug}), data=img,
+                                    HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(json.loads(response.content.decode('utf-8'))['is_valid'], True)
+        self.addCleanup(os.remove, media + 'products/image/some-name.jpg')
+
+    def test_should_delete_product_image(self):
+        product = ProductFactory(price=1500)
+        product_image = ProductImageFactory(product=product)
+        data = dict(productimage_id=product_image.id)
+        self.client.login(username=self.user.username, password='password')
+        response = self.client.post(reverse('product:delete_product_images'), data=data,
+                                    HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(json.loads(response.content.decode('utf-8'))['status'], 0)
+
+    def test_should_return_error_if_product_image_field_is_empty(self):
+        data = dict(productimage_id='')
+        self.client.login(username=self.user.username, password='password')
+        response = self.client.post(reverse('product:delete_product_images'), data=data,
+                                    HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        self.assertEqual(json.loads(response.content.decode('utf-8'))['status'], 1)
