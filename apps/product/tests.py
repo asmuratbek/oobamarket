@@ -204,16 +204,16 @@ class ProductImagesUpdateTest(TestCase):
         self.client = Client()
         self.user = UserFactory()
 
-    def test_should_upload_image(self):
+    def test_should_upload_images(self):
         im = Image.new(mode='RGB', size=(200, 200,))
         im_io = BytesIO()
         im.save(im_io, 'JPEG')
         im_io.seek(0)
-        image = InMemoryUploadedFile(im_io, None, 'some-name.jpg', 'image/jpeg', 3204, None)
-        img = dict(image=image)
+        img = InMemoryUploadedFile(im_io, None, 'some-name.jpg', 'image/jpeg', 3204, None)
+        imgs = {'image': img}
         product = ProductFactory(price=1500)
         self.client.login(username=self.user.username, password='password')
-        response = self.client.post(reverse('product:upload_product_images', kwargs={'slug': product.slug}), data=img,
+        response = self.client.post(reverse('product:upload_product_images', kwargs={'slug': product.slug}), data=imgs,
                                     HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         self.assertEqual(response.status_code, 200)
         self.assertEqual(json.loads(response.content.decode('utf-8'))['is_valid'], True)
