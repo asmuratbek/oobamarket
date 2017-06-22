@@ -157,3 +157,6 @@ class ProductImage(models.Model):
         storage, path = self.image.storage, self.image.path
         super(ProductImage, self).delete(*args, **kwargs)
         storage.delete(path)
+
+
+

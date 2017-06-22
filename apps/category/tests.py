@@ -5,7 +5,6 @@ from django.test import TestCase, Client
 from django.urls import reverse
 
 from .factories import CategoryFactory
-from apps.global_category.factories import GlobalCategoryFactory
 from apps.users.models import User
 from apps.users.tests.factories import UserFactory
 # Create your tests here.

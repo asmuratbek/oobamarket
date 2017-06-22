@@ -17,7 +17,7 @@ from config.settings import base
 from apps.shop.decorators import delete_decorator
 from apps.shop.forms import ShopForm, ShopBannersForm, ShopSocialLinksForm, ShopInlineFormSet
 from apps.users.mixins import AddBannerMixin, AddSocialLinksMixin, UpdateShopMixin, DeleteShopMixin
-from .models import Shop, SocialLinks, Banners
+from .models import Shop, SocialLinks, Banners, Contacts
 import random
 
 
@@ -26,6 +26,11 @@ import random
 
 class ShopDetailView(generic.DetailView):
     model = Shop
+
+
+class ShopContactsView(generic.DetailView):
+    model = Shop
+    template_name = 'shop/contacts.html'
 
 
 class ShopCreateView(LoginRequiredMixin, FormsetMixin, CreateView):
@@ -44,7 +49,7 @@ class ShopCreateView(LoginRequiredMixin, FormsetMixin, CreateView):
         form.instance.user.add(self.request.user)
         formset.instance = self.object
         formset.save()
-        return super(ShopCreateView, self).form_valid(form)
+        return super(ShopCreateView, self).form_valid(form, formset)
 
 
 class ShopUpdateView(LoginRequiredMixin, FormsetMixin, UpdateShopMixin, UpdateView):
@@ -150,11 +155,11 @@ def delete_banners(request):
             try:
                 banner = Banners.objects.get(id=banner_id)
             except Banners.DoesNotExist:
-                return JsonResponse({'message': 'Banner does not exist'})
+                return JsonResponse({'status': 3, 'message': 'Banner does not exist'})
             banner.delete()
-            return JsonResponse({'message': 'Banner is succefully delete.'})
-        return JsonResponse({'message': 'banner field must not be null.'})
-    return JsonResponse({'message': 'Request must be post.'})
+            return JsonResponse({'status': 0, 'message': 'Banner is succefully delete.'})
+        return JsonResponse({'status': 1, 'message': 'banner field must not be null.'})
+    return JsonResponse({'status': 2, 'message': 'Request must be post.'})
 
 
 @csrf_exempt
@@ -165,5 +170,5 @@ def remove_logo(request):
         if shop.logo:
             shop.logo = base.DEFAULT_IMAGE
             shop.save()
-            return JsonResponse({'message': 'Logo removed'})
-        return JsonResponse({'message': 'Shop does not have logo'})
+            return JsonResponse({'status': 0, 'message': 'Logo removed'})
+        return JsonResponse({'status': 1, 'message': 'Shop does not have logo'})

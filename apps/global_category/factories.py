@@ -10,7 +10,7 @@ class GlobalCategoryFactory(factory.DjangoModelFactory):
 
     title = "Some global category"
     slug = 'some-global-category'
-    icon = factory.LazyAttribute(lambda _: ContentFile(factory.django.ImageField()._make_data(
-                                    {'width': 300, 'height': 250}
-                                ), 'some_icon.jpg'))
+    # icon = factory.LazyAttribute(lambda _: ContentFile(factory.django.ImageField()._make_data(
+    #                                 {'width': 300, 'height': 250}
+    #                             ), 'some_icon.jpg'))
 

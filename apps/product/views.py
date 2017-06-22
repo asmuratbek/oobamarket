@@ -4,7 +4,7 @@ import random
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import ObjectDoesNotExist
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponseBadRequest
 from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
@@ -175,6 +175,7 @@ def upload_images(request):
             result.append({'id': media.id, 'url': media.image.url})
 
         return JsonResponse(dict(uploaded_files=result))
+    return HttpResponseBadRequest
 
 
 def remove_uploaded_image(request):
@@ -257,6 +258,7 @@ def upload_images_product_update(request, slug):
         else:
             data = {'is_valid': False}
         return JsonResponse(data)
+    return HttpResponseBadRequest
 
 
 @login_required
@@ -267,6 +269,6 @@ def delete_product_images(request):
         if product_image_id:
             product = get_object_or_404(ProductImage, id=product_image_id)
             product.delete()
-            return JsonResponse({'message': 'Productimage is succefully delete.'})
-        return JsonResponse({'message': 'Product_image_id field must not be null.'})
-    return JsonResponse({'message': 'Request must be post.'})
+            return JsonResponse({'status': 0, 'message': 'Productimage is succefully delete.'})
+        return JsonResponse({'status': 1, 'message': 'Product_image_id field must not be null.'})
+    return JsonResponse({'status': 2, 'message': 'Request must be post.'})
