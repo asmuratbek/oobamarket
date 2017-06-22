@@ -3,6 +3,7 @@
 {% block content %}
     <div class="row">
     <div class="cl-md-12">
+        <h1>Контакты</h1>
         {{ object.email }}<br>
         {{ object.phone }}
         {% for contact in object.contacts_set.all %}

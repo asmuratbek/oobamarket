@@ -80,6 +80,7 @@ LOCAL_APPS = [
     'apps.order',
     'apps.meta',
     'apps.utils',
+    'apps.reviews',
 ]
 
 # CHANNEL_LAYERS = {

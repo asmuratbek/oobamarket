@@ -49,7 +49,7 @@ class ShopCreateView(LoginRequiredMixin, FormsetMixin, CreateView):
         form.instance.user.add(self.request.user)
         formset.instance = self.object
         formset.save()
-        return super(ShopCreateView, self).form_valid(form)
+        return super(ShopCreateView, self).form_valid(form, formset)
 
 
 class ShopUpdateView(LoginRequiredMixin, FormsetMixin, UpdateShopMixin, UpdateView):
