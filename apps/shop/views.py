@@ -17,7 +17,7 @@ from config.settings import base
 from apps.shop.decorators import delete_decorator
 from apps.shop.forms import ShopForm, ShopBannersForm, ShopSocialLinksForm, ShopInlineFormSet
 from apps.users.mixins import AddBannerMixin, AddSocialLinksMixin, UpdateShopMixin, DeleteShopMixin
-from .models import Shop, SocialLinks, Banners
+from .models import Shop, SocialLinks, Banners, Contacts
 import random
 
 
@@ -26,6 +26,11 @@ import random
 
 class ShopDetailView(generic.DetailView):
     model = Shop
+
+
+class ShopContactsView(generic.DetailView):
+    model = Shop
+    template_name = 'shop/contacts.html'
 
 
 class ShopCreateView(LoginRequiredMixin, FormsetMixin, CreateView):
