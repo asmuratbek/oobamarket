@@ -11,6 +11,7 @@ urlpatterns = [
     url(r'^remove-logo/$', remove_logo, name='remove_logo'),
     url(r'^create/$', ShopCreateView.as_view(), name='create'),
     url(r'^(?P<slug>[\w-]+)/$', ShopDetailView.as_view(), name='detail'),
+    url(r'^(?P<slug>[\w-]+)/contacts$', ShopContactsView.as_view(), name='contacts_detail'),
     url(r'^(?P<slug>[\w-]+)/update/$', ShopUpdateView.as_view(), name='update'),
     url(r'^(?P<slug>[\w-]+)/delete/$', ShopDeleteView.as_view(), name='delete'),
     url(r'^(?P<slug>[\w-]+)/add-banners/$', CreateBanners.as_view(), name='add_banner'),
