@@ -18,11 +18,11 @@
 
                         <div class="form-group input col-md-6">
                             <label for="">Телефон:</label>
-                            {% render_field form.phone|attr:"type:text" placeholder="Телефон магазина" %}
+                            {% render_field form.phone|attr:"type:number" placeholder="Телефон магазина" %}
                         </div>
                         <div class="form-group input col-md-6">
                             <label for="">E-mail магазина:</label>
-                            {% render_field form.email|attr:"type:text" placeholder="E-mail магазина:" %}
+                            {% render_field form.email|attr:"type:email" placeholder="E-mail магазина:" %}
                         </div>
                         <div class="form-group input col-md-12">
                             <label for="">Короткое описание магазина:</label>
