@@ -93,10 +93,10 @@ $(document).ready(function () {
         });
     }
 
-    $(".delete-object").click(function() {
-    //открыть модальное окно с class="remove-product"
-    $(".remove-product").modal('show');
-  });
+    $(".delete-object").click(function () {
+        //открыть модальное окно с class="remove-product"
+        $(".remove-product").modal('show');
+    });
 
     //Функция вызова модального окана на главной для удаления товара
     var trigger = $('.model-trigger');
@@ -150,74 +150,74 @@ $(document).ready(function () {
     $('#global_category').on('change', function () {
         var categoryList = $('#category_list');
         var subcategoryList = $('#subcategory_list');
-        if ($(this)[0].selectedIndex === 0){
-           categoryList.html("").attr('disabled', "");
-           subcategoryList.html("").attr('disabled', "");
+        if ($(this)[0].selectedIndex === 0) {
+            categoryList.html("").attr('disabled', "");
+            subcategoryList.html("").attr('disabled', "");
         }
         else {
             $.ajax({
-            type: "GET",
-            url: "/get_category_list/",
-            data: {
-                "global_category": $("#global_category option:selected").text()
-            },
-            success: function (data) {
-                console.log(data);
-                if (data.count > 0) {
-                    categoryList.removeAttr('disabled');
-                    categoryList.html('<option>Выберите категорию</option>');
-                    $.each(data.category_list, function (key, value) {
-                        categoryList.append('<option value=' + key + '>' + value + '</option>')
-                    });
-                }
+                type: "GET",
+                url: "/get_category_list/",
+                data: {
+                    "global_category": $("#global_category option:selected").text()
+                },
+                success: function (data) {
+                    console.log(data);
+                    if (data.count > 0) {
+                        categoryList.removeAttr('disabled');
+                        categoryList.html('<option>Выберите категорию</option>');
+                        $.each(data.category_list, function (key, value) {
+                            categoryList.append('<option value=' + key + '>' + value + '</option>')
+                        });
+                    }
 
-                else {
-                    console.log('Noooo');
-                    categoryList.html("").attr('disabled', "");
+                    else {
+                        console.log('Noooo');
+                        categoryList.html("").attr('disabled', "");
+                    }
+                },
+                error: function (response, error) {
+                    console.log(response);
+                    console.log(error);
                 }
-            },
-            error: function (response, error) {
-                console.log(response);
-                console.log(error);
-            }
-        });
+            });
         }
 
     });
 
     $('#category_list').on('change', function () {
         var subcategoryList = $('#subcategory_list')
-        if ($(this)[0].selectedIndex === 0){
-           subcategoryList.html("").attr('disabled', "");
+        if ($(this)[0].selectedIndex === 0) {
+            subcategoryList.html("").attr('disabled', "");
         }
         else {
             $.ajax({
-            type: "GET",
-            url: "/get_subcategory_list/",
-            data: {
-                "category": $("#category_list option:selected").text()
-            },
-            success: function (data) {
-                console.log(data);
-                if (data.count > 0) {
-                    subcategoryList.removeAttr('disabled');
-                    subcategoryList.html('<option>Выберите подкатегорию</option>');
-                    $.each(data.category_list, function (key, value) {
-                        subcategoryList.append('<option value=' + key + '>' + value + '</option>')
-                    });
-                }
+                type: "GET",
+                url: "/get_subcategory_list/",
+                data: {
+                    "category": $("#category_list option:selected").text()
+                },
+                success: function (data) {
+                    console.log(data);
+                    if (data.count > 0) {
+                        subcategoryList.removeAttr('disabled');
+                        subcategoryList.html('<option>Выберите подкатегорию</option>');
+                        $.each(data.category_list, function (key, value) {
+                            subcategoryList.append('<option value=' + key + '>' + value + '</option>')
+                        });
+                    }
 
-                else {
-                    console.log('Noooo');
-                    subcategoryList.html("").attr('disabled', "");
-                }
+                    else {
+                        console.log('Noooo');
+                        subcategoryList.html("").attr('disabled', "");
+                    }
 
-            },
-            error: function (response, error) {
-                console.log(response);
-                console.log(error);
-            }
-        });
+                },
+                error: function (response, error) {
+                    console.log(response);
+                    console.log(error);
+                }
+            });
         }
 
     });
@@ -226,9 +226,9 @@ $(document).ready(function () {
         var categoryList = $('#category_list');
         var title = $('#id_title');
         var selected = $(this).find(":selected");
-        if ($(this)[0].selectedIndex === 0){
-           $('#property_list').html("").attr('disabled', "");
-           $('#empty_properties').fadeIn();
+        if ($(this)[0].selectedIndex === 0) {
+            $('#property_list').html("").attr('disabled', "");
+            $('#empty_properties').fadeIn();
         }
         else {
             if (selected.hasAttr('value')) {
@@ -529,13 +529,13 @@ $(document).ready(function () {
             // lensShape: "round",
             gallery: 'gal1',
             zoomWindowFadeIn: 500,
-			zoomWindowFadeOut: 500,
-			lensFadeIn: 500,
-			lensFadeOut: 500,
-            constrainType:"height",
-            zoomWindowWidth:500,
-            zoomWindowHeight:500,
-            scrollZoom : true,
+            zoomWindowFadeOut: 500,
+            lensFadeIn: 500,
+            lensFadeOut: 500,
+            constrainType: "height",
+            zoomWindowWidth: 500,
+            zoomWindowHeight: 500,
+            scrollZoom: true,
             cursor: 'pointer',
             galleryActiveClass: "active",
             imageCrossfade: true,
@@ -720,10 +720,10 @@ $(document).ready(function () {
     });
 
     var params = location.search.substr(1).split("&");
-    params.forEach(function(i){
-      if (i.split("=")[0] == "q"){
-        $('#search-form-index').val(i.split("=")[1]);
-      }
+    params.forEach(function (i) {
+        if (i.split("=")[0] == "q") {
+            $('#search-form-index').val(i.split("=")[1]);
+        }
     });
 
 // $('.glyphicon-eye-open').click(function (e) {
@@ -769,7 +769,64 @@ $(document).ready(function () {
     $(".back-page").click(function () {
         window.history.back();
         return false;
-    })
+    });
+
+    $.fn.getRating = function () {
+        if (this.hasAttr('data-stars-count'))
+            return parseInt(this.attr('data-stars-count'));
+        return 0;
+    };
+
+    $('.star-behaviour').each(function (p_i, p_obj) {
+        let stars = $(p_obj).find('i');
+        $(stars).parent().attr('data-save-stars', 'false');
+        stars.each(function (i, obj) {
+            $(obj).attr('data-count', (i + 1));
+            // if(parseInt($(obj).attr('data-count')) <= parseInt($(obj).parent().attr('data-stars-count')))
+            //     $(obj).addClass('active');
+            $(obj).hover(function () {
+                $(obj).parent().attr('data-save-stars', 'false');
+                let currCount = $(obj).attr('data-count');
+                $(stars).each(function () {
+                    if ($(this).attr('data-count') <= currCount) {
+                        $(this).addClass('active');
+                    }
+                });
+                $(obj).on('click', function (e) {
+                    $(obj).parent().attr('data-save-stars', 'true');
+                    $(obj).parent().attr('data-stars-count', currCount);
+                });
+            }, function () {
+                if ($(obj).parent().attr('data-save-stars') !== 'true') {
+                    $(stars).each(function () {
+                        if (parseInt($(obj).parent().attr('data-stars-count')) > 0) {
+                            if (parseInt($(this).attr('data-count')) <= parseInt($(obj).parent().attr('data-stars-count'))) {
+                                if (!$(obj).hasClass('active')) {
+                                    $(obj).addClass('active');
+                                }
+                            } else {
+                                $(this).removeClass('active');
+                            }
+                        } else {
+                            $(this).removeClass('active');
+                        }
+                    });
+                } else {
+                    $(stars).each(function () {
+                        if ($(obj).parent().hasAttr('data-stars-count')) {
+                            if (parseInt($(this).attr('data-count')) <= parseInt($(obj).parent().attr('data-stars-count'))) {
+                                if (!$(obj).hasClass('active')) {
+                                    $(obj).addClass('active');
+                                }
+                            } else {
+                                $(this).removeClass('active');
+                            }
+                        }
+                    });
+                }
+            });
+        });
+    });
+
 
 }); // end document ready
-

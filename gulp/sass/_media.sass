@@ -18,7 +18,37 @@
 /* Extra Small Devices, Phones */
 @media (min-width : 320px) and (max-width : 480px)
   body
+    margin-top: 50px
 
+  header
+    padding: 0 !important
+    .navbar-brand
+      img
+        width: 107px
+        margin: 7px 10px
+        float: left
+
+    .nav.navbar-nav.navbar-right
+      text-align: center
+      a
+        float: none
+        display: block
+        width: 200px
+        margin: 5px auto
+  .navbar-toggle
+    .icon-bar
+      background-color: #f3481c
+  button.navbar-toggle[aria-expanded="true"]
+    .icon-bar + .icon-bar
+      margin-top: 0
+      height: 1px
+  .search-index
+    padding: 10px 0
+    .form-group
+      input
+        width: 75%
+      button
+        width: 25%
 /**/
 
 

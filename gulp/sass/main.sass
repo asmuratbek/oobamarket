@@ -62,10 +62,10 @@ h1, h2, h3, h4, h5, h6, p, span, b, i, ul, li, button, input, select, a
   list-style: none!important
   outline: none!important
   transition: all 0.3s ease
-.container
-  width: 1200px
-  margin: 0 auto
-  padding: 0 15px
+//.container
+//  width: 1200px
+//  margin: 0 auto
+//  padding: 0 15px
 //.facebook
 //  background: url(../img/social.png) -31px 0 no-repeat
 //  width: 28px
@@ -1213,8 +1213,92 @@ header
             color: #686868
             span
               color: #CCCCCC
+.reviews.edit
+  margin-bottom: 300px
+  h5
+    font-size: 20px
+    margin-bottom: 10px
+  .description
+    padding: 5px 0
+  .star-wrapper
+    display: inline-block
+    position: relative
+  .fa-star
+    cursor: pointer
+  .item
+    margin-bottom: 0
+    padding-bottom: 0
+    border-bottom: 0
+  textarea
+    padding: 10px
+    width: 100% !important
+    max-width: 100% !important
+    box-shadow: none !important
+    min-width: 100% !important
+  .name
+    margin-bottom: 10px
+.reviews
+  margin-bottom: 30px
+  .container
+    background-color: #fff
+    padding: 15px
+  button
+
+    border: 1px solid #f3481c
+    border-left: 0
+    background-color: #f3481c
+    color: #fff
+    padding: 10px 20px
+    border-radius: 50px
+    font-size: 15px
+    font-weight: 400
+    transition: 0.3s
+    &:hover
+      background-color: #da3f17
+  .item:last-child
+    border-bottom: 0
+  .item
+    padding-bottom: 20px
+    margin-bottom: 20px
+    border-bottom: 1px solid #dedede
+
+  .star.default
+    position: relative
+    .fa-star-o
+      color: gold
+  .star.active
+    position: absolute
+    top: 0
+    right: 0
+    width: 100%
+    left: 0
+    float: left
+    bottom: 0
+    .fa-star.active
+      z-index: 1
+      opacity: 1
+
+      color: gold
+    .fa-star
+
+      z-index: 0
+      opacity: 0
+      color: gold
+  .star.pull-right
+    position: relative
+  .name
+    margin-bottom: 20px
+    h4
+      span
+        color: #bbb
+        display: inline-block
+        margin-left: 10px
+        font-size: 14px
+  .description
+    padding: 10px
+
 .about-product-text
-  margin-bottom: 200px
+  margin-bottom: 30px
   .container
     background-color: #fff
     border: 1px solid #eee
