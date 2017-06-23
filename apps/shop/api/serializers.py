@@ -39,7 +39,8 @@ class ShopSerializer(ModelSerializer):
             'short_description',
             'created_at',
             'updated_at',
-            'logo'
+            'logo',
+            'get_absolute_url'
 
         )
 

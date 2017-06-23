@@ -37,14 +37,14 @@ var MainInterface = createClass({
         })
       }
     }.bind(this));
-  axios.get(`http://localhost:8000/product/api/`)
+  axios.get(`/product/api/`)
     .then(res => {
       const products = res.data.map(obj => obj);
       this.setState({
          products: products
        });
     });
-  axios.get(`http://localhost:8000/shops/api/`)
+  axios.get(`/shops/api/`)
       .then(res => {
         const shops = res.data.map(obj => obj);
         this.setState({
@@ -111,9 +111,7 @@ var MainInterface = createClass({
     });
 
     if (this.state.priceFrom > 0) {
-      console.log('heere')
       filteredProducts = _.filter(filteredProducts, function(item){
-        console.log(item.price > parseInt(this.state.priceFrom))
         return item.price > parseInt(this.state.priceFrom)
       }.bind(this));
     };
@@ -152,7 +150,10 @@ var MainInterface = createClass({
 
     return (
       <div>
-      <ShopList />
+      <ShopList
+        shops = { this.state.shops }
+        q = { this.state.queryText }
+      />
       <ProductsCount
         count = {productsCount}
       />

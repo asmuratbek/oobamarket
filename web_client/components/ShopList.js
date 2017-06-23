@@ -1,11 +1,29 @@
 import React from 'react';
 import createClass from 'create-react-class';
+import Shop from './Shop';
 
 
 var ShopList = createClass({
   displayName: 'ShopList',
 
   render: function(){
+    var filteredShops = [];
+    var queryText = this.props.q;
+
+    this.props.shops.forEach(function(item) {
+      if(item.title.toLowerCase().indexOf(queryText)!=-1)
+      {
+        filteredShops.push(item)
+      }
+    });
+
+    filteredShops = filteredShops.map(function(item, index) {
+      return(
+        <Shop key = { index }
+          shop = { item } />
+      ) //return
+    }.bind(this));
+
     return(
           <div>
             <div className="search_query">
@@ -15,10 +33,7 @@ var ShopList = createClass({
 
             <div className="recommended_sellers">
 
-                <div className="img-wrapper">
-                    <a href="{{ shop.get_absolute_url }}"></a>
-                    <img src="{{ shop.get_logo }}" alt="{{ shop.title }}"/>
-                </div>
+                {filteredShops}
 
             </div>
           </div>
