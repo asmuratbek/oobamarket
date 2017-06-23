@@ -38,6 +38,8 @@ class Shop(PublishBaseModel):
     description = models.TextField(verbose_name='Полное описание магазина')
     logo = models.ImageField(upload_to='images/shop/logo/', default=settings.DEFAULT_IMAGE,
                              verbose_name='Логотип')
+    place = models.ManyToManyField('Place', blank=True, verbose_name="Торговые точки")
+
 
     def __str__(self):
         return self.title
@@ -141,3 +143,22 @@ def create_social_links(sender, **kwargs):
         social_links = SocialLinks.objects.create(shop=kwargs['instance'])
 
 post_save.connect(create_social_links, sender=Shop)
+
+
+PlACE_TYPE = (
+    ('mall', "Торговый центр"),
+    ('market', "Рынок")
+)
+
+
+class Place(PublishBaseModel):
+
+    class Meta:
+        verbose_name = "Торговая точка"
+        verbose_name_plural = "Торговые точки"
+
+    title = models.CharField(_("Название"), max_length=255)
+    type = models.CharField(_("Тип торговой точки"), choices=PlACE_TYPE, max_length=255)
+
+    def __str__(self):
+        return "{}-{}".format(self.get_type_display(), self.title)
