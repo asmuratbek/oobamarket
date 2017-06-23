@@ -7,19 +7,17 @@
 
 /* Medium Devices, Desktops */
 @media (min-width : 767px) and (max-width : 991px)
-	/**/
+  .search-index
+    ul.category
+      li
+        width: 32.6%
+/**/
 
 
 /* Small Devices, Tablets */
 @media (min-width : 480px) and (max-width : 767px)
-	/**/
-
-
-/* Extra Small Devices, Phones */
-@media (min-width : 320px) and (max-width : 480px)
   body
     margin-top: 50px
-
   header
     padding: 0 !important
     .navbar-brand
@@ -49,6 +47,68 @@
         width: 75%
       button
         width: 25%
+    ul.category
+      overflow: hidden
+      margin-top: 40px
+      li
+        width: 48.8%
+  .goods-of-week
+    .img-wrapper
+      height: auto !important
+      img
+        position: static !important
+/**/
+
+
+/* Extra Small Devices, Phones */
+@media (min-width : 320px) and (max-width : 480px)
+  body
+    margin-top: 50px
+  header
+    padding: 0 !important
+    .navbar-brand
+      img
+        width: 107px
+        margin: 7px 10px
+        float: left
+
+    .nav.navbar-nav.navbar-right
+      text-align: center
+      a
+        float: none
+        display: block
+        width: 200px
+        margin: 5px auto
+  .navbar-toggle
+    .icon-bar
+      background-color: #f3481c
+  button.navbar-toggle[aria-expanded="true"]
+    .icon-bar + .icon-bar
+      margin-top: 0
+      height: 1px
+  .search-index
+    padding: 10px 0
+    .form-group
+      input
+        width: 75%
+      button
+        width: 25%
+    ul.category
+      margin-top: 40px
+      text-align: center
+      li
+        width: 30%
+        float: none
+        display: inline-block
+        margin-bottom: 6px
+        padding: 10px
+        .img-wrapper
+          height: 50px
+        .title
+          height: 30px
+          p
+            font-size: 10px
+
 /**/
 
 

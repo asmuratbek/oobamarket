@@ -410,38 +410,38 @@ $(document).ready(function () {
         }
     });
 
-    if ($('.owl-carousel-category-link').length > 0) {
-        var owl = $('.owl-carousel-category-link');
-        owl.owlCarousel({
-            loop: false,
-            nav: true,
-            margin: 10,
-            mouseDrag: false,
-            autoWidth: true,
-            responsive: {
-                0: {
-                    items: 1
-                },
-                600: {
-                    items: 3
-                },
-                960: {
-                    items: 5
-                },
-                1200: {
-                    items: 6
-                }
-            }
-        });
-        owl.on('mousewheel', '.owl-stage', function (e) {
-            if (e.deltaY > 0) {
-                owl.trigger('next.owl');
-            } else {
-                owl.trigger('prev.owl');
-            }
-            e.preventDefault();
-        });
-    }
+    // if ($('.owl-carousel-category-link').length > 0) {
+    //     var owl = $('.owl-carousel-category-link');
+    //     owl.owlCarousel({
+    //         loop: false,
+    //         nav: true,
+    //         margin: 10,
+    //         mouseDrag: false,
+    //         autoWidth: true,
+    //         responsive: {
+    //             0: {
+    //                 items: 3
+    //             },
+    //             600: {
+    //                 items: 3
+    //             },
+    //             960: {
+    //                 items: 5
+    //             },
+    //             1200: {
+    //                 items: 6
+    //             }
+    //         }
+    //     });
+    //     owl.on('mousewheel', '.owl-stage', function (e) {
+    //         if (e.deltaY > 0) {
+    //             owl.trigger('next.owl');
+    //         } else {
+    //             owl.trigger('prev.owl');
+    //         }
+    //         e.preventDefault();
+    //     });
+    // }
 
     if ($('.owl-carousel.shop-page').length > 0) {
         $('.owl-carousel.shop-page').owlCarousel({
@@ -827,6 +827,20 @@ $(document).ready(function () {
             });
         });
     });
+
+
+    if ($('.demo-x').length > 0) {
+        $(".demo-x").mCustomScrollbar({
+					axis:"x",
+					scrollInertia: 200,
+					moveDragger:true,
+					contentTouchScroll: 200,
+					handlers: 'touch',
+					wheelPropagation: true,
+					theme:"dark",
+					advanced:{autoExpandHorizontalScroll:true}
+				});
+    }
 
 
 }); // end document ready
