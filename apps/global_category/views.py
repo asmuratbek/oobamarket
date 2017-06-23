@@ -27,3 +27,8 @@ class IndexView(generic.TemplateView):
 
 class GlobalDetailView(generic.DetailView):
     model = GlobalCategory
+
+
+
+def landing(request):
+    return render(request, 'layout/landing.html')
