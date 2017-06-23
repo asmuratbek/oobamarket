@@ -1,7 +1,7 @@
 import factory, random, string
 from django.core.files.base import ContentFile
 
-from .models import Shop, Banners
+from .models import Shop, Banners, SocialLinks
 
 
 class ShopFactory(factory.DjangoModelFactory):
@@ -23,4 +23,11 @@ class BannerFactory(factory.DjangoModelFactory):
     image = factory.LazyAttribute(lambda _: ContentFile(factory.django.ImageField()._make_data(
                                     {'width': 500, 'height': 350}
                                 ), 'some_banner.jpg'))
+    shop = factory.SubFactory(ShopFactory)
+
+
+class SocialLinksFactory(factory.DjangoModelFactory):
+    class Meta:
+        model = SocialLinks
+
     shop = factory.SubFactory(ShopFactory)
