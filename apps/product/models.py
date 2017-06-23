@@ -102,6 +102,9 @@ class Product(PublishBaseModel):
     def get_shop_url(self):
         return self.shop.get_absolute_url()
 
+    def get_category_title(self):
+        return self.category.title
+
 
 class FavoriteProduct(models.Model):
     class Meta:

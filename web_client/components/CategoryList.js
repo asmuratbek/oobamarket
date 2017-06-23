@@ -7,13 +7,9 @@ var CategoryList = createClass({
 
   render: function(){
     return (
-      <ul className="category-tab">
-                <li className="active"><a href="">Коляски</a></li>
-                <li><a href="">Автокресла</a></li>
-                <li><a href="">Кровати</a></li>
-                <li><a href="">Автокресла</a></li>
-                <li><a href="">Кровати</a></li>
-      </ul>
+
+            <li className="active"><a href="">{this.props.category}</a></li>
+
     )
   }
 });

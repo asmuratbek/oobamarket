@@ -65,7 +65,8 @@ class ProductSerializer(ModelSerializer):
             'update_view',
             'get_price_function',
             'created_at',
-            'updated_at'
+            'updated_at',
+            'get_category_title'
         )
 
     def get_shop(self, obj):

@@ -46,12 +46,12 @@ var SearchForm = createClass({
 
                     <div className="form-group input">
                         <label><span>Цена</span> от</label>
-                        <input type="text" className="form-control" placeholder="2000 сом" value={this.props.priceFrom} onChange={this.handlePriceFromChange} />
+                        <input type="number" className="form-control" placeholder="2000 сом" value={this.props.priceFrom} onChange={this.handlePriceFromChange} />
                     </div>
 
                     <div className="form-group input end">
                         <label>до</label>
-                        <input type="text" className="form-control" placeholder="4000 сом" value={this.props.priceTo} onChange={this.handlePriceToChange} />
+                        <input type="number" className="form-control" placeholder="4000 сом" value={this.props.priceTo} onChange={this.handlePriceToChange} />
                     </div>
 
                      <div className="form-group select">

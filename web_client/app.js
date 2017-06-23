@@ -95,6 +95,7 @@ var MainInterface = createClass({
 
   render: function() {
     var filteredProducts = [];
+    var categories = [];
     var allProducts = this.state.products;
     var orderBy = this.state.orderBy;
     var queryText = this.state.queryText;
@@ -105,9 +106,23 @@ var MainInterface = createClass({
       if(item.title.toLowerCase().indexOf(queryText)!=-1)
       {
         if (item.delivery_type == deliveryType || deliveryType == 'all'){
-          filteredProducts.push(item)
+          filteredProducts.push(item);
+          categories.push(item.get_category_title);
         }
       }
+    });
+
+    categories = _.uniqBy(categories, function (e) {
+          return e;
+    });
+
+    categories = categories.map(function(item, index) {
+      return (
+        <CategoryList
+          key={index}
+          category={item}
+        />
+      )
     });
 
     if (this.state.priceFrom > 0) {
@@ -128,6 +143,8 @@ var MainInterface = createClass({
           product = { item } />
       ) //return
     }.bind(this));
+
+
 
     var productsCount = filteredProducts.length
 
@@ -157,7 +174,9 @@ var MainInterface = createClass({
       <ProductsCount
         count = {productsCount}
       />
-      <CategoryList />
+      <ul className="category-tab">
+      {categories}
+      </ul>
       <SearchForm
           orderBy = { this.state.orderBy }
           onReOrder = { this.reOrder }
