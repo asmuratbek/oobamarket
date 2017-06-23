@@ -17,5 +17,6 @@ urlpatterns = [
     url(r'^(?P<slug>[\w-]+)/delete/$', ShopDeleteView.as_view(), name='delete'),
     url(r'^(?P<slug>[\w-]+)/add-banners/$', CreateBanners.as_view(), name='add_banner'),
     url(r'^(?P<slug>[\w-]+)/update-social/$', ShopSocialLinksUpdateView.as_view(), name='update_social'),
+    url(r'^$', ShopListView.as_view(), name='list'),
 
 ]

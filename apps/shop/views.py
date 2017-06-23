@@ -28,6 +28,10 @@ class ShopDetailView(generic.DetailView):
     model = Shop
 
 
+class ShopListView(generic.ListView):
+    model = Shop
+
+
 class ShopContactsView(generic.DetailView):
     model = Shop
     template_name = 'shop/contacts.html'

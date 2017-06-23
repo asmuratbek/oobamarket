@@ -102,7 +102,7 @@
     {% endif %}
 
 <section class="magazin">
-    <h2>Магазины</h2>
+    <h2><a href="{% url 'shops:list' %}">Магазины</a></h2>
 
     <div class="owl-carousel">
         {% include 'shop/shops.html' with shops=shops %}
