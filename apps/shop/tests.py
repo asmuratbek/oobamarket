@@ -55,3 +55,33 @@ class BannersTest(TestCase):
         response = self.client.post(reverse('shops:delete-banners'), data=data,
                                     HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         self.assertEqual(response.status_code, 404)
+
+
+class SocialLinksView(TestCase):
+    def setUp(self):
+        self.client = Client()
+        self.user = UserFactory()
+
+    def test_should_update_socialinks_if_all_form_is_valid(self):
+        shop = ShopFactory()
+        shop.user.add(self.user)
+        shop.save()
+        data = {'twitter': 'twitter',
+                'facebook': 'facebook',
+                'vk': 'vkontakte',
+                'instagram': 'instagram'}
+        self.client.login(username=self.user.username, password='password')
+        response = self.client.post(reverse('shops:update_social', kwargs={'slug': shop.slug}), data=data)
+        self.assertEqual(response.status_code, 302)
+
+    def test_should_return_new_social_obj_if_shop_hasnt_social(self):
+        shop = ShopFactory(sociallinks=None)
+        shop.user.add(self.user)
+        shop.save()
+        self.client.login(username=self.user.username, password='password')
+        response = self.client.get(reverse('shops:update_social', kwargs={'slug': shop.slug}))
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(shop.sociallinks.shop)
+
+
+# class
