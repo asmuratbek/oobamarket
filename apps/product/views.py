@@ -14,6 +14,7 @@ from slugify import slugify
 from apps.global_category.models import GlobalCategory
 from apps.product.forms import ProductForm, ProductSearchForm, ShopSearchForm, ProductUpdateForm, ProductImagesForm
 from apps.properties.models import Values, Properties
+from apps.reviews.forms import ProductReviewsForm
 from apps.reviews.models import ProductReviews
 from apps.users.mixins import AddProductMixin, DeleteProductMixin, UpdateProductMixin
 from config.settings.base import MEDIA_ROOT
@@ -54,13 +55,35 @@ def product_detail(request, global_slug, category_slug, slug):
     product = get_object_or_404(Product, slug=slug)
     category = get_object_or_404(Category, slug=category_slug)
     global_category = get_object_or_404(GlobalCategory, slug=global_slug)
-    review = ProductReviews.objects.all()
+    review = ProductReviews.objects.filter(product__slug=slug)
+
     template = "product/product_detail.html"
     context = {
         'review': review,
         "object": product
     }
     return render(request, template, context)
+
+
+def add_product_review(request, slug):
+    if request.method == 'POST':
+        if request.is_ajax():
+            form = ProductReviewsForm(request.POST, initial={'user': request.user, 'product': slug})
+            if form.is_valid():
+                review = ProductReviews()
+                review.text = form.cleaned_data['text']
+                review.product.id = request.POST.get('product')
+                if form.cleaned_data['rating']:
+                    review.stars = '*' * int(form.cleaned_data['rating'])
+                    review.save()
+                return JsonResponse(dict(success=True))
+
+        return JsonResponse(dict(success=True, message='Request is not AJAX!'))
+    return JsonResponse(dict(success=True, message='Request is not POST!'))
+
+
+
+
 
 
 class ProductCreateView(LoginRequiredMixin, AddProductMixin, CreateView):
