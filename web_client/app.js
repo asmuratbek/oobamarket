@@ -107,22 +107,8 @@ var MainInterface = createClass({
       {
         if (item.delivery_type == deliveryType || deliveryType == 'all'){
           filteredProducts.push(item);
-          categories.push(item.get_category_title);
         }
       }
-    });
-
-    categories = _.uniqBy(categories, function (e) {
-          return e;
-    });
-
-    categories = categories.map(function(item, index) {
-      return (
-        <CategoryList
-          key={index}
-          category={item}
-        />
-      )
     });
 
     if (this.state.priceFrom > 0) {
@@ -138,11 +124,25 @@ var MainInterface = createClass({
     };
 
     filteredProducts = filteredProducts.map(function(item, index) {
+      categories.push(item.get_category_title);
       return(
         <Product key = { index }
           product = { item } />
       ) //return
     }.bind(this));
+
+    categories = _.uniqBy(categories, function (e) {
+          return e;
+    });
+
+    categories = categories.map(function(item, index) {
+      return (
+        <CategoryList
+          key={index}
+          category={item}
+        />
+      )
+    });
 
 
 
