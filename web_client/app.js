@@ -24,7 +24,8 @@ var MainInterface = createClass({
       deliveryType: 'all',
       productsCount: 0,
       products: [],
-      shops: []
+      shops: [],
+      activeCategories: []
     }
   },
 
@@ -92,6 +93,19 @@ var MainInterface = createClass({
     })
   },
 
+  changeCategory(title) {
+    var activeCategories = this.state.activeCategories;
+    if (activeCategories.indexOf(title)!=-1) {
+      activeCategories = _.without(activeCategories, title);
+    }
+    else {
+      activeCategories.push(title);
+    }
+    this.setState({
+      activeCategories: activeCategories
+    })
+  },
+
 
   render: function() {
     var filteredProducts = [];
@@ -103,6 +117,8 @@ var MainInterface = createClass({
     var queryText = this.state.queryText;
     var orderDir = this.state.orderDir;
     var deliveryType = this.state.deliveryType;
+    var changeCategory = this.changeCategory;
+    var activeCategories = this.state.activeCategories;
 
     allProducts.forEach(function(item) {
       if(item.title.toLowerCase().indexOf(queryText)!=-1)
@@ -151,6 +167,8 @@ var MainInterface = createClass({
         <CategoryList
           key={index}
           category={item}
+          onChangeCategory={changeCategory}
+          activeCategories={activeCategories}
         />
       )
     });

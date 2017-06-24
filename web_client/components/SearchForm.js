@@ -63,10 +63,6 @@ var SearchForm = createClass({
                         </select>
                     </div>
 
-                    <div className="form-group search">
-                        <button type="submit" className="btn btn-default"> ПОКАЗАТЬ</button>
-                    </div>
-
                 </form>
             </div>
     )
