@@ -1,5 +1,6 @@
 import React from 'react';
 import createClass from 'create-react-class';
+import _ from 'lodash';
 
 
 var CategoryList = createClass({
@@ -7,18 +8,18 @@ var CategoryList = createClass({
 
   handleCategoriesSort: function(e){
     e.preventDefault();
-    this.props.onChangeCategory(e.target.text);
-    if (this.props.activeCategories.indexOf(this.props.category)!=-1){
-      e.target.parentElement.className += "active "
+    if (_.indexOf(this.props.activeCategories, this.props.category)!=-1){
+      e.target.parentElement.className = "";
     }
     else {
-      e.target.parentElement.className = "active "
+      e.target.parentElement.className += "active ";
     }
+    this.props.onChangeCategory(e.target.text);
   },
 
   render: function(){
     return (
-            <li className={this.handleActiveClass}><a href="" onClick={this.handleCategoriesSort}>{this.props.category}</a></li>
+            <li><a href="" onClick={this.handleCategoriesSort}>{this.props.category}</a></li>
           )
   }
 });
