@@ -30,8 +30,8 @@
                     <img class="placehold" src="http://via.placeholder.com/240x190" alt="">
                 </div>
                 {% endif %}
-                <h2>{{ object.title }}</h2>
-                <p class="see-more-toogle">{{ object.description }}</p>
+                <h2>{{ object.title|truncatechars:27}}</h2>
+                <p class="see-more-toogle">{{ object.description|truncatechars:34 }}</p>
                 <div class="bottom-line">
                 <div>
                     <a href="tel: 0312 89 53 33" class="">

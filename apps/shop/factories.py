@@ -1,7 +1,7 @@
 import factory, random, string
 from django.core.files.base import ContentFile
 
-from .models import Shop, Banners, SocialLinks
+from .models import Shop, Banners, SocialLinks, Contacts, Place
 
 
 class ShopFactory(factory.DjangoModelFactory):
@@ -31,3 +31,16 @@ class SocialLinksFactory(factory.DjangoModelFactory):
         model = SocialLinks
 
     shop = factory.SubFactory(ShopFactory)
+
+
+class ContactsFactory(factory.DjangoModelFactory):
+    class Meta:
+        model = Contacts
+
+    shop = factory.SubFactory(ShopFactory)
+
+
+class PlaceFactory(factory.DjangoModelFactory):
+    class Meta:
+        model = Place
+
