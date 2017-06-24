@@ -25,6 +25,7 @@ var MainInterface = createClass({
       productsCount: 0,
       products: [],
       shops: [],
+      categories: [],
       activeCategories: []
     }
   },
@@ -42,7 +43,8 @@ var MainInterface = createClass({
     .then(res => {
       const products = res.data.map(obj => obj);
       this.setState({
-         products: products
+         products: products,
+         categories: _.uniqBy(products.map(obj => obj.get_category_title), obj => obj)
        });
     });
   axios.get(`/shops/api/`)
@@ -141,18 +143,19 @@ var MainInterface = createClass({
       }.bind(this));
     };
 
+    if (this.state.activeCategories.length > 0){
+      filteredProducts = _.filter(filteredProducts, function(item){
+        return _.indexOf(this.state.activeCategories, item.category_title)!=-1
+      }.bind(this));
+    };
+
     filteredProducts = filteredProducts.map(function(item, index) {
       shopTitles.push(item.shop);
-      categories.push(item.get_category_title);
       return(
         <Product key = { index }
           product = { item } />
       ) //return
     }.bind(this));
-
-    categories = _.uniqBy(categories, function (e) {
-          return e;
-    });
 
     shopTitles = _.uniqBy(shopTitles, function(e){
        return e;
@@ -162,7 +165,7 @@ var MainInterface = createClass({
       return shopTitles.indexOf(item.title)!=-1
     });
 
-    categories = categories.map(function(item, index) {
+    categories = this.state.categories.map(function(item, index) {
       return (
         <CategoryList
           key={index}
