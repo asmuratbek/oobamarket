@@ -777,6 +777,17 @@ $(document).ready(function () {
         return 0;
     };
 
+    $.fn.clearRating = function () {
+       if (this.hasAttr('data-stars-count')) {
+           $(this).attr('data-stars-count', 0);
+           $(this).attr('data-save-stars', 'false');
+           $(this).find('i').each(function (i, obj) {
+               $(obj).removeClass('active');
+           });
+           return true;
+       }
+    };
+
     $('.star-behaviour').each(function (p_i, p_obj) {
         let stars = $(p_obj).find('i');
         $(stars).parent().attr('data-save-stars', 'false');
@@ -843,6 +854,8 @@ $(document).ready(function () {
             success: function (response) {
                 if (response.success) {
                     console.log(data)
+                    $('.star-behaviour').clearRating();
+                    $('#prod-rev').val('');
                 }
             }
         });
