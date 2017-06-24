@@ -3,14 +3,12 @@
 <html lang="en">
 <head>
     {% block head %}
-    {% include 'layout/head.html' %}
+        {% include 'layout/head.html' %}
     {% endblock %}
 </head>
-
+{% block body %}
 <body>
-
-
-
+{% endblock %}
 
 {% block fixed_categories %}
     {% include 'layout/fixed_categories.html' %}
@@ -20,34 +18,37 @@
     {% include 'layout/header.html' %}
 {% endblock %}
 
+{% block category_link %}
 <section class="category-link">
     <div class="container-fluid">
         <div class="clearfix"></div>
-{% block categories %}
+        {% block categories %}
 
-{% endblock %}
+        {% endblock %}
     </div>
 </section>
+{% endblock %}
 
 {% block content %}
 
 {% endblock content %}
 
 {% block modal %}
-<div class="modal fade remove-product" id="DeleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title" id="myModalLabel">Удалить ?</h4>
+    <div class="modal fade remove-product" id="DeleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Удалить ?</h4>
 
-      </div>
-      <div class="modal-body" id="ajax-modal-body">
+                </div>
+                <div class="modal-body" id="ajax-modal-body">
 
-      </div>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
-</div>
 {% endblock %}
 
 {% block js %}
@@ -55,4 +56,5 @@
 {% endblock %}
 
 </body>
+
 </html>
