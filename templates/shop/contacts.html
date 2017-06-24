@@ -1,15 +1,129 @@
 {% extends 'base-1.html' %}
+{% load staticfiles product_tags %}
+{% load shop_tags %}
+
+{% block header %}
+    {% include 'layout/header.html' with global_title=object.get_global_category.title %}
+{% endblock %}
+
+{% block categories %}
+    {% include 'layout/categories_without_global.html' with object_list=shop.get_used_categories %}
+{% endblock %}
 
 {% block content %}
-    <div class="row">
-    <div class="cl-md-12">
-        <h1>Контакты</h1>
-        {{ object.email }}<br>
-        {{ object.phone }}
-        {% for contact in object.contacts_set.all %}
-        <strong>{{ contact.contact_type }}</strong>:{{ contact.contact_value }}
-        {% endfor %}
-    </div>
+
+    <div class="shop-page-page">
+        <div class="container">
+            <div class="col-md-3">
+{#                <div class="auch-edit" data-toggle="tooltip" title="" data-placement="left" data-original-title="Редактировать магазин">#}
+{#                    <a href="{% url 'shops:update' slug=object.slug %}"  >#}
+{#                        <i class="glyphicon glyphicon-cog" ></i>#}
+{#                    </a>#}
+{#                </div>#}
+                {% show_edit_shop_button shop request.user %}
+                {% if object.logo %}
+                <div class="img-wrapper">
+                    <img src="{{ object.get_logo }}" alt="">
+                </div>
+                {% else %}
+                <div class="img-wrapper">
+                    <img class="placehold" src="http://via.placeholder.com/240x190" alt="">
+                </div>
+                {% endif %}
+                <h2>{{ object.title }}</h2>
+                <p class="see-more-toogle">{{ object.description }}</p>
+                <div class="bottom-line">
+                <div>
+                    <a href="tel: 0312 89 53 33" class="">
+                        <span class="glyphicon glyphicon-earphone"></span>
+                        {{ object.phone }}
+                    </a>
+                </div>
+                <div>
+                    <a href="" class="">
+                        <span class="glyphicon glyphicon-envelope"></span>
+                        {{ object.email }}
+                    </a>
+                </div>
+            </div>
+            </div>
+            <div class="col-md-9">
+                <div class="cover">
+
+                <div class="wrapper">
+
+                {% show_add_banner_button shop request.user %}
+
+                {% if not object.banners_set.all %}
+                <a href="">
+                    <img class="placehold" src="http://via.placeholder.com/827x330" alt="">
+                </a>
+                {% else %}
+                    <div class="owl-carousel shop-page">
+                        {% for banner in object.banners_set.all %}
+                            <div class="item">
+
+                                <a href="">
+                                    <img src="{{ banner.image.url }}" alt="">
+                                </a>
+
+                            </div>
+
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+                </div>
+
+
+                    <div class="bottom-line">
+                        {% show_add_social_button shop request.user %}
+                    {% if object.sociallinks %}
+                    <div class="pull-right">
+                        {% if object.sociallinks.facebook %}
+                        <a href="{{ object.sociallinks.facebook }}" class="facebook"></a>
+                            {% endif %}
+                        {% if object.sociallinks.twitter %}
+                        <a href="{{ object.sociallinks.twitter }}" class="tweet"></a>
+                            {% endif %}
+                    {% if object.sociallinks.vk %}
+                        <a href="{{ object.sociallinks.vk }}" class="google"></a>
+                        {% endif %}
+                    {% if object.sociallinks.instagram %}
+                        <a href="{{ object.sociallinks.instagram }}" class="instagram"></a>
+                        {% endif %}
+                    </div>
+                    {% endif %}
+                </div>
+                </div>
+            </div>
+        </div>
     </div>
 
+    <section class="shop-category">
+        <div class="container">
+            <ul class="category-tab">
+
+{#                <li class="active"><a href="{% url 'product:add_product' slug=object.slug %}">Товары</a></li>#}
+                <li><a href="{% url 'shops:sale_detail' slug=object.slug %}">Акции</a></li>
+                <li><a href="">Отзывы</a></li>
+{#                <li><a class="remove delete-object model-trigger" data-url="{% url 'shops:delete' slug=object.slug %}" style="cursor: pointer;">Удалить магазин</a></li>#}
+                <li class="active"><a href="{% url 'shops:contacts_detail' slug=object.slug %}">Контакты</a></li>
+            </ul>
+
+
+                <div class="col-md-12">
+
+
+                </div>
+        </div>
+    </section>
+
+
+{% endblock %}
+
+
+{% block js %}
+{{ block.super }}
+    <script src="{% static 'js/readmore.min.js' %}"></script>
 {% endblock %}
