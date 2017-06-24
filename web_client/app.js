@@ -95,7 +95,9 @@ var MainInterface = createClass({
 
   render: function() {
     var filteredProducts = [];
+    var filteredShops = [];
     var categories = [];
+    var shopTitles = [];
     var allProducts = this.state.products;
     var orderBy = this.state.orderBy;
     var queryText = this.state.queryText;
@@ -124,6 +126,7 @@ var MainInterface = createClass({
     };
 
     filteredProducts = filteredProducts.map(function(item, index) {
+      shopTitles.push(item.shop);
       categories.push(item.get_category_title);
       return(
         <Product key = { index }
@@ -133,6 +136,14 @@ var MainInterface = createClass({
 
     categories = _.uniqBy(categories, function (e) {
           return e;
+    });
+
+    shopTitles = _.uniqBy(shopTitles, function(e){
+       return e;
+    });
+
+    filteredShops = _.filter(this.state.shops, function(item){
+      return shopTitles.indexOf(item.title)!=-1
     });
 
     categories = categories.map(function(item, index) {
@@ -168,8 +179,7 @@ var MainInterface = createClass({
     return (
       <div>
       <ShopList
-        shops = { this.state.shops }
-        q = { this.state.queryText }
+        shops = { filteredShops }
       />
       <ProductsCount
         count = {productsCount}

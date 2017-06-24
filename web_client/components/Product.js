@@ -86,7 +86,7 @@ var ProductList = createClass({
 
                   <h2>
                       <a href={this.props.product.detail_view}>
-                      {this.props.product.shop_title}
+                      {this.props.product.shop}
                       </a>
                   </h2>
                   {this.props.product.is_owner ?

@@ -26,7 +26,6 @@ class ProductSerializer(ModelSerializer):
         lookup_field="slug"
     )
     shop = SerializerMethodField()
-    shop_title = SerializerMethodField()
     is_owner = SerializerMethodField()
     main_image = SerializerMethodField()
     is_in_cart = SerializerMethodField()
@@ -46,7 +45,6 @@ class ProductSerializer(ModelSerializer):
             'title',
             'category',
             'shop',
-            'shop_title',
             'price',
             'sell_count',
             'discount',
@@ -74,9 +72,6 @@ class ProductSerializer(ModelSerializer):
 
     def get_get_price_function(self, obj):
         return obj.get_price()
-
-    def get_shop_title(self, obj):
-        return str(obj.get_shop_title())
 
     def get_is_owner(self, obj):
         user = None

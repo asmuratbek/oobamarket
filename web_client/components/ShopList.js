@@ -10,14 +10,14 @@ var ShopList = createClass({
     var filteredShops = [];
     var queryText = this.props.q;
 
-    this.props.shops.forEach(function(item) {
-      if(item.title.toLowerCase().indexOf(queryText)!=-1)
-      {
-        filteredShops.push(item)
-      }
-    });
+    // this.props.shops.forEach(function(item) {
+    //   if(item.title.toLowerCase().indexOf(queryText)!=-1)
+    //   {
+    //     filteredShops.push(item)
+    //   }
+    // });
 
-    filteredShops = filteredShops.map(function(item, index) {
+    filteredShops = this.props.shops.map(function(item, index) {
       return(
         <Shop key = { index }
           shop = { item } />
