@@ -570,11 +570,12 @@ $(document).ready(function () {
         });
     }
 
-
+if($('.left-scroll-mouse .overflow').length > 0) {
     $('.left-scroll-mouse .overflow').mousewheel(function (e, delta) {
         this.scrollLeft -= (delta * 40);
         e.preventDefault();
     });
+}
 
 
     $('.item-qty').change(function () {
