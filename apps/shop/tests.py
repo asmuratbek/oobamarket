@@ -160,3 +160,26 @@ class ShopUdateViewTest(TestCase):
         self.assertEqual(self.user.shop_set.last().place.first().type, 'market')
         self.assertEqual(self.user.shop_set.last().place.count(), 2)
         self.assertEqual(self.user.shop_set.last().email, 'some_new_email@email.com')
+        self.addCleanup(os.remove, media + 'images/shop/logo/some-logo.jpg')
+
+    def test_should_remove_logo(self):
+        im = Image.new(mode='RGB', size=(200, 200,))
+        im_io = BytesIO()
+        im.save(im_io, 'JPEG')
+        im_io.seek(0)
+        img = InMemoryUploadedFile(im_io, None, 'some-logo.jpg', 'image/jpeg', 3204, None)
+        shop = ShopFactory(logo=img)
+        shop.user.add(self.user)
+        shop.save()
+        self.client.login(username=self.user.username, password='password')
+        response = self.client.post(reverse('shops:remove_logo'), data={'slug': shop.slug},
+                                    HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(self.user.shop_set.last().logo.name, '/default.jpg')
+        self.addCleanup(os.remove, media + 'images/shop/logo/some-logo.jpg')
+
+    def test_should_return_404_if_shop_does_not_exist(self):
+        self.client.login(username=self.user.username, password='password')
+        response = self.client.post(reverse('shops:remove_logo'), data={'slug': 'slug-slug'},
+                                    HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        self.assertEqual(response.status_code, 404)

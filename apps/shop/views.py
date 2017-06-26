@@ -1,6 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import JsonResponse, HttpResponseRedirect
+from django.http import JsonResponse, HttpResponseRedirect, HttpResponseBadRequest
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 from django.views import View
@@ -181,3 +181,4 @@ def remove_logo(request):
             shop.save()
             return JsonResponse({'status': 0, 'message': 'Logo removed'})
         return JsonResponse({'status': 1, 'message': 'Shop does not have logo'})
+    return HttpResponseBadRequest
