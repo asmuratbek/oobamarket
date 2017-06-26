@@ -16,23 +16,21 @@
     <section class="single-product">
         <div class="container">
 
+
             <div class="zoom-left">
-                <span class="help glyphicon glyphicon-exclamation-sign" data-toggle="tooltip" title=""
-                      data-placement="bottom" data-original-title="Используйте скролл для детального просмотра"
-                      aria-describedby="tooltip409378"></span>
+{#                <span class="help glyphicon glyphicon-exclamation-sign" data-toggle="tooltip" title=""#}
+{#                      data-placement="bottom" data-original-title="Используйте скролл для детального просмотра"#}
+{#                      aria-describedby="tooltip409378"></span>#}
                 {% if object.get_main_image %}
-                    <img style="border:1px solid #e8e8e6;" id="img_01" src="{{ object.get_main_image }}"
-                         data-zoom-image="{{ object.get_main_image }}" width="380"/>
+                    <img style="border:1px solid #e8e8e6;" class="my-foto-container" src="{{ object.get_main_image }}"  data-large="{{ object.get_main_image }}" title="Фото">
                 {% else %}
-                    <img style="border:1px solid #e8e8e6;" id="img_01" src="http://via.placeholder.com/378x378"
+                    <img style="border:1px solid #e8e8e6;" class="my-foto-container" src="http://via.placeholder.com/378x378"
                          data-zoom-image="http://via.placeholder.com/378x378" width="380"/>
                 {% endif %}
                 <div id="gal1">
                     {% for image in object.productimage_set.all %}
-                        <a href="#" class="elevatezoom-gallery slide-content {% if forloop.first %}active{% endif %}"
-                           data-image="{{ image.image.url }}" data-zoom-image="{{ image.image.url }}">
-                            <img id="img_01" src="{{ image.image.url }}" width="100"/>
-                        </a>
+                        <img {% if forloop.first %} active {% endif %} class="my-foto" src="{{ image.image.url }}"  data-large="{{ image.image.url }}" title="Фото1">
+
                     {% endfor %}
                 </div>
             </div>
@@ -222,5 +220,5 @@
     <script src="libs/respond/respond.min.js"></script>
     <![endif]-->
     {{ block.super }}
-    <script src={% static 'js/elecatrozoom.js' %}></script>
+    <script src={% static 'js/jquare-zoom.js' %}></script>
 {% endblock %}

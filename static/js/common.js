@@ -262,7 +262,7 @@ $(document).ready(function () {
 
     });
 
-    if($('.js-example-placeholder-single').length > 0){
+    if ($('.js-example-placeholder-single').length > 0) {
         $('.js-example-placeholder-single').selectize({
             create: false,
             sortField: 'text'
@@ -525,40 +525,53 @@ $(document).ready(function () {
     //     // });
     // }
 
-    if ($('#img_01').length > 0) {
-        //initiate the plugin and pass the id of the div containing gallery images
-        $("#img_01").elevateZoom({
-            // zoomType: "lens",
-            // lensShape: "round",
-            gallery: 'gal1',
-            zoomWindowFadeIn: 500,
-            zoomWindowFadeOut: 500,
-            lensFadeIn: 500,
-            lensFadeOut: 500,
-            constrainType: "height",
-            zoomWindowWidth: 500,
-            zoomWindowHeight: 500,
-            scrollZoom: true,
-            cursor: 'pointer',
-            galleryActiveClass: "active",
-            imageCrossfade: true,
+    // if ($('#img_01').length > 0) {
+    //     //initiate the plugin and pass the id of the div containing gallery images
+    //     $("#img_01").elevateZoom({
+    //         // zoomType: "lens",
+    //         // lensShape: "round",
+    //         gallery: 'gal1',
+    //         zoomWindowFadeIn: 500,
+    //         zoomWindowFadeOut: 500,
+    //         lensFadeIn: 500,
+    //         lensFadeOut: 500,
+    //         constrainType: "height",
+    //         zoomWindowWidth: 500,
+    //         zoomWindowHeight: 500,
+    //         scrollZoom: true,
+    //         cursor: 'pointer',
+    //         galleryActiveClass: "active",
+    //         imageCrossfade: true,
+    //     });
+    //
+    //
+    // }
+
+    jQuery(function () {
+
+        //вешаем плагин на контейнер-картинку
+        $(".my-foto-container").imagezoomsl();
+
+        //клик по превью-картинке
+        $(".my-foto").click(function () {
+
+            var that = this;
+
+            //копируем атрибуты из превью-картинки в контейнер-картинку
+            $(".my-foto-container").fadeOut(200, function () {
+
+                $(this).attr("src", $(that).attr("src"))              // путь до small картинки
+                    .attr("data-large", $(that).attr("data-large"))       // путь до big картинки
+
+                    //дополнительные атрибуты, если есть
+                    //.attr("data-title",       $(that).attr("data-title"))       // заголовок подсказки
+                    //.attr("data-help",        $(that).attr("data-help"))        // текст подсказки
+                    //.attr("data-text-bottom", $(that).attr("data-text-bottom")) // текст снизу картинки
+
+                    .fadeIn(200);
+            });
         });
-
-        // $("#zoom_03").elevateZoom({
-        //     gallery: 'gallery_01',
-        //     cursor: 'pointer',
-        //     galleryActiveClass: 'active',
-        //     imageCrossfade: true,
-        //     loadingIcon: 'http://www.elevateweb.co.uk/spinner.gif'
-        // });
-
-        //pass the images to Fancybox
-        // $("#img_01").bind("click", function (e) {
-        //     var ez = $('#img_01').data('elevateZoom');
-        //     $.fancybox(ez.getGalleryList());
-        //     return false;
-        // });
-    }
+    });
 
 
     if ($('.see-more-toogle').length > 0) {
@@ -570,12 +583,12 @@ $(document).ready(function () {
         });
     }
 
-if($('.left-scroll-mouse .overflow').length > 0) {
-    $('.left-scroll-mouse .overflow').mousewheel(function (e, delta) {
-        this.scrollLeft -= (delta * 40);
-        e.preventDefault();
-    });
-}
+    if ($('.left-scroll-mouse .overflow').length > 0) {
+        $('.left-scroll-mouse .overflow').mousewheel(function (e, delta) {
+            this.scrollLeft -= (delta * 40);
+            e.preventDefault();
+        });
+    }
 
 
     $('.item-qty').change(function () {
