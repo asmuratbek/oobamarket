@@ -139,7 +139,16 @@ TEMPLATES[0]['OPTIONS']['loaders'] = [
 
 # Use the Heroku-style specification
 # Raises ImproperlyConfigured exception if DATABASE_URL not in os.environ
-DATABASES['default'] = 'postgres:///market'
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'market',
+        'USER': 'postgres',
+        'PASSWORD': 'newpassword',
+        'HOST': '127.0.0.1',
+        'PORT': '5432',
+    }
+}
 
 # CACHING
 # ------------------------------------------------------------------------------
