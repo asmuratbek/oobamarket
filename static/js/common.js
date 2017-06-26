@@ -546,7 +546,7 @@ $(document).ready(function () {
     //
     //
     // }
-
+if ($('.my-foto-container').length > 0) {
     jQuery(function () {
 
         //вешаем плагин на контейнер-картинку
@@ -572,6 +572,7 @@ $(document).ready(function () {
             });
         });
     });
+}
 
 
     if ($('.see-more-toogle').length > 0) {
