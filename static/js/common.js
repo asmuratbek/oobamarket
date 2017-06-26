@@ -262,15 +262,16 @@ $(document).ready(function () {
 
     });
 
-    if($('.js-example-placeholder-single').length > 0)
-    {
+    if($('.js-example-placeholder-single').length > 0){
         $('.js-example-placeholder-single').selectize({
             create: false,
             sortField: 'text'
         });
     }
 
-    $('[data-toggle="tooltip"]').tooltip();
+    if ($('[data-toggle="tooltip"].shop-page').length > 0) {
+        $('[data-toggle="tooltip"]').tooltip();
+    }
 
     //Функция добавления товара в избранное
     $('.favorite-btn').click(function (event) {
