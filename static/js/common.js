@@ -262,11 +262,13 @@ $(document).ready(function () {
 
     });
 
-
-    $('.js-example-placeholder-single').selectize({
-        create: false,
-        sortField: 'text'
-    });
+    if($('.js-example-placeholder-single').length > 0)
+    {
+        $('.js-example-placeholder-single').selectize({
+            create: false,
+            sortField: 'text'
+        });
+    }
 
     $('[data-toggle="tooltip"]').tooltip();
 
@@ -778,14 +780,14 @@ $(document).ready(function () {
     };
 
     $.fn.clearRating = function () {
-       if (this.hasAttr('data-stars-count')) {
-           $(this).attr('data-stars-count', 0);
-           $(this).attr('data-save-stars', 'false');
-           $(this).find('i').each(function (i, obj) {
-               $(obj).removeClass('active');
-           });
-           return true;
-       }
+        if (this.hasAttr('data-stars-count')) {
+            $(this).attr('data-stars-count', 0);
+            $(this).attr('data-save-stars', 'false');
+            $(this).find('i').each(function (i, obj) {
+                $(obj).removeClass('active');
+            });
+            return true;
+        }
     };
 
     $('.star-behaviour').each(function (p_i, p_obj) {
@@ -864,15 +866,15 @@ $(document).ready(function () {
 
     if ($('.demo-x').length > 0) {
         $(".demo-x").mCustomScrollbar({
-					axis:"x",
-					scrollInertia: 200,
-					moveDragger:true,
-					contentTouchScroll: 200,
-					handlers: 'touch',
-					wheelPropagation: true,
-					theme:"dark",
-					advanced:{autoExpandHorizontalScroll:true}
-				});
+            axis: "x",
+            scrollInertia: 200,
+            moveDragger: true,
+            contentTouchScroll: 200,
+            handlers: 'touch',
+            wheelPropagation: true,
+            theme: "dark",
+            advanced: {autoExpandHorizontalScroll: true}
+        });
     }
 
 
