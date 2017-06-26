@@ -75,3 +75,4 @@ staticfiles/
 
 .cache/
 !/dump/media/
+/config/settings/local.py
