@@ -9,7 +9,7 @@ DJANGODIR="/var/www/ooba"                               # Django Project Directo
 USER=root                                            # the user to run as
 GROUP=root                                           # the group to run as
 NUM_WORKERS=3                                                   # No. of worker processes Gunicorn should spawn
-DJANGO_SETTINGS_MODULE=config.settings.production               # Settings file that Gunicorn should use
+DJANGO_SETTINGS_MODULE=config.settings.prod               # Settings file that Gunicorn should use
 DJANGO_WSGI_MODULE=config.wsgi                                  # WSGI module name
 
 
@@ -36,4 +36,4 @@ exec gunicorn ${DJANGO_WSGI_MODULE}:application \
         --workers $NUM_WORKERS \
         --user=$USER --group=$GROUP \
         --log-level=debug \
-        --bind=176.31.28.85:8000
+        --bind=176.31.28.85:80
