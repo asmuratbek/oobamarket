@@ -41,10 +41,10 @@
                         <div class="col-md-12">
                             <div id="contact-wrapper">
                                 <div class="inlines">
-                                 <h2>Контакты:</h2>
-                                     {% for form in formset %}
-                                            {{ form }}
-                                        {% endfor %}
+                                    <h2>Контакты:</h2>
+                                    {% for form in formset %}
+                                        {{ form }}
+                                    {% endfor %}
                                     {{ formset.management_form }}
                                 </div>
                             </div>
@@ -80,26 +80,28 @@
 
 {% endblock %}
 {% block js %}
+
+    {{ block.super }}
     <script src="{% static 'js/jquery.2.2.4.js' %}"></script>
     <script src="{% static 'js/previewLogos.js' %}"></script>
     <script type="text/html" id="contact-template">
-    <div class="inline-__prefix__">
-        {{ formset.empty_form }}
-    </div>
+        <div class="inline-__prefix__">
+            {{ formset.empty_form }}
+        </div>
     </script>
     <script>
 
-        $(function() {
-        $('#add-new-contact').click(function(ev){
-            ev.preventDefault();
-            var count = parseInt($('#id_contacts_set-TOTAL_FORMS').attr('value'), 10);
-            var tmplMarkup = $('#contact-template').html();
-            var compiledTmpl = tmplMarkup.replace(/__prefix__/g, count)
-            console.log(compiledTmpl);
-            $('div.inlines').append(compiledTmpl);
-            $('#id_contacts_set-TOTAL_FORMS').attr('value', count + 1);
+        $(function () {
+            $('#add-new-contact').click(function (ev) {
+                ev.preventDefault();
+                var count = parseInt($('#id_contacts_set-TOTAL_FORMS').attr('value'), 10);
+                var tmplMarkup = $('#contact-template').html();
+                var compiledTmpl = tmplMarkup.replace(/__prefix__/g, count)
+                console.log(compiledTmpl);
+                $('div.inlines').append(compiledTmpl);
+                $('#id_contacts_set-TOTAL_FORMS').attr('value', count + 1);
+            });
         });
-    });
 
 
     </script>
