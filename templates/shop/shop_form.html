@@ -13,27 +13,69 @@
                     <div class="col-md-8">
                         <div class="form-group input col-md-6">
                             <label for="">Название магазина</label>
-                            {% render_field form.title|attr:"type:text" placeholder="Название магазина" %}
+                            {% render_field form.title|attr:"type:text" placeholder="" %}
                         </div>
 
                         <div class="form-group input col-md-6">
                             <label for="">E-mail магазина:</label>
-                            {% render_field form.email|attr:"type:email" placeholder="E-mail магазина:" %}
+                            {% render_field form.email|attr:"type:email" placeholder="" %}
                         </div>
+
+                        <div class="form-group input col-md-6">
+                            <label for="">Телефон</label>
+                            <input type="text" class="form-control">
+                        </div>
+
+                        <div class="form-group input col-md-6">
+                            <label for="">Адрес магазина:</label>
+                            <input type="text" class="form-control">
+                        </div>
+
+                        <div class="form-group select col-md-6" style="margin-top: 10px">
+                            <select class="form-control">
+
+                                <option>Торговая точка:</option>
+                                <option value="663">Тренажеры и фитнес</option>
+                                <option value="676">Охота и рыбалка</option>
+                                <option value="684">Туризм и отдых на природе</option>
+                                <option value="698">Водный спорт</option>
+                                <option value="710">Велоспорт и другое</option>
+                                <option value="723">Игры и спорт</option>
+                                <option value="733">Музыкальные инструменты</option>
+                                <option value="744">Книги</option>
+                                <option value="759"> Хобби и творчество</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group input col-md-6" style="margin-top: 10px">
+                            <label class="switch">
+                                <input checked="checked" class="switch__input" id="id_published" name="published"
+                                       type="checkbox">
+                                <div class="switch__toggle">
+                                    <div class="switch__handle"></div>
+                                </div>
+                            </label>
+                            <label>Опубликовать</label>
+                        </div>
+
+                        <div class="form-group col-md-12" style="margin-top: 10px; margin-bottom: 40px">
+                            <button type="button" id="add-new-contact" class="btn add">Добавить форму</button>
+                        </div>
+
                         <div class="form-group input col-md-12">
                             <label for="">Короткое описание магазина:</label>
                             {% render_field form.short_description|attr:"rows:6" placeholder="Введите до 300 символов" %}
                         </div>
                         <div class="form-group input col-md-12">
-                            <label for="">Полное описание магазина:</label>
+                            <label for="">О компании</label>
                             {#                        <textarea class="form-control" rows="6"></textarea>#}
                             {% render_field form.description|attr:"rows:6" placeholder="Введите полное описание" %}
                         </div>
-                        <div class="form-group input col-md-12">
-                            <label for="">Торговые точки:</label>
-                            {#                        <textarea class="form-control" rows="6"></textarea>#}
-                            {% render_field form.place %}
-                        </div>
+                        {#                        <div class="form-group input col-md-12">#}
+                        {#                            <label for="">Торговые точки:</label>#}
+                        {#                        <textarea class="form-control" rows="6"></textarea>#}
+                        {#                            {% render_field form.place %}#}
+                        {#                        </div>#}
                         <div class="col-md-12">
                             <div id="contact-wrapper">
                                 <div class="inlines">
@@ -46,6 +88,8 @@
                             </div>
                             <button type="button" id="add-new-contact" class="btn btn-primary">Add new</button>
                         </div>
+
+
                         <div class="form-group btn-group-form col-md-12">
                             <button type="submit" class="btn add">Сохранить</button>
                         </div>
