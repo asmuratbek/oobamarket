@@ -105,7 +105,8 @@
             <ul class="category-tab">
 
 {#                <li class="active"><a href="{% url 'product:add_product' slug=object.slug %}">Товары</a></li>#}
-                <li><a href="{% url 'shops:sale_detail' slug=object.slug %}">Акции</a></li>
+                <li><a href="{% url 'shops:about_us' slug=object.slug %}">О компании</a></li>
+                <li><a href="{% url 'shops:sale' slug=object.slug %}">Акции</a></li>
                 <li><a href="">Отзывы</a></li>
 {#                <li><a class="remove delete-object model-trigger" data-url="{% url 'shops:delete' slug=object.slug %}" style="cursor: pointer;">Удалить магазин</a></li>#}
                 <li><a href="{% url 'shops:contacts_detail' slug=object.slug %}">Контакты</a></li>

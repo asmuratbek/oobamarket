@@ -28,7 +28,7 @@ class ShopDetailView(generic.DetailView):
     model = Shop
 
 
-class ShopSaleListView(generic.ListView):
+class ShopSaleListView(generic.DetailView):
     model = Shop
     template_name = 'shop/sale.html'
 
