@@ -32,13 +32,11 @@ class Shop(PublishBaseModel):
     user = models.ManyToManyField(to=User, verbose_name='Администратор магазина')
     title = models.CharField(max_length=255, verbose_name='Название магазина')
     slug = models.CharField(max_length=32, verbose_name='Название на транслите', unique=True)
-    phone = models.CharField(_("Телефон"), max_length=20, default='')
     email = models.EmailField(verbose_name='E-mail магазина')
     short_description = models.TextField(verbose_name='Короткое описание магазина')
     description = models.TextField(verbose_name='Полное описание магазина')
     logo = models.ImageField(upload_to='images/shop/logo/', default=settings.DEFAULT_IMAGE,
                              verbose_name='Логотип')
-    place = models.ManyToManyField('Place', blank=True, verbose_name="Торговые точки")
 
 
     def __str__(self):
@@ -101,6 +99,7 @@ class Banners(models.Model):
     image = models.ImageField(upload_to='images/shop/banners/', verbose_name='Изображение банера')
     shop = models.ForeignKey(Shop, on_delete=models.CASCADE, null=True, blank=True)
 
+
     def save(self, *args, **kwargs):
         super(Banners, self).save(*args, **kwargs)
         self.title = str(self.image)
@@ -114,12 +113,13 @@ class Contacts(PublishBaseModel):
         verbose_name = 'Контакт'
         verbose_name_plural = 'Контакты'
 
-    contact_type = models.CharField(choices=CONTACT_TYPES, verbose_name='Тип контактных данных', max_length=20)
-    contact_value = models.CharField(max_length=700, verbose_name='Текст данных', null=True, blank=True)
+    address = models.CharField(verbose_name='Адрес', max_length=255, null=True, blank=True)
+    phone = models.CharField(max_length=255, verbose_name='Телефон', null=True, blank=True)
     shop = models.ForeignKey(Shop, verbose_name='Магазин', null=True)
+    place = models.ForeignKey('Place', verbose_name='Торговая точка', null=True, blank=True)
 
     def __str__(self):
-        return "{} - {}".format(self.contact_type, self.shop)
+        return "{} - {}".format(self.address, self.shop)
 
 
 class SocialLinks(models.Model):
