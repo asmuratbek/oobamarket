@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import JsonResponse, HttpResponseRedirect, HttpResponseBadRequest
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, get_object_or_404, redirect, render_to_response
 from django.urls import reverse
 from django.views import View
 from django.views import generic
@@ -15,9 +15,9 @@ from slugify import slugify
 from apps.shop.mixin import FormsetMixin
 from config.settings import base
 from apps.shop.decorators import delete_decorator
-from apps.shop.forms import ShopForm, ShopBannersForm, ShopSocialLinksForm, ShopInlineFormSet
+from apps.shop.forms import ShopForm, ShopBannersForm, ShopSocialLinksForm, ShopInlineFormSet, SalesCreateForm
 from apps.users.mixins import AddBannerMixin, AddSocialLinksMixin, UpdateShopMixin, DeleteShopMixin
-from .models import Shop, SocialLinks, Banners, Contacts
+from .models import Shop, SocialLinks, Banners, Contacts, Sales
 import random
 
 
@@ -33,13 +33,44 @@ class ShopSaleListView(generic.DetailView):
     template_name = 'shop/sale.html'
 
 
-class ShopSaleDetailView(generic.DetailView):
-    model = Shop
-    template_name = 'shop/sale_detail.html'
+def sale_detail(request, slug, pk):
+    shop = get_object_or_404(Shop, slug=slug)
+    sale = get_object_or_404(Sales, pk=pk)
+
+    context = {
+        'shop': shop,
+        'sale': sale
+    }
+
+    return render(request, 'shop/sale_detail.html', context)
+
+
+class SalesCreateView(LoginRequiredMixin, CreateView):
+    form_class = SalesCreateForm
+    template_name = 'shop/sale_create.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(SalesCreateView, self).get_context_data(**kwargs)
+        context['slug'] = self.kwargs['slug']
+        return context
+
+    def get_success_url(self):
+        return reverse('shops:sale', kwargs={'slug': self.kwargs['slug']})
+
+    def get_initial(self):
+        return {'user': self.request.user,
+                'shop': Shop.objects.get(slug=self.kwargs['slug'])}
+
+    def form_valid(self, form, **kwargs):
+        form.instance.shop = Shop.objects.get(slug=self.kwargs['slug'])
+        form.save()
+        return super(SalesCreateView, self).form_valid(form)
+
 
 class ShopAboutUsDetailView(generic.DetailView):
     model = Shop
     template_name = 'shop/about-us.html'
+
 
 class ShopListView(generic.ListView):
     model = Shop

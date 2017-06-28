@@ -1,5 +1,5 @@
 from django.forms import ModelForm, forms, inlineformset_factory
-from .models import Shop, Banners, SocialLinks, Contacts
+from .models import Shop, Banners, SocialLinks, Contacts, Sales
 
 
 # class ShopForm(ModelForm):
@@ -33,7 +33,6 @@ class ShopBannersForm(ModelForm):
         fields = ['title', 'image']
 
 
-
 class ShopSocialLinksForm(ModelForm):
     class Meta:
         model = SocialLinks
@@ -50,7 +49,13 @@ class ShopSocialLinksForm(ModelForm):
 class ShopContactInline(ModelForm):
     class Meta:
         model = Contacts
-        fields = ('published', 'phone', 'address',  'shop',)
+        fields = ('published', 'phone', 'address', 'shop',)
 
 
 ShopInlineFormSet = inlineformset_factory(Shop, Contacts, extra=1, fields=('published', 'phone', 'address', 'place'))
+
+
+class SalesCreateForm(ModelForm):
+    class Meta:
+        model = Sales
+        exclude = ['shop']

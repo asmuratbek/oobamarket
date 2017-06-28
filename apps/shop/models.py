@@ -1,6 +1,6 @@
 # coding=utf-8
 from __future__ import unicode_literals
-
+from ckeditor_uploader.fields import RichTextUploadingField
 from django.core.mail import send_mail
 from django.db import models
 from django.db.models.signals import post_save
@@ -37,7 +37,6 @@ class Shop(PublishBaseModel):
     description = models.TextField(verbose_name='Полное описание магазина')
     logo = models.ImageField(upload_to='images/shop/logo/', default=settings.DEFAULT_IMAGE,
                              verbose_name='Логотип')
-
 
     def __str__(self):
         return self.title
@@ -99,7 +98,6 @@ class Banners(models.Model):
     image = models.ImageField(upload_to='images/shop/banners/', verbose_name='Изображение банера')
     shop = models.ForeignKey(Shop, on_delete=models.CASCADE, null=True, blank=True)
 
-
     def save(self, *args, **kwargs):
         super(Banners, self).save(*args, **kwargs)
         self.title = str(self.image)
@@ -130,9 +128,8 @@ class SocialLinks(models.Model):
     facebook = models.CharField(max_length=255, verbose_name='Facebook', null=True, blank=True)
     vk = models.CharField(max_length=255, verbose_name='VK', null=True, blank=True)
     instagram = models.CharField(max_length=255, verbose_name='Instagram', null=True, blank=True)
-    twitter =  models.CharField(max_length=255, verbose_name='Twitter', null=True, blank=True)
+    twitter = models.CharField(max_length=255, verbose_name='Twitter', null=True, blank=True)
     shop = models.OneToOneField(Shop, on_delete=models.CASCADE)
-
 
     def __str__(self):
         return str(self.shop)
@@ -142,8 +139,8 @@ def create_social_links(sender, **kwargs):
     if kwargs['created']:
         social_links = SocialLinks.objects.create(shop=kwargs['instance'])
 
-post_save.connect(create_social_links, sender=Shop)
 
+post_save.connect(create_social_links, sender=Shop)
 
 PlACE_TYPE = (
     ('mall', "Торговый центр"),
@@ -152,7 +149,6 @@ PlACE_TYPE = (
 
 
 class Place(PublishBaseModel):
-
     class Meta:
         verbose_name = "Торговая точка"
         verbose_name_plural = "Торговые точки"
@@ -162,3 +158,19 @@ class Place(PublishBaseModel):
 
     def __str__(self):
         return "{}-{}".format(self.get_type_display(), self.title)
+
+
+class Sales(PublishBaseModel):
+    class Meta:
+        verbose_name = "Акция"
+        verbose_name_plural = "Акции"
+
+    shop = models.ForeignKey(Shop, verbose_name='Магазин', on_delete=models.CASCADE, null=True, blank=True)
+    title = models.CharField(max_length=50, verbose_name='Название акции')
+    short_description = models.CharField(max_length=155, verbose_name='Короткое описание')
+    description = RichTextUploadingField()
+    discount = models.IntegerField(verbose_name='Скидка')
+    image = models.ImageField(upload_to='shops/sales', verbose_name='Изображение')
+
+    def __str__(self):
+        return self.title
