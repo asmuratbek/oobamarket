@@ -8,6 +8,8 @@ import ProductsCount from './components/ProductsCount';
 import ShopList from './components/ShopList';
 import axios from 'axios';
 import _ from 'lodash';
+import AlertContainer from 'react-alert';
+import Alert from './components/Alert';
 
 
 
@@ -199,6 +201,7 @@ var MainInterface = createClass({
 
     return (
       <div>
+      <Alert/>
       <ShopList
         shops = { filteredShops }
       />

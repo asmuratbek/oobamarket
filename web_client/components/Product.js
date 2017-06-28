@@ -1,9 +1,28 @@
-import React from 'react'
-import createClass from 'create-react-class'
+import React from 'react';
+import createClass from 'create-react-class';
+import AlertContainer from 'react-alert';
 
 
 var ProductList = createClass({
   displayName: 'Product',
+
+  showAlert: function(e) {
+    console.log(e.target.getAttribute("data-message"));
+    this.msg.show(e.target.getAttribute("data-message"), {
+      time: 3000,
+      type: 'success',
+      icon: <img src="http://merp.mx/lib/css/icon/success-32.png" />
+    })
+  },
+
+  // render () {
+  //   return (
+  //     <div>
+  //       <AlertContainer ref={a => this.msg = a} {...this.alertOptions} />
+  //       <button onClick={this.showAlert}>Show Alert</button>
+  //     </div>
+  //   )
+  // }
 
   deliveryColor: function(product) {
       if (this.props.product.delivery_type == 'paid') {
@@ -26,8 +45,11 @@ var ProductList = createClass({
       }
   },
 
-  addOrRemoveFromCart : function (product) {
-
+  addOrRemoveFromCart : function (e) {
+      e.preventDefault();
+      var target = e.target || e.srcElement;
+      console.log(target)
+      var showAlert = this.showAlert(e)
       $.ajax({
           type: "GET",
           url: "/cart/",
@@ -36,8 +58,17 @@ var ProductList = createClass({
                   "item":  this.props.product.id
               },
           success: function (data) {
-              this.showFlashMessage(data.flash_message)
-
+              $('.cart-count').text(data.total_items);
+              if (data.item_added) {
+                      target.innerHTML = '<span class="glyphicon glyphicon-shopping-cart"></span>В корзине';
+                      target.classList.toggle("in-the-basket");
+                      target.setAttribute('data-message', "Товар успешно удален из корзины");
+                  }
+                  else if (data.deleted) {
+                      target.innerHTML = '<span class="glyphicon glyphicon-shopping-cart"></span>Добавить в корзину';
+                      target.classList.remove("in-the-basket");
+                      target.setAttribute('data-message', "Товар успешно добавлен в корзину");
+                  }
           },
           error: function (response, error) {
               console.log(response);
@@ -48,7 +79,7 @@ var ProductList = createClass({
 
   inCart : function (product) {
     return (
-        <a className="add-basket in-the-basket" data-product-id={this.props.product.id} onClick={() => this.addOrRemoveFromCart(product)}>
+        <a href="#" className="add-basket in-the-basket" data-product-id={this.props.product.id} data-message="Товар успешно удален из корзины" onClick={this.addOrRemoveFromCart}>
                       <span className="glyphicon glyphicon-shopping-cart"></span>
                       В корзине
                   </a>
@@ -57,7 +88,7 @@ var ProductList = createClass({
 
   notInCart : function (product) {
     return (
-        <a className="add-basket" data-product-id={this.props.product.id} onClick={() => this.addOrRemoveFromCart(product)}>
+        <a href="#" className="add-basket" data-product-id={this.props.product.id} data-message="Товар успешно добавлен в корзину" onClick={this.addOrRemoveFromCart}>
                       <span className="glyphicon glyphicon-shopping-cart"></span>
                       Добавить в корзину
                   </a>
@@ -77,9 +108,18 @@ var ProductList = createClass({
   },
 
   render: function(){
+
+    var alertOptions = {
+      offset: 14,
+      position: 'bottom left',
+      theme: 'light',
+      time: 5000,
+      transition: 'scale',
+    }
     return (
 
         <div className="col-md-3 col-sm-6">
+        <AlertContainer ref={a => this.msg = a} {...this.alertOptions} />
           <div className="cover">
               <a className="url-item" href={this.props.product.detail_view}></a>
               <div className="top-line">
