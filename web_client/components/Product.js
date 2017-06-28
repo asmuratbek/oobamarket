@@ -45,10 +45,37 @@ var ProductList = createClass({
       }
   },
 
+  AddOrRemoveFavorite: function(e) {
+    e.preventDefault();
+    var target = e.target || e.srcElement;
+    var showAlert = this.showAlert(e);
+    $.ajax({
+            type: "GET",
+            url: "/favorite/add",
+            data: {
+                'item': this.props.product.id
+            },
+            success: function (data) {
+                if (data.created) {
+                    target.parentElement.classList.toggle("like");
+                    target.parentElement.setAttribute('data-message', "Товар удален из избранных");
+                }
+                else {
+                    target.parentElement.classList.remove("like");
+                    target.parentElement.setAttribute('data-message', "Товар добавлен в избранное");
+                }
+                $('.favorites_count').text(data.favorites_count)
+            },
+            error: function (response, error) {
+                console.log(response);
+                console.log(error);
+            }
+        })
+  },
+
   addOrRemoveFromCart : function (e) {
       e.preventDefault();
       var target = e.target || e.srcElement;
-      console.log(target)
       var showAlert = this.showAlert(e)
       $.ajax({
           type: "GET",
@@ -160,7 +187,7 @@ var ProductList = createClass({
               <div className="bottom-line">
                   {this.isInCart(this.props.product)}
                   {this.deliveryColor(this.props.product)}
-                  <span className={`hearth pull-right ${this.props.product.is_favorite && `like`}`} data-product-id={this.props.product.id}><i className="glyphicon glyphicon-heart"></i></span>
+                  <span className={`hearth pull-right ${this.props.product.is_favorite && `like`}`} data-product-id={this.props.product.id} onClick={this.AddOrRemoveFavorite}><i data-message={this.props.product.is_favorite ? "Товар удален из избранных" : "Товар добавлен в избранное"} className="glyphicon glyphicon-heart"></i></span>
 
               </div>
           </div>
