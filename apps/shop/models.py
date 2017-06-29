@@ -18,11 +18,6 @@ SOCIAL_LINKS = (
     ('instagram', u'Instagram.com')
 )
 
-CONTACT_TYPES = (
-    ('phone', 'Номер телефона'),
-    ('address', 'Адрес')
-)
-
 
 class Shop(PublishBaseModel):
     class Meta:

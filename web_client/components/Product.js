@@ -104,6 +104,11 @@ var ProductList = createClass({
       });
   },
 
+  changePublishStatus: function(e) {
+    e.preventDefault()
+    console.log(e.target.getAttribute("data-product-id"))
+  },
+
   inCart : function (product) {
     return (
         <a href="#" className="add-basket in-the-basket" data-product-id={this.props.product.id} data-message="Товар успешно удален из корзины" onClick={this.addOrRemoveFromCart}>
@@ -159,8 +164,8 @@ var ProductList = createClass({
                   {this.props.product.is_owner ?
                       <div>
                           <a className="edited glyphicon glyphicon-cog" href={`/products/${this.props.product.slug}/update_product/`} data-toggle="tooltip" title="" data-placement="bottom" data-original-title="Редактировать"></a>
-                          <a className={`eye glyphicon glyphicon-eye-${this.props.product.published ? 'open' : 'close'}`} data-toggle="tooltip" title="" data-placement="bottom" data-original-title="Скрыть" data-status={`${this.props.product.published ? false : true}`}></a>
-                          <a className="remove glyphicon glyphicon-remove-circle model-trigger"  data-url={this.props.product.delete_url} data-toggle="modal" data-target="#DeleteModal" title="" data-placement="bottom" data-original-title="Удалить"></a>
+                          <a href="#" className={`eye glyphicon glyphicon-eye-${this.props.product.published ? 'open' : 'close'}`} data-product-id={this.props.product.id} data-toggle="tooltip" title="" data-placement="bottom" data-original-title="Скрыть" data-status={`${this.props.product.published ? false : true}`} onClick={this.changePublishStatus}></a>
+                          <a href="#" className="remove glyphicon glyphicon-remove-circle model-trigger"  data-url={this.props.product.delete_url} data-toggle="modal" data-target="#DeleteModal" title="" data-placement="bottom" data-original-title="Удалить"></a>
                       </div>
                   :null}
 

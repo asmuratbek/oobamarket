@@ -99,18 +99,18 @@ class ShopCreateViewTest(TestCase):
         im_io.seek(0)
         img = InMemoryUploadedFile(im_io, None, 'some-logo.jpg', 'image/jpeg', 3204, None)
         data = {'contacts_set-MAX_NUM_FORMS': '1000', 'email': self.user.email,
-                'contacts_set-2-shop': '', 'contacts_set-2-contact_type': 'phone',
+                'contacts_set-2-shop': '', 'contacts_set-2-phone': '0707170017',
                 'contacts_set-2-id': '', 'contacts_set-TOTAL_FORMS': '3', 'contacts_set-0-shop': '',
                 'place': [places[0].id, places[1].id], 'contacts_set-1-shop': '',
                 'description': 'Купи слона',
-                'contacts_set-2-contact_value': 'Some value 2', 'contacts_set-MIN_NUM_FORMS': '0',
-                'contacts_set-0-contact_type': 'address', 'contacts_set-0-contact_value': 'Some value 0',
-                'phone': '9965596677492', 'contacts_set-1-id': '', 'contacts_set-0-id': '',
-                'contacts_set-2-published': 'on', 'contacts_set-1-contact_value': 'Some value 1',
+                'contacts_set-2-address': 'Some value 2', 'contacts_set-MIN_NUM_FORMS': '0',
+                'contacts_set-0-phone': 'address', 'contacts_set-0-address': 'Some value 0',
+                'contacts_set-1-id': '', 'contacts_set-0-id': '',
+                'contacts_set-2-published': 'on', 'contacts_set-1-phone': 'Some value 1',
                 'contacts_set-0-published': 'on', 'contacts_set-1-published': 'on',
                 'contacts_set-INITIAL_FORMS': '0', 'title': 'Купи слона',
                 'short_description': 'Some short description',
-                'contacts_set-1-contact_type': 'address', 'logo': img}
+                'contacts_set-1-address': 'address', 'logo': img}
         self.client.login(username=self.user.username, password='password')
         response = self.client.post(reverse('shops:create'), data=data)
         self.assertEqual(response.status_code, 302)
@@ -128,8 +128,7 @@ class ShopUdateViewTest(TestCase):
     def test_should_update_shop_if_all_values_is_valid(self):
         shop = ShopFactory()
         generate_str = ''.join([random.choice(string.ascii_lowercase) for i in range(10)])
-        places = [PlaceFactory(title=generate_str, type='mall') for i in range(2)]
-        contacts = [ContactsFactory(contact_type='phone', contact_value='value-%s' % i, shop=shop) for i in range(3)]
+        contacts = [ContactsFactory(address='phone', phone='value-%s' % i, shop=shop) for i in range(3)]
         im = Image.new(mode='RGB', size=(200, 200,))
         im_io = BytesIO()
         im.save(im_io, 'JPEG')
@@ -137,28 +136,23 @@ class ShopUdateViewTest(TestCase):
         img = InMemoryUploadedFile(im_io, None, 'some-logo.jpg', 'image/jpeg', 3204, None)
         shop.logo = img
         shop.user.add(self.user)
-        shop.place.add(places[0])
-        shop.place.add(places[1])
         shop.save()
-        new_places = [PlaceFactory(title=generate_str, type='market') for i in range(2)]
         data = {'contacts_set-MAX_NUM_FORMS': '1000', 'email': 'some_new_email@email.com',
-                'contacts_set-2-shop': shop.id, 'contacts_set-2-contact_type': 'phone',
+                'contacts_set-2-shop': shop.id, 'contacts_set-2-address': 'phone',
                 'contacts_set-2-id': contacts[2].id, 'contacts_set-TOTAL_FORMS': '3', 'contacts_set-0-shop': shop.id,
-                'place': [new_places[0].id, new_places[1].id], 'contacts_set-1-shop': shop.id,
+                'contacts_set-1-shop': shop.id,
                 'description': 'Some new description',
-                'contacts_set-2-contact_value': 'Some new_value 2', 'contacts_set-MIN_NUM_FORMS': '0',
-                'contacts_set-0-contact_type': 'address', 'contacts_set-0-contact_value': 'Some new_value 0',
+                'contacts_set-2-phone': 'Some new_value 2', 'contacts_set-MIN_NUM_FORMS': '0',
+                'contacts_set-0-address': 'address', 'contacts_set-0-phone': 'Some new_value 0',
                 'phone': '9965596677492', 'contacts_set-1-id': contacts[1].id, 'contacts_set-0-id': contacts[0].id,
-                'contacts_set-2-published': 'off', 'contacts_set-1-contact_value': 'Some new_value 1',
+                'contacts_set-2-published': 'off', 'contacts_set-1-phone': 'Some new_value 1',
                 'contacts_set-0-published': 'on', 'contacts_set-1-published': 'on',
                 'contacts_set-INITIAL_FORMS': '0', 'title': 'Купи слона',
                 'short_description': 'Some short description',
-                'contacts_set-1-contact_type': 'address', 'logo': ''}
+                'contacts_set-1-address': 'address', 'logo': ''}
         self.client.login(username=self.user.username, password='password')
         response = self.client.post(reverse('shops:update', kwargs={'slug': shop.slug}), data=data)
         self.assertEqual(response.status_code, 302)
-        self.assertEqual(self.user.shop_set.last().place.first().type, 'market')
-        self.assertEqual(self.user.shop_set.last().place.count(), 2)
         self.assertEqual(self.user.shop_set.last().email, 'some_new_email@email.com')
         self.addCleanup(os.remove, media + 'images/shop/logo/some-logo.jpg')
 
