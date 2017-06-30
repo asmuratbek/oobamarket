@@ -16,7 +16,7 @@ from apps.shop.mixin import FormsetMixin
 from config.settings import base
 from apps.shop.decorators import delete_decorator
 from apps.shop.forms import ShopForm, ShopBannersForm, ShopSocialLinksForm, ShopInlineFormSet, SalesCreateForm
-from apps.users.mixins import AddBannerMixin, AddSocialLinksMixin, UpdateShopMixin, DeleteShopMixin
+from apps.users.mixins import ShopMixin
 from .models import Shop, SocialLinks, Banners, Contacts, Sales
 import random
 
@@ -100,7 +100,7 @@ class ShopCreateView(LoginRequiredMixin, FormsetMixin, CreateView):
         return super(ShopCreateView, self).form_valid(form, formset)
 
 
-class ShopUpdateView(LoginRequiredMixin, FormsetMixin, UpdateShopMixin, UpdateView):
+class ShopUpdateView(LoginRequiredMixin, FormsetMixin, ShopMixin, UpdateView):
     model = Shop
     is_update_view = True
     form_class = ShopForm
@@ -108,13 +108,13 @@ class ShopUpdateView(LoginRequiredMixin, FormsetMixin, UpdateShopMixin, UpdateVi
     template_name = 'shop/shop_update.html'
 
 
-class ShopDeleteView(LoginRequiredMixin, DeleteShopMixin, DeleteView):
+class ShopDeleteView(LoginRequiredMixin, ShopMixin, DeleteView):
     model = Shop
     template_name = 'layout/modal_shop_delete_confirm.html'
     success_url = '/'
 
 
-class ShopBannersView(LoginRequiredMixin, AddBannerMixin, CreateView):
+class ShopBannersView(LoginRequiredMixin, ShopMixin, CreateView):
     form_class = ShopBannersForm
     template_name = 'shop/shop_banner.html'
 
@@ -136,11 +136,11 @@ class ShopBannersView(LoginRequiredMixin, AddBannerMixin, CreateView):
         return super(ShopBannersView, self).form_valid(form)
 
 
-class ShopBannerDeleteView(LoginRequiredMixin, AddBannerMixin, DeleteView):
+class ShopBannerDeleteView(LoginRequiredMixin, ShopMixin, DeleteView):
     pass
 
 
-class ShopSocialLinksUpdateView(LoginRequiredMixin, AddSocialLinksMixin, UpdateView):
+class ShopSocialLinksUpdateView(LoginRequiredMixin, ShopMixin, UpdateView):
     model = SocialLinks
     form_class = ShopSocialLinksForm
     template_name = 'shop/shop_social_update.html'
@@ -173,7 +173,7 @@ def agreement(request):
     return render(request, 'shop/agreement.html', params)
 
 
-class CreateBanners(LoginRequiredMixin, AddBannerMixin, View):
+class CreateBanners(LoginRequiredMixin, ShopMixin, View):
     def get(self, request, *args, **kwargs):
         slug = self.kwargs['slug']
         shop = get_object_or_404(Shop, slug=slug)
