@@ -34,6 +34,7 @@ class ProductSerializer(ModelSerializer):
     is_favorite = SerializerMethodField()
     detail_view = SerializerMethodField()
     update_view = SerializerMethodField()
+    delete_view = SerializerMethodField()
     get_price_function = SerializerMethodField()
 
     class Meta:
@@ -62,6 +63,7 @@ class ProductSerializer(ModelSerializer):
             'is_favorite',
             'detail_view',
             'update_view',
+            'delete_view',
             'get_price_function',
             'created_at',
             'updated_at',
@@ -119,6 +121,9 @@ class ProductSerializer(ModelSerializer):
 
     def get_update_view(self, obj):
         return obj.get_update_url()
+
+    def get_delete_view(self, obj):
+        return obj.get_delete_url()
 
 
 class ProductCreateSerializer(ModelSerializer):

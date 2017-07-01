@@ -58,11 +58,11 @@ var ProductList = createClass({
             success: function (data) {
                 if (data.created) {
                     target.parentElement.classList.toggle("like");
-                    target.parentElement.setAttribute('data-message', "Товар удален из избранных");
+                    target.setAttribute('data-message', "Товар удален из избранных");
                 }
                 else {
                     target.parentElement.classList.remove("like");
-                    target.parentElement.setAttribute('data-message', "Товар добавлен в избранное");
+                    target.setAttribute('data-message', "Товар добавлен в избранное");
                 }
                 $('.favorites_count').text(data.favorites_count)
             },
@@ -105,8 +105,36 @@ var ProductList = createClass({
   },
 
   changePublishStatus: function(e) {
-    e.preventDefault()
-    console.log(e.target.getAttribute("data-product-id"))
+    e.preventDefault();
+    var target = e.target || e.srcElement;
+    console.log(target.getAttribute("data-product-id"))
+    $.ajax({
+                url: '/product/change_publish_status/',
+                type: 'GET',
+                data: {
+                    "item" : target.getAttribute("data-product-id"),
+                },
+                success: function (data) {
+                    if(target.getAttribute("data-status") == "false") {
+                      target.setAttribute('data-original-title', 'Скрытый');
+                      target.setAttribute('data-status', "true");
+                      target.setAttribute('data-message', "Товар успешно опубликован");
+                      target.classList.remove('glyphicon-eye-open');
+                      target.classList.toggle('glyphicon-eye-close');
+                      target.parentElement.parentElement.parentElement.classList.toggle('active');
+                    }
+                    else {
+                      target.setAttribute('data-original-title', 'Скрыть');
+                      target.setAttribute('data-status', "false");
+                      target.setAttribute('data-message', "Товар успешно скрыт");
+                      target.classList.toggle('glyphicon-eye-open');
+                      target.classList.remove('glyphicon-eye-close');
+                      target.parentElement.parentElement.parentElement.classList.remove('active');
+                    }
+
+                }
+            });
+    var showAlert = this.showAlert(e);
   },
 
   inCart : function (product) {
@@ -139,6 +167,54 @@ var ProductList = createClass({
       }
   },
 
+  handleDelete: function(product_id){
+    this.props.onProductDelete(product_id)
+  },
+
+  deleteProduct: function(e) {
+    e.preventDefault();
+    var handleDelete = this.handleDelete;
+    var product_id = e.target.getAttribute('data-product-id')
+    function initForm() {
+        $('#ProductDelete').on('submit', function (event) {
+            event.preventDefault();
+            // $("#DeleteModal").fadeOut();
+            $("#DeleteModal").modal('hide');
+            var that = this;
+            $(that).addClass('hidden');
+            $.ajax({
+                method: 'POST',
+                dataType: 'JSON',
+                data: $(that).serialize(),
+                url: $(that).attr('action'),
+                success: function (response) {
+                },
+                error: function (error) {
+                }
+            });
+            handleDelete(product_id);
+        });
+    }
+
+    var target = e.target;
+    var link = target.getAttribute('data-url');
+
+    $.ajax({
+        method: 'GET',
+        dataType: 'HTML',
+        url: link,
+        success: function (response) {
+            $('#ajax-modal-body').html(response);
+            initForm();
+            $('#application-form').append("{% csrf_token %}");
+
+        },
+        error: function () {
+
+        }
+    });
+  },
+
   render: function(){
 
     var alertOptions = {
@@ -151,8 +227,8 @@ var ProductList = createClass({
     return (
 
         <div className="col-md-3 col-sm-6">
-        <AlertContainer ref={a => this.msg = a} {...this.alertOptions} />
-          <div className="cover">
+        <AlertContainer ref={a => this.msg = a} {...alertOptions} />
+          <div className={this.props.product.published ? "cover" : "cover active"}>
               <a className="url-item" href={this.props.product.detail_view}></a>
               <div className="top-line">
 
@@ -164,8 +240,8 @@ var ProductList = createClass({
                   {this.props.product.is_owner ?
                       <div>
                           <a className="edited glyphicon glyphicon-cog" href={`/products/${this.props.product.slug}/update_product/`} data-toggle="tooltip" title="" data-placement="bottom" data-original-title="Редактировать"></a>
-                          <a href="#" className={`eye glyphicon glyphicon-eye-${this.props.product.published ? 'open' : 'close'}`} data-product-id={this.props.product.id} data-toggle="tooltip" title="" data-placement="bottom" data-original-title="Скрыть" data-status={`${this.props.product.published ? false : true}`} onClick={this.changePublishStatus}></a>
-                          <a href="#" className="remove glyphicon glyphicon-remove-circle model-trigger"  data-url={this.props.product.delete_url} data-toggle="modal" data-target="#DeleteModal" title="" data-placement="bottom" data-original-title="Удалить"></a>
+                          <a href="#" data-message={this.props.product.published ? "Товар успешно скрыт" : "Товар успешно опубликован"} className={`eye glyphicon glyphicon-eye-${this.props.product.published ? 'open' : 'close'}`} data-product-id={this.props.product.id} data-toggle="tooltip" title="" data-placement="bottom" data-original-title="Скрыть" data-status={`${this.props.product.published ? false : true}`} onClick={this.changePublishStatus}></a>
+                          <a href="#" className="remove glyphicon glyphicon-remove-circle model-trigger"  data-url={this.props.product.delete_view} data-toggle="modal" data-target="#DeleteModal" title="" data-placement="bottom" data-product-id={this.props.product.id} data-original-title="Удалить" onClick={this.deleteProduct}></a>
                       </div>
                   :null}
 

@@ -99,6 +99,9 @@ class Product(PublishBaseModel):
     def get_update_url(self):
         return reverse("product:update_product", kwargs={'slug': self.slug})
 
+    def get_delete_url(self):
+        return reverse("product:delete_product", kwargs={'slug': self.slug})
+
     def get_shop_url(self):
         return self.shop.get_absolute_url()
 

@@ -12,7 +12,6 @@ import AlertContainer from 'react-alert';
 import Alert from './components/Alert';
 
 
-
 var MainInterface = createClass({
   displayName: 'MainInterface',
 
@@ -28,7 +27,7 @@ var MainInterface = createClass({
       products: [],
       shops: [],
       categories: [],
-      activeCategories: []
+      activeCategories: [],
     }
   },
 
@@ -61,6 +60,16 @@ var MainInterface = createClass({
   deleteMessage: function(item) {
     var allProducts = this.state.products;
     var newProducts = _.without(allProducts, item);
+    this.setState({
+      products: newProducts
+    }); //setState
+  },
+  productDelete: function(item) {
+    var allProducts = this.state.products;
+    var deleted = _.remove(allProducts, function(n) {
+      return n.id == item;
+    });
+    var newProducts = _.without(allProducts, deleted);
     this.setState({
       products: newProducts
     }); //setState
@@ -123,6 +132,7 @@ var MainInterface = createClass({
     var deliveryType = this.state.deliveryType;
     var changeCategory = this.changeCategory;
     var activeCategories = this.state.activeCategories;
+    var productDelete = this.productDelete;
 
     allProducts.forEach(function(item) {
       if(item.title.toLowerCase().indexOf(queryText)!=-1)
@@ -155,6 +165,7 @@ var MainInterface = createClass({
       shopTitles.push(item.shop);
       return(
         <Product key = { index }
+          onProductDelete={productDelete}
           product = { item } />
       ) //return
     }.bind(this));
@@ -201,7 +212,6 @@ var MainInterface = createClass({
 
     return (
       <div>
-      <Alert/>
       <ShopList
         shops = { filteredShops }
       />

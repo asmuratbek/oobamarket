@@ -62,6 +62,7 @@
     "gulp-install": "^1.1.0",
     "gulp-react": "^3.1.0",
     "pui-react-alerts": "^8.3.1",
-    "react-alert": "^2.1.2"
+    "react-alert": "^2.1.2",
+    "react-modal": "^2.2.1"
   }
 }

@@ -71,11 +71,13 @@ $(document).ready(function () {
 
 
     //Функция инициализации оправки формы для удаления товара
-    function initForm() {
+    function initForm(product) {
         $('#ProductDelete').on('submit', function (event) {
             event.preventDefault();
             var that = this;
             $(that).addClass('hidden');
+            $("#DeleteModal").modal('hide');
+
             $.ajax({
                 method: 'POST',
                 dataType: 'JSON',
@@ -83,13 +85,12 @@ $(document).ready(function () {
                 url: $(that).attr('action'),
                 success: function (response) {
                     console.log(response);
-                    console.log($("#DeleteModal"));
-                    console.log('hhhey')
                 },
                 error: function (error) {
                     console.log(error);
                 }
             });
+            product.fadeOut();
         });
     }
 
@@ -104,13 +105,14 @@ $(document).ready(function () {
     $(trigger).each(function (i, obj) {
         $(obj).on('click', function (event) {
             var link = $(this).attr('data-url');
+            var that = $(this);
             $.ajax({
                 method: 'GET',
                 dataType: 'HTML',
                 url: link,
                 success: function (response) {
                     $('#ajax-modal-body').html(response);
-                    initForm();
+                    initForm(that.parent().parent().parent());
                     $('#application-form').append("{% csrf_token %}");
                 },
                 error: function () {
