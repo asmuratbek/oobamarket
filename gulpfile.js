@@ -83,6 +83,27 @@ gulp.task('shop', function(){
 
 });
 
+gulp.task('category', function(){
+   return browserify({
+            entries: './web_client/category_detail.js',
+            extensions: ['.jsx'],
+            debug: true
+        })
+        .transform('babelify', {
+            presets: ['es2015', 'react'],
+            plugins: ['transform-class-properties']
+        })
+        .bundle()
+        .on('error', function(err){
+            gutil.log(gutil.colors.red.bold('[browserify error]'));
+            gutil.log(err.message);
+            this.emit('end');
+        })
+        .pipe(source('category_detail.js'))
+        .pipe(gulp.dest('static/js'));
+
+});
+
 gulp.task('watch', function () {
     gulp.watch('gulp/sass/*.sass', ['styles']);
 });
