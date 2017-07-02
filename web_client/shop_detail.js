@@ -1,11 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import createClass from 'create-react-class';
-import Product from './components/Product';
-import SearchForm from './components/SearchForm';
+import Product from './components/ShopDetailProducts';
+import SearchForm from './components/ShopDetailSearchForm';
 import CategoryList from './components/CategoryList';
 import ProductsCount from './components/ProductsCount';
-import ShopList from './components/ShopList';
 import axios from 'axios';
 import _ from 'lodash';
 import AlertContainer from 'react-alert';
@@ -23,9 +22,7 @@ var MainInterface = createClass({
       priceTo: '',
       queryText: '',
       deliveryType: 'all',
-      productsCount: 0,
       products: [],
-      shops: [],
       categories: [],
       activeCategories: [],
     }
@@ -48,13 +45,6 @@ var MainInterface = createClass({
          categories: _.uniqBy(products.map(obj => obj.get_category_title), obj => obj)
        });
     });
-  axios.get(`/shops/api/`)
-      .then(res => {
-        const shops = res.data.map(obj => obj);
-        this.setState({
-          shops: shops
-        });
-      });
   },
 
   deleteMessage: function(item) {
@@ -212,17 +202,23 @@ var MainInterface = createClass({
 
     return (
       <div>
+      <div className="col-md-3">
+        <ul>
 
+        <li>Все категории</li>
+                <li className="active">
+                    <a  role="button" data-toggle="collapse" href="#1" aria-expanded="false" aria-controls="collapseExample">Title</a>
 
-      <ShopList
-        shops = { filteredShops }
-      />
-      <ProductsCount
-        count = {productsCount}
-      />
-      <ul className="category-tab">
-      {categories}
-      </ul>
+                        <div className="collapse category-in-category" id="1">
+
+                                <a href="1" className="active">1</a>
+
+                        </div>
+
+                </li>
+        </ul>
+    </div>
+    <div className="col-md-9">
       <SearchForm
           orderBy = { this.state.orderBy }
           onReOrder = { this.reOrder }
@@ -235,6 +231,7 @@ var MainInterface = createClass({
           onChangePriceTo = { this.changePriceTo }
        />
       {filteredProducts}
+      </div>
       </div>
     )
   }
