@@ -188,7 +188,9 @@ $(document).ready(function () {
     });
 
     $('#category_list').on('change', function () {
-        var subcategoryList = $('#subcategory_list')
+        var section = $('#global_category option:selected').text();
+        console.log(section)
+        var subcategoryList = $('#subcategory_list');
         if ($(this)[0].selectedIndex === 0) {
             subcategoryList.html("").attr('disabled', "");
         }
@@ -197,7 +199,8 @@ $(document).ready(function () {
                 type: "GET",
                 url: "/get_subcategory_list/",
                 data: {
-                    "category": $("#category_list option:selected").text()
+                    "category": $("#category_list option:selected").text(),
+                    "section": section
                 },
                 success: function (data) {
                     console.log(data);
