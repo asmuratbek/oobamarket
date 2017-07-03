@@ -52,3 +52,27 @@ class Command(BaseCommand):
                                 Category.objects.create(title=field.internal_value, slug=slug, section=section,
                                                         parent=last_parent)
                                 self.stdout.write(self.style.SUCCESS('Создана категория "%s"' % field.internal_value))
+
+
+def parse_all_file():
+    file_load = px.load_workbook(settings.MEDIA_ROOT + "/" + 'categories.xlsx')
+    for worksheet in file_load.worksheets[1:]:
+        slug = slugify(worksheet.title)
+        section = GlobalCategory.objects.get_or_create(title=worksheet.title, slug=slug)
+        worksheet = file_load.get_sheet_by_name(name=worksheet.title)
+        for row in worksheet.iter_rows('A{}:A{}'.format(worksheet.min_row, worksheet.max_row)):
+            for field in row:
+                if field.internal_value is not None and isinstance(field.internal_value[0], int):
+                    try:
+                        title = field.internal_value[3:]
+                        slug = slugify(title)
+                        Category.objects.create(title=title, slug=slug, section=section)
+                        print("Создана категория-родитель %s" % title)
+                        # self.stdout.write(self.style.SUCCESS('Создана категория-родитель "%s"' % title))
+                    except IntegrityError:
+                        title = field.internal_value[3:]
+                        random_int = random.randrange(0, 101)
+                        slug = slugify(title) + str(random_int)
+                        Category.objects.create(title=title, slug=slug, section=section)
+                        print("Создана категория-родитель %s" % title)
+                        # self.stdout.write(self.style.SUCCESS('Создана категория-родитель "%s"' % title))
