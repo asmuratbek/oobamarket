@@ -45,7 +45,7 @@ def sale_detail(request, slug, pk):
     return render(request, 'shop/sale_detail.html', context)
 
 
-class SalesCreateView(LoginRequiredMixin, CreateView):
+class SalesCreateView(LoginRequiredMixin, ShopMixin, CreateView):
     form_class = SalesCreateForm
     template_name = 'shop/sale_create.html'
 

@@ -110,7 +110,7 @@
                 <li><a href="">Отзывы</a></li>
 {#                <li><a class="remove delete-object model-trigger" data-url="{% url 'shops:delete' slug=object.slug %}" style="cursor: pointer;">Удалить магазин</a></li>#}
                 <li><a href="{% url 'shops:contacts_detail' slug=shop.slug %}">Контакты</a></li>
-                <li><a href="{% url 'shops:add_sale' slug=shop.slug %}">Создать Акцию</a></li>
+                {% show_create_sale_button shop request.user %}
             </ul>
 {% block shopcontent %}
             <div class="goods-of-week filter-dropdown">
