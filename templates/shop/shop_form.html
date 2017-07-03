@@ -20,44 +20,38 @@
                             <label for="">E-mail магазина:</label>
                             {% render_field form.email|attr:"type:email" placeholder="" %}
                         </div>
-
+                        {% for form in formset %}
+                    <div class="inlines">
                         <div class="form-group input col-md-6">
                             <label for="">Телефон</label>
-                            <input type="text" class="form-control">
+{#                            <input type="text" class="form-control">#}
+                            {{ form.phone|attr:"class:form-control" }}
                         </div>
 
                         <div class="form-group input col-md-6">
                             <label for="">Адрес магазина:</label>
-                            <input type="text" class="form-control">
+{#                            <input type="text" class="form-control">#}
+                            {{ form.address|attr:"class:form-control" }}
                         </div>
 
                         <div class="form-group select col-md-6" style="margin-top: 10px">
-                            <select class="form-control">
-
-                                <option>Торговая точка:</option>
-                                <option value="663">Тренажеры и фитнес</option>
-                                <option value="676">Охота и рыбалка</option>
-                                <option value="684">Туризм и отдых на природе</option>
-                                <option value="698">Водный спорт</option>
-                                <option value="710">Велоспорт и другое</option>
-                                <option value="723">Игры и спорт</option>
-                                <option value="733">Музыкальные инструменты</option>
-                                <option value="744">Книги</option>
-                                <option value="759"> Хобби и творчество</option>
-                            </select>
+                            {{ form.place|attr:"class:form-control" }}
                         </div>
 
                         <div class="form-group input col-md-6" style="margin-top: 10px">
                             <label class="switch">
-                                <input checked="checked" class="switch__input" id="id_published" name="published"
-                                       type="checkbox">
+{#                                <input checked="checked" class="switch__input" id="id_published" name="published"#}
+{#                                       type="checkbox">#}
+                                {{ form.published|attr:"class:switch__input"|attr:"id:id_piblished"|attr:"checked:checked"}}
                                 <div class="switch__toggle">
                                     <div class="switch__handle"></div>
                                 </div>
                             </label>
                             <label>Опубликовать</label>
                         </div>
-
+                            {{ formset.management_form }}
+                    </div>
+                        {% endfor %}
                         <div class="form-group col-md-12" style="margin-top: 10px; margin-bottom: 40px">
                             <button type="button" id="add-new-contact" class="btn add">Добавить форму</button>
                         </div>
@@ -76,18 +70,18 @@
                         {#                        <textarea class="form-control" rows="6"></textarea>#}
                         {#                            {% render_field form.place %}#}
                         {#                        </div>#}
-                        <div class="col-md-12">
-                            <div id="contact-wrapper">
-                                <div class="inlines">
-                                    <h2>Контакты:</h2>
-                                    {% for form in formset %}
-                                        {{ form }}
-                                    {% endfor %}
-                                    {{ formset.management_form }}
-                                </div>
-                            </div>
-                            <button type="button" id="add-new-contact" class="btn btn-primary">Add new</button>
-                        </div>
+{#                        <div class="col-md-12">#}
+{#                            <div id="contact-wrapper">#}
+{#                                <div class="inlines">#}
+{#                                    <h2>Контакты:</h2>#}
+{#                                    {% for form in formset %}#}
+{#                                        {{ form }}#}
+{#                                    {% endfor %}#}
+{#                                    {{ formset.management_form }}#}
+{#                                </div>#}
+{#                            </div>#}
+{#                            <button type="button" id="add-new-contact" class="btn btn-primary">Add new</button>#}
+{#                        </div>#}
 
 
                         <div class="form-group btn-group-form col-md-12">
@@ -126,7 +120,36 @@
     <script src="{% static 'js/previewLogos.js' %}"></script>
     <script type="text/html" id="contact-template">
         <div class="inline-__prefix__">
-            {{ formset.empty_form }}
+            {% with formset.empty_form as form %}
+                <div class="form-group input col-md-6">
+                            <label for="">Телефон</label>
+{#                            <input type="text" class="form-control">#}
+                            {{ form.phone|attr:"class:form-control" }}
+                        </div>
+
+                        <div class="form-group input col-md-6">
+                            <label for="">Адрес магазина:</label>
+{#                            <input type="text" class="form-control">#}
+                            {{ form.address|attr:"class:form-control" }}
+                        </div>
+
+                        <div class="form-group select col-md-6" style="margin-top: 10px">
+                            {{ form.place|attr:"class:form-control" }}
+                        </div>
+
+                        <div class="form-group input col-md-6" style="margin-top: 10px">
+                            <label class="switch">
+{#                                <input checked="checked" class="switch__input" id="id_published" name="published"#}
+{#                                       type="checkbox">#}
+                                {{ form.published|attr:"class:switch__input"|attr:"id:id_piblished"|attr:"checked:checked"}}
+                                <div class="switch__toggle">
+                                    <div class="switch__handle"></div>
+                                </div>
+                            </label>
+                            <label>Опубликовать</label>
+                        </div>
+
+            {% endwith %}
         </div>
     </script>
     <script>
