@@ -1,11 +1,13 @@
 from django.db import models
 
 # Create your models here.
+from mptt.models import MPTTModel
+from mptt.fields import TreeForeignKey
 from apps.category.models import Category, Ordering
 from apps.product.models import Product
 
 
-class Properties(Ordering):
+class Properties(MPTTModel, Ordering):
     class Meta:
         verbose_name = 'Свойство'
         verbose_name_plural = 'Свойства'
@@ -13,6 +15,10 @@ class Properties(Ordering):
     category = models.ManyToManyField(Category, verbose_name='Категория')
     title = models.CharField(max_length=255, verbose_name='Название параметра')
     slug = models.CharField(max_length=255, verbose_name='Slug', null=True)
+    parent = TreeForeignKey('self', verbose_name='Родительская категория', null=True, blank=True)
+
+    class MPTTMeta:
+        order_insertion_by = ['order']
 
     def __str__(self):
         return self.title
