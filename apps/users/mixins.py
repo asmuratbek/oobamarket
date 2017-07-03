@@ -49,5 +49,5 @@ class ShopMixin(object):
         my_shop = [sh for sh in shop if sh.slug == slug]
 
         if not my_shop:
-            return HttpResponseRedirect(reverse('shops:detail', kwargs={'slug': shop.slug}))
+            return HttpResponseRedirect(reverse('shops:detail', kwargs={'slug': shop.first().slug}))
         return super(ShopMixin, self).dispatch(request, *args, **kwargs)
