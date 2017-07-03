@@ -49,9 +49,7 @@
                             {{ formset.management_form }}
                     </div>
                         {% endfor %}
-                        <div class="form-group col-md-12" style="margin-top: 10px; margin-bottom: 40px">
-                            <button type="button" id="add-new-contact" class="btn add">Добавить форму</button>
-                        </div>
+
 
                         <div class="form-group input col-md-12">
                             <label for="">Короткое описание магазина:</label>
@@ -63,7 +61,14 @@
                             {% render_field form.description|attr:"rows:6" placeholder="Введите полное описание" %}
                         </div>
 
+                        <div class="new-inlines">
+                            {{ formset.management_form }}
+                        </div>
 
+                        <div class="form-group col-md-12" style="margin-top: 10px; margin-bottom: 40px">
+                            <h4>Если у вас есть филиалы, добавьте их</h4><br>
+                            <button type="button" id="add-new-contact" class="btn add">Добавить филиал</button>
+                        </div>
 
                         <div class="form-group btn-group-form col-md-12">
                             <button type="submit" class="btn add">Сохранить</button>
@@ -138,7 +143,7 @@
                 var tmplMarkup = $('#contact-template').html();
                 var compiledTmpl = tmplMarkup.replace(/__prefix__/g, count)
                 console.log(compiledTmpl);
-                $('div.inlines').append(compiledTmpl);
+                $('div.new-inlines').append(compiledTmpl);
                 $('#id_contacts_set-TOTAL_FORMS').attr('value', count + 1);
             });
         });
