@@ -39,6 +39,7 @@ class DeleteProductMixin(object):
         return super(DeleteProductMixin, self).dispatch(request, *args, **kwargs)
 
 
+
 class ShopMixin(object):
     def dispatch(self, request, *args, **kwargs):
         user = request.user
