@@ -67,17 +67,13 @@ def product_detail(request, global_slug, category_slug, slug):
 
 def add_product_review(request, slug):
     if request.method == 'POST':
-        print(request.POST)
         if request.is_ajax():
             review = ProductReviews()
             review.text = request.POST.get('text')
             review.product = Product.objects.get(slug=slug)
             review.user = request.user
-            print(slug)
             if request.POST.get('rating'):
-                print(request.POST.get('rating'))
                 review.stars = '*' * int(request.POST.get('rating'))
-                print(review.stars)
             review.save()
             return JsonResponse(dict(success=True))
 
