@@ -14,7 +14,7 @@ class Ordering(models.Model):
     class Meta:
         abstract = True
 
-    order = models.PositiveIntegerField(verbose_name='Очередь')
+    order = models.PositiveIntegerField(verbose_name='Очередь', null=True, blank=True)
 
 
 class Category(MPTTModel, PublishBaseModel):

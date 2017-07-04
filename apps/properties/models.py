@@ -12,13 +12,13 @@ class Properties(MPTTModel, Ordering):
         verbose_name = 'Свойство'
         verbose_name_plural = 'Свойства'
 
-    category = models.ManyToManyField(Category, verbose_name='Категория')
+    category = models.ManyToManyField(Category, verbose_name='Категория', blank=True)
     title = models.CharField(max_length=255, verbose_name='Название параметра')
     slug = models.CharField(max_length=255, verbose_name='Slug', null=True)
     parent = TreeForeignKey('self', verbose_name='Родительская категория', null=True, blank=True)
 
     class MPTTMeta:
-        order_insertion_by = ['order']
+        order_insertion_by = ['title']
 
     def __str__(self):
         return self.title
@@ -32,7 +32,7 @@ class Values(Ordering):
         verbose_name = 'Значение'
         verbose_name_plural = 'Значения'
 
-    properties = models.ForeignKey(Properties, verbose_name='Параметр')
+    properties = models.ForeignKey(Properties, verbose_name='Параметр', blank=True)
     value = models.CharField(max_length=255, verbose_name='Значение')
     products = models.ManyToManyField(Product)
 
