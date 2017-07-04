@@ -7,6 +7,7 @@ from apps.category.models import Category
 from apps.global_category.models import GlobalCategory
 from django.conf import settings
 import openpyxl as px
+import string
 
 
 class Command(BaseCommand):
@@ -14,9 +15,20 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         W = px.load_workbook(settings.MEDIA_ROOT + '/ooba.xlsx')
+        wiki = dict()
+        categories = dict()
+        category = list()
+        first_level = list()
+        second_level = list()
+        third_level = list()
+        second_level_props = list()
+        third_level_props = list()
+        values = list()
         for index, worksheet in enumerate(W.worksheets[1:3]):
+            slug = slugify(worksheet.title)
+            section, created = GlobalCategory.objects.get_or_create(title=worksheet.title, slug=slug)
+            print(created)
             if index == 0:
-                wiki = dict()
                 for row in worksheet.iter_rows():
                     for index, field in enumerate(row):
                         if field.value:
@@ -27,14 +39,87 @@ class Command(BaseCommand):
                                 wiki[key].append(field.value)
 
             else:
-                for col in worksheet.iter_cols():
-                    for index, field in enumerate(col):
-                        if field.value:
-                            if field.internal_value[0].isdigit():
-                                x = str(field.internal_value).split('.')[:-1]
-                                x.append(str(field.internal_value).split('.')[-1][0])
-                                print(x)
+                for index, col in enumerate(worksheet.iter_cols(max_col=3)):
+                    if index == 0:
+                        for index, field in enumerate(col):
+                            if field.value:
+                                first_level.append([str(field.internal_value).split('.')[:-1], str(field.internal_value).split('.')[-1][1:]])
 
+                    elif index == 1:
+                        for index, field in enumerate(col):
+                            if field.value and not str(field.value).startswith('('):
+                                if field.font.bold:
+                                    ids = str(field.internal_value).split('.')[:-1]
+                                    category_text = str(field.internal_value).split('.')[-1][2:]
+                                    category_level = str(field.internal_value).split('.')[-1][:2] if \
+                                        str(field.internal_value).split('.')[-1][:2].isdigit() else \
+                                        str(field.internal_value).split('.')[-1][0]
+                                    if category_level:
+                                        ids.append(category_level)
+                                    second_level.append([ids, category_text])
+                                else:
+                                    property_text = str(field.internal_value).split('.')[-1]
+                                    second_level_props.append([ids, property_text])
+                                    for column in string.ascii_uppercase[string.ascii_uppercase.find(field.column) + 1:]:
+                                        if worksheet[column + str(field.row)].value:
+                                            if str(worksheet[column + str(field.row)].value).startswith('Wiki'):
+                                                key = str(worksheet[column + str(field.row)].value)[7:]
+                                                if key in wiki.keys():
+                                                    values.append([ids, property_text, wiki[key]])
+                                            else:
+                                                values.append([ids, property_text, worksheet[column + str(field.row)].value])
+
+                    elif index == 2:
+                        for index, field in enumerate(col):
+                            if field.value and not str(field.value).startswith('('):
+                                if field.font.bold:
+                                    ids = str(field.internal_value).split('.')[:-1]
+                                    category_text = str(field.internal_value).split('.')[-1][2:]
+                                    category_level = str(field.internal_value).split('.')[-1][:2] if \
+                                    str(field.internal_value).split('.')[-1][:2].isdigit() else \
+                                    str(field.internal_value).split('.')[-1][0]
+                                    if category_level:
+                                        ids.append(category_level)
+                                    third_level.append([ids, category_text])
+                                else:
+                                    property_text = str(field.internal_value).split('.')[-1]
+                                    third_level_props.append([ids, property_text])
+                                    for column in string.ascii_uppercase[string.ascii_uppercase.find(field.column) + 1:]:
+                                        if worksheet[column + str(field.row)].value:
+                                            if str(worksheet[column + str(field.row)].value).startswith('Wiki'):
+                                                key = str(worksheet[column + str(field.row)].value)[7:]
+                                                if key in wiki.keys():
+                                                    values.append([ids, property_text, wiki[key]])
+                                            else:
+                                                values.append([ids, property_text, worksheet[column + str(field.row)].value])
+
+            for category in first_level:
+                title = category[-1]
+                slug = slugify(title)
+                cat, created = Category.objects.get_or_create(title=title, section=section)
+                if created:
+                    self.stdout.write(self.style.SUCCESS('Создана категория 1-ого уровня "%s"' % title))
+                else:
+                    self.stdout.write(self.style.ERROR('{} уже существует'.format(title)))
+
+
+                # for lev in first_level:
+                #     for sec_lvl in second_level:
+                #         if sec_lvl[0][0] == lev[0][0]:
+                #             lev.append(sec_lvl[-1])
+                    # category.append(i[-1] for i in second_level if second_level[0][0] == lev[0])
+                    # for i in second_level:
+                    #     print(i[-1])
+                    # print(lev)
+                # cat = dict((key, value) for (key, value) in first_level)
+                # print(second_level)
+                # print(first_level)
+                # print(third_level_props)
+                # print(values)
+                # print(wiki)
+                # print(category)
+                # for i in second_level:
+                #     print(i)
             #  field.value.split('.')[-1][0]
             # slug = slugify(worksheet.title)
             # section, created = GlobalCategory.objects.get_or_create(title=worksheet.title, slug=slug)
