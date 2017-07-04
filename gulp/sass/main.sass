@@ -335,12 +335,14 @@ header
       margin: 2px 0
       float: left
   .navbar-brand + a
-      font-size: 18px
+      font-size: 14px
       font-weight: 700
       color: #808080
       display: inline-block
-      margin-left: 5px
-      line-height: 44px
+      margin-left: 10px
+      line-height: 20px
+      margin-top: 20px
+      float: left
   .form-inline
     width: 420px
     display: inline-block
@@ -808,6 +810,8 @@ header
         background-color: #FFDA00
       .truck.green
         background-color: #39B54A
+
+
 .magazin
   margin-bottom: 40px
   h2
@@ -2378,6 +2382,15 @@ ul.category-tab
     display: block
     img
       width: 100%
+  .select:before
+    top: 35px !important
+  p
+    margin-bottom: 30px
+    text-align: center
+  .inline-
+      float: left
+      margin-bottom: 30px
+
 .add-product, .edit-shop-detail, .sing-out
   .step_1, .step_2, .step_3, .step_4
     margin-bottom: 50px
@@ -3544,5 +3557,34 @@ body.landing
         z-index: 1
         &:hover
           background-color: #8a8a8a
+form.form-inline.sm-form
+  overflow: hidden
+  margin: 40px 0 60px 0
+  .form-group
+    width: 100%
+    margin-bottom: 0
+    input
+      width: 75%
+      float: left
+      border-top-right-radius: 0
+      border-bottom-right-radius: 0
+      border: 1px solid #CCCCCC
+      color: #808080
+      height: 36px
+      font-weight: 300
+    button
+      float: left
+      width: 25%
+      border-top-left-radius: 0
+      border-bottom-left-radius: 0
+      border: 1px solid #CCCCCC
+      border-left: 0
+      background-color: #CCCCCC
+      color: #333
+      height: 36px
+      font-size: 15px
+      font-weight: 400
+      &:hover
+        background-color: #b8b7b7
 //ALWAYS END
 @import "media"
