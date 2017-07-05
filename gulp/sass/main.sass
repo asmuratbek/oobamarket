@@ -382,7 +382,10 @@ header
     margin-left: 10px
     padding: 7px 15px
     font-weight: 300
-
+  .magazin-btn
+    background-color: transparent !important
+    span
+      color: gold
   .favorites
     background-color: transparent!important
     span
@@ -541,12 +544,18 @@ header
 
 .goods-of-week
   margin-bottom: 40px
+  .all-goods
+    text-align: center
+    margin-top: 20px
   h1
     font-size: 26px
     color: #333
     text-align: center
     margin-bottom: 30px
     font-weight: 400
+    a
+      color: #333
+      text-decoration: none
   .add-product
     padding: 112px 30px
     background-color: #fff
@@ -3484,7 +3493,24 @@ body.landing
     border: 1px solid #eee
     font-weight: 300
     padding: 20px
-
+  .img-wrapper
+    position: relative
+    img
+      width: 100%
+  .remove-logo-update
+    position: absolute
+    top: -40px
+    right: -40px
+    -webkit-border-radius: 50%
+    border-radius: 50%
+    padding: 5px
+    text-align: center
+    cursor: pointer
+    color: #fff
+    font-weight: 300
+    width: 30px
+    height: 30px
+    background-color: #f3481c
 .goods-of-week.filter-dropdown
   .col-md-3
     ul
