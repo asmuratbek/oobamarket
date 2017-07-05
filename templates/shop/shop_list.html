@@ -37,12 +37,14 @@
                                 </div>
                                 <div class="clearfix"></div>
                                 <div class="bottom-line">
+                                    {% if shop.contacts_set.all %}
                                     <div>
                                         <a href="tel: 0312 89 53 33" class="">
                                             <span class="glyphicon glyphicon-earphone"></span>
-                                            {{ shop.phone }}
+                                            {{ shop.contacts_set.first.phone }}
                                         </a>
                                     </div>
+                                    {% endif %}
                                     <div>
                                         <a href="mailto:{{ shop.email }}" class="">
                                             <span class="glyphicon glyphicon-envelope"></span>
