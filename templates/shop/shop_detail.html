@@ -33,12 +33,14 @@
                 <h2>{{ object.title|truncatechars:27}}</h2>
                 <p class="see-more-toogle">{{ object.description|truncatechars:34 }}</p>
                 <div class="bottom-line">
+                    {% if object.contacts_set.all %}
                 <div>
                     <a href="tel: 0312 89 53 33" class="">
                         <span class="glyphicon glyphicon-earphone"></span>
-                        {{ object.phone }}
+                        {{ object.contacts_set.first.phone }}
                     </a>
                 </div>
+                    {% endif %}
                 <div>
                     <a href="" class="">
                         <span class="glyphicon glyphicon-envelope"></span>

@@ -37,7 +37,8 @@ var MainInterface = createClass({
         })
       }
     }.bind(this));
-  axios.get(`/product/api/`)
+    var url = location.href.split("/")[4]
+  axios.get(`/product/api/?shop=` + url)
     .then(res => {
       const products = res.data.map(obj => obj);
       this.setState({
