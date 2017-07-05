@@ -1,12 +1,12 @@
 from django.conf.urls import url, include
 
 from .views import product_detail, ProductCreateView, ProductUpdateView, ProductIndexCreateView, upload_images, \
-    remove_uploaded_image, ProductDeleteView, change_publish_status, upload_images_product_update, delete_product_images, add_product_review
-
-
+    remove_uploaded_image, ProductDeleteView, change_publish_status, upload_images_product_update, \
+    delete_product_images, add_product_review, ProductListView
 
 urlpatterns = [
     url(r'^$', product_detail, name='product_detail'),
+    url(r'^all/$', ProductListView.as_view(), name='product_list'),
     url(r'^(?P<slug>[\w-]+)/add-product/$', ProductCreateView.as_view(), name='add_product'),
     url(r'^(?P<slug>[\w-]+)/update-product/$', ProductUpdateView.as_view(), name='update_product'),
     url(r'^(?P<slug>[\w-]+)/upload-product-images/$', upload_images_product_update, name='upload_product_images'),

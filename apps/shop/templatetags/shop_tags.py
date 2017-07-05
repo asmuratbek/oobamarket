@@ -91,7 +91,7 @@ def show_create_sale_button(shop, user):
         if user.is_authenticated:
             if shop.is_owner(user):
                 return mark_safe('''
-                                    <li><a href="%s">Создать Акцию</a></li>
+                                    <li class="active"><a href="%s">Создать Акцию</a></li>
                                 ''' % reverse('shops:add_sale', kwargs={'slug': shop.slug}))
             elif not shop.is_owner(user):
                 return mark_safe('')

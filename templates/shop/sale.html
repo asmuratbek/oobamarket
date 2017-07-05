@@ -1,23 +1,29 @@
 {% extends 'shop/shop_detail.html' %}
-
+{% load shop_tags %}
 {% block shopcontent %}
-            <div class="sale-page">
-                {% for sale in shop.sales_set.all %}
-                <div class="col-md-6">
-                    <span class="descount">{{  sale.discount }}%</span>
-                    <div class="img-wrapper">
-                        {% if sale.image %}
-                            <img src="{{ sale.image.url }}" alt="">
-                        {% else %}
-                            <img src="http://via.placeholder.com/540x200" alt="">
-                        {% endif %}
-                    </div>
-                    <div class="description">
-                        <h3>{{ sale.title }}</h3>
-                        <p>{{ sale.short_description }}</p>
-                        <a href="{% url 'shops:sale_detail' slug=shop.slug pk=sale.pk %}">Смотреть</a>
-                    </div>
+    <div class="sale-page">
+
+        <ul class="category-tab">
+
+            {% show_create_sale_button shop request.user %}
+        </ul>
+
+        {% for sale in shop.sales_set.all %}
+            <div class="col-md-6">
+                <span class="descount">{{ sale.discount }}%</span>
+                <div class="img-wrapper">
+                    {% if sale.image %}
+                        <img src="{{ sale.image.url }}" alt="">
+                    {% else %}
+                        <img src="http://via.placeholder.com/540x200" alt="">
+                    {% endif %}
                 </div>
-                {% endfor %}
+                <div class="description">
+                    <h3>{{ sale.title }}</h3>
+                    <p>{{ sale.short_description }}</p>
+                    <a href="{% url 'shops:sale_detail' slug=shop.slug pk=sale.pk %}">Смотреть</a>
+                </div>
             </div>
+        {% endfor %}
+    </div>
 {% endblock %}

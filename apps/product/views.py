@@ -51,6 +51,10 @@ class FavoriteCreateView(LoginRequiredMixin, View):
         return JsonResponse(data)
 
 
+class ProductListView(ListView):
+    model = Product
+    template_name = 'product/all_products.html'
+
 def product_detail(request, global_slug, category_slug, slug):
     product = get_object_or_404(Product, slug=slug)
     category = get_object_or_404(Category, slug=category_slug)

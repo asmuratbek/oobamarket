@@ -104,13 +104,13 @@
         <div class="container">
             <ul class="category-tab">
 
-{#                <li class="active"><a href="{% url 'product:add_product' slug=object.slug %}">Товары</a></li>#}
+                <li><a href="{% url 'shops:detail' slug=object.slug %}">Товары</a></li>
                 <li><a href="{% url 'shops:about_us' slug=shop.slug %}">О компании</a></li>
                 <li><a href="{% url 'shops:sale' slug=shop.slug %}">Акции</a></li>
                 <li><a href="">Отзывы</a></li>
 {#                <li><a class="remove delete-object model-trigger" data-url="{% url 'shops:delete' slug=object.slug %}" style="cursor: pointer;">Удалить магазин</a></li>#}
                 <li><a href="{% url 'shops:contacts_detail' slug=shop.slug %}">Контакты</a></li>
-                {% show_create_sale_button shop request.user %}
+
             </ul>
 {% block shopcontent %}
             <div class="goods-of-week filter-dropdown">

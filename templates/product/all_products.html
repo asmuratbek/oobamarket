@@ -1,0 +1,11 @@
+{% extends 'base-1.html' %}
+
+{% block content %}
+    <section class="goods-of-week">
+            <div class="container">
+                <h1>Товары недели</h1>
+                {% include 'product/product_list.html' with object_list=object_list col=3 %}
+                <a href="{% url 'product:product_list' %}">Все товары</a>
+            </div>
+        </section>
+{% endblock %}
