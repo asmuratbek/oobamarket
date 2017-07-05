@@ -814,6 +814,9 @@ header
 
 .magazin
   margin-bottom: 40px
+  text-align: center
+  a.add
+    margin-top: 20px
   h2
     font-size: 26px
     color: #333
@@ -822,55 +825,60 @@ header
     margin-top: 80px
     a
       color: #333
-  .owl-carousel
-    background-color: #fff
-    padding: 80px 100px 0px 10px
-    .owl-item
-      margin-left: 20px
+          //.owl-carousel
+          //  background-color: #fff
+          //  padding: 80px 100px 0px 10px
+          //  .owl-item
+          //    margin-left: 20px
+          //    position: relative
+          //    &:before
+          //      position: absolute
+          //      content: ''
+          //      right: -20px
+          //      top: 0
+          //      bottom: 0
+          //      border-right: 1px solid #EEEEEE
+          //      width: 1px
+          //      height: 70px
+  .item:hover
+    img
+      opacity: 0.4
+  .item
+    height: 110px
+    overflow: hidden
+    position: relative
+    margin-bottom: 30px
+    .img-wrapper
       position: relative
-      &:before
+      background-color: #fff
+      height: 110px
+      img
         position: absolute
-        content: ''
-        right: -20px
-        top: 0
-        bottom: 0
-        border-right: 1px solid #EEEEEE
-        width: 1px
-        height: 70px
-      .item:hover
-        img
-          opacity: 0.4
-      .item
-        height: 70px
-        overflow: hidden
-        position: relative
-        img
-          position: absolute
-          top: -9999px
-          bottom: -9999px
-          right: -9999px
-          left: -9999px
-          margin: auto
-          display: block
-          max-width: 90%
-          transition: 0.3s
-    .owl-nav
-      position: absolute
-      right: 15px
-      top: 50%
-      margin-top: -15px
-      .owl-prev
-        width: 30px
-        height: 30px
-        font-size: 0
-        background:  url(../img/png/arrow0.png) 5px 2px no-repeat
-        float: left
-      .owl-next
-        width: 30px
-        height: 30px
-        font-size: 0
-        background:  url(../img/png/arrow0.png) -40px 2px no-repeat
-        float: left
+        top: -9999px
+        bottom: -9999px
+        right: -9999px
+        left: -9999px
+        margin: auto
+        display: block
+        max-width: 100%
+        transition: 0.3s
+//.owl-nav
+//  position: absolute
+//  right: 15px
+//  top: 50%
+//  margin-top: -15px
+//  .owl-prev
+//    width: 30px
+//    height: 30px
+//    font-size: 0
+//    background:  url(../img/png/arrow0.png) 5px 2px no-repeat
+//    float: left
+//  .owl-next
+//    width: 30px
+//    height: 30px
+//    font-size: 0
+//    background:  url(../img/png/arrow0.png) -40px 2px no-repeat
+//    float: left
 .wrapper
     position: relative
     margin: 0 auto

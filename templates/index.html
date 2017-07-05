@@ -4,51 +4,59 @@
 {% block header %}
     <header class="navbar-fixed-top">
 
-    <nav class="navbar ">
-        <div class="container">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <!--<a class="navbar-brand" href="#">-->
+        <nav class="navbar ">
+            <div class="container">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                            data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <!--<a class="navbar-brand" href="#">-->
                     <!--<img src="img/logo.svg" alt="">-->
                     <!--<span>12символ max</span>-->
-                <!--</a>-->
-            </div>
-
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-
-                <div class="nav navbar-nav navbar-right">
-                    <!--<form class="form-inline">-->
-                        <!--<div class="form-group">-->
-                            <!--<input type="text" class="form-control" placeholder="Поиск товаров...">-->
-                            <!--<button type="submit" class="btn btn-default">Найти</button>-->
-                        <!--</div>-->
-                    <!--</form>-->
-                {% if user.is_authenticated %}
-                    <a href="{{ user.get_favorites_link }}"  class="favorites btn"><span class="glyphicon glyphicon-heart"></span> Избранные (<span class="favorites_count">{{ user.get_favorites_count }}</span>)</a>
-                    <a href="{% url 'cart:detail' %}"  class="basket btn"><span class="glyphicon glyphicon-shopping-cart"></span> Корзина (<span class="cart-count">{{ user.get_cart_count }}</span>)</a>
-                    <!-- <a href=""  class="enter btn">Войти</a> -->
-                    {% else %}
-                    <a href="{% url 'account_login' %}"  class="favorites btn"><span class="glyphicon glyphicon-heart"></span> Избранные</a>
-                    <a href="{% url 'cart:detail' %}"  class="basket btn"><span class="glyphicon glyphicon-shopping-cart"></span> Корзина (<span class="cart-count">{{ cart_count }}</span>)</a>
-                    <!-- <a href=""  class="enter btn">Войти</a> -->
-                {% endif %}
-                    <!--
-                    Когда вход выполнен!
-                    -->
-                    {% include 'layout/dropdown.html' %}
+                    <!--</a>-->
                 </div>
-            </div><!-- /.navbar-collapse -->
-        </div><!-- /.container-fluid -->
-    </nav>
 
-</header>
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+                    <div class="nav navbar-nav navbar-right">
+                        <!--<form class="form-inline">-->
+                        <!--<div class="form-group">-->
+                        <!--<input type="text" class="form-control" placeholder="Поиск товаров...">-->
+                        <!--<button type="submit" class="btn btn-default">Найти</button>-->
+                        <!--</div>-->
+                        <!--</form>-->
+                        {% if user.is_authenticated %}
+                            <a href="{{ user.get_favorites_link }}" class="favorites btn"><span
+                                    class="glyphicon glyphicon-heart"></span> Избранные (<span
+                                    class="favorites_count">{{ user.get_favorites_count }}</span>)</a>
+                            <a href="{% url 'cart:detail' %}" class="basket btn"><span
+                                    class="glyphicon glyphicon-shopping-cart"></span> Корзина (<span
+                                    class="cart-count">{{ user.get_cart_count }}</span>)</a>
+                            <!-- <a href=""  class="enter btn">Войти</a> -->
+                        {% else %}
+                            <a href="{% url 'account_login' %}" class="favorites btn"><span
+                                    class="glyphicon glyphicon-heart"></span> Избранные</a>
+                            <a href="{% url 'cart:detail' %}" class="basket btn"><span
+                                    class="glyphicon glyphicon-shopping-cart"></span> Корзина (<span
+                                    class="cart-count">{{ cart_count }}</span>)</a>
+                            <!-- <a href=""  class="enter btn">Войти</a> -->
+                        {% endif %}
+                        <!--
+                        Когда вход выполнен!
+                        -->
+                        {% include 'layout/dropdown.html' %}
+                    </div>
+                </div><!-- /.navbar-collapse -->
+            </div><!-- /.container-fluid -->
+        </nav>
+
+    </header>
 {% endblock %}
 
 {% block fixed_categories %}
@@ -59,38 +67,39 @@
 
 {% block content %}
 
-<section class="search-index">
+    <section class="search-index">
 
 
-    <div class="container">
-        <img class="center-block" src="{% static 'img/logo.svg' %}" alt="">
-        <div class="col-md-offset-3 col-md-6">
-            <form class="form-inline" method="get" action="/search/">
-                <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Поиск товаров..." id="search-form-index" name="q">
-                    <button type="submit" class="btn btn-default">Найти</button>
-                </div>
+        <div class="container">
+            <img class="center-block" src="{% static 'img/logo.svg' %}" alt="">
+            <div class="col-md-offset-3 col-md-6">
+                <form class="form-inline" method="get" action="/search/">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Поиск товаров..." id="search-form-index"
+                               name="q">
+                        <button type="submit" class="btn btn-default">Найти</button>
+                    </div>
 
-            </form>
+                </form>
+            </div>
+            <div class="clearfix"></div>
+
+            <ul class="category">
+                {% for object in fixed_categories %}
+                    <li>
+                        <a href="{{ object.get_absolute_url }}"></a>
+                        <div class="img-wrapper">
+                            <img src="{{ object.get_icon }}" alt="">
+                        </div>
+                        <div class="title">
+                            <p>{{ object.title }}</p>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+
         </div>
-        <div class="clearfix"></div>
-
-        <ul class="category">
-            {% for object in fixed_categories %}
-            <li>
-                <a href="{{ object.get_absolute_url }}"></a>
-                <div class="img-wrapper">
-                    <img src="{{ object.get_icon }}" alt="">
-                </div>
-                <div class="title">
-                    <p>{{ object.title }}</p>
-                </div>
-            </li>
-            {% endfor %}
-        </ul>
-
-    </div>
-</section>
+    </section>
 
     {% if weeks_best_products %}
         <section class="goods-of-week">
@@ -101,14 +110,16 @@
         </section>
     {% endif %}
 
-<section class="magazin">
-    <h2><a href="{% url 'shops:list' %}">Магазины</a></h2>
+    <section class="magazin">
+        <h2><a href="{% url 'shops:list' %}">Магазины</a></h2>
 
-    <div class="owl-carousel">
-        {% include 'shop/shops.html' with shops=shops %}
-    </div>
+        <div class="container">
+            {% include 'shop/shops.html' with shops=shops %}
+            <div class="clearfix"></div>
+            <a class="btn add" href="{% url 'shops:list' %}">Показать все магазины</a>
+        </div>
 
-</section>
+    </section>
 
 
 

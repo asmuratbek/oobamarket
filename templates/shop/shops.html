@@ -1,7 +1,9 @@
 {% for shop in shops %}
-        <div class="item">
+    <div class="item col-md-3 col-sm-6">
+        <div class="img-wrapper">
             <a href="{{ shop.get_absolute_url }}">
                 <img src="{{ shop.get_logo }}" alt="{{ shop.title }}">
             </a>
         </div>
+    </div>
 {% endfor %}
