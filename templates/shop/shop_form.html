@@ -20,9 +20,10 @@
                         <label for="">E-mail магазина:</label>
                         {% render_field form.email|attr:"type:email" placeholder="" %}
                     </div>
-                    {% for form in formset %}
+
 
                         <div class="inlines">
+                            {% for form in formset %}
                         <div class="form-group input col-md-6">
                             <label for="">Телефон</label>
                             {{ form.phone|attr:"class:form-control" }}
