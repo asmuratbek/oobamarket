@@ -34,7 +34,7 @@ class Values(Ordering):
 
     properties = models.ForeignKey(Properties, verbose_name='Параметр', blank=True)
     value = models.CharField(max_length=255, verbose_name='Значение')
-    products = models.ManyToManyField(Product)
+    products = models.ManyToManyField(Product, blank=True)
 
     def __str__(self):
         return self.value
