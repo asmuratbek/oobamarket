@@ -32,15 +32,27 @@ var MainInterface = createClass({
   },
 
   componentDidMount() {
-    var params = location.search.substr(1).split("&")
-    params.forEach(function(i){
-      if (i.split("=")[0] == "q"){
-        this.setState({
-          queryText: i.split("=")[1].toLowerCase()
-        })
-      }
-    }.bind(this));
-  axios.get(`/product/api/`)
+    // var params = location.search.substr(1).split("&")
+    var parseQueryString = function() {
+
+    var str = location.search;
+    var objURL = {};
+
+    str.replace(
+        new RegExp( "([^?=&]+)(=([^&]*))?", "g" ),
+        function( $0, $1, $2, $3 ){
+            objURL[ $1 ] = $3;
+        }
+    );
+    return objURL;
+};
+
+//Example how to use it:
+    var params = parseQueryString();
+    this.setState({
+      queryText: decodeURIComponent(params['q'])
+    });
+  axios.get(`/product/api/?q=` + this.state.queryText)
     .then(res => {
       const products = res.data.map(obj => obj);
       this.setState({
@@ -88,11 +100,11 @@ var MainInterface = createClass({
     });
   },
 
-  searchApts(q) {
-    this.setState({
-      queryText: q.toLowerCase()
-    }); //setState
-  }, //searchApts
+  // searchApts(q) {
+  //   this.setState({
+  //     queryText: q.toLowerCase()
+  //   }); //setState
+  // }, //searchApts
 
   changePriceFrom(price) {
     this.setState({

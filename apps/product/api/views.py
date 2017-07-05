@@ -33,12 +33,14 @@ class ProductListApiView(ListAPIView):
     def get_queryset(self):
         objects = Product.objects.all()
 
-        if self.request.GET.get('search'):
-            q = self.request.GET.get('search')
+        if self.request.GET.get('q'):
+            q = self.request.GET.get('q')
+            print(q)
             objects = Product.objects.filter(
                 Q(title__icontains=q)|
                 Q(short_description__icontains=q)
             ).distinct()
+            print(objects)
         elif self.request.GET.get('shop'):
             shop = self.request.GET.get('shop')
             objects = Product.objects.filter(shop__slug=shop)

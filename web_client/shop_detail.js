@@ -29,14 +29,6 @@ var MainInterface = createClass({
   },
 
   componentDidMount() {
-    var params = location.search.substr(1).split("&")
-    params.forEach(function(i){
-      if (i.split("=")[0] == "q"){
-        this.setState({
-          queryText: i.split("=")[1].toLowerCase()
-        })
-      }
-    }.bind(this));
     var url = location.href.split("/")[4]
   axios.get(`/product/api/?shop=` + url)
     .then(res => {

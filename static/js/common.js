@@ -742,12 +742,26 @@ if ($('.my-foto-container').length > 0) {
         _search('/search_results/', $(this).val())
     });
 
-    var params = location.search.substr(1).split("&");
-    params.forEach(function (i) {
-        if (i.split("=")[0] == "q") {
-            $('#search-form-index').val(i.split("=")[1]);
+    var parseQueryString = function() {
+
+    var str = location.search;
+    var objURL = {};
+
+    str.replace(
+        new RegExp( "([^?=&]+)(=([^&]*))?", "g" ),
+        function( $0, $1, $2, $3 ){
+            objURL[ $1 ] = $3;
         }
-    });
+    );
+    return objURL;
+};
+
+//Example how to use it:
+    var params = parseQueryString();
+    if (params['q']) {
+        $('#search-form-index').val(decodeURIComponent(params['q']));
+    }
+
 
 // $('.glyphicon-eye-open').click(function (e) {
 //     e.preventDefault();
