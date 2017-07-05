@@ -162,7 +162,7 @@ class Sales(PublishBaseModel):
 
     shop = models.ForeignKey(Shop, verbose_name='Магазин', on_delete=models.CASCADE, null=True, blank=True)
     title = models.CharField(max_length=50, verbose_name='Название акции')
-    short_description = models.CharField(max_length=155, verbose_name='Короткое описание')
+    short_description = models.TextField(max_length=155, verbose_name='Короткое описание')
     description = RichTextUploadingField()
     discount = models.IntegerField(verbose_name='Скидка')
     image = models.ImageField(upload_to='shops/sales', verbose_name='Изображение')

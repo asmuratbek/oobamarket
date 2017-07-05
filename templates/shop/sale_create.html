@@ -1,24 +1,29 @@
 {% extends 'base-1.html' %}
 {% load staticfiles %}
+{% load widget_tweaks %}
 {% block content %}
     <section class="add-sale add-product">
         <div class="container">
             <h1>Добавление акций</h1>
-            <form>
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
                 <div class="col-md-8">
                     <div class="form-group input col-md-6">
-                        <label for="">Название товара</label>
-                        <input class="form-control" type="text" required="">
+                        <label for="">Название акции</label>
+{#                        <input class="form-control" type="text" required="">#}
+                        {{ form.title|attr:"class:form-control"|attr:"required" }}
                     </div>
                     <div class="form-group input col-md-6">
                         <label for="">Короткое описание</label>
-                        <input class="form-control" type="text" required="">
+{#                        <input class="form-control" type="text" required="">#}
+                        {{ form.short_description|attr:"class:form-control"|attr:"textarea"}}
                     </div>
                     <div class="form-group input col-md-12">
                         <label class="switch">
 
-                            <input checked="checked" class="switch__input" id="id_published" name="published"
-                                   type="checkbox">
+{#                            <input checked="checked" class="switch__input" id="id_published" name="published"#}
+{#                                   type="checkbox">#}
+                            {{ form.published|attr:"class:switch__input"|attr:"id_published"|attr:"checked:checked" }}
                             <div class="switch__toggle">
                                 <div class="switch__handle"></div>
                             </div>
@@ -28,11 +33,13 @@
                     </div>
                     <div class="form-group input col-md-4">
                         <label>Размер скидки</label>
-                        <input class="form-control" placeholder="0%" type="number">
+{#                        <input class="form-control" placeholder="0%" type="number">#}
+                        {{ form.discount|attr:"class:form-control"|attr:"type:number"|attr:"placeholder:0%" }}
                     </div>
                     <div class="form-group input col-md-12">
-                        <label>Размер скидки</label>
-                        <textarea name="" id="" rows="10"></textarea>
+                        <label>Описание</label>
+{#                        <textarea name="" id="" rows="10"></textarea>#}
+                        {{ form.description|attr:"rows:10" }}
                     </div>
                     <div class="col-md-12">
                         <button type="submit" class="btn add">Сохранить</button>
@@ -56,7 +63,8 @@
                         </div>
                         <div class="img-upload hidden">
                             Currently: <a href=""></a>
-                            <input class="form-control" id="id_logo" name="logo" type="file">
+{#                            <input class="form-control" id="id_logo" name="logo" type="file">#}
+                            {{ form.image|attr:"class:form-control"|attr:"id:id_logo"|attr:"type:file" }}
                         </div>
 
                     </div>
@@ -72,15 +80,17 @@
 
         </div>
     </section>
-    <form class="form-inline" method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="btn add">Сохранить</button>
-    </form>
+{#    <form class="form-inline" method="post" enctype="multipart/form-data">#}
+{#        {% csrf_token %}#}
+{#        {{ form.as_p }}#}
+{#        <button type="submit" class="btn add">Сохранить</button>#}
+{#    </form>#}
 
 {% endblock %}
 
 {% block js %}
     <script src="{% static 'js/jquery.2.2.4.js' %}"></script>
     <script src="{% static 'js/previewLogos.js' %}"></script>
+    <script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
+    <script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
 {% endblock %}

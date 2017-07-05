@@ -52,3 +52,4 @@ class ShopMixin(object):
         if not my_shop:
             return HttpResponseRedirect(reverse('shops:detail', kwargs={'slug': shop.first().slug}))
         return super(ShopMixin, self).dispatch(request, *args, **kwargs)
+

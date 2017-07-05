@@ -15,7 +15,7 @@
             <div class="row">
                 <img src="{% static 'img/landing/logo.png' %}" alt="">
                 <h1>Бесплатная платформа для создание собственного Интернет-магазина</h1>
-                <a href="">Регистрация</a>
+                <a href="{% url "account_login" %}">Регистрация</a>
             </div>
         </div>
     </section>
@@ -132,45 +132,46 @@
         </div>
     </section>
 
-    <footer>
+   <section class="landing-header">
         <div class="container">
             <div class="row">
-                <div class="col-md-offset-4 col-md-4">
-                    <form action="">
-                        <label class="title">Регистрация магазина</label>
-                        <div class="form-group">
-                            <input type="email" class="form-control" placeholder="E-mail">
-                        </div>
-                        <div class="form-group">
-                            <input type="password" class="form-control" placeholder="Пароль">
-                        </div>
-                        <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Имя">
-                        </div>
-{#                        <div class="form-group">#}
-{#                            <input type="text" class="form-control" placeholder="Фамилия">#}
-{#                        </div>#}
-{#                        <div class="form-group">#}
-{#                            <input type="text" class="form-control" placeholder="Номер телефона">#}
-{#                        </div>#}
-{#                        <div class="form-group">#}
-{#                            <input type="text" class="form-control" placeholder="Название магазина">#}
-{#                        </div>#}
-                        <div class="form-group -m-30">
-                            <input type="checkbox" id="checkbox" class="form-control checkbox">
-                            <div class="indicator"></div>
-                            <label for="checkbox">Я принимаю <a href="">Условия сотрудничества</a></label>
-
-
-                        </div>
-                        <div class="form-group">
-                            <button class="form-control">Регистрация</button>
-                        </div>
-                    </form>
-                </div>
+                <img src="{% static 'img/landing/logo.png' %}" alt="">
+                <h1>Бесплатная платформа для создание собственного Интернет-магазина</h1>
+                <a href="{% url 'account_login' %}">Регистрация</a>
             </div>
         </div>
-    </footer>
+    </section>
+
+    {#    <footer>#}
+    {#        <div class="container">#}
+    {#            <div class="row">#}
+    {#                <div class="col-md-offset-4 col-md-4">#}
+    {#                    <form action="">#}
+    {#                        <label class="title">Регистрация магазина</label>#}
+    {#                        <div class="form-group">#}
+    {#                            <input type="email" class="form-control" placeholder="E-mail">#}
+    {#                        </div>#}
+    {#                        <div class="form-group">#}
+    {#                            <input type="password" class="form-control" placeholder="Пароль">#}
+    {#                        </div>#}
+    {#                        <div class="form-group">#}
+    {#                            <input type="text" class="form-control" placeholder="Имя">#}
+    {#                        </div>#}
+    {#                        <div class="form-group -m-30">#}
+    {#                            <input type="checkbox" id="checkbox" class="form-control checkbox">#}
+    {#                            <div class="indicator"></div>#}
+    {#                            <label for="checkbox">Я принимаю <a href="">Условия сотрудничества</a></label>#}
+    {##}
+    {##}
+    {#                        </div>#}
+    {#                        <div class="form-group">#}
+    {#                            <button class="form-control">Регистрация</button>#}
+    {#                        </div>#}
+    {#                    </form>#}
+    {#                </div>#}
+    {#            </div>#}
+    {#        </div>#}
+    {#    </footer>#}
 
 {% endblock %}
 
