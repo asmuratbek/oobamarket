@@ -21,64 +21,65 @@
                         </div>
 
 
-                    <div class="inlines">
-                        {% for form in formset %}
-                        <div class="form-group input col-md-6">
-                            <label for="">Телефон</label>
-                            {{ form.phone|attr:"class:form-control" }}
-                        </div>
-
-                        <div class="form-group input col-md-6">
-                            <label for="">Адрес магазина:</label>
-                            {{ form.address|attr:"class:form-control" }}
-                        </div>
-
-                        <div class="form-group select col-md-6" style="margin-top: 10px">
-                            {{ form.place|attr:"class:form-control" }}
-                        </div>
-
-                        <div class="form-group input col-md-6" style="margin-top: 10px">
-                            <label class="switch">
-
-                                {{ form.published|attr:"class:switch__input"|attr:"id:id_piblished"|attr:"checked:checked"}}
-                                <div class="switch__toggle">
-                                    <div class="switch__handle"></div>
+                        <div class="inlines">
+                            {% for form in formset %}
+                                <div class="form-group input col-md-6">
+                                    <label for="">Телефон</label>
+                                    {{ form.phone|attr:"class:form-control" }}
                                 </div>
-                            </label>
-                            <label>Опубликовать</label>
+
+                                <div class="form-group input col-md-6">
+                                    <label for="">Адрес магазина:</label>
+                                    {{ form.address|attr:"class:form-control" }}
+                                </div>
+
+                                <div class="form-group select col-md-6" style="margin-top: 10px">
+                                <label for="">Расположение вашего магазина</label>
+                                    {{ form.place|attr:"class:form-control" }}
+                                </div>
+
+                                <div class="form-group input col-md-6" style="margin-top: 35px; margin-bottom: 20px;">
+                                    <label class="switch">
+
+                                        {{ form.published|attr:"class:switch__input"|attr:"id:id_piblished"|attr:"checked:checked" }}
+                                        <div class="switch__toggle">
+                                            <div class="switch__handle"></div>
+                                        </div>
+                                    </label>
+                                    <label>Опубликовать</label>
+                                </div>
+                                {{ formset.management_form }}
+
+                            {% endfor %}
+
+
+                            <div class="form-group input col-md-12">
+                                <label for="">Короткое описание магазина:</label>
+                                {% render_field form.short_description|attr:"rows:6" placeholder="Введите до 300 символов" %}
+                            </div>
+                            <div class="form-group input col-md-12">
+                                <label for="">О компании</label>
+
+                                {% render_field form.description|attr:"rows:6" placeholder="Введите полное описание" %}
+                            </div>
+                            <div class="inline-appended"></div>
+
+                            <div class="form-group col-md-12" style="margin-top: 10px; margin-bottom: 40px">
+                                <p>Если у вас есть филиалы, добавьте их</p><br>
+
+                            </div>
+
                         </div>
-                            {{ formset.management_form }}
-
-                        {% endfor %}
-
-
-                        <div class="form-group input col-md-12">
-                            <label for="">Короткое описание магазина:</label>
-                            {% render_field form.short_description|attr:"rows:6" placeholder="Введите до 300 символов" %}
-                        </div>
-                        <div class="form-group input col-md-12">
-                            <label for="">О компании</label>
-
-                            {% render_field form.description|attr:"rows:6" placeholder="Введите полное описание" %}
-                        </div>
-
-
-                        <div class="form-group col-md-12" style="margin-top: 10px; margin-bottom: 40px">
-                            <h4>Если у вас есть филиалы, добавьте их</h4><br>
-                            <button type="button" id="add-new-contact" class="btn add">Добавить филиал</button>
-                        </div>
-
-                    </div>
 
                         <div class="form-group btn-group-form col-md-12">
+                            <button type="button" id="add-new-contact" class="btn add">Добавить филиал</button>
                             <button type="submit" class="btn add">Сохранить</button>
                         </div>
 
                     </div>
 
 
-
-                    <div class="col-md-4" id="shop-update-form">
+                    <div class="col-md-4 upload-image-magazin" id="shop-update-form">
                         <div class="form-group input">
                             <label for="id_logo" class="upload">
 
@@ -99,6 +100,7 @@
                             </div>
 
                         </div>
+                    <div class="img-wrapper">
                         {% if object.logo.name != "/default.jpg" %}
                             <img src="{{ object.logo.url }}" alt="" id="id_logo2">
                             <span class="remove-logo-update">X</span>
@@ -106,6 +108,8 @@
                             <img src="" alt="" id="id_logo2">
                         {% endif %}
                         <input type="hidden" id="slug" value="{{ object.get_slug }}"/>
+                    </div>
+
 
                     </div>
                 </form>
@@ -120,7 +124,7 @@
     <script src="{% static 'js/previewLogos.js' %}"></script>
 
     <script type="text/html" id="contact-template">
-        <div class="inline-__prefix__">
+        <div class="inline- __prefix__">
             {% with formset.empty_form as form %}
                 <div class="form-group input col-md-6">
                     <label for="">Телефон</label>
@@ -133,10 +137,11 @@
                 </div>
 
                 <div class="form-group select col-md-6" style="margin-top: 10px">
+                <label for="">Расположение вашего магазина</label>
                     {{ form.place|attr:"class:form-control" }}
                 </div>
 
-                <div class="form-group input col-md-6" style="margin-top: 10px">
+                <div class="form-group input col-md-6" style="margin-top: 35px; margin-bottom: 20px;">
                     <label class="switch">
                         {{ form.published|attr:"class:switch__input"|attr:"id:id_piblished"|attr:"checked:checked" }}
                         <div class="switch__toggle">
@@ -158,7 +163,7 @@
                 var tmplMarkup = $('#contact-template').html();
                 var compiledTmpl = tmplMarkup.replace(/__prefix__/g, count)
                 console.log(compiledTmpl);
-                $('div.inlines').append(compiledTmpl);
+                $('div.inline-appended').append(compiledTmpl);
                 $('#id_contacts_set-TOTAL_FORMS').attr('value', count + 1);
             });
         });
