@@ -252,25 +252,25 @@ body
   background-color: #F6F6F6
   font-family: 'Roboto', sans-serif
   margin-top: 90px
-.fixed-category:hover
-  left: 0
-  background: rgba(255, 255, 255, 0.7)
-  animation: fade-fixed-category 0s ease
-  transform-origin: 50% 50%
-  opacity: 1
-  @keyframes fade-fixed-category
-    0%
-      transform: translateX(0)
-    50%
-      transform: translateX(0)
-    100%
-      transform: translateX(0)
+//.fixed-category:hover
+//  left: 0
+//  background: rgba(255, 255, 255, 0.7)
+//  animation: fade-fixed-category 0s ease
+//  transform-origin: 50% 50%
+//  opacity: 1
+//  @keyframes fade-fixed-category
+//    0%
+//      transform: translateX(0)
+//    50%
+//      transform: translateX(0)
+//    100%
+//      transform: translateX(0)
 .fixed-category
   height: 100vh
   width: 40px
   background: rgba(0, 0, 0, 0)
   position: fixed
-  left: -20px
+  left: 0px
   top: 0
   z-index: 9999
   padding:  12% 0
@@ -1375,29 +1375,7 @@ header
       //        transform: rotate(0deg)
       //      100%
       //        transform: rotate(360deg)
-    .subscribe
-      margin-top: 20px
-      .row
-        margin: 0 -3px
-      .col-md-6
-        padding: 0 3px
-        button
-          padding: 5px 8px
-          background: #fff
-          border: 1px solid #f3481c
-          font-weight: 300
-          background: #f3481c
-          color: #fff
-          border-radius: 3px
-          outline: none !important
-          span
-            display: inline-block
-            margin-right: 3px
-        .selectize-input
-          padding: 6px 8px
-          background-color: #fff !important
-          box-shadow: none !important
-          background-image: none !important
+
     .bottom-line
       width: 100%
       z-index: 2
@@ -1484,7 +1462,6 @@ header
       -moz-box-shadow: 0px 0px 25px -9px rgba(0,0,0,0.75)
       box-shadow: 0px 0px 25px -9px rgba(0,0,0,0.75)
       border-radius: 8px
-      overflow: hidden
       z-index: 99
       background-color: #fff
       position: relative
@@ -1571,7 +1548,7 @@ header
           border-radius: 50%
       .bottom-line
         padding: 20px
-        overflow: hidden
+
         position: relative
         .auch-edit
           position: absolute
@@ -1624,6 +1601,29 @@ header
             background: url(../img/social.png) -92px 0 no-repeat
           .instagram
             background: url(../img/social.png) -216px 0 no-repeat
+.subscribe
+  margin-top: 20px
+  .row
+    margin: 0 -3px
+  .col-md-6
+    padding: 0 3px
+    button
+      padding: 5px 8px
+      background: #fff
+      border: 1px solid #f3481c
+      font-weight: 300
+      background: #f3481c
+      color: #fff
+      border-radius: 3px
+      outline: none !important
+      span
+        display: inline-block
+        margin-right: 3px
+    .selectize-input
+      padding: 6px 8px
+      background-color: #fff !important
+      box-shadow: none !important
+      background-image: none !important
 ul.category-tab
   text-align: center
   margin-bottom: 30px

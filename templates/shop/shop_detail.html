@@ -53,23 +53,6 @@
                         </a>
                     </div>
 
-                    <form action="" class="subscribe">
-                        <div class="row">
-
-                            <div class="form-group col-md-6">
-                                <button><span class="glyphicon glyphicon-send"></span> Подписаться</button>
-                            </div>
-
-                            <div class="form-group col-md-6">
-                                <select name="" id="" class=" js-example-placeholder-single">
-                                    <option>Все</option>
-                                    <option>Акции</option>
-                                    <option>Товары</option>
-                                </select>
-                            </div>
-
-                        </div>
-                    </form>
 
                 </div>
             </div>
@@ -103,6 +86,41 @@
 
 
                     <div class="bottom-line">
+                        <div class="col-md-6">
+                            <form action="" class="subscribe">
+                                <div class="row">
+
+                                    <div class="form-group col-md-6">
+                                        <button class="pull-left"><span class="glyphicon glyphicon-send"></span> Подписаться</button>
+                                        <div class="dropdown pull-left">
+                                            <button class="dropdown-toggle custom" type="button"
+                                                    id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                                    aria-expanded="false">
+                                                <span class="glyphicon glyphicon-menu-down"></span>
+                                            </button>
+                                            <div class="dropdown-menu">
+                                                <div class="form-group">
+                                                    <label for="optionsRadios1" class="form-check-label ">Все</label>
+                                                    <input type="radio" class="form-check-input pull-left" name="optionsRadios" id="optionsRadios1" checked value="option3">
+                                                    <div class="indicator"></div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="optionsRadios2" class="form-check-label ">Акции</label>
+                                                    <input type="radio" class="form-check-input pull-left" name="optionsRadios" id="optionsRadios2" value="option3">
+                                                    <div class="indicator"></div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="optionsRadios3" class="form-check-label ">Товары</label>
+                                                    <input type="radio" class="form-check-input pull-left " name="optionsRadios" id="optionsRadios3" value="option3">
+                                                    <div class="indicator"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </form>
+                        </div>
                         {% show_add_social_button shop request.user %}
                         {% if object.sociallinks %}
                             <div class="pull-right">
@@ -120,6 +138,7 @@
                                 {% endif %}
                             </div>
                         {% endif %}
+                    <div class="clearfix"></div>
                     </div>
                 </div>
             </div>

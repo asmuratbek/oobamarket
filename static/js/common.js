@@ -4,7 +4,9 @@ $(window).load(function () {
 
 
 $(document).ready(function () {
+$('.dropdown-toggle.custom').on('show.bs.dropdown-menu', function () {
 
+});
    // if ($('.owl-carousel-category-link').length > 0) {
    //      var owl = $('.owl-carousel-category-link');
    //      owl.owlCarousel({
