@@ -134,6 +134,11 @@ $(document).ready(function () {
         $(".remove-product").modal('show');
     });
 
+    $(".mobile-auth-btn").click(function () {
+        //открыть модальное окно с class="remove-product"
+        $(".mobile-auth").modal('show');
+    });
+
     //Функция вызова модального окана на главной для удаления товара
     var trigger = $('.model-trigger');
 
@@ -304,8 +309,8 @@ $(document).ready(function () {
 
     if ($('.js-example-placeholder-single').length > 0) {
         $('.js-example-placeholder-single').selectize({
-            create: false,
-            sortField: 'text'
+            create: false
+            // sortField: 'text'
         });
     }
 
@@ -902,19 +907,19 @@ if ($('.my-foto-container').length > 0) {
         });
     });
 
-
-    if ($('.demo-x').length > 0) {
-        $(".demo-x").mCustomScrollbar({
-            axis: "x",
-            scrollInertia: 200,
-            moveDragger: true,
-            contentTouchScroll: 200,
-            handlers: 'touch',
-            wheelPropagation: true,
-            theme: "dark",
-            advanced: {autoExpandHorizontalScroll: true}
-        });
-    }
+    //
+    // if ($('.demo-x').length > 0) {
+    //     $(".demo-x").mCustomScrollbar({
+    //         axis: "x",
+    //         scrollInertia: 200,
+    //         moveDragger: true,
+    //         contentTouchScroll: 200,
+    //         handlers: 'touch',
+    //         wheelPropagation: true,
+    //         theme: "dark",
+    //         advanced: {autoExpandHorizontalScroll: true}
+    //     });
+    // }
 
 
 }); // end document ready
