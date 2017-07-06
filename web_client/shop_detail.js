@@ -25,12 +25,13 @@ var MainInterface = createClass({
       products: [],
       categories: [],
       activeCategories: [],
+      shopSlug : location.href.split("/")[4]
     }
   },
 
   componentDidMount() {
-    var url = location.href.split("/")[4]
-  axios.get(`/product/api/?shop=` + url)
+    // var url = location.href.split("/")[4]
+  axios.get(`/product/api/?shop=` + this.state.shopSlug)
     .then(res => {
       const products = res.data.map(obj => obj);
       this.setState({
@@ -223,6 +224,19 @@ var MainInterface = createClass({
           onChangePriceFrom = { this.changePriceFrom }
           onChangePriceTo = { this.changePriceTo }
        />
+       <div className="col-md-4 col-sm-6">
+            <div className="cover">
+                <a className="url-item" href={`/product/${this.state.shopSlug}/add-product/`}></a>
+                <div className="add-product">
+                    <i className="glyphicon glyphicon-plus-sign"></i>
+                    <p>Добавить новый товар</p>
+                </div>
+
+                <div className="stock">
+                    <a href="#">Добавить акцию</a>
+                </div>
+            </div>
+        </div>
       {filteredProducts}
       </div>
       </div>
