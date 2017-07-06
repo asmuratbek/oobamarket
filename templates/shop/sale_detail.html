@@ -13,7 +13,7 @@
                     <h1>{{ sale.title }}</h1>
 
                     {{ sale.description|safe }}
-
+                    <a href="{% url 'shops:update_sale' slug=shop.slug pk=sale.pk %}">Обновить</a>
                 </div>
             </div>
 {% endblock %}

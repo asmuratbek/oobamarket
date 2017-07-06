@@ -15,6 +15,7 @@ urlpatterns = [
     url(r'^(?P<slug>[\w-]+)/about-us/$', ShopAboutUsDetailView.as_view(), name='about_us'),
     url(r'^(?P<slug>[\w-]+)/contacts/$', ShopContactsView.as_view(), name='contacts_detail'),
     url(r'^(?P<slug>[\w-]+)/sale/create$', SalesCreateView.as_view(), name='add_sale'),
+    url(r'^(?P<slug>[\w-]+)/sale/(?P<pk>[0-9]+)/update$', SalesUpdateView.as_view(), name='update_sale'),
     url(r'^(?P<slug>[\w-]+)/sale/$', ShopSaleListView.as_view(), name='sale'),
     url(r'^(?P<slug>[\w-]+)/sale/(?P<pk>[0-9]+)/$', sale_detail, name='sale_detail'),
     url(r'^(?P<slug>[\w-]+)/update/$', ShopUpdateView.as_view(), name='update'),

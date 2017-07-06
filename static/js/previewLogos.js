@@ -14,11 +14,13 @@ function previewImage(input, img) {
         reader.readAsDataURL(input.files[0]);
     }
 }
+
 $('#id_images').change(function () {
     logo_view.show();
     remove_logo.show();
     previewImage(this, logo_view)
 });
+
 remove_logo.click(function () {
     logo_view.attr('src', '');
     remove_logo.hide();
@@ -33,6 +35,7 @@ logo.change(function () {
     remove_logo_update.show();
     console.log(logo.val());
 });
+
 console.log(logo.val());
 remove_logo_update.on('click', function () {
     logo_view_update.attr('src', null);

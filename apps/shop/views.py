@@ -67,6 +67,15 @@ class SalesCreateView(LoginRequiredMixin, ShopMixin, CreateView):
         return super(SalesCreateView, self).form_valid(form)
 
 
+class SalesUpdateView(LoginRequiredMixin, ShopMixin, UpdateView):
+    model = Sales
+    form_class = SalesCreateForm
+    template_name = 'shop/sale_create.html'
+
+    def get_success_url(self):
+        return reverse('shops:sale', kwargs={'slug': self.kwargs['slug']})
+
+
 class ShopAboutUsDetailView(generic.DetailView):
     model = Shop
     template_name = 'shop/about-us.html'

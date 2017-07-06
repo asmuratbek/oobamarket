@@ -13,11 +13,24 @@
 {#                        <input class="form-control" type="text" required="">#}
                         {{ form.title|attr:"class:form-control"|attr:"required" }}
                     </div>
-                    <div class="form-group input col-md-6">
+
+
+                    <div class="form-group input col-md-4">
+                        <label>Размер скидки</label>
+{#                        <input class="form-control" placeholder="0%" type="number">#}
+                        {{ form.discount|attr:"class:form-control"|attr:"type:number"|attr:"placeholder:0%" }}
+                    </div>
+                    <div class="form-group input col-md-12">
                         <label for="">Короткое описание</label>
 {#                        <input class="form-control" type="text" required="">#}
                         {{ form.short_description|attr:"class:form-control"|attr:"textarea"}}
                     </div>
+                    <div class="form-group input col-md-12">
+                        <label>Описание</label>
+{#                        <textarea name="" id="" rows="10"></textarea>#}
+                        {{ form.description|attr:"rows:10" }}
+                    </div>
+
                     <div class="form-group input col-md-12">
                         <label class="switch">
 
@@ -31,16 +44,7 @@
                         </label>
                         <label>Опубликовать</label>
                     </div>
-                    <div class="form-group input col-md-4">
-                        <label>Размер скидки</label>
-{#                        <input class="form-control" placeholder="0%" type="number">#}
-                        {{ form.discount|attr:"class:form-control"|attr:"type:number"|attr:"placeholder:0%" }}
-                    </div>
-                    <div class="form-group input col-md-12">
-                        <label>Описание</label>
-{#                        <textarea name="" id="" rows="10"></textarea>#}
-                        {{ form.description|attr:"rows:10" }}
-                    </div>
+
                     <div class="col-md-12">
                         <button type="submit" class="btn add">Сохранить</button>
                     </div>
@@ -56,7 +60,7 @@
                         </label>
                         <div class="info">
                             <span>Рекомендация для фото:</span>
-                            <p>Размер: 380x380 или больше</p>
+                            <p>Размер: 540x270 или больше</p>
                             <p>Фон: белый или прозрачный</p>
                             <br>
                             <span id="file-counter" style="color: red;"></span>
@@ -69,11 +73,17 @@
 
                     </div>
                     <div class="img-wrapper">
+                        {% if sales.image %}
+                        <img src="{{ sales.image.url }}" alt="" id="id_logo2">
+                            <span class="remove-logo-update">X</span>
+                        {% else %}
                         <img src="" alt="" id="id_logo2">
+                        {% endif %}
                         <span class="remove-logo-update" style="display: none;">X</span>
 
                         <input type="hidden" id="slug" value="igrolend">
                     </div>
+
 
                 </div>
             </form>
