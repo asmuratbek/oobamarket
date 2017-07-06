@@ -335,10 +335,11 @@ header
       margin: 2px 0
       float: left
   .navbar-brand + a
-      font-size: 14px
-      font-weight: 700
+      font-size: 12px
+      font-weight: 300
       color: #808080
       display: inline-block
+      text-transform: uppercase
       margin-left: 10px
       line-height: 20px
       margin-top: 20px
@@ -3639,5 +3640,60 @@ form.form-inline.sm-form
       font-weight: 400
       &:hover
         background-color: #b8b7b7
+.mobile-footer-fixed-nav
+  position: fixed
+  bottom: 0
+  right: 0
+  left: 0
+  padding: 10px 0
+  background-color: #fff
+  z-index: 100
+  text-align: center
+  box-shadow: 0 0px 26px -5px rgba(0,0,0,.15)
+  .col-xs-3
+    border-right: 1px solid #ccc
+  .col-xs-3:last-child
+    border-right: 0
+  a.btn
+    color: #333
+    font-size: 0
+    text-transform: capitalize
+    box-shadow: none!important
+    border-radius: 0
+    background-color: #fff !important
+    font-weight: 300
+    padding: 0
+  span
+    display: inline-block
+    margin-right: 5px
+    font-size: 18px
+    width: 20px
+    height: 20px
+  .magazin-btn
+    background-color: transparent !important
+    span
+      color: gold
+  .favorites
+    background-color: transparent!important
+    span
+      color: #ED1C24
+  .basket
+    background-color: transparent!important
+    span
+      color: #0071BC
+  .enter
+    border: 1px solid #CCCCCC
+    position: relative
+    &:hover
+      border-color: #333
+  .user
+    span
+
+      color: #00e800
+
+  .quit
+    span
+      color: red
+
 //ALWAYS END
 @import "media"

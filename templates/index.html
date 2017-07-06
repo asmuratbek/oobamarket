@@ -32,7 +32,8 @@
                         <!--</div>-->
 
                         <!--</form>-->
-                        <a href="{% url 'landing' %}" class="magazin-btn btn"><span class="glyphicon glyphicon-star"></span> Для магазинов</a>
+                        <a href="{% url 'landing' %}" class="magazin-btn btn"><span
+                                class="glyphicon glyphicon-star"></span> Для магазинов</a>
 
                         {% if user.is_authenticated %}
                             <a href="{{ user.get_favorites_link }}" class="favorites btn"><span
@@ -111,7 +112,7 @@
                 {% include 'product/product_list.html' with object_list=weeks_best_products col=3 %}
                 <div class="clearfix"></div>
                 <div class="all-goods">
-                     <a class="btn add" href="{% url 'product:product_list' %}">Показать все товары</a>
+                    <a class="btn add" href="{% url 'product:product_list' %}">Показать все товары</a>
                 </div>
             </div>
         </section>
@@ -127,6 +128,54 @@
         </div>
 
     </section>
+
+    <div class="mobile-footer-fixed-nav hidden-lg hidden-md">
+
+
+        <div class="col-xs-3 col-sm-3">
+            <a href="{% url 'landing' %}" class="magazin-btn btn"><span class="glyphicon glyphicon-star"></span> Для
+                магазинов</a>
+        </div>
+        {% if user.is_authenticated %}
+            <div class="col-xs-3 col-sm-3">
+                <a href="{{ user.get_favorites_link }}" class="favorites btn"><span
+                        class="glyphicon glyphicon-heart"></span> Избранные (<span
+                        class="favorites_count">{{ user.get_favorites_count }}</span>)</a>
+            </div>
+            <div class="col-xs-3 col-sm-3">
+                <a href="{% url 'cart:detail' %}" class="basket btn"><span
+                        class="glyphicon glyphicon-shopping-cart"></span> Корзина (<span
+                        class="cart-count">{{ user.get_cart_count }}</span>)</a>
+            </div>
+
+            <!-- <a href=""  class="enter btn">Войти</a> -->
+        {% else %}
+            <div class="col-xs-3 col-sm-3">
+                <a href="{% url 'account_login' %}" class="favorites btn"><span
+                        class="glyphicon glyphicon-heart"></span> Избранные</a>
+            </div>
+            <div class="col-xs-3 col-sm-3">
+                <a href="{% url 'cart:detail' %}" class="basket btn"><span
+                        class="glyphicon glyphicon-shopping-cart"></span> Корзина (<span
+                        class="cart-count">{{ cart_count }}</span>)</a>
+            </div>
+
+            <!-- <a href=""  class="enter btn">Войти</a> -->
+        {% endif %}
+        <div class="col-xs-3 col-sm-3">
+            {% if user.is_authenticated %}
+                <a href="{% url 'account_logout' %}" class="btn quit">
+                    <span class="glyphicon glyphicon-log-out"></span>
+                </a>
+            {% else %}
+                <a href="{% url 'account_login' %}" class="btn user" type="button">
+                    <span class="glyphicon glyphicon-user"></span>
+                </a>
+            {% endif %}
+        </div>
+
+
+    </div>
 
 
 

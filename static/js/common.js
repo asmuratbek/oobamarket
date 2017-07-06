@@ -5,6 +5,41 @@ $(window).load(function () {
 
 $(document).ready(function () {
 
+   // if ($('.owl-carousel-category-link').length > 0) {
+   //      var owl = $('.owl-carousel-category-link');
+   //      owl.owlCarousel({
+   //          loop: false,
+   //          nav: true,
+   //          margin: 10,
+   //          mouseDrag: false,
+   //          autoWidth: true,
+   //          responsive: {
+   //              0: {
+   //                  items: 1
+   //              },
+   //              600: {
+   //                  items: 1
+   //              },
+   //              960: {
+   //                  items: 1
+   //              },
+   //              1200: {
+   //                  items: 1
+   //              },
+   //              1920: {
+   //                  items: 1
+   //              }
+   //          }
+   //      });
+   //      owl.on('mousewheel', '.owl-stage', function (e) {
+   //          if (e.deltaY > 0) {
+   //              owl.trigger('next.owl');
+   //          } else {
+   //              owl.trigger('prev.owl');
+   //          }
+   //          e.preventDefault();
+   //      });
+   //  }
 
     function readURL(input) {
         if (input.files && input.files[0]) {
@@ -274,7 +309,7 @@ $(document).ready(function () {
         });
     }
 
-    if ($('[data-toggle="tooltip"].shop-page').length > 0) {
+    if ($('[data-toggle="tooltip"]').length > 0) {
         $('[data-toggle="tooltip"]').tooltip();
     }
 
@@ -418,38 +453,7 @@ $(document).ready(function () {
         }
     });
 
-    // if ($('.owl-carousel-category-link').length > 0) {
-    //     var owl = $('.owl-carousel-category-link');
-    //     owl.owlCarousel({
-    //         loop: false,
-    //         nav: true,
-    //         margin: 10,
-    //         mouseDrag: false,
-    //         autoWidth: true,
-    //         responsive: {
-    //             0: {
-    //                 items: 3
-    //             },
-    //             600: {
-    //                 items: 3
-    //             },
-    //             960: {
-    //                 items: 5
-    //             },
-    //             1200: {
-    //                 items: 6
-    //             }
-    //         }
-    //     });
-    //     owl.on('mousewheel', '.owl-stage', function (e) {
-    //         if (e.deltaY > 0) {
-    //             owl.trigger('next.owl');
-    //         } else {
-    //             owl.trigger('prev.owl');
-    //         }
-    //         e.preventDefault();
-    //     });
-    // }
+
 
     if ($('.owl-carousel.shop-page').length > 0) {
         $('.owl-carousel.shop-page').owlCarousel({
