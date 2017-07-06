@@ -52,6 +52,7 @@ DJANGO_APPS = [
     'mptt',
     'django_mptt_admin',
     'django.contrib.admin',
+
 ]
 THIRD_PARTY_APPS = [
     'crispy_forms',  # Form layouts
@@ -190,6 +191,8 @@ USE_TZ = True
 # TEMPLATE CONFIGURATION
 # ------------------------------------------------------------------------------
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#templates
+
+
 TEMPLATES = [
     {
         # See: https://docs.djangoproject.com/en/dev/ref/settings/#std:setting-TEMPLATES-BACKEND
@@ -218,12 +221,14 @@ TEMPLATES = [
                 'django.template.context_processors.tz',
                 'django.contrib.messages.context_processors.messages',
                 'apps.global_category.context_processors.fixed_categories',
-                'apps.cart.context_processors.cart_count'
+                'apps.cart.context_processors.cart_count',
                 # Your stuff: custom template context processors go here
             ],
         },
     },
 ]
+
+
 
 # See: http://django-crispy-forms.readthedocs.io/en/latest/install.html#template-packs
 CRISPY_TEMPLATE_PACK = 'bootstrap4'

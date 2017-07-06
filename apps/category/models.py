@@ -26,6 +26,7 @@ class Category(MPTTModel, PublishBaseModel):
 
     parent = TreeForeignKey('self', verbose_name='Родительская категория', null=True, blank=True)
     title = models.CharField(max_length=255, verbose_name='Название категории')
+    image = models.ImageField(upload_to='category/icons/', verbose_name='Иконка категории', null=True)
     slug = models.CharField(max_length=255,verbose_name='Название на транслите', unique=True, blank=True, null=True)
     section = models.ForeignKey(GlobalCategory, verbose_name='Раздел', default='1')
     order = models.PositiveIntegerField(verbose_name='Очередь', default=0)
