@@ -7,7 +7,11 @@
         <div class="dropdown" data-id="#dropdown-{{ category.id }}">
                     <a class="enter btn" type="button" data-toggle="dropdown" aria-haspopup="true"
                        aria-expanded="false">
+                        {% if category.image %}
+                        {{ category.image }}
+                        {% else %}
                         {{ category.title }}
+                        {% endif %}
                         <span class="glyphicon glyphicon-menu-down"></span>
                     </a>
                 </div>
