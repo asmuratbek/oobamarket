@@ -9,7 +9,7 @@
         </ul>
 
         {% for sale in shop.sales_set.all %}
-            <div class="col-md-6">
+            <div class="col-md-6 disabled" >
                 <span class="descount">{{ sale.discount }}%</span>
                 <div class="img-wrapper">
                     {% if sale.image %}
