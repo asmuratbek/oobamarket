@@ -175,10 +175,34 @@
             {% endif %}
         </div>
 
-
     </section>
 
-    <!-- Modal -->
+    <footer>
+        <div class="container-fluid">
+            <div class="col-md-3">
+                <img class="center-block" src="{% static 'img/logo.svg' %}" alt="">
+                <ul>
+                    <li><a href="">link</a></li>
+                    <li><a href="">link</a></li>
+                    <li><a href="">link</a></li>
+                </ul>
+            </div>
+            <div class="col-md-6">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d9290635.710903395!2d40.297852!3d55.35413500000001!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sru!2sru!4v1499416434799"
+                        width="100%" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
+            </div>
+            <div class="col-md-3">
+                <h5>О нашем магазине</h5>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad aliquam culpa delectus in laboriosam,
+                    maxime molestias ratione sint tempora tenetur.</p>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Autem cumque, error facilis iure odio
+                    quaerat qui quis rerum velit voluptas! Consequatur culpa fugit nobis omnis praesentium quam quia,
+                    reiciendis repellendus?</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal mobile  -->
     <div class="modal fade mobile-auth" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -191,7 +215,7 @@
                     {% if user.is_authenticated %}
 
                         <a class="enter btn">
-                        <span class="glyphicon glyphicon-user"></span>
+                            <span class="glyphicon glyphicon-user"></span>
                             {{ request.user.get_username }}
                         </a>
 
@@ -209,7 +233,8 @@
                             {% for shop in request.user.shops_name %}
                                 <li><a href="{{ shop.get_absolute_url }}">{{ shop.title }}</a></li>
                             {% endfor %}
-                            <li><a href="{% url 'account_logout' %}"> <span class="glyphicon glyphicon-log-out"></span> <strong>Выйти</strong></a></li>
+                            <li><a href="{% url 'account_logout' %}"> <span class="glyphicon glyphicon-log-out"></span>
+                                <strong>Выйти</strong></a></li>
                         </ul>
 
                     {% else %}
