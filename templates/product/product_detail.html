@@ -8,7 +8,12 @@
 {% endblock %}
 
 {% block categories %}
+    <section class="category-link hidden-sm hidden-xs">
+    <div class="container-fluid">
+        <div class="clearfix"></div>
     {% include 'layout/categories.html' with object=object.shop.get_global_category %}
+    </div>
+    </section>
 {% endblock %}
 
 {% block content %}
