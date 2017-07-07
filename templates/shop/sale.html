@@ -22,7 +22,7 @@
                     <h3>{{ sale.title }}</h3>
                     <p>{{ sale.short_description }}</p>
                     <a href="{% url 'shops:sale_detail' slug=shop.slug pk=sale.pk %}">Смотреть</a>
-                     <a class="" href="{% url 'shops:update_sale' slug=shop.slug pk=sale.pk %}">Редактировать</a>
+                    {% show_update_sale_button shop sale request.user %}
                 </div>
             </div>
         {% endfor %}

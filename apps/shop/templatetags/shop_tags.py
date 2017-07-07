@@ -97,3 +97,16 @@ def show_create_sale_button(shop, user):
                 return mark_safe('')
     else:
         return mark_safe('')
+
+@register.assignment_tag
+def show_update_sale_button(shop, sale, user):
+    if not user.is_anonymous:
+        if user.is_authenticated:
+            if shop.is_owner(user):
+                return mark_safe('''
+                                    <a class="btn add" href="%s">Редактировать</a>
+                                ''' % reverse('shops:update_sale', kwargs={'slug': shop.slug, 'pk': sale.pk}))
+            elif not shop.is_owner(user):
+                return mark_safe('')
+    else:
+        return mark_safe('')
