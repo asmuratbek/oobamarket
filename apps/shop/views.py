@@ -32,6 +32,9 @@ class ShopSaleListView(generic.DetailView):
     model = Shop
     template_name = 'shop/sale.html'
 
+class ShopSaleArchiveView(generic.DetailView):
+    model = Shop
+    template_name = 'shop/sale_archive.html'
 
 def sale_detail(request, slug, pk):
     shop = get_object_or_404(Shop, slug=slug)

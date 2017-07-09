@@ -159,6 +159,7 @@ class Sales(PublishBaseModel):
     class Meta:
         verbose_name = "Акция"
         verbose_name_plural = "Акции"
+        ordering = ['-created_at']
 
     shop = models.ForeignKey(Shop, verbose_name='Магазин', on_delete=models.CASCADE, null=True, blank=True)
     title = models.CharField(max_length=50, verbose_name='Название акции')
