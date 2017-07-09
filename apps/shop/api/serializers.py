@@ -24,6 +24,8 @@ class ShopSerializer(ModelSerializer):
         lookup_field="slug"
     )
 
+    used_categories = SerializerMethodField()
+
     class Meta:
         model = Shop
         fields = (
@@ -39,9 +41,13 @@ class ShopSerializer(ModelSerializer):
             'created_at',
             'updated_at',
             'logo',
-            'get_absolute_url'
+            'get_absolute_url',
+            'used_categories',
 
         )
+
+    def get_used_categories(self, obj):
+        return obj.get_used_categories()
 
 
 class ShopCreateSerializer(ModelSerializer):

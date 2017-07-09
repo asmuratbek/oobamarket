@@ -25,7 +25,8 @@ var MainInterface = createClass({
       products: [],
       categories: [],
       activeCategories: [],
-      shopSlug : location.href.split("/")[4]
+      shopSlug : location.href.split("/")[4],
+      used_categories: []
     }
   },
 
@@ -37,6 +38,15 @@ var MainInterface = createClass({
       this.setState({
          products: products,
          categories: _.uniqBy(products.map(obj => obj.get_category_title), obj => obj)
+       });
+    });
+  },
+
+  axios.get(`/shop/api/` + this.state.shopSlug)
+    .then(res => {
+      const used_categories = res.data.map(obj => obj);
+      this.setState({
+         used_categories: used_categories
        });
     });
   },
