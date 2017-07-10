@@ -91,6 +91,7 @@
 
 
                     <div class="bottom-line">
+                    {% if user not in admin %}
                         <div class="col-md-6">
                             <form id="subscribe-form" class="subscribe">{% csrf_token %}
                                 <div class="row">
@@ -120,6 +121,7 @@
                                 <input type="hidden" name="shop_slug" value="{{ shop.slug }}"/>
                             </form>
                         </div>
+                    {% endif %}
                         {% show_add_social_button shop request.user %}
                         {% if object.sociallinks %}
                             <div class="pull-right">

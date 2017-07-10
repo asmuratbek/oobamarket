@@ -36,6 +36,7 @@ class ShopDetailView(generic.DetailView):
         except Subscription.DoesNotExist:
             context['subscribe'] = None
         context['sub_types'] = SUBSCRIPTION_TYPES
+        context['admin'] = self.object.user.all()
         return context
 
 
