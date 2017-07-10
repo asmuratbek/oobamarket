@@ -2,7 +2,7 @@ from django.conf.urls import url, include
 
 from .views import product_detail, ProductCreateView, ProductUpdateView, ProductIndexCreateView, upload_images, \
     remove_uploaded_image, ProductDeleteView, change_publish_status, upload_images_product_update, \
-    delete_product_images, add_product_review, ProductListView
+    delete_product_images, add_product_review, ProductListView, reviews_all
 
 urlpatterns = [
     url(r'^$', product_detail, name='product_detail'),
@@ -18,5 +18,6 @@ urlpatterns = [
     url(r'^upload/images/$', upload_images, name='upload_images'),
     url(r'^remove/images/$', remove_uploaded_image, name='remove_images'),
     url(r'^(?P<slug>[\w-]+)/add-review/$', add_product_review, name='add_review'),
+    url(r'^reviews_all/$', reviews_all, name='reviews_all'),
 
 ]

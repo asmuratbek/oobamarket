@@ -9,6 +9,13 @@ $(document).ready(function () {
 
     });
 
+
+
+
+
+
+
+
    // $('body').on('mousemove',function () {
    //     var that = this;
    //      setTimeout(function () {
@@ -114,6 +121,8 @@ $(document).ready(function () {
             });
         });
     }
+
+    //Ajax запрос на добавление комментария в продукте
 
 
     //Функция инициализации оправки формы для удаления товара

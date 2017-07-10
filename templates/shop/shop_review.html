@@ -1,10 +1,52 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends 'shop/shop_detail.html' %}
+{% load shop_tags %}
+
+{% block shopcontent %}
+<section class="reviews">
+
+</section>
+
+<section class="reviews edit">
+    <div class="container">
+        <div class="item">
+            <form id='review_form' action="{% url 'shops:add_review' slug=shop.slug %}" method="post">
+                {% csrf_token %}
+                <div class="name">
+                    <h5>Добавить отзыв</h5>
+
+                    <h4>
+
+                        <div class="star-wrapper">
+                            <div class="star default">
+                                <i class="fa fa-star-o" aria-hidden="true"></i>
+                                <i class="fa fa-star-o" aria-hidden="true"></i>
+                                <i class="fa fa-star-o" aria-hidden="true"></i>
+                                <i class="fa fa-star-o" aria-hidden="true"></i>
+                                <i class="fa fa-star-o" aria-hidden="true"></i>
+                            </div>
+                            <div class="star active star-behaviour" data-save-stars="false" data-stars-count="0">
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                            </div>
+                        </div>
+
+                    </h4>
+
+                </div>
+                <div class="description">
+
+                    <div class="form-group">
+                        <textarea name="text" id="prod-rev" cols="30" rows="10" class="form-control"></textarea>
+
+                    </div>
+                    <button type="submit">Отправить</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</section>
+{% endblock %}

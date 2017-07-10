@@ -56,7 +56,7 @@
                 {% else %}
                     <span>{{ object.get_price }} {{ object.currency }}</span>
                 {% endif %}
-                <p><strong>Количество:</strong> {{ object.quantity }}</p>
+
                 {#            <form class="form-inline">#}
                 {#                <div class="form-group">#}
                 {#                    <label>Оставьте свой номер телефона и продавец с вами свяжится</label>#}
@@ -132,48 +132,17 @@
     </section>
 
     <section class="reviews">
-        <div class="container">
-            {% for r in review %}
-            <div class="item">
-                <div class="name">
-
-                    <h4>{{ r.user.username }}
-                        <span>{{ r.created_at|date:"d.m.y H:m" }}</span>
-                        {% if r.stars %}
-                        <div class="star pull-right">
-                            <div class="star default">
-                                <i class="fa fa-star-o" aria-hidden="true"></i>
-                                <i class="fa fa-star-o" aria-hidden="true"></i>
-                                <i class="fa fa-star-o" aria-hidden="true"></i>
-                                <i class="fa fa-star-o" aria-hidden="true"></i>
-                                <i class="fa fa-star-o" aria-hidden="true"></i>
-                            </div>
-
-                            <div class="star active">
-                                {% for i in "*****" %}
-                                <i class="fa fa-star {% if forloop.counter <= r.stars|length %}active{% endif %}" aria-hidden="true"></i>
-                                {% endfor %}
-                            </div>
-
-                        </div>
-                        {% endif %}
-                    </h4>
-
-
-                </div>
-                <div class="description">
-                    <p>{{ r.text }}</p>
-                </div>
-            </div>
-             {% endfor %}
-
+    {% if  review %}
+        <div class="container eeee">
+        {% include 'layout/_reviews.html' %}
         </div>
+    {% endif %}
     </section>
 
     <section class="reviews edit">
         <div class="container">
             <div class="item">
-                <form id='review_form' action="{% url 'product:add_review' slug=object.slug %}" method="post">
+                <form id='review_form' class="product_review" action="{% url 'product:add_review' slug=object.slug %}" method="post">
                     {% csrf_token %}
                     <div class="name">
                         <h5>Добавить отзыв</h5>
@@ -226,4 +195,37 @@
     <![endif]-->
     {{ block.super }}
     <script src={% static 'js/jquare-zoom.js' %}></script>
+
+{#    <script>#}
+{#        var form = $('.product_review');#}
+{#    $(form).on('submit', function (event) {#}
+{#        event.preventDefault();#}
+{#        console.log('Send data function is called!');#}
+{#        $.ajax({#}
+{#            method: 'POST',#}
+{#            url: $(form).attr('action'),#}
+{#            dataType: 'JSON',#}
+{#            data: $(form).serialize(),#}
+{#            success: function (response) {#}
+{#                console.log('ajax is done!1');#}
+{#                if(response.success) {#}
+{#                    $.ajax({#}
+{#                        method: 'POST',#}
+{#                        dataType: 'HTML',#}
+{#                        url: '{% url "reviews_all" %}',#}
+{#                        data: { "csrf_token": {{ csrf_token|escapejs }}, "product": {{ product.slug }} },#}
+{#                        success: function (response) {#}
+{#                            console.log('lala');#}
+{#                            $('.eeee').html(response);#}
+{#                        },#}
+{#                        error: function () {#}
+{#                            console.error('Can\'t send ajax to load all comments');#}
+{#                        }#}
+{#                    });#}
+{#                }#}
+{#            }#}
+{#        });#}
+{#    });#}
+{#    </script>#}
+
 {% endblock %}

@@ -43,7 +43,7 @@ class Product(PublishBaseModel):
     sell_count = models.PositiveIntegerField(_("Количество продаж"), default=0, null=True, blank=True)
     discount = models.PositiveIntegerField(null=True, blank=True, verbose_name='Скидка')
     currency = models.CharField(null=True, max_length=255, verbose_name='Валюта', default='сом')
-    quantity = models.IntegerField(verbose_name='Количество', default=0)
+    # quantity = models.IntegerField(verbose_name='Количество', default=0)
     delivery_type = models.CharField(verbose_name='Вид доставки', choices=DELIVERY_TYPES, default='self',
                                      max_length=255)
     delivery_cost = models.FloatField(verbose_name='Стоимость доставки', default=0, null=True, blank=True)

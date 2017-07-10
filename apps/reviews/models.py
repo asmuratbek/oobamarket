@@ -43,4 +43,4 @@ class ShopReviews(AbstractReview):
     shop = models.ForeignKey(Shop, on_delete=models.CASCADE, verbose_name='Магазин')
 
     def __str__(self):
-        return self.shop
+        return str(self.shop)

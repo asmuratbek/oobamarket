@@ -12,6 +12,7 @@ from django.views.generic import DeleteView
 from django.views.generic import UpdateView
 from slugify import slugify
 
+from apps.reviews.models import ShopReviews
 from apps.shop.mixin import FormsetMixin
 from apps.users.models import Subscription, SUBSCRIPTION_TYPES
 from config.settings import base
@@ -44,9 +45,11 @@ class ShopSaleListView(generic.DetailView):
     model = Shop
     template_name = 'shop/sale.html'
 
+
 class ShopSaleArchiveView(generic.DetailView):
     model = Shop
     template_name = 'shop/sale_archive.html'
+
 
 def sale_detail(request, slug, pk):
     shop = get_object_or_404(Shop, slug=slug)
@@ -245,3 +248,24 @@ def remove_logo(request):
             return JsonResponse({'status': 0, 'message': 'Logo removed'})
         return JsonResponse({'status': 1, 'message': 'Shop does not have logo'})
     return HttpResponseBadRequest
+
+
+class ShopReviewListView(generic.DetailView):
+    model = Shop
+    template_name = 'shop/shop_review.html'
+
+
+def add_shop_review(request, slug):
+    if request.method == 'POST':
+        if request.is_ajax():
+            review = ShopReviews()
+            review.text = request.POST.get('text')
+            review.shop = Shop.objects.get(slug=slug)
+            review.user = request.user
+            if request.POST.get('rating'):
+                review.stars = '*' * int(request.POST.get('rating'))
+            review.save()
+            return JsonResponse(dict(success=True))
+
+        return JsonResponse(dict(success=True, message='Request is not AJAX!'))
+    return JsonResponse(dict(success=True, message='Request is not POST!'))

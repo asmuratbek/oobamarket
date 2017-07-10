@@ -6,7 +6,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponseRedirect, HttpResponseBadRequest
 from django.http import JsonResponse
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, render_to_response
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import ListView, View, UpdateView, CreateView, DeleteView
 from slugify import slugify
@@ -55,6 +55,7 @@ class ProductListView(ListView):
     model = Product
     template_name = 'product/all_products.html'
 
+
 def product_detail(request, global_slug, category_slug, slug):
     product = get_object_or_404(Product, slug=slug)
     category = get_object_or_404(Category, slug=category_slug)
@@ -85,7 +86,14 @@ def add_product_review(request, slug):
     return JsonResponse(dict(success=True, message='Request is not POST!'))
 
 
+@csrf_exempt
+def reviews_all(request):
+    review = ProductReviews.objects.filter(product_slug=request.POST.get('product'))
 
+    params = {
+        'review': review
+    }
+    return render_to_response('layout/_reviews.html', params)
 
 
 

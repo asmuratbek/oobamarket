@@ -153,7 +153,7 @@
                 <li><a href="{% url 'shops:detail' slug=shop.slug %}">Товары</a></li>
                 <li><a href="{% url 'shops:about_us' slug=shop.slug %}">О компании</a></li>
                 <li><a href="{% url 'shops:sale' slug=shop.slug %}">Акции</a></li>
-                <li><a href="">Отзывы</a></li>
+                <li><a href="{% url 'shops:review' slug=shop.slug %}">Отзывы</a></li>
                 {#                <li><a class="remove delete-object model-trigger" data-url="{% url 'shops:delete' slug=object.slug %}" style="cursor: pointer;">Удалить магазин</a></li>#}
                 <li><a href="{% url 'shops:contacts_detail' slug=shop.slug %}">Контакты</a></li>
 
