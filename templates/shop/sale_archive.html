@@ -10,8 +10,8 @@
 
         {% for sale in shop.sales_set.all %}
 
-            {% if sale.published == True %}
-            <div class="col-md-6">
+            {% if sale.published == False %}
+            <div class="col-md-6 disabled">
                 <span class="descount">{{ sale.discount }}%</span>
                 <div class="img-wrapper">
                     {% if sale.image %}

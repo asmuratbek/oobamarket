@@ -18,6 +18,7 @@ urlpatterns = [
     url(r'^(?P<slug>[\w-]+)/sale/(?P<pk>[0-9]+)/update$', SalesUpdateView.as_view(), name='update_sale'),
     url(r'^(?P<slug>[\w-]+)/sale/$', ShopSaleListView.as_view(), name='sale'),
     url(r'^(?P<slug>[\w-]+)/sale/(?P<pk>[0-9]+)/$', sale_detail, name='sale_detail'),
+    url(r'^(?P<slug>[\w-]+)/sale/archive$', ShopSaleArchiveView.as_view(), name='sale_archive'),
     url(r'^(?P<slug>[\w-]+)/update/$', ShopUpdateView.as_view(), name='update'),
     url(r'^(?P<slug>[\w-]+)/delete/$', ShopDeleteView.as_view(), name='delete'),
     url(r'^(?P<slug>[\w-]+)/add-banners/$', CreateBanners.as_view(), name='add_banner'),

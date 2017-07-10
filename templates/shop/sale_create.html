@@ -33,10 +33,11 @@
 
                     <div class="form-group input col-md-12">
                         <label class="switch">
-
-{#                            <input checked="checked" class="switch__input" id="id_published" name="published"#}
-{#                                   type="checkbox">#}
+                            {% if sales.published == TRUE %}
                             {{ form.published|attr:"class:switch__input"|attr:"id_published"|attr:"checked:checked" }}
+                            {% else %}
+                            {{ form.published|attr:"class:switch__input"|attr:"id_published" }}
+                            {% endif %}
                             <div class="switch__toggle">
                                 <div class="switch__handle"></div>
                             </div>
