@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import createClass from 'create-react-class';
 import Product from './components/ShopDetailProducts';
 import SearchForm from './components/ShopDetailSearchForm';
-import CategoryList from './components/CategoryList';
+import CategoryList from './components/ShopDetailCategory';
 import ProductsCount from './components/ProductsCount';
 import axios from 'axios';
 import _ from 'lodash';
@@ -25,30 +25,26 @@ var MainInterface = createClass({
       products: [],
       categories: [],
       activeCategories: [],
-      shopSlug : location.href.split("/")[4],
-      used_categories: []
+      shopSlug : location.href.split("/")[4]
     }
   },
 
   componentDidMount() {
-    // var url = location.href.split("/")[4]
   axios.get(`/product/api/?shop=` + this.state.shopSlug)
     .then(res => {
-      const products = res.data.map(obj => obj);
+      var products = res.data.map(obj => obj);
       this.setState({
          products: products,
-         categories: _.uniqBy(products.map(obj => obj.get_category_title), obj => obj)
        });
     });
-  },
 
-  axios.get(`/shop/api/` + this.state.shopSlug)
-    .then(res => {
-      const used_categories = res.data.map(obj => obj);
-      this.setState({
-         used_categories: used_categories
-       });
-    });
+    axios.get(`/api/category/shop/` + this.state.shopSlug)
+      .then(res => {
+        var categories = res.data.map(obj => obj);
+        this.setState({
+           categories: categories
+         });
+      });
   },
 
   deleteMessage: function(item) {
@@ -210,16 +206,7 @@ var MainInterface = createClass({
         <ul>
 
         <li>Все категории</li>
-                <li className="active">
-                    <a  role="button" data-toggle="collapse" href="#1" aria-expanded="false" aria-controls="collapseExample">Title</a>
-
-                        <div className="collapse category-in-category" id="1">
-
-                                <a href="1" className="active">1</a>
-
-                        </div>
-
-                </li>
+                {categories}
         </ul>
     </div>
     <div className="col-md-9">
@@ -236,7 +223,7 @@ var MainInterface = createClass({
        />
        <div className="col-md-4 col-sm-6">
             <div className="cover">
-                <a className="url-item" href={`/product/${this.state.shopSlug}/add-product/`}></a>
+                <a className="url-item" href={`/product/'${this.state.shopSlug}'/add-product/`}></a>
                 <div className="add-product">
                     <i className="glyphicon glyphicon-plus-sign"></i>
                     <p>Добавить новый товар</p>

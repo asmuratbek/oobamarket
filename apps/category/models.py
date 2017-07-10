@@ -42,7 +42,6 @@ class Category(MPTTModel, PublishBaseModel):
     def __str__(self):
         return self.title
 
-
     def get_absolute_url(self):
         return reverse("categories:detail", kwargs={'slug': self.slug, 'global_slug': self.section.slug})
 
@@ -54,3 +53,6 @@ class Category(MPTTModel, PublishBaseModel):
 
     def get_shops(self):
         return Shop.objects.filter(product__category=self)
+
+    def descendants(self):
+        return self.get_descendants().values('id', 'title', 'slug')

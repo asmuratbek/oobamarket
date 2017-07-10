@@ -21,6 +21,7 @@ urlpatterns = [
     url(r'^agreement/$', agreement, name='agreement'),
     url(r'^api/product/', include('apps.product.api.urls', namespace="product_api")),
     url(r'^api/shop/', include('apps.shop.api.urls', namespace="shop_api")),
+    url(r'^api/category/', include('apps.category.api.urls', namespace="category_api")),
     url(r'^search_predict_html', search_predict_html, name='search_predict_html'),
     # url(r'^search/', include('haystack.urls')),
     url(r'^search_results', search_predict_html),

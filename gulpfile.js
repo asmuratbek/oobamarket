@@ -9,6 +9,7 @@ var gulp         	= require('gulp'),
     rename       	= require('gulp-rename'),
     browserSync  	= require('browser-sync').create(),
     uglify       	= require('gulp-uglify'),
+    polyfill        = require('babel-polyfill'),
 
     del 			= require('del');
 
@@ -63,6 +64,9 @@ gulp.task('js', function(){
 });
 
 gulp.task('shop', function(){
+    module.exports = {
+        entry: ["babel-polyfill", "./web_client/shop_detail.js"]
+    };
    return browserify({
             entries: './web_client/shop_detail.js',
             extensions: ['.jsx'],
