@@ -87,38 +87,32 @@
 
                     <div class="bottom-line">
                         <div class="col-md-6">
-                            <form action="" class="subscribe">
+                            <form id="subscribe-form" class="subscribe">{% csrf_token %}
                                 <div class="row">
 
                                     <div class="form-group col-md-6">
-                                        <button class="pull-left"><span class="glyphicon glyphicon-send"></span> Подписаться</button>
-                                        <div class="dropdown pull-left">
+                                        <button type="button" class="pull-left" id="sub_button"><span class="glyphicon glyphicon-send">
+                                        </span>{% if subscribe %}Отписаться{% else %}Подписаться{% endif %}</button>
+                                        <div class="dropdown pull-left" {% if not subscribe %}style="display: none"{% endif %} id="sub_select">
                                             <button class="dropdown-toggle custom" type="button"
                                                     id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
                                                     aria-expanded="false">
                                                 <span class="glyphicon glyphicon-menu-down"></span>
                                             </button>
                                             <div class="dropdown-menu">
+                                            {% for val, text in sub_types %}
                                                 <div class="form-group">
-                                                    <label for="optionsRadios1" class="form-check-label ">Все</label>
-                                                    <input type="radio" class="form-check-input pull-left" name="optionsRadios" id="optionsRadios1" checked value="option3">
+                                                    <label for="optionsRadios{{ forloop.counter }}" class="form-check-label ">{{ text }}</label>
+                                                    <input type="radio" class="form-check-input pull-left" id="optionsRadios{{ forloop.counter }}" {% if subscribe.subscription_type == val %}checked{% endif %} value="{{ val }}">
                                                     <div class="indicator"></div>
                                                 </div>
-                                                <div class="form-group">
-                                                    <label for="optionsRadios2" class="form-check-label ">Акции</label>
-                                                    <input type="radio" class="form-check-input pull-left" name="optionsRadios" id="optionsRadios2" value="option3">
-                                                    <div class="indicator"></div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="optionsRadios3" class="form-check-label ">Товары</label>
-                                                    <input type="radio" class="form-check-input pull-left " name="optionsRadios" id="optionsRadios3" value="option3">
-                                                    <div class="indicator"></div>
-                                                </div>
+                                            {% endfor %}
                                             </div>
                                         </div>
                                     </div>
 
                                 </div>
+                                <input type="hidden" name="shop_slug" value="{{ shop.slug }}"/>
                             </form>
                         </div>
                         {% show_add_social_button shop request.user %}
@@ -236,4 +230,5 @@
     <script src="{% static 'js/readmore.min.js' %}"></script>
     <script src="{% static 'js/readmore.min.js' %}"></script>
     <script src="{% static 'js/select2.js' %}"></script>
+    <script src="{% static  'js/subscribe.js' %}"></script>
 {% endblock %}

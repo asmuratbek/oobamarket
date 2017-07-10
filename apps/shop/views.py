@@ -13,6 +13,7 @@ from django.views.generic import UpdateView
 from slugify import slugify
 
 from apps.shop.mixin import FormsetMixin
+from apps.users.models import Subscription, SUBSCRIPTION_TYPES
 from config.settings import base
 from apps.shop.decorators import delete_decorator
 from apps.shop.forms import ShopForm, ShopBannersForm, ShopSocialLinksForm, ShopInlineFormSet, SalesCreateForm
@@ -26,6 +27,16 @@ import random
 
 class ShopDetailView(generic.DetailView):
     model = Shop
+
+    def get_context_data(self, **kwargs):
+        context = super(ShopDetailView, self).get_context_data(**kwargs)
+        try:
+            context['subscribe'] = Subscription.objects.get(user=self.request.user, subscription=self.object) if \
+                self.request.user.is_authenticated else None
+        except Subscription.DoesNotExist:
+            context['subscribe'] = None
+        context['sub_types'] = SUBSCRIPTION_TYPES
+        return context
 
 
 class ShopSaleListView(generic.DetailView):

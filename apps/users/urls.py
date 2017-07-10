@@ -7,6 +7,7 @@ urlpatterns = [
         view=views.UserListView.as_view(),
         name='list'
     ),
+    url(r'^subscribe/$', views.subscribe, name='subscribe'),
     url(
         regex=r'^~redirect/$',
         view=views.UserRedirectView.as_view(),

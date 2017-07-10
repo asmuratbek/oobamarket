@@ -1,8 +1,13 @@
 from django.core.urlresolvers import reverse
+from django.http import HttpResponse, Http404, HttpResponseRedirect, HttpResponseBadRequest, JsonResponse
+from django.shortcuts import get_object_or_404, redirect
+from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import DetailView, ListView, RedirectView, UpdateView
 
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .models import User
+from django.contrib import messages
+from apps.shop.models import Shop
+from .models import User, Subscription
 
 
 class UserDetailView(LoginRequiredMixin, DetailView):
@@ -47,3 +52,35 @@ class UserListView(LoginRequiredMixin, ListView):
 class UsersFavoritesListView(DetailView):
     model = User
     template_name = 'users/favorites.html'
+
+
+@csrf_exempt
+def subscribe(request):
+    if request.user.is_authenticated:
+        if request.method == 'POST' and request.is_ajax():
+            user = request.user
+            shop_slug = request.POST.get('shop_slug', '')
+            shop = get_object_or_404(Shop, slug=shop_slug)
+            data = dict()
+            if not request.POST.get('sub-type'):
+                sub_obj, created = Subscription.objects.get_or_create(user=user, subscription=shop)
+                if not created:
+                    sub_obj.delete()
+                    data['message'] = 'Вы отписаны от обновлений'
+                    data['status'] = 0
+                    return JsonResponse(data)
+                data['message'] = 'Подписка оформлена'
+                data['status'] = 1
+                return JsonResponse(data)
+            else:
+                sub_type = request.POST.get('sub-type', '')
+                try:
+                    sub = Subscription.objects.get(user=user, subscription=shop)
+                except Subscription.DoesNotExist:
+                    return Http404
+                sub.subscription_type = sub_type
+                sub.save()
+                data['message'] = 'Параметры подписки изменены'
+                return JsonResponse(data)
+        return HttpResponseBadRequest()
+    return HttpResponse('redirect')

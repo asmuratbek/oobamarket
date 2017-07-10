@@ -4,6 +4,12 @@ from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
 
+SUBSCRIPTION_TYPES = (
+    ("all", "Все"),
+    ("only_actions", "Акции"),
+    ("only_products", "Товары"),
+)
+
 
 @python_2_unicode_compatible
 class User(AbstractUser):
@@ -50,3 +56,7 @@ class User(AbstractUser):
         return self.shop_set.all()
 
 
+class Subscription(models.Model):
+    user = models.ForeignKey(User)
+    subscription = models.ForeignKey('shop.Shop', verbose_name='Подписка на магазины', related_name='sub_shops')
+    subscription_type = models.CharField(max_length=50, choices=SUBSCRIPTION_TYPES, verbose_name='Тип подписки', default='all')
