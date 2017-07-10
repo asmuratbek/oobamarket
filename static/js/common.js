@@ -4,44 +4,53 @@ $(window).load(function () {
 
 
 $(document).ready(function () {
-$('.dropdown-toggle.custom').on('show.bs.dropdown-menu', function () {
+    $('.dropdown-toggle.custom').on('show.bs.dropdown-menu', function () {
 
-});
-   // if ($('.owl-carousel-category-link').length > 0) {
-   //      var owl = $('.owl-carousel-category-link');
-   //      owl.owlCarousel({
-   //          loop: false,
-   //          nav: true,
-   //          margin: 10,
-   //          mouseDrag: false,
-   //          autoWidth: true,
-   //          responsive: {
-   //              0: {
-   //                  items: 1
-   //              },
-   //              600: {
-   //                  items: 1
-   //              },
-   //              960: {
-   //                  items: 1
-   //              },
-   //              1200: {
-   //                  items: 1
-   //              },
-   //              1920: {
-   //                  items: 1
-   //              }
-   //          }
-   //      });
-   //      owl.on('mousewheel', '.owl-stage', function (e) {
-   //          if (e.deltaY > 0) {
-   //              owl.trigger('next.owl');
-   //          } else {
-   //              owl.trigger('prev.owl');
-   //          }
-   //          e.preventDefault();
-   //      });
-   //  }
+
+    });
+
+   // $('body').on('mousemove',function () {
+   //     var that = this;
+   //      setTimeout(function () {
+   //          $(that).addClass('bug')
+   //      }, 5000);
+   //  });
+
+    // if ($('.owl-carousel-category-link').length > 0) {
+    //      var owl = $('.owl-carousel-category-link');
+    //      owl.owlCarousel({
+    //          loop: false,
+    //          nav: true,
+    //          margin: 10,
+    //          mouseDrag: false,
+    //          autoWidth: true,
+    //          responsive: {
+    //              0: {
+    //                  items: 1
+    //              },
+    //              600: {
+    //                  items: 1
+    //              },
+    //              960: {
+    //                  items: 1
+    //              },
+    //              1200: {
+    //                  items: 1
+    //              },
+    //              1920: {
+    //                  items: 1
+    //              }
+    //          }
+    //      });
+    //      owl.on('mousewheel', '.owl-stage', function (e) {
+    //          if (e.deltaY > 0) {
+    //              owl.trigger('next.owl');
+    //          } else {
+    //              owl.trigger('prev.owl');
+    //          }
+    //          e.preventDefault();
+    //      });
+    //  }
 
     function readURL(input) {
         if (input.files && input.files[0]) {
@@ -316,8 +325,11 @@ $('.dropdown-toggle.custom').on('show.bs.dropdown-menu', function () {
         });
     }
 
-    if ($('[data-toggle="tooltip"]').length > 0) {
-        $('[data-toggle="tooltip"]').tooltip();
+
+    if ($('[data-original-title]').length > 0) {
+        $('[data-original-title]').tooltip({
+
+        });
     }
 
     //Функция добавления товара в избранное
@@ -461,7 +473,6 @@ $('.dropdown-toggle.custom').on('show.bs.dropdown-menu', function () {
     });
 
 
-
     if ($('.owl-carousel.shop-page').length > 0) {
         $('.owl-carousel.shop-page').owlCarousel({
             loop: true,
@@ -562,33 +573,33 @@ $('.dropdown-toggle.custom').on('show.bs.dropdown-menu', function () {
     //
     //
     // }
-if ($('.my-foto-container').length > 0) {
-    jQuery(function () {
+    if ($('.my-foto-container').length > 0) {
+        jQuery(function () {
 
-        //вешаем плагин на контейнер-картинку
-        $(".my-foto-container").imagezoomsl();
+            //вешаем плагин на контейнер-картинку
+            $(".my-foto-container").imagezoomsl();
 
-        //клик по превью-картинке
-        $(".my-foto").click(function () {
+            //клик по превью-картинке
+            $(".my-foto").click(function () {
 
-            var that = this;
+                var that = this;
 
-            //копируем атрибуты из превью-картинки в контейнер-картинку
-            $(".my-foto-container").fadeOut(200, function () {
+                //копируем атрибуты из превью-картинки в контейнер-картинку
+                $(".my-foto-container").fadeOut(200, function () {
 
-                $(this).attr("src", $(that).attr("src"))              // путь до small картинки
-                    .attr("data-large", $(that).attr("data-large"))       // путь до big картинки
+                    $(this).attr("src", $(that).attr("src"))              // путь до small картинки
+                        .attr("data-large", $(that).attr("data-large"))       // путь до big картинки
 
-                    //дополнительные атрибуты, если есть
-                    //.attr("data-title",       $(that).attr("data-title"))       // заголовок подсказки
-                    //.attr("data-help",        $(that).attr("data-help"))        // текст подсказки
-                    //.attr("data-text-bottom", $(that).attr("data-text-bottom")) // текст снизу картинки
+                        //дополнительные атрибуты, если есть
+                        //.attr("data-title",       $(that).attr("data-title"))       // заголовок подсказки
+                        //.attr("data-help",        $(that).attr("data-help"))        // текст подсказки
+                        //.attr("data-text-bottom", $(that).attr("data-text-bottom")) // текст снизу картинки
 
-                    .fadeIn(200);
+                        .fadeIn(200);
+                });
             });
         });
-    });
-}
+    }
 
 
     if ($('.see-more-toogle').length > 0) {
@@ -753,19 +764,19 @@ if ($('.my-foto-container').length > 0) {
         _search('/search_results/', $(this).val())
     });
 
-    var parseQueryString = function() {
+    var parseQueryString = function () {
 
-    var str = location.search;
-    var objURL = {};
+        var str = location.search;
+        var objURL = {};
 
-    str.replace(
-        new RegExp( "([^?=&]+)(=([^&]*))?", "g" ),
-        function( $0, $1, $2, $3 ){
-            objURL[ $1 ] = $3;
-        }
-    );
-    return objURL;
-};
+        str.replace(
+            new RegExp("([^?=&]+)(=([^&]*))?", "g"),
+            function ($0, $1, $2, $3) {
+                objURL[$1] = $3;
+            }
+        );
+        return objURL;
+    };
 
 //Example how to use it:
     var params = parseQueryString();
