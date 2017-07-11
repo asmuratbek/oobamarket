@@ -17,7 +17,6 @@
 {% endblock %}
 
 {% block content %}
-
     <section class="single-product">
         <div class="container">
 
@@ -132,11 +131,11 @@
     </section>
 
     <section class="reviews">
-    {% if  review %}
-        <div class="container eeee">
-        {% include 'layout/_reviews.html' %}
+
+        <div class="container" id="prod_review">
+            {% include 'layout/prod_reviews.html' %}
         </div>
-    {% endif %}
+
     </section>
 
     <section class="reviews edit">
@@ -196,36 +195,42 @@
     {{ block.super }}
     <script src={% static 'js/jquare-zoom.js' %}></script>
 
-{#    <script>#}
-{#        var form = $('.product_review');#}
-{#    $(form).on('submit', function (event) {#}
-{#        event.preventDefault();#}
-{#        console.log('Send data function is called!');#}
-{#        $.ajax({#}
-{#            method: 'POST',#}
-{#            url: $(form).attr('action'),#}
-{#            dataType: 'JSON',#}
-{#            data: $(form).serialize(),#}
-{#            success: function (response) {#}
-{#                console.log('ajax is done!1');#}
-{#                if(response.success) {#}
-{#                    $.ajax({#}
-{#                        method: 'POST',#}
-{#                        dataType: 'HTML',#}
-{#                        url: '{% url "reviews_all" %}',#}
-{#                        data: { "csrf_token": {{ csrf_token|escapejs }}, "product": {{ product.slug }} },#}
-{#                        success: function (response) {#}
-{#                            console.log('lala');#}
-{#                            $('.eeee').html(response);#}
-{#                        },#}
-{#                        error: function () {#}
-{#                            console.error('Can\'t send ajax to load all comments');#}
-{#                        }#}
-{#                    });#}
-{#                }#}
-{#            }#}
-{#        });#}
-{#    });#}
-{#    </script>#}
+    <script>
+    var form = $('#review_form');
+    $(form).unbind('submit').bind('submit', function (event) {
+        var data = $(form).serialize();
+        console.log(data);
+        data += '&rating=' + $('.star-behaviour').getRating();
+        event.preventDefault();
+        console.log('Send data function is called!');
+        $.ajax({
+            method: 'POST',
+            url: $(form).attr('action'),
+            dataType: 'JSON',
+            data: data,
+            success: function (response) {
+                if (response.success) {
+                    $.ajax({
+                        method: 'POST',
+                        dataType: 'HTML',
+                        url: '{% url "product_reviews" %}',
+                        data: { 'csrfmiddlewaretoken': '{{ csrf_token }}', 'product': '{{ object.slug }}' },
+                        success: function (response) {
+                            console.log(response);
+                            $('#prod_review').html(response);
+                        },
+                        error: function () {
+                            console.error('Can\'t send ajax to load all comments');
+                        }
+                    });
+                    $('.star-behaviour').clearRating();
+                    $('#prod-rev').val('');
+                }
+            }
+        });
+    });
+
+
+    </script>
 
 {% endblock %}

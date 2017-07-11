@@ -6,8 +6,8 @@ from django.views.generic import TemplateView
 from django.views import defaults as default_views
 
 from apps.global_category.views import IndexView, landing
-from apps.product.views import FavoriteCreateView
-from apps.shop.views import agreement
+from apps.product.views import FavoriteCreateView, product_reviews
+from apps.shop.views import agreement, shop_reviews
 from apps.product.views import search, search_predict_html
 
 urlpatterns = [
@@ -28,6 +28,8 @@ urlpatterns = [
     url(r'^search/', search, name='search'),
     url(r'^ckeditor/', include('ckeditor_uploader.urls')),
     url(r'^landing/', landing, name='landing'),
+    url(r'^product_reviews/$', product_reviews, name='product_reviews'),
+    url(r'^shop_reviews/$', shop_reviews, name='shop_reviews'),
 
     # Django Admin, use {% url 'admin:index' %}
     url(settings.ADMIN_URL, admin.site.urls),

@@ -864,27 +864,6 @@ $(document).ready(function () {
         });
     });
 
-    var form = $('#review_form');
-    $(form).on('submit', function (event) {
-        var data = $(form).serialize();
-        console.log(data);
-        data += '&rating=' + $('.star-behaviour').getRating();
-        event.preventDefault();
-        console.log('Send data function is called!');
-        $.ajax({
-            method: 'POST',
-            url: $(form).attr('action'),
-            dataType: 'JSON',
-            data: data,
-            success: function (response) {
-                if (response.success) {
-                    console.log(data)
-                    $('.star-behaviour').clearRating();
-                    $('#prod-rev').val('');
-                }
-            }
-        });
-    });
 
     //
     // if ($('.demo-x').length > 0) {

@@ -86,15 +86,13 @@ def add_product_review(request, slug):
     return JsonResponse(dict(success=True, message='Request is not POST!'))
 
 
-@csrf_exempt
-def reviews_all(request):
-    review = ProductReviews.objects.filter(product_slug=request.POST.get('product'))
+def product_reviews(request):
+    review = ProductReviews.objects.filter(product__slug=request.POST.get('product'))
 
     params = {
         'review': review
     }
-    return render_to_response('layout/_reviews.html', params)
-
+    return render_to_response('layout/prod_reviews.html', params)
 
 
 class ProductCreateView(LoginRequiredMixin, AddProductMixin, CreateView):

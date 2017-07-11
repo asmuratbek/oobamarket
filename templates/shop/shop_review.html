@@ -3,7 +3,9 @@
 
 {% block shopcontent %}
 <section class="reviews">
-
+    <div class="container" id="shop_review">
+        {% include 'layout/shop_reviews.html' %}
+    </div>
 </section>
 
 <section class="reviews edit">
@@ -49,4 +51,45 @@
 
     </div>
 </section>
+{% endblock %}
+
+{% block js %}
+    {{ block.super }}
+    <script>
+    var form = $('#review_form');
+    $(form).unbind('submit').bind('submit', function (event) {
+        var data = $(form).serialize();
+        console.log(data);
+        data += '&rating=' + $('.star-behaviour').getRating();
+        event.preventDefault();
+        console.log('Send data function is called!');
+        $.ajax({
+            method: 'POST',
+            url: $(form).attr('action'),
+            dataType: 'JSON',
+            data: data,
+            success: function (response) {
+                if (response.success) {
+                    $.ajax({
+                        method: 'POST',
+                        dataType: 'HTML',
+                        url: '{% url "shop_reviews" %}',
+                        data: { 'csrfmiddlewaretoken': '{{ csrf_token }}', 'shop': '{{ shop.slug }}' },
+                        success: function (response) {
+                            console.log(response);
+                            $('#shop_review').html(response);
+                        },
+                        error: function () {
+                            console.error('Can\'t send ajax to load all comments');
+                        }
+                    });
+                    $('.star-behaviour').clearRating();
+                    $('#prod-rev').val('');
+                }
+            }
+        });
+    });
+
+
+    </script>
 {% endblock %}
