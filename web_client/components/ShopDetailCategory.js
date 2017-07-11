@@ -27,16 +27,33 @@ var CategoryList = createClass({
     }
 
     return (
-      <div></div>
+        <div></div>
     )
   },
 
   render: function(){
-    return (
-              <li className="active">
-                  <a  role="button" data-toggle="collapse" href={this.props.category.id} aria-expanded="false" aria-controls="collapseExample">{this.props.category.title}</a>
+    var children = [];
+    var parent_id = this.props.index;
 
-                      {this.getDescendants(this.props.category)}
+    children = this.props.category.descendants.map(function(item, index) {
+      return (
+        <ChildCategory
+          key={index}
+          child={item}
+          index={index}
+          parent_id={parent_id}
+        />
+      )
+    });
+
+    return (
+              <li className={this.props.index == 0 ? "active":""}>
+                  <a  role="button" data-toggle="collapse" href={`#${this.props.index}`} aria-expanded="false" aria-controls="collapseExample">{this.props.category.title}</a>
+                    {this.props.category.descendants.length ?
+                        <div className="collapse category-in-category" id={this.props.index}>
+                              {children}
+                        </div>
+                    : ""}
 
               </li>
           )

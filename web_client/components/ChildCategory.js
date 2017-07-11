@@ -33,11 +33,7 @@ var ChildCategory = createClass({
   render: function(){
     return (
 
-              <div className="collapse category-in-category" id={this.props.child.id}>
-
-                        <a href="1" className="active">{this.props.child.title}</a>
-
-                </div>
+              <a href={this.props.parent_id} className="active">{this.props.child.title}</a>
 
           )
   }

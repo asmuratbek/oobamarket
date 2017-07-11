@@ -173,6 +173,7 @@ var MainInterface = createClass({
         <CategoryList
           key={index}
           category={item}
+          index={index}
           onChangeCategory={changeCategory}
           activeCategories={activeCategories}
         />
