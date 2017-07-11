@@ -1,7 +1,7 @@
 import React from 'react';
 import createClass from 'create-react-class';
 import _ from 'lodash';
-import ChildCategory from './components/ChildCategory';
+import ChildCategory from './ChildCategory';
 
 
 var CategoryList = createClass({

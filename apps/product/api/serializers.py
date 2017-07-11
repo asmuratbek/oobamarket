@@ -51,7 +51,6 @@ class ProductSerializer(ModelSerializer):
             'sell_count',
             'discount',
             'currency',
-            'quantity',
             'delivery_type',
             'delivery_cost',
             'availability',

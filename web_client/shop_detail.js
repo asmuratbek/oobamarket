@@ -223,14 +223,14 @@ var MainInterface = createClass({
        />
        <div className="col-md-4 col-sm-6">
             <div className="cover">
-                <a className="url-item" href={`/product/'${this.state.shopSlug}'/add-product/`}></a>
+                <a className="url-item" href={`/product/${this.state.shopSlug}/add-product/`}></a>
                 <div className="add-product">
                     <i className="glyphicon glyphicon-plus-sign"></i>
                     <p>Добавить новый товар</p>
                 </div>
 
                 <div className="stock">
-                    <a href="#">Добавить акцию</a>
+                    <a href={`/shops/${this.state.shopSlug}/sale/create/`}>Добавить акцию</a>
                 </div>
             </div>
         </div>
