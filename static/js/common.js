@@ -10,18 +10,12 @@ $(document).ready(function () {
     });
 
 
-
-
-
-
-
-
-   // $('body').on('mousemove',function () {
-   //     var that = this;
-   //      setTimeout(function () {
-   //          $(that).addClass('bug')
-   //      }, 5000);
-   //  });
+    // $('body').on('mousemove',function () {
+    //     var that = this;
+    //      setTimeout(function () {
+    //          $(that).addClass('bug')
+    //      }, 5000);
+    //  });
 
     // if ($('.owl-carousel-category-link').length > 0) {
     //      var owl = $('.owl-carousel-category-link');
@@ -336,9 +330,7 @@ $(document).ready(function () {
 
 
     if ($('[data-original-title]').length > 0) {
-        $('[data-original-title]').tooltip({
-
-        });
+        $('[data-original-title]').tooltip({});
     }
 
     //Функция добавления товара в избранное
@@ -486,8 +478,12 @@ $(document).ready(function () {
         $('.owl-carousel.shop-page').owlCarousel({
             loop: true,
             margin: 0,
-            nav: false,
+            nav: true,
             dots: true,
+            autoplay: true,
+            autoplayTimeout: 4000,
+            autoplaySpeed: 1000,
+            smartSpeed: 1000,
             responsiveClass: true,
             responsive: {
                 0: {
@@ -496,11 +492,11 @@ $(document).ready(function () {
                 },
                 600: {
                     items: 1,
-                    nav: false
+
                 },
                 1000: {
                     items: 1,
-                    nav: false,
+
                     loop: true
                 }
             }
@@ -543,45 +539,6 @@ $(document).ready(function () {
     });
 
 
-    //initiate the plugin and pass the id of the div containing gallery images
-    // if ($('#zoom_03').length > 0){
-    //     $("#zoom_03").elevateZoom({
-    //         gallery:'gallery_01',
-    //         cursor: 'pointer',
-    //         easing : true,
-    //         galleryActiveClass: 'active',
-    //         imageCrossfade: true
-    //     });
-    //
-    //     //pass the images to Fancybox
-    //     // $("#zoom_03").bind("click", function(e) {
-    //     //     var ez = $('#zoom_03').data('elevateZoom');
-    //     //     $.fancybox(ez.getGalleryList());
-    //     //     return false;
-    //     // });
-    // }
-
-    // if ($('#img_01').length > 0) {
-    //     //initiate the plugin and pass the id of the div containing gallery images
-    //     $("#img_01").elevateZoom({
-    //         // zoomType: "lens",
-    //         // lensShape: "round",
-    //         gallery: 'gal1',
-    //         zoomWindowFadeIn: 500,
-    //         zoomWindowFadeOut: 500,
-    //         lensFadeIn: 500,
-    //         lensFadeOut: 500,
-    //         constrainType: "height",
-    //         zoomWindowWidth: 500,
-    //         zoomWindowHeight: 500,
-    //         scrollZoom: true,
-    //         cursor: 'pointer',
-    //         galleryActiveClass: "active",
-    //         imageCrossfade: true,
-    //     });
-    //
-    //
-    // }
     if ($('.my-foto-container').length > 0) {
         jQuery(function () {
 

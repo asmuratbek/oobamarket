@@ -872,6 +872,13 @@ header
       position: relative
       background-color: #fff
       height: 110px
+      a
+        display: block
+        position: absolute
+        top: 0
+        right: 0
+        bottom: 0
+        left: 0
       img
         position: absolute
         top: -9999px
@@ -880,7 +887,7 @@ header
         left: -9999px
         margin: auto
         display: block
-        max-width: 100%
+        max-width: 80%
         transition: 0.3s
 //.owl-nav
 //  position: absolute
@@ -905,7 +912,6 @@ header
     overflow: hidden
     padding: 5px
     height: 50px
-
 .list
     position: absolute
     left: 0px
@@ -1539,6 +1545,45 @@ header
           margin: auto
           display: block
           max-width: 100%
+      .owl-nav
+        .owl-prev
+          position: absolute
+          top: 50%
+          left: 0
+          font-size: 0
+          width: 40px
+          height: 40px
+          margin-top: -20px
+          &:before
+            content: "\f137"
+            position: absolute
+            font-size: 20px
+            font-family: 'FontAwesome'
+            right: 12px
+            top: 6px
+            transition: 0.3s all
+        .owl-prev:hover
+          &:before
+            color: #f3481c
+        .owl-next
+          position: absolute
+          top: 50%
+          right: 0
+          font-size: 0
+          width: 40px
+          height: 40px
+          margin-top: -20px
+          &:before
+            content: "\f138"
+            position: absolute
+            font-size: 20px
+            font-family: 'FontAwesome'
+            right: 12px
+            top: 6px
+            transition: 0.3s all
+        .owl-next:hover
+          &:before
+            color: #f3481c
       .owl-dots
         position: absolute
         width: 100%
@@ -1610,11 +1655,15 @@ header
           .instagram
             background: url(../img/social.png) -216px 0 no-repeat
 .subscribe
-  margin-top: 20px
+
   .row
     margin: 0 -3px
   .col-md-6
     padding: 0 3px
+    margin: 0
+    button.pull-left
+      span
+        margin-right: 10px
     button
       margin-right: 5px
       padding: 5px 8px
