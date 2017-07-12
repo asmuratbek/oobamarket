@@ -51,6 +51,18 @@
                                     </label>
                                     <label>Опубликовать</label>
                                 </div>
+
+                                <div class="form-group input col-md-12">
+                                    <label for="">Время работы</label>
+                                    {{ form.work_time|attr:"rows:6"|attr:'class:form-control' }}
+                                </div>
+
+                                <div class="form-group input col-md-12">
+                                    <label for="">Маркер на карте</label>
+                                    {{ form.location|attr:'class:form-control' }}
+                                </div>
+
+
                                 {{ formset.management_form }}
 
                             {% endfor %}
@@ -97,8 +109,8 @@
                         </div>
                         <div class="img-wrapper">
                             {% render_field form.logo|attr:"type:file"|attr:"style:display:none;"|attr:"id:id_images" %}
-                        <img id="logo_view" src=""/><span class="remove-logo">X</span></div>
-                        </div>
+                            <img id="logo_view" src=""/><span class="remove-logo">X</span></div>
+                    </div>
 
                 </form>
             </div>
@@ -111,6 +123,8 @@
     {{ block.super }}
     <script src="{% static 'js/jquery.2.2.4.js' %}"></script>
     <script src="{% static 'js/previewLogos.js' %}"></script>
+    <script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
+    <script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
     <script type="text/html" id="contact-template">
         <div class="inline- __prefix__">
             {% with formset.empty_form as form %}
@@ -138,6 +152,11 @@
                         </div>
                     </label>
                     <label>Опубликовать</label>
+                </div>
+
+                <div class="form-group input col-md-12">
+                    <label>Время работы</label>
+                    {{ form.work_time|attr:"rows:6"|attr:'class:form-control' }}
                 </div>
 
             {% endwith %}

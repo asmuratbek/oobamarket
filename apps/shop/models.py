@@ -9,6 +9,7 @@ from django.utils.translation import ugettext as _
 from config.settings import base as settings
 from apps.users.models import User
 from apps.utils.models import PublishBaseModel
+from geoposition.fields import GeopositionField
 
 # Create your models here.
 SOCIAL_LINKS = (
@@ -101,6 +102,10 @@ class Banners(models.Model):
         return self.title
 
 
+
+
+
+
 class Contacts(PublishBaseModel):
     class Meta:
         verbose_name = 'Контакт'
@@ -110,6 +115,9 @@ class Contacts(PublishBaseModel):
     phone = models.CharField(max_length=255, verbose_name='Телефон', null=True, blank=True)
     shop = models.ForeignKey(Shop, verbose_name='Магазин', null=True)
     place = models.ForeignKey('Place', verbose_name='Торговая точка', null=True, blank=True)
+    work_time = models.TextField(verbose_name='График работы', null=True, blank=True)
+    location = GeopositionField(verbose_name='Отметьте на карте', null=True, blank=True)
+
 
     def __str__(self):
         return "{} - {}".format(self.address, self.shop)

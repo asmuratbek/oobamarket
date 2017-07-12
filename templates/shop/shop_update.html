@@ -34,7 +34,7 @@
                                 </div>
 
                                 <div class="form-group select col-md-6" style="margin-top: 10px">
-                                <label for="">Расположение вашего магазина</label>
+                                    <label for="">Расположение вашего магазина</label>
                                     {{ form.place|attr:"class:form-control" }}
                                 </div>
 
@@ -48,6 +48,12 @@
                                     </label>
                                     <label>Опубликовать</label>
                                 </div>
+
+                                <div class="form-group input col-md-12">
+                                    <label for="">Время работы</label>
+                                    {{ form.work_time|attr:"rows:6"|attr:'class:form-control' }}
+                                </div>
+
                                 {{ formset.management_form }}
 
                             {% endfor %}
@@ -100,15 +106,15 @@
                             </div>
 
                         </div>
-                    <div class="img-wrapper">
-                        {% if object.logo.name != "/default.jpg" %}
-                            <img src="{{ object.logo.url }}" alt="" id="id_logo2">
-                            <span class="remove-logo-update">X</span>
-                        {% else %}
-                            <img src="" alt="" id="id_logo2">
-                        {% endif %}
-                        <input type="hidden" id="slug" value="{{ object.get_slug }}"/>
-                    </div>
+                        <div class="img-wrapper">
+                            {% if object.logo.name != "/default.jpg" %}
+                                <img src="{{ object.logo.url }}" alt="" id="id_logo2">
+                                <span class="remove-logo-update">X</span>
+                            {% else %}
+                                <img src="" alt="" id="id_logo2">
+                            {% endif %}
+                            <input type="hidden" id="slug" value="{{ object.get_slug }}"/>
+                        </div>
 
 
                     </div>
@@ -137,7 +143,7 @@
                 </div>
 
                 <div class="form-group select col-md-6" style="margin-top: 10px">
-                <label for="">Расположение вашего магазина</label>
+                    <label for="">Расположение вашего магазина</label>
                     {{ form.place|attr:"class:form-control" }}
                 </div>
 
@@ -149,6 +155,11 @@
                         </div>
                     </label>
                     <label>Опубликовать</label>
+                </div>
+
+                <div class="form-group input col-md-12">
+                    <label for="">Время работы</label>
+                    {{ form.work_time|attr:"rows:6"|attr:'class:form-control' }}
                 </div>
 
             {% endwith %}

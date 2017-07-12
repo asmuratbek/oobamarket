@@ -49,10 +49,12 @@ class ShopSocialLinksForm(ModelForm):
 class ShopContactInline(ModelForm):
     class Meta:
         model = Contacts
-        fields = ('published', 'phone', 'address', 'shop',)
+        fields = ('published', 'phone', 'address', 'shop')
 
 
-ShopInlineFormSet = inlineformset_factory(Shop, Contacts, extra=1, fields=('published', 'phone', 'address', 'place'))
+ShopInlineFormSet = inlineformset_factory(Shop, Contacts, extra=1,
+                                          fields=(
+                                              'published', 'phone', 'address', 'place', 'work_time',))
 
 
 class SalesCreateForm(ModelForm):
