@@ -16,7 +16,7 @@ class Command(BaseCommand):
     help = 'Creates model instances from xlsx'
 
     def handle(self, *args, **options):
-        W = px.load_workbook(settings.MEDIA_ROOT + '/ooba.xlsx')
+        W = px.load_workbook(settings.DUMP_ROOT + '/ooba.xlsx')
         wiki = dict()
         first_level = list()
         second_level = list()
@@ -24,7 +24,7 @@ class Command(BaseCommand):
         second_level_props = list()
         third_level_props = list()
         values = list()
-        for index, worksheet in enumerate(W.worksheets[1:3]):
+        for index, worksheet in enumerate(W.worksheets[1:5]):
             if index == 0:
                 for row in worksheet.iter_rows():
                     for index, field in enumerate(row):
@@ -33,7 +33,7 @@ class Command(BaseCommand):
                                 key = field.value
                                 wiki[key] = []
                             else:
-                                wiki[key].append(field.value)
+                                wiki[key].append(str(field.value).capitalize())
 
             else:
                 slug = slugify(worksheet.title)
@@ -50,6 +50,7 @@ class Command(BaseCommand):
                                 if field.font.bold:
                                     ids = str(field.internal_value).split('.')[:-1]
                                     category_text = str(field.internal_value).split('.')[-1][2:].strip()
+                                    category_text = category_text.capitalize()
                                     category_level = str(field.internal_value).split('.')[-1][:2] if \
                                         str(field.internal_value).split('.')[-1][:2].isdigit() else \
                                         str(field.internal_value).split('.')[-1][0]
@@ -58,6 +59,11 @@ class Command(BaseCommand):
                                     second_level.append([ids, category_text])
                                 else:
                                     property_text = str(field.internal_value).split('.')[-1].strip()
+                                    if property_text.startswith('**'):
+                                        property_text = property_text[3:]
+                                    elif property_text.startswith('*') or property_text.startswith("#") or property_text.startswith("!"):
+                                        property_text = property_text[2:]
+                                    property_text = property_text.capitalize()
                                     second_level_props.append([ids, property_text])
                                     for column in string.ascii_uppercase[string.ascii_uppercase.find(field.column) + 1:]:
                                         if worksheet[column + str(field.row)].value:
@@ -66,7 +72,8 @@ class Command(BaseCommand):
                                                 if key in wiki.keys():
                                                     values.append([ids, property_text, wiki[key]])
                                             else:
-                                                values.append([ids, property_text, worksheet[column + str(field.row)].value])
+                                                if not str(worksheet[column + str(field.row)].value).startswith("("):
+                                                    values.append([ids, property_text, str(worksheet[column + str(field.row)].value).capitalize()])
 
                     elif index == 2:
                         for index, field in enumerate(col):
@@ -74,6 +81,7 @@ class Command(BaseCommand):
                                 if field.font.bold:
                                     ids = str(field.internal_value).split('.')[:-1]
                                     category_text = str(field.internal_value).split('.')[-1][2:].strip()
+                                    category_text = category_text.capitalize()
                                     category_level = str(field.internal_value).split('.')[-1][:2] if \
                                     str(field.internal_value).split('.')[-1][:2].isdigit() else \
                                     str(field.internal_value).split('.')[-1][0]
@@ -82,6 +90,11 @@ class Command(BaseCommand):
                                     third_level.append([ids, category_text])
                                 else:
                                     property_text = str(field.internal_value).split('.')[-1].strip()
+                                    if property_text.startswith('**'):
+                                        property_text = property_text[3:]
+                                    elif property_text.startswith('*') or property_text.startswith("#") or property_text.startswith("!"):
+                                        property_text = property_text[2:]
+                                    property_text = property_text.capitalize()
                                     third_level_props.append([ids, property_text])
                                     for column in string.ascii_uppercase[string.ascii_uppercase.find(field.column) + 1:]:
                                         if worksheet[column + str(field.row)].value:
@@ -90,7 +103,8 @@ class Command(BaseCommand):
                                                 if key in wiki.keys():
                                                     values.append([ids, property_text, wiki[key]])
                                             else:
-                                                values.append([ids, property_text, worksheet[column + str(field.row)].value])
+                                                if not str(worksheet[column + str(field.row)].value).startswith("("):
+                                                    values.append([ids, property_text, str(worksheet[column + str(field.row)].value).capitalize()])
 
             for category in first_level:
                 try:
@@ -113,24 +127,17 @@ class Command(BaseCommand):
 
                 for sec_lvl_cat in second_level:
                     if category[0][0] == sec_lvl_cat[0][0]:
-                        try:
-                            title = sec_lvl_cat[-1]
-                            slug = slugify(title)
-                            sec_cat, created = Category.objects.get_or_create(title=title, slug=slug, parent=cat, section=section)
-                            if created:
-                                self.stdout.write(self.style.SUCCESS('Создана категория 2-ого уровня "%s"' % title))
-                            else:
-                                self.stdout.write(self.style.ERROR('{} уже существует'.format(title)))
-                        except IntegrityError:
-                            title = sec_lvl_cat[-1]
+                        title = sec_lvl_cat[-1]
+                        possible_categories = Category.objects.filter(title=title, parent=cat, section=section)
+
+                        if possible_categories:
+                            self.stdout.write(self.style.ERROR('{} уже существует'.format(title)))
+                            sec_cat = possible_categories.first()
+                        else:
                             random_int = random.randrange(0, 101)
                             slug = slugify(title) + str(random_int)
-                            sec_cat, created = Category.objects.get_or_create(title=title, slug=slug, parent=cat,
-                                                                              section=section)
-                            if created:
-                                self.stdout.write(self.style.SUCCESS('Создана категория 2-ого уровня "%s"' % title))
-                            else:
-                                self.stdout.write(self.style.ERROR('{} уже существует'.format(title)))
+                            sec_cat = Category.objects.create(title=title, slug=slug, parent=cat, section=section)
+                            self.stdout.write(self.style.SUCCESS('Создана категория 2-ого уровня "%s"' % title))
 
                         for prop in second_level_props:
                             if prop[0] == sec_lvl_cat[0]:
@@ -168,25 +175,17 @@ class Command(BaseCommand):
 
                         for thrd_lvl_cat in third_level:
                             if sec_lvl_cat[0] == thrd_lvl_cat[0][:-1]:
-                                try:
-                                    title = thrd_lvl_cat[-1]
+                                title = thrd_lvl_cat[-1]
+                                possible_categories = Category.objects.filter(title=title, parent=sec_cat, section=section)
+
+                                if possible_categories:
+                                    self.stdout.write(self.style.ERROR('{} уже существует'.format(title)))
+                                    thrd_cat = possible_categories.first()
+                                else:
                                     random_int = random.randrange(0, 101)
                                     slug = slugify(title) + str(random_int)
-                                    thrd_cat, created = Category.objects.get_or_create(title=title, slug=slug, parent=sec_cat, section=section)
-                                    if created:
-                                        self.stdout.write(self.style.SUCCESS('Создана категория 3-ого уровня "%s"' % title))
-                                    else:
-                                        self.stdout.write(self.style.ERROR('{} уже существует'.format(title)))
-                                except IntegrityError:
-                                    title = thrd_lvl_cat[-1]
-                                    slug = slugify(title)
-                                    thrd_cat, created = Category.objects.get_or_create(title=title, slug=slug,
-                                                                                       parent=sec_cat, section=section)
-                                    if created:
-                                        self.stdout.write(
-                                            self.style.SUCCESS('Создана категория 3-ого уровня "%s"' % title))
-                                    else:
-                                        self.stdout.write(self.style.ERROR('{} уже существует'.format(title)))
+                                    thrd_cat = Category.objects.create(title=title, slug=slug, parent=sec_cat, section=section)
+                                    self.stdout.write(self.style.SUCCESS('Создана категория 3-ого уровня "%s"' % title))
 
                                 for prop in third_level_props:
                                     if prop[0] == thrd_lvl_cat[0]:

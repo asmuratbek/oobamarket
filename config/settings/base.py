@@ -256,6 +256,8 @@ STATICFILES_FINDERS = [
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#media-root
 MEDIA_ROOT = str(ROOT_DIR('media'))
 
+DUMP_ROOT = str(ROOT_DIR('dump'))
+
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#media-url
 MEDIA_URL = '/media/'
 DEFAULT_IMAGE = '/default.jpg'
