@@ -109,6 +109,7 @@ class Command(BaseCommand):
             for category in first_level:
                 try:
                     title = category[-1]
+                    title = str(title).capitalize()
                     slug = slugify(title)
                     cat, created = Category.objects.get_or_create(title=title, slug=slug, section=section)
                     if created:
@@ -117,7 +118,8 @@ class Command(BaseCommand):
                         self.stdout.write(self.style.ERROR('{} уже существует'.format(title)))
                 except IntegrityError:
                     title = category[-1]
-                    random_int = random.randrange(0, 101)
+                    title = str(title).capitalize()
+                    random_int = random.randrange(0, 1001)
                     slug = slugify(title) + str(random_int)
                     cat, created = Category.objects.get_or_create(title=title, slug=slug, section=section)
                     if created:
@@ -128,13 +130,14 @@ class Command(BaseCommand):
                 for sec_lvl_cat in second_level:
                     if category[0][0] == sec_lvl_cat[0][0]:
                         title = sec_lvl_cat[-1]
+                        title = str(title).capitalize()
                         possible_categories = Category.objects.filter(title=title, parent=cat, section=section)
 
                         if possible_categories:
                             self.stdout.write(self.style.ERROR('{} уже существует'.format(title)))
                             sec_cat = possible_categories.first()
                         else:
-                            random_int = random.randrange(0, 101)
+                            random_int = random.randrange(0, 1001)
                             slug = slugify(title) + str(random_int)
                             sec_cat = Category.objects.create(title=title, slug=slug, parent=cat, section=section)
                             self.stdout.write(self.style.SUCCESS('Создана категория 2-ого уровня "%s"' % title))
@@ -142,6 +145,7 @@ class Command(BaseCommand):
                         for prop in second_level_props:
                             if prop[0] == sec_lvl_cat[0]:
                                 title = prop[-1]
+                                title = str(title).capitalize()
                                 if title.startswith('Wiki'):
                                     title = title[7:]
                                 slug = slugify(title)
@@ -155,8 +159,10 @@ class Command(BaseCommand):
                                 for val in values:
                                     if prop[0] == val[0]:
                                         value = val[-1]
+                                        value = str(value).capitalize()
                                         if sec_prop.title == val[1]:
                                             if isinstance(value, list):
+                                                print("hey")
                                                 for v in value:
                                                     created_value, created = Values.objects.get_or_create(value=v,
                                                                                                           properties=sec_prop)
@@ -176,13 +182,14 @@ class Command(BaseCommand):
                         for thrd_lvl_cat in third_level:
                             if sec_lvl_cat[0] == thrd_lvl_cat[0][:-1]:
                                 title = thrd_lvl_cat[-1]
+                                title = str(title).capitalize()
                                 possible_categories = Category.objects.filter(title=title, parent=sec_cat, section=section)
 
                                 if possible_categories:
                                     self.stdout.write(self.style.ERROR('{} уже существует'.format(title)))
                                     thrd_cat = possible_categories.first()
                                 else:
-                                    random_int = random.randrange(0, 101)
+                                    random_int = random.randrange(0, 1001)
                                     slug = slugify(title) + str(random_int)
                                     thrd_cat = Category.objects.create(title=title, slug=slug, parent=sec_cat, section=section)
                                     self.stdout.write(self.style.SUCCESS('Создана категория 3-ого уровня "%s"' % title))
@@ -190,6 +197,7 @@ class Command(BaseCommand):
                                 for prop in third_level_props:
                                     if prop[0] == thrd_lvl_cat[0]:
                                         title = prop[-1]
+                                        title = str(title).capitalize()
                                         if title.startswith('Wiki'):
                                             title = title[7:]
                                         slug = slugify(title)
@@ -206,6 +214,7 @@ class Command(BaseCommand):
                                         for val in values:
                                             if prop[0] == val[0]:
                                                 value = val[-1]
+                                                value = str(value).capitalize()
                                                 if thrd_prop.title == val[1]:
                                                     if isinstance(value, list):
                                                         for v in value:
@@ -225,4 +234,3 @@ class Command(BaseCommand):
                                                         else:
                                                             self.stdout.write(
                                                                 self.style.SUCCESS('Изменено значение "%s"' % value))
-
