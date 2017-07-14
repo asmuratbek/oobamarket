@@ -8,7 +8,7 @@ from django.urls import reverse
 from django.utils.translation import ugettext as _
 from config.settings import base as settings
 from apps.users.models import User
-from apps.utils.models import PublishBaseModel
+from apps.utils.models import PublishBaseModel, Counter
 from geoposition.fields import GeopositionField
 
 # Create your models here.
@@ -20,7 +20,7 @@ SOCIAL_LINKS = (
 )
 
 
-class Shop(PublishBaseModel):
+class Shop(PublishBaseModel, Counter):
     class Meta:
         verbose_name = 'Магазин'
         verbose_name_plural = 'Магазины'

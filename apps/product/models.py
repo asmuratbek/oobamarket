@@ -9,7 +9,7 @@ from django.utils.translation import ugettext as _
 from apps.category.models import Category
 from apps.shop.models import Shop
 from apps.users.models import User
-from apps.utils.models import PublishBaseModel
+from apps.utils.models import PublishBaseModel, Counter
 
 DELIVERY_TYPES = (
     ('self', u'Самовывоз'),
@@ -29,7 +29,7 @@ class ProductPublishedManager(models.Manager):
         return super(ProductPublishedManager, self).get_query_set().filter(published=True)
 
 
-class Product(PublishBaseModel):
+class Product(PublishBaseModel, Counter):
     class Meta:
         verbose_name = 'Продукт'
         verbose_name_plural = 'Продукты'

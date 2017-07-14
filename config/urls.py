@@ -9,6 +9,7 @@ from apps.global_category.views import IndexView, landing
 from apps.product.views import FavoriteCreateView, product_reviews
 from apps.shop.views import agreement, shop_reviews
 from apps.product.views import search, search_predict_html
+from apps.utils.views import counter
 
 urlpatterns = [
     url(r'^$', IndexView.as_view(), name='home'),
@@ -24,6 +25,7 @@ urlpatterns = [
     url(r'^api/category/', include('apps.category.api.urls', namespace="category_api")),
     url(r'^search_predict_html', search_predict_html, name='search_predict_html'),
     # url(r'^search/', include('haystack.urls')),
+    url(r'^counter/$', counter, name='counter'),
     url(r'^search_results', search_predict_html),
     url(r'^search/', search, name='search'),
     url(r'^ckeditor/', include('ckeditor_uploader.urls')),

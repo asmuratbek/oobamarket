@@ -17,3 +17,10 @@ class PublishBaseModel(BaseModel):
 
     class Meta:
         abstract = True
+
+
+class Counter(models.Model):
+    counter = models.PositiveIntegerField(verbose_name='Количество просмотров', default=0)
+
+    class Meta:
+        abstract = True
