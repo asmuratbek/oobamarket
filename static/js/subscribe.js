@@ -11,14 +11,23 @@ $.ajax({
     success: function (data) {
         if(data == 'redirect'){
             window.location.href = '/accounts/login/'
-        } else if(data.status == 1) {
-                    sub_select.show();
-                    $('#sub_button').text('Отписаться');
-        }else {
-            sub_select.hide();
-            $('#sub_button').text('Подписаться');
+        } else {
+            if(data.status == 1) {
+                sub_select.show();
+            //      $('.form-check-input').each(function () {
+            //     if ($(this).val() === 'all') {
+            //         $(this).attr('checked', true)
+            //     } else {
+            //         $(this).attr('checked', false)
+            //     }
+            // });
+                $('#sub_button').text('Отписаться');
+            }else {
+                sub_select.hide();
+                $('#sub_button').text('Подписаться');
+            }
+            $('#sub_button').prepend("<span class='glyphicon glyphicon-send'></span>");
         }
-        $('#sub_button').prepend("<span class='glyphicon glyphicon-send'></span>");
         }
         })
     });

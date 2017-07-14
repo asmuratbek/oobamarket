@@ -109,7 +109,10 @@
                                             {% for val, text in sub_types %}
                                                 <div class="form-group">
                                                     <label for="optionsRadios{{ forloop.counter }}" class="form-check-label ">{{ text }}</label>
-                                                    <input type="radio" class="form-check-input pull-left" id="optionsRadios{{ forloop.counter }}" {% if subscribe.subscription_type == val %}checked{% endif %} value="{{ val }}">
+                                                    <input type="radio" class="form-check-input pull-left"
+                                                           id="optionsRadios{{ forloop.counter }}"
+                                                           {% if subscribe.subscription_type == val %}checked{% endif %}
+                                                           value="{{ val }}">
                                                     <div class="indicator"></div>
                                                 </div>
                                             {% endfor %}
