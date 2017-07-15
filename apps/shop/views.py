@@ -135,6 +135,7 @@ class ShopUpdateView(LoginRequiredMixin, FormsetMixin, ShopMixin, UpdateView):
     template_name = 'shop/shop_update.html'
 
 
+
 class ShopDeleteView(LoginRequiredMixin, ShopMixin, DeleteView):
     model = Shop
     template_name = 'layout/modal_shop_delete_confirm.html'
@@ -259,20 +260,54 @@ class ShopReviewListView(generic.DetailView):
         context['review'] = ShopReviews.objects.all
         return context
 
+
+@login_required
 def add_shop_review(request, slug):
-    if request.method == 'POST':
-        if request.is_ajax():
-            review = ShopReviews()
-            review.text = request.POST.get('text')
-            review.shop = Shop.objects.get(slug=slug)
-            review.user = request.user
-            if request.POST.get('rating'):
-                review.stars = '*' * int(request.POST.get('rating'))
+    if request.is_ajax():
+        review = ShopReviews()
+        review.text = request.POST.get('text')
+        review.shop = Shop.objects.get(slug=slug)
+        review.user = request.user
+        if request.POST.get('rating'):
+            review.stars = '*' * int(request.POST.get('rating'))
+
+        exists_review = ShopReviews.objects.filter(user=review.user, shop=review.shop)
+
+        if exists_review.count() <= 0:
             review.save()
             return JsonResponse(dict(success=True))
+        else:
+            return JsonResponse({
+                'success': False,
+                'message': 'Review is already exist',
+                'url': reverse('shops:update_review', kwargs={'slug': slug, 'pk': exists_review.first().id})
+            })
 
-        return JsonResponse(dict(success=True, message='Request is not AJAX!'))
-    return JsonResponse(dict(success=True, message='Request is not POST!'))
+    return JsonResponse(dict(success=False, message='Request is not AJAX!'))
+
+
+@login_required
+def update_shop_review(request, pk, slug):
+    review = ShopReviews.objects.get(pk=pk)
+    shop = Shop.objects.get(slug=slug)
+    if request.POST:
+        review.text = request.POST.get('text')
+        review.shop = shop
+        review.user = request.user
+        if request.POST.get('rating'):
+            review.stars = '*' * int(request.POST.get('rating'))
+        review.save()
+        return HttpResponseRedirect(shop.get_absolute_url())
+
+    lenstars = len(review.stars)
+
+    params = {
+        'review': review,
+        'object': Shop.objects.get(slug=slug),
+        'lenstars': lenstars,
+    }
+
+    return render(request, 'shop/shop_review_update.html', params)
 
 
 def shop_reviews(request):

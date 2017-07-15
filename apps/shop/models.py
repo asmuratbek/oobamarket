@@ -116,7 +116,9 @@ class Contacts(PublishBaseModel):
     shop = models.ForeignKey(Shop, verbose_name='Магазин', null=True)
     place = models.ForeignKey('Place', verbose_name='Торговая точка', null=True, blank=True)
     work_time = models.TextField(verbose_name='График работы', null=True, blank=True)
-    location = GeopositionField(verbose_name='Отметьте на карте', null=True, blank=True)
+    latitude = models.CharField(max_length=255, verbose_name='Широта', null=True, blank=True)
+    longitude = models.CharField(max_length=255, verbose_name='Долгота', null=True, blank=True)
+
 
 
     def __str__(self):

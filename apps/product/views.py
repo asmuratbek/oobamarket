@@ -70,20 +70,55 @@ def product_detail(request, global_slug, category_slug, slug):
     return render(request, template, context)
 
 
+@login_required
 def add_product_review(request, slug):
-    if request.method == 'POST':
-        if request.is_ajax():
-            review = ProductReviews()
-            review.text = request.POST.get('text')
-            review.product = Product.objects.get(slug=slug)
-            review.user = request.user
-            if request.POST.get('rating'):
-                review.stars = '*' * int(request.POST.get('rating'))
+    if request.is_ajax():
+        review = ProductReviews()
+        review.text = request.POST.get('text')
+        review.product = Product.objects.get(slug=slug)
+        review.user = request.user
+        if request.POST.get('rating'):
+            review.stars = '*' * int(request.POST.get('rating'))
+
+        exists_review = ProductReviews.objects.filter(user=review.user, product=review.product)
+
+        print(exists_review)
+
+        if exists_review.count() <= 0:
             review.save()
             return JsonResponse(dict(success=True))
+        else:
+            return JsonResponse({
+                'success': False,
+                'message': 'Review is already exist',
+                'url': reverse('product:update_review', kwargs={'slug': slug, 'pk': exists_review.first().id})
+            })
 
-        return JsonResponse(dict(success=True, message='Request is not AJAX!'))
-    return JsonResponse(dict(success=True, message='Request is not POST!'))
+    return JsonResponse(dict(success=False, message='Request is not AJAX!'))
+
+
+@login_required
+def update_product_review(request, pk, slug):
+    review = ProductReviews.objects.get(pk=pk)
+    product = Product.objects.get(slug=slug)
+    if request.POST:
+        review.text = request.POST.get('text')
+        review.product = product
+        review.user = request.user
+        if request.POST.get('rating'):
+            review.stars = '*' * int(request.POST.get('rating'))
+        review.save()
+        return HttpResponseRedirect(product.get_absolute_url())
+
+    lenstars = len(review.stars)
+
+    params = {
+        'review': review,
+        'object': Product.objects.get(slug=slug),
+        'lenstars': lenstars,
+    }
+
+    return render(request, 'product/prod_review_update.html', params)
 
 
 def product_reviews(request):
@@ -289,7 +324,8 @@ def upload_images_product_update(request, slug):
             product = get_object_or_404(Product, slug=slug)
             form.instance.product = product
             product_image = form.save()
-            data = {'is_valid': True, 'productimage_id': product_image.id, 'name': product_image.image.name, 'url': product_image.image.url}
+            data = {'is_valid': True, 'productimage_id': product_image.id, 'name': product_image.image.name,
+                    'url': product_image.image.url}
         else:
             data = {'is_valid': False}
         return JsonResponse(data)

@@ -26,5 +26,6 @@ urlpatterns = [
     url(r'^$', ShopListView.as_view(), name='list'),
     url(r'^(?P<slug>[\w-]+)/review/$', ShopReviewListView.as_view(), name='review'),
     url(r'^(?P<slug>[\w-]+)/add-review/$', add_shop_review, name='add_review'),
+    url(r'^(?P<slug>[\w-]+)/update-review/(?P<pk>[0-9]+)/$', update_shop_review, name='update_review'),
 
 ]

@@ -85,6 +85,8 @@
                     });
                     $('.star-behaviour').clearRating();
                     $('#prod-rev').val('');
+                } else if(response.url) {
+                    document.location.href = response.url;
                 }
             }
         });

@@ -52,15 +52,20 @@
                                     <label>Опубликовать</label>
                                 </div>
 
+                                <button type="button" class="btn btn-primary set-marker-trigger" data-id="0">Поставить метку</button>
+
                                 <div class="form-group input col-md-12">
                                     <label for="">Время работы</label>
                                     {{ form.work_time|attr:"rows:6"|attr:'class:form-control' }}
                                 </div>
 
-                                <div class="form-group input col-md-12">
-                                    <label for="">Маркер на карте</label>
-                                    {{ form.location|attr:'class:form-control' }}
+                                <div class="form-group select col-md-6" style="margin-top: 10px">
+                                    {{ form.longitude|attr:"class:form-control"|attr:"type:hidden" }}
                                 </div>
+                                <div class="form-group select col-md-6" style="margin-top: 10px">
+                                    {{ form.latitude|attr:"class:form-control"|attr:"type:hidden" }}
+                                </div>
+
 
 
                                 {{ formset.management_form }}
@@ -117,17 +122,34 @@
         </div>
     </section>
 
+    <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+         id="set-marker-modal">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">Поставьте маркер на карте</div>
+                <div class="modal-body">
+                    <div id="custom-map" style="width: 898px; height: 500px;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 {% endblock %}
 {% block js %}
 
     {{ block.super }}
     <script src="{% static 'js/jquery.2.2.4.js' %}"></script>
     <script src="{% static 'js/previewLogos.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDXEuBW9AIFcfHx1UHvceIvCz0JnRNjGyo&callback=initMap">
+    </script>
     <script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
     <script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
     <script type="text/html" id="contact-template">
-        <div class="inline- __prefix__">
+        <div class="inline-__prefix__">
             {% with formset.empty_form as form %}
+
                 <div class="form-group input col-md-6">
 
                     <label for="">Телефон</label>
@@ -154,28 +176,128 @@
                     <label>Опубликовать</label>
                 </div>
 
+                <button type="button" class="btn btn-primary set-marker-trigger" data-id="__prefix__">Поставить метку</button>
+
                 <div class="form-group input col-md-12">
                     <label>Время работы</label>
                     {{ form.work_time|attr:"rows:6"|attr:'class:form-control' }}
                 </div>
 
+
+                {#                <div class="form-group input col-md-12">#}
+                {#                    <label for="">Маркер на карте</label>#}
+                {#                    {{ form.location|attr:'class:form-control' }}#}
+                {#                </div>#}
+                {{ form.longitude|attr:"class:form-control"|attr:"type:hidden" }}
+                {{ form.latitude|attr:"class:form-control"|attr:"type:hidden" }}
             {% endwith %}
         </div>
     </script>
     <script>
-
+        var formSetsCounter = 0;
         $(function () {
             $('#add-new-contact').click(function (ev) {
                 ev.preventDefault();
                 var count = parseInt($('#id_contacts_set-TOTAL_FORMS').attr('value'), 10);
+                formSetsCounter = count;
                 var tmplMarkup = $('#contact-template').html();
                 var compiledTmpl = tmplMarkup.replace(/__prefix__/g, count)
                 console.log(compiledTmpl);
                 $('div.inline-appended').append(compiledTmpl);
                 $('#id_contacts_set-TOTAL_FORMS').attr('value', count + 1);
+                initSetMarkerButton();
             });
         });
 
     </script>
+    <script>
+        let map = null;
+        let markers = [];
+        let mapCenter = {lat: 42.864272, lng: 74.579775};
+        let workingIndex = -1;
 
+        function initMap() {
+            map = new google.maps.Map(document.getElementById('custom-map'), {
+                center: mapCenter,
+                zoom: 15,
+                mapTypeId: google.maps.MapTypeId.TERRAIN
+            });
+
+            map.addListener('click', function (event) {
+                addMarker(event.latLng);
+            });
+
+            // Adds a marker at the center of the map.
+        }
+
+        function addMarker(location) {
+            //let marker = new google.maps.Marker({
+            //    position: markers[j]['data'],
+            //    map: map
+            //});
+            let currId = -1;
+            for (let i=0; i < markers.length; ++i) {
+                if (markers[i]['id'] === workingIndex) currId = i;
+            }
+            $('#id_contacts_set-' + workingIndex + '-longitude').val(location['lng']);
+            $('#id_contacts_set-' + workingIndex + '-latitude').val(location['lat']);
+            closeMarkerModal();
+            if(markers.length > 0 && currId > -1)
+                markers[currId]['data'].setPosition(location);
+            else
+                markers.push({'id': workingIndex, 'data': new google.maps.Marker({position: location, map: map})});
+            //deleteMarkers();
+        }
+
+        // Sets the map on all markers in the array.
+        function setMapOnAll(map) {
+            for (var i = 0; i < markers.length; i++) {
+                markers[i].setMap(map);
+            }
+        }
+
+        // Removes the markers from the map, but keeps them in the array.
+        function clearMarkers() {
+            setMapOnAll(null);
+        }
+
+        // Shows any markers currently in the array.
+        function showMarkers() {
+            setMapOnAll(map);
+        }
+
+        // Deletes all markers in the array by removing references to them.
+        function deleteMarkers() {
+            clearMarkers();
+            markers = [];
+        }
+
+        function openMarkerModal(index) {
+            workingIndex = index;
+            $('#set-marker-modal').modal('show');
+            setTimeout(function () {
+                google.maps.event.trigger(map, "resize");
+                map.setCenter(mapCenter);
+            }, 2000);
+        }
+
+        function closeMarkerModal() {
+            $('#set-marker-modal').modal('hide');
+        }
+    </script>
+
+    <script>
+        function initSetMarkerButton() {
+            $('.set-marker-trigger').unbind('click').bind('click', function (e) {
+                e.preventDefault();
+                openMarkerModal(parseInt($(this).attr('data-id')));
+            });
+        }
+        initSetMarkerButton();
+        $('#add-new-contact').on('click', function (e) {
+            console.log(formSetsCounter);
+            openMarkerModal(formSetsCounter);
+
+        });
+    </script>
 {% endblock %}

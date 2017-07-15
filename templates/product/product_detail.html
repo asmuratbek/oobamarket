@@ -210,6 +210,7 @@
             dataType: 'JSON',
             data: data,
             success: function (response) {
+                console.log(response);
                 if (response.success) {
                     $.ajax({
                         method: 'POST',
@@ -226,6 +227,8 @@
                     });
                     $('.star-behaviour').clearRating();
                     $('#prod-rev').val('');
+                } else if(response.url) {
+                    document.location.href = response.url;
                 }
             }
         });
