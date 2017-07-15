@@ -1,0 +1,12 @@
+{% extends 'base-1.html' %}
+{% block content %}
+    <section class="sub-list">
+        <div class="sub-list-block">
+            {% for sale in sales %}
+            <h4>{{ sale.title }}</h4>
+            <a href="{{ sale.image.url }}"><img src="{{ sale.image.url }}"/></a>
+            <p>{{ sale.short_description|truncatechars:50 }}</p>
+            {% endfor %}
+        </div>
+    </section>
+{% endblock %}

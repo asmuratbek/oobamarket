@@ -1,8 +1,8 @@
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse, Http404, HttpResponseRedirect, HttpResponseBadRequest, JsonResponse
-from django.shortcuts import get_object_or_404, redirect
+from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.csrf import csrf_exempt
-from django.views.generic import DetailView, ListView, RedirectView, UpdateView
+from django.views.generic import DetailView, ListView, RedirectView, UpdateView, View
 
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
@@ -84,3 +84,20 @@ def subscribe(request):
                 return JsonResponse(data)
         return HttpResponseBadRequest()
     return HttpResponse('redirect')
+
+
+class SubscribeListView(LoginRequiredMixin, View):
+    def get(self, request, *args, **kwargs):
+        user = self.request.user
+        sales = list()
+        products = list()
+        for sub in user.subscription_set.all():
+            if sub.subscription_type == 'only_actions':
+                [sales.append(item) for item in sub.subscription.sales_set.all()]
+            elif sub.subscription_type == 'only_products':
+                [products.append(item) for item in sub.subscription.product_set.all()]
+            else:
+                [sales.append(item) for item in sub.subscription.sales_set.all()]
+                [products.append(item) for item in sub.subscription.product_set.all()]
+        return render(self.request, 'users/sub_list.html', {'sales': sales,
+                                                            'products': products})
