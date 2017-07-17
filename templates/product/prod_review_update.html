@@ -8,28 +8,29 @@
                 <form id='review_form' class="product_review" method="post">
                     {% csrf_token %}
                     <div class="name">
-                        <h5>Добавить отзыв</h5>
+                        <h5>Редактировать отзыв</h5>
 
                         <h4>
                             {% if review.stars %}
-                    <div class="star-wrapper">
-                        <div class="star default">
-                            <i class="fa fa-star-o" aria-hidden="true"></i>
-                            <i class="fa fa-star-o" aria-hidden="true"></i>
-                            <i class="fa fa-star-o" aria-hidden="true"></i>
-                            <i class="fa fa-star-o" aria-hidden="true"></i>
-                            <i class="fa fa-star-o" aria-hidden="true"></i>
-                        </div>
+                                <div class="star-wrapper">
+                                    <div class="star default">
+                                        <i class="fa fa-star-o" aria-hidden="true"></i>
+                                        <i class="fa fa-star-o" aria-hidden="true"></i>
+                                        <i class="fa fa-star-o" aria-hidden="true"></i>
+                                        <i class="fa fa-star-o" aria-hidden="true"></i>
+                                        <i class="fa fa-star-o" aria-hidden="true"></i>
+                                    </div>
 
-                        <div class="star active star-behaviour" data-save-stars="true" data-stars-count="{{ lenstars }}">
-                            {% for i in "*****" %}
-                                <i class="fa fa-star {% if forloop.counter <= review.stars|length %}active{% endif %}"
-                                   aria-hidden="true"></i>
-                            {% endfor %}
-                        </div>
+                                    <div class="star active star-behaviour" data-save-stars="true"
+                                         data-stars-count="{{ lenstars }}">
+                                        {% for i in "*****" %}
+                                            <i class="fa fa-star {% if forloop.counter <= review.stars|length %}active{% endif %}"
+                                               aria-hidden="true"></i>
+                                        {% endfor %}
+                                    </div>
 
-                    </div>
-                {% endif %}
+                                </div>
+                            {% endif %}
 
                         </h4>
 
@@ -37,10 +38,11 @@
                     <div class="description">
 
                         <div class="form-group">
-                            <textarea name="text" id="prod-rev" cols="30" rows="10" class="form-control">{{ review.text }}</textarea>
+                            <textarea name="text" id="prod-rev" cols="30" rows="10"
+                                      class="form-control">{{ review.text }}</textarea>
 
                         </div>
-                        <button type="submit">Отправить</button>
+                        <button type="submit"  id="prod_review" >Сохранить</button>
                     </div>
                 </form>
             </div>
