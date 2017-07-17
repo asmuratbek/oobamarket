@@ -24,7 +24,7 @@ class Command(BaseCommand):
         second_level_props = list()
         third_level_props = list()
         values = list()
-        for index, worksheet in enumerate(W.worksheets[1:5]):
+        for index, worksheet in enumerate(W.worksheets[1:]):
             if index == 0:
                 for row in worksheet.iter_rows():
                     for index, field in enumerate(row):
@@ -36,6 +36,12 @@ class Command(BaseCommand):
                                 wiki[key].append(str(field.value).capitalize())
 
             else:
+                first_level = list()
+                second_level = list()
+                third_level = list()
+                second_level_props = list()
+                third_level_props = list()
+                values = list()
                 slug = slugify(worksheet.title)
                 section, created = GlobalCategory.objects.get_or_create(title=worksheet.title, slug=slug)
                 for index, col in enumerate(worksheet.iter_cols(max_col=3)):
@@ -58,22 +64,26 @@ class Command(BaseCommand):
                                         ids.append(category_level)
                                     second_level.append([ids, category_text])
                                 else:
-                                    property_text = str(field.internal_value).split('.')[-1].strip()
+                                    look_for_vals = True
+                                    property_text = str(field.internal_value)
                                     if property_text.startswith('**'):
                                         property_text = property_text[3:]
                                     elif property_text.startswith('*') or property_text.startswith("#") or property_text.startswith("!"):
+                                        if property_text.startswith("#"):
+                                            look_for_vals = False
                                         property_text = property_text[2:]
                                     property_text = property_text.capitalize()
                                     second_level_props.append([ids, property_text])
-                                    for column in string.ascii_uppercase[string.ascii_uppercase.find(field.column) + 1:]:
-                                        if worksheet[column + str(field.row)].value:
-                                            if str(worksheet[column + str(field.row)].value).startswith('Wiki'):
-                                                key = str(worksheet[column + str(field.row)].value)[7:]
-                                                if key in wiki.keys():
-                                                    values.append([ids, property_text, wiki[key]])
-                                            else:
-                                                if not str(worksheet[column + str(field.row)].value).startswith("("):
-                                                    values.append([ids, property_text, str(worksheet[column + str(field.row)].value).capitalize()])
+                                    if look_for_vals:
+                                        for column in string.ascii_uppercase[string.ascii_uppercase.find(field.column) + 1:]:
+                                            if worksheet[column + str(field.row)].value:
+                                                if str(worksheet[column + str(field.row)].value).startswith('Wiki'):
+                                                    key = str(worksheet[column + str(field.row)].value)[7:]
+                                                    if key in wiki.keys():
+                                                        values.append([ids, property_text, wiki[key]])
+                                                else:
+                                                    if not str(worksheet[column + str(field.row)].value).startswith("("):
+                                                        values.append([ids, property_text, str(worksheet[column + str(field.row)].value).capitalize()])
 
                     elif index == 2:
                         for index, field in enumerate(col):
@@ -89,69 +99,57 @@ class Command(BaseCommand):
                                         ids.append(category_level)
                                     third_level.append([ids, category_text])
                                 else:
-                                    property_text = str(field.internal_value).split('.')[-1].strip()
+                                    look_for_values = True
+                                    property_text = str(field.internal_value)
                                     if property_text.startswith('**'):
                                         property_text = property_text[3:]
                                     elif property_text.startswith('*') or property_text.startswith("#") or property_text.startswith("!"):
+                                        if property_text.startswith("#"):
+                                            look_for_values = False
                                         property_text = property_text[2:]
                                     property_text = property_text.capitalize()
                                     third_level_props.append([ids, property_text])
-                                    for column in string.ascii_uppercase[string.ascii_uppercase.find(field.column) + 1:]:
-                                        if worksheet[column + str(field.row)].value:
-                                            if str(worksheet[column + str(field.row)].value).startswith('Wiki'):
-                                                key = str(worksheet[column + str(field.row)].value)[7:]
-                                                if key in wiki.keys():
-                                                    values.append([ids, property_text, wiki[key]])
-                                            else:
-                                                if not str(worksheet[column + str(field.row)].value).startswith("("):
-                                                    values.append([ids, property_text, str(worksheet[column + str(field.row)].value).capitalize()])
+                                    if look_for_values:
+                                        for column in string.ascii_uppercase[string.ascii_uppercase.find(field.column) + 1:]:
+                                            if worksheet[column + str(field.row)].value:
+                                                if str(worksheet[column + str(field.row)].value).startswith('Wiki'):
+                                                    key = str(worksheet[column + str(field.row)].value)[7:]
+                                                    if key in wiki.keys():
+                                                        values.append([ids, property_text, wiki[key]])
+                                                else:
+                                                    if not str(worksheet[column + str(field.row)].value).startswith("("):
+                                                        values.append([ids, property_text, str(worksheet[column + str(field.row)].value).capitalize()])
 
             for category in first_level:
-                try:
-                    title = category[-1]
-                    title = str(title).capitalize()
-                    slug = slugify(title)
-                    cat, created = Category.objects.get_or_create(title=title, slug=slug, section=section)
-                    if created:
-                        self.stdout.write(self.style.SUCCESS('Создана категория 1-ого уровня "%s"' % title))
-                    else:
-                        self.stdout.write(self.style.ERROR('{} уже существует'.format(title)))
-                except IntegrityError:
-                    title = category[-1]
-                    title = str(title).capitalize()
-                    random_int = random.randrange(0, 1001)
-                    slug = slugify(title) + str(random_int)
-                    cat, created = Category.objects.get_or_create(title=title, slug=slug, section=section)
-                    if created:
-                        self.stdout.write(self.style.SUCCESS('Создана категория 1-ого уровня "%s"' % title))
-                    else:
-                        self.stdout.write(self.style.ERROR('{} уже существует'.format(title)))
+                title = category[-1]
+                extra_slug = ".".join(category[0])
+                slug = slugify(title) + "-" + slugify(section.title) + "-" + extra_slug
+                cat, created = Category.objects.get_or_create(title=title, slug=slug, section=section)
+                if created:
+                    self.stdout.write(self.style.SUCCESS('Создана категория 1-ого уровня "%s"' % title))
+                else:
+                    self.stdout.write(self.style.ERROR('{} уже существует'.format(title)))
 
                 for sec_lvl_cat in second_level:
                     if category[0][0] == sec_lvl_cat[0][0]:
+                        extra_slug = '.'.join(sec_lvl_cat[0])
                         title = sec_lvl_cat[-1]
-                        title = str(title).capitalize()
-                        possible_categories = Category.objects.filter(title=title, parent=cat, section=section)
-
-                        if possible_categories:
-                            self.stdout.write(self.style.ERROR('{} уже существует'.format(title)))
-                            sec_cat = possible_categories.first()
-                        else:
-                            random_int = random.randrange(0, 1001)
-                            slug = slugify(title) + str(random_int)
-                            sec_cat = Category.objects.create(title=title, slug=slug, parent=cat, section=section)
+                        slug = slugify(title) + "-" + slugify(section.title) + "-" + extra_slug
+                        sec_cat, sec_cat_created = Category.objects.get_or_create(title=title, slug=slug, section=section)
+                        if sec_cat_created:
                             self.stdout.write(self.style.SUCCESS('Создана категория 2-ого уровня "%s"' % title))
+                        else:
+                            self.stdout.write(self.style.ERROR('{} уже существует'.format(title)))
 
                         for prop in second_level_props:
                             if prop[0] == sec_lvl_cat[0]:
                                 title = prop[-1]
-                                title = str(title).capitalize()
                                 if title.startswith('Wiki'):
                                     title = title[7:]
                                 slug = slugify(title)
-                                sec_prop,created = Properties.objects.get_or_create(title=title, slug=slug)
+                                sec_prop, sec_prop_created = Properties.objects.get_or_create(title=title, slug=slug)
                                 sec_prop.category.add(sec_cat)
-                                if created:
+                                if sec_prop_created:
                                     self.stdout.write(self.style.SUCCESS('Создано свойство "%s"' % title))
                                 else:
                                     self.stdout.write(self.style.SUCCESS('Изменено свойство "%s"' % title))
@@ -159,10 +157,8 @@ class Command(BaseCommand):
                                 for val in values:
                                     if prop[0] == val[0]:
                                         value = val[-1]
-                                        value = str(value).capitalize()
                                         if sec_prop.title == val[1]:
                                             if isinstance(value, list):
-                                                print("hey")
                                                 for v in value:
                                                     created_value, created = Values.objects.get_or_create(value=v,
                                                                                                           properties=sec_prop)
@@ -181,26 +177,24 @@ class Command(BaseCommand):
 
                         for thrd_lvl_cat in third_level:
                             if sec_lvl_cat[0] == thrd_lvl_cat[0][:-1]:
+                                extra_slug = ".".join(thrd_lvl_cat[0])
                                 title = thrd_lvl_cat[-1]
-                                title = str(title).capitalize()
-                                possible_categories = Category.objects.filter(title=title, parent=sec_cat, section=section)
-
-                                if possible_categories:
-                                    self.stdout.write(self.style.ERROR('{} уже существует'.format(title)))
-                                    thrd_cat = possible_categories.first()
-                                else:
-                                    random_int = random.randrange(0, 1001)
-                                    slug = slugify(title) + str(random_int)
-                                    thrd_cat = Category.objects.create(title=title, slug=slug, parent=sec_cat, section=section)
+                                slug = slugify(title) + "-" + slugify(section.title) + "-" + extra_slug
+                                print(title)
+                                print(slug)
+                                thrd_cat, thrd_cat_created = Category.objects.get_or_create(title=title, slug=slug, parent=sec_cat, section=section)
+                                if thrd_cat_created:
                                     self.stdout.write(self.style.SUCCESS('Создана категория 3-ого уровня "%s"' % title))
+                                else:
+                                    self.stdout.write(self.style.ERROR('{} уже существует'.format(title)))
 
                                 for prop in third_level_props:
                                     if prop[0] == thrd_lvl_cat[0]:
+                                        extra_slug = ".".join(thrd_lvl_cat[0])
                                         title = prop[-1]
-                                        title = str(title).capitalize()
                                         if title.startswith('Wiki'):
                                             title = title[7:]
-                                        slug = slugify(title)
+                                        slug = slugify(title) + "-" + extra_slug
                                         thrd_prop, created = Properties.objects.get_or_create(title=title,
                                                                                              slug=slug)
                                         thrd_prop.category.add(thrd_cat)
@@ -214,7 +208,6 @@ class Command(BaseCommand):
                                         for val in values:
                                             if prop[0] == val[0]:
                                                 value = val[-1]
-                                                value = str(value).capitalize()
                                                 if thrd_prop.title == val[1]:
                                                     if isinstance(value, list):
                                                         for v in value:
@@ -234,3 +227,111 @@ class Command(BaseCommand):
                                                         else:
                                                             self.stdout.write(
                                                                 self.style.SUCCESS('Изменено значение "%s"' % value))
+
+
+
+                                                    # for category in first_level:
+        #     title = category[-1]
+        #     slug = slugify(title)
+        #     cat, created = Category.objects.get_or_create(title=title, slug=slug, section=section)
+        #     if created:
+        #         self.stdout.write(self.style.SUCCESS('Создана категория 1-ого уровня "%s"' % title))
+        #     else:
+        #         self.stdout.write(self.style.ERROR('{} уже существует'.format(title)))
+        #
+        #     for sec_lvl_cat in second_level:
+        #         if category[0][0] == sec_lvl_cat[0][0]:
+        #             extra_slug = '.'.join(sec_lvl_cat[0][0])
+        #             title = sec_lvl_cat[-1]
+        #             slug = slugify(title) + "-" + extra_slug
+        #             sec_cat, sec_cat_created = Category.objects.get_or_create(title=title, slug=slug, section=section)
+        #             if sec_cat_created:
+        #                 self.stdout.write(self.style.SUCCESS('Создана категория 2-ого уровня "%s"' % title))
+        #             else:
+        #                 self.stdout.write(self.style.ERROR('{} уже существует'.format(title)))
+        #
+        #             for prop in second_level_props:
+        #                 if prop[0] == sec_lvl_cat[0]:
+        #                     extra_slug = ".".join(sec_lvl_cat[0])
+        #                     title = prop[-1]
+        #                     if title.startswith('Wiki'):
+        #                         title = title[7:]
+        #                     slug = slugify(title) + "-" + extra_slug
+        #                     sec_prop, sec_prop_created = Properties.objects.get_or_create(title=title, slug=slug)
+        #                     sec_prop.category.add(sec_cat)
+        #                     if sec_prop_created:
+        #                         self.stdout.write(self.style.SUCCESS('Создано свойство "%s"' % title))
+        #                     else:
+        #                         self.stdout.write(self.style.SUCCESS('Изменено свойство "%s"' % title))
+        #
+        #                     for val in values:
+        #                         if prop[0] == val[0]:
+        #                             value = val[-1]
+        #                             if sec_prop.title == val[1]:
+        #                                 if isinstance(value, list):
+        #                                     for v in value:
+        #                                         created_value, created = Values.objects.get_or_create(value=v,
+        #                                                                                               properties=sec_prop)
+        #                                         if created:
+        #                                             self.stdout.write(
+        #                                                 self.style.SUCCESS('Создано значение "%s"' % v))
+        #                                         else:
+        #                                             self.stdout.write(
+        #                                                 self.style.SUCCESS('Изменено значение "%s"' % v))
+        #                                 else:
+        #                                     created_value, created = Values.objects.get_or_create(value=value, properties=sec_prop)
+        #                                     if created:
+        #                                         self.stdout.write(self.style.SUCCESS('Создано значение "%s"' % value))
+        #                                     else:
+        #                                         self.stdout.write(self.style.SUCCESS('Изменено значение "%s"' % value))
+        #
+        #             for thrd_lvl_cat in third_level:
+        #                 if sec_lvl_cat[0] == thrd_lvl_cat[0][:-1]:
+        #                     extra_slug = ".".join(thrd_lvl_cat[0][:-1])
+        #                     title = thrd_lvl_cat[-1]
+        #                     slug = slugify(title) + "-" + extra_slug
+        #                     thrd_cat, thrd_cat_created = Category.objects.get_or_create(title=title, slug=slug, parent=sec_cat, section=section)
+        #                     if thrd_cat_created:
+        #                         self.stdout.write(self.style.SUCCESS('Создана категория 3-ого уровня "%s"' % title))
+        #                     else:
+        #                         self.stdout.write(self.style.ERROR('{} уже существует'.format(title)))
+        #
+        #                     for prop in third_level_props:
+        #                         if prop[0] == thrd_lvl_cat[0]:
+        #                             extra_slug = ".".join(thrd_lvl_cat[0])
+        #                             title = prop[-1]
+        #                             if title.startswith('Wiki'):
+        #                                 title = title[7:]
+        #                             slug = slugify(title) + "-" + extra_slug
+        #                             thrd_prop, created = Properties.objects.get_or_create(title=title,
+        #                                                                                  slug=slug)
+        #                             thrd_prop.category.add(thrd_cat)
+        #                             if created:
+        #                                 self.stdout.write(
+        #                                     self.style.SUCCESS('Создано свойство "%s"' % title))
+        #                             else:
+        #                                 self.stdout.write(
+        #                                     self.style.SUCCESS('Изменено свойство "%s"' % title))
+        #
+        #                             for val in values:
+        #                                 if prop[0] == val[0]:
+        #                                     value = val[-1]
+        #                                     if thrd_prop.title == val[1]:
+        #                                         if isinstance(value, list):
+        #                                             for v in value:
+        #                                                 created_value, created = Values.objects.get_or_create(
+        #                                                     value=v, properties=thrd_prop)
+        #                                                 if created:
+        #                                                     self.stdout.write(
+        #                                                         self.style.SUCCESS('Создано значение "%s"' % v))
+        #                                                 else:
+        #                                                     self.stdout.write(
+        #                                                         self.style.SUCCESS('Изменено значение "%s"' % v))
+        #                                         else:
+        #                                             created_value, created = Values.objects.get_or_create(value=value, properties=thrd_prop)
+        #                                             if created:
+        #                                                 self.stdout.write(
+        #                                                     self.style.SUCCESS('Создано значение "%s"' % value))
+        #                                             else:
+        #                                                 self.stdout.write(
+        #                                                     self.style.SUCCESS('Изменено значение "%s"' % value))

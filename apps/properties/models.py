@@ -14,7 +14,7 @@ class Properties(MPTTModel, Ordering):
 
     category = models.ManyToManyField(Category, verbose_name='Категория', blank=True)
     title = models.CharField(max_length=255, verbose_name='Название параметра')
-    slug = models.CharField(max_length=255, verbose_name='Slug', null=True)
+    slug = models.CharField(max_length=255, verbose_name='Slug', unique=True)
     parent = TreeForeignKey('self', verbose_name='Родительская категория', null=True, blank=True)
 
     class MPTTMeta:
