@@ -3,7 +3,9 @@
  */
 $(document).ready(function () {
     var array = window.location.href.split("/").slice(-2);
-    $.post('/counter/', {'slug': array[0]}, function (data) {
-        console.log(data);
-    })
+    if (array !== 'contacts'||'review'||'sale'||'about-us'){
+        $.post('/counter/', {'slug': array[0]}, function (data) {
+            console.log(data);
+        })
+    }
 });
