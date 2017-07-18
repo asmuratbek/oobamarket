@@ -1,3 +1,4 @@
+from allauth.account.views import EmailView
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse, Http404, HttpResponseRedirect, HttpResponseBadRequest, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render

@@ -108,7 +108,7 @@ def update_product_review(request, pk, slug):
         if request.POST.get('rating'):
             review.stars = '*' * int(request.POST.get('rating'))
         review.save()
-        return HttpResponseRedirect(product.get_absolute_url())
+        return JsonResponse(dict(success=True, url=product.get_absolute_url()))
 
     lenstars = len(review.stars)
 

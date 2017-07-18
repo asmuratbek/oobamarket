@@ -1,12 +1,12 @@
 {% extends 'shop/shop_detail.html' %}
 
 {% block shopcontent %}
-{% if shop.contacts_set.exists %}
-            <div class="contacs-page">
-                <div class="row">
-                    <div class="col-md-5">
+    {% if shop.contacts_set.exists %}
+        <div class="contacs-page">
+            <div class="row">
+                <div class="col-md-5">
+                    {% for contact in shop.contacts_set.all %}
                         <div class="border">
-                            {% for contact in shop.contacts_set.all %}
                             <ul>
                                 <li>
                                     <i class="fa fa-map-marker" aria-hidden="true"></i>
@@ -17,29 +17,64 @@
                                     <i class="fa fa-volume-control-phone" aria-hidden="true"></i>
                                     <p>{{ contact.phone }}</p>
                                 </li>
-{#                                <li>#}
-{#                                    <i class="fa fa-clock-o" aria-hidden="true"></i>#}
-{#                                    <p>Пн-Пт9-00 до 19-00</p>#}
-{#                                    <p>Вс: c 10-00 до 19-00</p>#}
-{#                                    <p>Сб: Выходной</p>#}
-{#                                </li>#}
+                                <li>
+                                    <i class="fa fa-clock-o" aria-hidden="true"></i>
+                                    <p>{{ contact.work_time }}</p>
+                                </li>
                             </ul>
-
-
-                            {% endfor %}
                         </div>
-                    </div>
-                    <div class="col-md-7">
-                        <div class="cover">
-                            <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d9290635.710903395!2d40.297852!3d55.35413500000001!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sru!2sru!4v1498560093518"
-                                width="100%" height="380" frameborder="0" style="border:0" allowfullscreen></iframe>
-                        </div>
-
-                    </div>
+                    {% endfor %}
                 </div>
+                <div class="col-md-7">
+                    <div class="cover">
+                        <div id="contacts-markers" style="width: 652px; height: 380px;"></div>
+                    </div>
 
+                </div>
             </div>
-        {% else %}
-    <H3>Магазин не добавил контактов</H3>
-{% endif %}
+
+        </div>
+    {% else %}
+        <H3>Магазин не добавил контактов</H3>
+    {% endif %}
+{% endblock %}
+
+{% block js %}
+    {{ block.super }}
+
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDXEuBW9AIFcfHx1UHvceIvCz0JnRNjGyo&callback=initMap">
+    </script>
+
+    <script>
+        let map = null;
+        let markers = [
+            {% for s in shop.contacts_set.all %}
+                {
+                    lat: {{ s.latitude }},
+                    lng: {{ s.longitude }}
+                }{% if forloop.counter < shop.contacts_set.count %},{% endif %}
+            {% endfor %}
+        ];
+        let mapCenter = {lat: 42.864272, lng: 74.579775};
+
+        function initMap() {
+            map = new google.maps.Map(document.getElementById('contacts-markers'), {
+                center: mapCenter,
+                zoom: 15,
+                mapTypeId: google.maps.MapTypeId.TERRAIN
+            });
+
+            if (markers.length > 0) {
+                for (let i = 0; i < markers.length; ++i) {
+                    let marker = new google.maps.Marker({
+                        position: markers[i],
+                        map: map
+                    });
+                    map.setCenter(markers[i]);
+                }
+            }
+            // Adds a marker at the center of the map.
+        }
+    </script>
 {% endblock %}

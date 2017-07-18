@@ -202,6 +202,7 @@
         var data = $(form).serialize();
         console.log(data);
         data += '&rating=' + $('.star-behaviour').getRating();
+        console.log(data);
         event.preventDefault();
         console.log('Send data function is called!');
         $.ajax({

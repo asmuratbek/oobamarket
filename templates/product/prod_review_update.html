@@ -43,7 +43,7 @@
     <section class="reviews edit">
         <div class="container">
             <div class="item">
-                <form id='review_form' class="product_review" method="post">
+                <form id='review_form_bla' class="product_review" method="POST">
                     {% csrf_token %}
                     <div class="name">
                         <h5>Редактировать отзыв</h5>
@@ -80,11 +80,41 @@
                                       class="form-control">{{ review.text }}</textarea>
 
                         </div>
-                        <button type="submit"  id="prod_review" >Сохранить</button>
+                        <button type="submit" id="prod_review">Сохранить</button>
                     </div>
                 </form>
             </div>
 
         </div>
     </section>
+{% endblock %}
+
+{% block js %}
+    {{ block.super }}
+    <script>
+        $(document).ready(function () {
+            let form = $('#review_form_bla');
+
+            form.on('submit', function (e) {
+                e.preventDefault();
+                console.log('Form submitted but action prevented');
+                let data = $(this).serialize();
+                data += '&rating=' + $('.star-behaviour').getRating();
+                $.ajax({
+                    url: '{{ request.path }}',
+                    data: data,
+                    method: 'POST',
+                    dataType: 'JSON',
+                    success: function (response) {
+                        if(response.success) {
+                            document.location.href = response.url;
+                        }
+                    },
+                    error: function () {
+
+                    }
+                });
+            });
+        });
+    </script>
 {% endblock %}

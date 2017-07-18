@@ -51,7 +51,9 @@
                                 </div>
 
                                 <div class="form-group input">
-                                    <button type="button" class="btn btn-primary set-marker-trigger" data-id="{{ forloop.counter0 }}">Поставить новую метку</button>
+                                    <button type="button" class="btn btn-primary set-marker-trigger"
+                                            data-id="{{ forloop.counter0 }}">Поставить новую метку
+                                    </button>
                                 </div>
 
                                 <div class="form-group input col-md-12">
@@ -180,7 +182,9 @@
                 </div>
 
                 <div class="form-group input">
-                    <button type="button" class="btn btn-primary set-marker-trigger" data-id="__prefix__">Поставить новую метку</button>
+                    <button type="button" class="btn btn-primary set-marker-trigger" data-id="__prefix__">Поставить
+                        новую метку
+                    </button>
                 </div>
 
                 <div class="form-group input col-md-12">
@@ -223,12 +227,16 @@
         let markers = [
             {% for marker in shop.contacts_set.all %}
                 {% if marker.longitude and marker.latitude %}
-                    {'id': {{ forloop.counter0 }}, 'data': {lat: {{ marker.longitude }}, lng: {{ marker.latitude }} }},
+                    {
+                        'id': {{ forloop.counter }},
+                        'data': {lng: {{ marker.longitude }}, lat: {{ marker.latitude }}}
+                    }{% if forloop.counter < shop.contacts_set.count %},{% endif %}
                 {% endif %}
             {% endfor %}
         ];
         let mapCenter = {lat: 42.864272, lng: 74.579775};
         let workingIndex = -1;
+        let center = null;
 
         function initMap() {
             map = new google.maps.Map(document.getElementById('custom-map'), {
@@ -241,35 +249,41 @@
                 addMarker(event.latLng);
             });
 
-            for(let i=0; i < markers.length; ++i) {
-                addMarker(markers[i]['data']);
+            if (markers.length > 0) {
+                for (let k = 0; k < markers.length; ++k) {
+                    let _marker = new google.maps.Marker({
+                        position: markers[k]['data'],
+                        map: map
+                    });
+                    markers[k]['data'] = _marker;
+                    center = _marker.position;
+                }
             }
-
             // Adds a marker at the center of the map.
         }
 
-        function addMarker(location) {
+
+        function addMarker(_location) {
             //let marker = new google.maps.Marker({
             //    position: markers[j]['data'],
             //    map: map
             //});
             let currId = -1;
-            for (let i=0; i < markers.length; ++i) {
+            for (let i = 0; i < markers.length; ++i) {
                 if (markers[i]['id'] === workingIndex) currId = i;
             }
-            $('#id_contacts_set-' + workingIndex + '-longitude').val(location['lng']);
-            $('#id_contacts_set-' + workingIndex + '-latitude').val(location['lat']);
-            closeMarkerModal();
-            if(markers.length > 0 && currId > -1)
-                markers[currId]['data'].setPosition(location);
+            $('#id_contacts_set-' + workingIndex + '-longitude').val(_location['lng']);
+            $('#id_contacts_set-' + workingIndex + '-latitude').val(_location['lat']);
+            if (markers.length > 0 && currId > -1)
+                markers[currId]['data'].setPosition(_location);
             else
-                markers.push({'id': workingIndex, 'data': new google.maps.Marker({position: location, map: map})});
+                markers.push({'id': workingIndex, 'data': new google.maps.Marker({position: _location, map: map})});
             //deleteMarkers();
         }
 
         // Sets the map on all markers in the array.
         function setMapOnAll(map) {
-            for (var i = 0; i < markers.length; i++) {
+            for (let i = 0; i < markers.length; i++) {
                 markers[i].setMap(map);
             }
         }
@@ -291,12 +305,18 @@
         }
 
         function openMarkerModal(index) {
+            console.log(index);
             workingIndex = index;
             $('#set-marker-modal').modal('show');
             setTimeout(function () {
                 google.maps.event.trigger(map, "resize");
-                map.setCenter(mapCenter);
-            }, 2000);
+                if(center !== null) {
+                    map.setCenter(center);
+                } else {
+                    map.setCenter(mapCenter);
+                }
+
+            }, 1000);
         }
 
         function closeMarkerModal() {

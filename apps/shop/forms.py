@@ -11,7 +11,7 @@ from .models import Shop, Banners, SocialLinks, Contacts, Sales
 class ShopForm(ModelForm):
     class Meta:
         model = Shop
-        exclude = ['user', 'slug']
+        exclude = ['user', 'slug', 'counter']
 
     def __init__(self, *args, **kwargs):
         super(ShopForm, self).__init__(*args, **kwargs)
@@ -19,6 +19,7 @@ class ShopForm(ModelForm):
             self.fields[field].widget.attrs.update({
                 'class': 'form-control'
             })
+
 
     def clean_logo(self):
         logo = self.cleaned_data['logo']
