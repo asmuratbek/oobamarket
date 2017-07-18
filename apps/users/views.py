@@ -101,3 +101,5 @@ class SubscribeListView(LoginRequiredMixin, View):
                 [products.append(item) for item in sub.subscription.product_set.all()]
         return render(self.request, 'users/sub_list.html', {'sales': sales,
                                                             'products': products})
+
+
