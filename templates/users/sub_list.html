@@ -1,12 +1,60 @@
 {% extends 'base-1.html' %}
 {% block content %}
-    <section class="sub-list">
-        <div class="sub-list-block">
-            {% for sale in sales %}
-            <h4>{{ sale.title }}</h4>
-            <a href="{{ sale.image.url }}"><img src="{{ sale.image.url }}"/></a>
-            <p>{{ sale.short_description|truncatechars:50 }}</p>
-            {% endfor %}
+    <section class="shop-category">
+        <div class="container">
+            <div class="sale-page sub-list">
+                <div class="col-md-6">
+                    <span class="descount">1%</span>
+                    <div class="img-wrapper">
+                        <img src="http://via.placeholder.com/540x200" alt="">
+                    </div>
+                    <div class="description">
+                        <h3>h3</h3>
+                        <p>p</p>
+                        <a class="btn add" href="">Просмотреть</a>
+
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <span class="descount">1%</span>
+                    <div class="img-wrapper">
+                        <img src="http://via.placeholder.com/540x200" alt="">
+                    </div>
+                    <div class="description">
+                        <h3>h3</h3>
+                        <p>p</p>
+                        <a class="btn add" href="">Просмотреть</a>
+
+                    </div>
+                </div>
+                <div class="col-md-6 product">
+                    <div class="border">
+                        <div class="img-wrapper col-md-6">
+                            <img src="http://via.placeholder.com/250x200" alt="">
+                        </div>
+                        <div class="description col-md-6">
+                            <h3>h3</h3>
+                            <p>p</p>
+                            <a class="btn add" href="">Просмотреть</a>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-md-6 product">
+                    <div class="border">
+                        <div class="img-wrapper col-md-6">
+                            <img src="http://via.placeholder.com/250x200" alt="">
+                        </div>
+                        <div class="description col-md-6">
+                            <h3>h3</h3>
+                            <p>p</p>
+                            <a class="btn add" href="">Просмотреть</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
+
     </section>
+
 {% endblock %}

@@ -1835,6 +1835,34 @@ ul.category-tab
       .img-wrapper
         img
           filter: grayscale(100%)
+    .product
+      .border
+        border: 1px solid #ccc
+        overflow: hidden
+        padding: 15px
+      .img-wrapper
+        height: 254px !important
+        margin: 0
+        border: 1px solid #ccc
+        img
+          max-width: 80% !important
+      .description
+        border: 0 !important
+        margin: 0
+        height: 254px !important
+        padding: 15px 0 15px 15px !important
+        h3
+          height: 50px !important
+          margin-bottom: 10px
+        p
+          height: 120px !important
+
+        a
+          position: absolute
+          bottom: 0
+          right: 0
+          padding: 10px 30px !important
+          margin: 0 !important
     .col-md-6
       span
         position: absolute
@@ -1866,7 +1894,7 @@ ul.category-tab
           max-width: 100%
 
       .description
-        padding: 20px
+        padding: 20px 15px 20px 20px
         overflow: hidden
         border: 1px solid #ccc
         h3
@@ -1878,17 +1906,9 @@ ul.category-tab
           height: 40px
           overflow: hidden
         a
-          margin-top: 10px
           float: right
-          padding: 10px 20px
-          border-radius: 50px
-          border: 1px solid #ccc
-          text-decoration: none
-          color: #7d7d7d
-          transition: 0.3s all
-          margin-left: 10px
-          &:hover
-            border-color: transparent
+          margin: 0 !important
+          padding: 10px 30px !important
 
   ul.category-tab
     text-align: center
