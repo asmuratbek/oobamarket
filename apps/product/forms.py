@@ -10,7 +10,7 @@ from .models import Product, ProductImage
 class ProductForm(forms.ModelForm):
     class Meta:
         model = Product
-        exclude = ['slug', 'objects', 'sell_count']
+        exclude = ['slug', 'objects', 'sell_count', 'counter']
 
     removed_images = forms.CharField(required=False)
     uploaded_images = forms.CharField(required=False)
