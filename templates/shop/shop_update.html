@@ -50,10 +50,22 @@
                                     <label>Опубликовать</label>
                                 </div>
 
+
                                 <div class="form-group input">
                                     <button type="button" class="btn btn-primary set-marker-trigger"
                                             data-id="{{ forloop.counter0 }}">Поставить новую метку
                                     </button>
+                                </div>
+
+                                <div class="form-group input col-md-6" style="margin-top: 35px; margin-bottom: 20px;">
+                                    <label class="switch">
+
+                                        {{ form.DELETE|attr:"class:switch__input"|attr:"id:id_piblished" }}
+                                        <div class="switch__toggle">
+                                            <div class="switch__handle"></div>
+                                        </div>
+                                    </label>
+                                    <label>Удалить</label>
                                 </div>
 
                                 <div class="form-group input col-md-12">
@@ -179,6 +191,17 @@
                         </div>
                     </label>
                     <label>Опубликовать</label>
+                </div>
+
+                <div class="form-group input col-md-6" style="margin-top: 35px; margin-bottom: 20px;">
+                    <label class="switch">
+
+                        {{ form.DELETE|attr:"class:switch__input"|attr:"id:id_piblished" }}
+                        <div class="switch__toggle">
+                            <div class="switch__handle"></div>
+                        </div>
+                    </label>
+                    <label>Удалить</label>
                 </div>
 
                 <div class="form-group input">
@@ -310,7 +333,7 @@
             $('#set-marker-modal').modal('show');
             setTimeout(function () {
                 google.maps.event.trigger(map, "resize");
-                if(center !== null) {
+                if (center !== null) {
                     map.setCenter(center);
                 } else {
                     map.setCenter(mapCenter);

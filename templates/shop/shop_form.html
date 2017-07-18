@@ -52,7 +52,20 @@
                                     <label>Опубликовать</label>
                                 </div>
 
-                                <button type="button" class="btn btn-primary set-marker-trigger" data-id="0">Поставить метку</button>
+                                <div class="form-group input col-md-6" style="margin-top: 35px; margin-bottom: 20px;">
+                                    <label class="switch">
+
+                                        {{ form.DELETE|attr:"class:switch__input"|attr:"id:id_piblished" }}
+                                        <div class="switch__toggle">
+                                            <div class="switch__handle"></div>
+                                        </div>
+                                    </label>
+                                    <label>Удалить</label>
+                                </div>
+
+                                <button type="button" class="btn btn-primary set-marker-trigger" data-id="0">Поставить
+                                    метку
+                                </button>
 
                                 <div class="form-group input col-md-12">
                                     <label for="">Время работы</label>
@@ -67,10 +80,11 @@
                                 </div>
 
 
-
                                 {{ formset.management_form }}
 
                             {% endfor %}
+
+
 
                             <div class="form-group input col-md-12">
                                 <label for="">Короткое описание магазина:</label>
@@ -177,7 +191,21 @@
                     <label>Опубликовать</label>
                 </div>
 
-                <button type="button" class="btn btn-primary set-marker-trigger" data-id="__prefix__">Поставить метку</button>
+                <button type="button" class="btn btn-primary set-marker-trigger" data-id="__prefix__">Поставить метку
+                </button>
+
+                <div class="form-group input col-md-6" style="margin-top: 35px; margin-bottom: 20px;">
+                    <label class="switch">
+
+                        {{ form.DELETE|attr:"class:switch__input"|attr:"id:id_piblished" }}
+                        <div class="switch__toggle">
+                            <div class="switch__handle"></div>
+                        </div>
+                    </label>
+                    <label>Удалить</label>
+                </div>
+
+
 
                 <div class="form-group input col-md-12">
                     <label>Время работы</label>
@@ -185,10 +213,6 @@
                 </div>
 
 
-                {#                <div class="form-group input col-md-12">#}
-                {#                    <label for="">Маркер на карте</label>#}
-                {#                    {{ form.location|attr:'class:form-control' }}#}
-                {#                </div>#}
                 {{ form.longitude|attr:"class:form-control"|attr:"type:hidden" }}
                 {{ form.latitude|attr:"class:form-control"|attr:"type:hidden" }}
             {% endwith %}
@@ -237,13 +261,12 @@
             //    map: map
             //});
             let currId = -1;
-            for (let i=0; i < markers.length; ++i) {
+            for (let i = 0; i < markers.length; ++i) {
                 if (markers[i]['id'] === workingIndex) currId = i;
             }
             $('#id_contacts_set-' + workingIndex + '-longitude').val(location['lng']);
             $('#id_contacts_set-' + workingIndex + '-latitude').val(location['lat']);
-            closeMarkerModal();
-            if(markers.length > 0 && currId > -1)
+            if (markers.length > 0 && currId > -1)
                 markers[currId]['data'].setPosition(location);
             else
                 markers.push({'id': workingIndex, 'data': new google.maps.Marker({position: location, map: map})});

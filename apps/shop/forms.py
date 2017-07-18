@@ -56,7 +56,7 @@ class ShopContactInline(ModelForm):
 ShopInlineFormSet = inlineformset_factory(Shop, Contacts, extra=1,
                                           fields=(
                                               'published', 'phone', 'address', 'place', 'work_time', 'latitude',
-                                              'longitude'))
+                                              'longitude'), can_delete=True)
 
 
 class SalesCreateForm(ModelForm):
