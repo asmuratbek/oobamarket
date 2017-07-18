@@ -41,9 +41,9 @@ class Category(MPTTModel, PublishBaseModel):
 
     def __str__(self):
         return self.title
-
-    def get_absolute_url(self):
-        return reverse("categories:detail", kwargs={'slug': self.slug, 'global_slug': self.section.slug})
+    #
+    # def get_absolute_url(self):
+    #     return reverse("categories:detail", kwargs={'slug': self.slug, 'global_slug': self.section.slug})
 
     def is_parent(self):
         return self.get_descendants().exists()

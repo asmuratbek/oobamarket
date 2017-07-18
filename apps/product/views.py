@@ -65,7 +65,8 @@ def product_detail(request, global_slug, category_slug, slug):
     template = "product/product_detail.html"
     context = {
         'review': review,
-        "object": product
+        "object": product,
+        "global_slug": global_slug
     }
     return render(request, template, context)
 

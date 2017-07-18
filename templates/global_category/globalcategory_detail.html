@@ -1,5 +1,5 @@
 {% extends 'base-1.html' %}
-
+{% load staticfiles %}
 
 {% block header %}
     {% include 'layout/header.html' with global_title=object.title %}
@@ -16,11 +16,19 @@
 {% endblock %}
 
 {% block content %}
-    <section class="goods-of-week">
-        <div class="container">
+  <section class="shop-category">
 
-            {% include 'product/product_list.html' with object_list=object.get_products col=3 %}
-        </div>
+                    <div class="goods-of-week search_results">
+                        <div class="container" id="root"></div>
+                    </div>
     </section>
+{% endblock %}
+
+
+{% block js %}
+
+    {{ block.super }}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.1/js/standalone/selectize.min.js"></script>
+    <script src="{% static 'js/category_detail.js' %}"></script>
 
 {% endblock %}

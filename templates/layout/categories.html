@@ -29,7 +29,7 @@
     {% for category in object.get_parent_categories %}
         <ul class="dropdown-menu" id="dropdown-{{ category.id }}" aria-labelledby="dLabel">
             {% for subcategory in category.get_descendants %}
-                <li><a href="{{ subcategory.get_absolute_url }}">{{ subcategory.title }}</a></li>
+                <li><a href="{% url 'categories:detail' global_slug=global_slug slug=subcategory.slug %}">{{ subcategory.title }}</a></li>
             {% endfor %}
         </ul>
     {% endfor %}

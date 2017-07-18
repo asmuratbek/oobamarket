@@ -28,6 +28,11 @@ class IndexView(generic.TemplateView):
 class GlobalDetailView(generic.DetailView):
     model = GlobalCategory
 
+    def get_context_data(self, **kwargs):
+        context = super(GlobalDetailView, self).get_context_data()
+        context['global_slug'] = self.object.slug
+        return context
+
 
 
 def landing(request):
