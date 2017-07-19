@@ -41,7 +41,7 @@
                                 </div>
 
 
-                                <div class="form-group input col-md-6" style="margin-top: 35px; margin-bottom: 20px;">
+                                <div class="form-group input col-md-12" style="margin-top: 10px; margin-bottom: 10px;">
                                     <label class="switch">
 
                                         {{ form.published|attr:"class:switch__input"|attr:"id:id_piblished"|attr:"checked:checked" }}
@@ -52,7 +52,7 @@
                                     <label>Опубликовать</label>
                                 </div>
 
-                                <div class="form-group input col-md-6" style="margin-top: 35px; margin-bottom: 20px;">
+                                <div class="form-group input col-md-12" style="margin-top: 10px; margin-bottom: 20px;">
                                     <label class="switch">
 
                                         {{ form.DELETE|attr:"class:switch__input"|attr:"id:id_piblished" }}
@@ -62,20 +62,22 @@
                                     </label>
                                     <label>Удалить</label>
                                 </div>
+                                <div class="col-md-6">
+                                    <button type="button" class="btn add set-marker-trigger" data-id="0">Поставить
+                                        метку на карте
+                                    </button>
+                                </div>
 
-                                <button type="button" class="btn btn-primary set-marker-trigger" data-id="0">Поставить
-                                    метку
-                                </button>
 
                                 <div class="form-group input col-md-12">
                                     <label for="">Время работы</label>
                                     {{ form.work_time|attr:"rows:6"|attr:'class:form-control' }}
                                 </div>
 
-                                <div class="form-group select col-md-6" style="margin-top: 10px">
+                                <div class="form-group col-md-6">
                                     {{ form.longitude|attr:"class:form-control"|attr:"type:hidden" }}
                                 </div>
-                                <div class="form-group select col-md-6" style="margin-top: 10px">
+                                <div class="form-group col-md-6">
                                     {{ form.latitude|attr:"class:form-control"|attr:"type:hidden" }}
                                 </div>
 
@@ -95,18 +97,8 @@
 
                                 {% render_field form.description|attr:"rows:6" placeholder="Введите полное описание" %}
                             </div>
-                            <div class="inline-appended"></div>
 
 
-                            <div class="form-group col-md-12" style="margin-top: 10px; margin-bottom: 40px">
-                                <p>Если у вас есть филиалы, добавьте их</p><br>
-
-                            </div>
-
-                        </div>
-                        <div class="form-group btn-group-form col-md-12">
-                            <button type="button" id="add-new-contact" class="btn add">Добавить филиал</button>
-                            <button type="submit" class="btn add">Сохранить</button>
                         </div>
 
 
@@ -131,6 +123,24 @@
                             <img id="logo_view" src=""/><span class="remove-logo">X</span></div>
                     </div>
 
+                    <div class="col-md-12" style="padding: 0; background-color: #fff;">
+                        <div class="col-md-8" >
+                            <div class="cover" style="overflow: hidden; padding: 30px 0;">
+                                <div class="inline-appended"></div>
+
+
+                                <div class="form-group col-md-12" style="margin-top: 10px; margin-bottom: 10px">
+                                    <p style="margin: 0;">Если у вас есть филиалы, добавьте их</p><br>
+
+                                </div>
+                                <div class="form-group btn-group-form col-md-12">
+                                    <button type="button" id="add-new-contact" class="btn add">Добавить филиал</button>
+                                    <button type="submit" class="btn add">Сохранить</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </form>
             </div>
         </div>
@@ -142,7 +152,7 @@
             <div class="modal-content">
                 <div class="modal-header">Поставьте маркер на карте</div>
                 <div class="modal-body">
-                    <div id="custom-map" style="width: 898px; height: 500px;"></div>
+                    <div id="custom-map" style="width: 100%; height: 500px;"></div>
                 </div>
             </div>
         </div>
@@ -181,7 +191,7 @@
                     {{ form.place|attr:"class:form-control" }}
                 </div>
 
-                <div class="form-group input col-md-6" style="margin-top: 35px; margin-bottom: 0;">
+                <div class="form-group input col-md-12" style="margin-top: 10px; margin-bottom: 10px;">
                     <label class="switch">
                         {{ form.published|attr:"class:switch__input"|attr:"id:id_piblished"|attr:"checked:checked" }}
                         <div class="switch__toggle">
@@ -191,10 +201,9 @@
                     <label>Опубликовать</label>
                 </div>
 
-                <button type="button" class="btn btn-primary set-marker-trigger" data-id="__prefix__">Поставить метку
-                </button>
 
-                <div class="form-group input col-md-6" style="margin-top: 35px; margin-bottom: 20px;">
+
+                <div class="form-group input col-md-12" style="margin-top: 10px; margin-bottom: 20px;">
                     <label class="switch">
 
                         {{ form.DELETE|attr:"class:switch__input"|attr:"id:id_piblished" }}
@@ -204,7 +213,11 @@
                     </label>
                     <label>Удалить</label>
                 </div>
-
+                <div class="col-md-6">
+                    <button type="button" class="add btn set-marker-trigger" data-id="__prefix__">Поставить метку на
+                        карте
+                    </button>
+                </div>
 
 
                 <div class="form-group input col-md-12">
