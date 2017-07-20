@@ -7,7 +7,7 @@
                 <option>------------</option>-->
                 {% for value in property.values_set.all %}
                     <!--<option value="{{ value.id }}">{{ value }}</option>-->
-                    <input type="checkbox" value="{{ value }}">
+                    <input type="checkbox" value="{{ value }}" name="val-{{ value.id }}">
                     <label>{{ value }}</label>
                 {% endfor %}
             <!--</select>-->
