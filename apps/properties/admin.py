@@ -6,7 +6,7 @@ from django.utils.html import mark_safe
 
 class PropertiesAdmin(admin.ModelAdmin):
     list_display = ('id', 'title', 'get_categories', 'slug', 'parent')
-    search_fields = ('title', 'slug')
+    search_fields = ('title', 'slug', 'values__value')
 
     def get_categories(self, obj):
         return ", ".join([c.title for c in obj.category.all()])
@@ -16,7 +16,7 @@ admin.site.register(Properties, PropertiesAdmin)
 
 class ValuesAdmin(admin.ModelAdmin):
     list_display = ('id', 'value', 'get_property', 'property_slug', 'get_products')
-    search_fields = ('value',)
+    search_fields = ('value', 'properties__title')
 
     def get_products(self, obj):
         return mark_safe(

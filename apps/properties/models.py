@@ -38,3 +38,6 @@ class Values(Ordering):
 
     def __str__(self):
         return self.value
+
+    def get_property_title(self):
+        return str(self.properties.title)
