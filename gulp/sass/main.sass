@@ -2754,7 +2754,7 @@ ul.category-tab
   .inline-appended
     overflow: hidden
     float: left
-.add-product, .edit-shop-detail, .sing-out
+.add-product, .edit-shop-detail, .sing-out, .user_update
   .step_1, .step_2, .step_3, .step_4
     margin-bottom: 50px
     overflow: hidden
@@ -3285,48 +3285,60 @@ form.add_email
     border-color: #eee
     &:focus
       border-color: #f3481c
-.user-detail
-  text-align: center
-  .container
-    background-color: #fff
-    padding: 50px 15px 300px 15px
-  h1
-    font-weight: 300
-    margin-bottom: 15px
-  h2
-    font-weight: 300
-
-    text-transform: capitalize
-    margin: 40px 0 15px 0
-  p
-    font-weight: 300
-    margin-bottom: 5px
-  a
-    display: inline-block
-    padding: 9px 60px
-    -webkit-border-radius: 4px
-    border-radius: 4px
-    height: 40px
-    margin: 0 10px
-    color: #fff!important
-    background-color: #f3481c
-    &:hover
-      background-color: #d03e19
+//.user-detail
+//  .container
+//    background-color: #fff
+//    padding: 50px 15px 300px 15px
+//  h1
+//    font-weight: 300
+//    margin-bottom: 15px
+//    text-align: left
+//  h2
+//    font-weight: 300
+//
+//    text-transform: capitalize
+//    margin: 40px 0 15px 0
+//  p
+//    font-weight: 300
+//    margin-bottom: 5px
+//  a
+//    display: inline-block
+//    padding: 9px 60px
+//    -webkit-border-radius: 4px
+//    border-radius: 4px
+//    height: 40px
+//    margin: 0 10px
+//    color: #fff!important
+//    background-color: #f3481c
+//    &:hover
+//      background-color: #d03e19
 .user_update
   .container
     background-color: #fff
     padding: 50px 15px 300px 15px
-    text-align: center
+  h3
+    font-size: 18px
+    font-weight: 500
+    margin-bottom: 30px
   h2
     font-weight: 300
     text-transform: capitalize
     margin-bottom: 30px
+    text-align: left
+  p
+    color: #828282
+    margin-bottom: 30px
+    font-size: 14px
+
   form
-    width: 40%
-    margin: 0 auto
+
+    label
+      font-weight: 400
+      display: block
     input
       border-radius: 0
       border-color: #eee
+      height: 40px
       &:focus
         border-color: #f3481c
     button
@@ -3341,6 +3353,29 @@ form.add_email
       &:hover
         background-color: #d03e19
         color: #fff
+  .info-user
+    margin-bottom: 100px
+    margin-top: 50px
+    .col-md-1
+      padding: 7px
+      text-align: center
+      cursor: pointer
+      font-weight: 400
+      span
+        color: #f3481c
+    .col-md-3
+      padding: 7px 15px
+    input
+      border-color: transparent
+      transition: 0.3s all
+    input:focus
+      border-color: #555
+  .add-email
+    .btn.add
+      margin-left: 0 !important
+      padding: 9px 25px
+    input:focus
+      border-color: #555
 .add-banner
   .container
     background-color: #fff
