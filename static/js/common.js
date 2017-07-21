@@ -430,7 +430,7 @@ $(document).ready(function () {
     });
 
     $(".btn-toggle-day").click(function () {
-        $(".toggle-days").slideToggle("100");
+        $("#toggle-days-1").slideToggle("100");
     });
 
     $(".filter-clone .btn-toggle-setting").click(function () {

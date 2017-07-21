@@ -42,17 +42,15 @@
                                 <div class="clearfix"></div>
 
                                 <div class="form-group col-md-6 btn-toggle-day">
-
                                     <a class="add btn btn-toggle-day-time">Указать время работы</a>
                                 </div>
 
-                                <div class="col-md-12 toggle-days"
-                                     style="padding: 0; display: none; margin-bottom: 30px;">
-
+                                <div class="col-md-12 toggle-days" id="toggle-days-1">
+                                    <i>Оставьте поле пустым если выходной день</i>
                                     <div class="form-group input col-md-6">
                                         <label for="">Понидельник</label>
                                         {{ form.monday|attr:"class:form-control"|attr:"placeholder:с 9:00 до 18:00" }}
-                                        <i>Оставьте поле пустым если выходной день</i>
+
                                     </div>
                                     <div class="clearfix"></div>
                                     <div class="form-group input col-md-6">
@@ -84,8 +82,6 @@
                                         <label for="">Воскресенье</label>
                                         {{ form.sunday|attr:"class:form-control"|attr:"placeholder:с 9:00 до 18:00" }}
                                     </div>
-
-
                                 </div>
 
 
@@ -237,13 +233,12 @@
                     <label for="">Расположение вашего магазина</label>
                     {{ form.place|attr:"class:form-control" }}
                 </div>
-
-                <div class="form-group col-md-6 btn-toggle-day" >
+                <div class="clearfix"></div>
+                <div class="form-group col-md-6 btn-toggle-day">
                     <a class="add btn btn-toggle-day-time">Указать время работы</a>
                 </div>
 
-                <div class="col-md-12 toggle-days"
-                     style="padding: 0; display: none; margin-bottom: 30px;">
+                <div class="col-md-12 toggle-days" id="toggle-days-1">
 
                     <div class="form-group input col-md-6">
                         <label for="">Понидельник</label>
