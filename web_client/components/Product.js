@@ -226,7 +226,7 @@ var ProductList = createClass({
     }
     return (
 
-        <div className="col-md-3 col-sm-6">
+        <div className="col-md-4 col-sm-6">
         <AlertContainer ref={a => this.msg = a} {...alertOptions} />
           <div className={this.props.product.published ? "cover" : "cover active"}>
               <a className="url-item" href={this.props.product.detail_view}></a>
@@ -268,11 +268,12 @@ var ProductList = createClass({
               <div className="bottom-line">
                   {this.isInCart(this.props.product)}
                   {this.deliveryColor(this.props.product)}
-                  <span className={`hearth pull-right ${this.props.product.is_favorite && `like`}`} data-product-id={this.props.product.id} onClick={this.AddOrRemoveFavorite}><i data-message={this.props.product.is_favorite ? "Товар удален из избранных" : "Товар добавлен в избранное"} className="glyphicon glyphicon-heart"></i></span>
+                  <span className={`hearth pull-right ${this.props.product.is_favorite && `like`}`} data-toggle="tooltip" title="" data-placement="top" data-original-title="Добавить в избранное" data-product-id={this.props.product.id} onClick={this.AddOrRemoveFavorite}><i data-message={this.props.product.is_favorite ? "Товар удален из избранных" : "Товар добавлен в избранное"} className="glyphicon glyphicon-heart"></i></span>
 
               </div>
           </div>
       </div>
+
     )
   }
 });

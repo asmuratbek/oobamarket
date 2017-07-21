@@ -429,6 +429,10 @@ $(document).ready(function () {
         $(this).toggleClass("active");
     });
 
+    $(".btn-toggle-setting").click(function () {
+        $(".toggle-setting").slideToggle("100");
+    });
+
     $.fn.hasAttr = function (value) {
         return this.attr(value) !== undefined;
     };

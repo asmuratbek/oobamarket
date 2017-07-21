@@ -559,6 +559,114 @@ header
         transform: rotateY(360deg)
 .goods-of-week
   margin-bottom: 40px
+  .item-filter
+    width: 75%
+    float: left
+  .catalog-filter
+    width: 25%
+    float: left
+    h4
+      text-align: center
+      margin-bottom: 20px
+      font-size: 30px
+      font-weight: 300
+    a.btn-toggle-setting
+      display: inline-block
+      text-transform: capitalize
+      background-color: #fff
+      width: 100%
+      text-align: left
+      border: 1px solid #eee
+      color: #a9a9a9
+      padding: 10px
+      cursor: pointer
+      position: relative
+      &:after
+        position: absolute
+        content: ''
+        width: 1px
+        height: 100%
+        top: 0
+        right: 40px
+        bottom: 0
+        background-color: #eee
+      &:before
+        position: absolute
+        content: ''
+        right: 15px
+        top: 13px
+        width: 10px
+        height: 13px
+        background: url(../img/png/arrow0.png) 0 0 no-repeat
+        -webkit-transform: rotate(-90deg)
+        -ms-transform: rotate(-90deg)
+        transform: rotate(-90deg)
+        background-size: 35px
+    .toggle-setting
+      background-color: #fff
+      padding: 10px 0
+      overflow: hidden
+      border: 1px solid #eee
+      border-top: 0
+      .form-group.checkbox
+        display: block
+        width: 100%
+        margin: 0 !important
+        .cover
+            padding: 10px
+            transition: 0.3s all
+        .cover:hover
+          background-color: #ccc
+        .form-custom-checkbox
+          margin: 0 !important
+
+    input[type=checkbox]
+      display: none
+    .indicator
+      float: left
+      margin-right: 10px
+      width: 20px
+      height: 20px
+
+      border: 1px solid #ccc
+      position: relative
+      background-color: #fff
+      &:before
+        position: absolute
+        top: 4px
+        left: 4px
+        width: 10px
+        height: 10px
+
+        background-color: #F3481C
+        opacity: 0
+        content: ''
+        transition: 0.3s all
+    label
+      cursor: pointer
+    input[type=checkbox]:checked + .indicator:before
+      opacity: 1
+    .toggle-setting
+      display: none
+    .form-custom-checkbox
+      margin-bottom: 5px
+      position: relative
+      overflow: hidden
+    .name_setting
+      position: absolute
+      top: 0
+      left: 0
+      padding-left: 30px !important
+      z-index: 10
+      right: 0
+      text-transform: capitalize
+    label.title
+      margin-bottom: 10px
+      display: block
+      text-transform: capitalize
+      padding-left: 0
+      font-size: 18px
+
   .all-goods
     text-align: center
     margin-top: 20px
@@ -2210,11 +2318,13 @@ ul.category-tab
             width: 129px
         .form-group.input.end
           width: 190px
+
           label
             margin-left: 11px
             margin-right: 2px
           input
             width: 145px
+            border-radius: 0 !important
         .form-group.search
           width: 190px
           position: relative
@@ -2620,7 +2730,7 @@ ul.category-tab
           display: inline-block
           margin-right: 10px
       input
-        border-radius: 0
+        border-radius: 0 !important
         box-shadow: none!important
         width: 129px
     .form-group.input.end
@@ -2752,6 +2862,8 @@ ul.category-tab
     right: 0
   label.title
     margin-bottom: 10px
+    display: block
+
 .edit-shop-detail
   padding-bottom: 100px
   .set-marker-trigger
