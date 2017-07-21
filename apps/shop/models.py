@@ -102,10 +102,6 @@ class Banners(models.Model):
         return self.title
 
 
-
-
-
-
 class Contacts(PublishBaseModel):
     class Meta:
         verbose_name = 'Контакт'
@@ -115,11 +111,15 @@ class Contacts(PublishBaseModel):
     phone = models.CharField(max_length=255, verbose_name='Телефон', null=True, blank=True)
     shop = models.ForeignKey(Shop, verbose_name='Магазин', null=True)
     place = models.ForeignKey('Place', verbose_name='Торговая точка', null=True, blank=True)
-    work_time = models.TextField(verbose_name='График работы', null=True, blank=True)
     latitude = models.CharField(max_length=255, verbose_name='Широта', null=True, blank=True)
     longitude = models.CharField(max_length=255, verbose_name='Долгота', null=True, blank=True)
-
-
+    monday = models.CharField(max_length=255, verbose_name='Понедельник', null=True, blank=True)
+    tuesday = models.CharField(max_length=255, verbose_name='Понедельник', null=True, blank=True)
+    wednesday = models.CharField(max_length=255, verbose_name='Понедельник', null=True, blank=True)
+    thursday = models.CharField(max_length=255, verbose_name='Понедельник', null=True, blank=True)
+    friday = models.CharField(max_length=255, verbose_name='Понедельник', null=True, blank=True)
+    saturday = models.CharField(max_length=255, verbose_name='Понедельник', null=True, blank=True)
+    sunday = models.CharField(max_length=255, verbose_name='Понедельник', null=True, blank=True)
 
     def __str__(self):
         return "{} - {}".format(self.address, self.shop)

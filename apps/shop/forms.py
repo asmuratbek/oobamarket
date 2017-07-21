@@ -20,7 +20,6 @@ class ShopForm(ModelForm):
                 'class': 'form-control'
             })
 
-
     def clean_logo(self):
         logo = self.cleaned_data['logo']
         if not logo:
@@ -55,8 +54,9 @@ class ShopContactInline(ModelForm):
 
 ShopInlineFormSet = inlineformset_factory(Shop, Contacts, extra=1,
                                           fields=(
-                                              'published', 'phone', 'address', 'place', 'work_time', 'latitude',
-                                              'longitude'), can_delete=True)
+                                              'published', 'phone', 'address', 'place', 'latitude',
+                                              'longitude', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday',
+                                              'saturday', 'sunday'), can_delete=True)
 
 
 class SalesCreateForm(ModelForm):

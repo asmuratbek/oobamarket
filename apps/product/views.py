@@ -92,7 +92,7 @@ def add_product_review(request, slug):
             return JsonResponse({
                 'success': False,
                 'message': 'Review is already exist',
-                'url': reverse('product:update_review', kwargs={'slug': slug, 'pk': exists_review.first().id})
+                'url': reverse('product:update_review', kwargs={'slug': slug, 'pk': exists_review.first().id}),
             })
 
     return JsonResponse(dict(success=False, message='Request is not AJAX!'))

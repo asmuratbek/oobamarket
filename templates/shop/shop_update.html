@@ -295,21 +295,38 @@
 
 
         function addMarker(_location) {
-            //let marker = new google.maps.Marker({
-            //    position: markers[j]['data'],
-            //    map: map
-            //});
             let currId = -1;
             for (let i = 0; i < markers.length; ++i) {
                 if (markers[i]['id'] === workingIndex) currId = i;
             }
+
             $('#id_contacts_set-' + workingIndex + '-longitude').val(_location['lng']);
             $('#id_contacts_set-' + workingIndex + '-latitude').val(_location['lat']);
+            let marker = new google.maps.Marker({
+                position: _location,
+                input_id: workingIndex
+            });
             if (markers.length > 0 && currId > -1)
                 markers[currId]['data'].setPosition(_location);
             else
-                markers.push({'id': workingIndex, 'data': new google.maps.Marker({position: _location, map: map})});
-            //deleteMarkers();
+                marker.setMap(map);
+                markers.push({
+                    'id': workingIndex,
+                    'data': marker
+                });
+
+            marker.addListener('click', function () {
+                console.log('Clicked on marker...');
+                removeMarker(marker);
+            });
+        }
+
+        function removeMarker(marker) {
+            console.log(marker);
+            marker.setMap(null);
+            markers.splice(markers.indexOf(marker.input_id), 1);
+            $('#id_contacts_set-' + marker.input_id + '-longitude').val('');
+            $('#id_contacts_set-' + marker.input_id + '-latitude').val('');
         }
 
         // Sets the map on all markers in the array.

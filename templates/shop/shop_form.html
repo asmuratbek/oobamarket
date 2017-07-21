@@ -46,35 +46,44 @@
                                     <a class="add btn btn-toggle-day-time">Указать время работы</a>
                                 </div>
 
-                                <div class="col-md-12 toggle-days" style="padding: 0; display: none; margin-bottom: 30px;">
+                                <div class="col-md-12 toggle-days"
+                                     style="padding: 0; display: none; margin-bottom: 30px;">
 
                                     <div class="form-group input col-md-6">
-                                        <label for="" style="
-                                        float: left;
-                                        line-height: 30px;
-                                        width: 30%;
-                                        margin: 0 10px 0 0;">Понидельник</label>
-                                        <input type="text" class="form-control" style="width: 67%;float: left;">
+                                        <label for="">Понидельник</label>
+                                        {{ form.monday|attr:"class:form-control"|attr:"placeholder:с 9:00 до 18:00"}}
+                                         <i>Оставьте поле пустым если выходной день</i>
                                     </div>
                                     <div class="clearfix"></div>
                                     <div class="form-group input col-md-6">
-                                        <label for="" style="
-                                        float: left;
-                                        line-height: 30px;
-                                        width: 30%;
-                                        margin: 0 10px 0 0;">Вторник</label>
-                                        <input type="text" class="form-control" style="width: 67%;float: left;">
+                                        <label for="">Вторник</label>
+                                        {{ form.tuesday|attr:"class:form-control"|attr:"placeholder:с 9:00 до 18:00" }}
                                     </div>
-                                   <div class="clearfix"></div>
+                                    <div class="clearfix"></div>
                                     <div class="form-group input col-md-6">
-                                        <label for="" style="
-                                        float: left;
-                                        line-height: 30px;
-                                        width: 30%;
-                                        margin: 0 10px 0 0;">Среда</label>
-                                        <input type="text" class="form-control" style="width: 67%;float: left;">
+                                        <label for="">Среда</label>
+                                        {{ form.wednesday|attr:"class:form-control"|attr:"placeholder:с 9:00 до 18:00" }}
                                     </div>
-
+                                    <div class="clearfix"></div>
+                                    <div class="form-group input col-md-6">
+                                        <label for="">Четверг</label>
+                                        {{ form.thursday|attr:"class:form-control"|attr:"placeholder:с 9:00 до 18:00" }}
+                                    </div>
+                                    <div class="clearfix"></div>
+                                    <div class="form-group input col-md-6">
+                                        <label for="">Пятница</label>
+                                        {{ form.friday|attr:"class:form-control"|attr:"placeholder:с 9:00 до 18:00" }}
+                                    </div>
+                                    <div class="clearfix"></div>
+                                    <div class="form-group input col-md-6">
+                                        <label for="">Суббота</label>
+                                        {{ form.saturday|attr:"class:form-control"|attr:"placeholder:с 9:00 до 18:00" }}
+                                    </div>
+                                    <div class="clearfix"></div>
+                                    <div class="form-group input col-md-6">
+                                        <label for="">Воскресенье</label>
+                                        {{ form.sunday|attr:"class:form-control"|attr:"placeholder:с 9:00 до 18:00" }}
+                                    </div>
 
 
                                 </div>
@@ -108,11 +117,6 @@
                                     </button>
                                 </div>
 
-
-                                <div class="form-group input col-md-12">
-                                    <label for="">Время работы</label>
-                                    {{ form.work_time|attr:"rows:6"|attr:'class:form-control' }}
-                                </div>
 
                                 <div class="form-group col-md-6">
                                     {{ form.longitude|attr:"class:form-control"|attr:"type:hidden" }}
@@ -234,6 +238,48 @@
                     {{ form.place|attr:"class:form-control" }}
                 </div>
 
+                <div class="col-md-12 toggle-days"
+                     style="padding: 0; display: none; margin-bottom: 30px;">
+
+                    <div class="form-group input col-md-6">
+                        <label for="">Понидельник</label>
+                        {{ form.monday|attr:"class:form-control"|attr:"placeholder:с 9:00 до 18:00" }}
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="form-group input col-md-6">
+                        <label for="">Вторник</label>
+                        {{ form.tuesday|attr:"class:form-control"|attr:"placeholder:с 9:00 до 18:00" }}
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="form-group input col-md-6">
+                        <label for="">Среда</label>
+                        {{ form.wednesday|attr:"class:form-control"|attr:"placeholder:с 9:00 до 18:00" }}
+
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="form-group input col-md-6">
+                        <label for="">Четверг</label>
+                        {{ form.thursday|attr:"class:form-control"|attr:"placeholder:с 9:00 до 18:00" }}
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="form-group input col-md-6">
+                        <label for="">Пятница</label>
+                        {{ form.friday|attr:"class:form-control"|attr:"placeholder:с 9:00 до 18:00" }}
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="form-group input col-md-6">
+                        <label for="">Суббота</label>
+                        {{ form.saturday|attr:"class:form-control"|attr:"placeholder:с 9:00 до 18:00" }}
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="form-group input col-md-6">
+                        <label for="">Воскресенье</label>
+                        {{ form.sunday|attr:"class:form-control"|attr:"placeholder:с 9:00 до 18:00" }}
+                    </div>
+
+
+                </div>
+
                 <div class="form-group input col-md-12" style="margin-top: 10px; margin-bottom: 10px;">
                     <label class="switch">
                         {{ form.published|attr:"class:switch__input"|attr:"id:id_piblished"|attr:"checked:checked" }}
@@ -263,10 +309,7 @@
                 </div>
 
 
-                <div class="form-group input col-md-12">
-                    <label>Время работы</label>
-                    {{ form.work_time|attr:"rows:6"|attr:'class:form-control' }}
-                </div>
+
 
 
                 {{ form.longitude|attr:"class:form-control"|attr:"type:hidden" }}
@@ -311,22 +354,37 @@
             // Adds a marker at the center of the map.
         }
 
-        function addMarker(location) {
-            //let marker = new google.maps.Marker({
-            //    position: markers[j]['data'],
-            //    map: map
-            //});
+        function addMarker(_location) {
             let currId = -1;
             for (let i = 0; i < markers.length; ++i) {
                 if (markers[i]['id'] === workingIndex) currId = i;
             }
-            $('#id_contacts_set-' + workingIndex + '-longitude').val(location['lng']);
-            $('#id_contacts_set-' + workingIndex + '-latitude').val(location['lat']);
+
+            $('#id_contacts_set-' + workingIndex + '-longitude').val(_location['lng']);
+            $('#id_contacts_set-' + workingIndex + '-latitude').val(_location['lat']);
+            let marker = new google.maps.Marker({
+                position: _location,
+                input_id: workingIndex
+            });
             if (markers.length > 0 && currId > -1)
-                markers[currId]['data'].setPosition(location);
+                markers[currId]['data'].setPosition(_location);
             else
-                markers.push({'id': workingIndex, 'data': new google.maps.Marker({position: location, map: map})});
-            //deleteMarkers();
+                marker.setMap(map);
+            markers.push({
+                'id': workingIndex,
+                'data': marker
+            });
+
+            marker.addListener('click', function () {
+                removeMarker(marker);
+            });
+        }
+
+        function removeMarker(marker) {
+            marker.setMap(null);
+            markers.splice(markers.indexOf(marker.input_id), 1);
+            $('#id_contacts_set-' + marker.input_id + '-longitude').val('');
+            $('#id_contacts_set-' + marker.input_id + '-latitude').val('');
         }
 
         // Sets the map on all markers in the array.
