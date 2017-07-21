@@ -2713,6 +2713,45 @@ ul.category-tab
           -ms-transform: rotate(-90deg)
           transform: rotate(-90deg)
           background-size: 35px
+  input[type=checkbox]
+    display: none
+  .indicator
+    float: left
+    margin-right: 10px
+    width: 20px
+    height: 20px
+
+    border: 1px solid #ccc
+    position: relative
+    background-color: #fff
+    &:before
+      position: absolute
+      top: 4px
+      left: 4px
+      width: 10px
+      height: 10px
+
+      background-color: #F3481C
+      opacity: 0
+      content: ''
+      transition: 0.3s all
+  label
+    cursor: pointer
+  input[type=checkbox]:checked + .indicator:before
+    opacity: 1
+  .form-custom-checkbox
+    margin-bottom: 5px
+    position: relative
+    overflow: hidden
+  .name_setting
+    position: absolute
+    top: 0
+    left: 0
+    padding-left: 30px !important
+    z-index: 10
+    right: 0
+  label.title
+    margin-bottom: 10px
 .edit-shop-detail
   padding-bottom: 100px
   .set-marker-trigger

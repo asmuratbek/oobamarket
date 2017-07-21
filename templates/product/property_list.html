@@ -1,15 +1,19 @@
 {% for property in properties %}
-    <div class="form-group select">
+    <div class="form-group checkbox col-md-12">
 
-        <label>{{ property.title }}</label>
-        <div class="cover">
+        <label class="title">{{ property.title }}</label>
+        <div class="cover col-md-6">
             <!--<select class="form-control" id="subcategory_list" name="property-{{ property.id }}">
                 <option>------------</option>-->
-                {% for value in property.values_set.all %}
-                    <!--<option value="{{ value.id }}">{{ value }}</option>-->
-                    <input type="checkbox" value="{{ value }}" name="val-{{ value.id }}">
-                    <label>{{ value }}</label>
-                {% endfor %}
+            {% for value in property.values_set.all %}
+                <!--<option value="{{ value.id }}">{{ value }}</option>-->
+                <div class="form-custom-checkbox">
+                    <label class="name_setting" for="{{ value.id }}">{{ value }}</label>
+                    <input type="checkbox" value="{{ value }}" name="val-{{ value.id }}" id="{{ value.id }}">
+                    <div class="indicator"></div>
+                </div>
+
+            {% endfor %}
             <!--</select>-->
         </div>
 
