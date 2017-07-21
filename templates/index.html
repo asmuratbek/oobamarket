@@ -35,6 +35,11 @@
                         <a href="{% url 'landing' %}" class="magazin-btn btn"><span
                                 class="glyphicon glyphicon-star"></span> Для магазинов</a>
 
+
+                        <a href="{% url 'sub_list' %}" class="magazin-btn btn"><span class="fa fa-newspaper-o" aria-hidden="true"></span> Лента</a>
+
+
+
                         {% if user.is_authenticated %}
                             <a href="{{ user.get_favorites_link }}" class="favorites btn"><span
                                     class="glyphicon glyphicon-heart"></span> Избранные (<span
