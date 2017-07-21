@@ -153,6 +153,9 @@ class ProductCreateView(LoginRequiredMixin, AddProductMixin, CreateView):
             if key.startswith('val'):
                 value = get_object_or_404(Values, id=int(key[4:]))
                 value.products.add(product)
+            elif key.startswith('property') and '---' not in value:
+                value = get_object_or_404(Values, id=int(value))
+                value.products.add(product)
         if form.cleaned_data['uploaded_images']:
             if ',' in form.cleaned_data['uploaded_images']:
                 for item in form.cleaned_data['uploaded_images'].split(','):

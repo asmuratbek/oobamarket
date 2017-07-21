@@ -3,18 +3,41 @@
 
         <label class="title">{{ property.title }}</label>
         <div class="cover col-md-6">
-            <!--<select class="form-control" id="subcategory_list" name="property-{{ property.id }}">
-                <option>------------</option>-->
-            {% for value in property.values_set.all %}
-                <!--<option value="{{ value.id }}">{{ value }}</option>-->
+
+            {% if property.title == 'Цвет' or property.title == 'Размер' %}
+                {% for value in property.values_set.all %}
+                    {% if forloop.counter == 15 or forloop.counter == 30 %}
+                        </div>
+                    <div class="cover col-md-6">
+                    {% endif %}
+                        <div class="form-custom-checkbox">
+                            <label class="name_setting" for="{{ value.id }}">{{ value }}</label>
+                            <input type="checkbox" value="{{ value }}" name="val-{{ value.id }}" id="{{ value.id }}">
+                            <div class="indicator"></div>
+                        </div>
+                    {% endfor %}
+                    {% if property.values_set.all.count >= 30 %}
+                        </div>
+                        </div>
+                    {% elif property.values_set.all.count >= 11 %}
+                        </div>
+                    {% endif %}
+                {% else %}
+
+
+
                 <div class="form-custom-checkbox">
-                    <label class="name_setting" for="{{ value.id }}">{{ value }}</label>
-                    <input type="checkbox" value="{{ value }}" name="val-{{ value.id }}" id="{{ value.id }}">
-                    <div class="indicator"></div>
+                    <select class="form-control" id="subcategory_list" name="property-{{ property.id }}">
+                        <option>------------</option>
+                    {% for value in property.values_set.all %}
+                        <option value="{{ value.id }}">{{ value }}</option>
+                        {% endfor %}
+                    </select>
                 </div>
 
-            {% endfor %}
-            <!--</select>-->
+
+            {% endif %}
+
         </div>
 
     </div>
