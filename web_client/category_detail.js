@@ -241,31 +241,65 @@ var MainInterface = createClass({
 
                 <div className="catalog-filter">
                     <h4>Параметры</h4>
-                    <a className="btn-toggle-setting">
-                        Производитель
-                    </a>
-                    <div className="toggle-setting">
-                        <div className="form-group checkbox">
+                    <div className="filter-clone">
+                        <a className="btn-toggle-setting">
+                            Производитель
+                        </a>
+                        <div className="toggle-setting" id="toggle-setting-1">
+                            <div className="form-group checkbox">
 
-                            <div className="cover">
-                                <div className="form-custom-checkbox">
-                                    <label className="name_setting" htmlFor="slug1">Название настроек</label>
-                                    <input type="checkbox" value="" name="" id="slug1"></input>
-                                    <div className="indicator"></div>
+                                <div className="cover">
+                                    <div className="form-custom-checkbox">
+                                        <label className="name_setting" htmlFor="slug1">Название настроек</label>
+                                        <input type="checkbox" value="" name="" id="slug1"></input>
+                                        <div className="indicator"></div>
+                                    </div>
+                                </div>
+                                <div className="cover">
+                                    <div className="form-custom-checkbox">
+                                        <label className="name_setting" htmlFor="slug2">Название настроек</label>
+                                        <input type="checkbox" value="" name="" id="slug2"></input>
+                                        <div className="indicator"></div>
+                                    </div>
+                                </div>
+                                <div className="cover">
+                                    <div className="form-custom-checkbox">
+                                        <label className="name_setting" htmlFor="slug3">Название настроек</label>
+                                        <input type="checkbox" value="" name="" id="slug3"></input>
+                                        <div className="indicator"></div>
+                                    </div>
                                 </div>
                             </div>
-                            <div className="cover">
-                                <div className="form-custom-checkbox">
-                                    <label className="name_setting" htmlFor="slug2">Название настроек</label>
-                                    <input type="checkbox" value="" name="" id="slug2"></input>
-                                    <div className="indicator"></div>
+                        </div>
+                    </div>
+
+                    <div className="filter-clone" id="toggle-setting-2">
+                        <a className="btn-toggle-setting">
+                            Производитель
+                        </a>
+                        <div className="toggle-setting">
+                            <div className="form-group checkbox">
+
+                                <div className="cover">
+                                    <div className="form-custom-checkbox">
+                                        <label className="name_setting" htmlFor="slug1">Название настроек</label>
+                                        <input type="checkbox" value="" name="" id="slug1"></input>
+                                        <div className="indicator"></div>
+                                    </div>
                                 </div>
-                            </div>
-                            <div className="cover">
-                                <div className="form-custom-checkbox">
-                                    <label className="name_setting" htmlFor="slug3">Название настроек</label>
-                                    <input type="checkbox" value="" name="" id="slug3"></input>
-                                    <div className="indicator"></div>
+                                <div className="cover">
+                                    <div className="form-custom-checkbox">
+                                        <label className="name_setting" htmlFor="slug2">Название настроек</label>
+                                        <input type="checkbox" value="" name="" id="slug2"></input>
+                                        <div className="indicator"></div>
+                                    </div>
+                                </div>
+                                <div className="cover">
+                                    <div className="form-custom-checkbox">
+                                        <label className="name_setting" htmlFor="slug3">Название настроек</label>
+                                        <input type="checkbox" value="" name="" id="slug3"></input>
+                                        <div className="indicator"></div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

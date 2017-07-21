@@ -429,8 +429,8 @@ $(document).ready(function () {
         $(this).toggleClass("active");
     });
 
-    $(".btn-toggle-setting").click(function () {
-        $(".toggle-setting").slideToggle("100");
+    $(".filter-clone .btn-toggle-setting").click(function () {
+        $("#toggle-setting-1").slideToggle("100");
     });
 
     $.fn.hasAttr = function (value) {
