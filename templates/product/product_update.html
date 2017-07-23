@@ -5,12 +5,11 @@
 {% block categories %}
 {% endblock %}
 {% block content %}
-    <h1>{{ object.slug }}</h1>
 
     <section class="add-product">
         <div class="container">
             <div class="form-filter">
-                <form class="form-inline" action="{% url 'product:update_product' slug=product.slug %}" method="post"
+                <form class="form-inline" action="{% url 'product:update_product' slug=object.slug %}" method="post"
                       enctype="multipart/form-data" data-media-upload-url="{% url 'product:upload_images' %}"
                       data-remove-uploaded-media-url="{% url 'product:remove_images' %}" id="form">
                     {% csrf_token %}
@@ -234,9 +233,9 @@
                             <br>
                             <span id="file-counter" style="color: red;"></span>
                         </div>
-                        <input class="hidden" type="file" id="uploading-images" name="image" style="display: none;" multiple
+                        <input class="hidden" type="file" data-product-slug="{{ object.slug }}" id="uploading-images" name="image" style="display: none;" multiple
                         data-url="{% url 'product:upload_product_images' slug=object.slug %}"
-                        data-form-data='{"csrfmiddlewaretoken": "{{ csrf_token }}"}'/>
+                        data-form-data='{"csrfmiddlewaretoken": "{{ csrf_token }}"}' >
 {#                        {% render_field form.image %}#}
 {#                        {% render_field form.removed_images type='hidden' %}#}
 {#                        {% render_field form.uploaded_images type='hidden' %}#}
