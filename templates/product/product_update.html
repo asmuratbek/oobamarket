@@ -5,11 +5,12 @@
 {% block categories %}
 {% endblock %}
 {% block content %}
+    <h1>{{ object.slug }}</h1>
 
     <section class="add-product">
         <div class="container">
             <div class="form-filter">
-                <form class="form-inline" action="{% url 'product:update_product' slug=object.slug %}" method="post"
+                <form class="form-inline" action="{% url 'product:update_product' slug=product.slug %}" method="post"
                       enctype="multipart/form-data" data-media-upload-url="{% url 'product:upload_images' %}"
                       data-remove-uploaded-media-url="{% url 'product:remove_images' %}" id="form">
                     {% csrf_token %}
@@ -134,22 +135,50 @@
                         <div class="step_3">
                             <h3><span>3.</span> Параметры товара</h3>
                             <div class="form-group select col-md-6" id="property_list">
-                                {% for prop in props %}
-                                    <div class="form-group select">
+                                {% for property in props %}
+                                <div class="form-group checkbox col-md-12">
 
-                                        <label>{{ prop.title }}</label>
-                                        <div class="cover">
-                                            <select class="form-control" id="subcategory_list" name="property-{{ prop.id }}">
-                                                <option>------------</option>
-                                                {% for val in prop.values_set.all %}
-                                                    <option value="{{ val.id }}" {% if val.id in values %}selected{% endif %}>{{ val }}</option>
+                                    <label class="title">{{ property.title }}</label>
+                                    <div class="cover col-md-6">
+
+                                        {% if property.title == 'Цвет' or property.title == 'Размер' %}
+                                            {% for value in property.values_set.all %}
+                                                {% if forloop.counter == 15 or forloop.counter == 30 %}
+                                                    </div>
+                                                <div class="cover col-md-6">
+                                                {% endif %}
+                                                    <div class="form-custom-checkbox">
+                                                        <label class="name_setting" for="{{ value.id }}">{{ value }}</label>
+                                                        <input type="checkbox" value="{{ value }}" name="val-{{ value.id }}" id="{{ value.id }}" {% if value.id in values %}checked{% endif %}>
+                                                        <div class="indicator"></div>
+                                                    </div>
                                                 {% endfor %}
-                                            </select>
-                                        </div>
+                                                {% if property.values_set.all.count >= 30 %}
+                                                    </div>
+                                                    </div>
+                                                {% elif property.values_set.all.count >= 11 %}
+                                                    </div>
+                                                {% endif %}
+                                            {% else %}
+
+
+
+                                            <div class="form-custom-checkbox">
+                                                <select class="form-control" id="subcategory_list" name="property-{{ property.id }}">
+                                                    <option>------------</option>
+                                                {% for value in property.values_set.all %}
+                                                    <option value="{{ value.id }}" {% if value.id in values %}selected{% endif %}>{{ value }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+
+
+                                        {% endif %}
 
                                     </div>
-                                {% endfor %}
-                            </div>
+
+                                </div>
+                            {% endfor %}
                             <p id="empty_properties">Параметры для данной категории отсутствуют</p>
                         </div>
 
