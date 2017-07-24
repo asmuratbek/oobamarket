@@ -11,6 +11,18 @@
 //    right: 0
 //    left: 0
 //    background:  url(../img/bug.gif) right bottom no-repeat
+
+.no-bg-2
+  background-color: transparent !important
+  color: #f3481c !important
+.no-bg
+  background-color: #fff !important
+  color: #f3481c !important
+  border: 1px solid #f3481c !important
+  &:hover
+    background-color: #f3481c !important
+    color: #fff !important
+
 ::-webkit-input-placeholder
   color: #ccc !important
 ::-moz-placeholder
@@ -19,6 +31,9 @@
   color: #ccc !important
 -ms-input-placeholder
   color: #ccc !important
+.inline-1, .inline-2, .inline-3, .inline-4
+  overflow: hidden
+  margin-bottom: 80px
 .label-error
   display: block
   color: #a94442
@@ -3407,8 +3422,10 @@ ul.category-tab
         width: 100px
         text-align: center
   .btn-group-form
-    text-align: center
-    margin-bottom: 50px
+    text-align: left
+    margin-bottom: 15px
+    .no-bg-2
+      padding: 10px 30px !important
     button.btn
       display: inline-block
       padding: 9px 60px

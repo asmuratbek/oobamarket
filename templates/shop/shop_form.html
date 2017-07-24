@@ -17,12 +17,13 @@
                         <div class="form-group input col-md-6">
                             {% if not form.title.errors %}
                                 <label for="">Название магазина{% else %}{{ form.title.errors }}</label>{% endif %}
-                            {{  form.title|attr:"type:text"  }}
+                            {{ form.title|attr:"type:text" }}
                         </div>
 
                         <div class="form-group {% if form.email.errors %}has-error{% endif %} input col-md-6">
                             {% if not form.email.errors %}
-                                <label for="">E-mail магазина:{% else %}<label for="">E-mail магазина:{{ form.email.errors }}</label>{% endif %}
+                                <label for="">E-mail магазина:{% else %}
+                                <label for="">E-mail магазина:{{ form.email.errors }}</label>{% endif %}
                             {% render_field form.email|attr:"type:email" placeholder="" %}
                         </div>
 
@@ -46,7 +47,7 @@
                                 </div>
                                 <div class="clearfix"></div>
                                 <div class="form-group col-md-6 btn-toggle-day" data-target="0">
-                                    <a class="add btn btn-toggle-day-time">Указать время работы</a>
+                                    <a class="add btn no-bg btn-toggle-day-time">Указать время работы</a>
                                 </div>
 
                                 <div class="col-md-12 toggle-days" data-id="0">
@@ -173,7 +174,7 @@
                                     <label>Удалить</label>
                                 </div>
                                 <div class="col-md-6">
-                                    <button type="button" class="btn add set-marker-trigger" data-id="0">Поставить
+                                    <button type="button" class="btn add no-bg set-marker-trigger" data-id="0">Поставить
                                         метку на карте
                                     </button>
                                 </div>
@@ -235,11 +236,16 @@
 
 
                                 <div class="form-group col-md-12" style="margin-top: 10px; margin-bottom: 10px">
-                                    <p style="margin: 0;">Если у вас есть филиалы, добавьте их</p><br>
+                                    <p style="margin: 0; text-align: left;">Если у вас есть филиалы, добавьте их</p><br>
 
                                 </div>
                                 <div class="form-group btn-group-form col-md-12">
-                                    <button type="button" id="add-new-contact" class="btn add">Добавить филиал</button>
+                                    <button type="button" id="add-new-contact" class="btn add no-bg-2"> + Добавить
+                                        филиал
+                                    </button>
+
+                                </div>
+                                <div class="form-group btn-group-form col-md-12">
                                     <button type="submit" class="btn add">Сохранить</button>
                                 </div>
                             </div>
@@ -302,7 +308,7 @@
                 </div>
                 <div class="clearfix"></div>
                 <div class="form-group col-md-6 btn-toggle-day" data-target="__prefix__">
-                    <a class="add btn btn-toggle-day-time">Указать время работы</a>
+                    <a class="add btn no-bg btn-toggle-day-time">Указать время работы</a>
                 </div>
 
                 <div class="col-md-12 toggle-days" data-id="__prefix__">
@@ -427,7 +433,8 @@
                     <label>Удалить</label>
                 </div>
                 <div class="col-md-6">
-                    <button type="button" class="add btn set-marker-trigger" data-id="__prefix__">Поставить метку на
+                    <button type="button" class="add btn no-bg set-marker-trigger" data-id="__prefix__">Поставить метку
+                        на
                         карте
                     </button>
                 </div>
