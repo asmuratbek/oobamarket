@@ -11,8 +11,22 @@
 //    right: 0
 //    left: 0
 //    background:  url(../img/bug.gif) right bottom no-repeat
+::-webkit-input-placeholder
+  color: #ccc !important
+::-moz-placeholder
+  color: #ccc !important
+::-moz-placeholder
+  color: #ccc !important
+-ms-input-placeholder
+  color: #ccc !important
+.label-error
+  display: block
+  color: #a94442
+.has-error.form-control
+  border: 1px solid #a94442 !important
 .has-error
-  label
+
+  label.label-error
     color: #a94442 !important
   .form-control
     border-color: #a94442 !important
@@ -3039,7 +3053,7 @@ ul.category-tab
       margin-right: 20px
     .price + .select
       width: 100px
-      margin-left: -25px
+      margin-left: -23px
       margin-right: 20px
       display: inline-block
       &:before
