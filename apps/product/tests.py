@@ -75,7 +75,7 @@ class ProductUpdateViewTest(TestCase):
         sub_category = CategoryFactory(parent=parent_category)
         product = ProductFactory(title="Product for test",
                                  price=1500, shop=shop,
-                                 category=sub_category, quantity=4)
+                                 category=sub_category)
         images = [ProductImageFactory(product=product) for i in range(2)]
         properties = [PropetiesFactory(order=1+i) for i in range(2)]
         properties[0].category.add(sub_category), properties[1].category.add(sub_category)
@@ -88,7 +88,7 @@ class ProductUpdateViewTest(TestCase):
         new_shop.save()
         self.client.login(username=self.user.username, password='password')
         data = {'currency': 'рублей', 'property-%s' % values[1].properties.id: values[1].id, 'section': global_category.id,
-                'title': 'Some phone23', 'delivery_type': 'self', 'quantity': '2',
+                'title': 'Some phone23', 'delivery_type': 'self',
                 'short_description': 'Some desc', 'shop': new_shop.id, 'parent_categories':new_parent_category.id,
                 'image': '', 'property-%s' % values[0].properties.id: values[0].id, 'category': new_sub_category.id, 'price': 1000,
                 'published': 'off', 'availability': 'waiting', 'long_description': ''}
