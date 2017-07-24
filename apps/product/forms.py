@@ -25,6 +25,28 @@ class ProductForm(forms.ModelForm):
                 'class': 'form-control'
             })
 
+    def clean(self):
+        cleaned_data = super(ProductForm, self).clean()
+        title = cleaned_data.get('title', '')
+        shop = cleaned_data.get('shop', '')
+        category = cleaned_data.get('category', '')
+        price = cleaned_data.get('price', '')
+        short_description = cleaned_data.get('short_description', '')
+
+        error_msg = "*Обязательное поле"
+
+        if shop is None or shop == "":
+            self._errors['shop'] = error_msg
+        if title is None or title == "":
+            self._errors['title'] = error_msg
+        if category is None or category == "":
+            self._errors['category'] = error_msg
+        if price is None or price == "":
+            self._errors['price'] = error_msg
+        if short_description is None or short_description == "":
+            self._errors['short_description'] = error_msg
+
+
 
 class ProductUpdateForm(forms.ModelForm):
     class Meta:
