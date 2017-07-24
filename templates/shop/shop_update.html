@@ -23,6 +23,7 @@
 
                         <div class="inlines">
                              {% for form in formset %}
+                                 {{ form.id }}
                                 <div class="form-group input col-md-6">
                                     <label for="">Телефон</label>
                                     {{ form.phone|attr:"class:form-control" }}
