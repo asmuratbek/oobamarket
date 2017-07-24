@@ -13,6 +13,8 @@ Production Configurations
 from boto.s3.connection import OrdinaryCallingFormat
 
 import logging
+import raven
+import os
 
 
 from .base import *  # noqa
@@ -220,10 +222,15 @@ LOGGING = {
     },
 }
 # SENTRY_CELERY_LOGLEVEL = env.int('DJANGO_SENTRY_LOG_LEVEL', logging.INFO)
-# RAVEN_CONFIG = {
-#     'CELERY_LOGLEVEL': env.int('DJANGO_SENTRY_LOG_LEVEL', logging.INFO),
-#     'DSN': SENTRY_DSN
-# }
+
+SENTRY_DSN = 'https://24e2d993c4c042da921a215cf10335bf:e29964a376cc4f0baf40527865d02fcf@sentry.io/167957'
+
+RAVEN_CONFIG = {
+    'dsn': SENTRY_DSN,
+    # If you are using git, you can also automatically configure the
+    # release based on the git info.
+    'release': raven.fetch_git_sha(os.path.dirname(os.pardir)),
+}
 
 # Custom Admin URL, use {% url 'admin:index' %}
 # ADMIN_URL = env('DJANGO_ADMIN_URL', default="{% url 'admin:index' %}")
