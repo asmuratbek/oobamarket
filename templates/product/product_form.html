@@ -8,9 +8,7 @@
             <div class="form-filter">
                 <form class="form-inline" method="post" enctype="multipart/form-data" data-media-upload-url="{% url 'product:upload_images' %}" data-remove-uploaded-media-url="{% url 'product:remove_images' %}" id="form">
                 {% csrf_token %}
-                {% if form.errors %}
-                <div class="alert alert-danger">{{ form.errors }}</div>
-                {% endif %}
+{#                {{ form.errors }}#}
                     <div class="col-md-8">
 
                         <div class="step_1">
@@ -18,7 +16,7 @@
                             <div class="form-group select col-md-6">
 
                                     {% render_field form.shop|add_error_attr:"aria-invalid:true" %}
-
+                                    <p class="valid-errors">{{ form.shop.errors }}</p>
                             </div>
 
                             <div class="form-group select col-md-6">
@@ -28,12 +26,13 @@
                                          <option>{{ cat.title }}</option>
                                     {% endfor %}
                                 </select>
+                            <p class="valid-errors" id="global_cat_error">{{ form.category.errors }}</p>
                             </div>
 
                             <div class="form-group select col-md-6">
                                 <select class="form-control" id="category_list" name="category" disabled>
                                 </select>
-
+                                <p class="valid-errors" id="cat_error">{{ form.category.errors }}</p>
                             </div>
 
                             <div class="form-group select col-md-6">
@@ -48,11 +47,13 @@
 {#                                   data-original-title="Рекомендация: для лучшего поиска, пишите тип товара в начале названия. Автомобильные шины MAXXIS AT-771 Bravo"#}
 {#                                   aria-describedby="tooltip200612" class="form-control" placeholder="Название товара">#}
                                 {% render_field form.title|add_error_attr:"aria-invalid:true"|attr:"data-toggle:tooltip"|attr:"data-placement:top"|attr:"aria-describedby:tooltip200612"|attr:"required"|attr:"data-original-title:Рекомендация - для лучшего поиска, пишите тип товара в начале названия. Автомобильные шины MAXXIS AT-771 Bravo"|attr:"disabled" placeholder="Название товара" %}
+                                <p class="valid-errors">{{ form.title.errors }}</p>
                             </div>
 
                             <div class="form-group input col-md-12">
 {#                                <input type="text" class="form-control mini price" placeholder="Цена">#}
                                 {% render_field form.price|add_error_attr:"aria-invalid:true"|attr:"required"|attr:"class:form-control mini price" placeholder="Цена" %}
+                                <p class="valid-errors">{{ form.price.errors }}</p>
 
                                 <div class="select">
                                    {% render_field  form.currency|add_error_attr:"aria-invalid:true"|attr:"required" %}
@@ -71,12 +72,6 @@
 {#                                    <input type="text" class="form-control" id="discount_id" placeholder="0%" disabled>#}
                                     {% render_field form.discount|add_error_attr:"aria-invalid:true"|attr:"id:discount_id"|attr:"disabled" placeholder="0%"%}
                                 </div>
-                            </div>
-
-                            <div class="form-group input col-md-12">
-{#                                <input type="text" class="form-control mini" placeholder="Количество">#}
-                                {% render_field form.quantity|add_error_attr:"aria-invalid:true"|attr:"class:form-control mini" placeholder="Количество" %}
-                                <label for="">Количество</label>
                             </div>
 
                             <div class="form-group select col-md-6">
@@ -153,6 +148,7 @@
                             <h3><span>4.</span> Короткое описание товара <span>(Опционально)</span></h3>
 {#                            <textarea class="form-control" rows="6"></textarea>#}
                             {% render_field form.short_description|attr:"rows:6"%}
+                            <p class="valid-errors">{{ form.short_description.errors }}</p>
                         </div>
 
                         <div class="step_5">
@@ -272,18 +268,5 @@
     <script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
     <script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
     <script src="{% static "js/image.uploading.multiple.js" %}"></script>
-    <script>
-        $(document).ready(function () {
-            var upload = new MultipleUpload({
-                uploadInput: '#uploading-images',
-                helpText: '#file-counter',
-                wrapper: '#wrapper-files',
-                form: '#form',
-                removedImagesInput: '#id_removed_images',
-                trueFileInput: '#id_uploaded_images'
-            });
-
-            upload.init();
-        });
-    </script>
+    <script src="{% static "js/product_form.js" %}"></script>
 {% endblock %}

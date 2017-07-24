@@ -19,8 +19,7 @@
                 <h2>{{ user.username }}</h2>
 
 
-                <form class="form-horizontal" method="post" action="{% url 'users:update' %}">
-                    {% csrf_token %}
+                <form class="form-horizontal" id="profile_form">
 
 
                     <div class="info-user">
@@ -29,7 +28,7 @@
                             <label for="name" class="">
                                 <div class="col-md-3">Логин:</div>
                                  <div class="col-md-6">
-                                {{ form.name|attr:"class:form-control "|attr:"id:name" }}
+                                <input class="form-control" id="name" value="{{ object.name }}"/>
 
                             </div>
                             <div class="col-md-1">
@@ -44,7 +43,7 @@
                                 <div class="col-md-3">Имя:</div>
 
                                 <div class="col-md-6">
-                                {{ form.username|attr:"class:form-control"|attr:"id:username" }}
+                                <input class="form-control" id="username" value="{{ object.username }}" />
 
                             </div>
                                 <span class="col-md-1">
@@ -58,7 +57,8 @@
                             <label for="first_name" class="">
                                 <div class="col-md-3">Фамилие:</div>
                                 <div class="col-md-6">
-                                    {{ form.first_name|attr:"class:form-control"|attr:"id:first_name" }}
+                                    <input class="form-control" id="first_name" value="{{ object.first_name }}"/>
+{#                                    {{ form.first_name|attr:"class:form-control"|attr:"id:first_name" }}#}
                                 </div>
                                 <div class="col-md-1">
                                     <span class="glyphicon glyphicon-pencil"></span>
@@ -69,9 +69,10 @@
 
                         <div class="form-group">
                             <label for="last_name" class="" style="display: block;">
-                                <div class="col-md-3">Familiya:</div>
+                                <div class="col-md-3">Номер телефона:</div>
                                 <div class="col-md-6">
-                                    {{ form.last_name|attr:"class:form-control"|attr:"id:last_name" }}
+                                    <input class="form-control" id="last_name" value="{{ object.phone }}"/>
+{#                                    {{ form.last_name|attr:"class:form-control"|attr:"id:last_name" }}#}
                                 </div>
                                 <div class="col-md-1">
                                     <span class="glyphicon glyphicon-pencil"></span>
@@ -91,7 +92,7 @@
                             <label for="email_radio_1" class="primary_email radio-button radio-button--material">
 
                                 <input class="radio-button__input radio-button--material__input" id="email_radio_1"
-                                       type="radio" name="email" checked="checked" value="admin@localhost">
+                                       type="radio" checked="checked" value="admin@localhost">
                                 <div class="radio-button__checkmark radio-button--material__checkmark"></div>
                                 admin@localhost
 
@@ -104,27 +105,28 @@
                             <label for="email_radio_2" class="primary_email radio-button radio-button--material">
 
                                 <input class="radio-button__input radio-button--material__input" id="email_radio_2"
-                                       type="radio" name="email" checked="checked" value="admin@localhost">
+                                       type="radio" checked="checked" value="admin@localhost">
                                 <div class="radio-button__checkmark radio-button--material__checkmark"></div>
                                 admin@localhost
 
                                 <span class="verified">Основной</span>
-
                                 <span class="primary">Primary</span>
                             </label>
                         </div>
                     </div>
 
                     <div class="add-email">
+                        <div id="add_input_email">
                         <div class="form-group col-md-6" style="margin-right: 0;">
                             <input type="text" class="form-control">
                         </div>
                         <div class="form-group col-md-3">
-                             <button class="add btn">Добавить</button>
+                             <button type="button" class="add btn" id="add-email">Добавить</button>
 
                         </div>
                         <div class="form-group col-md-3">
                              <button class="add btn">Отмена</button>
+                        </div>
                         </div>
                         <div class="clearfix"></div>
                      <div class="form-group col-md-12">
@@ -147,4 +149,17 @@
 
 
 
+{% endblock %}
+{% block js %}
+    {{ block.super }}
+    <script>
+        $('#add-email').on('click', function () {
+            if($('#add_input_email input[type=text]').val() !== ""){
+                console.log("if");
+{#                $(this).closest('#add_input_email').after(email_input);#}
+            } else {
+                alert("Заполните поле")
+            }
+        })
+    </script>
 {% endblock %}

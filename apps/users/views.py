@@ -11,11 +11,10 @@ from apps.shop.models import Shop
 from .models import User, Subscription
 
 
-class UserDetailView(LoginRequiredMixin, DetailView):
-    model = User
-    # These next two lines tell the view to index lookups by username
-    slug_field = 'username'
-    slug_url_kwarg = 'username'
+class UserDetailView(LoginRequiredMixin, View):
+    def get(self, request, *args, **kwargs):
+        user = get_object_or_404(User, username=kwargs['username'])
+        return render(self.request, 'users/user_form.html', {'object': user})
 
 
 class UserRedirectView(LoginRequiredMixin, RedirectView):
