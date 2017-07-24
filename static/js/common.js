@@ -434,6 +434,8 @@ $(document).ready(function () {
         $("#toggle-setting-1").slideToggle("100");
     });
 
+
+
     $.fn.hasAttr = function (value) {
         return this.attr(value) !== undefined;
     };

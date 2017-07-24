@@ -5,6 +5,7 @@
 
     <section class="add-product">
         <div class="container">
+
             <div class="form-filter">
                 <form class="form-inline" method="post" enctype="multipart/form-data" data-media-upload-url="{% url 'product:upload_images' %}" data-remove-uploaded-media-url="{% url 'product:remove_images' %}" id="form">
                 {% csrf_token %}

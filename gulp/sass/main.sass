@@ -2813,6 +2813,30 @@ ul.category-tab
       max-width: 90%
 .add-product
   .step_3
+    .params
+      overflow: hidden
+      .parent-group
+        margin-bottom: 40px !important
+      .select
+        position: relative
+
+        &:before
+          position: absolute !important
+          display: inline-block !important
+          content: '' !important
+          right: 30px
+          top: 40px
+          width: 10px
+          height: 13px
+          background: url(../img/png/arrow0.png) 0 0 no-repeat
+          -webkit-transform: rotate(-90deg)
+          -ms-transform: rotate(-90deg)
+          transform: rotate(-90deg)
+          background-size: 35px
+      .form-group.select
+        width: 50% !important
+      .form-control
+        margin-bottom: 15px !important
     .form-group.select
       width: 100%
       display: block

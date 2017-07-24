@@ -1,52 +1,176 @@
-{% for property in properties %}
-    <div class="form-group checkbox col-md-12" style="padding-left: 0;">
-
-        <label class="title">{{ property.title }}</label>
-        <div class="cover col-md-6" style="padding-left: 0;">
-
-            {% if property.title == 'Цвет' or property.title == 'Размер' %}
-                {% for value in property.values_set.all %}
-                    {% if forloop.counter == 15 or forloop.counter == 30 %}
-                        </div>
-                        <div class="cover form-group col-md-6">
-                    {% endif %}
-                    <div class="form-custom-checkbox">
-                        <label class="name_setting" for="{{ value.id }}">{{ value }}</label>
-                        <input type="checkbox" value="{{ value }}" name="val-{{ value.id }}" id="{{ value.id }}">
-                        <div class="indicator"></div>
-                    </div>
-                {% endfor %}
-            {% if property.values_set.all.count >= 30 %}
-                </div>
-                </div>
-            {% elif property.values_set.all.count >= 11 %}
-                </div>
-            {% endif %}
-            {% else %}
+<div class="params">
 
 
 
-                <div class="select form-group col-md-12 cover" style="padding-left: 0;">
-                    <select class="form-control " id="subcategory_list" name="property-{{ property.id }}">
-                        <option>------------</option>
-                        {% for value in property.values_set.all %}
-                            <option value="{{ value.id }}">{{ value }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-
-
-            {% endif %}
-
-    <div class="form-group col-md-12 cover" style="padding-left: 0;">
-
+{#Select#}
+<div class="select parent-group form-group col-md-6 cover" style="padding-left: 0; width: 50%;">
+    <label class="title">Название настройки 2</label>
+    <select class="form-control" id="subcategory_list" name="" >
+        <option>------------</option>
+        <option value="">asa</option>
+    </select>
+ <div class="manufacturer" style="display: none;">
         <input type="text" class="form-control">
+    </div>
+    <a class="add btn manufacturer-btn" style="margin: 0; width: 100%;">Добавить</a>
 
-    </div>
-    <div class="form-group col-md-12 cover" style="padding-left: 0;">
-        <button class="add btn" style="margin: 0; width: 100%;">Добавить</button>
-    </div>
+</div>
+
+
+
+{#Checkbox#}
+<div class="form-group parent-group checkbox col-md-12" style="padding-left: 0;">
+    <label class="title">Название настройки 1</label>
+
+{#    первый цикл 14 чекбоксов#}
+    <div class="cover col-md-4">
+        <div class="form-custom-checkbox">
+            <label class="name_setting" for="">asdsa</label>
+            <input type="checkbox" class="checkbox">
+            <div class="indicator"></div>
+        </div>
+        <div class="form-custom-checkbox">
+            <label class="name_setting" for="">asdsa</label>
+            <input type="checkbox" class="checkbox">
+            <div class="indicator"></div>
+        </div>
+        <div class="form-custom-checkbox">
+            <label class="name_setting" for="">asdsa</label>
+            <input type="checkbox" class="checkbox">
+            <div class="indicator"></div>
+        </div>
+        <div class="form-custom-checkbox">
+            <label class="name_setting" for="">asdsa</label>
+            <input type="checkbox" class="checkbox">
+            <div class="indicator"></div>
+        </div>
     </div>
 
+    {#    Второй цикл 14 чекбоксов#}
+    <div class="cover col-md-4">
+        <div class="form-custom-checkbox">
+            <label class="name_setting" for="">asdsa</label>
+            <input type="checkbox" class="checkbox">
+            <div class="indicator"></div>
+        </div>
+        <div class="form-custom-checkbox">
+            <label class="name_setting" for="">asdsa</label>
+            <input type="checkbox" class="checkbox">
+            <div class="indicator"></div>
+        </div>
+        <div class="form-custom-checkbox">
+            <label class="name_setting" for="">asdsa</label>
+            <input type="checkbox" class="checkbox">
+            <div class="indicator"></div>
+        </div>
+        <div class="form-custom-checkbox">
+            <label class="name_setting" for="">asdsa</label>
+            <input type="checkbox" class="checkbox">
+            <div class="indicator"></div>
+        </div>
     </div>
-{% endfor %}
+
+       {#    Третий цикл 14 чекбоксов#}
+    <div class="cover col-md-4">
+        <div class="form-custom-checkbox">
+            <label class="name_setting" for="">asdsa</label>
+            <input type="checkbox" class="checkbox">
+            <div class="indicator"></div>
+        </div>
+        <div class="form-custom-checkbox">
+            <label class="name_setting" for="">asdsa</label>
+            <input type="checkbox" class="checkbox">
+            <div class="indicator"></div>
+        </div>
+        <div class="form-custom-checkbox">
+            <label class="name_setting" for="">asdsa</label>
+            <input type="checkbox" class="checkbox">
+            <div class="indicator"></div>
+        </div>
+        <div class="form-custom-checkbox">
+            <label class="name_setting" for="">asdsa</label>
+            <input type="checkbox" class="checkbox">
+            <div class="indicator"></div>
+        </div>
+    </div>
+</div>
+
+
+
+
+{#Checkbox#}
+<div class="form-group parent-group checkbox col-md-12" style="padding-left: 0;">
+    <label class="title">Название настройки 1</label>
+
+{#    первый цикл 14 чекбоксов#}
+    <div class="cover col-md-4">
+        <div class="form-custom-checkbox">
+            <label class="name_setting" for="">asdsa</label>
+            <input type="checkbox" class="checkbox">
+            <div class="indicator"></div>
+        </div>
+        <div class="form-custom-checkbox">
+            <label class="name_setting" for="">asdsa</label>
+            <input type="checkbox" class="checkbox">
+            <div class="indicator"></div>
+        </div>
+        <div class="form-custom-checkbox">
+            <label class="name_setting" for="">asdsa</label>
+            <input type="checkbox" class="checkbox">
+            <div class="indicator"></div>
+        </div>
+        <div class="form-custom-checkbox">
+            <label class="name_setting" for="">asdsa</label>
+            <input type="checkbox" class="checkbox">
+            <div class="indicator"></div>
+        </div>
+    </div>
+
+    {#    Второй цикл 14 чекбоксов#}
+    <div class="cover col-md-4">
+        <div class="form-custom-checkbox">
+            <label class="name_setting" for="">asdsa</label>
+            <input type="checkbox" class="checkbox">
+            <div class="indicator"></div>
+        </div>
+        <div class="form-custom-checkbox">
+            <label class="name_setting" for="">asdsa</label>
+            <input type="checkbox" class="checkbox">
+            <div class="indicator"></div>
+        </div>
+        <div class="form-custom-checkbox">
+            <label class="name_setting" for="">asdsa</label>
+            <input type="checkbox" class="checkbox">
+            <div class="indicator"></div>
+        </div>
+        <div class="form-custom-checkbox">
+            <label class="name_setting" for="">asdsa</label>
+            <input type="checkbox" class="checkbox">
+            <div class="indicator"></div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</div>
+
+<script>
+
+
+     $('.manufacturer-btn').click(function(){
+
+       $('.manufacturer').slideToggle('100');
+       if($(this).text() == 'Убрать'){
+           $(this).text('Добавить');
+       } else {
+           $(this).text('Убрать');
+       }
+});
+</script>
+
+
+
