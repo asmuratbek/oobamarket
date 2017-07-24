@@ -20,10 +20,9 @@
                             {% render_field form.email|attr:"type:text" placeholder="E-mail магазина:" %}
                         </div>
 
-
                         <div class="inlines">
-                             {% for form in formset %}
-                                 {{ form.id }}
+                            {% for form in formset %}
+                                {{ form.id }}
                                 <div class="form-group input col-md-6">
                                     <label for="">Телефон</label>
                                     {{ form.phone|attr:"class:form-control" }}
@@ -85,6 +84,8 @@
                                 {{ formset.management_form }}
 
                             {% endfor %}
+
+
 
 
                             <div class="form-group input col-md-12">
@@ -311,10 +312,10 @@
                 markers[currId]['data'].setPosition(_location);
             else
                 marker.setMap(map);
-                markers.push({
-                    'id': workingIndex,
-                    'data': marker
-                });
+            markers.push({
+                'id': workingIndex,
+                'data': marker
+            });
 
             marker.addListener('click', function () {
                 console.log('Clicked on marker...');

@@ -13,17 +13,16 @@
             <div class="form-filter">
                 <form class="form-inline" method="post" enctype="multipart/form-data" id="add-shop-form">
                     {% csrf_token %}
-                    {% if form.errors %}
-                        <div class="alert alert-danger">{{ form.errors }}</div>
-                    {% endif %}
                     <div class="col-md-8">
                         <div class="form-group input col-md-6">
-                            <label for="">Название магазина</label>
-                            {% render_field form.title|attr:"type:text" placeholder="" %}
+                            {% if not form.title.errors %}
+                                <label for="">Название магазина{% else %}{{ form.title.errors }}</label>{% endif %}
+                            {{  form.title|attr:"type:text"  }}
                         </div>
 
-                        <div class="form-group has-error input col-md-6">
-                            <label for="">E-mail магазина:</label>
+                        <div class="form-group {% if form.email.errors %}has-error{% endif %} input col-md-6">
+                            {% if not form.email.errors %}
+                                <label for="">E-mail магазина:{% else %}<label for="">E-mail магазина:{{ form.email.errors }}</label>{% endif %}
                             {% render_field form.email|attr:"type:email" placeholder="" %}
                         </div>
 
@@ -53,14 +52,16 @@
                                 <div class="col-md-12 toggle-days" data-id="0">
                                     <i>Оставьте поле пустым если выходной день</i>
                                     <div class="form-group input col-md-6">
-                                        <label class="col-md-4" for="">Понидельник</label>
+                                        <label class="col-md-4" for="">Понедельник</label>
 
-                                            <div class=" col-md-4">
-                                                <span class="span-from">С</span> <input type="text" class="from timepicker form-control">
-                                            </div>
-                                            <div class=" col-md-4">
-                                                <span class="span-to">До</span> <input type="text" class="to timepicker form-control">
-                                            </div>
+                                        <div class=" col-md-4">
+                                            <span class="span-from">С</span> <input type="text"
+                                                                                    class="from timepicker form-control">
+                                        </div>
+                                        <div class=" col-md-4">
+                                            <span class="span-to">До</span> <input type="text"
+                                                                                   class="to timepicker form-control">
+                                        </div>
 
                                         {% render_field form.monday|attr:"type:hidden" class='form-control true_input' placeholder='с 9:00 до 18:00' %}
                                         {#{{ form.monday|attr:"class:"|attr:"placeholder:"|attr:"class:" }}#}
@@ -69,67 +70,79 @@
                                     <div class="clearfix"></div>
                                     <div class="form-group input col-md-6">
                                         <label class="col-md-4" for="">Вторник</label>
-                                         <div class=" col-md-4">
-                                                <span class="span-from">С</span> <input type="text" class="from timepicker form-control">
-                                            </div>
-                                            <div class=" col-md-4">
-                                                <span class="span-to">До</span> <input type="text" class="to timepicker form-control">
-                                            </div>
+                                        <div class=" col-md-4">
+                                            <span class="span-from">С</span> <input type="text"
+                                                                                    class="from timepicker form-control">
+                                        </div>
+                                        <div class=" col-md-4">
+                                            <span class="span-to">До</span> <input type="text"
+                                                                                   class="to timepicker form-control">
+                                        </div>
                                         {{ form.tuesday|attr:"class:form-control true_input"|attr:"placeholder:с 9:00 до 18:00"|attr:"type:hidden" }}
                                     </div>
                                     <div class="clearfix"></div>
                                     <div class="form-group input col-md-6">
                                         <label class="col-md-4" for="">Среда</label>
                                         <div class=" col-md-4">
-                                                <span class="span-from">С</span> <input type="text" class="from timepicker form-control">
-                                            </div>
-                                            <div class=" col-md-4">
-                                                <span class="span-to">До</span> <input type="text" class="to timepicker form-control">
-                                            </div>
+                                            <span class="span-from">С</span> <input type="text"
+                                                                                    class="from timepicker form-control">
+                                        </div>
+                                        <div class=" col-md-4">
+                                            <span class="span-to">До</span> <input type="text"
+                                                                                   class="to timepicker form-control">
+                                        </div>
                                         {{ form.wednesday|attr:"class:form-control"|attr:"placeholder:с 9:00 до 18:00"|attr:"type:hidden" }}
                                     </div>
                                     <div class="clearfix"></div>
                                     <div class="form-group input col-md-6">
                                         <label class="col-md-4" for="">Четверг</label>
                                         <div class=" col-md-4">
-                                                <span class="span-from">С</span> <input type="text" class="from timepicker form-control">
-                                            </div>
-                                            <div class=" col-md-4">
-                                                <span class="span-to">До</span> <input type="text" class="to timepicker form-control">
-                                            </div>
+                                            <span class="span-from">С</span> <input type="text"
+                                                                                    class="from timepicker form-control">
+                                        </div>
+                                        <div class=" col-md-4">
+                                            <span class="span-to">До</span> <input type="text"
+                                                                                   class="to timepicker form-control">
+                                        </div>
                                         {{ form.thursday|attr:"class:form-control"|attr:"placeholder:с 9:00 до 18:00"|attr:"type:hidden" }}
                                     </div>
                                     <div class="clearfix"></div>
                                     <div class="form-group input col-md-6">
                                         <label class="col-md-4" for="">Пятница</label>
                                         <div class=" col-md-4">
-                                                <span class="span-from">С</span> <input type="text" class="from timepicker form-control">
-                                            </div>
-                                            <div class=" col-md-4">
-                                                <span class="span-to">До</span> <input type="text" class="to timepicker form-control">
-                                            </div>
+                                            <span class="span-from">С</span> <input type="text"
+                                                                                    class="from timepicker form-control">
+                                        </div>
+                                        <div class=" col-md-4">
+                                            <span class="span-to">До</span> <input type="text"
+                                                                                   class="to timepicker form-control">
+                                        </div>
                                         {{ form.friday|attr:"class:form-control"|attr:"placeholder:с 9:00 до 18:00"|attr:"type:hidden" }}
                                     </div>
                                     <div class="clearfix"></div>
                                     <div class="form-group input col-md-6">
                                         <label class="col-md-4" for="">Суббота</label>
                                         <div class=" col-md-4">
-                                                <span class="span-from">С</span> <input type="text" class="from timepicker form-control">
-                                            </div>
-                                            <div class=" col-md-4">
-                                                <span class="span-to">До</span> <input type="text" class="to timepicker form-control">
-                                            </div>
+                                            <span class="span-from">С</span> <input type="text"
+                                                                                    class="from timepicker form-control">
+                                        </div>
+                                        <div class=" col-md-4">
+                                            <span class="span-to">До</span> <input type="text"
+                                                                                   class="to timepicker form-control">
+                                        </div>
                                         {{ form.saturday|attr:"class:form-control"|attr:"placeholder:с 9:00 до 18:00"|attr:"type:hidden" }}
                                     </div>
                                     <div class="clearfix"></div>
                                     <div class="form-group input col-md-6">
                                         <label class="col-md-4" for="">Воскресенье</label>
-                                       <div class=" col-md-4">
-                                                <span class="span-from">С</span> <input type="text" class="from timepicker form-control">
-                                            </div>
-                                            <div class=" col-md-4">
-                                                <span class="span-to">До</span> <input type="text" class="to timepicker form-control">
-                                            </div>
+                                        <div class=" col-md-4">
+                                            <span class="span-from">С</span> <input type="text"
+                                                                                    class="from timepicker form-control">
+                                        </div>
+                                        <div class=" col-md-4">
+                                            <span class="span-to">До</span> <input type="text"
+                                                                                   class="to timepicker form-control">
+                                        </div>
                                         {{ form.sunday|attr:"class:form-control"|attr:"placeholder:с 9:00 до 18:00"|attr:"type:hidden" }}
                                     </div>
 
@@ -595,7 +608,7 @@
             defaultTime: '06:00'
         });
     </script>
-     <script>
+    <script>
         $('.timepicker.to').timepicker({
             timeFormat: 'H:mm',
             show2400: true,
