@@ -29,7 +29,7 @@ class ProductForm(forms.ModelForm):
 class ProductUpdateForm(forms.ModelForm):
     class Meta:
         model = Product
-        exclude = ['objects', 'sell_count']
+        exclude = ['objects', 'sell_count', 'counter']
 
     section = forms.ModelChoiceField(queryset=GlobalCategory.objects.all())
     parent_categories = forms.ModelChoiceField(queryset=Category.objects.filter(parent=None))

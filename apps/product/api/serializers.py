@@ -45,6 +45,7 @@ class ProductSerializer(ModelSerializer):
             'delete_url',
             'id',
             'title',
+            'slug',
             'category_title',
             'shop',
             'price',

@@ -239,7 +239,7 @@ var ProductList = createClass({
                   </h2>
                   {this.props.product.is_owner ?
                       <div>
-                          <a className="edited glyphicon glyphicon-cog" href={`/products/${this.props.product.slug}/update_product/`} data-toggle="tooltip" title="" data-placement="bottom" data-original-title="Редактировать"></a>
+                          <a className="edited glyphicon glyphicon-cog" href={`/product/${this.props.product.slug}/update-product/`} data-toggle="tooltip" title="" data-placement="bottom" data-original-title="Редактировать"></a>
                           <a href="#" data-message={this.props.product.published ? "Товар успешно скрыт" : "Товар успешно опубликован"} className={`eye glyphicon glyphicon-eye-${this.props.product.published ? 'open' : 'close'}`} data-product-id={this.props.product.id} data-toggle="tooltip" title="" data-placement="bottom" data-original-title="Скрыть" data-status={`${this.props.product.published ? false : true}`} onClick={this.changePublishStatus}></a>
                           <a href="#" className="remove glyphicon glyphicon-remove-circle model-trigger"  data-url={this.props.product.delete_view} data-toggle="modal" data-target="#DeleteModal" title="" data-placement="bottom" data-product-id={this.props.product.id} data-original-title="Удалить" onClick={this.deleteProduct}></a>
                       </div>

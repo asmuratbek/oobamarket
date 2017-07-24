@@ -198,19 +198,23 @@ class ProductUpdateView(LoginRequiredMixin, UpdateProductMixin, UpdateView):
         initial['section'] = self.object.category.section.id
         return initial
 
+    def form_invalid(self, form):
+        print(form._errors)
+        super(ProductUpdateView, self).form_invalid(form)
+
     def form_valid(self, form):
         product = form.instance
-        product.slug = slugify(form.instance.title)
+        product.slug = slugify(product.title)
+        product.save()
         product.values_set.clear()
         for key, value in self.request.POST.items():
-            if key.startswith('property') and '---' not in value:
+            if key.startswith('val'):
+                value = get_object_or_404(Values, id=int(key[4:]))
+                value.products.add(product)
+            elif key.startswith('property') and '---' not in value:
                 value = get_object_or_404(Values, id=int(value))
                 value.products.add(product)
         return super(ProductUpdateView, self).form_valid(form)
-
-    def get_form_kwargs(self):
-        kwargs = super(ProductUpdateView, self).get_form_kwargs()
-        return kwargs
 
     def get_context_data(self, **kwargs):
         context = super(ProductUpdateView, self).get_context_data(**kwargs)

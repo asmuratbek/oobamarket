@@ -134,22 +134,50 @@
                         <div class="step_3">
                             <h3><span>3.</span> Параметры товара</h3>
                             <div class="form-group select col-md-6" id="property_list">
-                                {% for prop in props %}
-                                    <div class="form-group select">
+                                {% for property in props %}
+                                <div class="form-group checkbox col-md-12">
 
-                                        <label>{{ prop.title }}</label>
-                                        <div class="cover">
-                                            <select class="form-control" id="subcategory_list" name="property-{{ prop.id }}">
-                                                <option>------------</option>
-                                                {% for val in prop.values_set.all %}
-                                                    <option value="{{ val.id }}" {% if val.id in values %}selected{% endif %}>{{ val }}</option>
+                                    <label class="title">{{ property.title }}</label>
+                                    <div class="cover col-md-6">
+
+                                        {% if property.title == 'Цвет' or property.title == 'Размер' %}
+                                            {% for value in property.values_set.all %}
+                                                {% if forloop.counter == 15 or forloop.counter == 30 %}
+                                                    </div>
+                                                <div class="cover col-md-6">
+                                                {% endif %}
+                                                    <div class="form-custom-checkbox">
+                                                        <label class="name_setting" for="{{ value.id }}">{{ value }}</label>
+                                                        <input type="checkbox" value="{{ value }}" name="val-{{ value.id }}" id="{{ value.id }}" {% if value.id in values %}checked{% endif %}>
+                                                        <div class="indicator"></div>
+                                                    </div>
                                                 {% endfor %}
-                                            </select>
-                                        </div>
+                                                {% if property.values_set.all.count >= 30 %}
+                                                    </div>
+                                                    </div>
+                                                {% elif property.values_set.all.count >= 11 %}
+                                                    </div>
+                                                {% endif %}
+                                            {% else %}
+
+
+
+                                            <div class="form-custom-checkbox">
+                                                <select class="form-control" id="subcategory_list" name="property-{{ property.id }}">
+                                                    <option>------------</option>
+                                                {% for value in property.values_set.all %}
+                                                    <option value="{{ value.id }}" {% if value.id in values %}selected{% endif %}>{{ value }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+
+
+                                        {% endif %}
 
                                     </div>
-                                {% endfor %}
-                            </div>
+
+                                </div>
+                            {% endfor %}
                             <p id="empty_properties">Параметры для данной категории отсутствуют</p>
                         </div>
 
@@ -205,9 +233,9 @@
                             <br>
                             <span id="file-counter" style="color: red;"></span>
                         </div>
-                        <input class="hidden" type="file" id="uploading-images" name="image" style="display: none;" multiple
+                        <input class="hidden" type="file" data-product-slug="{{ object.slug }}" id="uploading-images" name="image" style="display: none;" multiple
                         data-url="{% url 'product:upload_product_images' slug=object.slug %}"
-                        data-form-data='{"csrfmiddlewaretoken": "{{ csrf_token }}"}'/>
+                        data-form-data='{"csrfmiddlewaretoken": "{{ csrf_token }}"}' >
 {#                        {% render_field form.image %}#}
 {#                        {% render_field form.removed_images type='hidden' %}#}
 {#                        {% render_field form.uploaded_images type='hidden' %}#}
