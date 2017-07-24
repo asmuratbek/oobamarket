@@ -1,5 +1,5 @@
 {% extends 'base-1.html' %}
-{% load staticfiles i18n account socialaccount %}
+{% load staticfiles i18n account socialaccount widget_tweaks %}
 <!--</ul>-->
 
 {% block header %}
@@ -89,10 +89,15 @@
                 <div class="form-group">
                     <label>E-mail*</label>
                     <input type="email" class="form-control" name="login" placeholder="Ваша почта" required>
+{#                    {{ form.login.errors }}#}
                 </div>
                 <div class="form-group">
                     <label>Пароль*</label>
                     <input type="password" class="form-control" name="password" placeholder="Пароль" required>
+{#                    {{ form.password.errors }}#}
+                    {% if form.errors %}
+                        <p class="has-error">Email/Пароль не верны.</p>
+                    {% endif %}
                 </div>
                 <button type="submit" name="submit" class="btn btn-default">Войти</button>
             </form>

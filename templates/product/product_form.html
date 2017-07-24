@@ -14,26 +14,25 @@
 
                         <div class="step_1">
                             <h3><span>1.</span> Основные данные</h3>
-                            <div class="form-group select col-md-6">
-
+                            <div class="form-group {% if form.shop.errors %}has-error{% endif %} select col-md-6">
                                     {% render_field form.shop|add_error_attr:"aria-invalid:true" %}
-                                    <p class="valid-errors">{{ form.shop.errors }}</p>
+                            <label class="valid-errors">{{ form.shop.errors }}</label>
                             </div>
 
-                            <div class="form-group select col-md-6">
+                            <div class="form-group {% if form.category.errors %}has-error{% endif %} select col-md-6">
                                 <select class="form-control" id="global_category" required>
                                     <option>Выберите раздел</option>
                                     {% for cat in fixed_categories %}
                                          <option>{{ cat.title }}</option>
                                     {% endfor %}
                                 </select>
-                            <p class="valid-errors" id="global_cat_error">{{ form.category.errors }}</p>
+                                <label>{{ form.category.errors }}</label>
                             </div>
 
-                            <div class="form-group select col-md-6">
+                            <div class="form-group {% if form.category.errors %}has-error{% endif %} select col-md-6">
                                 <select class="form-control" id="category_list" name="category" disabled>
                                 </select>
-                                <p class="valid-errors" id="cat_error">{{ form.category.errors }}</p>
+                                <label>{{ form.category.errors }}</label>
                             </div>
 
                             <div class="form-group select col-md-6">
@@ -42,19 +41,19 @@
 
                             </div>
 
-                            <div class="form-group input col-md-12">
+                            <div class="form-group {% if form.title.errors %}has-error{% endif %} input col-md-12">
 {#                                <input type="text" data-toggle="tooltip" title=""#}
 {#                                   data-placement="top"#}
 {#                                   data-original-title="Рекомендация: для лучшего поиска, пишите тип товара в начале названия. Автомобильные шины MAXXIS AT-771 Bravo"#}
 {#                                   aria-describedby="tooltip200612" class="form-control" placeholder="Название товара">#}
                                 {% render_field form.title|add_error_attr:"aria-invalid:true"|attr:"data-toggle:tooltip"|attr:"data-placement:top"|attr:"aria-describedby:tooltip200612"|attr:"required"|attr:"data-original-title:Рекомендация - для лучшего поиска, пишите тип товара в начале названия. Автомобильные шины MAXXIS AT-771 Bravo"|attr:"disabled" placeholder="Название товара" %}
-                                <p class="valid-errors">{{ form.title.errors }}</p>
+                                <label>{{ form.title.errors }}</label>
                             </div>
 
-                            <div class="form-group input col-md-12">
+                            <div class="form-group {% if form.price.errors %}has-error{% endif %} input col-md-12">
 {#                                <input type="text" class="form-control mini price" placeholder="Цена">#}
                                 {% render_field form.price|add_error_attr:"aria-invalid:true"|attr:"required"|attr:"class:form-control mini price" placeholder="Цена" %}
-                                <p class="valid-errors">{{ form.price.errors }}</p>
+                                <label>{{ form.price.errors }}</label>
 
                                 <div class="select">
                                    {% render_field  form.currency|add_error_attr:"aria-invalid:true"|attr:"required" %}
@@ -145,11 +144,11 @@
                             <p id="empty_properties" style="display: block;">Параметры для данной категории отсутствуют</p>
                         </div>
 
-                        <div class="step_4">
+                        <div class="step_4 {% if form.short_description.errors %}has-error{% endif %}">
                             <h3><span>4.</span> Короткое описание товара <span>(Опционально)</span></h3>
 {#                            <textarea class="form-control" rows="6"></textarea>#}
                             {% render_field form.short_description|attr:"rows:6"%}
-                            <p class="valid-errors">{{ form.short_description.errors }}</p>
+                            <label>{{ form.short_description.errors }}</label>
                         </div>
 
                         <div class="step_5">
