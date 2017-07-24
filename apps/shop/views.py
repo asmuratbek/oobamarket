@@ -17,7 +17,8 @@ from apps.shop.mixin import FormsetMixin
 from apps.users.models import Subscription, SUBSCRIPTION_TYPES
 from config.settings import base
 from apps.shop.decorators import delete_decorator
-from apps.shop.forms import ShopForm, ShopBannersForm, ShopSocialLinksForm, ShopInlineFormSet, SalesCreateForm
+from apps.shop.forms import ShopForm, ShopBannersForm, ShopSocialLinksForm, ShopInlineFormSet, SalesCreateForm, \
+    ShopUpdateInlineFormSet, ShopUpdateForm
 from apps.users.mixins import ShopMixin
 from .models import Shop, SocialLinks, Banners, Contacts, Sales
 import random
@@ -130,8 +131,8 @@ class ShopCreateView(LoginRequiredMixin, FormsetMixin, CreateView):
 class ShopUpdateView(LoginRequiredMixin, FormsetMixin, ShopMixin, UpdateView):
     model = Shop
     is_update_view = True
-    form_class = ShopForm
-    formset_class = ShopInlineFormSet
+    form_class = ShopUpdateForm
+    formset_class = ShopUpdateInlineFormSet
     template_name = 'shop/shop_update.html'
 
 
