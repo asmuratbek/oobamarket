@@ -9,14 +9,16 @@
             <div class="form-filter">
                 <form class="form-inline" method="post" enctype="multipart/form-data" id="add-shop-form">
                     {% csrf_token %}
-                    {{ form.errors }}
+                    {% if form.errors %}
+                        <div class="alert alert-danger">{{ form.errors }}</div>
+                    {% endif %}
                     <div class="col-md-8">
                         <div class="form-group input col-md-6">
                             <label for="">Название магазина</label>
                             {% render_field form.title|attr:"type:text" placeholder="" %}
                         </div>
 
-                        <div class="form-group input col-md-6">
+                        <div class="form-group has-error input col-md-6">
                             <label for="">E-mail магазина:</label>
                             {% render_field form.email|attr:"type:email" placeholder="" %}
                         </div>
@@ -40,48 +42,107 @@
                                     {{ form.place|attr:"class:form-control" }}
                                 </div>
                                 <div class="clearfix"></div>
-
-                                <div class="form-group col-md-6 btn-toggle-day">
+                                <div class="form-group col-md-6 btn-toggle-day" data-target="0">
                                     <a class="add btn btn-toggle-day-time">Указать время работы</a>
                                 </div>
 
-                                <div class="col-md-12 toggle-days" id="toggle-days-1">
+
+                                <div class="col-md-12 toggle-days" data-id="0">
                                     <i>Оставьте поле пустым если выходной день</i>
                                     <div class="form-group input col-md-6">
                                         <label for="">Понидельник</label>
-                                        {{ form.monday|attr:"class:form-control"|attr:"placeholder:с 9:00 до 18:00" }}
+                                        <div class="fake-input monday">
+                                            <div>
+                                                <span>С</span> <input type="text" class="from" style="float: none;">
+                                            </div>
+                                            <div>
+                                                <span>До</span> <input type="text" class="to" style="float: none;">
+                                            </div>
+                                        </div>
+                                        {% render_field form.monday|attr:"type:hidden" class='form-control true_input' placeholder='с 9:00 до 18:00' %}
+                                        {#{{ form.monday|attr:"class:"|attr:"placeholder:"|attr:"class:" }}#}
 
                                     </div>
                                     <div class="clearfix"></div>
                                     <div class="form-group input col-md-6">
                                         <label for="">Вторник</label>
-                                        {{ form.tuesday|attr:"class:form-control"|attr:"placeholder:с 9:00 до 18:00" }}
+                                        <div class="fake-input tuesday">
+                                            <div>
+                                                <span>С</span> <input type="text" class="from" style="float: none;">
+                                            </div>
+                                            <div>
+                                                <span>До</span> <input type="text" class="to" style="float: none;">
+                                            </div>
+                                        </div>
+                                        {{ form.tuesday|attr:"class:form-control true_input"|attr:"placeholder:с 9:00 до 18:00"|attr:"type:hidden" }}
                                     </div>
                                     <div class="clearfix"></div>
                                     <div class="form-group input col-md-6">
                                         <label for="">Среда</label>
-                                        {{ form.wednesday|attr:"class:form-control"|attr:"placeholder:с 9:00 до 18:00" }}
+                                        <div class="fake-input wednesday">
+                                            <div>
+                                                <span>С</span> <input type="text" class="from" style="float: none;">
+                                            </div>
+                                            <div>
+                                                <span>До</span> <input type="text" class="to" style="float: none;">
+                                            </div>
+                                        </div>
+                                        {{ form.wednesday|attr:"class:form-control"|attr:"placeholder:с 9:00 до 18:00"|attr:"type:hidden" }}
                                     </div>
                                     <div class="clearfix"></div>
                                     <div class="form-group input col-md-6">
                                         <label for="">Четверг</label>
-                                        {{ form.thursday|attr:"class:form-control"|attr:"placeholder:с 9:00 до 18:00" }}
+                                        <div class="fake-input thursday">
+                                            <div>
+                                                <span>С</span> <input type="text" class="from" style="float: none;">
+                                            </div>
+                                            <div>
+                                                <span>До</span> <input type="text" class="to" style="float: none;">
+                                            </div>
+                                        </div>
+                                        {{ form.thursday|attr:"class:form-control"|attr:"placeholder:с 9:00 до 18:00"|attr:"type:hidden" }}
                                     </div>
                                     <div class="clearfix"></div>
                                     <div class="form-group input col-md-6">
                                         <label for="">Пятница</label>
-                                        {{ form.friday|attr:"class:form-control"|attr:"placeholder:с 9:00 до 18:00" }}
+                                        <div class="fake-input friday">
+                                            <div>
+                                                <span>С</span> <input type="text" class="from" style="float: none;">
+                                            </div>
+                                            <div>
+                                                <span>До</span> <input type="text" class="to" style="float: none;">
+                                            </div>
+                                        </div>
+                                        {{ form.friday|attr:"class:form-control"|attr:"placeholder:с 9:00 до 18:00"|attr:"type:hidden" }}
                                     </div>
                                     <div class="clearfix"></div>
                                     <div class="form-group input col-md-6">
                                         <label for="">Суббота</label>
-                                        {{ form.saturday|attr:"class:form-control"|attr:"placeholder:с 9:00 до 18:00" }}
+                                        <div class="fake-input saturday">
+                                            <div>
+                                                <span>С</span> <input type="text" class="from" style="float: none;">
+                                            </div>
+                                            <div>
+                                                <span>До</span> <input type="text" class="to" style="float: none;">
+                                            </div>
+                                        </div>
+                                        {{ form.saturday|attr:"class:form-control"|attr:"placeholder:с 9:00 до 18:00"|attr:"type:hidden" }}
                                     </div>
                                     <div class="clearfix"></div>
                                     <div class="form-group input col-md-6">
                                         <label for="">Воскресенье</label>
-                                        {{ form.sunday|attr:"class:form-control"|attr:"placeholder:с 9:00 до 18:00" }}
+                                        <div class="fake-input sunday">
+                                            <div>
+                                                <span>С</span> <input type="text" class="from" style="float: none;">
+                                            </div>
+                                            <div>
+                                                <span>До</span> <input type="text" class="to" style="float: none;">
+                                            </div>
+                                        </div>
+                                        {{ form.sunday|attr:"class:form-control"|attr:"placeholder:с 9:00 до 18:00"|attr:"type:hidden" }}
                                     </div>
+
+
                                 </div>
 
 
@@ -204,12 +265,11 @@
 {% endblock %}
 {% block js %}
 
-    {{ block.super }}
-    <script src="{% static 'js/jquery.2.2.4.js' %}"></script>
-    <script src="{% static 'js/bootstrap.min.js' %}"></script>
     <script async defer
             src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDXEuBW9AIFcfHx1UHvceIvCz0JnRNjGyo&callback=initMap">
     </script>
+    <script src="{% static 'js/jquery.2.2.4.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
     <script src="{% static 'js/previewLogos.js' %}"></script>
 
     <script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
@@ -234,46 +294,104 @@
                     {{ form.place|attr:"class:form-control" }}
                 </div>
                 <div class="clearfix"></div>
-                <div class="form-group col-md-6 btn-toggle-day">
+                <div class="form-group col-md-6 btn-toggle-day" data-target="__prefix__">
                     <a class="add btn btn-toggle-day-time">Указать время работы</a>
                 </div>
 
-                <div class="col-md-12 toggle-days" id="toggle-days-1">
+                <div class="col-md-12 toggle-days" data-id="__prefix__">
 
+                    <i>Оставьте поле пустым если выходной день</i>
                     <div class="form-group input col-md-6">
                         <label for="">Понидельник</label>
-                        {{ form.monday|attr:"class:form-control"|attr:"placeholder:с 9:00 до 18:00" }}
+                        <div class="fake-input monday">
+                            <div>
+                                <span>С</span> <input type="text" class="from" style="float: none;">
+                            </div>
+                            <div>
+                                <span>До</span> <input type="text" class="to" style="float: none;">
+                            </div>
+                        </div>
+                        {% render_field form.monday|attr:"type:hidden" class='form-control true_input' placeholder='с 9:00 до 18:00' %}
+                        {#{{ form.monday|attr:"class:"|attr:"placeholder:"|attr:"class:" }}#}
+
                     </div>
                     <div class="clearfix"></div>
                     <div class="form-group input col-md-6">
                         <label for="">Вторник</label>
-                        {{ form.tuesday|attr:"class:form-control"|attr:"placeholder:с 9:00 до 18:00" }}
+                        <div class="fake-input tuesday">
+                            <div>
+                                <span>С</span> <input type="text" class="from" style="float: none;">
+                            </div>
+                            <div>
+                                <span>До</span> <input type="text" class="to" style="float: none;">
+                            </div>
+                        </div>
+                        {{ form.tuesday|attr:"class:form-control true_input"|attr:"placeholder:с 9:00 до 18:00"|attr:"type:hidden" }}
                     </div>
                     <div class="clearfix"></div>
                     <div class="form-group input col-md-6">
                         <label for="">Среда</label>
-                        {{ form.wednesday|attr:"class:form-control"|attr:"placeholder:с 9:00 до 18:00" }}
-
+                        <div class="fake-input wednesday">
+                            <div>
+                                <span>С</span> <input type="text" class="from" style="float: none;">
+                            </div>
+                            <div>
+                                <span>До</span> <input type="text" class="to" style="float: none;">
+                            </div>
+                        </div>
+                        {{ form.wednesday|attr:"class:form-control"|attr:"placeholder:с 9:00 до 18:00"|attr:"type:hidden" }}
                     </div>
                     <div class="clearfix"></div>
                     <div class="form-group input col-md-6">
                         <label for="">Четверг</label>
-                        {{ form.thursday|attr:"class:form-control"|attr:"placeholder:с 9:00 до 18:00" }}
+                        <div class="fake-input thursday">
+                            <div>
+                                <span>С</span> <input type="text" class="from" style="float: none;">
+                            </div>
+                            <div>
+                                <span>До</span> <input type="text" class="to" style="float: none;">
+                            </div>
+                        </div>
+                        {{ form.thursday|attr:"class:form-control"|attr:"placeholder:с 9:00 до 18:00"|attr:"type:hidden" }}
                     </div>
                     <div class="clearfix"></div>
                     <div class="form-group input col-md-6">
                         <label for="">Пятница</label>
-                        {{ form.friday|attr:"class:form-control"|attr:"placeholder:с 9:00 до 18:00" }}
+                        <div class="fake-input friday">
+                            <div>
+                                <span>С</span> <input type="text" class="from" style="float: none;">
+                            </div>
+                            <div>
+                                <span>До</span> <input type="text" class="to" style="float: none;">
+                            </div>
+                        </div>
+                        {{ form.friday|attr:"class:form-control"|attr:"placeholder:с 9:00 до 18:00"|attr:"type:hidden" }}
                     </div>
                     <div class="clearfix"></div>
                     <div class="form-group input col-md-6">
                         <label for="">Суббота</label>
-                        {{ form.saturday|attr:"class:form-control"|attr:"placeholder:с 9:00 до 18:00" }}
+                        <div class="fake-input saturday">
+                            <div>
+                                <span>С</span> <input type="text" class="from" style="float: none;">
+                            </div>
+                            <div>
+                                <span>До</span> <input type="text" class="to" style="float: none;">
+                            </div>
+                        </div>
+                        {{ form.saturday|attr:"class:form-control"|attr:"placeholder:с 9:00 до 18:00"|attr:"type:hidden" }}
                     </div>
                     <div class="clearfix"></div>
                     <div class="form-group input col-md-6">
                         <label for="">Воскресенье</label>
-                        {{ form.sunday|attr:"class:form-control"|attr:"placeholder:с 9:00 до 18:00" }}
+                        <div class="fake-input sunday">
+                            <div>
+                                <span>С</span> <input type="text" class="from" style="float: none;">
+                            </div>
+                            <div>
+                                <span>До</span> <input type="text" class="to" style="float: none;">
+                            </div>
+                        </div>
+                        {{ form.sunday|attr:"class:form-control"|attr:"placeholder:с 9:00 до 18:00"|attr:"type:hidden" }}
                     </div>
 
 
@@ -316,6 +434,7 @@
             {% endwith %}
         </div>
     </script>
+
     <script>
         var formSetsCounter = 0;
         $(function () {
@@ -329,8 +448,45 @@
                 $('div.inline-appended').append(compiledTmpl);
                 $('#id_contacts_set-TOTAL_FORMS').attr('value', count + 1);
                 initSetMarkerButton();
+                initToggle();
+
             });
         });
+
+
+        $(".btn-toggle-day").click(function (e) {
+            e.preventDefault();
+            $(".toggle-days").slideToggle("100").attr('data-id');
+
+        });
+
+        initFakeInputs();
+
+        function initFakeInputs() {
+            $('.fake-input').each(function (i, obj) {
+                let from = $(obj).find('input.from');
+                let to = $(obj).find('input.to');
+                let trueInput = $(obj).parent().find('input.true_input');
+
+                from.unbind('input').bind('input', function () {
+                    trueInput.val($(this).val() + ' - ' + to.val());
+                });
+
+                to.unbind('input').bind('input', function () {
+                    trueInput.val(from.val() + ' - ' + $(this).val());
+                })
+            });
+        }
+
+
+        function initToggle() {
+            console.log('Function called');
+            $(".btn-toggle-day").each(function () {
+                $(this).unbind('click').bind('click', function (e) {
+                    $('.toggle-days[data-id=' + $(this).attr('data-target') + ']').slideToggle("100");
+                });
+            });
+        }
 
     </script>
     <script>

@@ -2,10 +2,6 @@ from django.forms import ModelForm, forms, inlineformset_factory
 from .models import Shop, Banners, SocialLinks, Contacts, Sales
 
 
-# class ShopForm(ModelForm):
-#     # class Meta:
-#     #     model = Shop
-#     #     fields = ['title', 'logo', 'email', 'phone', 'short_description', 'description', 'user', 'slug',]
 
 
 class ShopForm(ModelForm):
@@ -25,6 +21,26 @@ class ShopForm(ModelForm):
         if not logo:
             raise forms.ValidationError("Логотип обязателен для заполнения", code='no_logo')
         return logo
+
+
+class ShopUpdateForm(ModelForm):
+    class Meta:
+        model = Shop
+        exclude = ['user', 'slug', 'counter']
+
+    def __init__(self, *args, **kwargs):
+        super(ShopUpdateForm, self).__init__(*args, **kwargs)
+        for field in iter(self.fields):
+            self.fields[field].widget.attrs.update({
+                'class': 'form-control'
+            })
+
+    def clean_logo(self):
+        logo = self.cleaned_data['logo']
+        if not logo:
+            raise forms.ValidationError("Логотип обязателен для заполнения", code='no_logo')
+        return logo
+
 
 
 class ShopBannersForm(ModelForm):
@@ -63,3 +79,10 @@ class SalesCreateForm(ModelForm):
     class Meta:
         model = Sales
         exclude = ['shop']
+
+
+ShopUpdateInlineFormSet = inlineformset_factory(Shop, Contacts, extra=0,
+                                          fields=(
+                                              'published', 'phone', 'address', 'place', 'latitude',
+                                              'longitude', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday',
+                                              'saturday', 'sunday'), can_delete=True)

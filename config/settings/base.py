@@ -36,6 +36,7 @@ if READ_DOT_ENV_FILE:
 DJANGO_APPS = [
     # Default Django apps:
     'behave_django',
+    'jet',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',

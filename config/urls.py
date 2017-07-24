@@ -36,6 +36,7 @@ urlpatterns = [
     url(r'^shop_reviews/$', shop_reviews, name='shop_reviews'),
 
     # Django Admin, use {% url 'admin:index' %}
+    url(r'^jet/', include('jet.urls', 'jet')),
     url(settings.ADMIN_URL, admin.site.urls),
 
     # User management

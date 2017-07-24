@@ -17,10 +17,22 @@
                                     <i class="fa fa-volume-control-phone" aria-hidden="true"></i>
                                     <p>{{ contact.phone }}</p>
                                 </li>
-                                <li>
-                                    <i class="fa fa-clock-o" aria-hidden="true"></i>
-                                    <p>{{ contact.work_time }}</p>
-                                </li>
+                                {% if contact.monday and contact.tuesday and contact.wednesday and contacts.thursday and contact.saturday and contact.sunday %}
+                                    <li>
+                                        <i class="fa fa-clock-o" aria-hidden="true"></i>
+                                        <p>Понедельник:{{ contact.monday }}</p>
+                                        <p>Вторник:{{ contact.tuesday }}</p>
+                                        <p>Среда:{{ contact.wednesday }}</p>
+                                        <p>Четверг:{{ contact.thursday }}</p>
+                                        <p>Пятница:{{ contact.friday }}</p>
+                                        <p>Субота:{{ contact.saturday }}</p>
+                                        <p>Воскресенье:{{ contact.sunday }}</p>
+                                    </li>
+                                {% else %}
+                                    <p>Выходные:</p>
+                                    <p>Субота:{{ contact.saturday }}</p>
+                                    <p>Воскресенье:{{ contact.sunday }}</p>
+                                {% endif %}
                             </ul>
                         </div>
                     {% endfor %}
