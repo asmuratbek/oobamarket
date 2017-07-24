@@ -429,9 +429,6 @@ $(document).ready(function () {
         $(this).toggleClass("active");
     });
 
-    $(".btn-toggle-day").click(function () {
-        $("#toggle-days-1").slideToggle("100");
-    });
 
     $(".filter-clone .btn-toggle-setting").click(function () {
         $("#toggle-setting-1").slideToggle("100");

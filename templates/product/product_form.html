@@ -8,7 +8,9 @@
             <div class="form-filter">
                 <form class="form-inline" method="post" enctype="multipart/form-data" data-media-upload-url="{% url 'product:upload_images' %}" data-remove-uploaded-media-url="{% url 'product:remove_images' %}" id="form">
                 {% csrf_token %}
-                {{ form.errors }}
+                {% if form.errors %}
+                <div class="alert alert-danger">{{ form.errors }}</div>
+                {% endif %}
                     <div class="col-md-8">
 
                         <div class="step_1">
