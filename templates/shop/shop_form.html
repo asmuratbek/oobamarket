@@ -22,7 +22,7 @@
 
                         <div class="form-group {% if form.email.errors %}has-error{% endif %} input col-md-6">
                             {% if not form.email.errors %}
-                                <label for="">E-mail магазина:{% else %}
+                                <label for="">E-mail магазина:</label>{% else %}
                                 <label for="">E-mail магазина:{{ form.email.errors }}</label>{% endif %}
                             {% render_field form.email|attr:"type:email" placeholder="" %}
                         </div>
