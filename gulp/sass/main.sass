@@ -24,13 +24,13 @@
     color: #fff !important
 
 ::-webkit-input-placeholder
-  color: #ccc !important
+  color: #a9a9a9 !important
 ::-moz-placeholder
-  color: #ccc !important
+  color: #a9a9a9 !important
 ::-moz-placeholder
-  color: #ccc !important
+  color: #a9a9a9 !important
 -ms-input-placeholder
-  color: #ccc !important
+  color: #a9a9a9 !important
 .inline-1, .inline-2, .inline-3, .inline-4
   overflow: hidden
   margin-bottom: 80px
@@ -602,7 +602,7 @@ header
     width: 25%
     float: left
     .filter-clone
-      margin-bottom: 10px
+      margin-bottom: 20px
     h4
       text-align: center
       margin-bottom: 20px
@@ -1981,6 +1981,41 @@ ul.category-tab
       color: #333
       border-color: #E6E6E6
 
+.shop-category.global-category
+  .selectize-control.single .selectize-input:after
+    border-top: 1px solid #eee !important
+    border: 0
+    position: absolute
+    content: ''
+    right: 0
+    top: 0
+    width: 43px
+    height: 37px
+    background: url(../img/png/arrow0.png) 16px center no-repeat
+    -webkit-transform: rotate(-90deg)
+    -ms-transform: rotate(-90deg)
+    transform: rotate(-90deg)
+    background-size: 35px
+  .selectize-input
+    .item
+      color: #555 !important
+  .selectize-input
+    input
+      font-size: 14px !important
+  .selectize-control.single
+    .selectize-input, .selectize-dropdown.single
+      border-color: #eee
+      background-image: none
+      background-color: #fff
+      box-shadow: none
+      border-radius: 0
+      font-size: 14px
+      color: #ccc
+  .form-filter .form-group.select
+    width: 30.99% !important
+  .goods-of-week
+    .catalog-filter
+      padding-right: 0 !important
 .shop-category
   margin-bottom: 200px
   .filter-dropdown

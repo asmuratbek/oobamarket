@@ -306,6 +306,31 @@ var MainInterface = createClass({
                     </div>
 
 
+                    <div className="filter-clone">
+                        <div className="form-group">
+                            <select className="select-beast " placeholder="Название настроек">
+                                <option value="">Название настроек</option>
+                                <option value="4">Thomas Edison</option>
+                                <option value="1">Nikola</option>
+                                <option value="3">Nikola Tesla</option>
+                                <option value="5">Arnold Schwarzenegger</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div className="filter-clone">
+                        <div className="form-group">
+                            <select className="select-beast " placeholder="Название настроек">
+                                <option value="">Название настроек</option>
+                                <option value="4">Thomas Edison</option>
+                                <option value="1">Nikola</option>
+                                <option value="3">Nikola Tesla</option>
+                                <option value="5">Arnold Schwarzenegger</option>
+                            </select>
+                        </div>
+                    </div>
+
+
                 </div>
             </div>
         )
@@ -314,3 +339,5 @@ var MainInterface = createClass({
 
 
 ReactDOM.render(<MainInterface />, document.getElementById('root'));
+
+$('.select-beast').selectize({});

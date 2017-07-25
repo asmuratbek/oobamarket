@@ -431,7 +431,7 @@ $(document).ready(function () {
 
 
     $(".filter-clone .btn-toggle-setting").click(function () {
-        $("#toggle-setting-1").slideToggle("100");
+        $("#toggle-setting-1").slideToggle("0");
     });
 
 
