@@ -47,7 +47,6 @@ class ProductForm(forms.ModelForm):
             self._errors['short_description'] = error_msg
 
 
-
 class ProductUpdateForm(forms.ModelForm):
     class Meta:
         model = Product
@@ -62,6 +61,8 @@ class ProductUpdateForm(forms.ModelForm):
         self.user = kwargs['initial']['user']
         super(ProductUpdateForm, self).__init__(*args, **kwargs)
         self.fields['shop'].queryset = Shop.objects.filter(user__in=[self.user.id])
+        self.fields['parent_categories'].queryset = Category.objects.filter(parent=None, section__id=kwargs.get('initial')['section'])
+        self.fields['category'].queryset = Category.objects.filter(parent__id=kwargs.get("initial")['parent_categories'])
         for field in iter(self.fields):
             self.fields[field].widget.attrs.update({
                 'class': 'form-control'
