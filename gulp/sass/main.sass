@@ -1196,6 +1196,13 @@ header
   .item
     float: left
     width: 10%
+    position: relative
+  .item
+    .dropdown-menu.open
+      display: none
+  .item:hover
+    .dropdown-menu.open
+      display: inline-block
   .pull-left
 
   .nav .open>a, .nav .open>a:focus, .nav .open>a:hover
@@ -1204,7 +1211,6 @@ header
   .dropdown
     display: inline-block
     margin-left: 10px
-
     .enter.btn:hover
       border-color: transparent!important
       &:before
@@ -1214,7 +1220,7 @@ header
       margin-left: 0!important
 
     .glyphicon
-      display: inline-block
+      display: none
       padding: 30px 5px
       position: absolute
       font-size: 15px
@@ -1232,7 +1238,7 @@ header
     display: block
     top: 100%
     animation-name: appear
-    animation-duration: 0.5s
+    animation-duration: 0.7s
   ul.dropdown-menu
     transition: 0.3s all
     border-top: 0
