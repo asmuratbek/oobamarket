@@ -3809,19 +3809,67 @@ form.add_email
     margin-bottom: 5px
     font-weight: 300
 .shop-list
-  h3
-    text-align: center
+  .selectize-dropdown.single.demo-default.col-md-5
+    padding-right: 0
+    padding-left: 0
+    border: 1px solid #ccc
+  form
+    .selectize-control.single .selectize-input:after
+      border-top: 1px solid #ccc !important
+      border: 0
+      position: absolute
+      content: ''
+      right: 0px
+      top: 0px
+      width: 37px
+      height: 37px
+      background: url(../img/png/arrow0.png) 13px center no-repeat
+      -webkit-transform: rotate(-90deg)
+      -ms-transform: rotate(-90deg)
+      transform: rotate(-90deg)
+      background-size: 35px
+
+    .selectize-input, .selectize-control.single .selectize-input
+      border-radius: 0
+      background-color: #fff
+      background-image: none !important
+      box-shadow: none !important
+      border: 1px solid #ccc
+    input.form-control
+      border: 1px solid #ccc !important
+    input
+      border-radius: 0 !important
+
+    button
+      position: absolute
+      top: 0
+      right: 0
+      bottom: 0
+      width: 40px
+      background-color: #ccc
+      outline: none !important
+      border: 0
+      span
+        color: #fff
+    button:hover
+      background-color: #b8b7b7
+  h1
+    text-align: left
     font-size: 34px
     font-weight: 300
     margin-bottom: 40px
-    color: #808080
+    color: #555
+  .bg-white
+    background-color: #fff
+    padding: 30px 15px 0 15px
+    overflow: hidden
   .col-md-3
     margin-bottom: 30px
 
   .single-magazin
     width: 100%
     float: left
-    margin-left: 35px
+
 
     .cover:hover
       -webkit-box-shadow: 0 0 40px -15px rgba(0,0,0,.75)

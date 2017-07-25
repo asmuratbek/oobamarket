@@ -7,6 +7,8 @@
     {% include 'layout/header.html' with global_title=object.shop.get_global_category.title %}
 {% endblock %}
 
+
+
 {% block categories %}
     <section class="category-link hidden-sm hidden-xs">
     <div class="container-fluid">
@@ -93,7 +95,7 @@
             <div class="single-magazin">
                 <h3>Магазин / Продавец:</h3>
                 <div class="cover">
-                    <a class="url-item" href="{{ object.shop.get_absolute_url }}"></a>
+                    <a class="url-item" data-toggle="tooltip" title="" data-placement="top" data-original-title="Перейти в магазин" href="{{ object.shop.get_absolute_url }}"></a>
                     <div class="top-line">
                         <h2>{{ object.shop.title }}</h2>
                     </div>
@@ -197,6 +199,7 @@
     {{ block.super }}
     <script src={% static 'js/jquare-zoom.js' %}></script>
     <script src="{% static 'js/counter.js' %}"></script>
+
 
     <script>
     var form = $('#review_form');
