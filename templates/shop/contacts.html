@@ -17,22 +17,53 @@
                                     <i class="fa fa-volume-control-phone" aria-hidden="true"></i>
                                     <p>{{ contact.phone }}</p>
                                 </li>
-                                {% if contact.monday and contact.tuesday and contact.wednesday and contacts.thursday and contact.saturday and contact.sunday %}
                                     <li>
                                         <i class="fa fa-clock-o" aria-hidden="true"></i>
-                                        <p>Понедельник:{{ contact.monday }}</p>
-                                        <p>Вторник:{{ contact.tuesday }}</p>
-                                        <p>Среда:{{ contact.wednesday }}</p>
-                                        <p>Четверг:{{ contact.thursday }}</p>
-                                        <p>Пятница:{{ contact.friday }}</p>
-                                        <p>Субота:{{ contact.saturday }}</p>
-                                        <p>Воскресенье:{{ contact.sunday }}</p>
+                                        {% if contact.monday %}
+                                            <p>Понедельник:{{ contact.monday }}</p>
+                                        {% endif %}
+                                        {% if contact.tuesday %}
+                                            <p>Вторник:{{ contact.tuesday }}</p>
+                                        {% endif %}
+                                        {% if contact.wednesday %}
+                                            <p>Среда:{{ contact.wednesday }}</p>
+                                        {% endif %}
+                                        {% if contact.thursday %}
+                                            <p>Четверг:{{ contact.thursday }}</p>
+                                        {% endif %}
+                                        {% if contact.friday %}
+                                            <p>Пятница:{{ contact.friday }}</p>
+                                        {% endif %}
+                                        {% if contact.saturday %}
+                                            <p>Субота:{{ contact.saturday }}</p>
+                                        {% endif %}
+                                        {% if contact.sunday %}
+                                            <p>Воскресенье:{{ contact.sunday }}</p>
+                                        {% endif %}
                                     </li>
-                                {% else %}
                                     <p>Выходные:</p>
-                                    <p>Субота:{{ contact.saturday }}</p>
-                                    <p>Воскресенье:{{ contact.sunday }}</p>
-                                {% endif %}
+                                        {% if not contact.monday %}
+                                            <p>Понедельник</p>
+                                        {% endif %}
+                                        {% if not contact.tuesday %}
+                                            <p>Вторник</p>
+                                        {% endif %}
+                                        {% if not contact.wednesday %}
+                                            <p>Среда</p>
+                                        {% endif %}
+                                        {% if not contact.thursday %}
+                                            <p>Четверг</p>
+                                        {% endif %}
+                                        {% if not contact.friday %}
+                                            <p>Пятница:</p>
+                                        {% endif %}
+                                        {% if not contact.saturday %}
+                                            <p>Субота</p>
+                                        {% endif %}
+                                        {% if not contact.sunday %}
+                                            <p>Воскресенье</p>
+                                        {% endif %}
+
                             </ul>
                         </div>
                     {% endfor %}
