@@ -134,50 +134,92 @@
                         <div class="step_3">
                             <h3><span>3.</span> Параметры товара</h3>
                             <div class="form-group select col-md-6" id="property_list">
-                                {% for property in props %}
-                                <div class="form-group checkbox col-md-12">
+                               <div class="params">
 
-                                    <label class="title">{{ property.title }}</label>
-                                    <div class="cover col-md-6">
+                                    {% for property in props %}
 
-                                        {% if property.title == 'Цвет' or property.title == 'Размер' %}
+                                    {#Select#}
+                                    {% if "Производ" in property.title %}
+                                        <div class="col-md-12">
+                                    <div class="select parent-group form-group col-md-6 cover" style="padding-left: 0; width: 50%;">
+                                        <label class="title">{{ property.title }}</label>
+                                        <select class="form-control" id="subcategory_list" name="property-{{ property.id }}">
+                                            <option>------------</option>
                                             {% for value in property.values_set.all %}
-                                                {% if forloop.counter == 15 or forloop.counter == 30 %}
-                                                    </div>
-                                                <div class="cover col-md-6">
-                                                {% endif %}
-                                                    <div class="form-custom-checkbox">
-                                                        <label class="name_setting" for="{{ value.id }}">{{ value }}</label>
-                                                        <input type="checkbox" value="{{ value }}" name="val-{{ value.id }}" id="{{ value.id }}" {% if value.id in values %}checked{% endif %}>
-                                                        <div class="indicator"></div>
-                                                    </div>
-                                                {% endfor %}
-                                                {% if property.values_set.all.count >= 30 %}
-                                                    </div>
-                                                    </div>
-                                                {% elif property.values_set.all.count >= 11 %}
-                                                    </div>
-                                                {% endif %}
-                                            {% else %}
+                                                <option value="{{ value.id }}">{{ value }}</option>
+                                            {% endfor %}
+                                        </select>
+                                     <div class="manufacturer" style="display: none;">
+                                            <input type="text" class="form-control" id="manufacturer-input">
+                                        </div>
+                                        <a class="add no-bg btn manufacturer-btn" style="margin: 0; width: 100%;">Добавить</a>
 
+                                    </div>
+                                        </div>
+
+                                        <script>
+
+
+                                         $('.manufacturer-btn').click(function(){
+                                             var input = $('#manufacturer-input');
+
+                                           $('.manufacturer').slideToggle('100');
+                                           if($(this).text() == 'Убрать'){
+                                               $(this).text('Добавить');
+                                               input.removeAttr('name');
+                                           } else {
+                                               $(this).text('Убрать');
+                                               input.attr('name', 'man-{{ property.id }}');
+                                           }
+                                    });
+                                    </script>
+
+                                    {% elif "Размер" in property.title or "Цвет" in property.title %}
+
+
+
+                                    {#Checkbox#}
+                                    <div class="form-group parent-group checkbox col-md-12" style="padding-left: 0;">
+                                        <label class="title">{{ property.title }}</label>
+
+                                    {#    первый цикл 14 чекбоксов#}
+                                        {% for value in property.values_set.all %}
+                                            {% if forloop.counter == 15 or forloop.counter == 1 %}
+                                        <div class="cover col-md-4">
+                                            {% endif %}
 
 
                                             <div class="form-custom-checkbox">
-                                                <select class="form-control" id="subcategory_list" name="property-{{ property.id }}">
-                                                    <option>------------</option>
-                                                {% for value in property.values_set.all %}
-                                                    <option value="{{ value.id }}" {% if value.id in values %}selected{% endif %}>{{ value }}</option>
-                                                    {% endfor %}
-                                                </select>
+                                                <label class="name_setting" for="{{ value.id }}">{{ value }}</label>
+                                                <input type="checkbox" class="checkbox" id="{{ value.id }}" value="{{ value }}" name="val-{{ value.id }}">
+                                                <div class="indicator"></div>
                                             </div>
-
-
-                                        {% endif %}
+                                          {% if forloop.counter == 28 or forloop.counter == 14 %}
+                                        </div>
+                                            {% endif %}
+                                        {% endfor %}
 
                                     </div>
 
-                                </div>
-                            {% endfor %}
+                                    {% else %}
+                                    <div class="col-md-12">
+                                    <div class="select parent-group form-group col-md-6 cover" style="padding-left: 0; width: 50%;">
+                                        <label class="title">{{ property.title }}</label>
+                                        <select class="form-control" id="subcategory_list" name="property-{{ property.id }}">
+                                            <option>------------</option>
+                                            {% for value in property.values_set.all %}
+                                                <option value="{{ value.id }}">{{ value }}</option>
+                                            {% endfor %}
+                                        </select>
+
+                                    </div>
+                                        </div>
+                                        {% endif %}
+
+                                    {% endfor %}
+
+                                    </div>
+
 {#                            <p id="empty_properties">Параметры для данной категории отсутствуют</p>#}
                         </div>
         </div>
