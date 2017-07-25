@@ -1,0 +1,193 @@
+{% load staticfiles %}
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDXEuBW9AIFcfHx1UHvceIvCz0JnRNjGyo&callback=initMap">
+</script>
+<script src="{% static 'js/jquery.2.2.4.js' %}"></script>
+
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+
+
+<script src="{% static 'js/previewLogos.js' %}"></script>
+
+<script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
+<script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
+<script type="text/html" id="contact-template">
+    <div class="inline-__prefix__">
+        {% include 'shop/partials/additional-form.html' %}
+    </div>
+</script>
+
+<script>
+    var formSetsCounter = 0;
+    $(function () {
+        $('#add-new-contact').click(function (ev) {
+            ev.preventDefault();
+            var count = parseInt($('#id_contacts_set-TOTAL_FORMS').attr('value'), 10);
+            formSetsCounter = count;
+            var tmplMarkup = $('#contact-template').html();
+            var compiledTmpl = tmplMarkup.replace(/__prefix__/g, count)
+            console.log(compiledTmpl);
+            $('div.inline-appended').append(compiledTmpl);
+            $('#id_contacts_set-TOTAL_FORMS').attr('value', count + 1);
+            initSetMarkerButton();
+            initToggle();
+
+        });
+    });
+
+
+    $(".btn-toggle-day").click(function (e) {
+        e.preventDefault();
+        $(".toggle-days").slideToggle("100").attr('data-id');
+
+    });
+
+    initFakeInputs();
+
+    function initFakeInputs() {
+        $('.fake-input').each(function (i, obj) {
+            let from = $(obj).find('input.from');
+            let to = $(obj).find('input.to');
+            let trueInput = $(obj).parent().find('input.true_input');
+
+            from.unbind('input').bind('input', function () {
+                trueInput.val($(this).val() + ' - ' + to.val());
+            });
+
+            to.unbind('input').bind('input', function () {
+                trueInput.val(from.val() + ' - ' + $(this).val());
+            })
+        });
+    }
+
+
+    function initToggle() {
+        console.log('Function called');
+        $(".btn-toggle-day").each(function () {
+            $(this).unbind('click').bind('click', function (e) {
+                $('.toggle-days[data-id=' + $(this).attr('data-target') + ']').slideToggle("100");
+            });
+        });
+    }
+
+</script>
+<script>
+    let map = null;
+    let markers = [];
+    let mapCenter = {lat: 42.864272, lng: 74.579775};
+    let workingIndex = -1;
+
+    function initMap() {
+        map = new google.maps.Map(document.getElementById('custom-map'), {
+            center: mapCenter,
+            zoom: 15,
+            mapTypeId: google.maps.MapTypeId.TERRAIN
+        });
+
+        map.addListener('click', function (event) {
+            addMarker(event.latLng);
+        });
+
+        // Adds a marker at the center of the map.
+    }
+
+    function addMarker(_location) {
+        let currId = -1;
+        for (let i = 0; i < markers.length; ++i) {
+            if (markers[i]['id'] === workingIndex) currId = i;
+            console.log(markers)
+        }
+
+        $('#id_contacts_set-' + workingIndex + '-longitude').val(_location['lng']);
+        $('#id_contacts_set-' + workingIndex + '-latitude').val(_location['lat']);
+        let marker = new google.maps.Marker({
+            position: _location,
+            input_id: workingIndex
+        });
+        if (markers.length > 0 && currId > -1)
+            markers[currId]['data'].setPosition(_location);
+        else
+            marker.setMap(map);
+        markers.push({
+            'id': workingIndex,
+            'data': marker
+        });
+
+        marker.addListener('click', function () {
+            removeMarker(marker);
+        });
+    }
+
+    function removeMarker(marker) {
+        marker.setMap(null);
+        markers.splice(markers.indexOf(marker.input_id), 1);
+        $('#id_contacts_set-' + marker.input_id + '-longitude').val('');
+        $('#id_contacts_set-' + marker.input_id + '-latitude').val('');
+    }
+
+    // Sets the map on all markers in the array.
+    function setMapOnAll(map) {
+        for (let i = 0; i < markers.length; i++) {
+            markers[i].setMap(map);
+        }
+    }
+
+    // Removes the markers from the map, but keeps them in the array.
+    function clearMarkers() {
+        setMapOnAll(null);
+    }
+
+    // Shows any markers currently in the array.
+    function showMarkers() {
+        setMapOnAll(map);
+    }
+
+    // Deletes all markers in the array by removing references to them.
+    function deleteMarkers() {
+        clearMarkers();
+        markers = [];
+    }
+
+    function openMarkerModal(index) {
+        workingIndex = index;
+        $('#set-marker-modal').modal('show');
+        setTimeout(function () {
+            google.maps.event.trigger(map, "resize");
+            map.setCenter(mapCenter);
+        }, 2000);
+    }
+
+    function closeMarkerModal() {
+        $('#set-marker-modal').modal('hide');
+    }
+</script>
+
+<script>
+    function initSetMarkerButton() {
+        $('.set-marker-trigger').unbind('click').bind('click', function (e) {
+            e.preventDefault();
+            openMarkerModal(parseInt($(this).attr('data-id')));
+        });
+    }
+    initSetMarkerButton();
+    $('#add-new-contact').on('click', function (e) {
+        console.log(formSetsCounter);
+        openMarkerModal(formSetsCounter);
+
+    });
+</script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
+<script>
+    $('.timepicker.from').timepicker({
+        timeFormat: 'H:mm',
+        show2400: true,
+        defaultTime: '06:00'
+    });
+</script>
+<script>
+    $('.timepicker.to').timepicker({
+        timeFormat: 'H:mm',
+        show2400: true,
+        defaultTime: '16:00'
+    });
+</script>

@@ -132,7 +132,7 @@ class ShopUpdateView(LoginRequiredMixin, FormsetMixin, ShopMixin, UpdateView):
     is_update_view = True
     form_class = ShopForm
     formset_class = ShopInlineFormSet
-    template_name = 'shop/shop_update.html'
+    template_name = 'shop/shop_form.html'
 
 
 
