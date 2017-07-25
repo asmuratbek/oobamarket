@@ -47,7 +47,6 @@ class ProductForm(forms.ModelForm):
             self._errors['short_description'] = error_msg
 
 
-
 class ProductUpdateForm(forms.ModelForm):
     class Meta:
         model = Product

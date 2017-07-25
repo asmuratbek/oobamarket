@@ -217,6 +217,9 @@ class ProductUpdateView(LoginRequiredMixin, UpdateProductMixin, UpdateView):
             elif key.startswith('property') and '---' not in value:
                 value = get_object_or_404(Values, id=int(value))
                 value.products.add(product)
+            elif key.startswith("man-") and value:
+                my_value, created = Values.objects.get_or_create(value=value, properties_id=int(key[4:]))
+                my_value.products.add(product)
         return super(ProductUpdateView, self).form_valid(form)
 
     def get_context_data(self, **kwargs):
