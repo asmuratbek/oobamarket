@@ -136,14 +136,14 @@
 
     <section class="reviews">
 
-        <div class="container" id="prod_review">
+        <div class="container bg-white" id="prod_review">
             {% include 'layout/prod_reviews.html' %}
         </div>
 
     </section>
 
     <section class="reviews edit">
-        <div class="container">
+        <div class="container bg-white">
             <div class="item">
                 <form id='review_form' class="product_review" action="{% url 'product:add_review' slug=object.slug %}" method="post">
                     {% csrf_token %}

@@ -74,47 +74,50 @@ $(document).ready(function () {
     $(wrapper).append('<img class="img-responsive" src="' + link + '">');
 
 
-    var dropParents = $('.category-link .dropdown');
 
-    $(dropParents).each(function (i, obj) {
-        $(obj).on('click', function (event) {
-            event.stopPropagation();
-            var target = $($(obj).attr('data-id'));
-            openDropdown(target, obj);
-        });
-    });
 
-    $(document).on('click', function (e) {
-        openDropdown(null, null);
-    });
 
-    function openDropdown(target, parent) {
-        var dropChildren = $('.category-link .dropdown-menu');
-        $(dropParents).each(function () {
-            if ($(this).attr('data-id') === $(parent).attr('data-id')) {
-                $(this).toggleClass('open');
-            } else {
-                $(this).removeClass('open');
-            }
-        });
-        $(dropChildren).each(function (i, obj) {
-            if (target !== null) {
-                if ($(obj).attr('id') === $(target).attr('id')) {
-                    var left = $(parent).offset().left;
-                    $(obj).toggleClass('open');
-                    $(obj).css('left', left);
-                } else {
-                    $(obj).removeClass('open');
-                }
-            } else {
-                $(obj).removeClass('open');
-            }
-
-            $(obj).click('click', function (e) {
-                e.stopPropagation();
-            });
-        });
-    }
+    // var dropParents = $('.category-link .dropdown');
+    //
+    // $(dropParents).each(function (i, obj) {
+    //     $(obj).on('click', function (event) {
+    //         event.stopPropagation();
+    //         var target = $($(obj).attr('data-id'));
+    //         openDropdown(target, obj);
+    //     });
+    // });
+    //
+    // $(document).on('click', function (e) {
+    //     openDropdown(null, null);
+    // });
+    //
+    // function openDropdown(target, parent) {
+    //     var dropChildren = $('.category-link .dropdown-menu');
+    //     $(dropParents).each(function () {
+    //         if ($(this).attr('data-id') === $(parent).attr('data-id')) {
+    //             $(this).toggleClass('open');
+    //         } else {
+    //             $(this).removeClass('open');
+    //         }
+    //     });
+    //     $(dropChildren).each(function (i, obj) {
+    //         if (target !== null) {
+    //             if ($(obj).attr('id') === $(target).attr('id')) {
+    //                 var left = $(parent).offset().left;
+    //                 $(obj).toggleClass('open');
+    //                 // $(obj).css('left', left);
+    //             } else {
+    //                 $(obj).removeClass('open');
+    //             }
+    //         } else {
+    //             $(obj).removeClass('open');
+    //         }
+    //
+    //         $(obj).click('click', function (e) {
+    //             e.stopPropagation();
+    //         });
+    //     });
+    // }
 
     //Ajax запрос на добавление комментария в продукте
 
