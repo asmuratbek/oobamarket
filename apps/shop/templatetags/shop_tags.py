@@ -99,7 +99,7 @@ def show_create_sale_button(shop, user):
         return mark_safe('')
 
 @register.assignment_tag
-def щshow_update_sale_button(shop, sale, user):
+def show_update_sale_button(shop, sale, user):
     if not user.is_anonymous:
         if user.is_authenticated:
             if shop.is_owner(user):

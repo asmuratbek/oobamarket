@@ -6,25 +6,28 @@
             <li><a href="{% url 'shops:sale_archive' slug=shop.slug %}">Архив акций</a></li>
             {% show_create_sale_button shop request.user %}
         </ul>
-        {% for sale in shop.sales_set.all %}
-            {% if sale.published == True %}
-            <div class="col-md-6">
-                <span class="descount">{{ sale.discount }}%</span>
-                <div class="img-wrapper">
-                    {% if sale.image %}
-                        <img src="{{ sale.image.url }}" alt="">
-                    {% else %}
-                        <img src="http://via.placeholder.com/540x200" alt="">
-                    {% endif %}
-                </div>
-                <div class="description">
-                    <h3>{{ sale.title }}</h3>
-                    <p>{{ sale.short_description }}</p>
-                    <a class="btn add" href="{% url 'shops:sale_detail' slug=shop.slug pk=sale.pk %}">Просмотреть</a>
-                    {% show_update_sale_button shop sale request.user %}
-                </div>
-            </div>
-            {% endif %}
-        {% endfor %}
+        <div class="row">
+            {% for sale in shop.sales_set.all %}
+                {% if sale.published == True %}
+                    <div class="col-md-6">
+                        <span class="descount">{{ sale.discount }}%</span>
+                        <div class="img-wrapper">
+                            {% if sale.image %}
+                                <img src="{{ sale.image.url }}" alt="">
+                            {% else %}
+                                <img src="http://via.placeholder.com/540x200" alt="">
+                            {% endif %}
+                        </div>
+                        <div class="description">
+                            <h3>{{ sale.title }}</h3>
+                            <p>{{ sale.short_description }}</p>
+                            <a class="btn add" href="{% url 'shops:sale_detail' slug=shop.slug pk=sale.pk %}">Просмотреть</a>
+                            {% show_update_sale_button shop sale request.user %}
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+
     </div>
 {% endblock %}
