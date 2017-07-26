@@ -159,7 +159,6 @@ var MainInterface = createClass({
         ;
 
         filteredProducts = filteredProducts.map(function (item, index) {
-            shopTitles.push(item.shop);
             return (
                 <Product key={ index }
                          onProductDelete={productDelete}
