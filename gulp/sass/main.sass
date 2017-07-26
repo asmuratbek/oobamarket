@@ -2970,7 +2970,6 @@ ul.category-tab
         margin-bottom: 40px !important
       .select
         position: relative
-
         &:before
           position: absolute !important
           display: inline-block !important
@@ -3007,6 +3006,7 @@ ul.category-tab
           -ms-transform: rotate(-90deg)
           transform: rotate(-90deg)
           background-size: 35px
+
   input[type=checkbox]
     display: none
   .indicator
@@ -3053,6 +3053,40 @@ ul.category-tab
     padding: 0
     display: none
     margin-bottom: 30px
+    .col-md-1
+      padding: 6px
+      input[type=checkbox]
+        opacity: 0
+        z-index: 100
+        position: absolute
+        width: 20px
+        margin: 0
+        height: 20px
+        cursor: pointer
+      .indicator
+        float: left
+        margin-right: 10px
+        width: 20px
+        height: 20px
+        border: 1px solid #ccc
+        position: relative
+        background-color: #fff
+        &:before
+          position: absolute
+          top: 4px
+          left: 4px
+          width: 10px
+          height: 10px
+          background-color: #F3481C
+          opacity: 0
+          content: ''
+          transition: 0.3s all
+      input[type=checkbox]:checked + .indicator:before
+        opacity: 1
+    .switch
+      width: 40px !important
+    .switch + label
+      line-height: 23px
     i
       display: block
       margin: 10px 0 20px 10px
