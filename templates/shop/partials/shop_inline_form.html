@@ -23,6 +23,17 @@
 
     <div class="col-md-12 toggle-days" data-id="0">
         <i>Оставьте поле пустым если выходной день</i>
+        <div class="form-group input col-md-12" style="margin-top: 10px; margin-bottom: 20px;">
+            <label class="switch">
+
+                {{ form.round_the_clock|attr:"class:switch__input"|attr:"id:id_piblished" }}
+                <div class="switch__toggle">
+                    <div class="switch__handle"></div>
+                </div>
+            </label>
+            <label>Круглосуточно</label>
+        </div>
+
         <div class="form-group input col-md-6">
             <label class="col-md-4" for="">Понедельник</label>
 

@@ -1,14 +1,11 @@
 {% load staticfiles %}
+
+<script src="{% static 'js/jquery.2.2.4.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/previewLogos.js' %}"></script>
 <script async defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDXEuBW9AIFcfHx1UHvceIvCz0JnRNjGyo&callback=initMap">
 </script>
-<script src="{% static 'js/jquery.2.2.4.js' %}"></script>
-
-<script src="{% static 'js/bootstrap.min.js' %}"></script>
-
-
-<script src="{% static 'js/previewLogos.js' %}"></script>
-
 <script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
 <script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
 <script type="text/html" id="contact-template">
@@ -95,7 +92,7 @@
         let currId = -1;
         for (let i = 0; i < markers.length; ++i) {
             if (markers[i]['id'] === workingIndex) currId = i;
-            console.log(markers)
+            console.log(i);
         }
 
         $('#id_contacts_set-' + workingIndex + '-longitude').val(_location['lng']);
@@ -110,8 +107,14 @@
             marker.setMap(map);
         markers.push({
             'id': workingIndex,
-            'data': marker
+            'data': marker,
+
         });
+
+        if (markers.length > 2)
+        markers = [];
+        if (markers.length >= 0)
+
 
         marker.addListener('click', function () {
             removeMarker(marker);
