@@ -15,6 +15,9 @@
 </script>
 
 <script>
+
+
+
     var formSetsCounter = 0;
     $(function () {
         $('#add-new-contact').click(function (ev) {
@@ -28,7 +31,7 @@
             $('#id_contacts_set-TOTAL_FORMS').attr('value', count + 1);
             initSetMarkerButton();
             initToggle();
-
+            //openMarkerModal(formSetsCounter);
         });
     });
 
@@ -92,8 +95,9 @@
         let currId = -1;
         for (let i = 0; i < markers.length; ++i) {
             if (markers[i]['id'] === workingIndex) currId = i;
-            console.log(i);
         }
+
+        console.log(currId);
 
         $('#id_contacts_set-' + workingIndex + '-longitude').val(_location['lng']);
         $('#id_contacts_set-' + workingIndex + '-latitude').val(_location['lat']);
@@ -101,19 +105,15 @@
             position: _location,
             input_id: workingIndex
         });
-        if (markers.length > 0 && currId > -1)
+        if (markers.length > 0 && currId > -1) {
             markers[currId]['data'].setPosition(_location);
-        else
+        }
+        else {
+            markers.push({'id': workingIndex,'data': marker});
             marker.setMap(map);
-        markers.push({
-            'id': workingIndex,
-            'data': marker,
+        }
 
-        });
 
-        if (markers.length > 2)
-        markers = [];
-        if (markers.length >= 0)
 
 
         marker.addListener('click', function () {
@@ -173,11 +173,6 @@
         });
     }
     initSetMarkerButton();
-    $('#add-new-contact').on('click', function (e) {
-        console.log(formSetsCounter);
-        openMarkerModal(formSetsCounter);
-
-    });
 </script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
 <script>

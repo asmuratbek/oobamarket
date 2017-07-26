@@ -64,10 +64,10 @@
                         </div>
 
                         <div class="img-wrapper">
-                            {% if not object.logo %}
-                            {% render_field form.logo|attr:"type:file"|attr:"style:display:none;"|attr:"id:id_images" %}
+{#                            {% render_field form.logo|attr:"type:file"|attr:"style:display:none;"|attr:"id:id_images" %}#}
+                            <input class="form-control" id="id_images" name="logo" style="display:none;" type="file">
                             <img id="logo_view" src=""/><span class="remove-logo">X</span>
-                             {% elif object.logo.name != "/default.jpg" %}
+                            {% if object.logo.name != "/default.jpg" %}
                                 <img src="{{ object.logo.url }}" alt="" id="id_logo2">
                                 <span class="remove-logo-update">X</span>
                             {% else %}
