@@ -23,8 +23,8 @@
 
     <div class="col-md-12 toggle-days" data-id="0">
         <i>Оставьте поле пустым если выходной день</i>
-        <div class="form-group input col-md-12" style="margin-top: 10px; margin-bottom: 20px;">
-            <label class="switch">
+        <div class="form-group input col-md-12" style="margin-top: 10px; margin-bottom: 20px;" id="switcher">
+            <label class="switch js-function">
 
                 {{ form.round_the_clock|attr:"class:switch__input"|attr:"id:id_piblished" }}
                 <div class="switch__toggle">
@@ -34,19 +34,19 @@
             <label>Круглосуточно</label>
         </div>
 
-        <div class="form-group input col-md-8">
+        <div class="form-group input col-md-8 fake-input">
             <label class="col-md-3" for="">Понедельник</label>
 
             <div class=" col-md-4">
                 <span class="span-from">С</span> <input type="text"
-                                                        class="from timepicker form-control">
+                                                        class="from  form-control" disabled>
             </div>
             <div class=" col-md-4">
                 <span class="span-to">До</span> <input type="text"
-                                                       class="to timepicker form-control">
+                                                       class="to  form-control" disabled>
             </div>
             <div class="col-md-1">
-                <input type="checkbox">
+                <input type="checkbox" class="checked">
                 <div class="indicator"></div>
             </div>
 
@@ -55,15 +55,15 @@
 
         </div>
         <div class="clearfix"></div>
-        <div class="form-group input col-md-8">
+        <div class="form-group input col-md-8 fake-input">
             <label class="col-md-3" for="">Вторник</label>
-            <div class=" col-md-4">
+            <div class=" col-md-4 ">
                 <span class="span-from">С</span> <input type="text"
-                                                        class="from timepicker form-control" disabled>
+                                                        class="from  form-control" disabled>
             </div>
             <div class=" col-md-4">
                 <span class="span-to">До</span> <input type="text"
-                                                       class="to timepicker form-control" disabled>
+                                                       class="to  form-control" disabled>
             </div>
             <div class="col-md-1">
                 <input type="checkbox">
@@ -72,15 +72,15 @@
             {{ form.tuesday|attr:"class:form-control true_input"|attr:"placeholder:с 9:00 до 18:00"|attr:"type:hidden" }}
         </div>
         <div class="clearfix"></div>
-        <div class="form-group input col-md-8">
+        <div class="form-group input col-md-8 fake-input">
             <label class="col-md-3" for="">Среда</label>
             <div class=" col-md-4">
                 <span class="span-from">С</span> <input type="text"
-                                                        class="from timepicker form-control" disabled>
+                                                        class="from  form-control" disabled>
             </div>
             <div class=" col-md-4">
                 <span class="span-to">До</span> <input type="text"
-                                                       class="to timepicker form-control" disabled>
+                                                       class="to  form-control" disabled>
             </div>
             <div class="col-md-1">
                 <input type="checkbox">
@@ -89,15 +89,15 @@
             {{ form.wednesday|attr:"class:form-control"|attr:"placeholder:с 9:00 до 18:00"|attr:"type:hidden" }}
         </div>
         <div class="clearfix"></div>
-        <div class="form-group input col-md-8">
+        <div class="form-group input col-md-8 fake-input">
             <label class="col-md-3" for="">Четверг</label>
             <div class=" col-md-4">
                 <span class="span-from">С</span> <input type="text"
-                                                        class="from timepicker form-control" disabled>
+                                                        class="from  form-control" disabled>
             </div>
             <div class=" col-md-4">
                 <span class="span-to">До</span> <input type="text"
-                                                       class="to timepicker form-control" disabled>
+                                                       class="to  form-control" disabled>
             </div>
             <div class="col-md-1">
                 <input type="checkbox">
@@ -106,15 +106,15 @@
             {{ form.thursday|attr:"class:form-control"|attr:"placeholder:с 9:00 до 18:00"|attr:"type:hidden" }}
         </div>
         <div class="clearfix"></div>
-        <div class="form-group input col-md-8">
+        <div class="form-group input col-md-8 fake-input">
             <label class="col-md-3" for="">Пятница</label>
             <div class=" col-md-4">
                 <span class="span-from">С</span> <input type="text"
-                                                        class="from timepicker form-control" disabled>
+                                                        class="from  form-control" disabled>
             </div>
             <div class=" col-md-4">
                 <span class="span-to">До</span> <input type="text"
-                                                       class="to timepicker form-control" disabled>
+                                                       class="to  form-control" disabled>
             </div>
             <div class="col-md-1">
                 <input type="checkbox">
@@ -123,15 +123,15 @@
             {{ form.friday|attr:"class:form-control"|attr:"placeholder:с 9:00 до 18:00"|attr:"type:hidden" }}
         </div>
         <div class="clearfix"></div>
-        <div class="form-group input col-md-8">
+        <div class="form-group input col-md-8 fake-input">
             <label class="col-md-3" for="">Суббота</label>
             <div class=" col-md-4">
                 <span class="span-from">С</span> <input type="text"
-                                                        class="from timepicker form-control" disabled>
+                                                        class="from  form-control" disabled>
             </div>
             <div class=" col-md-4">
                 <span class="span-to">До</span> <input type="text"
-                                                       class="to timepicker form-control" disabled>
+                                                       class="to  form-control" disabled>
             </div>
             <div class="col-md-1">
                 <input type="checkbox">
@@ -140,15 +140,15 @@
             {{ form.saturday|attr:"class:form-control"|attr:"placeholder:с 9:00 до 18:00"|attr:"type:hidden" }}
         </div>
         <div class="clearfix"></div>
-        <div class="form-group input col-md-8">
+        <div class="form-group input col-md-8 fake-input">
             <label class="col-md-3" for="">Воскресенье</label>
             <div class=" col-md-4">
                 <span class="span-from">С</span> <input type="text"
-                                                        class="from timepicker form-control" disabled>
+                                                        class="from  form-control" disabled>
             </div>
             <div class=" col-md-4">
                 <span class="span-to">До</span> <input type="text"
-                                                       class="to timepicker form-control" disabled>
+                                                       class="to  form-control" disabled>
             </div>
             <div class="col-md-1">
                 <input type="checkbox">

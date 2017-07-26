@@ -119,7 +119,7 @@ class ShopCreateView(LoginRequiredMixin, FormsetMixin, CreateView):
 
     def form_valid(self, form, formset):
         random_int = random.randrange(0, 1010)
-        form.instance.slug = slugify(form.instance.title) + str(random_int)
+        form.instance.slug = slugify(form.instance.title, max_length=32) + str(random_int)
         self.object = form.save()
         form.instance.user.add(self.request.user)
         formset.instance = self.object

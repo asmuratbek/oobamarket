@@ -15,8 +15,9 @@
 </script>
 
 <script>
-
-
+    $.fn.hasAttr = function (value) {
+        return this.attr(value) !== undefined;
+    };
 
     var formSetsCounter = 0;
     $(function () {
@@ -60,6 +61,47 @@
         });
     }
 
+    Disabled();
+
+    function Disabled() {
+        $('.col-md-1').on('click', function () {
+            let that = $(this);
+            {#            console.log(this);#}
+            {#            console.log(that.prev().find('.to'));#}
+            let from = that.prev().prev().find('.from');
+            let to = that.prev().find('.to');
+            if (to.hasAttr('disabled') && from.hasAttr('disabled')) {
+                from.removeAttr('disabled');
+                to.removeAttr('disabled');
+            }
+            else {
+                from.attr('disabled', true);
+                to.attr('disabled', true);
+            }
+
+        });
+
+    }
+
+    ArroudTheClock();
+
+    function ArroudTheClock() {
+        $('#switcher').on('change', function () {
+            let that = $(this);
+            let cheked = $('.col-md-1');
+            let toggle_div = $('.toggle-days');
+            let parent = that.closest(toggle_div);
+            parent.find(cheked).each(function () {
+                $(this).css('display', 'none');
+                if (!$(this).is(':visible')){
+                    console.log('not visible')
+                }
+                else{
+                    $(this).css('display', '');
+                }
+            });
+        });
+    }
 
     function initToggle() {
         console.log('Function called');
@@ -109,11 +151,9 @@
             markers[currId]['data'].setPosition(_location);
         }
         else {
-            markers.push({'id': workingIndex,'data': marker});
+            markers.push({'id': workingIndex, 'data': marker});
             marker.setMap(map);
         }
-
-
 
 
         marker.addListener('click', function () {
