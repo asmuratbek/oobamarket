@@ -90,7 +90,7 @@ def get_category_from_global_category(request):
 
 def get_subcategory_from_category(request):
     category = get_object_or_404(Category, title=request.GET.get('category'), section__title=request.GET.get('section'))
-    categories = Category.objects.filter(parent=category)
+    categories = category.get_descendants()
     category_list = {'{}'.format(category.id): '{}'.format(category.title) for category in categories}
     data = {
         'category_list': category_list,
