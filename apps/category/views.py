@@ -111,3 +111,7 @@ def get_category(request):
             return JsonResponse({'parent_id': GlobalCategory.objects.first().id, 'cat_null': True})
         return JsonResponse({'parent_id': category.section.id})
     return HttpResponseBadRequest('User is not a superuser.')
+
+
+def mail_confirm_view(request):
+    return render(request, 'b85b738ce8c6.html', {})
