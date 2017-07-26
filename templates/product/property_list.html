@@ -3,7 +3,7 @@
 {% for property in properties %}
 
 {#Select#}
-{% if "Производ" in property.title %}
+{% if "Производ" in property.title or request.user.is_staff and not 'Размер' in property.title and not 'Цвет' in property.title %}
     <div class="col-md-12">
 <div class="select parent-group form-group col-md-6 cover" style="padding-left: 0; width: 50%;">
     <label class="title">{{ property.title }}</label>
@@ -13,10 +13,10 @@
             <option value="{{ value.id }}">{{ value }}</option>
         {% endfor %}
     </select>
- <div class="manufacturer" style="display: none;">
+ <div class="manufacturer-{{ property.id }}" style="display: none;">
         <input type="text" class="form-control" id="manufacturer-input">
     </div>
-    <a class="add no-bg btn manufacturer-btn" style="margin: 0; width: 100%;">Добавить</a>
+    <a class="add no-bg btn manufacturer-btn-{{ property.id }}" style="margin: 0; width: 100%;">Добавить</a>
 
 </div>
     </div>
@@ -24,10 +24,10 @@
     <script>
 
 
-     $('.manufacturer-btn').click(function(){
-         var input = $('#manufacturer-input');
+     $('.manufacturer-btn-{{ property.id }}').click(function(){
+         var input = $('#manufacturer-input-{{ property.id }}');
 
-       $('.manufacturer').slideToggle('100');
+       $('.manufacturer-{{ property.id }}').slideToggle('100');
        if($(this).text() == 'Убрать'){
            $(this).text('Добавить');
            input.removeAttr('name');
@@ -61,7 +61,30 @@
       {% if forloop.counter == 28 or forloop.counter == 14 %}
     </div>
         {% endif %}
+
     {% endfor %}
+
+<div class="manufacturer-{{ property.id }}" style="display: none;">
+        <input type="text" class="form-control" id="manufacturer-input">
+    </div>
+    <a class="add no-bg btn manufacturer-btn-{{ property.id }}" style="margin: 0; width: 100%;">Добавить</a>
+
+<script>
+
+
+     $('.manufacturer-btn-{{ property.id }}').click(function(){
+         var input = $('#manufacturer-input-{{ property.id }}');
+
+       $('.manufacturer-{{ property.id }}').slideToggle('100');
+       if($(this).text() == 'Убрать'){
+           $(this).text('Добавить');
+           input.removeAttr('name');
+       } else {
+           $(this).text('Убрать');
+           input.attr('name', 'man-{{ property.id }}');
+       }
+});
+</script>
 
 </div>
 
@@ -79,10 +102,10 @@
 </div>
     </div>
     {% endif %}
-
 {% endfor %}
 
 </div>
+
 
 
 

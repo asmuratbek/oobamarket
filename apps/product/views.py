@@ -143,6 +143,12 @@ class ProductCreateView(LoginRequiredMixin, AddProductMixin, CreateView):
                 'user': self.request.user
                 }
 
+    def form_invalid(self, form):
+        print(locals())
+        print(self)
+        print(form.fields.get('section'))
+        return super(ProductCreateView, self).form_invalid(form)
+
     def form_valid(self, form, **kwargs):
         random_int = random.randrange(0, 1010)
         product = form.instance
