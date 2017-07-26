@@ -45,13 +45,6 @@ var MainInterface = createClass({
                     categories: _.uniqBy(products.map(obj => obj.get_category_title), obj => obj)
                 });
             });
-        axios.get(`/shops/api/`)
-            .then(res => {
-                const shops = res.data.map(obj => obj);
-                this.setState({
-                    shops: shops
-                });
-            });
     },
 
     deleteMessage: function (item) {
