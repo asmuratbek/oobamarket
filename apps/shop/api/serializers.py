@@ -25,6 +25,7 @@ class ShopSerializer(ModelSerializer):
     )
 
     used_categories = SerializerMethodField()
+    is_owner = SerializerMethodField()
 
     class Meta:
         model = Shop
@@ -36,6 +37,7 @@ class ShopSerializer(ModelSerializer):
             'title',
             'user',
             'email',
+            'is_owner',
             'description',
             'short_description',
             'created_at',
@@ -48,6 +50,14 @@ class ShopSerializer(ModelSerializer):
 
     def get_used_categories(self, obj):
         return obj.get_used_categories()
+
+    def get_is_owner(self, obj):
+        user = None
+        request = self.context.get("request")
+        if request and hasattr(request, "user"):
+            user = request.user
+            return obj.is_owner(user)
+        return False
 
 
 class ShopCreateSerializer(ModelSerializer):

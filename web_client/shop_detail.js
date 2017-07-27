@@ -33,6 +33,7 @@ var MainInterface = createClass({
   axios.get(`/product/api/?shop=` + this.state.shopSlug)
     .then(res => {
       var products = res.data.map(obj => obj);
+      console.log(res.data);
       this.setState({
          products: products,
        });
@@ -222,6 +223,7 @@ var MainInterface = createClass({
           onChangePriceFrom = { this.changePriceFrom }
           onChangePriceTo = { this.changePriceTo }
        />
+        {/*{this.state.products.first().is_owner ?*/}
        <div className="col-md-4 col-sm-6">
             <div className="cover">
                 <a className="url-item" href={`/product/${this.state.shopSlug}/add-product/`}></a>
@@ -235,6 +237,7 @@ var MainInterface = createClass({
                 </div>
             </div>
         </div>
+            // : null}
       {filteredProducts}
       </div>
       </div>
