@@ -3,13 +3,13 @@
 
 {% block shopcontent %}
 <section class="reviews">
-    <div class="container" id="shop_review">
+    <div class="bg-white" id="shop_review">
         {% include 'layout/shop_reviews.html' %}
     </div>
 </section>
 
 <section class="reviews edit">
-    <div class="container">
+    <div class="bg-white">
         <div class="item">
             <form id='review_form' action="{% url 'shops:add_review' slug=shop.slug %}" method="post">
                 {% csrf_token %}

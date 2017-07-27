@@ -11,6 +11,7 @@ from apps.shop.views import agreement, shop_reviews
 from apps.product.views import search, search_predict_html
 from apps.utils.views import counter
 from apps.users.views import SubscribeListView
+from apps.category.views import mail_confirm_view
 
 urlpatterns = [
     url(r'^$', IndexView.as_view(), name='home'),
@@ -42,6 +43,7 @@ urlpatterns = [
     # User management
     url(r'^users/', include('apps.users.urls', namespace='users')),
     url(r'^accounts/', include('allauth.urls')),
+    url(r'^b85b738ce8c6.html/', mail_confirm_view),
     url(r'^', include('apps.category.urls', namespace='categories')),
 
     # Your stuff: custom urls includes go here

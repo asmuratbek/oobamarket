@@ -143,6 +143,12 @@ class ProductCreateView(LoginRequiredMixin, AddProductMixin, CreateView):
                 'user': self.request.user
                 }
 
+    def form_invalid(self, form):
+        print(locals())
+        print(self)
+        print(form.fields.get('section'))
+        return super(ProductCreateView, self).form_invalid(form)
+
     def form_valid(self, form, **kwargs):
         random_int = random.randrange(0, 1010)
         product = form.instance
@@ -217,6 +223,9 @@ class ProductUpdateView(LoginRequiredMixin, UpdateProductMixin, UpdateView):
             elif key.startswith('property') and '---' not in value:
                 value = get_object_or_404(Values, id=int(value))
                 value.products.add(product)
+            elif key.startswith("man-") and value:
+                my_value, created = Values.objects.get_or_create(value=value, properties_id=int(key[4:]))
+                my_value.products.add(product)
         return super(ProductUpdateView, self).form_valid(form)
 
     def get_context_data(self, **kwargs):

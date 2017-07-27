@@ -1,0 +1,162 @@
+{% load widget_tweaks %}
+{% with formset.empty_form as form %}
+
+    <div class="form-group input col-md-6">
+        <label for="">Телефон</label>
+        {{ form.phone|attr:"class:form-control" }}
+    </div>
+
+    <div class="form-group input col-md-6">
+        <label for="">Адрес магазина:</label>
+        {{ form.address|attr:"class:form-control" }}
+    </div>
+
+
+    <div class="form-group select col-md-6" style="margin-top: 10px">
+        <label for="">Расположение вашего магазина</label>
+        {{ form.place|attr:"class:form-control" }}
+    </div>
+    <div class="clearfix"></div>
+    <div class="form-group col-md-6 btn-toggle-day" data-target="0">
+        <a class="add btn no-bg btn-toggle-day-time">Указать время работы</a>
+    </div>
+
+    <div class="col-md-12 toggle-days" data-id="0">
+        <i>Оставьте поле пустым если выходной день</i>
+        <div class="form-group input col-md-6 fake-input">
+            <label class="col-md-4" for="">Понедельник</label>
+
+            <div class=" col-md-4">
+                <span class="span-from">С</span> <input type="text"
+                                                        class="from  form-control">
+            </div>
+            <div class=" col-md-4">
+                <span class="span-to">До</span> <input type="text"
+                                                       class="to  form-control">
+            </div>
+
+            {% render_field form.monday|attr:"type:hidden" class='form-control true_input' placeholder='с 9:00 до 18:00' %}
+            {#{{ form.monday|attr:"class:"|attr:"placeholder:"|attr:"class:" }}#}
+
+        </div>
+        <div class="clearfix"></div>
+        <div class="form-group input col-md-6 fake-input">
+            <label class="col-md-4" for="">Вторник</label>
+            <div class=" col-md-4">
+                <span class="span-from">С</span> <input type="text"
+                                                        class="from  form-control">
+            </div>
+            <div class=" col-md-4">
+                <span class="span-to">До</span> <input type="text"
+                                                       class="to  form-control">
+            </div>
+            {{ form.tuesday|attr:"class:form-control true_input"|attr:"placeholder:с 9:00 до 18:00"|attr:"type:hidden" }}
+        </div>
+        <div class="clearfix"></div>
+        <div class="form-group input col-md-6 fake-input">
+            <label class="col-md-4" for="">Среда</label>
+            <div class=" col-md-4">
+                <span class="span-from">С</span> <input type="text"
+                                                        class="from  form-control">
+            </div>
+            <div class=" col-md-4">
+                <span class="span-to">До</span> <input type="text"
+                                                       class="to  form-control">
+            </div>
+            {{ form.wednesday|attr:"class:form-control"|attr:"placeholder:с 9:00 до 18:00"|attr:"type:hidden" }}
+        </div>
+        <div class="clearfix"></div>
+        <div class="form-group input col-md-6 fake-input">
+            <label class="col-md-4" for="">Четверг</label>
+            <div class=" col-md-4">
+                <span class="span-from">С</span> <input type="text"
+                                                        class="from  form-control">
+            </div>
+            <div class=" col-md-4">
+                <span class="span-to">До</span> <input type="text"
+                                                       class="to  form-control">
+            </div>
+            {{ form.thursday|attr:"class:form-control"|attr:"placeholder:с 9:00 до 18:00"|attr:"type:hidden" }}
+        </div>
+        <div class="clearfix"></div>
+        <div class="form-group input col-md-6 fake-input">
+            <label class="col-md-4" for="">Пятница</label>
+            <div class=" col-md-4">
+                <span class="span-from">С</span> <input type="text"
+                                                        class="from  form-control">
+            </div>
+            <div class=" col-md-4">
+                <span class="span-to">До</span> <input type="text"
+                                                       class="to  form-control">
+            </div>
+            {{ form.friday|attr:"class:form-control"|attr:"placeholder:с 9:00 до 18:00"|attr:"type:hidden" }}
+        </div>
+        <div class="clearfix"></div>
+        <div class="form-group input col-md-6 fake-input">
+            <label class="col-md-4" for="">Суббота</label>
+            <div class=" col-md-4">
+                <span class="span-from">С</span> <input type="text"
+                                                        class="from  form-control">
+            </div>
+            <div class=" col-md-4">
+                <span class="span-to">До</span> <input type="text"
+                                                       class="to  form-control">
+            </div>
+            {{ form.saturday|attr:"class:form-control"|attr:"placeholder:с 9:00 до 18:00"|attr:"type:hidden" }}
+        </div>
+        <div class="clearfix"></div>
+        <div class="form-group input col-md-6 fake-input">
+            <label class="col-md-4" for="">Воскресенье</label>
+            <div class=" col-md-4">
+                <span class="span-from">С</span> <input type="text"
+                                                        class="from form-control">
+            </div>
+            <div class=" col-md-4">
+                <span class="span-to">До</span> <input type="text"
+                                                       class="to form-control">
+            </div>
+            {{ form.sunday|attr:"class:form-control"|attr:"placeholder:с 9:00 до 18:00"|attr:"type:hidden" }}
+        </div>
+
+
+    </div>
+
+
+
+    <div class="form-group input col-md-12" style="margin-top: 10px; margin-bottom: 10px;">
+        <label class="switch">
+
+            {{ form.published|attr:"class:switch__input"|attr:"id:id_piblished"|attr:"checked:checked" }}
+            <div class="switch__toggle">
+                <div class="switch__handle"></div>
+            </div>
+        </label>
+        <label>Опубликовать</label>
+    </div>
+
+    <div class="form-group input col-md-12" style="margin-top: 10px; margin-bottom: 20px;">
+        <label class="switch">
+
+            {{ form.DELETE|attr:"class:switch__input"|attr:"id:id_piblished" }}
+            <div class="switch__toggle">
+                <div class="switch__handle"></div>
+            </div>
+        </label>
+        <label>Удалить</label>
+    </div>
+    <div class="col-md-6">
+        <button type="button" class="btn add no-bg set-marker-trigger" data-id="__prefix__">Поставить
+            метку на карте
+        </button>
+    </div>
+
+
+    <div class="form-group col-md-6">
+        {{ form.longitude|attr:"class:form-control"|attr:"type:hidden" }}
+    </div>
+    <div class="form-group col-md-6">
+        {{ form.latitude|attr:"class:form-control"|attr:"type:hidden" }}
+    </div>
+
+
+{% endwith %}

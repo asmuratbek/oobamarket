@@ -21,7 +21,7 @@ class Properties(MPTTModel, Ordering):
         order_insertion_by = ['title']
 
     def __str__(self):
-        return self.title
+        return self.title + ' ' + self.slug
 
     def get_property_from_category(self):
         return self.objects.filter(category__in__id=self.category.id)

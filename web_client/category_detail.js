@@ -4,12 +4,9 @@ import createClass from 'create-react-class';
 import Product from './components/Product';
 import SearchForm from './components/SearchForm';
 import CategoryList from './components/CategoryList';
-import ProductsCount from './components/ProductsCount';
-import ShopList from './components/ShopList';
 import axios from 'axios';
 import _ from 'lodash';
-import AlertContainer from 'react-alert';
-import Alert from './components/Alert';
+
 
 
 var MainInterface = createClass({
@@ -46,13 +43,6 @@ var MainInterface = createClass({
                 this.setState({
                     products: products,
                     categories: _.uniqBy(products.map(obj => obj.get_category_title), obj => obj)
-                });
-            });
-        axios.get(`/shops/api/`)
-            .then(res => {
-                const shops = res.data.map(obj => obj);
-                this.setState({
-                    shops: shops
                 });
             });
     },
@@ -122,9 +112,7 @@ var MainInterface = createClass({
 
     render: function () {
         var filteredProducts = [];
-        var filteredShops = [];
         var categories = [];
-        var shopTitles = [];
         var allProducts = this.state.products;
         var orderBy = this.state.orderBy;
         var queryText = this.state.queryText;
@@ -164,7 +152,6 @@ var MainInterface = createClass({
         ;
 
         filteredProducts = filteredProducts.map(function (item, index) {
-            shopTitles.push(item.shop);
             return (
                 <Product key={ index }
                          onProductDelete={productDelete}
@@ -172,13 +159,6 @@ var MainInterface = createClass({
             ) //return
         }.bind(this));
 
-        shopTitles = _.uniqBy(shopTitles, function (e) {
-            return e;
-        });
-
-        filteredShops = _.filter(this.state.shops, function (item) {
-            return shopTitles.indexOf(item.title) != -1
-        });
 
         categories = this.state.categories.map(function (item, index) {
             return (
@@ -213,13 +193,6 @@ var MainInterface = createClass({
         return (
             <div>
 
-
-                <ShopList
-                    shops={ filteredShops }
-                />
-                <ProductsCount
-                    count={productsCount}
-                />
                 <ul className="category-tab">
                     {categories}
                 </ul>
@@ -306,6 +279,31 @@ var MainInterface = createClass({
                     </div>
 
 
+                    <div className="filter-clone">
+                        <div className="form-group">
+                            <select className="select-beast " placeholder="Название настроек">
+                                <option value="">Название настроек</option>
+                                <option value="4">Thomas Edison</option>
+                                <option value="1">Nikola</option>
+                                <option value="3">Nikola Tesla</option>
+                                <option value="5">Arnold Schwarzenegger</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div className="filter-clone">
+                        <div className="form-group">
+                            <select className="select-beast " placeholder="Название настроек">
+                                <option value="">Название настроек</option>
+                                <option value="4">Thomas Edison</option>
+                                <option value="1">Nikola</option>
+                                <option value="3">Nikola Tesla</option>
+                                <option value="5">Arnold Schwarzenegger</option>
+                            </select>
+                        </div>
+                    </div>
+
+
                 </div>
             </div>
         )
@@ -314,3 +312,5 @@ var MainInterface = createClass({
 
 
 ReactDOM.render(<MainInterface />, document.getElementById('root'));
+
+$('.select-beast').selectize({});

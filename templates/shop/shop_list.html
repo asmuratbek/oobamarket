@@ -21,44 +21,75 @@
     <section class="shop-list">
         <div class="container">
             <div class="row">
-            <h3>Магазины</h3>
-                {% for shop in object_list %}
-                    <div class="col-md-3">
+                <h1 class="pull-left">Магазины</h1>
+                <form action="" class="pull-right col-md-6">
+                    <select id="select-beast-empty" class="demo-default col-md-5" data-placeholder="Выбрать категорию">
+                        <option value="">Thomqwqas Edison</option>
+                        {#                    одну опцию не трогать !!#}
+                        <option>Опция 1</option>
+                        <option>Опция 2</option>
+                        <option>Опция 3</option>
+                        <option>Опция 4</option>
+                        <option>Опция 5</option>
+                        <option>Опция 6</option>
+                        <option>Nikola</option>
+                        <option>Nikola Tesla</option>
+                        <option>Arnold Schwarzenegger</option>
+                    </select>
+                    <div class="form-search col-md-7">
+                        <input class="form-control" type="search" placeholder="Поиск магазина...">
+                        <button type="submit">
+                            <span class="glyphicon glyphicon-search"></span>
+                        </button>
+                    </div>
+                </form>
+                <div class="clearfix"></div>
 
-                        <div class="single-magazin">
-
-                            <div class="cover">
-                                <a class="url-item" href="{{ shop.get_absolute_url }}"></a>
-                                <div class="top-line">
-                                    <h2>{{ shop.title }}</h2>
-                                </div>
-                                <div class="img-wrapper">
-                                    <img src="{{ shop.get_logo }}" alt="">
-                                </div>
-                                <div class="clearfix"></div>
-                                <div class="bottom-line">
-                                    {% if shop.contacts_set.all %}
-                                    <div>
-                                        <a href="tel: 0312 89 53 33" class="">
-                                            <span class="glyphicon glyphicon-earphone"></span>
-                                            {{ shop.contacts_set.first.phone }}
-                                        </a>
+                <div class="bg-white">
+                    {% for shop in object_list %}
+                        <div class="col-md-3">
+                            <div class="single-magazin">
+                                <div class="cover">
+                                    <a class="url-item" href="{{ shop.get_absolute_url }}"></a>
+                                    <div class="top-line">
+                                        <h2>{{ shop.title }}</h2>
                                     </div>
-                                    {% endif %}
-                                    <div>
-                                        <a href="mailto:{{ shop.email }}" class="">
-                                            <span class="glyphicon glyphicon-envelope"></span>
-                                            {{ shop.email }}
-                                        </a>
+                                    <div class="img-wrapper">
+                                        <img src="{{ shop.get_logo }}" alt="">
+                                    </div>
+                                    <div class="clearfix"></div>
+                                    <div class="bottom-line">
+                                        {% if shop.contacts_set.all %}
+                                            <div>
+                                                <a href="tel: 0312 89 53 33" class="">
+                                                    <span class="glyphicon glyphicon-earphone"></span>
+                                                    {{ shop.contacts_set.first.phone }}
+                                                </a>
+                                            </div>
+                                        {% endif %}
+                                        <div>
+                                            <a href="mailto:{{ shop.email }}" class="">
+                                                <span class="glyphicon glyphicon-envelope"></span>
+                                                {{ shop.email }}
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                    {% endfor %}
+                </div>
 
-                    </div>
-                {% endfor %}
             </div>
         </div>
     </section>
+{% endblock %}
+
+{% block js %}
+    {{ block.super }}
+    <script src="{% static 'js/select2.js' %}"></script>
+    <script>
+        $('#select-beast-empty').selectize({});
+    </script>
 {% endblock %}
 
