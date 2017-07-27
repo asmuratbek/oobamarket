@@ -32,6 +32,10 @@
             $('#id_contacts_set-TOTAL_FORMS').attr('value', count + 1);
             initSetMarkerButton();
             initToggle();
+            initFakeInputs();
+            Disabled();
+            ArroudTheClock();
+            Timepicker();
             //openMarkerModal(formSetsCounter);
         });
     });
@@ -83,11 +87,6 @@
                     to.trigger('change');
                     console.log(trueInput);
                 }
-                else{
-                    to.val('');
-                    from.val('');
-                    trueInput.val('');
-                }
             }
         });
     }
@@ -117,12 +116,12 @@
     ArroudTheClock();
 
     function ArroudTheClock() {
-        $('#switcher').on('change', function () {
+        $('.switcher').on('change', function () {
             let that = $(this);
-            let cheked = $('.col-md-1');
             let toggle_div = $('.toggle-days');
+            let weekdays = $('.weekdays')
             let parent = that.closest(toggle_div);
-            parent.find(cheked).each(function () {
+            parent.find(weekdays).each(function () {
                 if(!$(that).hasAttr('data-visible')) $(that).attr('data-visible', 'true');
                 if($(that).attr('data-visible') === 'false') {
                     $(this).fadeIn('slow', function () {
@@ -250,7 +249,9 @@
 </script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
 <script>
-    $('.timepicker.from').timepicker({
+    Timepicker();
+    function Timepicker () {
+     $('.timepicker.from').timepicker({
         timeFormat: 'H:mm',
         show2400: true,
         defaultTime: '06:00',
@@ -258,8 +259,7 @@
             $(this).trigger('change');
         }
     });
-</script>
-<script>
+
     $('.timepicker.to').timepicker({
         timeFormat: 'H:mm',
         show2400: true,
@@ -268,4 +268,5 @@
             $(this).trigger('change');
         }
     });
+    }
 </script>
