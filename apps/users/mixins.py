@@ -39,7 +39,6 @@ class DeleteProductMixin(object):
         return super(DeleteProductMixin, self).dispatch(request, *args, **kwargs)
 
 
-
 class ShopMixin(object):
     def dispatch(self, request, *args, **kwargs):
         user = request.user
@@ -52,4 +51,14 @@ class ShopMixin(object):
         if not my_shop:
             return HttpResponseRedirect(reverse('shops:detail', kwargs={'slug': shop.first().slug}))
         return super(ShopMixin, self).dispatch(request, *args, **kwargs)
+
+
+class UserPermMixin(object):
+    def dispatch(self, request, *args, **kwargs):
+        if request.method == 'GET':
+            user = request.user
+            username = kwargs.get('username')
+            if user.username != username:
+                return HttpResponseRedirect(reverse('users:detail', kwargs={'username': user.username}))
+        return super(UserPermMixin, self).dispatch(request, *args, **kwargs)
 

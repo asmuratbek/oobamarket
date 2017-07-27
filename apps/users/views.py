@@ -1,20 +1,64 @@
+from allauth.account.models import EmailAddress
 from allauth.account.views import EmailView
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse, Http404, HttpResponseRedirect, HttpResponseBadRequest, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import DetailView, ListView, RedirectView, UpdateView, View
-
+from django.db import IntegrityError
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from apps.shop.models import Shop
 from .models import User, Subscription
+from .mixins import UserPermMixin
 
 
-class UserDetailView(LoginRequiredMixin, View):
-    def get(self, request, *args, **kwargs):
-        user = get_object_or_404(User, username=kwargs['username'])
-        return render(self.request, 'users/user_form.html', {'object': user})
+class UserDetailView(LoginRequiredMixin, UserPermMixin, View):
+    def get(self, *args, **kwargs):
+        return render(self.request, 'users/user_form.html')
+
+    def post(self, request, *args, **kwargs):
+        user = self.request.user
+        if self.request.POST.get('only_email'):
+            email = self.request.POST.get('email', '')
+            if '@' not in email:
+                return JsonResponse(dict(message='Введите павильный email', status=2))
+            try:
+                email_address = EmailAddress.objects.create(user=self.request.user, email=email)
+            except IntegrityError:
+                return JsonResponse(dict(status=1, message="Такой email уже существует."))
+            email_count = user.emailaddress_set.count()
+            message = "Email успешно добавлен"
+            data = dict(emailaddress=email_address.email, email_count=email_count, message=message, status=0)
+            return JsonResponse(data)
+        elif self.request.POST.get('remove'):
+            if user.emailaddress_set.count() == 1:
+                message = "Вы не можете удалить единственный email."
+                return JsonResponse(dict(message=message, status=1))
+            email = self.request.POST.get('email', '')
+            email_address = get_object_or_404(EmailAddress, email=email)
+            if email_address.primary is True:
+                next_email = user.emailaddress_set.exclude(email=email).first()
+                next_email.primary = True
+                next_email.save()
+            email_address.delete()
+            data = dict(message='{} успешно удален.'.format(email), status=0)
+            return JsonResponse(data)
+        else:
+            userform = get_object_or_404(User, username=kwargs['username'])
+            if self.request.POST.get('username') is None or self.request.POST.get('username') == "":
+                message = "Поле username не может быть пустым."
+                messages.add_message(self.request, messages.ERROR, message)
+                return HttpResponseRedirect(reverse('users:detail', kwargs={'username': user.username}))
+            userform.username = self.request.POST.get('username', '')
+            userform.name = self.request.POST.get('name', '')
+            userform.phone = self.request.POST.get('phone', '')
+            userform.first_name = self.request.POST.get('first_name', '')
+            userform.save()
+            email_address = get_object_or_404(EmailAddress, email=self.request.POST.get('email', ''))
+            email_address.primary = True
+            email_address.save()
+            return HttpResponseRedirect(reverse('users:detail', kwargs={'username': user.username}))
 
 
 class UserRedirectView(LoginRequiredMixin, RedirectView):

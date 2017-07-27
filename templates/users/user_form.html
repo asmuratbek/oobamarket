@@ -1,6 +1,6 @@
 {% extends "base-1.html" %}
 
-{% load widget_tweaks %}
+{% load i18n widget_tweaks static %}
 
 {% block title %}{{ user.username }}{% endblock %}
 
@@ -16,10 +16,11 @@
                 {% endif %}
 
 
-                <h2>{{ user.username }}</h2>
+                <h2>{{ object.username }}</h2>
 
 
-                <form class="form-horizontal" id="profile_form">
+                <form id="add_email_form" class="form-horizontal" action="{% url 'users:detail' username=user.username %}" method="POST">
+                {% csrf_token %}
 
 
                     <div class="info-user">
@@ -28,7 +29,7 @@
                             <label for="name" class="">
                                 <div class="col-md-3">Логин:</div>
                                  <div class="col-md-6">
-                                <input class="form-control" id="name" value="{{ object.name }}"/>
+                                <input class="form-control" id="name" name="username" value="{{ user.username }}"/>
 
                             </div>
                             <div class="col-md-1">
@@ -43,7 +44,7 @@
                                 <div class="col-md-3">Имя:</div>
 
                                 <div class="col-md-6">
-                                <input class="form-control" id="username" value="{{ object.username }}" />
+                                <input class="form-control" id="username" name="name" value="{{ user.name }}" />
 
                             </div>
                                 <span class="col-md-1">
@@ -55,9 +56,9 @@
 
                         <div class="form-group">
                             <label for="first_name" class="">
-                                <div class="col-md-3">Фамилие:</div>
+                                <div class="col-md-3">Фамилия:</div>
                                 <div class="col-md-6">
-                                    <input class="form-control" id="first_name" value="{{ object.first_name }}"/>
+                                    <input class="form-control" id="first_name" name="first_name" value="{{ user.first_name }}"/>
 {#                                    {{ form.first_name|attr:"class:form-control"|attr:"id:first_name" }}#}
                                 </div>
                                 <div class="col-md-1">
@@ -71,7 +72,7 @@
                             <label for="last_name" class="" style="display: block;">
                                 <div class="col-md-3">Номер телефона:</div>
                                 <div class="col-md-6">
-                                    <input class="form-control" id="last_name" value="{{ object.phone }}"/>
+                                    <input class="form-control" id="last_name" name="phone" value="{{ user.phone }}"/>
 {#                                    {{ form.last_name|attr:"class:form-control"|attr:"id:last_name" }}#}
                                 </div>
                                 <div class="col-md-1">
@@ -84,58 +85,48 @@
 
                     {#                    type mail#}
 
+                    <div class="radio" id="email-list">
+                        <h3>{% trans 'Адрес электронной почты' %}</h3>
+                        {% if user.emailaddress_set.all %}
+                        <p>{% trans 'К вашему аккаунту привязаны следующие адреса электронной почты' %}</p>
+                        {% for email in user.emailaddress_set.all %}
+                        <div class="form-group input col-md-12">
+                            <label for="email_radio_{{ forloop.counter }}" class="primary_email radio-button radio-button--material">
 
-                    <div class="radio">
-                        <h3>Адрес электронной почты</h3>
-                        <p>К вашему аккаунту привязаны следующие адреса электронной почты</p>
-                        <div class=" form-group input col-md-12">
-                            <label for="email_radio_1" class="primary_email radio-button radio-button--material">
-
-                                <input class="radio-button__input radio-button--material__input" id="email_radio_1"
-                                       type="radio" checked="checked" value="admin@localhost">
+                                <input class="radio-button__input radio-button--material__input" id="email_radio_{{ forloop.counter }}"
+                                       type="radio" name="email" {% if email.primary %}checked="checked"{% endif %} value="{{ email.email }}">
                                 <div class="radio-button__checkmark radio-button--material__checkmark"></div>
-                                admin@localhost
-
-                                <span class="verified">Основной</span>
-
-                                <span class="primary">Primary</span>
+                                {{ email.email }}
+                                {% if email.verified %}
+                                <span class="verified">{% trans 'Подтвержден' %}</span>
+                                {% else %}
+                                <span class="unverified">{% trans 'Unverified' %}</span>
+                                {% endif %}
+                                {% if email.primary %}<span class="primary">{% trans 'Primary' %}</span>{% endif %}
                             </label>
                         </div>
-                        <div class=" form-group input col-md-12">
-                            <label for="email_radio_2" class="primary_email radio-button radio-button--material">
-
-                                <input class="radio-button__input radio-button--material__input" id="email_radio_2"
-                                       type="radio" checked="checked" value="admin@localhost">
-                                <div class="radio-button__checkmark radio-button--material__checkmark"></div>
-                                admin@localhost
-
-                                <span class="verified">Основной</span>
-                                <span class="primary">Primary</span>
-                            </label>
-                        </div>
+                            {% endfor %}
+                        {% endif %}
                     </div>
 
                     <div class="add-email">
-                        <div id="add_input_email">
+                        <div class="add_input_email" id="add_email_input">
                         <div class="form-group col-md-6" style="margin-right: 0;">
                             <input type="text" class="form-control">
                         </div>
                         <div class="form-group col-md-3">
-                             <button type="button" class="add btn" id="add-email">Добавить</button>
+                             <button type="button" class="btn add no-bg set-market-trigger" id="add-email-button">{% trans 'Добавить' %}</button>
 
-                        </div>
-                        <div class="form-group col-md-3">
-                             <button class="add btn">Отмена</button>
                         </div>
                         </div>
                         <div class="clearfix"></div>
                      <div class="form-group col-md-12">
-                             <button class="add btn">Сделать основным</button>
-                             <button class="add btn">Отправить письмо с проверкой</button>
-                             <button class="add btn">Удалить</button>
-                        </div>
-
-                    </div>
+{#                             <button class="add btn">Сделать основным</button>#}
+                             <button type="button" class="btn add no-bg set-market-trigger" id="send_email_button">{% trans 'Отправить письмо с проверкой' %}</button>
+                             <button type="button" class="btn add no-bg set-market-trigger" id="remove_email">{% trans 'Удалить' %}</button>
+                             <button type="submit" class="add btn">Сохранить</button>
+                     </div>
+                </div>
 
 
 
@@ -152,14 +143,5 @@
 {% endblock %}
 {% block js %}
     {{ block.super }}
-    <script>
-        $('#add-email').on('click', function () {
-            if($('#add_input_email input[type=text]').val() !== ""){
-                console.log("if");
-{#                $(this).closest('#add_input_email').after(email_input);#}
-            } else {
-                alert("Заполните поле")
-            }
-        })
-    </script>
+    <script src="{% static 'js/user_email.js' %}"></script>
 {% endblock %}
