@@ -4,9 +4,9 @@
         <ul class="content demo-x">
             {% for category in object.get_parent_categories %}
 
-                <li class="item">
-                    <div class="dropdown" data-id="#dropdown-{{ category.id }}" data-toggle="tooltip" title=""
+                <li class="item" data-toggle="tooltip" title=""
                          data-placement="right" data-original-title="{{ category.title }}">
+                    <div class="dropdown" data-id="#dropdown-{{ category.id }}" >
                         <a class="enter btn" type="button" data-toggle="dropdown" aria-haspopup="true"
                            aria-expanded="false">
                             {% if category.image %}

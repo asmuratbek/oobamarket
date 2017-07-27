@@ -98,7 +98,7 @@
                     {% if form.errors %}
                         <label>{{ form.errors|striptags|slice:"7:" }}</label>
                     {% endif %}
-                <a href="{% url 'account_reset_password' %}">Забыли пароль?</a>
+                    <a class="lost-pass" href="{% url 'account_reset_password' %}">Забыли пароль?</a>
                 </div>
 
                 <button type="submit" name="submit" class="btn btn-default">Войти</button>
