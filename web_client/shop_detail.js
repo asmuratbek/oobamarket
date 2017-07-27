@@ -31,28 +31,32 @@ var MainInterface = createClass({
   },
 
   componentDidMount() {
-  axios.get(`/product/api/?shop=` + this.state.shopSlug)
-    .then(res => {
-      var products = res.data.map(obj => obj);
-      console.log(res.data);
-      this.setState({
-         products: products,
-       });
-    });
-
-    axios.get(`/api/category/shop/` + this.state.shopSlug)
-      .then(res => {
-        var categories = res.data.map(obj => obj);
-        this.setState({
-           categories: categories
-         });
-      });
+  // axios.get(`/product/api/?shop=` + this.state.shopSlug)
+  //   .then(res => {
+  //     var products = res.data.map(obj => obj);
+  //     console.log(res.data);
+  //     this.setState({
+  //        products: products,
+  //      });
+  //   });
+  //
+  //   axios.get(`/api/category/shop/` + this.state.shopSlug)
+  //     .then(res => {
+  //       var categories = res.data.map(obj => obj);
+  //       this.setState({
+  //          categories: categories
+  //        });
+  //     });
 
     axios.get(`/api/shops/` + this.state.shopSlug)
       .then(res => {
-        var shop = res.data;
+        var shop = res.data[0].shop.map(obj => obj);
+        var categories = res.data[2].category.map(obj => obj);
+        var products = res.data[1].product.map(obj => obj);
         this.setState({
-           shop: shop
+           shop: shop,
+           categories: categories,
+           products: products
          });
       });
   },
