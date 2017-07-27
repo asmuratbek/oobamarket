@@ -23,6 +23,7 @@ var MainInterface = createClass({
       queryText: '',
       deliveryType: 'all',
       products: [],
+      shop: [],
       categories: [],
       activeCategories: [],
       shopSlug : location.href.split("/")[4]
@@ -44,6 +45,14 @@ var MainInterface = createClass({
         var categories = res.data.map(obj => obj);
         this.setState({
            categories: categories
+         });
+      });
+
+    axios.get(`/api/shops/` + this.state.shopSlug)
+      .then(res => {
+        var shop = res.data;
+        this.setState({
+           shop: shop
          });
       });
   },
@@ -124,6 +133,7 @@ var MainInterface = createClass({
     var changeCategory = this.changeCategory;
     var activeCategories = this.state.activeCategories;
     var productDelete = this.productDelete;
+    var owner = this.state.shop.is_owner;
 
     allProducts.forEach(function(item) {
       if(item.title.toLowerCase().indexOf(queryText)!=-1)
@@ -223,7 +233,7 @@ var MainInterface = createClass({
           onChangePriceFrom = { this.changePriceFrom }
           onChangePriceTo = { this.changePriceTo }
        />
-        {/*{this.state.products.first().is_owner ?*/}
+        {owner ?
        <div className="col-md-4 col-sm-6">
             <div className="cover">
                 <a className="url-item" href={`/product/${this.state.shopSlug}/add-product/`}></a>
@@ -237,7 +247,7 @@ var MainInterface = createClass({
                 </div>
             </div>
         </div>
-            // : null}
+            : null}
       {filteredProducts}
       </div>
       </div>

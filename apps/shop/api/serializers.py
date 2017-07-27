@@ -24,7 +24,7 @@ class ShopSerializer(ModelSerializer):
         lookup_field="slug"
     )
 
-    used_categories = SerializerMethodField()
+    # used_categories = SerializerMethodField()
     is_owner = SerializerMethodField()
 
     class Meta:
@@ -44,12 +44,12 @@ class ShopSerializer(ModelSerializer):
             'updated_at',
             'logo',
             'get_absolute_url',
-            'used_categories',
+            # 'used_categories',
 
         )
 
-    def get_used_categories(self, obj):
-        return obj.get_used_categories()
+    # def get_used_categories(self, obj):
+    #     return obj.get_used_categories()
 
     def get_is_owner(self, obj):
         user = None

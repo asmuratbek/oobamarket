@@ -23,7 +23,7 @@ urlpatterns = [
     url(r'^about/$', TemplateView.as_view(template_name='pages/about.html'), name='about'),
     url(r'^agreement/$', agreement, name='agreement'),
     url(r'^api/product/', include('apps.product.api.urls', namespace="product_api")),
-    url(r'^api/shop/', include('apps.shop.api.urls', namespace="shop_api")),
+    url(r'^api/shops/', include('apps.shop.api.urls', namespace="shop_api")),
     url(r'^api/category/', include('apps.category.api.urls', namespace="category_api")),
     url(r'^search_predict_html', search_predict_html, name='search_predict_html'),
     # url(r'^search/', include('haystack.urls')),
