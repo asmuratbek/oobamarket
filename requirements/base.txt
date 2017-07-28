@@ -72,3 +72,5 @@ lxml-3.8.0
 xlwt==1.2.0
 
 # Your custom requirements go here
+django-rest-multiple-models==1.8.2
+

@@ -1,4 +1,5 @@
 from django.shortcuts import get_object_or_404
+from drf_multiple_model.views import MultipleModelAPIView
 from rest_framework.generics import (
     ListAPIView,
     RetrieveAPIView,
@@ -16,6 +17,8 @@ from rest_framework.filters import (
     OrderingFilter
 )
 
+from apps.product.api.serializers import ProductSerializer
+from apps.product.models import Product
 from apps.shop.models import Shop
 from .pagination import CategoryLimitPagination
 from .permissions import IsOwnerOrReadOnly
@@ -30,11 +33,11 @@ class CategoryListApiView(ListAPIView):
     queryset = Category.objects.all()
 
 
-class CategoryDetailApiView(RetrieveAPIView):
-    queryset = Category.objects.all()
-    serializer_class = CategorySerializer
-    lookup_field = 'slug'
-    permission_classes = [AllowAny]
+# class CategoryDetailApiView(RetrieveAPIView):
+#     queryset = Category.objects.all()
+#     serializer_class = CategorySerializer
+#     lookup_field = 'slug'
+#     permission_classes = [AllowAny]
 
 
 class GetUsedCategoriesFromShop(ListAPIView):
@@ -45,3 +48,18 @@ class GetUsedCategoriesFromShop(ListAPIView):
         shop = get_object_or_404(Shop, slug=slug)
         objects = shop.get_used_categories()
         return objects
+
+
+class CategoryDetailApiView(MultipleModelAPIView):
+    # queryList = [
+    #     (Shop.objects.all(), ShopSerializer),
+    #     (Product.objects.all(), ProductSerializer),
+    # ]
+
+    def get_queryList(self):
+        slug = self.kwargs.get('slug')
+        category = Category.objects.get(slug=slug)
+        queryList = [
+            (Product.objects.filter(category=category), ProductSerializer),
+        ]
+        return queryList

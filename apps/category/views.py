@@ -12,7 +12,7 @@ from django.forms.models import model_to_dict
 
 
 def category_detail(request, global_slug, slug):
-    category = get_object_or_404(Category, slug=slug)
+    category = Category.objects.get(slug=slug)
     global_category = get_object_or_404(GlobalCategory, slug=global_slug)
     _property = Properties.objects.filter(category=category.id)
     properties = list()
@@ -28,7 +28,7 @@ def category_detail(request, global_slug, slug):
     context = {
         "object": category,
         "properties": properties,
-        "global_slug": global_slug
+        "global_slug": global_slug,
     }
     return render(request, template, context)
 

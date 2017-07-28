@@ -11,7 +11,24 @@
 //    right: 0
 //    left: 0
 //    background:  url(../img/bug.gif) right bottom no-repeat
+.pagination
+  text-align: center
+  display: block !important
+  ul
+    text-align: center
 
+    li
+      display: inline-block
+      a
+        display: inline-block
+        padding: 5px
+        color: #555
+        width: 30px
+        font-size: 20px
+    li:hover
+      a
+        color: #f3481c
+        text-decoration: underline !important
 .no-bg-2
   background-color: transparent !important
   color: #f3481c !important
@@ -394,7 +411,7 @@ header
       margin-top: 20px
       float: left
   .form-inline
-    width: 420px
+    width: 350px
     display: inline-block
     .form-group
       width: 100%
@@ -718,7 +735,7 @@ header
       color: #333
       text-decoration: none
   .add-product
-    padding: 150px 30px
+    padding: 149px 30px
     background-color: #fff
     text-align: center
     i
@@ -1050,7 +1067,7 @@ header
         left: -9999px
         margin: auto
         display: block
-        max-width: 100%
+        max-width: 80%
     .bottom-line
       width: 100%
       z-index: 2
@@ -1176,27 +1193,37 @@ header
   position: relative
   img
     width: 40px
-
-  .mCSB_container
-    margin-bottom: 0 !important
-  .mCSB_scrollTools.mCSB_scrollTools_horizontal
-    height: 6px !important
-    top: inherit !important
-    bottom: 8px !important
-    .mCSB_dragger_bar
-      margin: 1px auto !important
-    .mCSB_draggerRail
-      margin: 2px 0 !important
+  .tooltip-inner
+    min-width: 140px
+    max-width: 100%
+  //.mCSB_container
+  //  margin-bottom: 0 !important
+  //.mCSB_scrollTools.mCSB_scrollTools_horizontal
+  //  height: 6px !important
+  //  top: inherit !important
+  //  bottom: 8px !important
+  //  .mCSB_dragger_bar
+  //    margin: 1px auto !important
+  //  .mCSB_draggerRail
+  //    margin: 2px 0 !important
   .content.demo-x
-
-
-
     ul
+  .item-9
+    width: 11% !important
+  .item-8
+    width: 12% !important
 
+  .item-11
+    width: 9% !important
+  .item-10
+    width: 10% !important
+  .item-7
+    width: 14% !important
   .item
     float: left
-    width: 10%
+    width: 6%
     position: relative
+    text-align: center
   .item
     .dropdown-menu.open
       display: none
@@ -1210,13 +1237,11 @@ header
     border-color: transparent!important
   .dropdown
     display: inline-block
-    margin-left: 10px
     .enter.btn:hover
       border-color: transparent!important
       &:before
         background-color: transparent!important
     .enter.btn
-      padding-right: 30px
       margin-left: 0!important
 
     .glyphicon
@@ -1314,6 +1339,23 @@ header
       line-height: 30px
       margin-bottom: 10px
       margin-top: 10px
+      position: relative
+      .edited
+        position: absolute
+        width: 17px
+        height: 15px
+        overflow: hidden
+        right: -4px
+        top: -20px
+        font-size: 17px
+        z-index: 10
+        //&:hover
+        //  animation: rotate 1.875s linear infinite
+        //  @keyframes rotate
+        //    0%
+        //      transform: rotate(0deg)
+        //    100%
+        //      transform: rotate(360deg)
     p
       font-size: 14px
       font-weight: 300
@@ -1574,6 +1616,7 @@ header
   .container
     background-color: #fff
     border: 1px solid #eee
+
     .col-md-12
       margin-top: 30px
       margin-bottom: 30px
@@ -1622,14 +1665,14 @@ header
       width: 100%
       z-index: 2
       position: relative
-      margin-top: 38px
+      margin-top: 10px
       div
 
         a
           font-size: 14px
           color: #686868
           display: inline-block
-          margin-bottom: 15px
+          margin-bottom: 5px
     .img-wrapper
       position: relative
       width: 240px
@@ -1690,7 +1733,7 @@ header
       font-weight: 400
       border-bottom: 1px solid #EEEEEE
       margin-top: 15px
-      margin-bottom: 15px
+      margin-bottom: 10px
       padding-bottom: 15px
     p
       font-size: 15px
@@ -2024,6 +2067,20 @@ ul.category-tab
   .goods-of-week
     .catalog-filter
       padding-right: 0 !important
+  ul.category-tab
+    li
+      margin: 0 5px 10px 5px !important
+      a
+        padding: 5px 10px !important
+        border: 1px solid #f3481c !important
+        color: #f3481c !important
+    li:hover
+      a
+        background-color: #f3481c !important
+        color: #fff !important
+    li.active
+      a
+        color: #fff !important
 .shop-category
   margin-bottom: 200px
   .filter-dropdown
@@ -2780,6 +2837,13 @@ ul.category-tab
         &:hover
           background-color: #fff
           color: #F3481C
+
+.lost-pass
+  display: inline-block
+  margin-top: 5px
+  color: #f3481c !important
+  &:hover
+    text-decoration: underline !important
 .registration
   overflow: hidden
   text-align: center
@@ -2846,6 +2910,8 @@ ul.category-tab
         -webkit-box-shadow: 0px 0px 10px 2px rgba(243, 72, 28, 0.1) /* WebKit */
         -moz-box-shadow: 0px 0px 10px 2px rgba(243, 72, 28, 0.1) /* Firefox */
         box-shadow: 0px 0px 10px 2px rgba(243, 72, 28, 0.1) /* Standard */
+
+
 .search_results
   .form-filter
     background-color: #fff
@@ -3016,7 +3082,6 @@ ul.category-tab
     margin-right: 10px
     width: 20px
     height: 20px
-
     border: 1px solid #ccc
     position: relative
     background-color: #fff
@@ -3056,7 +3121,9 @@ ul.category-tab
     display: none
     margin-bottom: 30px
     .col-md-1
-      padding: 6px
+      margin: 6px 0
+      padding: 0
+      width: 20px
       input[type=checkbox]
         opacity: 0
         z-index: 100
@@ -3684,6 +3751,11 @@ ul.category-tab
       color: #fff
   .blockLabels
     margin-bottom: 50px
+  label
+    display: block
+    text-align: left
+  input
+    height: 40px
 form.add_email
   width: 40%
   margin: 0 auto
@@ -4082,7 +4154,7 @@ form.add_email
           left: -9999px
           margin: auto
           display: block
-          max-width: 100%
+          max-width: 80%
       .bottom-line
         width: 100%
         padding-left: 20px

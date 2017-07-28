@@ -25,6 +25,7 @@ var MainInterface = createClass({
             shops: [],
             categories: [],
             activeCategories: [],
+            categorySlug: location.href.split("/")[location.href.split("/").length - 2]
         }
     },
 
@@ -37,12 +38,19 @@ var MainInterface = createClass({
                 })
             }
         }.bind(this));
-        axios.get(`/product/api/`)
+        // axios.get(`/product/api/`)
+        //     .then(res => {
+        //         const products = res.data.map(obj => obj);
+        //         this.setState({
+        //             products: products,
+        //             categories: _.uniqBy(products.map(obj => obj.get_category_title), obj => obj)
+        //         });
+        //     });
+        axios.get(`/api/category/` + this.state.categorySlug)
             .then(res => {
-                const products = res.data.map(obj => obj);
+                var products = res.data[0].product.map(obj => obj);
                 this.setState({
                     products: products,
-                    categories: _.uniqBy(products.map(obj => obj.get_category_title), obj => obj)
                 });
             });
     },

@@ -108,6 +108,28 @@ gulp.task('category', function(){
 
 });
 
+gulp.task('globalcategory', function(){
+   return browserify({
+            entries: './web_client/globalcategory_detail.js',
+            extensions: ['.jsx'],
+            debug: true
+        })
+        .transform('babelify', {
+            presets: ['es2015', 'react'],
+            plugins: ['transform-class-properties']
+        })
+        .bundle()
+        .on('error', function(err){
+            gutil.log(gutil.colors.red.bold('[browserify error]'));
+            gutil.log(err.message);
+            this.emit('end');
+        })
+        .pipe(source('globalcategory_detail.js'))
+        .pipe(gulp.dest('static/js'));
+
+});
+
+
 gulp.task('watch', function () {
     gulp.watch('gulp/sass/*.sass', ['styles']);
 });

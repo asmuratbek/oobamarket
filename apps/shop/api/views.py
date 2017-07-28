@@ -16,11 +16,17 @@ from rest_framework.filters import (
     SearchFilter,
     OrderingFilter
 )
+
+from apps.category.api.serializers import CategorySerializer
+from apps.category.models import Category
+from apps.product.api.serializers import ProductSerializer
+from apps.product.models import Product
 from .pagination import ShopLimitPagination
 from .permissions import IsOwnerOrReadOnly
 from django.db.models import Q
 from apps.shop.models import Shop
 from .serializers import ShopSerializer, ShopCreateSerializer
+from drf_multiple_model.views import MultipleModelAPIView
 
 
 class ShopListApiView(ListAPIView):
@@ -45,11 +51,29 @@ class ShopListApiView(ListAPIView):
             return objects
 
 
-class ShopDetailApiView(RetrieveAPIView):
-    queryset = Shop.objects.all()
-    serializer_class = ShopSerializer
-    lookup_field = 'slug'
-    permission_classes = [AllowAny]
+# class ShopDetailApiView(RetrieveAPIView):
+#     queryset = Shop.objects.all()
+#     serializer_class = ShopSerializer
+#     lookup_field = 'slug'
+#     permission_classes = [AllowAny]
+
+class ShopDetailApiView(MultipleModelAPIView):
+    # queryList = [
+    #     (Shop.objects.all(), ShopSerializer),
+    #     (Product.objects.all(), ProductSerializer),
+    # ]
+
+    def get_queryList(self):
+        slug = self.kwargs.get('slug')
+        shop = Shop.objects.filter(slug=slug)
+        queryList = [
+            (shop, ShopSerializer),
+            (Product.objects.filter(shop=shop), ProductSerializer),
+            (shop.first().get_used_categories(), CategorySerializer)
+        ]
+        return queryList
+
+
 
 
 class ShopUpdateApiView(RetrieveUpdateAPIView):

@@ -32,6 +32,10 @@
             $('#id_contacts_set-TOTAL_FORMS').attr('value', count + 1);
             initSetMarkerButton();
             initToggle();
+            initFakeInputs();
+            Disabled();
+            ArroudTheClock();
+            Timepicker();
             //openMarkerModal(formSetsCounter);
         });
     });
@@ -49,15 +53,41 @@
         $('.fake-input').each(function (i, obj) {
             let from = $(obj).find('input.from');
             let to = $(obj).find('input.to');
-            let trueInput = $(obj).parent().find('input.true_input');
+            let trueInput = $(obj).find('input.true_input');
+            let that = $(this);
 
-            from.unbind('input').bind('input', function () {
+            from.unbind('change').bind('change', function () {
                 trueInput.val($(this).val() + ' - ' + to.val());
+                if(that.hasAttr('data-first')) {
+                    let parent = that.parent();
+                    setTime(from, to, parent);
+                }
             });
 
-            to.unbind('input').bind('input', function () {
+            to.unbind('change').bind('change', function () {
                 trueInput.val(from.val() + ' - ' + $(this).val());
-            })
+                if(that.hasAttr('data-first')) {
+                    let parent = that.parent();
+                    setTime(from, to, parent);
+                }
+            });
+        });
+    }
+
+    function setTime(_from, _to, parent) {
+        $('.fake-input', parent).each(function (i, obj) {
+            let from = $(obj).find('input.from');
+            let to = $(obj).find('input.to');
+            let trueInput = $(obj).find('input.true_input');
+            if(from[0] !== _from[0] && to[0] !== _to[0]) {
+                if(!from.hasAttr('disabled') && !to.hasAttr('disabled')) {
+                    from.val(_from.val());
+                    to.val(_to.val());
+                    from.trigger('change');
+                    to.trigger('change');
+                    console.log(trueInput);
+                }
+            }
         });
     }
 
@@ -86,18 +116,21 @@
     ArroudTheClock();
 
     function ArroudTheClock() {
-        $('#switcher').on('change', function () {
+        $('.switcher').on('change', function () {
             let that = $(this);
-            let cheked = $('.col-md-1');
             let toggle_div = $('.toggle-days');
+            let weekdays = $('.weekdays')
             let parent = that.closest(toggle_div);
-            parent.find(cheked).each(function () {
-                $(this).css('display', 'none');
-                if (!$(this).is(':visible')){
-                    console.log('not visible')
-                }
-                else{
-                    $(this).css('display', '');
+            parent.find(weekdays).each(function () {
+                if(!$(that).hasAttr('data-visible')) $(that).attr('data-visible', 'true');
+                if($(that).attr('data-visible') === 'false') {
+                    $(this).fadeIn('slow', function () {
+                        $(that).attr('data-visible', 'true');
+                    });
+                } else {
+                    $(this).fadeOut('slow', function () {
+                        $(that).attr('data-visible', 'false');
+                    });
                 }
             });
         });
@@ -216,16 +249,24 @@
 </script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
 <script>
-    $('.timepicker.from').timepicker({
+    Timepicker();
+    function Timepicker () {
+     $('.timepicker.from').timepicker({
         timeFormat: 'H:mm',
         show2400: true,
-        defaultTime: '06:00'
+        defaultTime: '06:00',
+        change: function (time) {
+            $(this).trigger('change');
+        }
     });
-</script>
-<script>
+
     $('.timepicker.to').timepicker({
         timeFormat: 'H:mm',
         show2400: true,
-        defaultTime: '16:00'
+        defaultTime: '16:00',
+        change: function (time) {
+            $(this).trigger('change');
+        }
     });
+    }
 </script>

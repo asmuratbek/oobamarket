@@ -9,15 +9,10 @@ from apps.product.models import Category
 
 
 class CategorySerializer(ModelSerializer):
-    detail_url = HyperlinkedIdentityField(
-        view_name='category_api:detail',
-        lookup_field='slug'
-    )
 
     class Meta:
         model = Category
         fields = (
-            'detail_url',
             'id',
             'title',
             'descendants',
