@@ -68,6 +68,7 @@ THIRD_PARTY_APPS = [
     'widget_tweaks',
     'ckeditor',
     'ckeditor_uploader',
+    'drf_multiple_model',
 ]
 
 # Apps specific for this project go here.

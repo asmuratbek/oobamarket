@@ -23,6 +23,7 @@ var MainInterface = createClass({
       queryText: '',
       deliveryType: 'all',
       products: [],
+      shop: [],
       categories: [],
       activeCategories: [],
       shopSlug : location.href.split("/")[4]
@@ -30,19 +31,32 @@ var MainInterface = createClass({
   },
 
   componentDidMount() {
-  axios.get(`/product/api/?shop=` + this.state.shopSlug)
-    .then(res => {
-      var products = res.data.map(obj => obj);
-      this.setState({
-         products: products,
-       });
-    });
+  // axios.get(`/product/api/?shop=` + this.state.shopSlug)
+  //   .then(res => {
+  //     var products = res.data.map(obj => obj);
+  //     console.log(res.data);
+  //     this.setState({
+  //        products: products,
+  //      });
+  //   });
+  //
+  //   axios.get(`/api/category/shop/` + this.state.shopSlug)
+  //     .then(res => {
+  //       var categories = res.data.map(obj => obj);
+  //       this.setState({
+  //          categories: categories
+  //        });
+  //     });
 
-    axios.get(`/api/category/shop/` + this.state.shopSlug)
+    axios.get(`/api/shops/` + this.state.shopSlug)
       .then(res => {
-        var categories = res.data.map(obj => obj);
+        var shop = res.data[0].shop.map(obj => obj);
+        var categories = res.data[2].category.map(obj => obj);
+        var products = res.data[1].product.map(obj => obj);
         this.setState({
-           categories: categories
+           shop: shop,
+           categories: categories,
+           products: products
          });
       });
   },
@@ -123,6 +137,7 @@ var MainInterface = createClass({
     var changeCategory = this.changeCategory;
     var activeCategories = this.state.activeCategories;
     var productDelete = this.productDelete;
+    var owner = this.state.shop.is_owner;
 
     allProducts.forEach(function(item) {
       if(item.title.toLowerCase().indexOf(queryText)!=-1)
@@ -222,6 +237,7 @@ var MainInterface = createClass({
           onChangePriceFrom = { this.changePriceFrom }
           onChangePriceTo = { this.changePriceTo }
        />
+        {owner ?
        <div className="col-md-4 col-sm-6">
             <div className="cover">
                 <a className="url-item" href={`/product/${this.state.shopSlug}/add-product/`}></a>
@@ -235,6 +251,7 @@ var MainInterface = createClass({
                 </div>
             </div>
         </div>
+            : null}
       {filteredProducts}
       </div>
       </div>
