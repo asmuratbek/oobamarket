@@ -4,11 +4,8 @@ import createClass from 'create-react-class';
 import Product from './components/ShopDetailProducts';
 import SearchForm from './components/ShopDetailSearchForm';
 import CategoryList from './components/ShopDetailCategory';
-import ProductsCount from './components/ProductsCount';
 import axios from 'axios';
 import _ from 'lodash';
-import AlertContainer from 'react-alert';
-import Alert from './components/Alert';
 
 
 var MainInterface = createClass({
@@ -30,31 +27,15 @@ var MainInterface = createClass({
         }
     },
 
-    componentDidMount() {
-        // axios.get(`/product/api/?shop=` + this.state.shopSlug)
-        //   .then(res => {
-        //     var products = res.data.map(obj => obj);
-        //     console.log(res.data);
-        //     this.setState({
-        //        products: products,
-        //      });
-        //   });
-        //
-        //   axios.get(`/api/category/shop/` + this.state.shopSlug)
-        //     .then(res => {
-        //       var categories = res.data.map(obj => obj);
-        //       this.setState({
-        //          categories: categories
-        //        });
-        //     });
+    componentWillMount() {
 
         axios.get(`/api/shops/` + this.state.shopSlug)
             .then(res => {
-                var shop = res.data[0].shop.map(obj => obj);
+                var owner = res.data[0].shop[0].is_owner;
                 var categories = res.data[2].category.map(obj => obj);
                 var products = res.data[1].product.map(obj => obj);
                 this.setState({
-                    shop: shop,
+                    owner: owner,
                     categories: categories,
                     products: products
                 });
@@ -126,9 +107,7 @@ var MainInterface = createClass({
 
     render: function () {
         var filteredProducts = [];
-        var filteredShops = [];
         var categories = [];
-        var shopTitles = [];
         var allProducts = this.state.products;
         var orderBy = this.state.orderBy;
         var queryText = this.state.queryText;
@@ -137,7 +116,7 @@ var MainInterface = createClass({
         var changeCategory = this.changeCategory;
         var activeCategories = this.state.activeCategories;
         var productDelete = this.productDelete;
-        var owner = this.state.shop.is_owner;
+        var owner = this.state.owner;
 
         allProducts.forEach(function (item) {
             if (item.title.toLowerCase().indexOf(queryText) != -1) {
@@ -169,21 +148,12 @@ var MainInterface = createClass({
         ;
 
         filteredProducts = filteredProducts.map(function (item, index) {
-            shopTitles.push(item.shop);
             return (
                 <Product key={ index }
                          onProductDelete={productDelete}
                          product={ item }/>
             ) //return
         }.bind(this));
-
-        shopTitles = _.uniqBy(shopTitles, function (e) {
-            return e;
-        });
-
-        filteredShops = _.filter(this.state.shops, function (item) {
-            return shopTitles.indexOf(item.title) != -1
-        });
 
         categories = this.state.categories.map(function (item, index) {
             return (
@@ -198,7 +168,7 @@ var MainInterface = createClass({
         });
 
 
-        var productsCount = filteredProducts.length
+        var productsCount = filteredProducts.length;
 
         filteredProducts = _.orderBy(filteredProducts, function (item) {
             if (orderBy == 'title') {
