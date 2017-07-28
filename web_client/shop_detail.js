@@ -31,22 +31,6 @@ var MainInterface = createClass({
   },
 
   componentDidMount() {
-  // axios.get(`/product/api/?shop=` + this.state.shopSlug)
-  //   .then(res => {
-  //     var products = res.data.map(obj => obj);
-  //     console.log(res.data);
-  //     this.setState({
-  //        products: products,
-  //      });
-  //   });
-  //
-  //   axios.get(`/api/category/shop/` + this.state.shopSlug)
-  //     .then(res => {
-  //       var categories = res.data.map(obj => obj);
-  //       this.setState({
-  //          categories: categories
-  //        });
-  //     });
 
     axios.get(`/api/shops/` + this.state.shopSlug)
       .then(res => {
@@ -197,7 +181,7 @@ var MainInterface = createClass({
 
 
 
-    var productsCount = filteredProducts.length
+    var productsCount = filteredProducts.length;
 
     filteredProducts = _.orderBy(filteredProducts, function(item) {
       if (orderBy == 'title'){
