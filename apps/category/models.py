@@ -56,3 +56,4 @@ class Category(MPTTModel, PublishBaseModel):
 
     def descendants(self):
         return self.get_descendants().values('id', 'title', 'slug')
+

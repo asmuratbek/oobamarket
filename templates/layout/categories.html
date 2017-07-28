@@ -4,13 +4,13 @@
         <ul class="content demo-x">
             {% for category in object.get_parent_categories %}
 
-                <li class="item" data-toggle="tooltip" title=""
-                         data-placement="right" data-original-title="{{ category.title }}">
+                <li class="item item-{{ object.get_parent_categories|length }}" >
                     <div class="dropdown" data-id="#dropdown-{{ category.id }}" >
                         <a class="enter btn" type="button" data-toggle="dropdown" aria-haspopup="true"
                            aria-expanded="false">
                             {% if category.image %}
-                                <img src="{{ category.image.url }}" alt="">
+                                <img src="{{ category.image.url }}" alt="" data-toggle="tooltip" title=""
+                         data-placement="right" data-original-title="{{ category.title }}">
                             {% else %}
                                 {{ category.title }}
                             {% endif %}
