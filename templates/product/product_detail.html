@@ -48,7 +48,13 @@
                     <li><a href="{{ object.shop.get_absolute_url }}">{{ object.get_shop_title }}</a></li>
                     <li class="active">{{ object.title }}</li>
                 </ol>
-                <h1>{{ object.title }}  <a class="edited glyphicon glyphicon-cog" href="{% url 'product:update_product' slug=object.slug %}" data-toggle="tooltip" title="" data-placement="bottom" data-original-title="Редактировать товар"></a></h1>
+                <h1>{{ object.title }}
+                    {% if user.is_authenticated %}
+                        {% if user in object.shop.user.all %}
+                    <a class="edited glyphicon glyphicon-cog" href="{% url 'product:update_product' slug=object.slug %}" data-toggle="tooltip" title="" data-placement="bottom" data-original-title="Редактировать товар"></a>
+                        {% endif %}
+                    {% endif %}
+                </h1>
                 {% if object.discount %}
                     <span>{{ object.get_price }} {{ object.currency }}</span>
                     <span class="old-price">
