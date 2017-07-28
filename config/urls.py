@@ -25,6 +25,7 @@ urlpatterns = [
     url(r'^api/product/', include('apps.product.api.urls', namespace="product_api")),
     url(r'^api/shops/', include('apps.shop.api.urls', namespace="shop_api")),
     url(r'^api/category/', include('apps.category.api.urls', namespace="category_api")),
+    url(r'^api/globalcategory/', include('apps.global_category.api.urls', namespace="globalcategory_api")),
     url(r'^search_predict_html', search_predict_html, name='search_predict_html'),
     # url(r'^search/', include('haystack.urls')),
     url(r'^sub-list/$', SubscribeListView.as_view(), name='sub_list'),

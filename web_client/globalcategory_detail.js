@@ -46,7 +46,7 @@ var MainInterface = createClass({
         //             categories: _.uniqBy(products.map(obj => obj.get_category_title), obj => obj)
         //         });
         //     });
-        axios.get(`/api/category/` + this.state.categorySlug)
+        axios.get(`/api/globalcategory/` + this.state.categorySlug)
             .then(res => {
                 var products = res.data[0].product.map(obj => obj);
                 this.setState({
@@ -322,3 +322,4 @@ var MainInterface = createClass({
 ReactDOM.render(<MainInterface />, document.getElementById('root'));
 
 $('.select-beast').selectize({});
+

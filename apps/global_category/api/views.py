@@ -23,34 +23,17 @@ from apps.shop.models import Shop
 from .pagination import CategoryLimitPagination
 from .permissions import IsOwnerOrReadOnly
 from django.db.models import Q
-from apps.category.models import Category
-from .serializers import CategorySerializer
+from apps.global_category.models import GlobalCategory
+from .serializers import GlobalCategorySerializer
 
 
-class CategoryListApiView(ListAPIView):
-    serializer_class = CategorySerializer
+class GlobalCategoryListApiView(ListAPIView):
+    serializer_class = GlobalCategorySerializer
     # pagination_class = ShopLimitPagination#PageNumberPagination
-    queryset = Category.objects.all()
+    queryset = GlobalCategory.objects.all()
 
 
-# class CategoryDetailApiView(RetrieveAPIView):
-#     queryset = Category.objects.all()
-#     serializer_class = CategorySerializer
-#     lookup_field = 'slug'
-#     permission_classes = [AllowAny]
-
-
-class GetUsedCategoriesFromShop(ListAPIView):
-    serializer_class = CategorySerializer
-
-    def get_queryset(self):
-        slug = self.kwargs.get('slug')
-        shop = get_object_or_404(Shop, slug=slug)
-        objects = shop.get_used_categories()
-        return objects
-
-
-class CategoryDetailApiView(MultipleModelAPIView):
+class GlobalCategoryDetailApiView(MultipleModelAPIView):
     # queryList = [
     #     (Shop.objects.all(), ShopSerializer),
     #     (Product.objects.all(), ProductSerializer),
@@ -58,8 +41,8 @@ class CategoryDetailApiView(MultipleModelAPIView):
 
     def get_queryList(self):
         slug = self.kwargs.get('slug')
-        category = Category.objects.get(slug=slug)
+        globalcategory = GlobalCategory.objects.get(slug=slug)
         queryList = [
-            (Product.objects.filter(category=category), ProductSerializer),
+            (Product.objects.filter(category__section=globalcategory), ProductSerializer),
         ]
         return queryList
