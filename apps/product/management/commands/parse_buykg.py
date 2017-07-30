@@ -35,13 +35,15 @@ class Command(BaseCommand):
                     code = soup.find('p', class_='tt').next.split(":")[1].replace(' ', '')
                     short_desc = soup.find('p', class_='tt').next_sibling.next_sibling.next.replace("\r\n", "")
                     price = soup.find('p', class_='cost').next.split(" ")[0]
+                    if price == "\n":
+                        price = soup.find('p', class_='cost').find('span', class_="bold").next.split(" ")[0]
                     colors_div = soup.find("div", class_="colors")
                     color_spans = colors_div.find_all('span') if colors_div else None
                     colors_list = [span.get("style").split(":")[1] for span in color_spans] if color_spans else None
                     colors = ",".join(colors_list) if colors_list else "Не указано"
                     available = soup.find("span", class_="teal-text").next.next[1:]
                     images_div = soup.find("div", class_="owl-carousel").find_all("img")
-                    image_links = [img.get("src") for img in images_div]
+                    image_links = ["http://buy.kg" + img.get("src") for img in images_div]
                     images = ",".join(image_links)
                     slug = slugify(title) + "-buykg-" + str(i)
                     description = soup.find("div", class_="description")
