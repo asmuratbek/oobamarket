@@ -48,7 +48,7 @@ class Command(BaseCommand):
                     if index == 0:
                         for index, field in enumerate(col):
                             if field.value:
-                                first_level.append([str(field.internal_value).split('.')[:-1], str(field.internal_value).split('.')[-1][1:]])
+                                first_level.append([str(field.internal_value).split('.')[:-1], str(field.internal_value).split('.')[-1][1:], worksheet.title])
 
                     elif index == 1:
                         for index, field in enumerate(col):
@@ -62,7 +62,7 @@ class Command(BaseCommand):
                                         str(field.internal_value).split('.')[-1][0]
                                     if category_level:
                                         ids.append(category_level)
-                                    second_level.append([ids, category_text])
+                                    second_level.append([ids, category_text, worksheet.title])
                                 else:
                                     look_for_vals = True
                                     property_text = str(field.internal_value)
@@ -73,17 +73,17 @@ class Command(BaseCommand):
                                             look_for_vals = False
                                         property_text = property_text[2:]
                                     property_text = property_text.capitalize()
-                                    second_level_props.append([ids, property_text])
+                                    second_level_props.append([ids, property_text, worksheet.title])
                                     if look_for_vals:
                                         for column in string.ascii_uppercase[string.ascii_uppercase.find(field.column) + 1:]:
                                             if worksheet[column + str(field.row)].value:
                                                 if str(worksheet[column + str(field.row)].value).startswith('Wiki'):
                                                     key = str(worksheet[column + str(field.row)].value)[7:]
                                                     if key in wiki.keys():
-                                                        values.append([ids, property_text, wiki[key]])
+                                                        values.append([ids, property_text, wiki[key], worksheet.title])
                                                 else:
                                                     if not str(worksheet[column + str(field.row)].value).startswith("("):
-                                                        values.append([ids, property_text, str(worksheet[column + str(field.row)].value).capitalize()])
+                                                        values.append([ids, property_text, str(worksheet[column + str(field.row)].value).capitalize(), worksheet.title])
 
                     elif index == 2:
                         for index, field in enumerate(col):
@@ -97,7 +97,7 @@ class Command(BaseCommand):
                                     str(field.internal_value).split('.')[-1][0]
                                     if category_level:
                                         ids.append(category_level)
-                                    third_level.append([ids, category_text])
+                                    third_level.append([ids, category_text, worksheet.title])
                                 else:
                                     look_for_values = True
                                     property_text = str(field.internal_value)
@@ -108,17 +108,17 @@ class Command(BaseCommand):
                                             look_for_values = False
                                         property_text = property_text[2:]
                                     property_text = property_text.capitalize()
-                                    third_level_props.append([ids, property_text])
+                                    third_level_props.append([ids, property_text, worksheet.title])
                                     if look_for_values:
                                         for column in string.ascii_uppercase[string.ascii_uppercase.find(field.column) + 1:]:
                                             if worksheet[column + str(field.row)].value:
                                                 if str(worksheet[column + str(field.row)].value).startswith('Wiki'):
                                                     key = str(worksheet[column + str(field.row)].value)[7:]
                                                     if key in wiki.keys():
-                                                        values.append([ids, property_text, wiki[key]])
+                                                        values.append([ids, property_text, wiki[key], worksheet.title])
                                                 else:
                                                     if not str(worksheet[column + str(field.row)].value).startswith("("):
-                                                        values.append([ids, property_text, str(worksheet[column + str(field.row)].value).capitalize()])
+                                                        values.append([ids, property_text, str(worksheet[column + str(field.row)].value).capitalize(), worksheet.title])
 
             for category in first_level:
                 title = category[-1]
@@ -131,9 +131,12 @@ class Command(BaseCommand):
                     self.stdout.write(self.style.ERROR('{} уже существует'.format(title)))
 
                 for sec_lvl_cat in second_level:
-                    if category[0][0] == sec_lvl_cat[0][0]:
+                    print(sec_lvl_cat)
+                    print(category)
+                    if category[0][0] == sec_lvl_cat[0][0] and category[-1] == sec_lvl_cat[-1]:
                         extra_slug = '.'.join(sec_lvl_cat[0])
-                        title = sec_lvl_cat[-1]
+                        title = sec_lvl_cat[1]
+                        print(title)
                         slug = slugify(title) + "-" + slugify(section.title) + "-" + extra_slug
                         sec_cat, sec_cat_created = Category.objects.get_or_create(title=title, parent=cat, slug=slug, section=section)
                         if sec_cat_created:
@@ -142,8 +145,10 @@ class Command(BaseCommand):
                             self.stdout.write(self.style.ERROR('{} уже существует'.format(title)))
 
                         for prop in second_level_props:
-                            if prop[0] == sec_lvl_cat[0]:
-                                title = prop[-1]
+                            if prop[0] == sec_lvl_cat[0] and prop[-1] == sec_lvl_cat[-1]:
+                                print(prop)
+                                print(sec_lvl_cat)
+                                title = prop[1]
                                 if title.startswith('Wiki'):
                                     title = title[7:]
                                 extra_slug = ".".join(sec_lvl_cat[0])
@@ -156,8 +161,8 @@ class Command(BaseCommand):
                                     self.stdout.write(self.style.SUCCESS('Изменено свойство "%s"' % title))
 
                                 for val in values:
-                                    if prop[0] == val[0]:
-                                        value = val[-1]
+                                    if prop[0] == val[0] and prop[-1] and val[-1]:
+                                        value = val[1]
                                         if sec_prop.title == val[1]:
                                             if isinstance(value, list):
                                                 for v in value:
@@ -177,9 +182,9 @@ class Command(BaseCommand):
                                                     self.stdout.write(self.style.SUCCESS('Изменено значение "%s"' % value))
 
                         for thrd_lvl_cat in third_level:
-                            if sec_lvl_cat[0] == thrd_lvl_cat[0][:-1]:
+                            if sec_lvl_cat[0] == thrd_lvl_cat[0][:-1] and sec_lvl_cat[-1] == thrd_lvl_cat[-1]:
                                 extra_slug = ".".join(thrd_lvl_cat[0])
-                                title = thrd_lvl_cat[-1]
+                                title = thrd_lvl_cat[1]
                                 slug = slugify(title) + "-" + slugify(section.title) + "-" + extra_slug
                                 thrd_cat, thrd_cat_created = Category.objects.get_or_create(title=title, slug=slug, parent=sec_cat, section=section)
                                 if thrd_cat_created:
@@ -188,9 +193,9 @@ class Command(BaseCommand):
                                     self.stdout.write(self.style.ERROR('{} уже существует'.format(title)))
 
                                 for prop in third_level_props:
-                                    if prop[0] == thrd_lvl_cat[0]:
+                                    if prop[0] == thrd_lvl_cat[0] and prop[-1] == thrd_lvl_cat[-1]:
                                         extra_slug = ".".join(thrd_lvl_cat[0])
-                                        title = prop[-1]
+                                        title = prop[1]
                                         if title.startswith('Wiki'):
                                             title = title[7:]
                                         slug = slugify(title) + "-" + extra_slug
@@ -205,8 +210,8 @@ class Command(BaseCommand):
                                                 self.style.SUCCESS('Изменено свойство "%s"' % title))
 
                                         for val in values:
-                                            if prop[0] == val[0]:
-                                                value = val[-1]
+                                            if prop[0] == val[0] and prop[-1] == val[-1]:
+                                                value = val[1]
                                                 if thrd_prop.title == val[1]:
                                                     if isinstance(value, list):
                                                         for v in value:
