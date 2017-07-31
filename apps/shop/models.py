@@ -29,8 +29,8 @@ class Shop(PublishBaseModel, Counter):
     title = models.CharField(max_length=255, verbose_name='Название магазина')
     slug = models.CharField(max_length=32, verbose_name='Название на транслите', unique=True)
     email = models.EmailField(verbose_name='E-mail магазина')
-    short_description = models.TextField(verbose_name='Короткое описание магазина')
-    description = models.TextField(verbose_name='Полное описание магазина')
+    short_description = models.TextField(verbose_name='Короткое описание магазина', null=True, blank=True)
+    description = models.TextField(verbose_name='Полное описание магазина', blank=True, null=True)
     logo = models.ImageField(upload_to='images/shop/logo/', default=settings.DEFAULT_IMAGE,
                              verbose_name='Логотип')
 
