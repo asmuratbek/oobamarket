@@ -188,14 +188,14 @@ var MainInterface = createClass({
 
         return (
             <div>
-                <div className="col-md-3">
+                <div className="col-md-12 col-lg-3">
                     <ul>
 
                         <li>Все категории</li>
                         {categories}
                     </ul>
                 </div>
-                <div className="col-md-9">
+                <div className="col-md-12 col-lg-9">
                     <SearchForm
                         orderBy={ this.state.orderBy }
                         onReOrder={ this.reOrder }
