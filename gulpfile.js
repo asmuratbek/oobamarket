@@ -12,6 +12,8 @@ var gulp         	= require('gulp'),
     polyfill        = require('babel-polyfill'),
 
     del 			= require('del');
+    jsmin = require('gulp-jsmin');
+    rename = require('gulp-rename');
 
 gulp.task('styles', function () {
     return gulp.src('gulp/sass/*.sass')
@@ -127,6 +129,13 @@ gulp.task('globalcategory', function(){
         .pipe(source('globalcategory_detail.js'))
         .pipe(gulp.dest('static/js'));
 
+});
+
+gulp.task('min', function () {
+    gulp.src('static/js/globalcategory_detail.js')
+        .pipe(jsmin())
+        .pipe(rename({suffix: '.min'}))
+        .pipe(gulp.dest('static/js'));
 });
 
 
