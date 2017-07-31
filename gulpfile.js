@@ -136,6 +136,18 @@ gulp.task('min', function () {
         .pipe(jsmin())
         .pipe(rename({suffix: '.min'}))
         .pipe(gulp.dest('static/js'));
+    gulp.src('static/js/category_detail.js')
+        .pipe(jsmin())
+        .pipe(rename({suffix: '.min'}))
+        .pipe(gulp.dest('static/js'));
+    gulp.src('static/js/app.js')
+        .pipe(jsmin())
+        .pipe(rename({suffix: '.min'}))
+        .pipe(gulp.dest('static/js'));
+    gulp.src('static/js/shop_detail.js')
+        .pipe(jsmin())
+        .pipe(rename({suffix: '.min'}))
+        .pipe(gulp.dest('static/js'));
 });
 
 
