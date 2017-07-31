@@ -4,8 +4,8 @@ import createClass from 'create-react-class';
 import Product from './components/Product';
 import SearchForm from './components/SearchForm';
 import CategoryList from './components/CategoryList';
-import axios from 'axios';
 import _ from 'lodash';
+import $ from 'jquery';
 
 
 
@@ -46,13 +46,28 @@ var MainInterface = createClass({
         //             categories: _.uniqBy(products.map(obj => obj.get_category_title), obj => obj)
         //         });
         //     });
-        axios.get(`/api/category/` + this.state.categorySlug)
-            .then(res => {
-                var products = res.data[0].product.map(obj => obj);
-                this.setState({
-                    products: products,
-                });
-            });
+        // axios.get(`/api/category/` + this.state.categorySlug)
+        //     .then(res => {
+        //         var products = res.data[0].product.map(obj => obj);
+        //         this.setState({
+        //             products: products,
+        //         });
+        //     });
+
+        $.ajax({
+            type: "GET",
+              url: `/api/category/` + this.state.categorySlug,
+              success: function (data) {
+                    var products = data[0].product.map(obj => obj);
+                    this.setState({
+                        products: products,
+                    });
+              }.bind(this),
+              error: function (response, error) {
+                  console.log(response);
+                  console.log(error);
+              }
+        })
     },
 
     deleteMessage: function (item) {

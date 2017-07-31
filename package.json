@@ -38,6 +38,7 @@
     "gulp-autoprefixer": "^3.1.0",
     "gulp-clean-css": "^2.0.6",
     "gulp-concat": "^2.6.0",
+    "gulp-jsmin": "^0.1.5",
     "gulp-rename": "^1.2.2",
     "gulp-sass": "^2.3.1",
     "gulp-uglify": "^2.0.0",
@@ -62,8 +63,11 @@
   "dependencies": {
     "gulp-install": "^1.1.0",
     "gulp-react": "^3.1.0",
+    "gulp-streamify": "^1.0.2",
     "pui-react-alerts": "^8.3.1",
     "react-alert": "^2.1.2",
-    "react-modal": "^2.2.1"
+    "react-modal": "^2.2.1",
+    "reactify": "^1.1.1",
+    "watchify": "^3.9.0"
   }
 }

@@ -4,7 +4,6 @@ import createClass from 'create-react-class';
 import Product from './components/ShopDetailProducts';
 import SearchForm from './components/ShopDetailSearchForm';
 import CategoryList from './components/ShopDetailCategory';
-import axios from 'axios';
 import _ from 'lodash';
 
 
@@ -29,17 +28,36 @@ var MainInterface = createClass({
 
     componentWillMount() {
 
-        axios.get(`/api/shops/` + this.state.shopSlug)
-            .then(res => {
-                var owner = res.data[0].shop[0].is_owner;
-                var categories = res.data[2].category.map(obj => obj);
-                var products = res.data[1].product.map(obj => obj);
-                this.setState({
-                    owner: owner,
-                    categories: categories,
-                    products: products
-                });
-            });
+        // axios.get(`/api/shops/` + this.state.shopSlug)
+        //     .then(res => {
+        //         var owner = res.data[0].shop[0].is_owner;
+        //         var categories = res.data[2].category.map(obj => obj);
+        //         var products = res.data[1].product.map(obj => obj);
+        //         this.setState({
+        //             owner: owner,
+        //             categories: categories,
+        //             products: products
+        //         });
+        //     });
+
+        $.ajax({
+            type: "GET",
+              url: `/api/shops/` + this.state.shopSlug,
+              success: function (data) {
+                    var owner = data[0].shop[0].is_owner;
+                    var categories = data[2].category.map(obj =>obj);
+                    var products = data[1].product.map(obj => obj);
+                    this.setState({
+                        owner: owner,
+                        categories:categories,
+                        products: products,
+                    });
+              }.bind(this),
+              error: function (response, error) {
+                  console.log(response);
+                  console.log(error);
+              }
+        })
     },
 
     deleteMessage: function (item) {
@@ -188,14 +206,14 @@ var MainInterface = createClass({
 
         return (
             <div>
-                <div className="col-md-3">
+                <div className="col-md-12 col-lg-3">
                     <ul>
 
                         <li>Все категории</li>
                         {categories}
                     </ul>
                 </div>
-                <div className="col-md-9">
+                <div className="col-md-12 col-lg-9">
                     <SearchForm
                         orderBy={ this.state.orderBy }
                         onReOrder={ this.reOrder }

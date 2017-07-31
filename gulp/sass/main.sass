@@ -519,14 +519,14 @@ header
       transform: rotate(180deg)
       color: #808080
 .search-index
-  padding: 90px 0
+  padding: 60px 0 90px 0
   position: relative
   img.center-block
     width: 200px
     margin-bottom: 30px
   img.center-block
-    animation: up-down 2s linear infinite
-    transform-origin: 50% 50%
+    //animation: up-down 2s linear infinite
+    //transform-origin: 50% 50%
   @keyframes up-down
     0%
       transform: translateY(0)
@@ -1556,6 +1556,8 @@ header
   .bg-white
     background-color: #fff
     padding: 15px
+    box-shadow: 0 0 25px -9px rgba(0,0,0,.75)
+    border-radius: 8px
   button
     border: 1px solid #f3481c
     border-left: 0
@@ -1634,7 +1636,7 @@ header
         margin: 15px 0
 .shop-page-page
   margin-bottom: 30px
-  .col-md-3
+  .col-lg-3
     background-color: #fff
     border-radius: 8px
     padding: 16px 15px
@@ -1741,7 +1743,7 @@ header
       color: #333
     p + a
       color: #f3481c
-  .col-md-9
+  .col-lg-9
     padding-left: 25px
     padding-right: 0
     .cover
@@ -2084,9 +2086,9 @@ ul.category-tab
 .shop-category
   margin-bottom: 200px
   .filter-dropdown
-    .col-md-3
+    .col-lg-3
       padding-left: 0
-  .col-md-9
+  .col-lg-9
     padding-right: 0
   .form-filter
     margin-right: 0 !important
@@ -2130,6 +2132,11 @@ ul.category-tab
             p
               font-weight: 300
   .about-us-page
+    padding: 70px
+    background: #fff
+    border-radius: 8px
+    -webkit-box-shadow: 0 0 25px -9px rgba(0,0,0,.75)
+    box-shadow: 0 0 25px -9px rgba(0,0,0,.75)
     h2
       font-size: 20px
       margin-bottom: 20px
@@ -4415,7 +4422,7 @@ body.landing
     height: 30px
     background-color: #f3481c
 .goods-of-week.filter-dropdown
-  .col-md-3
+  .col-md-3, .col-lg-3
     ul
       li:first-child
         text-transform: uppercase
@@ -4430,7 +4437,6 @@ body.landing
         background-color: #fff
         a
           color: #000
-
         .category-in-category
           padding-left: 20px
           a

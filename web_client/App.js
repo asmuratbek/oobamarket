@@ -1,10 +1,10 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import createClass from 'create-react-class';
 import Product from './components/Product';
 import SearchForm from './components/SearchForm';
 import CategoryList from './components/CategoryList';
 import _ from 'lodash';
+import $ from 'jquery';
 
 
 
@@ -31,7 +31,7 @@ var MainInterface = createClass({
     componentDidMount() {
         var params = location.search.substr(1).split("&")
         params.forEach(function (i) {
-            if (i.split("=")[0] == "q") {
+            if (i.split("=")[0] === "q") {
                 this.setState({
                     queryText: i.split("=")[1].toLowerCase()
                 })
@@ -79,7 +79,7 @@ var MainInterface = createClass({
     productDelete: function (item) {
         var allProducts = this.state.products;
         var deleted = _.remove(allProducts, function (n) {
-            return n.id == item;
+            return n.id === item;
         });
         var newProducts = _.without(allProducts, deleted);
         this.setState({
@@ -120,7 +120,7 @@ var MainInterface = createClass({
 
     changeCategory(title) {
         var activeCategories = this.state.activeCategories;
-        if (activeCategories.indexOf(title) != -1) {
+        if (activeCategories.indexOf(title) !== -1) {
             activeCategories = _.without(activeCategories, title);
         }
         else {
@@ -145,8 +145,8 @@ var MainInterface = createClass({
         var productDelete = this.productDelete;
 
         allProducts.forEach(function (item) {
-            if (item.title.toLowerCase().indexOf(queryText) != -1) {
-                if (item.delivery_type == deliveryType || deliveryType == 'all') {
+            if (item.title.toLowerCase().indexOf(queryText) !== -1) {
+                if (item.delivery_type === deliveryType || deliveryType === 'all') {
                     filteredProducts.push(item);
                 }
             }
@@ -168,7 +168,7 @@ var MainInterface = createClass({
 
         if (this.state.activeCategories.length > 0) {
             filteredProducts = _.filter(filteredProducts, function (item) {
-                return _.indexOf(this.state.activeCategories, item.category_title) != -1
+                return _.indexOf(this.state.activeCategories, item.category_title) !== -1
             }.bind(this));
         }
         ;
@@ -179,7 +179,7 @@ var MainInterface = createClass({
                          onProductDelete={productDelete}
                          product={ item }/>
             ) //return
-        }.bind(this));
+        });
 
 
         categories = this.state.categories.map(function (item, index) {
@@ -193,20 +193,17 @@ var MainInterface = createClass({
             )
         });
 
-
-        var productsCount = filteredProducts.length
-
         filteredProducts = _.orderBy(filteredProducts, function (item) {
-            if (orderBy == 'title') {
+            if (orderBy === 'title') {
                 return item.props.product.title.toLowerCase();
             }
-            else if (orderBy == 'priceAsc') {
+            else if (orderBy === 'priceAsc') {
                 return item.props.product.get_price_function;
             }
-            else if (orderBy == 'priceDesc') {
+            else if (orderBy === 'priceDesc') {
                 return item.props.product.get_price_function;
             }
-            else if (orderBy == 'newFirst') {
+            else if (orderBy === 'newFirst') {
                 return item.props.product.created_at;
             }
         }, orderDir);//orderBy
@@ -332,8 +329,6 @@ var MainInterface = createClass({
     }
 });
 
+export default MainInterface;
 
-ReactDOM.render(<MainInterface />, document.getElementById('root'));
-
-$('.select-beast').selectize({});
 
