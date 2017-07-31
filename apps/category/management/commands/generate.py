@@ -121,7 +121,7 @@ class Command(BaseCommand):
                                                         values.append([ids, property_text, str(worksheet[column + str(field.row)].value).capitalize(), worksheet.title])
 
             for category in first_level:
-                title = category[-1]
+                title = category[1]
                 extra_slug = ".".join(category[0])
                 slug = slugify(title) + "-" + slugify(section.title) + "-" + extra_slug
                 cat, created = Category.objects.get_or_create(title=title, slug=slug, section=section)
@@ -131,8 +131,6 @@ class Command(BaseCommand):
                     self.stdout.write(self.style.ERROR('{} уже существует'.format(title)))
 
                 for sec_lvl_cat in second_level:
-                    print(sec_lvl_cat)
-                    print(category)
                     if category[0][0] == sec_lvl_cat[0][0] and category[-1] == sec_lvl_cat[-1]:
                         extra_slug = '.'.join(sec_lvl_cat[0])
                         title = sec_lvl_cat[1]
@@ -146,8 +144,6 @@ class Command(BaseCommand):
 
                         for prop in second_level_props:
                             if prop[0] == sec_lvl_cat[0] and prop[-1] == sec_lvl_cat[-1]:
-                                print(prop)
-                                print(sec_lvl_cat)
                                 title = prop[1]
                                 if title.startswith('Wiki'):
                                     title = title[7:]
@@ -162,7 +158,8 @@ class Command(BaseCommand):
 
                                 for val in values:
                                     if prop[0] == val[0] and prop[-1] and val[-1]:
-                                        value = val[1]
+                                        print(val)
+                                        value = val[2]
                                         if sec_prop.title == val[1]:
                                             if isinstance(value, list):
                                                 for v in value:
@@ -211,7 +208,7 @@ class Command(BaseCommand):
 
                                         for val in values:
                                             if prop[0] == val[0] and prop[-1] == val[-1]:
-                                                value = val[1]
+                                                value = val[2]
                                                 if thrd_prop.title == val[1]:
                                                     if isinstance(value, list):
                                                         for v in value:
