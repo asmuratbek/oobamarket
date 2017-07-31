@@ -1,6 +1,7 @@
 import React from 'react';
 import createClass from 'create-react-class';
 import AlertContainer from 'react-alert';
+import $ from 'jquery';
 
 
 var ProductList = createClass({
@@ -11,7 +12,7 @@ var ProductList = createClass({
     this.msg.show(e.target.getAttribute("data-message"), {
       time: 3000,
       type: 'success',
-      icon: <img src="http://merp.mx/lib/css/icon/success-32.png" />
+      icon: <img src="http://merp.mx/lib/css/icon/success-32.png" alt='' />
     })
   },
 
@@ -25,13 +26,13 @@ var ProductList = createClass({
   // }
 
   deliveryColor: function(product) {
-      if (this.props.product.delivery_type == 'paid') {
+      if (this.props.product.delivery_type === 'paid') {
           return (
               <span className="truck pull-right yellow" data-toggle="tooltip" title=""
                         data-placement="top" data-original-title={this.props.product.delivery_type_display}><i className="fa fa-truck" aria-hidden="true"></i></span>
           )
       }
-      else if (this.props.product.delivery_type == 'free') {
+      else if (this.props.product.delivery_type === 'free') {
           return (
               <span className="truck pull-right green" data-toggle="tooltip" title=""
                         data-placement="top" data-original-title={this.props.product.delivery_type_display}><i className="fa fa-truck" aria-hidden="true"></i></span>
@@ -48,7 +49,6 @@ var ProductList = createClass({
   AddOrRemoveFavorite: function(e) {
     e.preventDefault();
     var target = e.target || e.srcElement;
-    var showAlert = this.showAlert(e);
     $.ajax({
             type: "GET",
             url: "/favorite/add",
@@ -76,7 +76,6 @@ var ProductList = createClass({
   addOrRemoveFromCart : function (e) {
       e.preventDefault();
       var target = e.target || e.srcElement;
-      var showAlert = this.showAlert(e)
       $.ajax({
           type: "GET",
           url: "/cart/",
