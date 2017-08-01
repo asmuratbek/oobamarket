@@ -4,7 +4,7 @@
             <div class="cover">
                 <a class="url-item" href="{{ shop.get_absolute_url }}"></a>
                 <div class="top-line">
-                    <h3>{{ shop.title }}</h3>
+                    <h3>{{ shop.title|truncatechars:28 }}</h3>
                 </div>
                 <div class="img-wrapper">
                     <img src="{{ shop.get_logo }}" alt="">

@@ -14,9 +14,10 @@
                 <form class="form-inline" method="post" enctype="multipart/form-data" id="add-shop-form">
                     {% csrf_token %}
                     <div class="col-md-8">
-                        <div class="form-group input col-md-6">
+                        <div class="form-group {% if form.title.errors %}has-error{% endif %} input col-md-6">
                             {% if not form.title.errors %}
-                                <label for="">Название магазина{% else %}{{ form.title.errors }}</label>{% endif %}
+                                <label for="">Название магазина</label>{% else %}
+                                <label for="">Название магазина:{{ form.title.errors }}</label>{% endif %}
                             {{ form.title|attr:"type:text" }}
                         </div>
 
@@ -64,15 +65,18 @@
                         </div>
 
                         <div class="img-wrapper">
-{#                            {% render_field form.logo|attr:"type:file"|attr:"style:display:none;"|attr:"id:id_images" %}#}
+
                             <input class="form-control" id="id_images" name="logo" style="display:none;" type="file">
                             <img id="logo_view" src=""/><span class="remove-logo">X</span>
-                            {% if object.logo.name != "/default.jpg" %}
-                                <img src="{{ object.logo.url }}" alt="" id="id_logo2">
-                                <span class="remove-logo-update">X</span>
-                            {% else %}
-                                <img src="" alt="" id="id_logo2">
+                            {% if object.logo %}
+                                {% if object.logo.name != "/default.jpg" %}
+                                    <img src="{{ object.logo.url }}" alt="" id="id_logo2">
+                                    <span class="remove-logo-update">X</span>
+                                {% else %}
+                                    <img src="" alt="" id="id_logo2">
+                                {% endif %}
                             {% endif %}
+
                             <input type="hidden" id="slug" value="{{ object.get_slug }}"/>
                         </div>
                     </div>

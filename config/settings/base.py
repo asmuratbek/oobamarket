@@ -53,7 +53,6 @@ DJANGO_APPS = [
     'mptt',
     'django_mptt_admin',
     'django.contrib.admin',
-    'geoposition',
 
 ]
 THIRD_PARTY_APPS = [
@@ -393,21 +392,5 @@ CKEDITOR_CONFIGS = {
         'width': '100%'
     },
 }
-GEOPOSITION_GOOGLE_MAPS_API_KEY = 'AIzaSyDXEuBW9AIFcfHx1UHvceIvCz0JnRNjGyo'
 
-GEOPOSITION_MAP_OPTIONS = {
-    'zoom': 14,
-    'center': {
-        'lat': 42.87897400249492,
-        'lng': 74.57215264062506
-    }
-}
-
-GEOPOSITION_MARKER_OPTIONS = {
-    'cursor': 'pointer',
-    'position': {
-        'lat': 42.87897400249492,
-        'lng': 74.57215264062506
-    }
-
-}
+JET_SIDE_MENU_COMPACT = True

@@ -1,4 +1,5 @@
 {% if user.is_authenticated %}
+
     <div class="dropdown">
         <a class="enter btn" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             {{ request.user.get_username }}
@@ -10,12 +11,12 @@
             <li><a href="{% url 'shops:create' %}"><strong>Создать магазин</strong></a></li>
 
             <li><a href="{% url 'order:order-history' username=request.user %}"><strong>История заказов</strong></a></li>
-            {% if request.get_full_path == "/" %}
+
                 <li><a href="{% url 'product:add_product_index' %}">
                     <strong>Добавить товар</strong>
                     </a>
                 </li>
-                {% endif %}
+
             {% for shop in request.user.shops_name %}
                 <li><a href="{{ shop.get_absolute_url }}">{{ shop.title }}</a></li>
             {% endfor %}
@@ -26,3 +27,4 @@
     <a href="{% url 'account_login' %}" class="enter btn" type="button">
         Войти</a>
 {% endif %}
+

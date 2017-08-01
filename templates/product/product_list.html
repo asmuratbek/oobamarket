@@ -20,7 +20,7 @@
 
                 <h2>
                     <a href="{{ product.shop.get_absolute_url }}">
-                        {{ product.get_shop_title }}
+                        {{ product.get_shop_title |truncatechars:28 }}
                     </a>
                 </h2>
                 {% if user.is_authenticated %}

@@ -9,7 +9,7 @@ from django.utils.translation import ugettext as _
 from config.settings import base as settings
 from apps.users.models import User
 from apps.utils.models import PublishBaseModel, Counter
-from geoposition.fields import GeopositionField
+
 
 # Create your models here.
 SOCIAL_LINKS = (
@@ -26,7 +26,7 @@ class Shop(PublishBaseModel, Counter):
         verbose_name_plural = 'Магазины'
 
     user = models.ManyToManyField(to=User, verbose_name='Администратор магазина')
-    title = models.CharField(max_length=255, verbose_name='Название магазина')
+    title = models.CharField(max_length=30, verbose_name='Название магазина')
     slug = models.CharField(max_length=32, verbose_name='Название на транслите', unique=True)
     email = models.EmailField(verbose_name='E-mail магазина')
     short_description = models.TextField(verbose_name='Короткое описание магазина', null=True, blank=True)

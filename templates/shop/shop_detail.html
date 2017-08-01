@@ -25,11 +25,6 @@
     <div class="shop-page-page">
         <div class="container">
             <div class="col-md-12 col-lg-3" >
-                {#                <div class="auch-edit" data-toggle="tooltip" title="" data-placement="left" data-original-title="Редактировать магазин">#}
-                {#                    <a href="{% url 'shops:update' slug=object.slug %}"  >#}
-                {#                        <i class="glyphicon glyphicon-cog" ></i>#}
-                {#                    </a>#}
-                {#                </div>#}
                 {% show_edit_shop_button shop request.user %}
                 {% if object.logo %}
                     <div class="img-wrapper">
@@ -152,80 +147,23 @@
     <section class="shop-category">
         <div class="container">
             <ul class="category-tab">
-
-                <li><a href="{% url 'shops:detail' slug=shop.slug %}">Товары</a></li>
-                <li><a href="{% url 'shops:about_us' slug=shop.slug %}">О компании</a></li>
-                <li><a href="{% url 'shops:sale' slug=shop.slug %}">Акции</a></li>
-                <li><a href="{% url 'shops:review' slug=shop.slug %}">Отзывы</a></li>
+                {% url 'shops:detail' slug=shop.slug as shop_detail %}
+                {% url 'shops:about_us' slug=shop.slug as about_us %}
+                {% url 'shops:sale' slug=shop.slug as sale %}
+                {% url 'shops:review' slug=shop.slug as review %}
+                {% url 'shops:contacts_detail' slug=shop.slug as contacts %}
+                <li {% if request.path == shop_detail  %}class="active"{% endif %}><a href="{{ shop_detail }}">Товары</a></li>
+                <li {% if request.path == about_us %}class="active"{% endif %}><a href="{{ about_us }}">О компании</a></li>
+                <li {% if request.path == sale %}class="active"{% endif %}><a href="{{ sale }}">Акции</a></li>
+                <li {% if request.path == review %}class="active"{% endif %}><a href="{{ review }}">Отзывы</a></li>
                 {#                <li><a class="remove delete-object model-trigger" data-url="{% url 'shops:delete' slug=object.slug %}" style="cursor: pointer;">Удалить магазин</a></li>#}
-                <li><a href="{% url 'shops:contacts_detail' slug=shop.slug %}">Контакты</a></li>
+                <li {% if request.path == contacts %}class="active"{% endif %}><a href="{{ contacts }}">Контакты</a></li>
 
             </ul>
             {% block shopcontent %}
                 <div class="goods-of-week filter-dropdown">
 
                     <div class="" id="root"></div>
-                    {#                <div class="col-md-3">#}
-                    {#                    <ul>#}
-                    {##}
-                    {#                    <li>Все категории</li>#}
-                    {#                        {% for category in object.get_used_categories %}#}
-                    {#                            <li class="{% if forloop.first %}active{% endif %}">#}
-                    {#                                <a  role="button" data-toggle="collapse" href="#{{ forloop.counter }}" aria-expanded="false" aria-controls="collapseExample">{{ category.title }}</a>#}
-                    {#                                {% if category.is_parent %}#}
-                    {#                                    <div class="collapse category-in-category" id="{{ forloop.counter }}">#}
-                    {#                                        {% for subcategory in category.get_descendants %}#}
-                    {#                                            <a href="{{ subcategory.get_absolute_url }}" class="{% if forloop.first %}active{% endif %}">{{ subcategory.title }}</a>#}
-                    {#                                        {% endfor %}#}
-                    {#                                    </div>#}
-                    {#                                {% endif %}#}
-                    {#                            </li>#}
-                    {#                        {% endfor %}#}
-                    {#                    </ul>#}
-                    {#                </div>#}
-                    {#                <div class="col-md-9">#}
-                    {#                    <div class="form-filter">#}
-                    {##}
-                    {#                        <form class="form-inline">#}
-                    {##}
-                    {#                            <div class="form-group select">#}
-                    {#                                <select class="form-control">#}
-                    {#                                    <option>Сортировка</option>#}
-                    {#                                    <option>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Maiores, modi?#}
-                    {#                                    </option>#}
-                    {#                                    <option>3</option>#}
-                    {#                                    <option>4</option>#}
-                    {#                                    <option>5</option>#}
-                    {#                                </select>#}
-                    {#                            </div>#}
-                    {##}
-                    {#                            <div class="form-group input">#}
-                    {#                                <label><span>Цена</span> от</label>#}
-                    {#                                <input type="text" class="form-control" placeholder="2000 сом">#}
-                    {#                            </div>#}
-                    {##}
-                    {#                            <div class="form-group input end">#}
-                    {#                                <label>до</label>#}
-                    {#                                <input type="text" class="form-control" placeholder="4000 сом">#}
-                    {#                            </div>#}
-                    {##}
-                    {#                            <div class="form-group search">#}
-                    {#                                <input type="search" class="form-control" placeholder="Поиск товара...">#}
-                    {#                                <button type="submit" class="btn btn-default glyphicon glyphicon-search"></button>#}
-                    {#                            </div>#}
-                    {##}
-                    {#                        </form>#}
-                    {##}
-                    {#                    </div>#}
-                    {#                    <div class="goods-of-week">#}
-                    {#                        <div class="clearfix"></div>#}
-                    {#                            {% show_add_product_button shop request.user %}#}
-                    {#                            {% include 'product/product_list.html' with object_list=object.get_shop_products col=4 %}#}
-                    {#                        <div class="clearfix"></div>#}
-                    {#                    </div>#}
-                    {##}
-                    {##}
-                    {#                </div>#}
                 </div>
             {% endblock %}
 

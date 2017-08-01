@@ -51,7 +51,7 @@ class CartItem(models.Model):
         verbose_name_plural = "Продукты в корзине"
 
     cart = models.ForeignKey(Cart, verbose_name='Корзина')
-    product = models.ForeignKey(Product, verbose_name='Продукт')
+    product = models.ForeignKey(Product, verbose_name='Продукт', null=True, blank=True)
     quantity = models.PositiveIntegerField(_("Количество"), default=1)
     total = models.DecimalField(_("Общая цена"), max_digits=10, decimal_places=2)
 
