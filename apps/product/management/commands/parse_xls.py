@@ -46,6 +46,7 @@ class Command(BaseCommand):
                 prod.availability = available
                 prod.long_description = desc
                 prod.save()
+                self.stdout.write(self.style.SUCCESS("{} изменен.".format(title)))
             except Product.DoesNotExist:
                 imgs_list = product[6].split(",")
                 product_create = Product.objects.create(shop=shop, category=category, title=title, slug=slug,
@@ -59,5 +60,5 @@ class Command(BaseCommand):
                                                                 str(slug) + "-{}.jpg".format(img_i))
                     product_images = ProductImage.objects.create(product=product_create, image="products/image/" + str(slug) +
                                                                                                "-{}.jpg".format(img_i))
-            self.stdout.write(self.style.SUCCESS("{} создан.".format(title)))
+                self.stdout.write(self.style.SUCCESS("{} создан.".format(title)))
         return self.stdout.write(self.style.SUCCESS("Done!"))
