@@ -264,12 +264,24 @@ $(document).ready(function () {
                     "section": section
                 },
                 success: function (data) {
-                    console.log(data);
                     if (data.count > 0) {
                         subcategoryList.removeAttr('disabled');
                         subcategoryList.html('<option>Выберите подкатегорию</option>');
-                        $.each(data.category_list, function (key, value) {
-                            subcategoryList.append('<option value=' + key + '>' + value + '</option>')
+                        $.each(data.category_list, function (index, category) {
+                            if (category[2].length) {
+                                    subcategoryList.append('<option value=' + category[0] + ' disabled>' + category[1] + '</option>');
+                                    $.each(category[2], function (index, cat) {
+                                    subcategoryList.append('<option value=' + cat[0] + '>' + '--- ' + cat[1] + '</option>')
+                                })
+                            }
+
+                            else {
+                                subcategoryList.append('<option value=' + category[0] + '>' + category[1] + '</option>');
+                                    $.each(category[2], function (index, cat) {
+                                    subcategoryList.append('<option value=' + cat[0] + '>' + '--- ' + cat[1] + '</option>')
+                                })
+                            }
+
                         });
                     }
 
