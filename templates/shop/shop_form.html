@@ -17,14 +17,14 @@
                         <div class="form-group {% if form.title.errors %}has-error{% endif %} input col-md-6">
                             {% if not form.title.errors %}
                                 <label for="">Название магазина</label>{% else %}
-                                <label for="">Название магазина:{{ form.title.errors }}</label>{% endif %}
+                                <label for="" style="color:red;">Название магазина:{{ form.title.errors }}</label>{% endif %}
                             {{ form.title|attr:"type:text" }}
                         </div>
 
                         <div class="form-group {% if form.email.errors %}has-error{% endif %} input col-md-6">
                             {% if not form.email.errors %}
                                 <label for="">E-mail магазина:</label>{% else %}
-                                <label for="">E-mail магазина:{{ form.email.errors }}</label>{% endif %}
+                                <label for="" style="color:red;">E-mail магазина:{{ form.email.errors }}</label>{% endif %}
                             {% render_field form.email|attr:"type:email" placeholder="" %}
                         </div>
 

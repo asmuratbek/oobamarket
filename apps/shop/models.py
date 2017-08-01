@@ -175,9 +175,9 @@ class Sales(PublishBaseModel):
     shop = models.ForeignKey(Shop, verbose_name='Магазин', on_delete=models.CASCADE, null=True, blank=True)
     title = models.CharField(max_length=50, verbose_name='Название акции')
     short_description = models.TextField(max_length=155, verbose_name='Короткое описание')
-    description = RichTextUploadingField()
-    discount = models.IntegerField(verbose_name='Скидка')
-    image = models.ImageField(upload_to='shops/sales', verbose_name='Изображение')
+    description = RichTextUploadingField(null=True, blank=True)
+    discount = models.IntegerField(verbose_name='Скидка', null=True, blank=True)
+    image = models.ImageField(upload_to='shops/sales', verbose_name='Изображение', null=True, blank=True)
 
     def __str__(self):
         return self.title
