@@ -116,3 +116,5 @@ def is_favorite_for_like(product, user):
 #                             </h2>''').format(product.slug)
 #         else:
 #             return ''
+
+

@@ -109,6 +109,7 @@ class Product(PublishBaseModel, Counter):
         return self.category.title
 
 
+
 class FavoriteProduct(models.Model):
     class Meta:
         verbose_name_plural = "Избранные продукты"

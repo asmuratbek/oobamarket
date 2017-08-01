@@ -152,7 +152,7 @@ class ProductCreateView(LoginRequiredMixin, AddProductMixin, CreateView):
     def form_valid(self, form, **kwargs):
         random_int = random.randrange(0, 1010)
         product = form.instance
-        product.slug = slugify(form.instance.title) + str(random_int)
+        product.slug = slugify(form.instance.title, max_length=32) + str(random_int)
         product.shop = Shop.objects.get(slug=self.kwargs['slug'])
         product.save()
         for key, value in self.request.POST.items():

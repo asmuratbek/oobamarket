@@ -136,6 +136,9 @@ class ShopUpdateView(LoginRequiredMixin, FormsetMixin, ShopMixin, UpdateView):
 
 
 
+
+
+
 class ShopDeleteView(LoginRequiredMixin, ShopMixin, DeleteView):
     model = Shop
     template_name = 'layout/modal_shop_delete_confirm.html'
