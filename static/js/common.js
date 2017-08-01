@@ -156,6 +156,11 @@ $(document).ready(function () {
         $(".mobile-auth").modal('show');
     });
 
+    $(".mobile-landing-btn").click(function () {
+        //открыть модальное окно с class="remove-product"
+        $(".mobile-landing").modal('show');
+    });
+
     //Функция вызова модального окана на главной для удаления товара
     var trigger = $('.model-trigger');
 
