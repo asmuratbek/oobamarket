@@ -236,7 +236,6 @@ $(document).ready(function () {
                     }
 
                     else {
-                        console.log('Noooo');
                         categoryList.html("").attr('disabled', "");
                     }
                 },

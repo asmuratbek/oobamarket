@@ -16,6 +16,7 @@ class Properties(MPTTModel, Ordering):
     title = models.CharField(max_length=255, verbose_name='Название параметра')
     slug = models.CharField(max_length=255, verbose_name='Slug', null=True)
     parent = TreeForeignKey('self', verbose_name='Родительский параметр', null=True, blank=True)
+    help_text = models.CharField(max_length=255, verbose_name="Вспомогательный текст", blank=True, null=True)
 
     class MPTTMeta:
         order_insertion_by = ['title']
