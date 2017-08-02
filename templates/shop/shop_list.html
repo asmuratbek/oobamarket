@@ -23,7 +23,7 @@
             <div class="row">
                 <h1 class="pull-left">Магазины</h1>
                 <form action="" class="pull-right col-md-6">
-                    <select id="select-beast-empty" class="demo-default col-md-5" data-placeholder="Выбрать категорию">
+                    <select id="select-beast-empty" class="demo-default col-md-5" data-placeholder="Выбрать ТЦ">
                         <option value="">Thomqwqas Edison</option>
                         {#                    одну опцию не трогать !!#}
                         <option>Опция 1</option>
@@ -59,13 +59,23 @@
                                     </div>
                                     <div class="clearfix"></div>
                                     <div class="bottom-line">
-                                        {% if shop.contacts_set.all %}
+                                        {% if shop.constac_set.first.phone %}
                                             <div>
-                                                <a href="tel: 0312 89 53 33" class="">
+                                                <a href="tel: {{ shop.contacts_set.first.phone }}" class="">
                                                     <span class="glyphicon glyphicon-earphone"></span>
                                                     {{ shop.contacts_set.first.phone }}
+
                                                 </a>
                                             </div>
+                                        {% else %}
+                                            <div>
+                                                <a href="tel:" class="">
+                                                    <span class="glyphicon glyphicon-earphone"></span>
+                                                    не указан
+
+                                                </a>
+                                            </div>
+
                                         {% endif %}
                                         <div>
                                             <a href="mailto:{{ shop.email }}" class="">
