@@ -11,13 +11,23 @@
                 </div>
                 <div class="clearfix"></div>
                 <div class="bottom-line">
-                    {% if shop.contacts_set.all %}
+                    {% if shop.contacts_set.first.phone %}
                         <div>
-                            <a href="tel: 0312 89 53 33" class="">
+                            <a href="tel: {{ shop.contacts_set.first.phone }}" class="">
                                 <span class="glyphicon glyphicon-earphone"></span>
                                 {{ shop.contacts_set.first.phone }}
                             </a>
                         </div>
+
+                    {% else %}
+
+                        <div>
+                            <a href="tel: 0312 89 53 33" class="">
+                                <span class="glyphicon glyphicon-earphone"></span>
+                                не указан
+                            </a>
+                        </div>
+
                     {% endif %}
                     <div>
                         <a href="mailto:{{ shop.email }}" class="">
