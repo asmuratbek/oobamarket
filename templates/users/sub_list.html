@@ -22,7 +22,8 @@
                 <div class="col-md-6 product">
                     <div class="border">
                         <div class="img-wrapper col-md-6">
-                            <a href=""><img src="{{ sub.get_all_images.first.image.url }}" alt=""></a>
+                            <a href="/{{ sub.category.section.slug }}/{{ sub.category.slug}}/{{ sub.slug }}">
+                                <img src="{{ sub.get_all_images.first.image.url }}" alt=""></a>
                         </div>
                         <div class="description col-md-6">
                             <div class="top-line">
