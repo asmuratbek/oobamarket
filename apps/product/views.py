@@ -203,7 +203,7 @@ class ProductUpdateView(LoginRequiredMixin, UpdateProductMixin, UpdateView):
     def get_initial(self, **kwargs):
         initial = super(ProductUpdateView, self).get_initial()
         initial['user'] = self.request.user
-        initial['parent_categories'] = self.object.category.parent.id
+        initial['parent_categories'] = self.object.category.get_root().id
         initial['section'] = self.object.category.section.id
         return initial
 
