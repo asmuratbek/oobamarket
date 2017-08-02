@@ -16,6 +16,9 @@
                     <div class="manufacturer-{{ property.id }}" style="display: none;">
                         <input type="text" class="form-control" id="manufacturer-input" placeholder="{{ property.title }}">
                     </div>
+                    {% if property.help_text %}
+                        <p>{{ property.help_text }}</p>
+                    {% endif %}
                     <a class="add no-bg btn manufacturer-btn-{{ property.id }}"
                        style="margin: 0; width: 100%;">Добавить</a>
 
@@ -72,6 +75,9 @@
                             <input type="text" class="form-control" id="manufacturer-input" placeholder="{{ property.title }}">
 
                         </div>
+                        {% if property.help_text %}
+                            <p>{{ property.help_text }}</p>
+                        {% endif %}
                         <a class="add no-bg btn manufacturer-btn-{{ property.id }}" style="margin: 0; width: 100%;">Добавить</a>
                     </div>
 
@@ -101,6 +107,9 @@
             <div class="col-md-12">
                 <div class="select parent-group form-group col-md-6 cover" style="padding-left: 0; width: 50%;">
                     <label class="title">{{ property.title }}</label>
+                    {% if property.help_text %}
+                        <p>{{ property.help_text }}</p>
+                    {% endif %}
                     <select class="form-control" id="subcategory_list" name="property-{{ property.id }}">
                         <option>------------</option>
                         {% for value in property.values_set.all %}

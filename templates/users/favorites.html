@@ -6,7 +6,11 @@
     <div class="container">
         <h1>Избранные товары</h1>
         <div class="favorite-products">
+        {% if not object.get_original_products %}
+            <p style="text-align: center;">Вы еще не добавили товары в избранное!</p>
+        {% else %}
         {% include 'product/product_list.html' with object_list=object.get_original_products col=3 %}
+        {% endif %}
         </div>
     </div>
 </section>

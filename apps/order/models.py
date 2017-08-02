@@ -13,19 +13,18 @@ from apps.shop.models import Shop
 from apps.users.models import User
 from apps.utils.models import PublishBaseModel
 
-
 import braintree
 
 if settings.DEBUG:
     braintree.Configuration.configure(braintree.Environment.Sandbox,
-        merchant_id=settings.BRAINTREE_MERCHANT_ID,
-        public_key=settings.BRAINTREE_PUBLIC,
-        private_key=settings.BRAINTREE_PRIVATE)
+                                      merchant_id=settings.BRAINTREE_MERCHANT_ID,
+                                      public_key=settings.BRAINTREE_PUBLIC,
+                                      private_key=settings.BRAINTREE_PRIVATE)
 
 
 class UserCheckout(models.Model):
-    user = models.OneToOneField(User, null=True, blank=True) #not required
-    email = models.EmailField(unique=True) #--> required
+    user = models.OneToOneField(User, null=True, blank=True)  # not required
+    email = models.EmailField(unique=True)  # --> required
     braintree_id = models.CharField(max_length=120, null=True, blank=True)
 
     def __str__(self):
@@ -60,7 +59,6 @@ def update_braintree_id(sender, instance, *args, **kwargs):
 
 post_save.connect(update_braintree_id, sender=UserCheckout)
 
-
 ADDRESS_TYPE = (
     ('billing', 'Billing'),
     ('shipping', 'Shipping'),
@@ -77,7 +75,7 @@ class UserAddress(models.Model):
         return self.street
 
     def get_address(self):
-        return "%s, %s, %s %s" %(self.street, self.city, self.state, self.zipcode)
+        return "%s, %s, %s %s" % (self.street, self.city, self.state, self.zipcode)
 
 
 ORDER_STATUS_CHOICES = (
@@ -121,11 +119,11 @@ def order_pre_save(sender, instance, *args, **kwargs):
     order_total = Decimal(shipping_total_price) + Decimal(cart_total)
     instance.order_total = order_total
 
+
 pre_save.connect(order_pre_save, sender=Order)
 
 
 class SimpleOrder(PublishBaseModel):
-
     class Meta:
         verbose_name = "Заказ"
         verbose_name_plural = "Заказы"
@@ -140,7 +138,7 @@ class SimpleOrder(PublishBaseModel):
     status = models.CharField(max_length=120, choices=ORDER_STATUS_CHOICES, default='created')
 
     def __str__(self):
-        return  str(self.name) + str(self.last_name)
+        return str(self.name) + str(self.last_name)
 
 
 def send_email_to_shop_owner(sender, instance, *args, **kwargs):
@@ -153,7 +151,7 @@ def send_email_to_shop_owner(sender, instance, *args, **kwargs):
                                         {"name": instance.name + ' ' + instance.last_name,
                                          'date': instance.created_at, 'address': instance.address,
                                          'phone': instance.phone,
-                                         'products': products,})
+                                         'products': products, })
         html_content = render_to_string(template_html,
                                         {"name": instance.name + ' ' + instance.last_name,
                                          'date': instance.created_at, 'address': instance.address,
@@ -161,7 +159,8 @@ def send_email_to_shop_owner(sender, instance, *args, **kwargs):
                                          'products': products,
                                          })
 
-        msg = EmailMultiAlternatives('Поступил новый заказ в магазин ' + shop.title, text_content, settings.EMAIL_HOST_USER, [shop.email])
+        msg = EmailMultiAlternatives('Поступил новый заказ в магазин ' + shop.title, text_content,
+                                     settings.EMAIL_HOST_USER, [shop.email])
         msg.attach_alternative(html_content, "text/html")
         msg.send()
 
