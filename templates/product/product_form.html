@@ -21,26 +21,19 @@
                                 <label class="label-error">{{ form.shop.errors }}</label>
                             </div>
 
-                            <div class="form-group {% if form.category.errors %}has-error{% endif %} select col-md-6">
-                                <select class="form-control" id="global_category">
-                                    <option>Выберите раздел</option>
-                                    {% for cat in fixed_categories %}
-                                        <option>{{ cat.title }}</option>
-                                    {% endfor %}
-                                </select>
-                                <label class="label-error">{{ form.category.errors }}</label>
+                            <div class="form-group {% if form.section.errors %}has-error{% endif %} select col-md-6">
+                                {% render_field form.section|attr:"id:global_category"|add_error_attr:"aria-invalid:true" %}
+                                <label class="label-error">{{ form.section.errors }}</label>
+                            </div>
+
+                            <div class="form-group {% if form.parent_categories.errors %}has-error{% endif %} select col-md-6">
+                                {% render_field form.parent_categories|attr:"id:category_list"|add_error_attr:"aria-invalid:true" %}
+                                <label class="label-error">{{ form.parent_categories.errors }}</label>
                             </div>
 
                             <div class="form-group {% if form.category.errors %}has-error{% endif %} select col-md-6">
-                                <select class="form-control" id="category_list" name="category" disabled>
-                                </select>
+                                {% render_field form.category|attr:"id:subcategory_list" %}
                                 <label class="label-error">{{ form.category.errors }}</label>
-                            </div>
-
-                            <div class="form-group select col-md-6">
-                                <select class="form-control" id="subcategory_list" disabled>
-                                </select>
-
                             </div>
 
                             <div class="form-group {% if form.title.errors %}has-error{% endif %} input col-md-12">

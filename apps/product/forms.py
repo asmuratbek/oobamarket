@@ -12,6 +12,8 @@ class ProductForm(forms.ModelForm):
         model = Product
         exclude = ['slug', 'objects', 'sell_count', 'counter']
 
+    section = forms.ModelChoiceField(queryset=GlobalCategory.objects.all())
+    parent_categories = forms.ModelChoiceField(queryset=Category.objects.filter(parent=None))
     removed_images = forms.CharField(required=False)
     uploaded_images = forms.CharField(required=False)
 

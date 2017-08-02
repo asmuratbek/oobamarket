@@ -311,7 +311,6 @@ $(document).ready(function () {
         else {
             if (selected.hasAttr('value')) {
                 title.removeAttr('disabled');
-                categoryList.removeAttr('name');
                 $(this).attr('name', 'category');
                 $.ajax({
                     type: "GET",

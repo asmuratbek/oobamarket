@@ -139,15 +139,13 @@ class ProductCreateView(LoginRequiredMixin, AddProductMixin, CreateView):
         return reverse('shops:detail', args=(self.object.shop.slug,))
 
     def get_initial(self):
-        return {'shop': Shop.objects.get(slug=self.kwargs['slug']),
-                'user': self.request.user
-                }
+        initial = dict()
+        initial['shop'] = Shop.objects.get(slug=self.kwargs['slug'])
+        initial['user'] = self.request.user
+        return initial
 
     def form_invalid(self, form):
-        print(locals())
-        print(self)
-        print(form.fields.get('section'))
-        return super(ProductCreateView, self).form_invalid(form)
+        return self.render_to_response(self.get_context_data(form=form))
 
     def form_valid(self, form, **kwargs):
         random_int = random.randrange(0, 1010)
@@ -230,7 +228,7 @@ class ProductUpdateView(LoginRequiredMixin, UpdateProductMixin, UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super(ProductUpdateView, self).get_context_data(**kwargs)
-        context['props'] = self.object.category.properties_set.all()
+        context['properties'] = self.object.category.properties_set.all()
         context['values'] = [val.id for val in self.object.values_set.all()]
         return context
 
