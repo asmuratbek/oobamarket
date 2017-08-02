@@ -145,6 +145,9 @@ class ProductCreateView(LoginRequiredMixin, AddProductMixin, CreateView):
         return initial
 
     def form_invalid(self, form):
+        form.fields.get('title').widget.attrs['disabled'] = False
+        form.fields.get('parent_categories').widget.attrs['disabled'] = False
+        form.fields.get('category').widget.attrs['disabled'] = False
         return self.render_to_response(self.get_context_data(form=form))
 
     def form_valid(self, form, **kwargs):
@@ -206,8 +209,8 @@ class ProductUpdateView(LoginRequiredMixin, UpdateProductMixin, UpdateView):
         return initial
 
     def form_invalid(self, form):
-        print(form._errors)
-        super(ProductUpdateView, self).form_invalid(form)
+        print("hey")
+        return super(ProductUpdateView, self).form_invalid(self, form)
 
     def form_valid(self, form):
         product = form.instance

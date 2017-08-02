@@ -22,6 +22,9 @@ class ProductForm(forms.ModelForm):
         self.user = kwargs['initial']['user']
         super(ProductForm, self).__init__(*args, **kwargs)
         self.fields['shop'].queryset = Shop.objects.filter(user__in=[self.user.id])
+        self.fields.get('parent_categories').widget.attrs['disabled'] = True
+        self.fields.get('category').widget.attrs['disabled'] = True
+
         for field in iter(self.fields):
             self.fields[field].widget.attrs.update({
                 'class': 'form-control'
