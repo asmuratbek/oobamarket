@@ -22,6 +22,11 @@ $.ajax({
             //     }
             // });
                 $('#sub_button').text('Отписаться');
+                $('.form-check-input').each(function () {
+                    if($(this).val() === "all")
+                        $(this).attr('checked', 'checked');
+                })
+
             }else {
                 sub_select.hide();
                 $('#sub_button').text('Подписаться');
@@ -44,7 +49,7 @@ $.ajax({
         } else {
             $('.form-check-input').each(function () {
                if($(this).attr('id') === that.attr('id'))
-                   $(this).attr('checked', true);
+                   $(this).attr('checked', 'checked');
                 else{
                    $(this).attr('checked', false)
                }

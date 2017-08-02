@@ -133,17 +133,15 @@ def subscribe(request):
 class SubscribeListView(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         user = self.request.user
-        sales = list()
-        products = list()
+        sub_list = list()
         for sub in user.subscription_set.all():
             if sub.subscription_type == 'only_actions':
-                [sales.append(item) for item in sub.subscription.sales_set.all()]
+                [sub_list.append(item) for item in sub.subscription.sales_set.all().order_by("-created_at")]
             elif sub.subscription_type == 'only_products':
-                [products.append(item) for item in sub.subscription.product_set.all()]
+                [sub_list.append(item) for item in sub.subscription.product_set.all().order_by("-created_at")]
             else:
-                [sales.append(item) for item in sub.subscription.sales_set.all()]
-                [products.append(item) for item in sub.subscription.product_set.all()]
-        return render(self.request, 'users/sub_list.html', {'sales': sales,
-                                                            'products': products})
+                [sub_list.append(item) for item in sub.subscription.sales_set.all().order_by("-created_at")]
+                [sub_list.append(item) for item in sub.subscription.product_set.all().order_by("-created_at")]
+        return render(self.request, 'users/sub_list.html', {'sub_objects': sub_list})
 
 
