@@ -15,6 +15,7 @@ class ProductAdmin(admin.ModelAdmin):
     inlines = [ProductImagesInline]
     prepopulated_fields = {'slug': ('title',)}
     filter_horizontal = ('values',)
+    search_fields = ['title']
 
 
 admin.site.register(Product, ProductAdmin)
