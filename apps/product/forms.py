@@ -36,7 +36,6 @@ class ProductForm(forms.ModelForm):
         shop = cleaned_data.get('shop', '')
         category = cleaned_data.get('category', '')
         price = cleaned_data.get('price', '')
-        short_description = cleaned_data.get('short_description', '')
 
         error_msg = "*Обязательное поле"
 
@@ -48,8 +47,6 @@ class ProductForm(forms.ModelForm):
             self._errors['category'] = error_msg
         if price is None or price == "":
             self._errors['price'] = error_msg
-        if short_description is None or short_description == "":
-            self._errors['short_description'] = error_msg
 
 
 class ProductUpdateForm(forms.ModelForm):

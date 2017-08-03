@@ -145,6 +145,7 @@ class ProductCreateView(LoginRequiredMixin, AddProductMixin, CreateView):
         return initial
 
     def form_invalid(self, form):
+        print(form.errors)
         form.fields.get('title').widget.attrs['disabled'] = False
         form.fields.get('parent_categories').widget.attrs['disabled'] = False
         form.fields.get('category').widget.attrs['disabled'] = False
