@@ -41,7 +41,7 @@
                                 {#                                   data-placement="top"#}
                                 {#                                   data-original-title="Рекомендация: для лучшего поиска, пишите тип товара в начале названия. Автомобильные шины MAXXIS AT-771 Bravo"#}
                                 {#                                   aria-describedby="tooltip200612" class="form-control" placeholder="Название товара">#}
-                                {% render_field form.title|add_error_attr:"aria-invalid:true"|attr:"data-toggle:tooltip"|attr:"data-placement:top"|attr:"aria-describedby:tooltip200612"|attr:"data-original-title:Рекомендация - для лучшего поиска, пишите тип товара в начале названия. Автомобильные шины MAXXIS AT-771 Bravo"|attr:"disabled" placeholder="Название товара" %}
+                                {% render_field form.title|add_error_attr:"aria-invalid:true"|attr:"data-toggle:tooltip"|attr:"data-placement:top"|attr:"aria-describedby:tooltip200612"|attr:"data-original-title:Рекомендация - для лучшего поиска, пишите тип товара в начале названия. Автомобильные шины MAXXIS AT-771 Bravo" placeholder="Название товара" %}
                                 <label class="label-error">{{ form.title.errors }}</label>
                             </div>
 
@@ -119,35 +119,35 @@
                             {#                            </div>#}
                         </div>
 
-                        <div class="step_2">
-                            <h3><span>2.</span> Доставка</h3>
-
-
-                            <div class="form-group select col-md-6">
-                                {% render_field form.delivery_type|add_error_attr:"aria-invalid:true" %}
-                            </div>
-
-                            <div class="form-group input col-md-6">
-                                {% render_field form.delivery_cost|add_error_attr:"aria-invalid:true"|attr:"class:form-control mini"|attr:"disabled" placeholder="Стоимость доставки" %}
-                            </div>
-                        </div>
-
-                        <div class="step_3">
-                            <h3 style="margin-bottom: 10px;"><span>3.</span> Параметры товара</h3>
-                            <p style="margin-bottom: 30px;">Рекомендуется заполнить для лучшего отображения результатов
-                                поиска</p>
-
-                            <div class="col-md-12" id="property_list">
-
-                            </div>
-                            <div class="clearfix"></div>
-
-                            <p id="empty_properties" style="display: block;">Параметры для данной категории
-                                отсутствуют</p>
-                        </div>
+{#                        <div class="step_2">#}
+{#                            <h3><span>2.</span> Доставка</h3>#}
+{##}
+{##}
+{#                            <div class="form-group select col-md-6">#}
+{#                                {% render_field form.delivery_type|add_error_attr:"aria-invalid:true" %}#}
+{#                            </div>#}
+{##}
+{#                            <div class="form-group input col-md-6">#}
+{#                                {% render_field form.delivery_cost|add_error_attr:"aria-invalid:true"|attr:"class:form-control mini"|attr:"disabled" placeholder="Стоимость доставки" %}#}
+{#                            </div>#}
+{#                        </div>#}
+{##}
+{#                        <div class="step_3">#}
+{#                            <h3 style="margin-bottom: 10px;"><span>3.</span> Параметры товара</h3>#}
+{#                            <p style="margin-bottom: 30px;">Рекомендуется заполнить для лучшего отображения результатов#}
+{#                                поиска</p>#}
+{##}
+{#                            <div class="col-md-12" id="property_list">#}
+{##}
+{#                            </div>#}
+{#                            <div class="clearfix"></div>#}
+{##}
+{#                            <p id="empty_properties" style="display: block;">Параметры для данной категории#}
+{#                                отсутствуют</p>#}
+{#                        </div>#}
 
                         <div class="step_4 {% if form.short_description.errors %}has-error{% endif %}">
-                            <h3><span>4.</span> Короткое описание товара <span>(Опционально)</span></h3>
+                            <h3><span>2.</span> Короткое описание товара <span>(Опционально)</span></h3>
                             {#                            <textarea class="form-control" rows="6"></textarea>#}
                             <label class="label-error">{{ form.short_description.errors }}</label>
                             {% render_field form.short_description|attr:"rows:6" %}
@@ -155,7 +155,7 @@
                         </div>
 
                         <div class="step_5">
-                            <h3><span>5.</span> Полное описание товара <span>(Опционально)</span></h3>
+                            <h3><span>3.</span> Полное описание товара <span>(Опционально)</span></h3>
                             {#                            <textarea class="form-control" rows="6"></textarea>#}
                             {% render_field form.long_description|attr:"rows:6" %}
                         </div>
