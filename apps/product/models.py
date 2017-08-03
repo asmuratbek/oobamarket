@@ -40,6 +40,7 @@ class Product(PublishBaseModel, Counter):
     title = models.CharField(max_length=255, verbose_name='Название товара')
     slug = models.SlugField(_("Название на транслите"), max_length=255, unique=True, blank=True, null=True)
     price = models.DecimalField(null=True, blank=True, verbose_name='Цена', decimal_places=0, max_digits=10)
+    partner_price = models.DecimalField(null=True, blank=True, verbose_name='Цена для партнера', decimal_places=0, max_digits=10)
     sell_count = models.PositiveIntegerField(_("Количество продаж"), default=0, null=True, blank=True)
     discount = models.PositiveIntegerField(null=True, blank=True, verbose_name='Скидка')
     currency = models.CharField(null=True, max_length=255, verbose_name='Валюта', default='сом')
