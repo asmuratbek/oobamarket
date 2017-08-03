@@ -210,8 +210,8 @@ class ProductUpdateView(LoginRequiredMixin, UpdateProductMixin, UpdateView):
         return initial
 
     def form_invalid(self, form):
-        print("hey")
-        return super(ProductUpdateView, self).form_invalid(self, form)
+        print(form.errors)
+        return self.render_to_response(self.get_context_data(form=form))
 
     def form_valid(self, form):
         product = form.instance
