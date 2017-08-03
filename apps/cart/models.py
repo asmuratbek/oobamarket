@@ -18,8 +18,8 @@ class Cart(PublishBaseModel):
         verbose_name_plural = "Корзины"
 
     user = models.ForeignKey(User, null=True, blank=True, verbose_name="Владелец")
-    subtotal = models.DecimalField(max_digits=50, decimal_places=2, default=25.00)
-    total = models.DecimalField(max_digits=50, decimal_places=2, default=25.00)
+    subtotal = models.DecimalField(max_digits=50, decimal_places=2, default=0.00)
+    total = models.DecimalField(max_digits=50, decimal_places=2, default=0.00)
     completed = models.BooleanField(default=False)
 
     def __str__(self):
