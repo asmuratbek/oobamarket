@@ -134,8 +134,8 @@
         <div class="container">
             <div class="row">
 
-                <h1>Хотите получить бесплатный интернет-магазин у нас</h1>
-                <p>Если у вас еще нет интернет-магазина, вы можете получить <br> его у нас бесплатно</p>
+                <h1>У вас еще нет интернет-магазина?</h1>
+                <p>Вы можете получить его у нас бесплатно !</p>
                 <div class="clearfix"></div>
                 <a class="log mobile-landing-btn">Посмотреть <br> Магазин</a>
                 <a class="log" href="{% url 'account_login' %}">Создать <br> Магазин</a>
@@ -301,9 +301,13 @@
                                     продвигать в поисковиках
                                     Google и Yandex</p>
                                 <img src="{% static 'img/landing/8p.png' %}" alt="">
+                                <div class="clearfix"></div>
+                                <a href="{% url 'account_login' %}" class="add btn" style="margin-top: 100px">Создать магазин</a>
                             </div>
                         </div>
                     </section>
+
+
                 </div>
                 {#      <div class="modal-footer">#}
                 {#        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>#}

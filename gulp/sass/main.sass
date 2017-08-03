@@ -451,8 +451,18 @@ header
     font-weight: 300
   .magazin-btn
     background-color: transparent !important
+
+
     span
       color: gold
+  .for-magazin
+    border: 1px solid #e94d09
+    border-radius: 2px !important
+    background-color: #e94d09 !important
+    color: #fff !important
+    font-weight: bold
+    span
+      color: #fff
   .favorites
     background-color: transparent!important
     span
@@ -914,14 +924,9 @@ header
       position: relative
       margin: 0 auto
       img
-        position: absolute
-        top: -9999px
-        bottom: -9999px
-        right: -9999px
-        left: -9999px
-        margin: auto
-        display: block
-        max-width: 100%
+        height: 300px
+        object-fit: cover
+        width: 100%
     .title
       width: 85%
       margin: 10px auto
@@ -1512,7 +1517,7 @@ header
           left: -9999px
           margin: auto
           display: block
-          max-width: 100%
+          max-width: 80%
       .bottom-line
         width: 100%
         padding-left: 20px
@@ -2505,6 +2510,9 @@ ul.category-tab
         margin: 0 11px
         overflow: hidden
         margin-bottom: 20px
+        .form-group.search-input
+          margin-left: 11px
+          padding: 6px 0
         .form-group
           float: left
         .form-group.select
@@ -2582,7 +2590,6 @@ ul.category-tab
             &:hover
               background-color: #8a8a8a
       .goods-of-week
-
         .col-md-4:hover
           .cover
             border-color: #cecece
@@ -2629,14 +2636,9 @@ ul.category-tab
             margin: 0 auto
 
             img
-              position: absolute
-              top: -9999px
-              bottom: -9999px
-              right: -9999px
-              left: -9999px
-              margin: auto
-              display: block
-              max-width: 100%
+              object-fit: cover
+              height: 225px
+              width: 100%
           .title
             width: 85%
             margin: 10px auto
@@ -4118,8 +4120,6 @@ form.add_email
   .single-magazin
     width: 100%
     float: left
-
-
     .cover:hover
       -webkit-box-shadow: 0 0 40px -15px rgba(0,0,0,.75)
       box-shadow: 0 0 40px -15px rgba(0,0,0,.75)
@@ -4566,6 +4566,12 @@ body.landing
     margin-bottom: 20px
     .form-group
       float: left
+    .form-group.search-input
+      padding: 5px 2px 5px 2px
+      border-top: 1px solid #EEEEEE
+      border-bottom: 1px solid #EEEEEE
+      input
+        border-radius: 0 !important
     .form-group.select
       width: 25.106%
       height: 46px
@@ -4582,7 +4588,7 @@ body.landing
         background-size: 35px
       select
         width: 100%
-        border-radius: 0
+        border-radius: 0 !important
         height: 46px
         border-color: #EEEEEE
         box-shadow: none!important
@@ -4605,7 +4611,7 @@ body.landing
           display: inline-block
           margin-right: 10px
       input
-        border-radius: 0
+        border-radius: 0 !important
         box-shadow: none!important
         width: 129px
     .form-group.input.end
