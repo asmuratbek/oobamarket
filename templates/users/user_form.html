@@ -81,6 +81,20 @@
                             </label>
 
                         </div>
+
+                         <div class="form-group">
+                            <label for="last_name" class="" style="display: block;">
+                                <div class="col-md-3">Адрес:</div>
+                                <div class="col-md-6">
+                                    <input class="form-control" id="last_name" name="phone" value="{{ user.phone }}"/>
+{#                                    {{ form.last_name|attr:"class:form-control"|attr:"id:last_name" }}#}
+                                </div>
+                                <div class="col-md-1">
+                                    <span class="glyphicon glyphicon-pencil"></span>
+                                </div>
+                            </label>
+
+                        </div>
                         <a class="lost-pass" href="{% url 'account_change_password' %}">Изменить пароль</a>
                     </div>
 

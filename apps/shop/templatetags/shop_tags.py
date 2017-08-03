@@ -38,9 +38,9 @@ def show_add_banner_button(shop, user):
         if user.is_authenticated:
             if shop.is_owner(user):
                 return mark_safe('''
-                                <div class="auch-edit" data-toggle="tooltip" title="" data-placement="left" data-original-title="Редактировать баннер">
+                                <div class="auch-edit" >
                                     <a href="%s" >
-                                        <i class="glyphicon glyphicon-cog" ></i>
+                                       Редактировать баннер
                                     </a>
                                 </div>
                                     ''' % reverse('shops:add_banner', kwargs={'slug': shop.slug}))
@@ -56,11 +56,7 @@ def show_add_social_button(shop, user):
         if user.is_authenticated:
             if shop.is_owner(user):
                 return mark_safe('''
-                                <div class="auch-edit" data-toggle="tooltip" title="" data-placement="left" data-original-title="Редактировать соц.сети">
-                                    <a href="%s" >
-                                        <i class="glyphicon glyphicon-cog" ></i>
-                                    </a>
-                                </div>
+                                    <a href="%s" class="edit-social">+ Добавить соц.сети</a>
                                     ''' % reverse('shops:update_social', kwargs={'slug': shop.slug}))
             elif not shop.is_owner(user):
                 return mark_safe('')
@@ -74,9 +70,9 @@ def show_edit_shop_button(shop, user):
         if user.is_authenticated:
             if shop.is_owner(user):
                 return mark_safe('''
-                                <div class="auch-edit" data-toggle="tooltip" title="" data-placement="left" data-original-title="Редактировать настройки магазина">
+                                <div class="auch-edit">
                                     <a href="%s" >
-                                        <i class="glyphicon glyphicon-cog" ></i>
+                                        Редактировать
                                     </a>
                                 </div>
                                     ''' % reverse('shops:update', kwargs={'slug': shop.slug}))

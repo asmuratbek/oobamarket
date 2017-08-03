@@ -120,21 +120,23 @@
                             </form>
                         </div>
                     {% endif %}
-                        {% show_add_social_button shop request.user %}
+
                         {% if object.sociallinks %}
                             <div class="pull-right">
+{% show_add_social_button shop request.user %}
                                 {% if object.sociallinks.facebook %}
-                                    <a href="{{ object.sociallinks.facebook }}" class="facebook"></a>
+                                    <a href="{{ object.sociallinks.facebook }}" class="facebook social"></a>
                                 {% endif %}
                                 {% if object.sociallinks.twitter %}
-                                    <a href="{{ object.sociallinks.twitter }}" class="tweet"></a>
+                                    <a href="{{ object.sociallinks.twitter }}" class="tweet social"></a>
                                 {% endif %}
                                 {% if object.sociallinks.vk %}
-                                    <a href="{{ object.sociallinks.vk }}" class="vk"></a>
+                                    <a href="{{ object.sociallinks.vk }}" class="vk social"></a>
                                 {% endif %}
                                 {% if object.sociallinks.instagram %}
-                                    <a href="{{ object.sociallinks.instagram }}" class="instagram"></a>
+                                    <a href="{{ object.sociallinks.instagram }}" class="instagram social"></a>
                                 {% endif %}
+
                             </div>
                         {% endif %}
                     <div class="clearfix"></div>

@@ -1643,16 +1643,27 @@ header
     -webkit-box-shadow: 0px 0px 25px -9px rgba(0,0,0,0.75)
     -moz-box-shadow: 0px 0px 25px -9px rgba(0,0,0,0.75)
     box-shadow: 0px 0px 25px -9px rgba(0,0,0,0.75)
+    .auch-edit:hover
+      background: rgba(0, 0, 0, 0.5)
     .auch-edit
       position: absolute
-      top: 5px
-      right: 5px
+      top: 0
+      right: 0
+      background: rgba(0, 0, 0, 0.3)
+      border-top-right-radius: 10px
+      border-bottom-left-radius: 10px
       z-index: 1
+      transition: 0.3s
       a
+        padding: 10px
         display: block
-      i
-        font-size: 17px
-        color: #337ab7
+        font-size: 12px
+        color: #fff
+        font-weight: 700
+
+      //i
+      //  font-size: 17px
+      //  color: #337ab7
       //a:hover
       //  i
       //    animation: wrench 1.875s ease infinite
@@ -1759,29 +1770,28 @@ header
         overflow: hidden
         .placehold
           width: 100%
+      .auch-edit:hover
+        background: rgba(0, 0, 0, 0.5) !important
       .auch-edit
-        position: absolute
-        top: 5px
-        right: 5px
-        height: 17px
-        width: 17px
-        //a:hover
-        //  i
-        //    animation: wrench 1.875s ease infinite
-        //
-        //    @keyframes wrench
-        //      0%
-        //        transform: rotate(0deg)
-        //      100%
-        //        transform: rotate(360deg)
+        position: absolute !important
+        width: auto !important
+        height: auto !important
+        background: rgba(0, 0, 0, 0.3) !important
+        border-bottom-left-radius: 10px !important
+        z-index: 1
+        transition: 0.3s
         a
+          padding: 10px 15px
           display: block
+          font-size: 12px
+          color: #fff
+          font-weight: 700
 
-        i
-          font-size: 17px
-          color: #337ab7
-          width: 17px
-          height: 17px
+        //i
+        //  font-size: 17px
+        //  color: #337ab7
+        //  width: 17px
+        //  height: 17px
       .wrapper
         position: relative
         .auch-edit
@@ -1811,14 +1821,18 @@ header
           right: 0
           left: 0
         img
-          position: absolute
-          top: -9999px
-          bottom: -9999px
-          right: -9999px
-          left: -9999px
-          margin: auto
-          display: block
-          max-width: 100%
+          width: 100%
+          object-fit: cover
+          width: 100%
+          height: 330px
+          //position: absolute
+          //top: -9999px
+          //bottom: -9999px
+          //right: -9999px
+          //left: -9999px
+          //margin: auto
+          //display: block
+          //max-width: 100%
       .owl-nav
         .owl-prev
           position: absolute
@@ -1875,22 +1889,14 @@ header
           background-color: #fff
           border-radius: 50%
       .bottom-line
-        padding: 20px
+        padding: 12px 20px
         position: relative
-        .auch-edit
-          position: absolute
-          top: 5px
-          right: 5px
-          height: 17px
-          width: 17px
-          z-index: 10
-          a
-            display: block
-            i
-              font-size: 17px
-              color: #337ab7
-              width: 17px
-              height: 17px
+        a.edit-social
+          float: left
+          line-height: 30px
+          margin-right: 15px
+          color: #f3481c
+          font-size: 13px
           //a:hover
           //  i
           //    animation: wrench 1.875s ease infinite
@@ -1914,9 +1920,10 @@ header
               color: #000
         .pull-right
           padding: 8px 0
+
           a:hover
             opacity: 0.6
-          a
+          a.social
             width: 28px
             height: 28px
             display: inline-block
@@ -3852,7 +3859,7 @@ form.add_email
     .col-md-3
       padding: 7px 15px
     input
-      border-color: transparent
+      border-color: #ccc
       transition: 0.3s all
     input:focus
       border-color: #555
