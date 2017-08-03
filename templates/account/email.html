@@ -33,9 +33,9 @@
             {% if emailaddress.verified %}
             <span class="verified">{% trans "Основной" %}</span>
             {% else %}
-            <span class="unverified">{% trans "Unverified" %}</span>
+            <span class="unverified">{% trans "Не верифицированный" %}</span>
             {% endif %}
-            {% if emailaddress.primary %}<span class="primary">{% trans "Primary" %}</span>{% endif %}
+            {% if emailaddress.primary %}<span class="primary">{% trans "Прямой" %}</span>{% endif %}
           </label>
         </div>
   {% endfor %}
