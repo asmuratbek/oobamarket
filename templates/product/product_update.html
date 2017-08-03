@@ -73,11 +73,11 @@
                                 <label for="">Количество</label>
                             </div>
 
-                            <div class="form-group select col-md-6">
-
-                                {% render_field form.availability|add_error_attr:"aria-invalid:true" %}
-
-                            </div>
+{#                            <div class="form-group select col-md-6">#}
+{##}
+{#                                {% render_field form.availability|add_error_attr:"aria-invalid:true" %}#}
+{##}
+{#                            </div>#}
 
                             <div class="form-group input col-md-12">
                                 <label class="switch">
@@ -118,31 +118,32 @@
                             </div>
                         </div>
 
-                        <div class="step_2">
-                            <h3><span>2.</span> Доставка</h3>
-
-
-                            <div class="form-group select col-md-6">
-                                {% render_field form.delivery_type|add_error_attr:"aria-invalid:true" %}
-                            </div>
-
-                            <div class="form-group input col-md-6">
-                                {% render_field form.delivery_cost|add_error_attr:"aria-invalid:true"|attr:"class:form-control mini"|attr:"disabled" placeholder="Стоимость доставки" %}
-                            </div>
-                        </div>
-
-                        <div class="step_3">
-                            <h3><span>3.</span> Параметры товара</h3>
-                                {% include 'product/property_list.html' with values=values %}
+{#                        <div class="step_2">#}
+{#                            <h3><span>2.</span> Доставка</h3>#}
+{##}
+{##}
+{#                            <div class="form-group select col-md-6">#}
+{#                                {% render_field form.delivery_type|add_error_attr:"aria-invalid:true" %}#}
+{#                            </div>#}
+{##}
+{#                            <div class="form-group input col-md-6">#}
+{#                                {% render_field form.delivery_cost|add_error_attr:"aria-invalid:true"|attr:"class:form-control mini"|attr:"disabled" placeholder="Стоимость доставки" %}#}
+{#                            </div>#}
+{#                        </div>#}
+{##}
+{#                        <div class="step_3">#}
+{#                            <h3><span>3.</span> Параметры товара</h3>#}
+{#                                {% include 'product/property_list.html' with values=values %}#}
+{#                        </div>#}
 
                         <div class="step_4">
-                            <h3><span>4.</span> Короткое описание товара <span>(Опционально)</span></h3>
+                            <h3><span>2.</span> Короткое описание товара <span>(Опционально)</span></h3>
                             {#                            <textarea class="form-control" rows="6"></textarea>#}
                             {% render_field form.short_description|attr:"rows:6" %}
                         </div>
 
                         <div class="step_5">
-                            <h3><span>5.</span> Полное описание товара <span>(Опционально)</span></h3>
+                            <h3><span>3.</span> Полное описание товара <span>(Опционально)</span></h3>
                             {#                            <textarea class="form-control" rows="6"></textarea>#}
                             {% render_field form.long_description|attr:"rows:6" %}
                         </div>
@@ -168,7 +169,7 @@
                     {#                            <span id="file-counter" style="color: red;"></span>#}
                     {#                        </div>#}
                     {#                        <input type="file" id="id_images" style="display: none;" multiple>#}
-                    {#                    </div>#}
+                                        </div>
 
 
                     <div class="col-md-4">

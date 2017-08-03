@@ -48,7 +48,8 @@ class Product(PublishBaseModel, Counter):
                                      max_length=255)
     delivery_cost = models.FloatField(verbose_name='Стоимость доставки', default=0, null=True, blank=True)
     # settings = models.ManyToManyField('ProductSettings', verbose_name='Характеристика')
-    availability = models.CharField(_("Наличие"), max_length=100, choices=AVAILABILITY_TYPES, default='available')
+    availability = models.CharField(_("Наличие"), max_length=100, choices=AVAILABILITY_TYPES, default='available',
+                                    blank=True, null=True)
     short_description = models.TextField(max_length=300, null=True, blank=True,
                                          verbose_name='Короткое описание товара до 300 символов')
     long_description = RichTextUploadingField(null=True, blank=True, verbose_name='Полное описание')
