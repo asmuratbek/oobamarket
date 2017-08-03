@@ -12,6 +12,8 @@ class ProductForm(forms.ModelForm):
         model = Product
         exclude = ['slug', 'objects', 'sell_count', 'counter']
 
+    section = forms.ModelChoiceField(queryset=GlobalCategory.objects.all())
+    parent_categories = forms.ModelChoiceField(queryset=Category.objects.filter(parent=None))
     removed_images = forms.CharField(required=False)
     uploaded_images = forms.CharField(required=False)
 
@@ -20,6 +22,9 @@ class ProductForm(forms.ModelForm):
         self.user = kwargs['initial']['user']
         super(ProductForm, self).__init__(*args, **kwargs)
         self.fields['shop'].queryset = Shop.objects.filter(user__in=[self.user.id])
+        self.fields.get('parent_categories').widget.attrs['disabled'] = True
+        self.fields.get('category').widget.attrs['disabled'] = True
+
         for field in iter(self.fields):
             self.fields[field].widget.attrs.update({
                 'class': 'form-control'
@@ -31,7 +36,6 @@ class ProductForm(forms.ModelForm):
         shop = cleaned_data.get('shop', '')
         category = cleaned_data.get('category', '')
         price = cleaned_data.get('price', '')
-        short_description = cleaned_data.get('short_description', '')
 
         error_msg = "*Обязательное поле"
 
@@ -43,8 +47,6 @@ class ProductForm(forms.ModelForm):
             self._errors['category'] = error_msg
         if price is None or price == "":
             self._errors['price'] = error_msg
-        if short_description is None or short_description == "":
-            self._errors['short_description'] = error_msg
 
 
 class ProductUpdateForm(forms.ModelForm):

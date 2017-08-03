@@ -10,7 +10,7 @@
                     <select class="form-control" id="subcategory_list" name="property-{{ property.id }}">
                         <option>------------</option>
                         {% for value in property.values_set.all %}
-                            <option value="{{ value.id }}">{{ value }}</option>
+                            <option value="{{ value.id }}" {% if value.id in values %}selected{% endif %}>{{ value }}</option>
                         {% endfor %}
                     </select>
                     <div class="manufacturer-{{ property.id }}" style="display: none;">
@@ -60,7 +60,7 @@
                 <div class="form-custom-checkbox">
                     <label class="name_setting" for="{{ value.id }}">{{ value }}</label>
                     <input type="checkbox" class="checkbox" id="{{ value.id }}" value="{{ value }}"
-                           name="val-{{ value.id }}">
+                           name="val-{{ value.id }}" {% if value.id in values %} checked {% endif %}>
                     <div class="indicator"></div>
                 </div>
                 {% if forloop.counter == 28 or forloop.counter == 14 %}
@@ -72,7 +72,7 @@
                 <div class="col-md-12" style="margin-top: 15px;">
                     <div class="col-md-6" style="padding: 0;">
                         <div class="manufacturer-{{ property.id }}" style="display: none;">
-                            <input type="text" class="form-control" id="manufacturer-input" placeholder="{{ property.title }}">
+                            <input type="text" class="form-control" id="manufacturer-input" placeholder="{{ property.title }}" {% if value.id in values %} value="{{ value }}" {% endif %}>
 
                         </div>
                         {% if property.help_text %}
@@ -113,7 +113,7 @@
                     <select class="form-control" id="subcategory_list" name="property-{{ property.id }}">
                         <option>------------</option>
                         {% for value in property.values_set.all %}
-                            <option value="{{ value.id }}">{{ value }}</option>
+                            <option value="{{ value.id }}" {% if value.id in values %} selected {% endif %}>{{ value }}</option>
                         {% endfor %}
                     </select>
 
