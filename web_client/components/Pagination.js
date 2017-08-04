@@ -16,22 +16,21 @@ var Pagination = createClass({
         this.props.goToNext();
     },
 
-    renderPageNumbers: function() {
-
+    handleChangePage: function(page) {
+        this.props.goTo(page);
     },
 
     render: function(){
-        // var pages = _.range(1, this.props.pagesCount + 1).forEach(function(value){
-        //     var link = this.props.baseUrl + '?page=' + value;
-        //     console.log(value);
-        //     return(
-        //         <Page
-        //             page={value}
-        //             currentPage={this.props.currentPage}
-        //             link={link}
-        //         />
-        //     )
-        // }.bind(this));
+        var pages = _.range(1, this.props.pagesCount + 1).map(function(value){
+            return(
+                <Page
+                    key={value}
+                    page={value}
+                    currentPage={this.props.page}
+                    changePage={this.handleChangePage}
+                />
+            )
+        }.bind(this));
         return (
             <nav className="pagination">
                         <ul>
@@ -42,11 +41,7 @@ var Pagination = createClass({
                                 </a>
                             </li>
                                 : ''}
-                                 <Page
-                                  page="2"
-                                  currentPage="2"
-                                  link="2"
-                                    />
+                            {pages}
                             {this.props.next ?
                             <li>
                                 <a href="" aria-label="Next" onClick={this.handleNext}>

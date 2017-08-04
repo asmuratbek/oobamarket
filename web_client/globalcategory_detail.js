@@ -138,6 +138,27 @@ var MainInterface = createClass({
         })
     },
 
+    goTo: function(page) {
+        $.ajax({
+            type: "GET",
+              url: this.state.baseUrl + '?page=' + page,
+              success: function (data) {
+                    var products = data.results.map(obj => obj);
+                    this.setState({
+                        products: products,
+                        next: data.next,
+                        previous: data.previous,
+                        productsCount: data.count,
+                        currentPage: page
+                    });
+              }.bind(this),
+              error: function (response, error) {
+                  console.log(response);
+                  console.log(error);
+              }
+        })
+    },
+
     reOrder: function (orderBy, orderDir) {
         this.setState({
             orderBy: orderBy,
@@ -382,6 +403,7 @@ var MainInterface = createClass({
                 <Pagination
                     goToPrevious={this.goToPreviousPage}
                     goToNext={this.goToNextPage}
+                    goTo={this.goTo}
                     count={this.state.productsCount}
                     next={this.state.next}
                     previous={this.state.previous}
