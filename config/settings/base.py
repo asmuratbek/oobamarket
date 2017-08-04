@@ -62,7 +62,7 @@ THIRD_PARTY_APPS = [
     'allauth.socialaccount',  # registration
     'tabbed_admin',
     'allauth.socialaccount.providers.facebook',
-    'allauth.socialaccount.providers.vk',
+    'allauth.socialaccount.providers.google',
     'rest_framework',
     'widget_tweaks',
     'ckeditor',
@@ -314,6 +314,7 @@ ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 ACCOUNT_ALLOW_REGISTRATION = env.bool('DJANGO_ACCOUNT_ALLOW_REGISTRATION', True)
 ACCOUNT_ADAPTER = 'apps.users.adapters.AccountAdapter'
 SOCIALACCOUNT_ADAPTER = 'apps.users.adapters.SocialAccountAdapter'
+SOCIALACCOUNT_QUERY_EMAIL = True
 
 # Custom user app defaults
 # Select the correct user model
