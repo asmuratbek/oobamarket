@@ -235,99 +235,99 @@ var MainInterface = createClass({
                     <div className="clearfix"></div>
                 </div>
 
-                <div className="catalog-filter">
-                    <h4>Параметры</h4>
-                    <div className="filter-clone">
-                        <a className="btn-toggle-setting">
-                            Производитель
-                        </a>
-                        <div className="toggle-setting" id="toggle-setting-1">
-                            <div className="form-group checkbox">
+                {/*<div className="catalog-filter">*/}
+                    {/*<h4>Параметры</h4>*/}
+                    {/*<div className="filter-clone">*/}
+                        {/*<a className="btn-toggle-setting">*/}
+                            {/*Производитель*/}
+                        {/*</a>*/}
+                        {/*<div className="toggle-setting" id="toggle-setting-1">*/}
+                            {/*<div className="form-group checkbox">*/}
 
-                                <div className="cover">
-                                    <div className="form-custom-checkbox">
-                                        <label className="name_setting" htmlFor="slug1">Название настроек</label>
-                                        <input type="checkbox" value="" name="" id="slug1"></input>
-                                        <div className="indicator"></div>
-                                    </div>
-                                </div>
-                                <div className="cover">
-                                    <div className="form-custom-checkbox">
-                                        <label className="name_setting" htmlFor="slug2">Название настроек</label>
-                                        <input type="checkbox" value="" name="" id="slug2"></input>
-                                        <div className="indicator"></div>
-                                    </div>
-                                </div>
-                                <div className="cover">
-                                    <div className="form-custom-checkbox">
-                                        <label className="name_setting" htmlFor="slug3">Название настроек</label>
-                                        <input type="checkbox" value="" name="" id="slug3"></input>
-                                        <div className="indicator"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                                {/*<div className="cover">*/}
+                                    {/*<div className="form-custom-checkbox">*/}
+                                        {/*<label className="name_setting" htmlFor="slug1">Название настроек</label>*/}
+                                        {/*<input type="checkbox" value="" name="" id="slug1"></input>*/}
+                                        {/*<div className="indicator"></div>*/}
+                                    {/*</div>*/}
+                                {/*</div>*/}
+                                {/*<div className="cover">*/}
+                                    {/*<div className="form-custom-checkbox">*/}
+                                        {/*<label className="name_setting" htmlFor="slug2">Название настроек</label>*/}
+                                        {/*<input type="checkbox" value="" name="" id="slug2"></input>*/}
+                                        {/*<div className="indicator"></div>*/}
+                                    {/*</div>*/}
+                                {/*</div>*/}
+                                {/*<div className="cover">*/}
+                                    {/*<div className="form-custom-checkbox">*/}
+                                        {/*<label className="name_setting" htmlFor="slug3">Название настроек</label>*/}
+                                        {/*<input type="checkbox" value="" name="" id="slug3"></input>*/}
+                                        {/*<div className="indicator"></div>*/}
+                                    {/*</div>*/}
+                                {/*</div>*/}
+                            {/*</div>*/}
+                        {/*</div>*/}
+                    {/*</div>*/}
 
-                    <div className="filter-clone" id="toggle-setting-2">
-                        <a className="btn-toggle-setting">
-                            Производитель
-                        </a>
-                        <div className="toggle-setting">
-                            <div className="form-group checkbox">
+                    {/*<div className="filter-clone" id="toggle-setting-2">*/}
+                        {/*<a className="btn-toggle-setting">*/}
+                            {/*Производитель*/}
+                        {/*</a>*/}
+                        {/*<div className="toggle-setting">*/}
+                            {/*<div className="form-group checkbox">*/}
 
-                                <div className="cover">
-                                    <div className="form-custom-checkbox">
-                                        <label className="name_setting" htmlFor="slug1">Название настроек</label>
-                                        <input type="checkbox" value="" name="" id="slug1"></input>
-                                        <div className="indicator"></div>
-                                    </div>
-                                </div>
-                                <div className="cover">
-                                    <div className="form-custom-checkbox">
-                                        <label className="name_setting" htmlFor="slug2">Название настроек</label>
-                                        <input type="checkbox" value="" name="" id="slug2"></input>
-                                        <div className="indicator"></div>
-                                    </div>
-                                </div>
-                                <div className="cover">
-                                    <div className="form-custom-checkbox">
-                                        <label className="name_setting" htmlFor="slug3">Название настроек</label>
-                                        <input type="checkbox" value="" name="" id="slug3"></input>
-                                        <div className="indicator"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div className="filter-clone">
-                        <div className="form-group">
-                            <select className="select-beast " placeholder="Название настроек">
-                                <option value="">Название настроек</option>
-                                <option value="4">Thomas Edison</option>
-                                <option value="1">Nikola</option>
-                                <option value="3">Nikola Tesla</option>
-                                <option value="5">Arnold Schwarzenegger</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div className="filter-clone">
-                        <div className="form-group">
-                            <select className="select-beast " placeholder="Название настроек">
-                                <option value="">Название настроек</option>
-                                <option value="4">Thomas Edison</option>
-                                <option value="1">Nikola</option>
-                                <option value="3">Nikola Tesla</option>
-                                <option value="5">Arnold Schwarzenegger</option>
-                            </select>
-                        </div>
-                    </div>
+                                {/*<div className="cover">*/}
+                                    {/*<div className="form-custom-checkbox">*/}
+                                        {/*<label className="name_setting" htmlFor="slug1">Название настроек</label>*/}
+                                        {/*<input type="checkbox" value="" name="" id="slug1"></input>*/}
+                                        {/*<div className="indicator"></div>*/}
+                                    {/*</div>*/}
+                                {/*</div>*/}
+                                {/*<div className="cover">*/}
+                                    {/*<div className="form-custom-checkbox">*/}
+                                        {/*<label className="name_setting" htmlFor="slug2">Название настроек</label>*/}
+                                        {/*<input type="checkbox" value="" name="" id="slug2"></input>*/}
+                                        {/*<div className="indicator"></div>*/}
+                                    {/*</div>*/}
+                                {/*</div>*/}
+                                {/*<div className="cover">*/}
+                                    {/*<div className="form-custom-checkbox">*/}
+                                        {/*<label className="name_setting" htmlFor="slug3">Название настроек</label>*/}
+                                        {/*<input type="checkbox" value="" name="" id="slug3"></input>*/}
+                                        {/*<div className="indicator"></div>*/}
+                                    {/*</div>*/}
+                                {/*</div>*/}
+                            {/*</div>*/}
+                        {/*</div>*/}
+                    {/*</div>*/}
 
 
-                </div>
+                    {/*<div className="filter-clone">*/}
+                        {/*<div className="form-group">*/}
+                            {/*<select className="select-beast " placeholder="Название настроек">*/}
+                                {/*<option value="">Название настроек</option>*/}
+                                {/*<option value="4">Thomas Edison</option>*/}
+                                {/*<option value="1">Nikola</option>*/}
+                                {/*<option value="3">Nikola Tesla</option>*/}
+                                {/*<option value="5">Arnold Schwarzenegger</option>*/}
+                            {/*</select>*/}
+                        {/*</div>*/}
+                    {/*</div>*/}
+
+                    {/*<div className="filter-clone">*/}
+                        {/*<div className="form-group">*/}
+                            {/*<select className="select-beast " placeholder="Название настроек">*/}
+                                {/*<option value="">Название настроек</option>*/}
+                                {/*<option value="4">Thomas Edison</option>*/}
+                                {/*<option value="1">Nikola</option>*/}
+                                {/*<option value="3">Nikola Tesla</option>*/}
+                                {/*<option value="5">Arnold Schwarzenegger</option>*/}
+                            {/*</select>*/}
+                        {/*</div>*/}
+                    {/*</div>*/}
+
+
+                {/*</div>*/}
             </div>
         )
     }

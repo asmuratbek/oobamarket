@@ -26,7 +26,7 @@ var MainInterface = createClass({
         }
     },
 
-    componentWillMount() {
+    componentDidMount() {
 
         // axios.get(`/api/shops/` + this.state.shopSlug)
         //     .then(res => {

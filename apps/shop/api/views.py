@@ -62,6 +62,8 @@ class ShopDetailApiView(MultipleModelAPIView):
     #     (Shop.objects.all(), ShopSerializer),
     #     (Product.objects.all(), ProductSerializer),
     # ]
+    pagination_class = ShopLimitPagination
+    flat = True
 
     def get_queryList(self):
         slug = self.kwargs.get('slug')

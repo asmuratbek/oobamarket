@@ -27,7 +27,7 @@ class ProductListApiView(ListAPIView):
     serializer_class = ProductSerializer
     filter_backends = [SearchFilter, OrderingFilter]
     search_fields = ['title', 'short_description']
-    # pagination_class = ProductLimitPagination#PageNumberPagination
+    pagination_class = ProductLimitPagination#PageNumberPagination
     permission_classes = [AllowAny]
 
     def get_queryset(self):
