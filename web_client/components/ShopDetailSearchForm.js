@@ -44,14 +44,14 @@ var SearchForm = createClass({
                         </select>
                     </div>
 
-                    <div className="form-group input">
+                    <div className="form-group input price">
                         <label><span>Цена</span> от</label>
-                        <input type="number" className="form-control" placeholder="2000 сом" value={this.props.priceFrom} onChange={this.handlePriceFromChange} />
+                        <input type="number" className="form-control" placeholder="от 2000 сом" value={this.props.priceFrom} onChange={this.handlePriceFromChange} />
                     </div>
 
-                    <div className="form-group input end">
+                    <div className="form-group input price">
                         <label>до</label>
-                        <input type="number" className="form-control" placeholder="4000 сом" value={this.props.priceTo} onChange={this.handlePriceToChange} />
+                        <input type="number" className="form-control" placeholder="до 4000 сом" value={this.props.priceTo} onChange={this.handlePriceToChange} />
                     </div>
 
                      <div className="form-group search-input">
@@ -62,6 +62,9 @@ var SearchForm = createClass({
                             {/*<option value="self">Самовывоз</option>*/}
                         {/*</select>*/}
                          <input type="text" className="form-control" placeholder="Поиск товара"/>
+                         <button type="submit">
+                            <span className="glyphicon glyphicon-search"></span>
+                        </button>
                     </div>
 
                 </form>

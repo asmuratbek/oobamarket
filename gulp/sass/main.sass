@@ -563,11 +563,11 @@ header
     margin-bottom: 40px
     li
       border-radius: 5px
-      width: 19.5%
+      width: 16.3%
       float: left
       background-color: #fff
       text-align: center
-      padding: 40px 10px
+      padding: 22px 10px
       margin: 2px
       position: relative
       a
@@ -593,6 +593,8 @@ header
           margin: auto
           display: block
           max-width: 100%
+          object-fit: cover
+          height: 100%
       .title
         margin-top: 20px
         height: 45px
@@ -605,10 +607,12 @@ header
       background-color: #FAFAFA
       .img-wrapper
         transform: rotateY(360deg)
+
 .goods-of-week
   margin-bottom: 40px
   .item-filter
-    width: 75%
+    //width: 75%
+    width: 100%
     float: left
   .catalog-filter
     padding-left: 15px
@@ -2497,14 +2501,10 @@ ul.category-tab
         margin: 0 11px
         overflow: hidden
         margin-bottom: 20px
-        .form-group.search-input
-          margin-left: 11px
-          padding: 6px 0
+
         .form-group
           float: left
         .form-group.select
-          width: 25.106%
-          height: 46px
           position: relative
           &:before
             position: absolute
@@ -2528,11 +2528,7 @@ ul.category-tab
             -ms-appearance: none
             appearance: none
             padding-right: 25px
-        .form-group.input
-          padding: 5px 0
-          width: 221px
-          border-top: 1px solid #EEEEEE
-          border-bottom: 1px solid #EEEEEE
+
           label
             margin: 0 10px
             font-size: 16px
@@ -4551,23 +4547,45 @@ body.landing
     margin: 0 11px
     overflow: hidden
     margin-bottom: 20px
+    .form-group.price
+      width: 15% !important
+      input
+        padding: 5px 0 5px 10px
     .form-group
+      width: 35% !important
       float: left
-    .form-group.search-input
-      padding: 5px 2px 5px 2px
-      border-top: 1px solid #EEEEEE
-      border-bottom: 1px solid #EEEEEE
+      padding: 5px
+      position: relative
       input
         border-radius: 0 !important
+        width: 100%
+        height: 40px
+        border-color: #eee
+        &:focus
+          border-color: #ccc
+      button
+        position: absolute
+        top: 5px
+        right: 5px
+        bottom: 0
+        width: 40px
+        height: 40px
+        background-color: #ccc
+        outline: 0!important
+        border: 0
+        &:hover
+          background-color: #b8b7b7
+        span
+          color: #fff
+      label
+        display: none
     .form-group.select
-      width: 25.106%
-      height: 46px
       position: relative
       &:before
         position: absolute
         content: ''
-        right: 8px
-        top: 15px
+        right: 17px
+        top: 18px
         width: 10px
         height: 13px
         background:  url(../img/png/arrow0.png) 0 0 no-repeat
@@ -4576,7 +4594,7 @@ body.landing
       select
         width: 100%
         border-radius: 0 !important
-        height: 46px
+        height: 40px
         border-color: #EEEEEE
         box-shadow: none!important
         cursor: pointer
@@ -4585,52 +4603,11 @@ body.landing
         -ms-appearance: none
         appearance: none
         padding-right: 25px
-    .form-group.input
-      padding: 5px 0
-      width: 218px
-      border-top: 1px solid #EEEEEE
-      border-bottom: 1px solid #EEEEEE
+        &:focus
+          border-color: #ccc
       label
-        margin: 0 10px
-        font-size: 16px
-        font-weight: 300
-        span
-          display: inline-block
-          margin-right: 10px
-      input
-        border-radius: 0 !important
-        box-shadow: none!important
-        width: 129px
-    .form-group.input.end
-      width: 180px
-      label
-        margin-left: 11px
-        margin-right: 2px
-      input
-        width: 145px
-    .form-group.search
-      width: 190px
-      position: relative
-      input
-        position: relative
-        height: 46px
-        border-color: #EEEEEE
-        border-radius: 0
-        box-shadow: none!important
-        width: 100%
-      button
-        position: absolute
-        right: -2px
-        top: 0
-        border-radius: 0
-        height: 46px
-        width: 50px
-        background-color: #ccc
-        color: #fff
-        border-color: #EEEEEE
-        z-index: 1
-        &:hover
-          background-color: #8a8a8a
+        display: none
+
 form.form-inline.sm-form
   overflow: hidden
   margin: 40px 0 60px 0
