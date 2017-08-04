@@ -13,10 +13,10 @@
 
 {% block categories %}
     <section class="category-link hidden-sm hidden-xs">
-    <div class="container-fluid">
-        <div class="clearfix"></div>
-    {% include 'layout/categories_without_global.html' with object_list=shop.get_used_categories %}
-    </div>
+        <div class="container-fluid">
+            <div class="clearfix"></div>
+            {% include 'layout/categories_without_global.html' with object_list=shop.get_used_categories %}
+        </div>
     </section>
 {% endblock %}
 
@@ -24,7 +24,7 @@
 
     <div class="shop-page-page">
         <div class="container">
-            <div class="col-md-12 col-lg-3" >
+            <div class="col-md-12 col-lg-3">
                 {% show_edit_shop_button shop request.user %}
                 {% if object.logo %}
                     <div class="img-wrapper">
@@ -36,7 +36,7 @@
                     </div>
                 {% endif %}
                 <h2>{{ object.title|truncatechars:27 }}</h2>
-                <p class="see-more-toogle">{{ object.description }}</p>
+                <p class="see-more-toogle">{{ object.description|truncatechars:70  }}</p>
                 <div class="bottom-line">
                     {% if object.contacts_set.all %}
                         <div>
@@ -56,7 +56,7 @@
 
                 </div>
             </div>
-            <div class="col-lg-9 col-md-12" >
+            <div class="col-lg-9 col-md-12">
                 <div class="cover">
 
                     <div class="wrapper">
@@ -86,44 +86,48 @@
 
 
                     <div class="bottom-line">
-                    {% if user not in admin %}
-                        <div class="col-md-6" style="padding-left: 0;">
-                            <form id="subscribe-form" class="subscribe">{% csrf_token %}
-                                <div class="row">
+                        {% if user not in admin %}
+                            <div class="col-md-6" style="padding-left: 0;">
+                                <form id="subscribe-form" class="subscribe">{% csrf_token %}
+                                    <div class="row">
 
-                                    <div class="form-group col-md-6">
-                                        <button type="button" class="pull-left" id="sub_button"><span class="glyphicon glyphicon-send">
+                                        <div class="form-group col-md-6">
+                                            <button type="button" class="pull-left" id="sub_button"><span
+                                                    class="glyphicon glyphicon-send">
                                         </span>{% if subscribe %}Отписаться{% else %}Подписаться{% endif %}</button>
-                                        <div class="dropdown pull-left" {% if not subscribe %}style="display: none"{% endif %} id="sub_select">
-                                            <button class="dropdown-toggle custom" type="button"
-                                                    id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
-                                                    aria-expanded="false">
-                                                <span class="glyphicon glyphicon-menu-down"></span>
-                                            </button>
-                                            <div class="dropdown-menu">
-                                            {% for val, text in sub_types %}
-                                                <div class="form-group">
-                                                    <label for="optionsRadios{{ forloop.counter }}" class="form-check-label ">{{ text }}</label>
-                                                    <input type="radio" class="form-check-input pull-left"
-                                                           id="optionsRadios{{ forloop.counter }}"
-                                                           {% if subscribe.subscription_type == val %}checked{% endif %}
-                                                           value="{{ val }}">
-                                                    <div class="indicator"></div>
+                                            <div class="dropdown pull-left"
+                                                 {% if not subscribe %}style="display: none"{% endif %} id="sub_select">
+                                                <button class="dropdown-toggle custom" type="button"
+                                                        id="dropdownMenuButton" data-toggle="dropdown"
+                                                        aria-haspopup="true"
+                                                        aria-expanded="false">
+                                                    <span class="glyphicon glyphicon-menu-down"></span>
+                                                </button>
+                                                <div class="dropdown-menu">
+                                                    {% for val, text in sub_types %}
+                                                        <div class="form-group">
+                                                            <label for="optionsRadios{{ forloop.counter }}"
+                                                                   class="form-check-label ">{{ text }}</label>
+                                                            <input type="radio" class="form-check-input pull-left"
+                                                                   id="optionsRadios{{ forloop.counter }}"
+                                                                   {% if subscribe.subscription_type == val %}checked{% endif %}
+                                                                   value="{{ val }}">
+                                                            <div class="indicator"></div>
+                                                        </div>
+                                                    {% endfor %}
                                                 </div>
-                                            {% endfor %}
                                             </div>
                                         </div>
-                                    </div>
 
-                                </div>
-                                <input type="hidden" name="shop_slug" value="{{ shop.slug }}"/>
-                            </form>
-                        </div>
-                    {% endif %}
+                                    </div>
+                                    <input type="hidden" name="shop_slug" value="{{ shop.slug }}"/>
+                                </form>
+                            </div>
+                        {% endif %}
 
                         {% if object.sociallinks %}
                             <div class="pull-right">
-{% show_add_social_button shop request.user %}
+                                {% show_add_social_button shop request.user %}
                                 {% if object.sociallinks.facebook %}
                                     <a href="{{ object.sociallinks.facebook }}" class="facebook social"></a>
                                 {% endif %}
@@ -139,7 +143,7 @@
 
                             </div>
                         {% endif %}
-                    <div class="clearfix"></div>
+                        <div class="clearfix"></div>
                     </div>
                 </div>
             </div>
@@ -154,12 +158,15 @@
                 {% url 'shops:sale' slug=shop.slug as sale %}
                 {% url 'shops:review' slug=shop.slug as review %}
                 {% url 'shops:contacts_detail' slug=shop.slug as contacts %}
-                <li {% if request.path == shop_detail  %}class="active"{% endif %}><a href="{{ shop_detail }}">Товары</a></li>
-                <li {% if request.path == about_us %}class="active"{% endif %}><a href="{{ about_us }}">О компании</a></li>
+                <li {% if request.path == shop_detail %}class="active"{% endif %}><a href="{{ shop_detail }}">Товары</a>
+                </li>
+                <li {% if request.path == about_us %}class="active"{% endif %}><a href="{{ about_us }}">О компании</a>
+                </li>
                 <li {% if request.path == sale %}class="active"{% endif %}><a href="{{ sale }}">Акции</a></li>
                 <li {% if request.path == review %}class="active"{% endif %}><a href="{{ review }}">Отзывы</a></li>
                 {#                <li><a class="remove delete-object model-trigger" data-url="{% url 'shops:delete' slug=object.slug %}" style="cursor: pointer;">Удалить магазин</a></li>#}
-                <li {% if request.path == contacts %}class="active"{% endif %}><a href="{{ contacts }}">Контакты</a></li>
+                <li {% if request.path == contacts %}class="active"{% endif %}><a href="{{ contacts }}">Контакты</a>
+                </li>
 
             </ul>
             {% block shopcontent %}
@@ -181,6 +188,6 @@
     <script src="{% static 'js/readmore.min.js' %}"></script>
     <script src="{% static 'js/shop_detail.js' %}"></script>
     <script src="{% static 'js/select2.js' %}"></script>
-    <script src="{% static  'js/subscribe.js' %}"></script>
+    <script src="{% static 'js/subscribe.js' %}"></script>
     <script src="{% static 'js/counter.js' %}"></script>
 {% endblock %}

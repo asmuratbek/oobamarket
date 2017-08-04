@@ -10,7 +10,7 @@ import $ from 'jquery';
 
 
 var MainInterface = createClass({
-    displayName: 'MainInterface',
+    displayName: 'MainInterfa',
 
     getInitialState: function () {
         return {

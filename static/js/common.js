@@ -593,14 +593,14 @@ $(document).ready(function () {
     }
 
 
-    if ($('.see-more-toogle').length > 0) {
-        $('.see-more-toogle').readmore({
-            speed: 500,
-            collapsedHeight: 40,
-            moreLink: '<a href="#">Прочитать</a>',
-            lessLink: '<a href="#">Скрыть</a>'
-        });
-    }
+    //     if ($('.see-more-toogle').length > 0){
+    //     $('.see-more-toogle').readmore({
+    //         speed: 500,
+    //         collapsedHeight: 40,
+    //         moreLink: '<a href="{{ about_us }}">Прочитать</a>'
+    //
+    //     });
+    // }
 
     if ($('.left-scroll-mouse .overflow').length > 0) {
         $('.left-scroll-mouse .overflow').mousewheel(function (e, delta) {

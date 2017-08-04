@@ -1,7 +1,6 @@
 var gulp         	= require('gulp'),
     gutil           = require('gulp-util'),
     browserify      = require('browserify'),
-    babelify        = require('babelify'),
     sass         	= require('gulp-sass'),
     source          = require('vinyl-source-stream'),
     autoprefixer 	= require('gulp-autoprefixer'),
@@ -9,10 +8,8 @@ var gulp         	= require('gulp'),
     rename       	= require('gulp-rename'),
     browserSync  	= require('browser-sync').create(),
     uglify       	= require('gulp-uglify'),
-    polyfill        = require('babel-polyfill'),
 
     del 			= require('del');
-    jsmin = require('gulp-jsmin');
     rename = require('gulp-rename');
 
 gulp.task('styles', function () {
