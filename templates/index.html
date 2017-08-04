@@ -82,7 +82,8 @@
 
         <div class="container">
             <img class="center-block" src="{% static 'img/logo.png' %}" alt="">
-            <div class="col-md-offset-3 col-md-6">
+            <h1>Лучший сервиc по поиску товаров в Бишкеке</h1>
+            <div class="col-md-offset-2 col-md-8">
                 <form class="form-inline" method="get" action="/search/">
                     <div class="form-group">
                         <input type="text" class="form-control" placeholder="Поиск товаров..." id="search-form-index"
@@ -114,7 +115,7 @@
     {% if weeks_best_products %}
         <section class="goods-of-week">
             <div class="container">
-                <h1><a href="{% url 'product:product_list' %}">Товары недели</a></h1>
+                <h2 class="index-title"><a href="{% url 'product:product_list' %}">Товары недели</a></h2>
                 {% include 'product/product_list.html' with object_list=weeks_best_products col=3 %}
                 <div class="clearfix"></div>
                 <div class="all-goods">

@@ -516,10 +516,16 @@ header
       transform: rotate(180deg)
       color: #808080
 .search-index
-  padding: 60px 0 90px 0
+  padding: 30px 0 90px 0
   position: relative
+  h1
+    text-align: center
+    color: #6d6d6d
+    font-size: 20px
+    margin-bottom: 60px
+    margin-top: 60px
   img.center-block
-    width: 200px
+    width: 280px
     margin-bottom: 30px
   img.center-block
     //animation: up-down 2s linear infinite
@@ -531,8 +537,8 @@ header
       transform: translateY(-8px)
     100%
       transform: translateY(0)
-  .col-md-6
-    margin-bottom: 40px
+  .col-md-8
+    margin-bottom: 60px
   .form-group
     width: 100%
     margin-bottom: 0
@@ -543,8 +549,10 @@ header
       border-bottom-right-radius: 0 !important
       border: 1px solid #CCCCCC
       color: #808080
-      height: 40px !important
-      font-weight: 300
+      height: 50px !important
+
+      padding-left: 20px
+      font-weight: 500
     button
       float: left
       width: 20%
@@ -554,9 +562,9 @@ header
       border-left: 0
       background-color: #CCCCCC
       color: #333
-      height: 40px
+      height: 50px
       font-size: 15px
-      font-weight: 400
+      font-weight: 500
       &:hover
         background-color: #b8b7b7
   ul.category
@@ -610,6 +618,14 @@ header
 
 .goods-of-week
   margin-bottom: 40px
+  h2.index-title
+    font-size: 26px
+    color: #333
+    text-align: center
+    margin-bottom: 30px
+    margin-top: 80px
+    a
+      color: #333
   .item-filter
     //width: 75%
     width: 100%
@@ -1225,14 +1241,14 @@ header
       display: none
   .item:hover
     .dropdown-menu.open
-      display: inline-block
+      display: block
   .pull-left
 
   .nav .open>a, .nav .open>a:focus, .nav .open>a:hover
     background-color: #eee
     border-color: transparent!important
   .dropdown
-    display: inline-block
+    display: block
     .enter.btn:hover
       border-color: transparent!important
       &:before
@@ -1283,7 +1299,7 @@ header
     font-size: 16px
     font-weight: 300
     color: #eee
-    display: inline-block
+    display: block
     padding: 15px 0
     &:hover
       color: #ccc
@@ -1618,6 +1634,11 @@ header
     .col-md-12
       margin-top: 30px
       margin-bottom: 30px
+      pre
+        background-color: #fff !important
+        border: 0 !important
+        font-weight: 400 !important
+        font-family: Roboto, sans-serif !important
       h4
         font-size: 20px
         color: #333
