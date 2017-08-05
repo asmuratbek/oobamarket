@@ -296,7 +296,7 @@ var MainInterface = createClass({
                      {this.state.pagesCount > 1 ?
                         <Pagination
                           activePage={this.state.activePage}
-                          itemsCountPerPage={20}
+                          itemsCountPerPage={21}
                           totalItemsCount={this.state.productsCount}
                           pageRangeDisplayed={5}
                           onChange={this.handlePageChange}
