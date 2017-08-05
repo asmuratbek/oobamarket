@@ -5,7 +5,7 @@ import Product from './components/ShopDetailProducts';
 import SearchForm from './components/ShopDetailSearchForm';
 import CategoryList from './components/ShopDetailCategory';
 import _ from 'lodash';
-import Pagination from './components/Pagination';
+import Pagination from 'react-js-pagination';
 
 
 
@@ -52,7 +52,7 @@ var MainInterface = createClass({
                         next: data.next,
                         previous: data.previous,
                         productsCount: data.count,
-                        currentPage: "1",
+                        activePage: 1,
                         pagesCount: pagesCount,
                         baseUrl: `/api/shops/` + this.state.shopSlug + '/'
                     });
@@ -99,61 +99,15 @@ var MainInterface = createClass({
             products: newProducts
         }); //setState
     },
-
-    goToNextPage: function () {
-      $.ajax({
-            type: "GET",
-              url: this.state.next,
-              success: function (data) {
-                    var products = data.results.map(obj => obj);
-                    this.setState({
-                        products: products,
-                        next: data.next,
-                        previous: data.previous,
-                        productsCount: data.count,
-                        currentPage: this.state.next.split('?')[1].split('=')[1]
-                    });
-              }.bind(this),
-              error: function (response, error) {
-                  console.log(response);
-                  console.log(error);
-              }
-        })
-    },
-
-    goToPreviousPage: function() {
+    handlePageChange: function(pageNumber) {
         $.ajax({
             type: "GET",
-              url: this.state.previous,
+              url: this.state.baseUrl + '?page=' + pageNumber,
               success: function (data) {
                     var products = data.results.map(obj => obj);
                     this.setState({
                         products: products,
-                        next: data.next,
-                        previous: data.previous,
-                        productsCount: data.count,
-                        currentPage: this.state.previous.split('?').length > 1 ? this.state.previous.split('?')[1].split('=')[1] : "1"
-                    });
-              }.bind(this),
-              error: function (response, error) {
-                  console.log(response);
-                  console.log(error);
-              }
-        })
-    },
-
-    goTo: function(page) {
-        $.ajax({
-            type: "GET",
-              url: this.state.baseUrl + '?page=' + page,
-              success: function (data) {
-                    var products = data.results.map(obj => obj);
-                    this.setState({
-                        products: products,
-                        next: data.next,
-                        previous: data.previous,
-                        productsCount: data.count,
-                        currentPage: page
+                        activePage: pageNumber
                     });
               }.bind(this),
               error: function (response, error) {
@@ -327,17 +281,27 @@ var MainInterface = createClass({
                         : null}
                     {filteredProducts}
                     <div className="clearfix"></div>
-                    <Pagination
-                        goToPrevious={this.goToPreviousPage}
-                        goToNext={this.goToNextPage}
-                        goTo={this.goTo}
-                        count={this.state.productsCount}
-                        next={this.state.next}
-                        previous={this.state.previous}
-                        page={this.state.currentPage}
-                        pagesCount={this.state.pagesCount}
-                        baseUrl={this.state.baseUrl}
-                     />
+                    {/*<Pagination*/}
+                        {/*goToPrevious={this.goToPreviousPage}*/}
+                        {/*goToNext={this.goToNextPage}*/}
+                        {/*goTo={this.goTo}*/}
+                        {/*count={this.state.productsCount}*/}
+                        {/*next={this.state.next}*/}
+                        {/*previous={this.state.previous}*/}
+                        {/*page={this.state.currentPage}*/}
+                        {/*pagesCount={this.state.pagesCount}*/}
+                        {/*baseUrl={this.state.baseUrl}*/}
+                     {/*/>*/}
+
+                     {this.state.pagesCount > 1 ?
+                        <Pagination
+                          activePage={this.state.activePage}
+                          itemsCountPerPage={20}
+                          totalItemsCount={this.state.productsCount}
+                          pageRangeDisplayed={5}
+                          onChange={this.handlePageChange}
+                        />
+                    : ''}
                 </div>
             </div>
         )

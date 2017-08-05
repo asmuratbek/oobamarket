@@ -5,7 +5,7 @@ import Product from './components/Product';
 import SearchForm from './components/SearchForm';
 import CategoryList from './components/CategoryList';
 import _ from 'lodash';
-import Pagination from './components/Pagination';
+import Pagination from 'react-js-pagination';
 
 
 
@@ -20,9 +20,8 @@ var MainInterface = createClass({
             priceTo: '',
             queryText: '',
             deliveryType: 'all',
-            productsCount: 0,
-            pagesCount: 0,
             products: [],
+            activePage: 1,
             shops: [],
             categories: [],
             activeCategories: [],
@@ -63,12 +62,28 @@ var MainInterface = createClass({
                     var pagesCount = Math.ceil(data.count / 20);
                     this.setState({
                         products: products,
-                        next: data.next,
-                        previous: data.previous,
                         productsCount: data.count,
-                        currentPage: "1",
+                        activePage: 1,
                         pagesCount: pagesCount,
                         baseUrl: `/api/category/` + this.state.categorySlug + '/',
+                    });
+              }.bind(this),
+              error: function (response, error) {
+                  console.log(response);
+                  console.log(error);
+              }
+        })
+    },
+
+    handlePageChange: function(pageNumber) {
+        $.ajax({
+            type: "GET",
+              url: this.state.baseUrl + '?page=' + pageNumber,
+              success: function (data) {
+                    var products = data.results.map(obj => obj);
+                    this.setState({
+                        products: products,
+                        activePage: pageNumber
                     });
               }.bind(this),
               error: function (response, error) {
@@ -96,68 +111,68 @@ var MainInterface = createClass({
         }); //setState
     },
 
-    goToNextPage: function () {
-      $.ajax({
-            type: "GET",
-              url: this.state.next,
-              success: function (data) {
-                    var products = data.results.map(obj => obj);
-                    this.setState({
-                        products: products,
-                        next: data.next,
-                        previous: data.previous,
-                        productsCount: data.count,
-                        currentPage: this.state.next.split('?')[1].split('=')[1]
-                    });
-              }.bind(this),
-              error: function (response, error) {
-                  console.log(response);
-                  console.log(error);
-              }
-        })
-    },
-
-    goToPreviousPage: function() {
-        $.ajax({
-            type: "GET",
-              url: this.state.previous,
-              success: function (data) {
-                    var products = data.results.map(obj => obj);
-                    this.setState({
-                        products: products,
-                        next: data.next,
-                        previous: data.previous,
-                        productsCount: data.count,
-                        currentPage: this.state.previous.split('?').length > 1 ? this.state.previous.split('?')[1].split('=')[1] : "1"
-                    });
-              }.bind(this),
-              error: function (response, error) {
-                  console.log(response);
-                  console.log(error);
-              }
-        })
-    },
-
-    goTo: function(page) {
-        $.ajax({
-            type: "GET",
-              url: this.state.baseUrl + '?page=' + page,
-              success: function (data) {
-                    var products = data.results.map(obj => obj);
-                    this.setState({
-                        products: products,
-                        next: data.next,
-                        previous: data.previous,
-                        productsCount: data.count,
-                        currentPage: page
-                    });
-              }.bind(this),
-              error: function (response, error) {
-                  console.log(response);
-                  console.log(error);
-              }
-        })
-    },
+    // goToNextPage: function () {
+    //   $.ajax({
+    //         type: "GET",
+    //           url: this.state.next,
+    //           success: function (data) {
+    //                 var products = data.results.map(obj => obj);
+    //                 this.setState({
+    //                     products: products,
+    //                     next: data.next,
+    //                     previous: data.previous,
+    //                     productsCount: data.count,
+    //                     activePage: this.state.next.split('?')[1].split('=')[1]
+    //                 });
+    //           }.bind(this),
+    //           error: function (response, error) {
+    //               console.log(response);
+    //               console.log(error);
+    //           }
+    //     })
+    // },
+    //
+    // goToPreviousPage: function() {
+    //     $.ajax({
+    //         type: "GET",
+    //           url: this.state.previous,
+    //           success: function (data) {
+    //                 var products = data.results.map(obj => obj);
+    //                 this.setState({
+    //                     products: products,
+    //                     next: data.next,
+    //                     previous: data.previous,
+    //                     productsCount: data.count,
+    //                     currentPage: this.state.previous.split('?').length > 1 ? this.state.previous.split('?')[1].split('=')[1] : "1"
+    //                 });
+    //           }.bind(this),
+    //           error: function (response, error) {
+    //               console.log(response);
+    //               console.log(error);
+    //           }
+    //     })
+    // },
+    //
+    // goTo: function(page) {
+    //     $.ajax({
+    //         type: "GET",
+    //           url: this.state.baseUrl + '?page=' + page,
+    //           success: function (data) {
+    //                 var products = data.results.map(obj => obj);
+    //                 this.setState({
+    //                     products: products,
+    //                     next: data.next,
+    //                     previous: data.previous,
+    //                     productsCount: data.count,
+    //                     currentPage: page
+    //                 });
+    //           }.bind(this),
+    //           error: function (response, error) {
+    //               console.log(response);
+    //               console.log(error);
+    //           }
+    //     })
+    // },
 
     reOrder: function (orderBy, orderDir) {
         this.setState({
@@ -400,17 +415,27 @@ var MainInterface = createClass({
 
                 {/*</div>*/}
 
+                {/*<Pagination*/}
+                    {/*goToPrevious={this.goToPreviousPage}*/}
+                    {/*goToNext={this.goToNextPage}*/}
+                    {/*goTo={this.goTo}*/}
+                    {/*count={this.state.productsCount}*/}
+                    {/*next={this.state.next}*/}
+                    {/*previous={this.state.previous}*/}
+                    {/*page={this.state.currentPage}*/}
+                    {/*pagesCount={this.state.pagesCount}*/}
+                    {/*baseUrl={this.state.baseUrl}*/}
+                {/*/>*/}
+
+                {this.state.pagesCount > 1 ?
                 <Pagination
-                    goToPrevious={this.goToPreviousPage}
-                    goToNext={this.goToNextPage}
-                    goTo={this.goTo}
-                    count={this.state.productsCount}
-                    next={this.state.next}
-                    previous={this.state.previous}
-                    page={this.state.currentPage}
-                    pagesCount={this.state.pagesCount}
-                    baseUrl={this.state.baseUrl}
+                  activePage={this.state.activePage}
+                  itemsCountPerPage={20}
+                  totalItemsCount={this.state.productsCount}
+                  pageRangeDisplayed={5}
+                  onChange={this.handlePageChange}
                 />
+                    : ''}
 
             </div>
         )
