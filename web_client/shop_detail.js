@@ -31,7 +31,7 @@ var MainInterface = createClass({
         }
     },
 
-    componentDidMount() {
+    componentWillMount() {
         var params = location.search.substr(1).split("&")
         params.forEach(function (i) {
             if (i.split("=")[0] == "q") {
