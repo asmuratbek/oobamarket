@@ -18,7 +18,6 @@ var conf = {
 
 function compile(watch) {
   conf.appName.forEach(function (value) {
-    console.log(value)
     var bundler = watchify(
     browserify(conf.srcJs + '/' + value, { debug: true })
       .transform(babel.configure({ presets: ['es2015', 'react'] })

@@ -5,6 +5,8 @@ import Product from './components/ShopDetailProducts';
 import SearchForm from './components/ShopDetailSearchForm';
 import CategoryList from './components/ShopDetailCategory';
 import _ from 'lodash';
+import Pagination from 'react-js-pagination';
+
 
 
 var MainInterface = createClass({
@@ -18,39 +20,41 @@ var MainInterface = createClass({
             priceTo: '',
             queryText: '',
             deliveryType: 'all',
+            productsCount: 0,
+            pagesCount: 0,
             products: [],
-            shop: [],
+            shops: [],
             categories: [],
             activeCategories: [],
+            owner: false,
             shopSlug: location.href.split("/")[4]
         }
     },
 
     componentWillMount() {
-
-        // axios.get(`/api/shops/` + this.state.shopSlug)
-        //     .then(res => {
-        //         var owner = res.data[0].shop[0].is_owner;
-        //         var categories = res.data[2].category.map(obj => obj);
-        //         var products = res.data[1].product.map(obj => obj);
-        //         this.setState({
-        //             owner: owner,
-        //             categories: categories,
-        //             products: products
-        //         });
-        //     });
+        var params = location.search.substr(1).split("&")
+        params.forEach(function (i) {
+            if (i.split("=")[0] == "q") {
+                this.setState({
+                    queryText: i.split("=")[1].toLowerCase()
+                })
+            }
+        }.bind(this));
 
         $.ajax({
             type: "GET",
               url: `/api/shops/` + this.state.shopSlug,
               success: function (data) {
-                    var owner = data[0].shop[0].is_owner;
-                    var categories = data[2].category.map(obj =>obj);
-                    var products = data[1].product.map(obj => obj);
+                    var products = data.results.map(obj => obj);
+                    var pagesCount = Math.ceil(data.count / 21);
                     this.setState({
-                        owner: owner,
-                        categories:categories,
                         products: products,
+                        next: data.next,
+                        previous: data.previous,
+                        productsCount: data.count,
+                        activePage: 1,
+                        pagesCount: pagesCount,
+                        baseUrl: `/api/shops/` + this.state.shopSlug + '/'
                     });
               }.bind(this),
               error: function (response, error) {
@@ -58,6 +62,24 @@ var MainInterface = createClass({
                   console.log(error);
               }
         })
+
+        $.ajax({
+            type: "GET",
+              url: `/api/shops/` + this.state.shopSlug + '/shop/',
+              success: function (data) {
+                   var owner = data[0].shop[0].is_owner;
+                    var categories = data[1].category.map(obj =>obj);
+                    this.setState({
+                        owner: owner,
+                        categories:categories,
+                    });
+              }.bind(this),
+              error: function (response, error) {
+                  console.log(response);
+                  console.log(error);
+              }
+        })
+
     },
 
     deleteMessage: function (item) {
@@ -76,6 +98,23 @@ var MainInterface = createClass({
         this.setState({
             products: newProducts
         }); //setState
+    },
+    handlePageChange: function(pageNumber) {
+        $.ajax({
+            type: "GET",
+              url: this.state.baseUrl + '?page=' + pageNumber,
+              success: function (data) {
+                    var products = data.results.map(obj => obj);
+                    this.setState({
+                        products: products,
+                        activePage: pageNumber
+                    });
+              }.bind(this),
+              error: function (response, error) {
+                  console.log(response);
+                  console.log(error);
+              }
+        })
     },
 
     reOrder: function (orderBy, orderDir) {
@@ -173,12 +212,12 @@ var MainInterface = createClass({
             ) //return
         }.bind(this));
 
+
         categories = this.state.categories.map(function (item, index) {
             return (
                 <CategoryList
                     key={index}
                     category={item}
-                    index={index}
                     onChangeCategory={changeCategory}
                     activeCategories={activeCategories}
                 />
@@ -186,7 +225,7 @@ var MainInterface = createClass({
         });
 
 
-        var productsCount = filteredProducts.length;
+        var productsCount = filteredProducts.length
 
         filteredProducts = _.orderBy(filteredProducts, function (item) {
             if (orderBy == 'title') {
@@ -242,29 +281,35 @@ var MainInterface = createClass({
                         : null}
                     {filteredProducts}
                     <div className="clearfix"></div>
-                    <nav className="pagination">
-                        <ul>
-                            <li>
-                                <a href="#" aria-label="Previous">
-                                    <span aria-hidden="true">&laquo;</span>
-                                </a>
-                            </li>
-                            <li><a href="#">1</a></li>
-                            <li><a href="#">2</a></li>
-                            <li><a href="#">3</a></li>
-                            <li><a href="#">4</a></li>
-                            <li><a href="#">5</a></li>
-                            <li>
-                                <a href="#" aria-label="Next">
-                                    <span aria-hidden="true">&raquo;</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>
+                    {/*<Pagination*/}
+                        {/*goToPrevious={this.goToPreviousPage}*/}
+                        {/*goToNext={this.goToNextPage}*/}
+                        {/*goTo={this.goTo}*/}
+                        {/*count={this.state.productsCount}*/}
+                        {/*next={this.state.next}*/}
+                        {/*previous={this.state.previous}*/}
+                        {/*page={this.state.currentPage}*/}
+                        {/*pagesCount={this.state.pagesCount}*/}
+                        {/*baseUrl={this.state.baseUrl}*/}
+                     {/*/>*/}
+
+                     {this.state.pagesCount > 1 ?
+                        <Pagination
+                          activePage={this.state.activePage}
+                          itemsCountPerPage={21}
+                          totalItemsCount={this.state.productsCount}
+                          pageRangeDisplayed={5}
+                          onChange={this.handlePageChange}
+                        />
+                    : ''}
                 </div>
             </div>
         )
     }
 });
 
+
 ReactDOM.render(<MainInterface />, document.getElementById('root'));
+
+$('.select-beast').selectize({});
+

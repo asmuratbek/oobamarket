@@ -29,7 +29,6 @@ from .serializers import GlobalCategorySerializer
 
 class GlobalCategoryListApiView(ListAPIView):
     serializer_class = GlobalCategorySerializer
-    # pagination_class = ShopLimitPagination#PageNumberPagination
     queryset = GlobalCategory.objects.all()
 
 
@@ -38,6 +37,8 @@ class GlobalCategoryDetailApiView(MultipleModelAPIView):
     #     (Shop.objects.all(), ShopSerializer),
     #     (Product.objects.all(), ProductSerializer),
     # ]
+    pagination_class = CategoryLimitPagination
+    flat = True
 
     def get_queryList(self):
         slug = self.kwargs.get('slug')

@@ -5,12 +5,12 @@ import Product from './components/Product';
 import SearchForm from './components/SearchForm';
 import CategoryList from './components/CategoryList';
 import _ from 'lodash';
-import $ from 'jquery';
+import Pagination from 'react-js-pagination';
 
 
 
 var MainInterface = createClass({
-    displayName: 'MainInterfa',
+    displayName: 'MainInterface',
 
     getInitialState: function () {
         return {
@@ -20,8 +20,8 @@ var MainInterface = createClass({
             priceTo: '',
             queryText: '',
             deliveryType: 'all',
-            productsCount: 0,
             products: [],
+            activePage: 1,
             shops: [],
             categories: [],
             activeCategories: [],
@@ -46,7 +46,7 @@ var MainInterface = createClass({
         //             categories: _.uniqBy(products.map(obj => obj.get_category_title), obj => obj)
         //         });
         //     });
-        // axios.get(`/api/category/` + this.state.categorySlug)
+        // axios.get(`/api/globalcategory/` + this.state.categorySlug)
         //     .then(res => {
         //         var products = res.data[0].product.map(obj => obj);
         //         this.setState({
@@ -58,9 +58,32 @@ var MainInterface = createClass({
             type: "GET",
               url: `/api/category/` + this.state.categorySlug,
               success: function (data) {
-                    var products = data[0].product.map(obj => obj);
+                    var products = data.results.map(obj => obj);
+                    var pagesCount = Math.ceil(data.count / 20);
                     this.setState({
                         products: products,
+                        productsCount: data.count,
+                        activePage: 1,
+                        pagesCount: pagesCount,
+                        baseUrl: `/api/category/` + this.state.categorySlug + '/',
+                    });
+              }.bind(this),
+              error: function (response, error) {
+                  console.log(response);
+                  console.log(error);
+              }
+        })
+    },
+
+    handlePageChange: function(pageNumber) {
+        $.ajax({
+            type: "GET",
+              url: this.state.baseUrl + '?page=' + pageNumber,
+              success: function (data) {
+                    var products = data.results.map(obj => obj);
+                    this.setState({
+                        products: products,
+                        activePage: pageNumber
                     });
               }.bind(this),
               error: function (response, error) {
@@ -87,6 +110,69 @@ var MainInterface = createClass({
             products: newProducts
         }); //setState
     },
+
+    // goToNextPage: function () {
+    //   $.ajax({
+    //         type: "GET",
+    //           url: this.state.next,
+    //           success: function (data) {
+    //                 var products = data.results.map(obj => obj);
+    //                 this.setState({
+    //                     products: products,
+    //                     next: data.next,
+    //                     previous: data.previous,
+    //                     productsCount: data.count,
+    //                     activePage: this.state.next.split('?')[1].split('=')[1]
+    //                 });
+    //           }.bind(this),
+    //           error: function (response, error) {
+    //               console.log(response);
+    //               console.log(error);
+    //           }
+    //     })
+    // },
+    //
+    // goToPreviousPage: function() {
+    //     $.ajax({
+    //         type: "GET",
+    //           url: this.state.previous,
+    //           success: function (data) {
+    //                 var products = data.results.map(obj => obj);
+    //                 this.setState({
+    //                     products: products,
+    //                     next: data.next,
+    //                     previous: data.previous,
+    //                     productsCount: data.count,
+    //                     currentPage: this.state.previous.split('?').length > 1 ? this.state.previous.split('?')[1].split('=')[1] : "1"
+    //                 });
+    //           }.bind(this),
+    //           error: function (response, error) {
+    //               console.log(response);
+    //               console.log(error);
+    //           }
+    //     })
+    // },
+    //
+    // goTo: function(page) {
+    //     $.ajax({
+    //         type: "GET",
+    //           url: this.state.baseUrl + '?page=' + page,
+    //           success: function (data) {
+    //                 var products = data.results.map(obj => obj);
+    //                 this.setState({
+    //                     products: products,
+    //                     next: data.next,
+    //                     previous: data.previous,
+    //                     productsCount: data.count,
+    //                     currentPage: page
+    //                 });
+    //           }.bind(this),
+    //           error: function (response, error) {
+    //               console.log(response);
+    //               console.log(error);
+    //           }
+    //     })
+    // },
 
     reOrder: function (orderBy, orderDir) {
         this.setState({
@@ -235,99 +321,122 @@ var MainInterface = createClass({
                     <div className="clearfix"></div>
                 </div>
 
-                <div className="catalog-filter">
-                    <h4>Параметры</h4>
-                    <div className="filter-clone">
-                        <a className="btn-toggle-setting">
-                            Производитель
-                        </a>
-                        <div className="toggle-setting" id="toggle-setting-1">
-                            <div className="form-group checkbox">
+                {/*<div className="catalog-filter">*/}
+                    {/*<h4>Параметры</h4>*/}
+                    {/*<div className="filter-clone">*/}
+                        {/*<a className="btn-toggle-setting">*/}
+                            {/*Производитель*/}
+                        {/*</a>*/}
+                        {/*<div className="toggle-setting" id="toggle-setting-1">*/}
+                            {/*<div className="form-group checkbox">*/}
 
-                                <div className="cover">
-                                    <div className="form-custom-checkbox">
-                                        <label className="name_setting" htmlFor="slug1">Название настроек</label>
-                                        <input type="checkbox" value="" name="" id="slug1"></input>
-                                        <div className="indicator"></div>
-                                    </div>
-                                </div>
-                                <div className="cover">
-                                    <div className="form-custom-checkbox">
-                                        <label className="name_setting" htmlFor="slug2">Название настроек</label>
-                                        <input type="checkbox" value="" name="" id="slug2"></input>
-                                        <div className="indicator"></div>
-                                    </div>
-                                </div>
-                                <div className="cover">
-                                    <div className="form-custom-checkbox">
-                                        <label className="name_setting" htmlFor="slug3">Название настроек</label>
-                                        <input type="checkbox" value="" name="" id="slug3"></input>
-                                        <div className="indicator"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                                {/*<div className="cover">*/}
+                                    {/*<div className="form-custom-checkbox">*/}
+                                        {/*<label className="name_setting" htmlFor="slug1">Название настроек</label>*/}
+                                        {/*<input type="checkbox" value="" name="" id="slug1"></input>*/}
+                                        {/*<div className="indicator"></div>*/}
+                                    {/*</div>*/}
+                                {/*</div>*/}
+                                {/*<div className="cover">*/}
+                                    {/*<div className="form-custom-checkbox">*/}
+                                        {/*<label className="name_setting" htmlFor="slug2">Название настроек</label>*/}
+                                        {/*<input type="checkbox" value="" name="" id="slug2"></input>*/}
+                                        {/*<div className="indicator"></div>*/}
+                                    {/*</div>*/}
+                                {/*</div>*/}
+                                {/*<div className="cover">*/}
+                                    {/*<div className="form-custom-checkbox">*/}
+                                        {/*<label className="name_setting" htmlFor="slug3">Название настроек</label>*/}
+                                        {/*<input type="checkbox" value="" name="" id="slug3"></input>*/}
+                                        {/*<div className="indicator"></div>*/}
+                                    {/*</div>*/}
+                                {/*</div>*/}
+                            {/*</div>*/}
+                        {/*</div>*/}
+                    {/*</div>*/}
 
-                    <div className="filter-clone" id="toggle-setting-2">
-                        <a className="btn-toggle-setting">
-                            Производитель
-                        </a>
-                        <div className="toggle-setting">
-                            <div className="form-group checkbox">
+                    {/*<div className="filter-clone" id="toggle-setting-2">*/}
+                        {/*<a className="btn-toggle-setting">*/}
+                            {/*Производитель*/}
+                        {/*</a>*/}
+                        {/*<div className="toggle-setting">*/}
+                            {/*<div className="form-group checkbox">*/}
 
-                                <div className="cover">
-                                    <div className="form-custom-checkbox">
-                                        <label className="name_setting" htmlFor="slug1">Название настроек</label>
-                                        <input type="checkbox" value="" name="" id="slug1"></input>
-                                        <div className="indicator"></div>
-                                    </div>
-                                </div>
-                                <div className="cover">
-                                    <div className="form-custom-checkbox">
-                                        <label className="name_setting" htmlFor="slug2">Название настроек</label>
-                                        <input type="checkbox" value="" name="" id="slug2"></input>
-                                        <div className="indicator"></div>
-                                    </div>
-                                </div>
-                                <div className="cover">
-                                    <div className="form-custom-checkbox">
-                                        <label className="name_setting" htmlFor="slug3">Название настроек</label>
-                                        <input type="checkbox" value="" name="" id="slug3"></input>
-                                        <div className="indicator"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div className="filter-clone">
-                        <div className="form-group">
-                            <select className="select-beast " placeholder="Название настроек">
-                                <option value="">Название настроек</option>
-                                <option value="4">Thomas Edison</option>
-                                <option value="1">Nikola</option>
-                                <option value="3">Nikola Tesla</option>
-                                <option value="5">Arnold Schwarzenegger</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div className="filter-clone">
-                        <div className="form-group">
-                            <select className="select-beast " placeholder="Название настроек">
-                                <option value="">Название настроек</option>
-                                <option value="4">Thomas Edison</option>
-                                <option value="1">Nikola</option>
-                                <option value="3">Nikola Tesla</option>
-                                <option value="5">Arnold Schwarzenegger</option>
-                            </select>
-                        </div>
-                    </div>
+                                {/*<div className="cover">*/}
+                                    {/*<div className="form-custom-checkbox">*/}
+                                        {/*<label className="name_setting" htmlFor="slug1">Название настроек</label>*/}
+                                        {/*<input type="checkbox" value="" name="" id="slug1"></input>*/}
+                                        {/*<div className="indicator"></div>*/}
+                                    {/*</div>*/}
+                                {/*</div>*/}
+                                {/*<div className="cover">*/}
+                                    {/*<div className="form-custom-checkbox">*/}
+                                        {/*<label className="name_setting" htmlFor="slug2">Название настроек</label>*/}
+                                        {/*<input type="checkbox" value="" name="" id="slug2"></input>*/}
+                                        {/*<div className="indicator"></div>*/}
+                                    {/*</div>*/}
+                                {/*</div>*/}
+                                {/*<div className="cover">*/}
+                                    {/*<div className="form-custom-checkbox">*/}
+                                        {/*<label className="name_setting" htmlFor="slug3">Название настроек</label>*/}
+                                        {/*<input type="checkbox" value="" name="" id="slug3"></input>*/}
+                                        {/*<div className="indicator"></div>*/}
+                                    {/*</div>*/}
+                                {/*</div>*/}
+                            {/*</div>*/}
+                        {/*</div>*/}
+                    {/*</div>*/}
 
 
-                </div>
+                    {/*<div className="filter-clone">*/}
+                        {/*<div className="form-group">*/}
+                            {/*<select className="select-beast " placeholder="Название настроек">*/}
+                                {/*<option value="">Название настроек</option>*/}
+                                {/*<option value="4">Thomas Edison</option>*/}
+                                {/*<option value="1">Nikola</option>*/}
+                                {/*<option value="3">Nikola Tesla</option>*/}
+                                {/*<option value="5">Arnold Schwarzenegger</option>*/}
+                            {/*</select>*/}
+                        {/*</div>*/}
+                    {/*</div>*/}
+
+                    {/*<div className="filter-clone">*/}
+                        {/*<div className="form-group">*/}
+                            {/*<select className="select-beast " placeholder="Название настроек">*/}
+                                {/*<option value="">Название настроек</option>*/}
+                                {/*<option value="4">Thomas Edison</option>*/}
+                                {/*<option value="1">Nikola</option>*/}
+                                {/*<option value="3">Nikola Tesla</option>*/}
+                                {/*<option value="5">Arnold Schwarzenegger</option>*/}
+                            {/*</select>*/}
+                        {/*</div>*/}
+                    {/*</div>*/}
+
+
+                {/*</div>*/}
+
+                {/*<Pagination*/}
+                    {/*goToPrevious={this.goToPreviousPage}*/}
+                    {/*goToNext={this.goToNextPage}*/}
+                    {/*goTo={this.goTo}*/}
+                    {/*count={this.state.productsCount}*/}
+                    {/*next={this.state.next}*/}
+                    {/*previous={this.state.previous}*/}
+                    {/*page={this.state.currentPage}*/}
+                    {/*pagesCount={this.state.pagesCount}*/}
+                    {/*baseUrl={this.state.baseUrl}*/}
+                {/*/>*/}
+
+                {this.state.pagesCount > 1 ?
+                <Pagination
+                  activePage={this.state.activePage}
+                  itemsCountPerPage={20}
+                  totalItemsCount={this.state.productsCount}
+                  pageRangeDisplayed={5}
+                  onChange={this.handlePageChange}
+                />
+                    : ''}
+
             </div>
         )
     }
@@ -337,3 +446,4 @@ var MainInterface = createClass({
 ReactDOM.render(<MainInterface />, document.getElementById('root'));
 
 $('.select-beast').selectize({});
+
