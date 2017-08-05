@@ -11,14 +11,14 @@
     {% include 'layout/header.html' with global_title=object.get_global_category.title %}
 {% endblock %}
 
-{% block categories %}
-    <section class="category-link hidden-sm hidden-xs">
-        <div class="container-fluid">
-            <div class="clearfix"></div>
-            {% include 'layout/categories_without_global.html' with object_list=shop.get_used_categories %}
-        </div>
-    </section>
-{% endblock %}
+{#{% block categories %}#}
+{#    <section class="category-link hidden-sm hidden-xs">#}
+{#        <div class="container-fluid">#}
+{#            <div class="clearfix"></div>#}
+{#            {% include 'layout/categories_without_global.html' with object_list=shop.get_used_categories %}#}
+{#        </div>#}
+{#    </section>#}
+{#{% endblock %}#}
 
 {% block content %}
 
