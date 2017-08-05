@@ -46,7 +46,7 @@ var MainInterface = createClass({
               url: `/api/shops/` + this.state.shopSlug,
               success: function (data) {
                     var products = data.results.map(obj => obj);
-                    var pagesCount = Math.ceil(data.count / 20);
+                    var pagesCount = Math.ceil(data.count / 21);
                     this.setState({
                         products: products,
                         next: data.next,
