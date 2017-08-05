@@ -33,6 +33,7 @@
     "node-bourbon": "^4.2.8",
     "react-alert": "^2.2.0",
     "react-js-pagination": "^2.2.0",
+    "react-tooltip": "^3.3.0",
     "reactify": "^1.1.1",
     "utils-merge": "^1.0.0",
     "vinyl-buffer": "^1.0.0",

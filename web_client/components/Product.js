@@ -2,6 +2,7 @@ import React from 'react';
 import createClass from 'create-react-class';
 import AlertContainer from 'react-alert';
 import $ from 'jquery';
+import ReactTooltip from 'react-tooltip';
 
 
 var ProductList = createClass({
@@ -48,6 +49,7 @@ var ProductList = createClass({
 
   AddOrRemoveFavorite: function(e) {
     e.preventDefault();
+    var showAlert = this.showAlert(e);
     var target = e.target || e.srcElement;
     $.ajax({
             type: "GET",
@@ -59,10 +61,12 @@ var ProductList = createClass({
                 if (data.created) {
                     target.parentElement.classList.toggle("like");
                     target.setAttribute('data-message', "Товар удален из избранных");
+                    target.parentElement.setAttribute('data-tip', "Удалить из избранных");
                 }
                 else {
                     target.parentElement.classList.remove("like");
                     target.setAttribute('data-message', "Товар добавлен в избранное");
+                    target.parentElement.setAttribute('data-tip', "Добавить в избранное");
                 }
                 $('.favorites_count').text(data.favorites_count)
             },
@@ -268,8 +272,9 @@ var ProductList = createClass({
                   {this.isInCart(this.props.product)}
                   {/*{this.deliveryColor(this.props.product)}*/}
                   <span className={`hearth pull-right ${this.props.product.is_favorite && `like`}`}
-                        data-toggle="tooltip" title="" data-placement="top" data-original-title="Добавить в избранное"
+                        data-tip={this.props.product.is_favorite ? "Удалить из избранных" : "Добавить в избранное"}
                         data-product-id={this.props.product.id} onClick={this.AddOrRemoveFavorite}>
+                      <ReactTooltip/>
                       <i data-message={this.props.product.is_favorite ? "Товар удален из избранных" : "Товар добавлен в избранное"}
                          className="glyphicon glyphicon-heart"></i></span>
 
