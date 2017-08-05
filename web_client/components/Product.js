@@ -79,6 +79,7 @@ var ProductList = createClass({
 
   addOrRemoveFromCart : function (e) {
       e.preventDefault();
+      var showAlert = this.showAlert(e);
       var target = e.target || e.srcElement;
       $.ajax({
           type: "GET",
