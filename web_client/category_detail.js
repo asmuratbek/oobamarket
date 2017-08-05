@@ -444,6 +444,3 @@ var MainInterface = createClass({
 
 
 ReactDOM.render(<MainInterface />, document.getElementById('root'));
-
-$('.select-beast').selectize({});
-

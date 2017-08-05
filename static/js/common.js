@@ -424,10 +424,12 @@ $(document).ready(function () {
                 showFlashMessage(data.flash_message);
                 console.log(data);
                 if (data.created) {
-                    thisIcon.toggleClass("like")
+                    thisIcon.toggleClass("like");
+                    thisIcon.attr("data-original-title", "Удалить из избранных");
                 }
                 else {
                     thisIcon.removeClass("like");
+                    thisIcon.attr("data-original-title", "Добавить в избранное");
                     if (thisIcon.parent().parent().parent().parent().hasClass('favorite-products')) {
                         thisIcon.parent().parent().parent().fadeOut();
                     }

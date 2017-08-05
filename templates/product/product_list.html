@@ -60,13 +60,14 @@
             <div class="bottom-line">
 
                 {% cart_message request product %}
-                <span class="truck pull-right {% if product.delivery_type == 'paid' %} yellow
-                    {% elif product.delivery_type == 'free' %} green {% endif %}" data-toggle="tooltip" title=""
-                      data-placement="top" data-original-title="{{ product.get_delivery_type }}"><i class="fa fa-truck"
-                                                                                                    aria-hidden="true"></i></span>
+{#                <span class="truck pull-right {% if product.delivery_type == 'paid' %} yellow#}
+{#                    {% elif product.delivery_type == 'free' %} green {% endif %}" data-toggle="tooltip" title=""#}
+{#                      data-placement="top" data-original-title="{{ product.get_delivery_type }}"><i class="fa fa-truck" aria-hidden="true"></i></span>#}
+                {% if user.is_authenticated %}
                 <span class="hearth pull-right {% is_favorite_for_like product request.user %}"
                       data-product-id="{{ product.id }}" data-toggle="tooltip" title="" data-placement="top"
-                      data-original-title="Добавить в избранное"><i class="glyphicon glyphicon-heart"></i></span>
+                      data-original-title="{% is_favorite_for_tooltip product request.user %}"><i class="glyphicon glyphicon-heart"></i></span>
+                {% endif %}
 
             </div>
         </div>

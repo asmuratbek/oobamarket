@@ -104,6 +104,14 @@ def is_favorite_for_like(product, user):
         else:
             return ''
 
+@register.assignment_tag
+def is_favorite_for_tooltip(product, user):
+    if user.is_authenticated:
+        if product.favorite.filter(user=user).exists():
+            return "Удалить из избранных"
+        else:
+            return "Добавить в избранное"
+
 
 # @register.assignment_tag
 # def update_product_link(user, product):

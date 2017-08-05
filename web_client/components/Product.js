@@ -266,8 +266,12 @@ var ProductList = createClass({
                   }
               <div className="bottom-line">
                   {this.isInCart(this.props.product)}
-                  {this.deliveryColor(this.props.product)}
-                  <span className={`hearth pull-right ${this.props.product.is_favorite && `like`}`} data-toggle="tooltip" title="" data-placement="top" data-original-title="Добавить в избранное" data-product-id={this.props.product.id} onClick={this.AddOrRemoveFavorite}><i data-message={this.props.product.is_favorite ? "Товар удален из избранных" : "Товар добавлен в избранное"} className="glyphicon glyphicon-heart"></i></span>
+                  {/*{this.deliveryColor(this.props.product)}*/}
+                  <span className={`hearth pull-right ${this.props.product.is_favorite && `like`}`}
+                        data-toggle="tooltip" title="" data-placement="top" data-original-title="Добавить в избранное"
+                        data-product-id={this.props.product.id} onClick={this.AddOrRemoveFavorite}>
+                      <i data-message={this.props.product.is_favorite ? "Товар удален из избранных" : "Товар добавлен в избранное"}
+                         className="glyphicon glyphicon-heart"></i></span>
 
               </div>
           </div>
