@@ -69,9 +69,9 @@ class ShopDetailApiView(MultipleModelAPIView):
         slug = self.kwargs.get('slug')
         shop = Shop.objects.filter(slug=slug)
         queryList = [
-            (shop, ShopSerializer),
+            # (shop, ShopSerializer),
             (Product.objects.filter(shop=shop), ProductSerializer),
-            (shop.first().get_used_categories(), CategorySerializer)
+            # (shop.first().get_used_categories(), CategorySerializer)
         ]
         return queryList
 
