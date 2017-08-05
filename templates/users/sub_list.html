@@ -1,4 +1,5 @@
 {% extends 'base-1.html' %}
+{% load product_tags %}
 {% block content %}
     {% load class_name %}
     <section class="shop-category">
@@ -49,11 +50,11 @@
                                     Добавить в корзину
                                 </a>
 
-                                <span class="truck pull-right " data-toggle="tooltip" title="" data-placement="top"
-                                      data-original-title="Самовывоз"><i class="fa fa-truck"
-                                                                         aria-hidden="true"></i></span>
-                                <span class="hearth pull-right " data-product-id="{{ sub.id }}" data-toggle="tooltip" title=""
-                                      data-placement="top" data-original-title="Добавить в избранное"><i
+{#                                <span class="truck pull-right " data-toggle="tooltip" title="" data-placement="top"#}
+{#                                      data-original-title="Самовывоз"><i class="fa fa-truck"#}
+{#                                                                         aria-hidden="true"></i></span>#}
+                                <span class="hearth pull-right {% is_favorite_for_like sub request.user %}" data-product-id="{{ sub.id }}" data-toggle="tooltip" title=""
+                                      data-placement="top" data-original-title="{% is_favorite_for_tooltip sub request.user %}"><i
                                         class="glyphicon glyphicon-heart"></i></span>
                                 <div class="clearfix"></div>
                             </div>
