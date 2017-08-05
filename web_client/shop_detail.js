@@ -26,6 +26,7 @@ var MainInterface = createClass({
             shops: [],
             categories: [],
             activeCategories: [],
+            owner: false,
             shopSlug: location.href.split("/")[4]
         }
     },
@@ -61,6 +62,24 @@ var MainInterface = createClass({
                   console.log(error);
               }
         })
+
+        $.ajax({
+            type: "GET",
+              url: `/api/shops/` + this.state.shopSlug + '/shop/',
+              success: function (data) {
+                   var owner = data[0].shop[0].is_owner;
+                    var categories = data[1].category.map(obj =>obj);
+                    this.setState({
+                        owner: owner,
+                        categories:categories,
+                    });
+              }.bind(this),
+              error: function (response, error) {
+                  console.log(response);
+                  console.log(error);
+              }
+        })
+
     },
 
     deleteMessage: function (item) {
@@ -200,7 +219,7 @@ var MainInterface = createClass({
         var changeCategory = this.changeCategory;
         var activeCategories = this.state.activeCategories;
         var productDelete = this.productDelete;
-        var owner = true;
+        var owner = this.state.owner;
 
         allProducts.forEach(function (item) {
             if (item.title.toLowerCase().indexOf(queryText) != -1) {
