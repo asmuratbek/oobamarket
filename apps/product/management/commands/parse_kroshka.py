@@ -47,3 +47,4 @@ class Command(BaseCommand):
 
 
 # Some changes
+# Some changes 2
