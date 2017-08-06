@@ -46,3 +46,4 @@ class Command(BaseCommand):
                 slug = link.split("/")[-1]
 
 
+# Some changes
