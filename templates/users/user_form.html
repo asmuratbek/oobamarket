@@ -44,7 +44,7 @@
                                 <div class="col-md-3">Имя:</div>
 
                                 <div class="col-md-6">
-                                <input class="form-control" id="username" name="name" value="{{ user.name }}" />
+                                <input class="form-control" id="username" name="first_name" value="{{ user.first_name }}" />
 
                             </div>
                                 <span class="col-md-1">
@@ -58,8 +58,7 @@
                             <label for="first_name" class="">
                                 <div class="col-md-3">Фамилия:</div>
                                 <div class="col-md-6">
-                                    <input class="form-control" id="first_name" name="first_name" value="{{ user.first_name }}"/>
-{#                                    {{ form.first_name|attr:"class:form-control"|attr:"id:first_name" }}#}
+                                    <input class="form-control" id="first_name" name="last_name" value="{{ user.last_name }}"/>
                                 </div>
                                 <div class="col-md-1">
                                     <span class="glyphicon glyphicon-pencil"></span>
@@ -72,7 +71,7 @@
                             <label for="last_name" class="" style="display: block;">
                                 <div class="col-md-3">Номер телефона:</div>
                                 <div class="col-md-6">
-                                    <input class="form-control" id="last_name" name="phone" value="{{ user.phone }}"/>
+                                    <input class="form-control" id="phone" name="phone" value="{{ user.phone }}"/>
 {#                                    {{ form.last_name|attr:"class:form-control"|attr:"id:last_name" }}#}
                                 </div>
                                 <div class="col-md-1">
@@ -86,7 +85,7 @@
                             <label for="last_name" class="" style="display: block;">
                                 <div class="col-md-3">Адрес:</div>
                                 <div class="col-md-6">
-                                    <input class="form-control" id="last_name" name="phone" value="{{ user.phone }}"/>
+                                    <input class="form-control" id="address" name="address" value="{{ user.address }}"/>
 {#                                    {{ form.last_name|attr:"class:form-control"|attr:"id:last_name" }}#}
                                 </div>
                                 <div class="col-md-1">
