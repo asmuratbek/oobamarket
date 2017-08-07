@@ -51,6 +51,19 @@ def show_add_banner_button(shop, user):
 
 
 @register.assignment_tag
+def show_order_history_button(shop, user):
+    if not user.is_anonymous:
+        if user.is_authenticated:
+            if shop.is_owner(user):
+                return mark_safe('''
+                                    <li class="active"><a href="%s">История заказов</a></li>
+                                ''' % reverse('order:shop_order_list', kwargs={'slug': shop.slug}))
+            elif not shop.is_owner(user):
+                return mark_safe('')
+    else:
+        return mark_safe('')
+
+@register.assignment_tag
 def show_add_social_button(shop, user):
     if not user.is_anonymous:
         if user.is_authenticated:
