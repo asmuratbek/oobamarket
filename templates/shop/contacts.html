@@ -1,5 +1,5 @@
 {% extends 'shop/shop_detail.html' %}
-
+{% load staticfiles %}
 {% block shopcontent %}
     {% if shop.contacts_set.exists %}
         <div class="contacs-page">
@@ -83,27 +83,14 @@
     {% else %}
         <H3>Магазин не добавил контактов</H3>
     {% endif %}
+
+
 {% endblock %}
 
 {% block js %}
-    {{ block.super }}
-
-    <script async defer
-            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDXEuBW9AIFcfHx1UHvceIvCz0JnRNjGyo&callback=initMap">
-    </script>
-
-    <script>
-        let map = null;
-        let markers = [
-            {% for s in shop.contacts_set.all %}
-                {
-                    lat: {{ s.latitude }},
-                    lng: {{ s.longitude }}
-                }{% if forloop.counter < shop.contacts_set.count %},{% endif %}
-            {% endfor %}
-        ];
-        let mapCenter = {lat: 42.864272, lng: 74.579775};
-
+    <script src="{% static 'js/jquery.2.2.4.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script>
         function initMap() {
             map = new google.maps.Map(document.getElementById('contacts-markers'), {
                 center: mapCenter,
@@ -122,5 +109,24 @@
             }
             // Adds a marker at the center of the map.
         }
+
+        let map = null;
+        let markers = [
+            {% for s in shop.contacts_set.all %}
+                {
+                    lat: {% if s.latitude %}{{ s.latitude }}{% else %}42.864272{% endif %},
+                    lng: {% if s.longitude %}{{ s.longitude }}{% else %}74.579775{% endif %}
+                }{% if forloop.counter < shop.contacts_set.count %},{% endif %}
+            {% endfor %}
+        ];
+        let mapCenter = {lat: 42.864272, lng: 74.579775};
+
+
     </script>
+
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDXEuBW9AIFcfHx1UHvceIvCz0JnRNjGyo&callback=initMap">
+    </script>
+
+
+
 {% endblock %}

@@ -48,26 +48,26 @@ class ShopSocialLinksForm(ModelForm):
 
     def clean_facebook(self):
         facebook = self.cleaned_data.get('facebook')
-        if not 'facebook' in facebook:
+        if not 'facebook' and '' in facebook:
             raise forms.ValidationError('Пожалуйста введите корректную ссылку с фейсбука')
         return facebook
 
     def clean_vk(self):
         vk = self.cleaned_data.get('vk')
-        if not 'vk' in vk:
+        if not 'vk' and '' in vk:
             raise forms.ValidationError('Пожалуйста введите корректную ссылку с vk')
         return vk
 
     def clean_twitter(self):
         twitter = self.cleaned_data.get('twitter')
-        if not 'twitter' in twitter:
+        if not 'twitter' and '' in twitter:
             raise forms.ValidationError('Пожалуйста введите корректную ссылку с twitter')
         return twitter
 
 
     def clean_instagram(self):
         instagram = self.cleaned_data.get('instagram')
-        if not 'instagram' in instagram:
+        if not 'instagram' and '' in instagram:
             raise forms.ValidationError('Пожалуйста введите корректную ссылку с instagram')
         return instagram
 
