@@ -307,7 +307,7 @@ var isDev=function(x){return x==='development'||!x;}(process.env.NODE_ENV);funct
 fns.forEach(function(fn){if(_this.fns.indexOf(fn)>=0){if(isDev){console.warn('adding the same plugin again, ignoring');}}else{_this.fns=[fn].concat(_this.fns);}});},remove:function remove(fn){this.fns=this.fns.filter(function(x){return x!==fn;});},clear:function clear(){this.fns=[];},transform:function transform(o){return this.fns.reduce(function(o,fn){return fn(o);},o);}});function fallbacks(node){var hasArray=Object.keys(node.style).map(function(x){return Array.isArray(node.style[x]);}).indexOf(true)>=0;if(hasArray){var style=node.style;var flattened=Object.keys(style).reduce(function(o,key){o[key]=Array.isArray(style[key])?style[key].join('; '+(0,_CSSPropertyOperations.processStyleName)(key)+': '):style[key];return o;},{});return(0,_objectAssign2.default)({},node,{style:flattened});}
 return node;}
 var contentValues=['normal','none','counter','open-quote','close-quote','no-open-quote','no-close-quote','initial','inherit'];function contentWrap(node){if(node.style.content){var cont=node.style.content;if(contentValues.indexOf(cont)>=0){return node;}
-if(/^(attr|calc|counters?|url)\(/.test(cont)){return node;}
+if(cont.indexOf('url(')>=0){return node;}
 if(cont.charAt(0)===cont.charAt(cont.length-1)&&(cont.charAt(0)==='"'||cont.charAt(0)==="'")){return node;}
 return _extends({},node,{style:_extends({},node.style,{content:'"'+cont+'"'})});}
 return node;}

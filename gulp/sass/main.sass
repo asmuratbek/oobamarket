@@ -1,20 +1,23 @@
 .pagination
   text-align: center
   display: block !important
-  ul
-    text-align: center
-    li
+  li
+    display: inline-block
+    a
       display: inline-block
-      a
-        display: inline-block
-        padding: 5px
-        color: #555
-        width: 30px
-        font-size: 20px
-    li:hover
-      a
-        color: #f3481c
-        text-decoration: underline !important
+      padding: 5px
+      color: #555
+      width: 30px
+      font-size: 20px
+      text-decoration: none !important
+  li:hover
+    a
+      color: #f3481c
+      text-decoration: underline !important
+.pagination>.active>a, .pagination>.active>a:focus, .pagination>.active>a:hover, .pagination>.active>span, .pagination>.active>span:focus, .pagination>.active>span:hover
+    background-color: #f3481c
+    border-color: #f3481c
+
 
 .no-bg-2
   background-color: transparent !important
@@ -629,7 +632,7 @@ header
   .item-filter
     //width: 75%
     width: 100%
-    float: left
+    //float: left
   .catalog-filter
     padding-left: 15px
     padding-right: 10px
@@ -1771,6 +1774,8 @@ header
       font-size: 15px
       font-weight: 300
       color: #333
+      height: 44px
+      overflow: hidden
     p + a
       color: #f3481c
   .col-lg-9
@@ -1805,7 +1810,6 @@ header
           font-size: 12px
           color: #fff
           font-weight: 700
-
         //i
         //  font-size: 17px
         //  color: #337ab7
@@ -2090,11 +2094,77 @@ ul.category-tab
       border-radius: 0
       font-size: 14px
       color: #ccc
+
   .form-filter .form-group.select
     width: 30.99% !important
   .goods-of-week
     .catalog-filter
       padding-right: 0 !important
+    .form-filter
+        background-color: #fff
+        margin: 0 11px
+        overflow: hidden
+        margin-bottom: 20px
+        .form-group.price
+          width: 15% !important
+          input
+            padding: 5px 0 5px 10px
+        .form-group
+          width: 35% !important
+          float: left
+          padding: 5px
+          position: relative
+          input
+            border-radius: 0 !important
+            width: 100%
+            height: 40px
+            border-color: #eee
+            &:focus
+              border-color: #ccc
+          button
+            position: absolute
+            top: 5px
+            right: 5px
+            bottom: 0
+            width: 40px
+            height: 40px
+            background-color: #ccc
+            outline: 0!important
+            border: 0
+            &:hover
+              background-color: #b8b7b7
+            span
+              color: #fff
+          label
+            display: none
+        .form-group.select
+          position: relative
+          &:before
+            position: absolute
+            content: ''
+            right: 17px
+            top: 18px
+            width: 10px
+            height: 13px
+            background:  url(../img/png/arrow0.png) 0 0 no-repeat
+            transform: rotate(-90deg)
+            background-size: 35px
+          select
+            width: 100%
+            border-radius: 0 !important
+            height: 40px
+            border-color: #EEEEEE
+            box-shadow: none!important
+            cursor: pointer
+            -webkit-appearance: none
+            -moz-appearance: none
+            -ms-appearance: none
+            appearance: none
+            padding-right: 25px
+            &:focus
+              border-color: #ccc
+          label
+            display: none
   ul.category-tab
     li
       margin: 0 5px 10px 5px !important
@@ -2111,15 +2181,77 @@ ul.category-tab
         color: #fff !important
 .shop-category
   margin-bottom: 200px
+  .form-filter
+      background-color: #fff
+      margin: 0 11px
+      overflow: hidden
+      margin-bottom: 20px
+      .form-group.price
+        width: 15% !important
+        input
+          padding: 5px 0 5px 10px
+      .form-group
+        width: 35% !important
+        float: left
+        padding: 5px
+        position: relative
+        input
+          border-radius: 0 !important
+          width: 100%
+          height: 40px
+          border-color: #eee
+          &:focus
+            border-color: #ccc
+        button
+          position: absolute
+          top: 5px
+          right: 5px
+          bottom: 0
+          width: 40px
+          height: 40px
+          background-color: #ccc
+          outline: 0!important
+          border: 0
+          &:hover
+            background-color: #b8b7b7
+          span
+            color: #fff
+        label
+          display: none
+      .form-group.select
+        position: relative
+        &:before
+          position: absolute
+          content: ''
+          right: 17px
+          top: 18px
+          width: 10px
+          height: 13px
+          background:  url(../img/png/arrow0.png) 0 0 no-repeat
+          transform: rotate(-90deg)
+          background-size: 35px
+        select
+          width: 100%
+          border-radius: 0 !important
+          height: 40px
+          border-color: #EEEEEE
+          box-shadow: none!important
+          cursor: pointer
+          -webkit-appearance: none
+          -moz-appearance: none
+          -ms-appearance: none
+          appearance: none
+          padding-right: 25px
+          &:focus
+            border-color: #ccc
+        label
+          display: none
   .filter-dropdown
     .col-lg-3
       padding-left: 0
   .col-lg-9
     padding-right: 0
-  .form-filter
-    margin-right: 0 !important
-  .form-filter .form-group.select
-    width: 25.99% !important
+
   .contacs-page
     .col-md-7
       .cover
@@ -2137,7 +2269,6 @@ ul.category-tab
         border-radius: 5px
         ul
           overflow: hidden
-
           li
             float: left
             width: 100%
@@ -2145,16 +2276,12 @@ ul.category-tab
             margin-bottom: 20px
             position: relative
             padding-left: 30px
-
-
             i
               position: absolute
               top: 0
               left: 0
               float: left
               font-size: 20px
-
-
             p
               font-weight: 300
   .about-us-page
@@ -2519,82 +2646,66 @@ ul.category-tab
           a:hover
             color: #F3481C
     .col-md-9
-      .form-filter
-        background-color: #fff
-        margin: 0 11px
-        overflow: hidden
-        margin-bottom: 20px
-
-        .form-group
-          float: left
-        .form-group.select
-          position: relative
-          &:before
-            position: absolute
-            content: ''
-            right: 8px
-            top: 15px
-            width: 10px
-            height: 13px
-            background:  url(../img/png/arrow0.png) 0 0 no-repeat
-            transform: rotate(-90deg)
-            background-size: 35px
-          select
-            width: 100%
-            border-radius: 0
-            height: 46px
-            border-color: #EEEEEE
-            box-shadow: none!important
-            cursor: pointer
-            -webkit-appearance: none
-            -moz-appearance: none
-            -ms-appearance: none
-            appearance: none
-            padding-right: 25px
-
-          label
-            margin: 0 10px
-            font-size: 16px
-            font-weight: 300
-            span
-              display: inline-block
-              margin-right: 10px
-          input
-            border-radius: 0
-            box-shadow: none!important
-            width: 129px
-        .form-group.input.end
-          width: 190px
-
-          label
-            margin-left: 11px
-            margin-right: 2px
-          input
-            width: 145px
-            border-radius: 0 !important
-        .form-group.search
-          width: 190px
-          position: relative
-          input
-            position: relative
-            height: 46px
-            border-color: #EEEEEE
-            border-radius: 0
-            box-shadow: none!important
-            width: 100%
-          button
-            position: absolute
-            right: -2px
-            top: 0
-            border-radius: 0
-            height: 46px
-            width: 50px
-            background-color: #ccc
-            color: #fff
-            border-color: #EEEEEE
-            z-index: 1
-            &:hover
-              background-color: #8a8a8a
+      //.form-filter
+      //  background-color: #fff
+      //  margin: 0 11px
+      //  overflow: hidden
+      //  margin-bottom: 20px
+      //
+      //  .form-group
+      //    float: left
+      //  .form-group.select
+      //    position: relative
+      //    &:before
+      //      position: absolute
+      //      content: ''
+      //      right: 8px
+      //      top: 15px
+      //      width: 10px
+      //      height: 13px
+      //      background:  url(../img/png/arrow0.png) 0 0 no-repeat
+      //      transform: rotate(-90deg)
+      //      background-size: 35px
+      //    select
+      //      width: 100%
+      //      border-radius: 0
+      //      height: 46px
+      //      border-color: #EEEEEE
+      //      box-shadow: none!important
+      //      cursor: pointer
+      //      -webkit-appearance: none
+      //      -moz-appearance: none
+      //      -ms-appearance: none
+      //      appearance: none
+      //      padding-right: 25px
+      //
+      //    label
+      //      margin: 0 10px
+      //      font-size: 16px
+      //      font-weight: 300
+      //      span
+      //        display: inline-block
+      //        margin-right: 10px
+      //    input
+      //      position: relative
+      //      height: 46px
+      //      border-color: #EEEEEE
+      //      border-radius: 0
+      //      box-shadow: none!important
+      //      width: 100%
+      //    button
+      //      position: absolute
+      //      right: -2px
+      //      top: 0
+      //      border-radius: 0
+      //      height: 46px
+      //      width: 50px
+      //      background-color: #ccc
+      //      color: #fff
+      //      border-color: #EEEEEE
+      //      z-index: 1
+      //      &:hover
+      //        background-color: #8a8a8a
       .goods-of-week
         .col-md-4:hover
           .cover
@@ -2936,83 +3047,70 @@ ul.category-tab
 
 .search_results
   .form-filter
-    background-color: #fff
-    margin: 0 11px 20px 11px
-    overflow: hidden
-    .form-group
-      float: left
-    .form-group.select
-      width: 20%
-      height: 46px
-      position: relative
-      &:before
-        position: absolute
-        content: ''
-        right: 8px
-        top: 15px
-        width: 10px
-        height: 13px
-        background:  url(../img/png/arrow0.png) 0 0 no-repeat
-        transform: rotate(-90deg)
-        background-size: 35px
-      select
-        width: 100%
-        border-radius: 0
-        height: 46px
-        border-color: #EEEEEE
-        box-shadow: none!important
-        cursor: pointer
-        -webkit-appearance: none
-        -moz-appearance: none
-        -ms-appearance: none
-        appearance: none
-        padding-right: 25px
-    .form-group.input
-      padding: 5px 0
-      width: 239px
-      border-top: 1px solid #EEEEEE
-      border-bottom: 1px solid #EEEEEE
-      label
-        margin: 0 10px
-        font-size: 16px
-        font-weight: 300
-        span
-          display: inline-block
-          margin-right: 10px
-      input
-        border-radius: 0 !important
-        box-shadow: none!important
-        width: 129px
-    .form-group.input.end
-      width: 190px
-      label
-        margin-left: 11px
-        margin-right: 2px
-      input
-        width: 145px
-    .form-group.search
-      margin-left: 10px
-      width: 249px
-      position: relative
-      float: right
-      input
+      background-color: #fff
+      margin: 0 11px
+      overflow: hidden
+      margin-bottom: 20px
+      .form-group.price
+        width: 15% !important
+        input
+          padding: 5px 0 5px 10px
+      .form-group
+        width: 35% !important
+        float: left
+        padding: 5px
         position: relative
-        height: 46px
-        border-color: #EEEEEE
-        border-radius: 0
-        box-shadow: none!important
-        width: 100%
-      button
-        position: static
-        border-radius: 0
-        height: 46px
-        width: 100%
-        background-color: #F3481C
-        color: #fff
-        border-color: #F3481C
-        z-index: 1
-        &:hover
-          background-color: #d63f19
+        input
+          border-radius: 0 !important
+          width: 100%
+          height: 40px
+          border-color: #eee
+          &:focus
+            border-color: #ccc
+        button
+          position: absolute
+          top: 5px
+          right: 5px
+          bottom: 0
+          width: 40px
+          height: 40px
+          background-color: #ccc
+          outline: 0!important
+          border: 0
+          &:hover
+            background-color: #b8b7b7
+          span
+            color: #fff
+        label
+          display: none
+      .form-group.select
+        position: relative
+        &:before
+          position: absolute
+          content: ''
+          right: 17px
+          top: 18px
+          width: 10px
+          height: 13px
+          background:  url(../img/png/arrow0.png) 0 0 no-repeat
+          transform: rotate(-90deg)
+          background-size: 35px
+        select
+          width: 100%
+          border-radius: 0 !important
+          height: 40px
+          border-color: #EEEEEE
+          box-shadow: none!important
+          cursor: pointer
+          -webkit-appearance: none
+          -moz-appearance: none
+          -ms-appearance: none
+          appearance: none
+          padding-right: 25px
+          &:focus
+            border-color: #ccc
+        label
+          display: none
   ul
     li
       margin: 5px
@@ -3728,6 +3826,26 @@ ul.category-tab
         display: inline-block
         margin-bottom: 10px
     #wrapper-files
+      .product-images-block
+        img
+          width: 100% !important
+        .delete_prod_images
+          position: absolute
+          top: 5px
+          right: 5px
+          -webkit-border-radius: 50%
+          border-radius: 50%
+          padding: 5px
+          text-align: center
+          cursor: pointer
+          color: #fff
+          font-weight: 300
+          width: 30px
+          height: 30px
+          background-color: #f3481c
+          text-transform: uppercase
+          &:hover
+            background-color: #d03e19
       .one-image
         margin-bottom: 20px
         position: relative

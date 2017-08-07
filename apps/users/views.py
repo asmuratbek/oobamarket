@@ -51,9 +51,10 @@ class UserDetailView(LoginRequiredMixin, UserPermMixin, View):
                 messages.add_message(self.request, messages.ERROR, message)
                 return HttpResponseRedirect(reverse('users:detail', kwargs={'username': user.username}))
             userform.username = self.request.POST.get('username', '')
-            userform.name = self.request.POST.get('name', '')
-            userform.phone = self.request.POST.get('phone', '')
             userform.first_name = self.request.POST.get('first_name', '')
+            userform.phone = self.request.POST.get('phone', '')
+            userform.last_name = self.request.POST.get('last_name', '')
+            userform.address = self.request.POST.get('address', '')
             userform.save()
             email_address = get_object_or_404(EmailAddress, email=self.request.POST.get('email', ''))
             email_address.primary = True

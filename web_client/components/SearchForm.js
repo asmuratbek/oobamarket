@@ -44,27 +44,30 @@ var SearchForm = createClass({
                         </select>
                     </div>
 
-                    <div className="form-group input">
-                        <label><span>Цена</span> от</label>
-                        <input type="number" className="form-control" placeholder="2000 сом" value={this.props.priceFrom} onChange={this.handlePriceFromChange} />
+                    <div className="form-group input price">
+                        <input type="number" className="form-control" placeholder="от 2000 сом" value={this.props.priceFrom} onChange={this.handlePriceFromChange} />
                     </div>
 
-                    <div className="form-group input end">
-                        <label>до</label>
-                        <input type="number" className="form-control" placeholder="4000 сом" value={this.props.priceTo} onChange={this.handlePriceToChange} />
+                    <div className="form-group input price">
+                        <input type="number" className="form-control" placeholder="до 4000 сом" value={this.props.priceTo} onChange={this.handlePriceToChange} />
                     </div>
 
-                     <div className="form-group select">
-                        <select className="form-control" value={this.props.deliveryType} onChange={this.handleDeliveryType}>
-                            <option value="all">Доставка (все виды)</option>
-                            <option value="free">Бесплатная</option>
-                            <option value="paid">Платная</option>
-                            <option value="self">Самовывоз</option>
-                        </select>
+                     <div className="form-group search-input">
+                        {/*<select className="form-control" value={this.props.deliveryType} onChange={this.handleDeliveryType}>*/}
+                            {/*<option value="all">Доставка (все виды)</option>*/}
+                            {/*<option value="free">Бесплатная</option>*/}
+                            {/*<option value="paid">Платная</option>*/}
+                            {/*<option value="self">Самовывоз</option>*/}
+                        {/*</select>*/}
+                         <input type="text" className="form-control" placeholder="Поиск товара"/>
+                         <button type="submit">
+                            <span className="glyphicon glyphicon-search"></span>
+                        </button>
                     </div>
 
                 </form>
             </div>
+
     )
   }
 });
