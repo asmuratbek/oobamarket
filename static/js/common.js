@@ -1,13 +1,14 @@
+
 // $(window).load(function () {
 //     $(".search-index").addClass('animated fade')
 // });
 
 
 $(document).ready(function () {
-    $('.dropdown-toggle.custom').on('show.bs.dropdown-menu', function () {
+    // $('.dropdown-toggle.custom').on('show.bs.dropdown-menu', function () {
 
 
-    });
+    // });
 
 
     // $('body').on('mousemove',function () {

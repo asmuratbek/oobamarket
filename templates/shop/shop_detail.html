@@ -153,6 +153,7 @@
     <section class="shop-category">
         <div class="container">
             <ul class="category-tab">
+                {% show_order_history_button shop request.user  %}
                 {% url 'shops:detail' slug=shop.slug as shop_detail %}
                 {% url 'shops:about_us' slug=shop.slug as about_us %}
                 {% url 'shops:sale' slug=shop.slug as sale %}

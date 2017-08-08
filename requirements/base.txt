@@ -74,4 +74,5 @@ xlrd==1.0.0
 
 # Your custom requirements go here
 django-rest-multiple-models==1.8.2
+django-rest-auth==0.9.1
 

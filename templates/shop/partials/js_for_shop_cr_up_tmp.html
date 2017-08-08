@@ -115,16 +115,16 @@
 
 
     Switch();
-    function Switch () {
+    function Switch() {
         $('.switcher').on('change', function () {
-           let that = $(this);
-           let  toggle = $('.toggle-days');
-           let parent = that.closest(toggle);
-           let weekDays = parent.find('.weekdays');
-            if(that.attr('data-visible') === 'true'){
+            let that = $(this);
+            let toggle = $('.toggle-days');
+            let parent = that.closest(toggle);
+            let weekDays = parent.find('.weekdays');
+            if (that.attr('data-visible') === 'true') {
                 $(weekDays).fadeOut('slow');
                 that.attr('data-visible', 'false');
-            }else {
+            } else {
                 $(weekDays).fadeIn('slow');
                 that.attr('data-visible', 'true');
             }
@@ -157,7 +157,17 @@
 </script>
 <script>
     let map = null;
-    let markers = [];
+    let markers = [
+
+        {% for marker in shop.contacts_set.all %}
+            {% if marker.longitude and marker.latitude %}
+                {
+                    'id': {{ forloop.counter }},
+                    'data': {lng: {{ marker.longitude }}, lat: {{ marker.latitude }}}
+                }{% if forloop.counter < shop.contacts_set.count %},{% endif %}
+            {% endif %}
+        {% endfor %}
+    ];
     let mapCenter = {lat: 42.864272, lng: 74.579775};
     let workingIndex = -1;
 
@@ -171,6 +181,23 @@
         map.addListener('click', function (event) {
             addMarker(event.latLng);
         });
+
+        if (markers.length > 0) {
+            for (let k = 0; k < markers.length; ++k) {
+                let _marker = new google.maps.Marker({
+                    position: markers[k]['data'],
+                    map: map
+                });
+                markers[k]['data'] = _marker;
+                center = _marker.position;
+
+
+            }
+            marker.addListener('click', function () {
+                removeMarker(marker);
+            });
+        }
+
 
         // Adds a marker at the center of the map.
     }
