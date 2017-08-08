@@ -56,9 +56,14 @@ class Command(BaseCommand):
                 img_i = 0
                 for img in imgs_list:
                     img_i += 1
-                    download_imgs = urllib.request.urlretrieve(img, settings.MEDIA_ROOT + "/products/image/" +
-                                                                str(slug) + "-{}.jpg".format(img_i))
-                    product_images = ProductImage.objects.create(product=product_create, image="products/image/" + str(slug) +
-                                                                                               "-{}.jpg".format(img_i))
+                    try:
+                        download_imgs = urllib.request.urlretrieve(img, settings.MEDIA_ROOT + "/products/image/" +
+                                                                    str(slug) + "-{}.jpg".format(img_i))
+                        product_images = ProductImage.objects.create(product=product_create, image="products/image/" + str(slug) +
+                                                                                                   "-{}.jpg".format(img_i))
+                    except ValueError:
+                        continue
+                    except urllib.request.URLError:
+                        continue
                 self.stdout.write(self.style.SUCCESS("{} создан.".format(title)))
         return self.stdout.write(self.style.SUCCESS("Done!"))
