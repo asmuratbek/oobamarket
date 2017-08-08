@@ -934,7 +934,14 @@ header
       img
         height: 300px
         object-fit: cover
-        width: 100%
+        position: absolute
+        top: -9999px
+        bottom: -9999px
+        right: -9999px
+        left: -9999px
+        margin: auto
+        display: block
+
     .title
       width: 85%
       margin: 10px auto
@@ -1764,7 +1771,7 @@ header
         display: block
         max-width: 90%
         object-fit: scale-down
-        height: 100%
+        max-height: 100%
     h2
       text-align: center
       font-size: 18px
@@ -1849,15 +1856,15 @@ header
         img
           width: 100%
           object-fit: cover
-          height: 330px
-          //position: absolute
-          //top: -9999px
-          //bottom: -9999px
-          //right: -9999px
-          //left: -9999px
-          //margin: auto
-          //display: block
-          //max-width: 100%
+          min-height: 100%
+          position: absolute
+          top: -9999px
+          bottom: -9999px
+          right: -9999px
+          left: -9999px
+          margin: auto
+          display: block
+          max-width: 100%
       .owl-nav
         .owl-prev
           position: absolute
@@ -2530,8 +2537,7 @@ ul.category-tab
           display: block
           max-width: 100% !important
           object-fit: cover
-          height: 100%
-          width: 100%
+          min-height: 100%
 
       .description
         padding: 20px 15px 20px 20px
