@@ -6,6 +6,7 @@ import SearchForm from './components/SearchForm';
 import CategoryList from './components/CategoryList';
 import _ from 'lodash';
 import Pagination from 'react-js-pagination';
+import Loader from 'react-loader';
 
 
 
@@ -24,6 +25,7 @@ var MainInterface = createClass({
             activePage: 1,
             shops: [],
             categories: [],
+            loaded: false,
             activeCategories: [],
             categorySlug: location.href.split("/")[location.href.split("/").length - 2]
         }
@@ -66,6 +68,7 @@ var MainInterface = createClass({
                         activePage: 1,
                         pagesCount: pagesCount,
                         baseUrl: `/api/v1/globalcategory/` + this.state.categorySlug + '/',
+                        loaded: true
                     });
               }.bind(this),
               error: function (response, error) {
@@ -76,6 +79,9 @@ var MainInterface = createClass({
     },
 
     handlePageChange: function(pageNumber) {
+        this.setState({
+           loaded: false
+        });
         $.ajax({
             type: "GET",
               url: this.state.baseUrl + '?page=' + pageNumber,
@@ -83,7 +89,8 @@ var MainInterface = createClass({
                     var products = data.results.map(obj => obj);
                     this.setState({
                         products: products,
-                        activePage: pageNumber
+                        activePage: pageNumber,
+                        loaded: true
                     });
               }.bind(this),
               error: function (response, error) {
@@ -317,8 +324,10 @@ var MainInterface = createClass({
                     onChangePriceTo={ this.changePriceTo }
                 />
                 <div className="item-filter">
+                    <Loader loaded={this.state.loaded}>
                     {filteredProducts}
                     <div className="clearfix"></div>
+                    </Loader>
                 </div>
 
                 {/*<div className="catalog-filter">*/}
