@@ -64,6 +64,9 @@ THIRD_PARTY_APPS = [
     'allauth.socialaccount.providers.facebook',
     'allauth.socialaccount.providers.google',
     'rest_framework',
+    'rest_framework.authtoken',
+    'rest_auth',
+    'rest_auth.registration',
     'widget_tweaks',
     'ckeditor',
     'ckeditor_uploader',
@@ -74,6 +77,7 @@ THIRD_PARTY_APPS = [
 LOCAL_APPS = [
     # custom users app
     'apps.users.apps.UsersConfig',
+    'apps.api.v1',
     # Your stuff: custom apps go here
     'apps.category',
     'apps.properties',

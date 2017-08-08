@@ -31,7 +31,7 @@ var MainInterface = createClass({
         }
     },
 
-    componentWillMount() {
+    componentDidMount() {
         var params = location.search.substr(1).split("&")
         params.forEach(function (i) {
             if (i.split("=")[0] == "q") {
@@ -43,7 +43,7 @@ var MainInterface = createClass({
 
         $.ajax({
             type: "GET",
-              url: `/api/shops/` + this.state.shopSlug,
+              url: `/api/v1/shop/` + this.state.shopSlug,
               success: function (data) {
                     var products = data.results.map(obj => obj);
                     var pagesCount = Math.ceil(data.count / 21);
@@ -54,7 +54,7 @@ var MainInterface = createClass({
                         productsCount: data.count,
                         activePage: 1,
                         pagesCount: pagesCount,
-                        baseUrl: `/api/shops/` + this.state.shopSlug + '/'
+                        baseUrl: `/api/v1/shop/` + this.state.shopSlug + '/'
                     });
               }.bind(this),
               error: function (response, error) {
@@ -65,7 +65,7 @@ var MainInterface = createClass({
 
         $.ajax({
             type: "GET",
-              url: `/api/shops/` + this.state.shopSlug + '/shop/',
+              url: `/api/v1/shop/` + this.state.shopSlug + '/shop/',
               success: function (data) {
                    var owner = data[0].shop[0].is_owner;
                     var categories = data[1].category.map(obj =>obj);
