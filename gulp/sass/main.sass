@@ -124,7 +124,6 @@ h1, h2, h3, h4, h5, h6, p, span, b, i, ul, li, button, input, select, a
 //  background: url(../img/social.png) -31px 0 no-repeat
 //  width: 28px
 //  height: 25px
-//  display: inline-block
 //  &:hover
 //    opacity: 0.5
 //.tweet
@@ -603,7 +602,8 @@ header
           display: block
           max-width: 100%
           object-fit: cover
-          height: 100%
+          height: 35vh
+          max-height: 100%
       .title
         margin-top: 20px
         height: 45px
@@ -932,9 +932,17 @@ header
       position: relative
       margin: 0 auto
       img
-        height: 300px
+        height: 35vh
+        max-height: 100%
         object-fit: cover
         width: 100%
+        position: absolute
+        top: -9999px
+        bottom: -9999px
+        right: -9999px
+        left: -9999px
+        margin: auto
+        display: block
     .title
       width: 85%
       margin: 10px auto
@@ -1762,7 +1770,8 @@ header
         display: block
         max-width: 90%
         object-fit: scale-down
-        height: 100%
+        height: 35vh
+        max-height: 100%
     h2
       text-align: center
       font-size: 18px
@@ -1847,16 +1856,16 @@ header
         img
           width: 100%
           object-fit: cover
-          width: 100%
-          height: 330px
-          //position: absolute
-          //top: -9999px
-          //bottom: -9999px
-          //right: -9999px
-          //left: -9999px
-          //margin: auto
-          //display: block
-          //max-width: 100%
+          height: 35vh
+          max-height: 100%
+          position: absolute
+          top: -9999px
+          bottom: -9999px
+          right: -9999px
+          left: -9999px
+          margin: auto
+          display: block
+          max-width: 100%
       .owl-nav
         .owl-prev
           position: absolute
@@ -2531,7 +2540,8 @@ ul.category-tab
           display: block
           max-width: 100% !important
           object-fit: cover
-          height: 100%
+          height: 35vh
+          max-height: 100%
           width: 100%
 
       .description
@@ -2758,8 +2768,16 @@ ul.category-tab
 
             img
               object-fit: cover
-              height: 225px
+              max-height: 100%
+              height: 35vh
               width: 100%
+              position: absolute
+              top: -9999px
+              bottom: -9999px
+              right: -9999px
+              left: -9999px
+              margin: auto
+              display: block
           .title
             width: 85%
             margin: 10px auto
