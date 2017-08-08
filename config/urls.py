@@ -15,6 +15,8 @@ from apps.category.views import mail_confirm_view
 
 urlpatterns = [
     url(r'^$', IndexView.as_view(), name='home'),
+    url(r'^rest-auth/', include('rest_auth.urls')),
+    url(r'^rest-auth/registration/', include('rest_auth.registration.urls')),
     url(r'favorite/add/', FavoriteCreateView.as_view(), name="create_favorite"),
     url(r'^shops/', include('apps.shop.urls', namespace='shops')),
     url(r'^order/', include('apps.order.urls', namespace='order')),
@@ -24,6 +26,7 @@ urlpatterns = [
     url(r'^agreement/$', agreement, name='agreement'),
     url(r'^api/product/', include('apps.product.api.urls', namespace="product_api")),
     url(r'^api/shops/', include('apps.shop.api.urls', namespace="shop_api")),
+    url(r'^api/users/', include('apps.users.api.urls', namespace="users_api")),
     url(r'^api/category/', include('apps.category.api.urls', namespace="category_api")),
     url(r'^api/globalcategory/', include('apps.global_category.api.urls', namespace="globalcategory_api")),
     url(r'^search_predict_html', search_predict_html, name='search_predict_html'),
