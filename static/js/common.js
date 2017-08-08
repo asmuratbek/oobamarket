@@ -230,6 +230,7 @@ $(document).ready(function () {
                     console.log(data);
                     if (data.count > 0) {
                         categoryList.removeAttr('disabled');
+                        subcategoryList.html("").attr('disabled', "");
                         categoryList.html('<option>Выберите категорию</option>');
                         $.each(data.category_list, function (key, value) {
                             categoryList.append('<option value=' + key + '>' + value + '</option>')
@@ -238,6 +239,7 @@ $(document).ready(function () {
 
                     else {
                         categoryList.html("").attr('disabled', "");
+                        subcategoryList.html("").attr('disabled', "");
                     }
                 },
                 error: function (response, error) {

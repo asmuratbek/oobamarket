@@ -24,12 +24,11 @@
                             </div>
 
                             <div class="form-group select col-md-6">
-                                {{ form.section }}
+                                {% render_field form.section|attr:"id:global_category" %}
                             </div>
 
                             <div class="form-group select col-md-6">
-                                {{ form.parent_categories }}
-
+                                {% render_field form.parent_categories|attr:"id:category_list" %}
                             </div>
 
                             <div class="form-group select col-md-6">
