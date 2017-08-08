@@ -32,7 +32,8 @@ from apps.shop.models import Shop
 from .pagination import (
     CategoryLimitPagination,
     ProductLimitPagination,
-    ShopLimitPagination
+    ShopLimitPagination,
+    ShopProductsLimitPagination
 )
 
 from .permissions import IsOwnerOrReadOnly
@@ -160,11 +161,12 @@ class ProductCreateApiView(CreateAPIView):
     # def perform_create(self, serializer):
     #     serializer.save(author=self.request.user)
 
+
 class ShopListApiView(ListAPIView):
     serializer_class = ShopSerializer
     filter_backends = [SearchFilter, OrderingFilter]
     search_fields = ['title', 'description']
-    # pagination_class = ShopLimitPagination#PageNumberPagination
+    pagination_class = ShopProductsLimitPagination
     permission_classes = [AllowAny]
 
     def get_queryset(self):
