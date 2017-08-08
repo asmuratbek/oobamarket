@@ -1,10 +1,35 @@
-from django.utils.safestring import mark_safe
 from rest_framework.serializers import (
     ModelSerializer,
     HyperlinkedIdentityField,
-    SerializerMethodField
+    SerializerMethodField,
 )
 from slugify import slugify
+from apps.product.models import Category
+from apps.global_category.models import GlobalCategory
+
+
+class CategorySerializer(ModelSerializer):
+
+    class Meta:
+        model = Category
+        fields = (
+            'id',
+            'title',
+            'descendants',
+            'created_at',
+            'updated_at',
+            )
+
+
+class GlobalCategorySerializer(ModelSerializer):
+
+    class Meta:
+        model = GlobalCategory
+        fields = (
+            'id',
+            'title',
+            'slug',
+            )
 
 from apps.cart.models import Cart
 from apps.product.models import Product
@@ -12,17 +37,17 @@ from apps.product.models import Product
 
 class ProductSerializer(ModelSerializer):
     detail_url = HyperlinkedIdentityField(
-        view_name='product_api:detail',
+        view_name='api:product_detail',
         lookup_field='slug'
     )
 
     update_url = HyperlinkedIdentityField(
-        view_name='product_api:update',
+        view_name='api:product_update',
         lookup_field="slug"
     )
 
     delete_url = HyperlinkedIdentityField(
-        view_name='product_api:delete',
+        view_name='api:product_delete',
         lookup_field="slug"
     )
     shop = SerializerMethodField()
@@ -145,6 +170,84 @@ class ProductCreateSerializer(ModelSerializer):
             'delivery_cost',
             'availability',
             'published',
+        )
+
+    slug = SerializerMethodField()
+
+    def get_slug(self, obj):
+        return slugify(obj.title)
+
+
+from apps.product.models import Shop
+
+
+class ShopSerializer(ModelSerializer):
+    detail_url = HyperlinkedIdentityField(
+        view_name='api:shop_detail',
+        lookup_field='slug'
+    )
+
+    update_url = HyperlinkedIdentityField(
+        view_name='api:shop_update',
+        lookup_field="slug"
+    )
+
+    delete_url = HyperlinkedIdentityField(
+        view_name='api:shop_delete',
+        lookup_field="slug"
+    )
+
+    # used_categories = SerializerMethodField()
+    is_owner = SerializerMethodField()
+
+    class Meta:
+        model = Shop
+        fields = (
+            'detail_url',
+            'update_url',
+            'delete_url',
+            'id',
+            'title',
+            'user',
+            'email',
+            'is_owner',
+            'description',
+            'short_description',
+            'created_at',
+            'updated_at',
+            'logo',
+            'get_absolute_url',
+            # 'used_categories',
+
+        )
+
+    # def get_used_categories(self, obj):
+    #     return obj.get_used_categories()
+
+    def get_is_owner(self, obj):
+        user = None
+        request = self.context.get("request")
+        if request and hasattr(request, "user"):
+            user = request.user
+            return obj.is_owner(user) or user.is_staff
+        return False
+
+
+class ShopCreateSerializer(ModelSerializer):
+
+    class Meta:
+        model = Shop
+        fields = (
+            'id',
+            'title',
+            'slug',
+            'user',
+            'email',
+            'description',
+            'short_description',
+            'created_at',
+            'updated_at',
+            'logo'
         )
 
     slug = SerializerMethodField()

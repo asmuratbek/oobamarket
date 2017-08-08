@@ -56,7 +56,7 @@ var MainInterface = createClass({
 
         $.ajax({
             type: "GET",
-              url: `/api/category/` + this.state.categorySlug,
+              url: `/api/v1/category/` + this.state.categorySlug,
               success: function (data) {
                     var products = data.results.map(obj => obj);
                     var pagesCount = Math.ceil(data.count / 20);
@@ -65,7 +65,7 @@ var MainInterface = createClass({
                         productsCount: data.count,
                         activePage: 1,
                         pagesCount: pagesCount,
-                        baseUrl: `/api/category/` + this.state.categorySlug + '/',
+                        baseUrl: `/api/v1/category/` + this.state.categorySlug + '/',
                     });
               }.bind(this),
               error: function (response, error) {

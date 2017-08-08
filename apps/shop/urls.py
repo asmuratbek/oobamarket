@@ -7,7 +7,6 @@ from apps.shop.views import *
 # from apps.shop.views import shop_add
 
 urlpatterns = [
-    url(r'^api/', include('apps.shop.api.urls')),
     url(r'^delete-banners/$', delete_banners, name='delete-banners'),
     url(r'^remove-logo/$', remove_logo, name='remove_logo'),
     url(r'^create/$', ShopCreateView.as_view(), name='create'),

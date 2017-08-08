@@ -77,6 +77,7 @@ THIRD_PARTY_APPS = [
 LOCAL_APPS = [
     # custom users app
     'apps.users.apps.UsersConfig',
+    'apps.api.v1',
     # Your stuff: custom apps go here
     'apps.category',
     'apps.properties',
