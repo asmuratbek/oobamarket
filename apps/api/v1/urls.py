@@ -19,6 +19,8 @@ from .views import (
     FacebookLogin,
     GoogleLogin
 )
+from rest_framework.documentation import include_docs_urls
+
 
 urlpatterns = [
     # url(r'^shop/(?P<slug>[-_\w]+)/$', GetUsedCategoriesFromShop.as_view(), name="shops_used_categories"),
