@@ -1,6 +1,7 @@
 from django.db.models import Q
 from django.shortcuts import get_object_or_404
 from drf_multiple_model.views import MultipleModelAPIView
+from rest_framework import filters
 from rest_framework.generics import (
     ListAPIView,
     RetrieveAPIView,
@@ -75,6 +76,7 @@ class CategoryDetailApiView(MultipleModelAPIView):
     # ]
     pagination_class = CategoryLimitPagination
     flat = True
+    filter_backends = (filters.OrderingFilter,)
 
     def get_queryList(self):
         slug = self.kwargs.get('slug')
@@ -88,6 +90,7 @@ class CategoryDetailApiView(MultipleModelAPIView):
 class GlobalCategoryListApiView(ListAPIView):
     serializer_class = GlobalCategorySerializer
     queryset = GlobalCategory.objects.all()
+    filter_backends = (filters.OrderingFilter,)
 
 
 class GlobalCategoryDetailApiView(MultipleModelAPIView):
@@ -97,6 +100,8 @@ class GlobalCategoryDetailApiView(MultipleModelAPIView):
     # ]
     pagination_class = CategoryLimitPagination
     flat = True
+    filter_backends = (filters.OrderingFilter,)
+    serializer_class = ProductSerializer
 
     def get_queryList(self):
         slug = self.kwargs.get('slug')
@@ -197,6 +202,7 @@ class ShopDetailApiView(MultipleModelAPIView):
     # ]
     pagination_class = ShopLimitPagination
     flat = True
+    filter_backends = (filters.OrderingFilter,)
 
     def get_queryList(self):
         slug = self.kwargs.get('slug')

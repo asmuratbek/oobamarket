@@ -6,21 +6,8 @@ var SearchForm = createClass({
   displayName: 'SearchForm',
 
   handleSort: function(e) {
-    if (e.target.value == 'priceDesc') {
-      this.props.onReOrder(e.target.value, 'desc');
-    }
-    else if (e.target.value == 'newFirst') {
-      this.props.onReOrder(e.target.value, 'desc');
-    }
-    else {
-      this.props.onReOrder(e.target.value, 'asc');
-    }
-
+      this.props.onReOrder(e.target.value);
   }, //handleSort
-
-  handleDeliveryType: function(e) {
-    this.props.onChangeDeliveryType(e.target.value)
-  },
 
   handlePriceFromChange: function(e) {
     this.props.onChangePriceFrom(e.target.value)
@@ -38,9 +25,9 @@ var SearchForm = createClass({
                     <div className="form-group select">
                         <select className="form-control" value={this.props.orderBy} onChange={this.handleSort}>
                             <option value="title">По названию</option>
-                            <option value="priceAsc">Цена по возрастанию</option>
-                            <option value="priceDesc">Цена по убыванию </option>
-                            <option value="newFirst">Сначала новые </option>
+                            <option value="price">Цена по возрастанию</option>
+                            <option value="-price">Цена по убыванию </option>
+                            <option value="-created_at">Сначала новые </option>
                         </select>
                     </div>
 

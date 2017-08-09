@@ -145,7 +145,7 @@ class ProductCreateView(LoginRequiredMixin, AddProductMixin, CreateView):
         return initial
 
     def form_invalid(self, form):
-        print(form.errors)
+        print('heey')
         form.fields.get('title').widget.attrs['disabled'] = False
         form.fields.get('parent_categories').widget.attrs['disabled'] = False
         form.fields.get('category').widget.attrs['disabled'] = False
@@ -182,7 +182,7 @@ class ProductCreateView(LoginRequiredMixin, AddProductMixin, CreateView):
                     product_image.product = product
                     product_image.save()
                 except ObjectDoesNotExist:
-                    print('error')
+                    pass
         form.save()
         if form.cleaned_data['removed_images']:
             for item in form.cleaned_data['removed_images'].split(','):
@@ -305,8 +305,6 @@ def search(request):
     product_form = ProductSearchForm(request.GET)
     shop_form = ShopSearchForm(request.GET)
     products = product_form.search()
-    for product in products:
-        print(product.favorite)
     shops = shop_form.search()
     template = 'pages/search_results.html'
     return render(request, template, {

@@ -15,12 +15,10 @@ var MainInterface = createClass({
 
     getInitialState: function () {
         return {
-            orderBy: 'title',
-            orderDir: 'asc',
+            orderBy: '-created_at',
             priceFrom: '',
             priceTo: '',
             queryText: '',
-            deliveryType: 'all',
             products: [],
             activePage: 1,
             shops: [],
@@ -40,25 +38,10 @@ var MainInterface = createClass({
                 })
             }
         }.bind(this));
-        // axios.get(`/product/api/`)
-        //     .then(res => {
-        //         const products = res.data.map(obj => obj);
-        //         this.setState({
-        //             products: products,
-        //             categories: _.uniqBy(products.map(obj => obj.get_category_title), obj => obj)
-        //         });
-        //     });
-        // axios.get(`/api/globalcategory/` + this.state.categorySlug)
-        //     .then(res => {
-        //         var products = res.data[0].product.map(obj => obj);
-        //         this.setState({
-        //             products: products,
-        //         });
-        //     });
 
         $.ajax({
             type: "GET",
-              url: `/api/v1/globalcategory/` + this.state.categorySlug,
+              url: `/api/v1/globalcategory/` + this.state.categorySlug + '/?ordering=' + this.state.orderBy,
               success: function (data) {
                     var products = data.results.map(obj => obj);
                     var pagesCount = Math.ceil(data.count / 20);
@@ -84,13 +67,13 @@ var MainInterface = createClass({
         });
         $.ajax({
             type: "GET",
-              url: this.state.baseUrl + '?page=' + pageNumber,
+              url: this.state.baseUrl + '?ordering=' + this.state.orderBy + '&page=' + pageNumber,
               success: function (data) {
                     var products = data.results.map(obj => obj);
                     this.setState({
                         products: products,
                         activePage: pageNumber,
-                        loaded: true
+                        loaded: true,
                     });
               }.bind(this),
               error: function (response, error) {
@@ -118,80 +101,32 @@ var MainInterface = createClass({
         }); //setState
     },
 
-    // goToNextPage: function () {
-    //   $.ajax({
-    //         type: "GET",
-    //           url: this.state.next,
-    //           success: function (data) {
-    //                 var products = data.results.map(obj => obj);
-    //                 this.setState({
-    //                     products: products,
-    //                     next: data.next,
-    //                     previous: data.previous,
-    //                     productsCount: data.count,
-    //                     activePage: this.state.next.split('?')[1].split('=')[1]
-    //                 });
-    //           }.bind(this),
-    //           error: function (response, error) {
-    //               console.log(response);
-    //               console.log(error);
-    //           }
-    //     })
-    // },
-    //
-    // goToPreviousPage: function() {
-    //     $.ajax({
-    //         type: "GET",
-    //           url: this.state.previous,
-    //           success: function (data) {
-    //                 var products = data.results.map(obj => obj);
-    //                 this.setState({
-    //                     products: products,
-    //                     next: data.next,
-    //                     previous: data.previous,
-    //                     productsCount: data.count,
-    //                     currentPage: this.state.previous.split('?').length > 1 ? this.state.previous.split('?')[1].split('=')[1] : "1"
-    //                 });
-    //           }.bind(this),
-    //           error: function (response, error) {
-    //               console.log(response);
-    //               console.log(error);
-    //           }
-    //     })
-    // },
-    //
-    // goTo: function(page) {
-    //     $.ajax({
-    //         type: "GET",
-    //           url: this.state.baseUrl + '?page=' + page,
-    //           success: function (data) {
-    //                 var products = data.results.map(obj => obj);
-    //                 this.setState({
-    //                     products: products,
-    //                     next: data.next,
-    //                     previous: data.previous,
-    //                     productsCount: data.count,
-    //                     currentPage: page
-    //                 });
-    //           }.bind(this),
-    //           error: function (response, error) {
-    //               console.log(response);
-    //               console.log(error);
-    //           }
-    //     })
-    // },
 
-    reOrder: function (orderBy, orderDir) {
+    reOrder: function (orderBy) {
         this.setState({
-            orderBy: orderBy,
-            orderDir: orderDir
-        }); //setState
-    }, //reOrder
-
-    changeDeliveryType: function (deliveryType) {
-        this.setState({
-            deliveryType: deliveryType
+           loaded: false
         });
+        $.ajax({
+            type: "GET",
+              url: this.state.baseUrl + '?ordering=' + orderBy + '&page=' + this.state.activePage,
+              success: function (data) {
+                    var products = data.results.map(obj => obj);
+                    this.setState({
+                        products: products,
+                        loaded: true,
+                        orderBy: orderBy
+                    });
+              }.bind(this),
+              error: function (response, error) {
+                  console.log(response);
+                  console.log(error);
+              }
+        })
+
+        // this.setState({
+        //     orderBy: orderBy,
+        //     orderDir: orderDir
+        // }); //setState
     },
 
     searchApts(q) {
@@ -240,9 +175,7 @@ var MainInterface = createClass({
 
         allProducts.forEach(function (item) {
             if (item.title.toLowerCase().indexOf(queryText) != -1) {
-                if (item.delivery_type == deliveryType || deliveryType == 'all') {
                     filteredProducts.push(item);
-                }
             }
         });
 
@@ -288,24 +221,6 @@ var MainInterface = createClass({
         });
 
 
-        var productsCount = filteredProducts.length
-
-        filteredProducts = _.orderBy(filteredProducts, function (item) {
-            if (orderBy == 'title') {
-                return item.props.product.title.toLowerCase();
-            }
-            else if (orderBy == 'priceAsc') {
-                return item.props.product.get_price_function;
-            }
-            else if (orderBy == 'priceDesc') {
-                return item.props.product.get_price_function;
-            }
-            else if (orderBy == 'newFirst') {
-                return item.props.product.created_at;
-            }
-        }, orderDir);//orderBy
-
-
         return (
             <div>
 
@@ -316,8 +231,6 @@ var MainInterface = createClass({
                     orderBy={ this.state.orderBy }
                     onReOrder={ this.reOrder }
                     onSearch={ this.searchApts }
-                    deliveryType={ this.state.deliveryType }
-                    onChangeDeliveryType={ this.changeDeliveryType }
                     priceFrom={ this.state.priceFrom }
                     priceTo={ this.state.priceTo }
                     onChangePriceFrom={ this.changePriceFrom }
@@ -329,112 +242,6 @@ var MainInterface = createClass({
                     <div className="clearfix"></div>
                     </Loader>
                 </div>
-
-                {/*<div className="catalog-filter">*/}
-                    {/*<h4>Параметры</h4>*/}
-                    {/*<div className="filter-clone">*/}
-                        {/*<a className="btn-toggle-setting">*/}
-                            {/*Производитель*/}
-                        {/*</a>*/}
-                        {/*<div className="toggle-setting" id="toggle-setting-1">*/}
-                            {/*<div className="form-group checkbox">*/}
-
-                                {/*<div className="cover">*/}
-                                    {/*<div className="form-custom-checkbox">*/}
-                                        {/*<label className="name_setting" htmlFor="slug1">Название настроек</label>*/}
-                                        {/*<input type="checkbox" value="" name="" id="slug1"></input>*/}
-                                        {/*<div className="indicator"></div>*/}
-                                    {/*</div>*/}
-                                {/*</div>*/}
-                                {/*<div className="cover">*/}
-                                    {/*<div className="form-custom-checkbox">*/}
-                                        {/*<label className="name_setting" htmlFor="slug2">Название настроек</label>*/}
-                                        {/*<input type="checkbox" value="" name="" id="slug2"></input>*/}
-                                        {/*<div className="indicator"></div>*/}
-                                    {/*</div>*/}
-                                {/*</div>*/}
-                                {/*<div className="cover">*/}
-                                    {/*<div className="form-custom-checkbox">*/}
-                                        {/*<label className="name_setting" htmlFor="slug3">Название настроек</label>*/}
-                                        {/*<input type="checkbox" value="" name="" id="slug3"></input>*/}
-                                        {/*<div className="indicator"></div>*/}
-                                    {/*</div>*/}
-                                {/*</div>*/}
-                            {/*</div>*/}
-                        {/*</div>*/}
-                    {/*</div>*/}
-
-                    {/*<div className="filter-clone" id="toggle-setting-2">*/}
-                        {/*<a className="btn-toggle-setting">*/}
-                            {/*Производитель*/}
-                        {/*</a>*/}
-                        {/*<div className="toggle-setting">*/}
-                            {/*<div className="form-group checkbox">*/}
-
-                                {/*<div className="cover">*/}
-                                    {/*<div className="form-custom-checkbox">*/}
-                                        {/*<label className="name_setting" htmlFor="slug1">Название настроек</label>*/}
-                                        {/*<input type="checkbox" value="" name="" id="slug1"></input>*/}
-                                        {/*<div className="indicator"></div>*/}
-                                    {/*</div>*/}
-                                {/*</div>*/}
-                                {/*<div className="cover">*/}
-                                    {/*<div className="form-custom-checkbox">*/}
-                                        {/*<label className="name_setting" htmlFor="slug2">Название настроек</label>*/}
-                                        {/*<input type="checkbox" value="" name="" id="slug2"></input>*/}
-                                        {/*<div className="indicator"></div>*/}
-                                    {/*</div>*/}
-                                {/*</div>*/}
-                                {/*<div className="cover">*/}
-                                    {/*<div className="form-custom-checkbox">*/}
-                                        {/*<label className="name_setting" htmlFor="slug3">Название настроек</label>*/}
-                                        {/*<input type="checkbox" value="" name="" id="slug3"></input>*/}
-                                        {/*<div className="indicator"></div>*/}
-                                    {/*</div>*/}
-                                {/*</div>*/}
-                            {/*</div>*/}
-                        {/*</div>*/}
-                    {/*</div>*/}
-
-
-                    {/*<div className="filter-clone">*/}
-                        {/*<div className="form-group">*/}
-                            {/*<select className="select-beast " placeholder="Название настроек">*/}
-                                {/*<option value="">Название настроек</option>*/}
-                                {/*<option value="4">Thomas Edison</option>*/}
-                                {/*<option value="1">Nikola</option>*/}
-                                {/*<option value="3">Nikola Tesla</option>*/}
-                                {/*<option value="5">Arnold Schwarzenegger</option>*/}
-                            {/*</select>*/}
-                        {/*</div>*/}
-                    {/*</div>*/}
-
-                    {/*<div className="filter-clone">*/}
-                        {/*<div className="form-group">*/}
-                            {/*<select className="select-beast " placeholder="Название настроек">*/}
-                                {/*<option value="">Название настроек</option>*/}
-                                {/*<option value="4">Thomas Edison</option>*/}
-                                {/*<option value="1">Nikola</option>*/}
-                                {/*<option value="3">Nikola Tesla</option>*/}
-                                {/*<option value="5">Arnold Schwarzenegger</option>*/}
-                            {/*</select>*/}
-                        {/*</div>*/}
-                    {/*</div>*/}
-
-
-                {/*</div>*/}
-
-                {/*<Pagination*/}
-                    {/*goToPrevious={this.goToPreviousPage}*/}
-                    {/*goToNext={this.goToNextPage}*/}
-                    {/*goTo={this.goTo}*/}
-                    {/*count={this.state.productsCount}*/}
-                    {/*next={this.state.next}*/}
-                    {/*previous={this.state.previous}*/}
-                    {/*page={this.state.currentPage}*/}
-                    {/*pagesCount={this.state.pagesCount}*/}
-                    {/*baseUrl={this.state.baseUrl}*/}
-                {/*/>*/}
 
                 {this.state.pagesCount > 1 ?
                 <Pagination
