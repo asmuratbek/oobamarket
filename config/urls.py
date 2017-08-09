@@ -9,7 +9,7 @@ from rest_framework.documentation import include_docs_urls
 from apps.global_category.views import IndexView, landing
 from apps.product.views import FavoriteCreateView, product_reviews
 from apps.shop.views import agreement, shop_reviews
-from apps.product.views import search, search_predict_html
+from apps.product.views import search_predict_html
 from apps.utils.views import counter
 from apps.users.views import SubscribeListView
 from apps.category.views import mail_confirm_view
@@ -26,11 +26,9 @@ urlpatterns = [
     url(r'^about/$', TemplateView.as_view(template_name='pages/about.html'), name='about'),
     url(r'^agreement/$', agreement, name='agreement'),
     url(r'^search_predict_html', search_predict_html, name='search_predict_html'),
-    # url(r'^search/', include('haystack.urls')),
     url(r'^sub-list/$', SubscribeListView.as_view(), name='sub_list'),
     url(r'^counter/$', counter, name='counter'),
     url(r'^search_results', search_predict_html),
-    url(r'^search/', search, name='search'),
     url(r'^ckeditor/', include('ckeditor_uploader.urls')),
     url(r'^landing/', landing, name='landing'),
     url(r'^product_reviews/$', product_reviews, name='product_reviews'),

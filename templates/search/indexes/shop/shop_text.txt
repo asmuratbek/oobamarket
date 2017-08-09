@@ -1,4 +1,0 @@
-{{ object.title }}
-{{ object.get_products_count }}
-{{ object.get_logo }}
-{{ object.get_absolute_url }}

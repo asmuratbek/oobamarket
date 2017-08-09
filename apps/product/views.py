@@ -4,6 +4,7 @@ import random
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import ObjectDoesNotExist
+from django.db.models import Q
 from django.http import HttpResponseRedirect, HttpResponseBadRequest
 from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404, render_to_response
@@ -12,7 +13,7 @@ from django.views.generic import ListView, View, UpdateView, CreateView, DeleteV
 from slugify import slugify
 
 from apps.global_category.models import GlobalCategory
-from apps.product.forms import ProductForm, ProductSearchForm, ShopSearchForm, ProductUpdateForm, ProductImagesForm
+from apps.product.forms import ProductForm, ProductUpdateForm, ProductImagesForm
 from apps.properties.models import Values, Properties
 from apps.reviews.forms import ProductReviewsForm
 from apps.reviews.models import ProductReviews
@@ -289,27 +290,19 @@ def remove_uploaded_image(request):
 
 
 def search_predict_html(request):
-    product_form = ProductSearchForm(request.GET)
-    shop_form = ShopSearchForm(request.GET)
-    products = product_form.search()
-    shops = shop_form.search()
+    q = request.GET.get('q')
+    products = Product.objects.filter(
+        Q(title__icontains=str(q)) |
+        Q(short_description__icontains=str(q))
+    ).distinct()
+    shops = Shop.objects.filter(
+        Q(title__icontains=str(q))
+    ).distinct()
     template = 'search/home_page_search.html'
     return render(request, template, {
         'products': products,
         'shops': shops,
         'query': request.GET.get('q')
-    })
-
-
-def search(request):
-    product_form = ProductSearchForm(request.GET)
-    shop_form = ShopSearchForm(request.GET)
-    products = product_form.search()
-    shops = shop_form.search()
-    template = 'pages/search_results.html'
-    return render(request, template, {
-        'products': products,
-        'shops': shops
     })
 
 

@@ -1,6 +1,4 @@
 from django import forms
-from haystack.forms import SearchForm
-
 from apps.category.models import Category
 from apps.global_category.models import GlobalCategory
 from apps.shop.models import Shop
@@ -69,28 +67,6 @@ class ProductUpdateForm(forms.ModelForm):
             self.fields[field].widget.attrs.update({
                 'class': 'form-control'
             })
-
-
-class ProductSearchForm(SearchForm):
-    models = [Product]
-
-    def get_models(self):
-        return self.models
-
-    def search(self):
-        sqs = super(ProductSearchForm, self).search().models(*self.get_models())
-        return sqs
-
-
-class ShopSearchForm(SearchForm):
-    models = [Shop]
-
-    def get_models(self):
-        return self.models
-
-    def search(self):
-        sqs = super(ShopSearchForm, self).search().models(*self.get_models())
-        return sqs
 
 
 class ProductImagesForm(forms.ModelForm):
