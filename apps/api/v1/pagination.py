@@ -7,12 +7,19 @@ class CategoryLimitPagination(PageNumberPagination):
     max_page_size = 40
 
 
-class ProductLimitPagination(LimitOffsetPagination):
-    default_limit = 2
-    max_limit = 10
+class ProductLimitPagination(PageNumberPagination):
+    page_size = 20
+    page_size_query_param = 'page_size'
+    max_page_size = 40
 
 
 class ShopLimitPagination(PageNumberPagination):
     page_size = 21
+    page_size_query_param = 'page_size'
+    max_page_size = 42
+
+
+class ShopProductsLimitPagination(PageNumberPagination):
+    page_size = 10
     page_size_query_param = 'page_size'
     max_page_size = 42

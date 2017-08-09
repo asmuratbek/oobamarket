@@ -1,10 +1,15 @@
 {% extends 'base-1.html' %}
+{% load staticfiles %}
 
 {% block content %}
     <section class="goods-of-week">
             <div class="container">
-                <h1>Товары недели</h1>
-                {% include 'product/product_list.html' with object_list=object_list col=3 %}
+                <h1>Все товары</h1>
+                <div id="root"></div>
             </div>
         </section>
+{% endblock %}
+
+{% block js %}
+    <script src="{% static 'js/product_list.js' %}"></script>
 {% endblock %}

@@ -20,8 +20,8 @@ class IndexView(generic.TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(IndexView, self).get_context_data(**kwargs)
-        context['shops'] = Shop.objects.all()
-        context["weeks_best_products"] = Product.objects.all()[:8]
+        context['shops'] = Shop.objects.all()[:12]
+        context["weeks_best_products"] = Product.objects.all()[:12]
         return context
 
 

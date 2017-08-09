@@ -173,14 +173,11 @@
                 <tr>
                     <td class="content">
 {% blocktrans with site_name=current_site.name site_domain=current_site.domain %}
-                        <h2>Hello from {{ site_name }}!</h2>
+                        <h2>Добро пожаловать в {{ site_name }}!</h2>
 
-    <p>You're receiving this e-mail because user {{ user_display }} at {{ site_domain }} has given yours as an e-mail address to connect their account.</p>
-
-    <p>To confirm this is correct, go to {{ activate_url }}</p>
+    <p>Вы получили данное письмо потому, что пользователь {{ user_display }} в oobamarket.kg дал нам этот email для привязки к своему аккаунту</p>
 {% endblocktrans %}
-{% blocktrans with site_name=current_site.name site_domain=current_site.domain %}Thank you from {{ site_name }}!
-{{ site_domain }}{% endblocktrans %}
+{% blocktrans with site_name=current_site.name site_domain=current_site.domain %}Спасибо вам от {{ site_name }}!{% endblocktrans %}
 
 
 
@@ -188,7 +185,7 @@
                             <tr>
                                 <td align="center">
                                     <p>
-                                        <a href="http://oobamarket.kg/" class="button">Перейти на сайт</a>
+                                        <a href="{{ activate_url }}" class="button">Подтвердить</a>
                                     </p>
                                 </td>
                             </tr>
@@ -209,7 +206,7 @@
                 <tr>
                     <td class="content footer" align="center">
                         <p>Магазин <a href="http://oobamarket.kg/">oobamarket</a> Адрес Магазина</p>
-                        <p>Наша почта <a href="mailto:">hello@company.com</a></p>
+                        <p>Наша почта <a href="mailto:">salam@oobamarket.kg</a></p>
                     </td>
                 </tr>
             </table>

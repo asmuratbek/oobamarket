@@ -1,6 +1,7 @@
 from django.db.models import Q
 from django.shortcuts import get_object_or_404
 from drf_multiple_model.views import MultipleModelAPIView
+from rest_framework import filters
 from rest_framework.generics import (
     ListAPIView,
     RetrieveAPIView,
@@ -32,7 +33,8 @@ from apps.shop.models import Shop
 from .pagination import (
     CategoryLimitPagination,
     ProductLimitPagination,
-    ShopLimitPagination
+    ShopLimitPagination,
+    ShopProductsLimitPagination
 )
 
 from .permissions import IsOwnerOrReadOnly
@@ -74,6 +76,7 @@ class CategoryDetailApiView(MultipleModelAPIView):
     # ]
     pagination_class = CategoryLimitPagination
     flat = True
+    filter_backends = (filters.OrderingFilter,)
 
     def get_queryList(self):
         slug = self.kwargs.get('slug')
@@ -87,6 +90,7 @@ class CategoryDetailApiView(MultipleModelAPIView):
 class GlobalCategoryListApiView(ListAPIView):
     serializer_class = GlobalCategorySerializer
     queryset = GlobalCategory.objects.all()
+    filter_backends = (filters.OrderingFilter,)
 
 
 class GlobalCategoryDetailApiView(MultipleModelAPIView):
@@ -96,6 +100,8 @@ class GlobalCategoryDetailApiView(MultipleModelAPIView):
     # ]
     pagination_class = CategoryLimitPagination
     flat = True
+    filter_backends = (filters.OrderingFilter,)
+    serializer_class = ProductSerializer
 
     def get_queryList(self):
         slug = self.kwargs.get('slug')
@@ -160,11 +166,12 @@ class ProductCreateApiView(CreateAPIView):
     # def perform_create(self, serializer):
     #     serializer.save(author=self.request.user)
 
+
 class ShopListApiView(ListAPIView):
     serializer_class = ShopSerializer
     filter_backends = [SearchFilter, OrderingFilter]
     search_fields = ['title', 'description']
-    # pagination_class = ShopLimitPagination#PageNumberPagination
+    pagination_class = ShopProductsLimitPagination
     permission_classes = [AllowAny]
 
     def get_queryset(self):
@@ -195,6 +202,7 @@ class ShopDetailApiView(MultipleModelAPIView):
     # ]
     pagination_class = ShopLimitPagination
     flat = True
+    filter_backends = (filters.OrderingFilter,)
 
     def get_queryList(self):
         slug = self.kwargs.get('slug')

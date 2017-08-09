@@ -56,7 +56,8 @@ DJANGO_APPS = [
 
 ]
 THIRD_PARTY_APPS = [
-    'crispy_forms',  # Form layouts
+    'crispy_forms',
+    'coreapi',# Form layouts
     'allauth',  # registration
     'allauth.account',  # registration
     'allauth.socialaccount',  # registration

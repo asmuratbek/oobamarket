@@ -156,19 +156,13 @@ class ProductCreateSerializer(ModelSerializer):
     class Meta:
         model = Product
         fields = (
-            'id',
             'title',
             'slug',
             'category',
             'shop',
             'price',
-            'sell_count',
             'discount',
             'currency',
-            'quantity',
-            'delivery_type',
-            'delivery_cost',
-            'availability',
             'published',
         )
 

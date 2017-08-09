@@ -6,6 +6,7 @@ import SearchForm from './components/ShopDetailSearchForm';
 import CategoryList from './components/ShopDetailCategory';
 import _ from 'lodash';
 import Pagination from 'react-js-pagination';
+import Loader from 'react-loader';
 
 
 
@@ -24,6 +25,7 @@ var MainInterface = createClass({
             pagesCount: 0,
             products: [],
             shops: [],
+            loaded: false,
             categories: [],
             activeCategories: [],
             owner: false,
@@ -43,6 +45,24 @@ var MainInterface = createClass({
 
         $.ajax({
             type: "GET",
+              url: `/api/v1/shop/` + this.state.shopSlug + '/shop/',
+              success: function (data) {
+                   var owner = data[0].shop[0].is_owner;
+                    var categories = data[1].category.map(obj =>obj);
+                    this.setState({
+                        owner: owner,
+                        categories:categories,
+
+                    });
+              }.bind(this),
+              error: function (response, error) {
+                  console.log(response);
+                  console.log(error);
+              }
+        })
+
+        $.ajax({
+            type: "GET",
               url: `/api/v1/shop/` + this.state.shopSlug,
               success: function (data) {
                     var products = data.results.map(obj => obj);
@@ -54,24 +74,8 @@ var MainInterface = createClass({
                         productsCount: data.count,
                         activePage: 1,
                         pagesCount: pagesCount,
+                        loaded: true,
                         baseUrl: `/api/v1/shop/` + this.state.shopSlug + '/'
-                    });
-              }.bind(this),
-              error: function (response, error) {
-                  console.log(response);
-                  console.log(error);
-              }
-        })
-
-        $.ajax({
-            type: "GET",
-              url: `/api/v1/shop/` + this.state.shopSlug + '/shop/',
-              success: function (data) {
-                   var owner = data[0].shop[0].is_owner;
-                    var categories = data[1].category.map(obj =>obj);
-                    this.setState({
-                        owner: owner,
-                        categories:categories,
                     });
               }.bind(this),
               error: function (response, error) {
@@ -100,6 +104,9 @@ var MainInterface = createClass({
         }); //setState
     },
     handlePageChange: function(pageNumber) {
+        this.setState({
+           loaded: false
+        });
         $.ajax({
             type: "GET",
               url: this.state.baseUrl + '?page=' + pageNumber,
@@ -107,7 +114,8 @@ var MainInterface = createClass({
                     var products = data.results.map(obj => obj);
                     this.setState({
                         products: products,
-                        activePage: pageNumber
+                        activePage: pageNumber,
+                        loaded: true
                     });
               }.bind(this),
               error: function (response, error) {
@@ -279,7 +287,9 @@ var MainInterface = createClass({
                             </div>
                         </div>
                         : null}
+                    <Loader loaded={this.state.loaded}>
                     {filteredProducts}
+                    </Loader>
                     <div className="clearfix"></div>
                     {/*<Pagination*/}
                         {/*goToPrevious={this.goToPreviousPage}*/}

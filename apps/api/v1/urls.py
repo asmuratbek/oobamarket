@@ -19,13 +19,15 @@ from .views import (
     FacebookLogin,
     GoogleLogin
 )
+from rest_framework.documentation import include_docs_urls
+
 
 urlpatterns = [
     # url(r'^shop/(?P<slug>[-_\w]+)/$', GetUsedCategoriesFromShop.as_view(), name="shops_used_categories"),
-    url(r'^category/$', CategoryListApiView.as_view(), name='category_list'),
     url(r'^category/(?P<slug>[-_.\w]+)/$', CategoryDetailApiView.as_view(), name='category_detail'),
-    url(r'^globalcategory/$', GlobalCategoryListApiView.as_view(), name='globalcategory_list'),
+    url(r'^category/$', CategoryListApiView.as_view(), name='category_list'),
     url(r'^globalcategory/(?P<slug>[-_.\w]+)/$', GlobalCategoryDetailApiView.as_view(), name='globalcategory_detail'),
+    url(r'^globalcategory/$', GlobalCategoryListApiView.as_view(), name='globalcategory_list'),
     url(r'^product/create/$', ProductCreateApiView.as_view(), name='product_create'),
     # url(r'^category/(?P<slug>[-_\w]+)/$', views.CategoryDetailView.as_view(), name='category_detail'),
     url(r'^product/(?P<slug>[-_\w]+)/$', ProductDetailApiView.as_view(), name='product_detail'),
@@ -35,6 +37,7 @@ urlpatterns = [
     url(r'^shop/create/$', ShopCreateApiView.as_view(), name='shop_create'),
     # url(r'^category/(?P<slug>[-_\w]+)/$', views.CategoryDetailView.as_view(), name='category_detail'),
     url(r'^shop/(?P<slug>[-_\w]+)/$', ShopDetailApiView.as_view(), name='shop_detail'),
+    url(r'^shop/(?P<slug>[-_\w]+)/shop/$', ShopApiView.as_view(), name='shop_categories'),
     url(r'^shop/(?P<slug>[-_\w]+)/update/$', ShopUpdateApiView.as_view(), name='shop_update'),
     url(r'^shop/(?P<slug>[-_\w]+)/delete/$', ShopDeleteApiView.as_view(), name='shop_delete'),
     url(r'^shop/$', ShopListApiView.as_view(), name='shop_list'),
