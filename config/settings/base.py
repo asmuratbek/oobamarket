@@ -339,6 +339,13 @@ else:
 ########## END CELERY
 
 
+# INSTGRAM
+INSTAGRAM_CLIENT_ID = "ce049c6b468547a189abda09e5ec7d93"
+INSTAGRAM_CLIENT_SECRET = "0fd39165d3cc401ca41732c73df3d24d"
+INSTAGRAM_ACCESS_TOKEN = "5707385197.ce049c6.743d4e5975c246719fab7388a6cc3afc"
+INSTAGRAM_CODE = "d62cd7a0155a47ab809f1f1b615afade"
+
+
 # Location of root django.contrib.admin URL, use {% url 'admin:index' %}
 ADMIN_URL = r'^admin/'
 
