@@ -74,15 +74,29 @@ class CategoryDetailApiView(MultipleModelAPIView):
     #     (Shop.objects.all(), ShopSerializer),
     #     (Product.objects.all(), ProductSerializer),
     # ]
+    serializer_class = ProductSerializer
     pagination_class = CategoryLimitPagination
     flat = True
     filter_backends = (filters.OrderingFilter,)
 
     def get_queryList(self):
         slug = self.kwargs.get('slug')
+        q = self.request.GET.get('q')
+        price_from = self.request.GET.get('priceFrom')
+        price_to = self.request.GET.get('priceTo')
         category = Category.objects.get(slug=slug)
+        products = Product.objects.filter(category=category)
+        if q:
+            products = products.filter(
+                Q(title__icontains=str(q)) |
+                Q(short_description__icontains=str(q))
+            ).distinct()
+        if price_from and price_from != 'NaN':
+            products = products.filter(price__gt=int(price_from))
+        if price_to and price_to != 'NaN':
+            products = products.filter(price__lt=int(price_to))
         queryList = [
-            (Product.objects.filter(category=category), ProductSerializer),
+            (products, ProductSerializer),
         ]
         return queryList
 
@@ -105,9 +119,22 @@ class GlobalCategoryDetailApiView(MultipleModelAPIView):
 
     def get_queryList(self):
         slug = self.kwargs.get('slug')
+        q = self.request.GET.get('q')
+        price_from = self.request.GET.get('priceFrom')
+        price_to = self.request.GET.get('priceTo')
         globalcategory = GlobalCategory.objects.get(slug=slug)
+        products = Product.objects.filter(category__section=globalcategory)
+        if q:
+            products = products.filter(
+                Q(title__icontains=str(q)) |
+                Q(short_description__icontains=str(q))
+            ).distinct()
+        if price_from and price_from != 'NaN':
+            products = products.filter(price__gt=int(price_from))
+        if price_to and price_to != 'NaN':
+            products = products.filter(price__lt=int(price_to))
         queryList = [
-            (Product.objects.filter(category__section=globalcategory), ProductSerializer),
+            (products, ProductSerializer),
         ]
         return queryList
 
@@ -189,28 +216,30 @@ class ShopListApiView(ListAPIView):
             return objects
 
 
-# class ShopDetailApiView(RetrieveAPIView):
-#     queryset = Shop.objects.all()
-#     serializer_class = ShopSerializer
-#     lookup_field = 'slug'
-#     permission_classes = [AllowAny]
-
 class ShopDetailApiView(MultipleModelAPIView):
-    # queryList = [
-    #     (Shop.objects.all(), ShopSerializer),
-    #     (Product.objects.all(), ProductSerializer),
-    # ]
     pagination_class = ShopLimitPagination
     flat = True
     filter_backends = (filters.OrderingFilter,)
+    serializer_class = ProductSerializer
 
     def get_queryList(self):
         slug = self.kwargs.get('slug')
+        q = self.request.GET.get('q')
+        price_from = self.request.GET.get('priceFrom')
+        price_to = self.request.GET.get('priceTo')
         shop = Shop.objects.filter(slug=slug)
+        products = Product.objects.filter(shop=shop)
+        if q:
+            products = products.filter(
+                Q(title__icontains=str(q)) |
+                Q(short_description__icontains=str(q))
+            ).distinct()
+        if price_from and price_from != 'NaN':
+            products = products.filter(price__gt=int(price_from))
+        if price_to and price_to != 'NaN':
+            products = products.filter(price__lt=int(price_to))
         queryList = [
-            # (shop, ShopSerializer),
-            (Product.objects.filter(shop=shop), ProductSerializer),
-            # (shop.first().get_used_categories(), CategorySerializer)
+            (products, ProductSerializer),
         ]
         return queryList
 

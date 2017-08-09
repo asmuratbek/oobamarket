@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import createClass from 'create-react-class';
 import Product from './components/ShopDetailProducts';
-import SearchForm from './components/ShopDetailSearchForm';
+import SearchForm from './components/SearchForm';
 import CategoryList from './components/ShopDetailCategory';
 import _ from 'lodash';
 import Pagination from 'react-js-pagination';
@@ -15,13 +15,12 @@ var MainInterface = createClass({
 
     getInitialState: function () {
         return {
-            orderBy: 'title',
-            orderDir: 'asc',
+            orderBy: '-created_at',
             priceFrom: '',
             priceTo: '',
             queryText: '',
-            deliveryType: 'all',
             productsCount: 0,
+            activePage: 1,
             pagesCount: 0,
             products: [],
             shops: [],
@@ -63,14 +62,13 @@ var MainInterface = createClass({
 
         $.ajax({
             type: "GET",
-              url: `/api/v1/shop/` + this.state.shopSlug,
+              url: `/api/v1/shop/` + this.state.shopSlug + '?ordering=' + this.state.orderBy + '&page=' + this.state.activePage +
+              '&priceFrom=' + this.state.priceFrom + '&priceTo=' + this.state.priceTo,
               success: function (data) {
                     var products = data.results.map(obj => obj);
                     var pagesCount = Math.ceil(data.count / 21);
                     this.setState({
                         products: products,
-                        next: data.next,
-                        previous: data.previous,
                         productsCount: data.count,
                         activePage: 1,
                         pagesCount: pagesCount,
@@ -109,13 +107,14 @@ var MainInterface = createClass({
         });
         $.ajax({
             type: "GET",
-              url: this.state.baseUrl + '?page=' + pageNumber,
+              url: this.state.baseUrl + '?ordering=' + this.state.orderBy + '&page=' + pageNumber +
+              '&priceFrom=' + this.state.priceFrom + '&priceTo=' + this.state.priceTo + '&q=' + this.state.queryText,
               success: function (data) {
                     var products = data.results.map(obj => obj);
                     this.setState({
                         products: products,
                         activePage: pageNumber,
-                        loaded: true
+                        loaded: true,
                     });
               }.bind(this),
               error: function (response, error) {
@@ -125,34 +124,116 @@ var MainInterface = createClass({
         })
     },
 
-    reOrder: function (orderBy, orderDir) {
+    reOrder: function (orderBy) {
         this.setState({
-            orderBy: orderBy,
-            orderDir: orderDir
-        }); //setState
-    }, //reOrder
-
-    changeDeliveryType: function (deliveryType) {
-        this.setState({
-            deliveryType: deliveryType
+           loaded: false
         });
+        $.ajax({
+            type: "GET",
+              url: this.state.baseUrl + '?ordering=' + orderBy + '&page=' + this.state.activePage +
+              '&priceFrom=' + this.state.priceFrom + '&priceTo=' + this.state.priceTo + '&q=' + this.state.queryText,
+              success: function (data) {
+                    var products = data.results.map(obj => obj);
+                    this.setState({
+                        products: products,
+                        loaded: true,
+                        orderBy: orderBy
+                    });
+              }.bind(this),
+              error: function (response, error) {
+                  console.log(response);
+                  console.log(error);
+              }
+        })
+
     },
+
+    // changeDeliveryType: function (deliveryType) {
+    //     this.setState({
+    //         deliveryType: deliveryType
+    //     });
+    // },
 
     searchApts(q) {
         this.setState({
-            queryText: q.toLowerCase()
-        }); //setState
+            loaded: false,
+        });
+        $.ajax({
+            type: "GET",
+              url: this.state.baseUrl + '?ordering=' + this.state.orderBy + '&page=1' +
+              '&priceFrom=' + this.state.priceFrom + '&priceTo=' + this.state.priceTo +
+              '&q=' + q.toLowerCase(),
+              success: function (data) {
+                    var products = data.results.map(obj => obj);
+                    var pagesCount = Math.ceil(data.count / 20);
+                    this.setState({
+                        products: products,
+                        loaded: true,
+                        pagesCount: pagesCount,
+                        productsCount: data.count,
+                        queryText: q.toLowerCase(),
+                        activePage: 1
+                    });
+              }.bind(this),
+              error: function (response, error) {
+                  console.log(response);
+                  console.log(error);
+              }
+        })
     }, //searchApts
 
     changePriceFrom(price) {
         this.setState({
-            priceFrom: parseInt(price)
+            loaded: false,
+
+        });
+        $.ajax({
+            type: "GET",
+              url: this.state.baseUrl + '?ordering=' + this.state.orderBy + '&page=1' +
+              '&priceFrom=' + parseInt(price) + '&priceTo=' + this.state.priceTo + '&q=' + this.state.queryText,
+              success: function (data) {
+                    var products = data.results.map(obj => obj);
+                    var pagesCount = Math.ceil(data.count / 20);
+                    this.setState({
+                        products: products,
+                        loaded: true,
+                        priceFrom: parseInt(price),
+                        pagesCount: pagesCount,
+                        productsCount: data.count,
+                        activePage: 1
+                    });
+              }.bind(this),
+              error: function (response, error) {
+                  console.log(response);
+                  console.log(error);
+              }
         })
     },
 
     changePriceTo(price) {
         this.setState({
-            priceTo: parseInt(price)
+            loaded: false
+        });
+        $.ajax({
+            type: "GET",
+              url: this.state.baseUrl + '?ordering=' + this.state.orderBy + '&page=1' +
+              '&priceFrom=' + this.state.priceFrom + '&priceTo=' + parseInt(price) + '&q=' + this.state.queryText,
+              success: function (data) {
+                    var products = data.results.map(obj => obj);
+                    var pagesCount = Math.ceil(data.count / 20);
+                    this.setState({
+                        products: products,
+                        loaded: true,
+                        priceTo: parseInt(price),
+                        pagesCount: pagesCount,
+                        productsCount: data.count,
+                        activePage: 1
+                    });
+              }.bind(this),
+              error: function (response, error) {
+                  console.log(response);
+                  console.log(error);
+              }
         })
     },
 
@@ -183,36 +264,14 @@ var MainInterface = createClass({
         var productDelete = this.productDelete;
         var owner = this.state.owner;
 
-        allProducts.forEach(function (item) {
-            if (item.title.toLowerCase().indexOf(queryText) != -1) {
-                if (item.delivery_type == deliveryType || deliveryType == 'all') {
-                    filteredProducts.push(item);
-                }
-            }
-        });
+        // if (this.state.activeCategories.length > 0) {
+        //     filteredProducts = _.filter(filteredProducts, function (item) {
+        //         return _.indexOf(this.state.activeCategories, item.category_title) != -1
+        //     }.bind(this));
+        // }
+        // ;
 
-        if (this.state.priceFrom > 0) {
-            filteredProducts = _.filter(filteredProducts, function (item) {
-                return item.price > parseInt(this.state.priceFrom)
-            }.bind(this));
-        }
-        ;
-
-        if (this.state.priceTo > 0) {
-            filteredProducts = _.filter(filteredProducts, function (item) {
-                return item.price < parseInt(this.state.priceTo)
-            }.bind(this));
-        }
-        ;
-
-        if (this.state.activeCategories.length > 0) {
-            filteredProducts = _.filter(filteredProducts, function (item) {
-                return _.indexOf(this.state.activeCategories, item.category_title) != -1
-            }.bind(this));
-        }
-        ;
-
-        filteredProducts = filteredProducts.map(function (item, index) {
+        filteredProducts = this.state.products.map(function (item, index) {
             return (
                 <Product key={ index }
                          onProductDelete={productDelete}
@@ -232,24 +291,7 @@ var MainInterface = createClass({
             )
         });
 
-
-        var productsCount = filteredProducts.length
-
-        filteredProducts = _.orderBy(filteredProducts, function (item) {
-            if (orderBy == 'title') {
-                return item.props.product.title.toLowerCase();
-            }
-            else if (orderBy == 'priceAsc') {
-                return item.props.product.get_price_function;
-            }
-            else if (orderBy == 'priceDesc') {
-                return item.props.product.get_price_function;
-            }
-            else if (orderBy == 'newFirst') {
-                return item.props.product.created_at;
-            }
-        }, orderDir);//orderBy
-
+        var productsCount = filteredProducts.length;
 
         return (
             <div>
@@ -265,8 +307,6 @@ var MainInterface = createClass({
                         orderBy={ this.state.orderBy }
                         onReOrder={ this.reOrder }
                         onSearch={ this.searchApts }
-                        deliveryType={ this.state.deliveryType }
-                        onChangeDeliveryType={ this.changeDeliveryType }
                         priceFrom={ this.state.priceFrom }
                         priceTo={ this.state.priceTo }
                         onChangePriceFrom={ this.changePriceFrom }
@@ -291,17 +331,6 @@ var MainInterface = createClass({
                     {filteredProducts}
                     </Loader>
                     <div className="clearfix"></div>
-                    {/*<Pagination*/}
-                        {/*goToPrevious={this.goToPreviousPage}*/}
-                        {/*goToNext={this.goToNextPage}*/}
-                        {/*goTo={this.goTo}*/}
-                        {/*count={this.state.productsCount}*/}
-                        {/*next={this.state.next}*/}
-                        {/*previous={this.state.previous}*/}
-                        {/*page={this.state.currentPage}*/}
-                        {/*pagesCount={this.state.pagesCount}*/}
-                        {/*baseUrl={this.state.baseUrl}*/}
-                     {/*/>*/}
 
                      {this.state.pagesCount > 1 ?
                         <Pagination
