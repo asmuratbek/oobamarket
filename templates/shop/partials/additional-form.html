@@ -2,6 +2,9 @@
 {% with formset.empty_form as form %}
 
     {{ form.id }}
+    <a href="" class="close-additional" data-toggle="tooltip" title="" data-placement="top" data-original-title="Удалить Филиал">
+        <span aria-hidden="true">&times;</span>
+    </a>
     <div class="form-group input col-md-6">
         <label for="">Телефон</label>
         {{ form.phone|attr:"class:form-control" }}
