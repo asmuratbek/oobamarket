@@ -1,14 +1,15 @@
 from django.contrib import messages
-from django.http import Http404, HttpResponseRedirect
+from django.http import Http404, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.views import View
 from django.views.generic import TemplateView
-from django.views.generic.edit import CreateView, FormView
+from django.views.generic.edit import CreateView, FormView, UpdateView
 from django.views.generic.detail import DetailView
 from  django.views.generic.list import ListView
 # Create your views here.
 from apps.cart.models import Cart
+from apps.shop.models import Shop
 from .forms import AddressForm, UserAddressForm, SimpleOrderForm
 from .mixins import CartOrderMixin, LoginRequiredMixin
 from .models import UserAddress, UserCheckout, Order, SimpleOrder
@@ -146,30 +147,55 @@ class SimpleOrderDetailView(DetailView):
     template_name = 'order/order_detail.html'
 
 
-class SimpleOrderShopListView(ListView):
-    model = SimpleOrder
-    slug_field = 'slug'
-    slug_url_kwarg = 'slug'
+# class SimpleOrderShopListUpdateView(UpdateView):
+#     model = SimpleOrder
+#     form_class = SimpleOrderForm
+#
+#     def get_initial(self):
+#         return {'user': self.request.user, 'slug': Shop.objects.get(slug=self.l)}
+#
+#     # def get_object(self, queryset=None):
+#     #     return SimpleOrder.objects.get(cart__cartitem__product__shop__slug=self.kwargs['slug'])
+#
+#     def get_context_data(self, **kwargs):
+#         context = super(SimpleOrderShopListUpdateView, self).get_context_data(**kwargs)
+#         context['object_list'] = SimpleOrder.objects.filter(self.kwargs['pk']).order_by('-created_at')
+#         context['shop'] = Shop.objects.get(slug=self.kwargs['slug'])
+#         return context
+#
+#     # def post(self, request, *args, **kwargs):
+#     #     data = request.POST.copy()
+#     #     order = get_object_or_404(SimpleOrder, id=data['id'])
+#     #     order.status = data['status']
+#     #     order.save()
+#     #     return HttpResponseRedirect(reverse("order:shop_order_list", kwargs={'slug': self.kwargs['slug']}))
+#
+#     def form_valid(self, form):
+#         form.save()
+#         return super(SimpleOrderShopListUpdateView, self).form_valid(form)
 
-    def get_initial(self):
-        return {'user': self.request.user}
+
+def simple_order_shop_list_update(request, slug):
+    object_list = SimpleOrder.objects.filter(cart__cartitem__product__shop__slug=slug)
+    shop = Shop.objects.get(slug=slug)
+
+    form = SimpleOrderForm(request.GET)
+
+    if request.method == 'POST':
+        form = SimpleOrderForm(request.POST)
+        simple_order = SimpleOrder.objects.get(id=request.POST['id'])
+        simple_order.status = request.POST['status']
+        simple_order.save()
 
 
-    def get_queryset(self):
-        return SimpleOrder.objects.filter(cart__cartitem__product__shop__slug=self.kwargs['slug'])
+    context = {
+        'shop': shop,
+        'object_list': object_list,
+        'form': form,
 
-    def get_context_data(self, **kwargs):
-        context = super(SimpleOrderShopListView, self).get_context_data(**kwargs)
-        context['form'] = SimpleOrderForm()
-        return context
+    }
 
-    def post(self, request, *args, **kwargs):
-        data = request.POST.copy()
-        order = get_object_or_404(SimpleOrder, id=data['id'])
-        order.status = data['status']
-        order.save()
-        return HttpResponseRedirect(reverse("order:shop_order_list", kwargs={'slug': self.kwargs['slug']}))
-
+    return render(request, 'order/simpleorder_list.html', context)
 
 
 class SimpleOrderShopDetailView(DetailView):

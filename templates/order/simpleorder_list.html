@@ -1,40 +1,46 @@
 {% extends 'base-1.html' %}
-
+{% load staticfiles widget_tweaks %}
 
 {% block content %}
     <div class="simpleorder">
         <div class="container">
-            <h1>Заказы</h1>
-            {% if shop.slug %}
-            {% for order in object_list %}
-                <div class="border">
-                    <h3><a href="{% url 'order:simple_detail' pk=order.id %}">Заказ от {{ order.created_at|date:"d.m.y H:i" }}</a></h3>
-                    <p>{{ order.name }}</p>
-                    <p>{{ order.last_name }}</p>
-                    <p>{{ order.phone }}</p>
-                    <p>{{ order.address }}</p>
-                </div>
-            {% endfor %}
-            {% else %}
-            {% for order in object_list %}
-                <div class="border">
-                    <h3><a href="{% url 'order:simple_detail' pk=order.id %}">Заказ от {{ order.created_at|date:"d.m.y H:i" }}</a></h3>
-                    <p>{{ order.name }}</p>
-                    <p>{{ order.last_name }}</p>
-                    <p>{{ order.phone }}</p>
-                    <p>{{ order.address }}</p>
-                    <form method="post" action="">
-                        {% csrf_token %}
-                        {{ form.status }}
-                        <input type="hidden" name="id" value="{{ order.id }}">
-                        <button class="btn" type="submit">Подтвердить</button>
-                    </form>
-
-                </div>
-            {% endfor %}
-            {% endif %}
+            <h1>Заказы магазина {{ shop }}</h1>
+                {% for order in object_list %}
+                    <div class="border">
+                        <h3><a href="{% url 'order:simple_detail' pk=order.id %}">Заказ
+                            от {{ order.created_at|date:"d.m.y H:i" }}</a></h3>
+                        <p>{{ order.name }}</p>
+                        <p>{{ order.last_name }}</p>
+                        <p>{{ order.phone }}</p>
+                        <p>{{ order.address }}</p>
+                        <p>{{ order.status }}</p>
+                        <form method="post" action="" class="order_change">
+                            {% csrf_token %}
+                            <div class="form-group select col-md-6" style="margin-top: 10px">
+                            {{ form.status|attr:"class:form-control " }}
+                            </div>
+                            <input type="hidden" name="id" value="{{ order.id }}">
+                            <button class="btn" type="submit">Подтвердить</button>
+                        </form>
+                    </div>
+                {% endfor %}
         </div>
     </div>
+
+
+
+{% endblock %}
+
+
+{% block js %}
+    <script src="{% static 'js/jquery.2.2.4.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+
+    <script>
+
+
+    </script>
+
 
 
 {% endblock %}

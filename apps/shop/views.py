@@ -258,10 +258,6 @@ class ShopReviewListView(generic.DetailView):
     model = Shop
     template_name = 'shop/shop_review.html'
 
-    def get_context_data(self, **kwargs):
-        context = super(ShopReviewListView, self).get_context_data(**kwargs)
-        context['review'] = ShopReviews.objects.all
-        return context
 
 
 @login_required
@@ -316,7 +312,8 @@ def update_shop_review(request, pk, slug):
 def shop_reviews(request):
     review = ShopReviews.objects.filter(shop__slug=request.POST.get('shop'))
 
+
     params = {
         'review': review
     }
-    return render_to_response('layout/prod_reviews.html', params)
+    return render_to_response('layout/shop_reviews.html', params)

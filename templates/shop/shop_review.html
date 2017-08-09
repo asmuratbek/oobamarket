@@ -1,5 +1,5 @@
 {% extends 'shop/shop_detail.html' %}
-{% load shop_tags %}
+{% load shop_tags staticfiles %}
 
 {% block shopcontent %}
 <section class="reviews">
@@ -54,7 +54,11 @@
 {% endblock %}
 
 {% block js %}
-    {{ block.super }}
+    <script src="{% static 'js/jquery.2.2.4.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/common.js' %}"></script>
+    <script src="{% static 'js/owl.carousel.min.js' %}"></script>
+
     <script>
     var form = $('#review_form');
     $(form).unbind('submit').bind('submit', function (event) {

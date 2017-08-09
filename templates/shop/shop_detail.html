@@ -165,7 +165,6 @@
                 </li>
                 <li {% if request.path == sale %}class="active"{% endif %}><a href="{{ sale }}">Акции</a></li>
                 <li {% if request.path == review %}class="active"{% endif %}><a href="{{ review }}">Отзывы</a></li>
-                {#                <li><a class="remove delete-object model-trigger" data-url="{% url 'shops:delete' slug=object.slug %}" style="cursor: pointer;">Удалить магазин</a></li>#}
                 <li {% if request.path == contacts %}class="active"{% endif %}><a href="{{ contacts }}">Контакты</a>
                 </li>
 

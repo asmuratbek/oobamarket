@@ -99,7 +99,9 @@
                                 </div>
                                 <div class="form-group btn-group-form col-md-12">
                                     <button type="submit" class="btn add">Сохранить</button>
+                                    <li><a class="remove delete-object model-trigger" data-url="{% url 'shops:delete' slug=object.slug %}" style="cursor: pointer;">Удалить магазин</a></li>
                                 </div>
+
                             </div>
                         </div>
                     </div>
