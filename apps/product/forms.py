@@ -1,4 +1,5 @@
 from django import forms
+from .fields import CustomField
 from apps.category.models import Category
 from apps.global_category.models import GlobalCategory
 from apps.shop.models import Shop
@@ -11,7 +12,7 @@ class ProductForm(forms.ModelForm):
         exclude = ['slug', 'objects', 'sell_count', 'counter']
 
     section = forms.ModelChoiceField(queryset=GlobalCategory.objects.all())
-    parent_categories = forms.ModelChoiceField(queryset=Category.objects.filter(parent=None))
+    parent_categories = CustomField(queryset=Category.objects.filter(parent=None))
     removed_images = forms.CharField(required=False)
     uploaded_images = forms.CharField(required=False)
 
