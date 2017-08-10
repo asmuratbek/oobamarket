@@ -26,7 +26,7 @@ gulp.task('styles', function () {
 
 gulp.task('js', function(){
    return browserify({
-            entries: './web_client/app.js',
+            entries: './web_client/search.js',
             extensions: ['.jsx'],
             debug: true
         })
@@ -40,7 +40,7 @@ gulp.task('js', function(){
             gutil.log(err.message);
             this.emit('end');
         })
-        .pipe(source('app.js'))
+        .pipe(source('search.js'))
         .pipe(gulp.dest('static/js'));
 
 //     return browserify({
@@ -58,7 +58,7 @@ gulp.task('js', function(){
 //             gutil.log(err.message);
 //             this.emit('end');
 //         })
-//         .pipe(source('app.js'))
+//         .pipe(source('search.js'))
 //         .pipe(gulp.dest('static/js'));
 });
 

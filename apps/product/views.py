@@ -305,6 +305,9 @@ def search_predict_html(request):
         'query': request.GET.get('q')
     })
 
+def search(request):
+    return render(request, 'search/search.html', {})
+
 
 class ProductDeleteView(LoginRequiredMixin, DeleteProductMixin, DeleteView):
     model = Product

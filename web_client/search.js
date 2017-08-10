@@ -9,40 +9,45 @@ import Pagination from 'react-js-pagination';
 import Loader from 'react-loader';
 
 
-
 var MainInterface = createClass({
     displayName: 'MainInterface',
 
     getInitialState: function () {
+        var parseQueryString = function () {
+
+        var str = location.search;
+        var objURL = {};
+
+        str.replace(
+            new RegExp("([^?=&]+)(=([^&]*))?", "g"),
+            function ($0, $1, $2, $3) {
+                objURL[$1] = $3;
+            }
+        );
+        return objURL;
+    };
+
+        //Example how to use it:
+        var params = parseQueryString();
         return {
             orderBy: '-created_at',
             priceFrom: '',
             priceTo: '',
-            queryText: '',
             products: [],
+            queryText: params['q'] ? decodeURIComponent(params['q']) : '',
             activePage: 1,
             shops: [],
             categories: [],
             loaded: false,
             activeCategories: [],
-            categorySlug: location.href.split("/")[location.href.split("/").length - 2]
         }
     },
 
     componentDidMount() {
-        var params = location.search.substr(1).split("&")
-        params.forEach(function (i) {
-            if (i.split("=")[0] == "q") {
-                this.setState({
-                    queryText: i.split("=")[1].toLowerCase()
-                })
-            }
-        }.bind(this));
-
         $.ajax({
             type: "GET",
-              url: `/api/v1/globalcategory/` + this.state.categorySlug + '?ordering=' + this.state.orderBy + '&page=' + this.state.activePage +
-              '&priceFrom=' + this.state.priceFrom + '&priceTo=' + this.state.priceTo,
+              url: `/api/v1/product/` + '?ordering=' + this.state.orderBy + '&page=' + this.state.activePage +
+              '&priceFrom=' + this.state.priceFrom + '&priceTo=' + this.state.priceTo + '&q=' + this.state.queryText,
               success: function (data) {
                     var products = data.results.map(obj => obj);
                     var pagesCount = Math.ceil(data.count / 20);
@@ -51,7 +56,7 @@ var MainInterface = createClass({
                         productsCount: data.count,
                         activePage: 1,
                         pagesCount: pagesCount,
-                        baseUrl: `/api/v1/globalcategory/` + this.state.categorySlug + '/',
+                        baseUrl: `/api/v1/product/`,
                         loaded: true
                     });
               }.bind(this),
