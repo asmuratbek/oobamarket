@@ -233,6 +233,7 @@ var MainInterface = createClass({
                     onSearch={ this.searchApts }
                     priceFrom={ this.state.priceFrom }
                     priceTo={ this.state.priceTo }
+                    query={this.state.queryText}
                     onChangePriceFrom={ this.changePriceFrom }
                     onChangePriceTo={ this.changePriceTo }
                 />

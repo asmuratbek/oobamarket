@@ -50,7 +50,7 @@ var SearchForm = createClass({
                             {/*<option value="paid">Платная</option>*/}
                             {/*<option value="self">Самовывоз</option>*/}
                         {/*</select>*/}
-                         <input type="text" className="form-control" placeholder="Поиск товара" onChange={this.search}/>
+                         <input type="text" className="form-control" placeholder="Поиск товара" onChange={this.search} value={this.props.query} />
                          {/*<button type="submit">*/}
                             {/*<span className="glyphicon glyphicon-search"></span>*/}
                         {/*</button>*/}

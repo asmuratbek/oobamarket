@@ -2,26 +2,17 @@
 {% load staticfiles %}
 
     {% block content %}
-        <form type="get" action=".">
-            <input type="text" name="q">
-            <button type="submit">Search</button>
-        </form>
+    <section class="shop-category global-category">
+        <div class="goods-of-week search_results">
+            <div class="container" id="root">
 
-{#        <section class="goods-of-week" id="container">#}
-{##}
-{#        </section>#}
-
-
-{% for note in notes %}
-<h1>{{ note.title }}</h1>
-<p>
-    {{ note.detail_url }}
-</p>
-{% endfor %}
-    {% endblock %}
+            </div>
+        </div>
+    </section>
+{% endblock %}
 
 
 {% block js %}
     {{ block.super }}
-    <script type="text/javascript" src="{% static 'js/app.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/search.js' %}"></script>
 {% endblock %}
