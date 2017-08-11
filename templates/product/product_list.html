@@ -7,9 +7,57 @@
         <button type="submit" class="btn btn-default">Найти</button>
     </div>
 </form>
+<div class="row">
+    <div class="col-md-3 col-sm-6 new-design">
+        <div class="img-wrapper">
+
+            <div class="setting-control">
+                <a href="" class="glyphicon glyphicon-pencil" data-toggle="tooltip" title="" data-placement="top"
+                          data-original-title="Редактировать товар"></a>
+                <a href="" class="glyphicon glyphicon-eye-open" data-toggle="tooltip" title="" data-placement="top"
+                          data-original-title="Показать товар"></a>
+                <a href="" class="glyphicon glyphicon-eye-close" data-toggle="tooltip" title="" data-placement="top"
+                          data-original-title="Скрыть товар"></a>
+                <a href="" class="glyphicon glyphicon-remove" data-toggle="tooltip" title="" data-placement="top"
+                          data-original-title="Удалить товар"></a>
+            </div>
+
+            <img src="http://via.placeholder.com/350x150" alt="">
+
+            <div class="back-fade">
+
+                <a href=""></a>
+
+                <div class="name-magazin-title">
+                    <h3>Don carleone Don carleone Don carleone</h3>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsa, qui?</p>
+                </div>
+
+                <div class="button-basket-favorite">
+                    <span class="glyphicon glyphicon-shopping-cart" data-toggle="tooltip" title="" data-placement="top"
+                          data-original-title="Добавить в корзину"></span>
+                    <span class="glyphicon glyphicon-heart  enable" data-product-id="" data-toggle="tooltip" title=""
+                          data-placement="top"
+                          data-original-title="Добавить в избранные"></span>
+                </div>
+
+                <div class="title-price">
+                    <div class="col-md-8">
+                        <h4>True-Mass 1200 - 4,6kg BSN</h4>
+                    </div>
+                    <div class="col-md-4">
+                        <span>200011 сом</span>
+                        <strike>-2222 сом</strike>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
 {% for product in object_list %}
 
-    <div class="col-md-{{ col }} col-sm-6">
+    <div class="col-md-{{ col }} col-sm-6 old-design">
         <div class="cover {% if not product.published %} active{% endif %}">
             {% if product.discount %}
                 <span class="discount" data-toggle="tooltip" title="" data-placement="left"
@@ -17,12 +65,11 @@
             {% endif %}
             <a class="url-item" href="{{ product.get_absolute_url }}"></a>
             <div class="top-line">
-
-                <h2>
+                <h3>
                     <a href="{{ product.shop.get_absolute_url }}">
                         {{ product.get_shop_title |truncatechars:28 }}
                     </a>
-                </h2>
+                </h3>
                 {% if user.is_authenticated %}
                     {% if user in product.shop.user.all %}
                         <a class="edited glyphicon glyphicon-cog"
@@ -60,16 +107,20 @@
             <div class="bottom-line">
 
                 {% cart_message request product %}
-{#                <span class="truck pull-right {% if product.delivery_type == 'paid' %} yellow#}
-{#                    {% elif product.delivery_type == 'free' %} green {% endif %}" data-toggle="tooltip" title=""#}
-{#                      data-placement="top" data-original-title="{{ product.get_delivery_type }}"><i class="fa fa-truck" aria-hidden="true"></i></span>#}
+                {#                <span class="truck pull-right {% if product.delivery_type == 'paid' %} yellow#}
+                {#                    {% elif product.delivery_type == 'free' %} green {% endif %}" data-toggle="tooltip" title=""#}
+                {#                      data-placement="top" data-original-title="{{ product.get_delivery_type }}"><i class="fa fa-truck" aria-hidden="true"></i></span>#}
                 {% if user.is_authenticated %}
-                <span class="hearth pull-right {% is_favorite_for_like product request.user %}"
-                      data-product-id="{{ product.id }}" data-toggle="tooltip" title="" data-placement="top"
-                      data-original-title="{% is_favorite_for_tooltip product request.user %}"><i class="glyphicon glyphicon-heart"></i></span>
+                    <span class="hearth pull-right {% is_favorite_for_like product request.user %}"
+                          data-product-id="{{ product.id }}" data-toggle="tooltip" title="" data-placement="top"
+                          data-original-title="{% is_favorite_for_tooltip product request.user %}"><i
+                            class="glyphicon glyphicon-heart"></i></span>
                 {% endif %}
 
             </div>
         </div>
     </div>
+
+
 {% endfor %}
+
