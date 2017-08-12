@@ -84,8 +84,6 @@ def add_product_review(request, slug):
 
         exists_review = ProductReviews.objects.filter(user=review.user, product=review.product)
 
-        print(exists_review)
-
         if exists_review.count() <= 0:
             review.save()
             return JsonResponse(dict(success=True))
