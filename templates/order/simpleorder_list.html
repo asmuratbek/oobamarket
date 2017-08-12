@@ -4,75 +4,107 @@
 {% block content %}
     <div class="simpleorder">
         <div class="container">
-        <table class="table table-hover tab-simpleorder">
-            <thead>
-            <tr>
-                <td>
-                    <label for="parent">
-                        <input type="checkbox" id="parent">
-                        <div class="indicator"></div>
-                    </label>
-                </td>
-                <td>Номер <br> заказа</td>
-                <td>Дата</td>
-                <td>Заказчик</td>
-                <td>Статус</td>
-                <td>Адрес доставки</td>
-                <td>Телефон</td>
-                <td>Сумма доставки</td>
-                <td>Комиссия</td>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td>
-                    <label for="child">
-                        <input type="checkbox" id="child">
-                        <div class="indicator"></div>
-                    </label>
-                </td>
-                <td>1</td>
-                <td>11.08.2017</td>
-                <td>Rasul</td>
-                <td>
-                    <select  name="" id="">
-                        <option value="">1</option>
-                        <option value="">2</option>
-                        <option value="">3</option>
-                        <option value="">4</option>
-                    </select>
-                </td>
-                <td>Очень длинный адрес доставки и Мура  Очень длинный адрес доставки и Мура Очень длинный адрес доставки и Мура </td>
-                <td>+9995 223 3424 2342</td>
-                <td>34000 сом</td>
-                <td>0 сом</td>
-            </tr>
-            </tbody>
-        </table>
+            <div class="tab-simpleorder">
+                <div class="head">
+                    <div class="parets">
+                        <ul>
+                            <li>
+                                <label for="parent">
+                                    <input type="checkbox" id="parent">
+                                    <div class="indicator"></div>
+                                </label>
+                            </li>
+                            <li>Номер заказа</li>
+                            <li>Дата</li>
+                            <li>Заказчик</li>
+                            <li>Статус</li>
+                            <li>Адрес доставки</li>
+                            <li>Телефон</li>
+                            <li>Сумма доставки</li>
+                            <li>Комиссия</li>
+                        </ul>
 
-
+                    </div>
+                </div>
+                <div class="child-order">
+                    <a href=""></a>
+                    <ul>
+                        <li>
+                            <label for="child">
+                                <input type="checkbox" id="child">
+                                <div class="indicator"></div>
+                            </label>
+                        </li>
+                        <li>1</li>
+                        <li>11.08.2017</li>
+                        <li>Rasul</li>
+                        <li>
+                            <select class="form-control" name="" id="">
+                                <option value="">1</option>
+                                <option value="">2</option>
+                                <option value="">3</option>
+                                <option value="">4</option>
+                            </select>
+                        </li>
+                        <li>Очень длинный адрес доставки и Мура Очень длинный адрес доставки и Мура Очень длинный
+                            адрес доставки и Мура
+                        </li>
+                        <li>+996 444 44 44 44</li>
+                        <li>34000 сом</li>
+                        <li>0 сом</li>
+                    </ul>
+                </div>
+                 <div class="child-order">
+                     <a href=""></a>
+                    <ul>
+                        <li>
+                            <label for="child2">
+                                <input type="checkbox" id="child2">
+                                <div class="indicator"></div>
+                            </label>
+                        </li>
+                        <li>1</li>
+                        <li>11.08.2017</li>
+                        <li>Rasul</li>
+                        <li>
+                            <select class="form-control" name="" id="">
+                                <option value="">1</option>
+                                <option value="">2</option>
+                                <option value="">3</option>
+                                <option value="">4</option>
+                            </select>
+                        </li>
+                        <li>Очень длинный адрес доставки и Мура Очень длинный адрес доставки и Мура Очень длинный
+                            адрес доставки и Мура
+                        </li>
+                        <li>+996 444 44 44 44</li>
+                        <li>34000 сом</li>
+                        <li>0 сом</li>
+                    </ul>
+                </div>
+            </div>
 
 
             <h1>Заказы магазина {{ shop }}</h1>
-                {% for order in object_list %}
-                    <div class="border">
-                        <h3><a href="{% url 'order:simple_detail' pk=order.id %}">Заказ
-                            от {{ order.created_at|date:"d.m.y H:i" }}</a></h3>
-                        <p>{{ order.name }}</p>
-                        <p>{{ order.last_name }}</p>
-                        <p>{{ order.phone }}</p>
-                        <p>{{ order.address }}</p>
-                        <p>{{ order.status }}</p>
-                        <form method="post" action="" class="order_change">
-                            {% csrf_token %}
-                            <div class="form-group select col-md-6" style="margin-top: 10px">
+            {% for order in object_list %}
+                <div class="border">
+                    <h3><a href="{% url 'order:simple_detail' pk=order.id %}">Заказ
+                        от {{ order.created_at|date:"d.m.y H:i" }}</a></h3>
+                    <p>{{ order.name }}</p>
+                    <p>{{ order.last_name }}</p>
+                    <p>{{ order.phone }}</p>
+                    <p>{{ order.address }}</p>
+                    <p>{{ order.status }}</p>
+                    <form method="post" action="" class="order_change">
+                        {% csrf_token %}
+                        <div class="form-group select col-md-6" style="margin-top: 10px">
                             {{ form.status|attr:"class:form-control " }}
-                            </div>
-                            <input type="hidden" name="id" value="{{ order.id }}">
-                            <button class="btn" type="submit">Подтвердить</button>
-                        </form>
-                    </div>
-                {% endfor %}
+                        </div>
+                        <input type="hidden" name="id" value="{{ order.id }}">
+                        <button class="btn" type="submit">Подтвердить</button>
+                    </form>
+                </div>
+            {% endfor %}
         </div>
     </div>
 

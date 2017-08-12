@@ -2314,13 +2314,20 @@ ul.category-tab
       a
         color: #fff !important
 .tab-simpleorder
+  border: 2px solid #e9e9e9
+  border-radius: 3px
+
+  border-bottom: 0
   label > input:checked + .indicator:after
     transform: scale(1, 1)
   label
     position: relative
     width: 15px
     height: 15px
-    margin-right: 5px
+    cursor: pointer
+    display: block
+    margin: 0 auto
+    z-index: 2
     input
       display: none
     .indicator
@@ -2338,8 +2345,10 @@ ul.category-tab
         left: 0
         width: 15px
         height: 15px
-        border: 1px solid #ccc
+        border: 1px solid #aeaeae
+        background-color: #f6f6f6
         content: ''
+        border-radius: 2px
       &:after
         content: "\e013"
         position: absolute
@@ -2350,15 +2359,53 @@ ul.category-tab
         line-height: 15px
         transform: scale(0, 0)
         transition: 0.3s
-  table
-    thead
-      tr
-        td
+  ul
+    padding: 15px 0
+    overflow: hidden
+    li:first-child
+      width: 5%
+    li:nth-child(2)
+      width: 5%
+    li:nth-child(3)
+      width: 10%
+    li:nth-child(6)
+      width: 20%
+      padding: 0 10px
+    li
+      width: 12%
+      float: left
+      align-items: center
+      display: grid
+      height: 40px
+      text-align: center
+      overflow: hidden
 
-    tbody
-      tr
-        td
+  .head
+    background-color: #e9e9e9
+    ul
+      li
+        font-weight: 300
 
+  .child-order:hover
+    background-color: #f4f4f4
+  .child-order
+    border-bottom: 2px solid #e9e9e9
+    transition: 0.3s
+    position: relative
+    a
+      position: absolute
+      top: 0
+      bottom: 0
+      right: 0
+      left: 0
+    ul
+      li
+
+      li
+        vertical-align: middle !important
+        transition: 0.3s
+  select
+    width: 100%
 .shop-category
   margin-bottom: 200px
   .form-filter
@@ -2628,8 +2675,8 @@ ul.category-tab
         width: 100%
         z-index: 2
         position: relative
-        border-bottom: 1px solid #ccc;
-        padding-bottom: 4px;
+        border-bottom: 1px solid #ccc
+        padding-bottom: 4px
         .in-the-basket:hover
 
         .in-the-basket
