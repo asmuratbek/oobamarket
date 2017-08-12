@@ -24,7 +24,7 @@ class UpdateProductMixin(object):
         user = request.user
         my_product = get_object_or_404(Product, slug=kwargs.get('slug'))
         my_shop = user.shop_set.all()
-        if my_product.shop not in my_shop:
+        if my_product.shop not in my_shop and not user.is_staff:
             return HttpResponseForbidden()
         return super(UpdateProductMixin, self).dispatch(request, *args, **kwargs)
 
