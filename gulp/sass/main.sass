@@ -788,6 +788,13 @@ header
   .col-md-3.new-design, .col-md-4.new-design
     margin-bottom: 20px
     padding: 0 10px
+
+    .img-wrapper:hover
+      .back-fade
+        background-color: rgba(255, 255, 255, 0.6)
+    .img-wrapper.disabled
+      img
+        filter: grayscale(100%)
     .img-wrapper
       position: relative
       height: 340px
@@ -819,7 +826,7 @@ header
       bottom: 0
       right: 0
       left: 0
-      background-color: rgba(255, 255, 255, 0.6)
+      transition: 0.3s
       a
         position: absolute
         top: 0
