@@ -2313,6 +2313,42 @@ ul.category-tab
     li.active
       a
         color: #fff !important
+.tab-simpleorder
+  label
+    position: relative
+    input
+      display: none
+    .indicator
+      position: absolute
+      top: 0
+      bottom: 0
+      right: 0
+      left: 0
+      &:before
+        position: absolute
+        top: 0
+        left: 0
+        width: 10px
+        height: 10px
+        border: 1px solid #ccc
+        content: ''
+      &:after
+        content: "\e013"
+        position: absolute
+        font-family: 'Glyphicons Halflings'
+        top: 0
+        left: 0
+
+        font-size: 14px
+  table
+    thead
+      tr
+        td
+
+    tbody
+      tr
+        td
+
 .shop-category
   margin-bottom: 200px
   .form-filter
@@ -4809,12 +4845,10 @@ body.landing
   .col-md-3, .col-lg-3
     ul
       li:first-child
-        text-transform: uppercase
+
+      li.active
         background-color: #f3481c
         color: #fff
-        padding: 13px 20px
-        font-weight: 300
-      li.active
         a
       li
         padding: 13px 20px

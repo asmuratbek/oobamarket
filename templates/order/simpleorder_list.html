@@ -4,11 +4,15 @@
 {% block content %}
     <div class="simpleorder">
         <div class="container">
-
-        <table class="table table-hover">
+        <table class="table table-hover tab-simpleorder">
             <thead>
             <tr>
-                <td><input type="checkbox"></td>
+                <td>
+                    <label for="parent">
+                        <input type="checkbox" id="parent">
+                        <div class="indicator"></div>
+                    </label>
+                </td>
                 <td>Номер <br> заказа</td>
                 <td>Дата</td>
                 <td>Заказчик</td>
@@ -21,7 +25,12 @@
             </thead>
             <tbody>
             <tr>
-                <td><input type="checkbox"></td>
+                <td>
+                    <label for="child">
+                        <input type="checkbox" id="child">
+                        <div class="indicator"></div>
+                    </label>
+                </td>
                 <td>1</td>
                 <td>11.08.2017</td>
                 <td>Rasul</td>
@@ -33,7 +42,7 @@
                         <option value="">4</option>
                     </select>
                 </td>
-                <td>Очень длинный адрес доставки и Мура </td>
+                <td>Очень длинный адрес доставки и Мура  Очень длинный адрес доставки и Мура Очень длинный адрес доставки и Мура </td>
                 <td>+9995 223 3424 2342</td>
                 <td>34000 сом</td>
                 <td>0 сом</td>
@@ -75,6 +84,4 @@
 {% block js %}
     <script src="{% static 'js/jquery.2.2.4.js' %}"></script>
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
-    <script src="{% static 'js/select2.js' %}"></script>
-    <script src="{% static 'js/common.js' %}"></script>
 {% endblock %}
