@@ -9,6 +9,9 @@ var CategoryList = createClass({
 
   handleCategoriesSort: function(e){
     e.preventDefault();
+    console.log(e.target.getAttribute('data-id'));
+    this.props.categorySort(e.target.getAttribute('data-id'));
+
     // if (_.indexOf(this.props.activeCategories, this.props.category)!=-1){
     //   e.target.parentElement.className = "";
     // }
@@ -18,40 +21,39 @@ var CategoryList = createClass({
     // this.props.onChangeCategory(e.target.text);
   },
 
-  getDescendants: function(category){
-    if (category.descendants.length) {
-      console.log('yes')
-    }
-    else {
-      console.log("no")
-    }
-
-    return (
-        <div></div>
-    )
-  },
+  // getDescendants: function(category){
+  //   if (category.descendants.length) {
+  //     console.log('yes')
+  //   }
+  //   else {
+  //     console.log("no")
+  //   }
+  //
+  //   return (
+  //       <div></div>
+  //   )
+  // },
 
   render: function(){
-    var children = [];
+    // var children = [];
     var parent_id = this.props.index;
-
-    children = this.props.category.descendants.map(function(item, index) {
-      return (
-        <ChildCategory
-          key={index}
-          child={item}
-          index={index}
-          parent_id={parent_id}
-        />
-      )
-    });
+    //
+    // children = this.props.category.descendants.map(function(item, index) {
+    //   return (
+    //     <ChildCategory
+    //       key={index}
+    //       child={item}
+    //       index={index}
+    //       parent_id={parent_id}
+    //     />
+    //   )
+    // });
 
     return (
-              <li className={this.props.index == 0 ? "active":""}>
-                  <a  role="button" data-toggle="collapse" href={`#${this.props.index}`} aria-expanded="false" aria-controls="collapseExample">{this.props.category.title}</a>
+              <li className={this.props.category.id == this.props.activeCategory ? "active":""}>
+                  <a  role="button" data-toggle="collapse" href='#' aria-expanded="false" aria-controls="collapseExample" onClick={this.handleCategoriesSort} data-id={this.props.category.id}>{this.props.category.title}</a>
                     {this.props.category.descendants.length ?
                         <div className="collapse category-in-category" id={this.props.index}>
-                              {children}
                         </div>
                     : ""}
 

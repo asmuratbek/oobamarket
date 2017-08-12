@@ -221,8 +221,14 @@ class ShopDetailApiView(MultipleModelAPIView):
         q = self.request.GET.get('q')
         price_from = self.request.GET.get('priceFrom')
         price_to = self.request.GET.get('priceTo')
+        category = self.request.GET.get('category')
         shop = Shop.objects.filter(slug=slug)
         products = Product.objects.filter(shop=shop)
+        if category:
+            print(category)
+            products = products.filter(
+                Q(category_id=int(category))
+            )
         if q:
             products = products.filter(
                 Q(title__icontains=str(q))
