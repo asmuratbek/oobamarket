@@ -2314,8 +2314,13 @@ ul.category-tab
       a
         color: #fff !important
 .tab-simpleorder
+  label > input:checked + .indicator:after
+    transform: scale(1, 1)
   label
     position: relative
+    width: 15px
+    height: 15px
+    margin-right: 5px
     input
       display: none
     .indicator
@@ -2324,12 +2329,15 @@ ul.category-tab
       bottom: 0
       right: 0
       left: 0
+      width: 15px
+      height: 15px
+      margin-right: 5px
       &:before
         position: absolute
         top: 0
         left: 0
-        width: 10px
-        height: 10px
+        width: 15px
+        height: 15px
         border: 1px solid #ccc
         content: ''
       &:after
@@ -2337,9 +2345,11 @@ ul.category-tab
         position: absolute
         font-family: 'Glyphicons Halflings'
         top: 0
-        left: 0
-
-        font-size: 14px
+        left: 1px
+        font-size: 11px
+        line-height: 15px
+        transform: scale(0, 0)
+        transition: 0.3s
   table
     thead
       tr
