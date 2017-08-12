@@ -25,29 +25,35 @@ def is_favorite(product, user):
 
 @register.assignment_tag
 def cart_message(request, product):
+    """
+    <a href="#" class="add-basket in-the-basket" data-product-id="{product}">
+                        <span class="glyphicon glyphicon-shopping-cart"></span>
+                        В корзине
+                    </a>
+    :param request:
+    :param product:
+    :return:
+    """
     if request.session.get("cart_id"):
         cart_id = request.session.get("cart_id")
         cart, created = Cart.objects.get_or_create(id=cart_id)
         if cart.cartitem_set.filter(product=product).exists():
-            cart_message = """
-                <a href="#" class="add-basket in-the-basket" data-product-id="{product}">
-                        <span class="glyphicon glyphicon-shopping-cart"></span>
-                        В корзине
-                    </a>
+            cart_message = """                               
+                    <span class="glyphicon glyphicon-shopping-cart add-basket in-the-basket" data-toggle="tooltip"
+                     title="" data-placement="top" data-product-id="{product}"
+                          data-original-title="В корзине"></span>
             """.format(product=product.id)
         else:
             cart_message = """
-                <a href="#" class="add-basket" data-product-id="{product}">
-                        <span class="glyphicon glyphicon-shopping-cart"></span>
-                        Добавить в корзину
-                    </a>
+                <span class="glyphicon glyphicon-shopping-cart add-basket" data-toggle="tooltip"
+                     title="" data-placement="top" data-product-id="{product}"
+                          data-original-title="Добавить в корзину"></span>
             """.format(product=product.id)
     else:
         cart_message = """
-                    <a href="#" class="add-basket" data-product-id="{product}">
-                        <span class="glyphicon glyphicon-shopping-cart"></span>
-                        Добавить в корзину
-                    </a>
+                    <span class="glyphicon glyphicon-shopping-cart add-basket" data-toggle="tooltip"
+                     title="" data-placement="top" data-product-id="{product}"
+                          data-original-title="Добавить в корзину"></span>
             """.format(product=product.id)
 
     return mark_safe(cart_message)

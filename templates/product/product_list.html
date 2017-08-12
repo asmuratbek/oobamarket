@@ -11,19 +11,20 @@
 {% for product in object_list %}
 
     <div class="col-md-{{ col }} col-sm-6 new-design">
-        <div class="img-wrapper">
+        <div class="img-wrapper {% if not product.published %} disabled {% endif %}">
             {% if user.is_authenticated and user in product.shop.user.all or user.is_staff %}
 
             <div class="setting-control">
                 <a href="{% url 'product:update_product' slug=product.slug %}" class="glyphicon glyphicon-pencil" data-toggle="tooltip" title="" data-placement="top"
                           data-original-title="Редактировать товар"></a>
-                <a href="" class="glyphicon glyphicon-eye-open" data-toggle="tooltip" title="" data-placement="top"
+                <a href="" class="glyphicon eye {% if product.published %}glyphicon-eye-open {% else %} glyphicon-eye-close {% endif %}" data-toggle="tooltip" title="" data-placement="top"
                           data-original-title="Показать товар"
                    data-status="{% if product.published %}false{% else %}true {% endif %}" data-item="{{ product.id }}"></a>
 {#                <a href="" class="glyphicon glyphicon-eye-close" data-toggle="tooltip" title="" data-placement="top"#}
 {#                          data-original-title="Скрыть товар"></a>#}
-                <a href="" class="glyphicon glyphicon-remove" data-toggle="tooltip" title="" data-placement="top"
-                          data-original-title="Удалить товар"></a>
+                <a class="remove glyphicon glyphicon-remove model-trigger delete-object"
+                           data-url="{% url 'product:delete_product' slug=product.slug %}" data-toggle="tooltip"
+                          title="" data-placement="top" data-original-title="Удалить"></a>
             </div>
                 {% endif %}
 
@@ -39,15 +40,15 @@
 
                 <div class="name-magazin-title">
                     <h3>{{ product.shop.title }}</h3>
-                    <p>{{ product.shop.short_description }}</p>
+                    <p>{{ product.short_description }}</p>
                 </div>
 
                 <div class="button-basket-favorite">
-                    <span class="glyphicon glyphicon-shopping-cart" data-toggle="tooltip" title="" data-placement="top"
-                          data-original-title="Добавить в корзину"></span>
-                    <span class="glyphicon glyphicon-heart  enable" data-product-id="" data-toggle="tooltip" title=""
+                    {% cart_message request product %}
+                    <span class="glyphicon glyphicon-heart  enable {% is_favorite_for_like product request.user %}"
+                          data-product-id="{{ product.id }}" data-toggle="tooltip" title=""
                           data-placement="top"
-                          data-original-title="Добавить в избранные"></span>
+                          data-original-title="{% is_favorite_for_tooltip product request.user %}"></span>
                 </div>
 
                 <div class="title-price">

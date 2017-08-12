@@ -33,7 +33,7 @@ class DeleteProductMixin(object):
     def dispatch(self, request, *args, **kwargs):
         user = request.user
         product = get_object_or_404(Product, slug=self.kwargs.get('slug'))
-        if not user in product.shop.user.all():
+        if not user in product.shop.user.all() and not user.is_staff:
             return HttpResponseForbidden()
 
         return super(DeleteProductMixin, self).dispatch(request, *args, **kwargs)
