@@ -375,14 +375,6 @@ BRAINTREE_PUBLIC = "t2sxn5r5jx8knbcd"
 BRAINTREE_PRIVATE = "a5324df2de5e4da5331f91551bdee1c7"
 
 import os
-import raven
-
-# RAVEN_CONFIG = {
-#     'dsn': 'https://24e2d993c4c042da921a215cf10335bf:e29964a376cc4f0baf40527865d02fcf@sentry.io/167957',
-#     # If you are using git, you can also automatically configure the
-#     # release based on the git info.
-#     'release': raven.fetch_git_sha(os.path.dirname(os.pardir)),
-# }
 
 CKEDITOR_JQUERY_URL = '//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js'
 CKEDITOR_UPLOAD_PATH = "uploads/"

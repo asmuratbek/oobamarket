@@ -88,8 +88,7 @@ class CategoryDetailApiView(MultipleModelAPIView):
         products = Product.objects.filter(category=category)
         if q:
             products = products.filter(
-                Q(title__icontains=str(q)) |
-                Q(short_description__icontains=str(q))
+                Q(title__icontains=str(q))
             ).distinct()
         if price_from and price_from != 'NaN':
             products = products.filter(price__gt=int(price_from))
@@ -126,8 +125,7 @@ class GlobalCategoryDetailApiView(MultipleModelAPIView):
         products = Product.objects.filter(category__section=globalcategory)
         if q:
             products = products.filter(
-                Q(title__icontains=str(q)) |
-                Q(short_description__icontains=str(q))
+                Q(title__icontains=str(q))
             ).distinct()
         if price_from and price_from != 'NaN':
             products = products.filter(price__gt=int(price_from))
@@ -151,12 +149,9 @@ class ProductListApiView(ListAPIView):
 
         if self.request.GET.get('q'):
             q = self.request.GET.get('q')
-            print(q)
             objects = Product.objects.filter(
-                Q(title__icontains=q)|
-                Q(short_description__icontains=q)
+                Q(title__icontains=q)
             ).distinct()
-            print(objects)
         elif self.request.GET.get('shop'):
             shop = self.request.GET.get('shop')
             objects = Product.objects.filter(shop__slug=shop)
@@ -207,8 +202,7 @@ class ShopListApiView(ListAPIView):
         if self.request.GET.get('search'):
             q = self.request.GET.get('search')
             objects = Shop.objects.filter(
-                Q(title__icontains=q)|
-                Q(text__icontains=q)
+                Q(title__icontains=q)
             ).distinct()
             return objects
         else:
@@ -231,8 +225,7 @@ class ShopDetailApiView(MultipleModelAPIView):
         products = Product.objects.filter(shop=shop)
         if q:
             products = products.filter(
-                Q(title__icontains=str(q)) |
-                Q(short_description__icontains=str(q))
+                Q(title__icontains=str(q))
             ).distinct()
         if price_from and price_from != 'NaN':
             products = products.filter(price__gt=int(price_from))
