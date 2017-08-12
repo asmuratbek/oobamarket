@@ -353,7 +353,8 @@ var MainInterface = createClass({
                 <div className="col-md-12 col-lg-3">
                     <ul>
 
-                        <li><a href="#" onClick={this.deleteActiveCategory}>Все категории</a></li>
+                        <li className={this.state.activeCategory == '' ? 'active' : ''}>
+                            <a href="#" onClick={this.deleteActiveCategory}>Все категории</a></li>
                         {categories}
                     </ul>
                 </div>
