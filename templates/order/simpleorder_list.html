@@ -1,40 +1,119 @@
 {% extends 'base-1.html' %}
-
+{% load staticfiles widget_tweaks %}
 
 {% block content %}
     <div class="simpleorder">
         <div class="container">
-            <h1>Заказы</h1>
-            {% if shop.slug %}
-            {% for order in object_list %}
-                <div class="border">
-                    <h3><a href="{% url 'order:simple_detail' pk=order.id %}">Заказ от {{ order.created_at|date:"d.m.y H:i" }}</a></h3>
-                    <p>{{ order.name }}</p>
-                    <p>{{ order.last_name }}</p>
-                    <p>{{ order.phone }}</p>
-                    <p>{{ order.address }}</p>
+            <div class="tab-simpleorder">
+                <div class="head">
+                    <div class="parets">
+                        <ul>
+                            <li>
+                                <label for="parent">
+                                    <input type="checkbox" id="parent">
+                                    <div class="indicator"></div>
+                                </label>
+                            </li>
+                            <li>Номер заказа</li>
+                            <li>Дата</li>
+                            <li>Заказчик</li>
+                            <li>Статус</li>
+                            <li>Адрес доставки</li>
+                            <li>Телефон</li>
+                            <li>Сумма доставки</li>
+                            <li>Комиссия</li>
+                        </ul>
+
+                    </div>
                 </div>
-            {% endfor %}
-            {% else %}
+                <div class="child-order">
+                    <a href=""></a>
+                    <ul>
+                        <li>
+                            <label for="child">
+                                <input type="checkbox" id="child">
+                                <div class="indicator"></div>
+                            </label>
+                        </li>
+                        <li>1</li>
+                        <li>11.08.2017</li>
+                        <li>Rasul</li>
+                        <li>
+                            <select class="form-control" name="" id="">
+                                <option value="">1</option>
+                                <option value="">2</option>
+                                <option value="">3</option>
+                                <option value="">4</option>
+                            </select>
+                        </li>
+                        <li>Очень длинный адрес доставки и Мура Очень длинный адрес доставки и Мура Очень длинный
+                            адрес доставки и Мура
+                        </li>
+                        <li>+996 444 44 44 44</li>
+                        <li>34000 сом</li>
+                        <li>0 сом</li>
+                    </ul>
+                </div>
+                 <div class="child-order">
+                     <a href=""></a>
+                    <ul>
+                        <li>
+                            <label for="child2">
+                                <input type="checkbox" id="child2">
+                                <div class="indicator"></div>
+                            </label>
+                        </li>
+                        <li>1</li>
+                        <li>11.08.2017</li>
+                        <li>Rasul</li>
+                        <li>
+                            <select class="form-control" name="" id="">
+                                <option value="">1</option>
+                                <option value="">2</option>
+                                <option value="">3</option>
+                                <option value="">4</option>
+                            </select>
+                        </li>
+                        <li>Очень длинный адрес доставки и Мура Очень длинный адрес доставки и Мура Очень длинный
+                            адрес доставки и Мура
+                        </li>
+                        <li>+996 444 44 44 44</li>
+                        <li>34000 сом</li>
+                        <li>0 сом</li>
+                    </ul>
+                </div>
+            </div>
+
+
+            <h1>Заказы магазина {{ shop }}</h1>
             {% for order in object_list %}
                 <div class="border">
-                    <h3><a href="{% url 'order:simple_detail' pk=order.id %}">Заказ от {{ order.created_at|date:"d.m.y H:i" }}</a></h3>
+                    <h3><a href="{% url 'order:simple_detail' pk=order.id %}">Заказ
+                        от {{ order.created_at|date:"d.m.y H:i" }}</a></h3>
                     <p>{{ order.name }}</p>
                     <p>{{ order.last_name }}</p>
                     <p>{{ order.phone }}</p>
                     <p>{{ order.address }}</p>
-                    <form method="post" action="">
+                    <p>{{ order.status }}</p>
+                    <form method="post" action="" class="order_change">
                         {% csrf_token %}
-                        {{ form.status }}
+                        <div class="form-group select col-md-6" style="margin-top: 10px">
+                            {{ form.status|attr:"class:form-control " }}
+                        </div>
                         <input type="hidden" name="id" value="{{ order.id }}">
                         <button class="btn" type="submit">Подтвердить</button>
                     </form>
-
                 </div>
             {% endfor %}
-            {% endif %}
         </div>
     </div>
 
 
+
+{% endblock %}
+
+
+{% block js %}
+    <script src="{% static 'js/jquery.2.2.4.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
 {% endblock %}

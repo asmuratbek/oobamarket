@@ -229,7 +229,7 @@ var ProductList = createClass({
     }
     return (
 
-        <div className="col-md-4 col-sm-6">
+        <div className="col-md-4 col-sm-6 old-design">
         <AlertContainer ref={a => this.msg = a} {...alertOptions} />
           <div className={this.props.product.published ? "cover" : "cover active"}>
               <a className="url-item" href={this.props.product.detail_view}></a>

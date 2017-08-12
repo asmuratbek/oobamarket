@@ -115,7 +115,7 @@
     {% if weeks_best_products %}
         <section class="goods-of-week">
             <div class="container">
-                <h2 class="index-title"><a href="{% url 'product:product_list' %}">Товары недели</a></h2>
+                <h2 class="index-title"><a href="{% url 'product:product_list' %}">Последние добавленные товары</a></h2>
                 {% include 'product/product_list.html' with object_list=weeks_best_products col=3 %}
                 <div class="clearfix"></div>
                 <div class="all-goods">

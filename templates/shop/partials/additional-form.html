@@ -2,6 +2,9 @@
 {% with formset.empty_form as form %}
 
     {{ form.id }}
+    <a href="" class="close-additional" data-toggle="tooltip" title="" data-placement="top" data-original-title="Удалить Филиал">
+        <span aria-hidden="true">&times;</span>
+    </a>
     <div class="form-group input col-md-6">
         <label for="">Телефон</label>
         {{ form.phone|attr:"class:form-control" }}
@@ -18,11 +21,11 @@
         {{ form.place|attr:"class:form-control" }}
     </div>
     <div class="clearfix"></div>
-    <div class="form-group col-md-6 btn-toggle-day" data-target="0">
+    <div class="form-group col-md-6 btn-toggle-day" data-target="__prefix__">
         <a class="add btn no-bg btn-toggle-day-time">Указать время работы</a>
     </div>
 
-    <div class="col-md-12 toggle-days" data-id="0">
+    <div class="col-md-12 toggle-days" data-id="__prefix__">
         <i>Оставьте поле пустым если выходной день</i>
         <div class="form-group input col-md-12 switcher" style="margin-top: 10px; margin-bottom: 20px;">
             <label class="switch js-function">
@@ -185,7 +188,7 @@
                 <div class="switch__handle"></div>
             </div>
         </label>
-        <label>Удалить</label>
+        <label>Удалить филиал<i>(удаляется тел, адрес, график работы и расположение на карте)</i></label>
     </div>
     <div class="col-md-6">
         <button type="button" class="btn add no-bg set-marker-trigger" data-id="0">Поставить

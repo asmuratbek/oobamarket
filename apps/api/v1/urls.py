@@ -41,6 +41,7 @@ urlpatterns = [
     url(r'^shop/(?P<slug>[-_\w]+)/update/$', ShopUpdateApiView.as_view(), name='shop_update'),
     url(r'^shop/(?P<slug>[-_\w]+)/delete/$', ShopDeleteApiView.as_view(), name='shop_delete'),
     url(r'^shop/$', ShopListApiView.as_view(), name='shop_list'),
+
     url(r'^rest-auth/', include('rest_auth.urls')),
     url(r'^rest-auth/registration/', include('rest_auth.registration.urls')),
     url(r'^rest-auth/facebook/$', FacebookLogin.as_view(), name='fb_login'),

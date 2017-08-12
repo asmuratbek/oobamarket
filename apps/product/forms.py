@@ -1,6 +1,5 @@
 from django import forms
-from haystack.forms import SearchForm
-
+from .fields import CustomField
 from apps.category.models import Category
 from apps.global_category.models import GlobalCategory
 from apps.shop.models import Shop
@@ -13,7 +12,7 @@ class ProductForm(forms.ModelForm):
         exclude = ['slug', 'objects', 'sell_count', 'counter']
 
     section = forms.ModelChoiceField(queryset=GlobalCategory.objects.all())
-    parent_categories = forms.ModelChoiceField(queryset=Category.objects.filter(parent=None))
+    parent_categories = CustomField(queryset=Category.objects.filter(parent=None))
     removed_images = forms.CharField(required=False)
     uploaded_images = forms.CharField(required=False)
 
@@ -69,28 +68,6 @@ class ProductUpdateForm(forms.ModelForm):
             self.fields[field].widget.attrs.update({
                 'class': 'form-control'
             })
-
-
-class ProductSearchForm(SearchForm):
-    models = [Product]
-
-    def get_models(self):
-        return self.models
-
-    def search(self):
-        sqs = super(ProductSearchForm, self).search().models(*self.get_models())
-        return sqs
-
-
-class ShopSearchForm(SearchForm):
-    models = [Shop]
-
-    def get_models(self):
-        return self.models
-
-    def search(self):
-        sqs = super(ShopSearchForm, self).search().models(*self.get_models())
-        return sqs
 
 
 class ProductImagesForm(forms.ModelForm):

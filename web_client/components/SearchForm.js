@@ -17,6 +17,10 @@ var SearchForm = createClass({
     this.props.onChangePriceTo(e.target.value)
   },
 
+  search: function (e) {
+    this.props.onSearch(e.target.value)
+  },
+
   render: function(){
     return (
       <div className="form-filter">
@@ -24,10 +28,10 @@ var SearchForm = createClass({
 
                     <div className="form-group select">
                         <select className="form-control" value={this.props.orderBy} onChange={this.handleSort}>
+                            <option value="-created_at">Сначала новые </option>
                             <option value="title">По названию</option>
                             <option value="price">Цена по возрастанию</option>
                             <option value="-price">Цена по убыванию </option>
-                            <option value="-created_at">Сначала новые </option>
                         </select>
                     </div>
 
@@ -46,10 +50,10 @@ var SearchForm = createClass({
                             {/*<option value="paid">Платная</option>*/}
                             {/*<option value="self">Самовывоз</option>*/}
                         {/*</select>*/}
-                         <input type="text" className="form-control" placeholder="Поиск товара"/>
-                         <button type="submit">
-                            <span className="glyphicon glyphicon-search"></span>
-                        </button>
+                         <input type="text" className="form-control" placeholder="Поиск товара" onChange={this.search} value={this.props.query} />
+                         {/*<button type="submit">*/}
+                            {/*<span className="glyphicon glyphicon-search"></span>*/}
+                        {/*</button>*/}
                     </div>
 
                 </form>
