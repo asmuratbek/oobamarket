@@ -4,6 +4,46 @@
 {% block content %}
     <div class="simpleorder">
         <div class="container">
+
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <td><input type="checkbox"></td>
+                <td>Номер <br> заказа</td>
+                <td>Дата</td>
+                <td>Заказчик</td>
+                <td>Статус</td>
+                <td>Адрес доставки</td>
+                <td>Телефон</td>
+                <td>Сумма доставки</td>
+                <td>Комиссия</td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td><input type="checkbox"></td>
+                <td>1</td>
+                <td>11.08.2017</td>
+                <td>Rasul</td>
+                <td>
+                    <select  name="" id="">
+                        <option value="">1</option>
+                        <option value="">2</option>
+                        <option value="">3</option>
+                        <option value="">4</option>
+                    </select>
+                </td>
+                <td>Очень длинный адрес доставки и Мура </td>
+                <td>+9995 223 3424 2342</td>
+                <td>34000 сом</td>
+                <td>0 сом</td>
+            </tr>
+            </tbody>
+        </table>
+
+
+
+
             <h1>Заказы магазина {{ shop }}</h1>
                 {% for order in object_list %}
                     <div class="border">
@@ -35,12 +75,6 @@
 {% block js %}
     <script src="{% static 'js/jquery.2.2.4.js' %}"></script>
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
-
-    <script>
-
-
-    </script>
-
-
-
+    <script src="{% static 'js/select2.js' %}"></script>
+    <script src="{% static 'js/common.js' %}"></script>
 {% endblock %}
