@@ -26,7 +26,7 @@ var MainInterface = createClass({
             shops: [],
             loaded: false,
             categories: [],
-            activeCategories: [],
+            activeCategory: '',
             owner: false,
             shopSlug: location.href.split("/")[4]
         }
@@ -63,7 +63,7 @@ var MainInterface = createClass({
         $.ajax({
             type: "GET",
               url: `/api/v1/shop/` + this.state.shopSlug + '?ordering=' + this.state.orderBy + '&page=' + this.state.activePage +
-              '&priceFrom=' + this.state.priceFrom + '&priceTo=' + this.state.priceTo,
+              '&priceFrom=' + this.state.priceFrom + '&priceTo=' + this.state.priceTo + '&category=' + this.state.activeCategory,
               success: function (data) {
                     var products = data.results.map(obj => obj);
                     var pagesCount = Math.ceil(data.count / 21);
@@ -108,7 +108,8 @@ var MainInterface = createClass({
         $.ajax({
             type: "GET",
               url: this.state.baseUrl + '?ordering=' + this.state.orderBy + '&page=' + pageNumber +
-              '&priceFrom=' + this.state.priceFrom + '&priceTo=' + this.state.priceTo + '&q=' + this.state.queryText,
+              '&priceFrom=' + this.state.priceFrom + '&priceTo=' + this.state.priceTo + '&q=' + this.state.queryText
+               + '&category=' + this.state.activeCategory,
               success: function (data) {
                     var products = data.results.map(obj => obj);
                     this.setState({
@@ -131,7 +132,8 @@ var MainInterface = createClass({
         $.ajax({
             type: "GET",
               url: this.state.baseUrl + '?ordering=' + orderBy + '&page=' + this.state.activePage +
-              '&priceFrom=' + this.state.priceFrom + '&priceTo=' + this.state.priceTo + '&q=' + this.state.queryText,
+              '&priceFrom=' + this.state.priceFrom + '&priceTo=' + this.state.priceTo + '&q=' + this.state.queryText
+               + '&category=' + this.state.activeCategory,
               success: function (data) {
                     var products = data.results.map(obj => obj);
                     this.setState({
@@ -162,7 +164,7 @@ var MainInterface = createClass({
             type: "GET",
               url: this.state.baseUrl + '?ordering=' + this.state.orderBy + '&page=1' +
               '&priceFrom=' + this.state.priceFrom + '&priceTo=' + this.state.priceTo +
-              '&q=' + q.toLowerCase(),
+              '&q=' + q.toLowerCase() + '&category=' + this.state.activeCategory,
               success: function (data) {
                     var products = data.results.map(obj => obj);
                     var pagesCount = Math.ceil(data.count / 20);
@@ -190,7 +192,8 @@ var MainInterface = createClass({
         $.ajax({
             type: "GET",
               url: this.state.baseUrl + '?ordering=' + this.state.orderBy + '&page=1' +
-              '&priceFrom=' + parseInt(price) + '&priceTo=' + this.state.priceTo + '&q=' + this.state.queryText,
+              '&priceFrom=' + parseInt(price) + '&priceTo=' + this.state.priceTo + '&q=' + this.state.queryText
+               + '&category=' + this.state.activeCategory,
               success: function (data) {
                     var products = data.results.map(obj => obj);
                     var pagesCount = Math.ceil(data.count / 20);
@@ -217,7 +220,8 @@ var MainInterface = createClass({
         $.ajax({
             type: "GET",
               url: this.state.baseUrl + '?ordering=' + this.state.orderBy + '&page=1' +
-              '&priceFrom=' + this.state.priceFrom + '&priceTo=' + parseInt(price) + '&q=' + this.state.queryText,
+              '&priceFrom=' + this.state.priceFrom + '&priceTo=' + parseInt(price) + '&q=' + this.state.queryText
+               + '&category=' + this.state.activeCategory,
               success: function (data) {
                     var products = data.results.map(obj => obj);
                     var pagesCount = Math.ceil(data.count / 20);
@@ -238,15 +242,71 @@ var MainInterface = createClass({
     },
 
     changeCategory(title) {
-        var activeCategories = this.state.activeCategories;
-        if (activeCategories.indexOf(title) != -1) {
-            activeCategories = _.without(activeCategories, title);
+        var activeCategory = this.state.activeCategory;
+        if (activeCategory.indexOf(title) != -1) {
+            activeCategory = _.without(activeCategory, title);
         }
         else {
-            activeCategories.push(title);
+            activeCategory.push(title);
         }
         this.setState({
-            activeCategories: activeCategories
+            activeCategory: activeCategory
+        })
+    },
+
+    handleCategorySort(id){
+        this.setState({
+            loaded: false
+        });
+        $.ajax({
+            type: "GET",
+              url: this.state.baseUrl + '?ordering=' + this.state.orderBy + '&page=1' +
+              '&priceFrom=' + this.state.priceFrom + '&priceTo=' + this.state.priceTo + '&q=' + this.state.queryText +
+              '&category=' + id,
+              success: function (data) {
+                    var products = data.results.map(obj => obj);
+                    var pagesCount = Math.ceil(data.count / 20);
+                    this.setState({
+                        products: products,
+                        loaded: true,
+                        pagesCount: pagesCount,
+                        productsCount: data.count,
+                        activePage: 1,
+                        activeCategory: id
+                    });
+              }.bind(this),
+              error: function (response, error) {
+                  console.log(response);
+                  console.log(error);
+              }
+        })
+    },
+
+    deleteActiveCategory(e) {
+      e.preventDefault();
+      this.setState({
+          loaded: false
+      });
+        $.ajax({
+            type: "GET",
+              url: this.state.baseUrl + '?ordering=' + this.state.orderBy + '&page=1' +
+              '&priceFrom=' + this.state.priceFrom + '&priceTo=' + this.state.priceTo + '&q=' + this.state.queryText,
+              success: function (data) {
+                    var products = data.results.map(obj => obj);
+                    var pagesCount = Math.ceil(data.count / 20);
+                    this.setState({
+                        products: products,
+                        loaded: true,
+                        activeCategory: '',
+                        pagesCount: pagesCount,
+                        productsCount: data.count,
+                        activePage: 1
+                    });
+              }.bind(this),
+              error: function (response, error) {
+                  console.log(response);
+                  console.log(error);
+              }
         })
     },
 
@@ -260,16 +320,10 @@ var MainInterface = createClass({
         var orderDir = this.state.orderDir;
         var deliveryType = this.state.deliveryType;
         var changeCategory = this.changeCategory;
-        var activeCategories = this.state.activeCategories;
+        var activeCategory = this.state.activeCategory;
         var productDelete = this.productDelete;
         var owner = this.state.owner;
-
-        // if (this.state.activeCategories.length > 0) {
-        //     filteredProducts = _.filter(filteredProducts, function (item) {
-        //         return _.indexOf(this.state.activeCategories, item.category_title) != -1
-        //     }.bind(this));
-        // }
-        // ;
+        var handleCategorySort = this.handleCategorySort;
 
         filteredProducts = this.state.products.map(function (item, index) {
             return (
@@ -286,7 +340,8 @@ var MainInterface = createClass({
                     key={index}
                     category={item}
                     onChangeCategory={changeCategory}
-                    activeCategories={activeCategories}
+                    activeCategory={activeCategory}
+                    categorySort={handleCategorySort}
                 />
             )
         });
@@ -298,7 +353,7 @@ var MainInterface = createClass({
                 <div className="col-md-12 col-lg-3">
                     <ul>
 
-                        <li>Все категории</li>
+                        <li><a href="#" onClick={this.deleteActiveCategory}>Все категории</a></li>
                         {categories}
                     </ul>
                 </div>
