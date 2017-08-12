@@ -157,43 +157,22 @@ class ProductCreateView(LoginRequiredMixin, AddProductMixin, CreateView):
         product.slug = slugify(form.instance.title, max_length=32) + str(random_int)
         product.shop = Shop.objects.get(slug=self.kwargs['slug'])
         product.save()
-        for key, value in self.request.POST.items():
-            if key.startswith('val'):
-                my_value = get_object_or_404(Values, id=int(key[4:]))
-                my_value.products.add(product)
-            elif key.startswith('property') and '---' not in value:
-                my_value = get_object_or_404(Values, id=int(value))
-                my_value.products.add(product)
-            elif key.startswith("man-") and value:
-                my_value, created = Values.objects.get_or_create(value=value, properties_id=int(key[4:]))
-                my_value.products.add(product)
-        if form.cleaned_data['uploaded_images']:
-            if ',' in form.cleaned_data['uploaded_images']:
-                for item in form.cleaned_data['uploaded_images'].split(','):
-                    try:
-                        product_image = ProductImage.objects.get(id=int(item))
-                        product_image.product = product
-                        product_image.save()
-                    except ObjectDoesNotExist:
-                        pass
-            else:
-                try:
-                    product_image = ProductImage.objects.get(id=int(form.cleaned_data['uploaded_images']))
-                    product_image.product = product
-                    product_image.save()
-                except ObjectDoesNotExist:
-                    pass
-        form.save()
-        if form.cleaned_data['removed_images']:
-            for item in form.cleaned_data['removed_images'].split(','):
-                try:
-                    product_image = ProductImage.objects.get(id=int(item))
-                    image_path = MEDIA_ROOT + '/' + product_image.image.name
-                    os.remove(image_path)
-                    product_image.delete()
-                except ObjectDoesNotExist:
-                    pass
-
+        # for key, value in self.request.POST.items():
+        #     if key.startswith('val'):
+        #         my_value = get_object_or_404(Values, id=int(key[4:]))
+        #         my_value.products.add(product)
+        #     elif key.startswith('property') and '---' not in value:
+        #         my_value = get_object_or_404(Values, id=int(value))
+        #         my_value.products.add(product)
+        #     elif key.startswith("man-") and value:
+        #         my_value, created = Values.objects.get_or_create(value=value, properties_id=int(key[4:]))
+        #         my_value.products.add(product)
+        if self.request.FILES.get('image'):
+            avatar = self.request.FILES.get('avatar')
+            images = self.request.FILES.getlist('image')
+            ProductImage.objects.create(product=product, image=avatar, is_avatar=True)
+            other_images = [ProductImage(product=product, image=img) for img in images]
+            ProductImage.objects.bulk_create(other_images)
         return super(ProductCreateView, self).form_valid(form)
 
 
