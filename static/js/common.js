@@ -152,6 +152,22 @@ $(document).ready(function () {
         $(".remove-product").modal('show');
     });
 
+    $('.form-control').on('change', function (e) {
+        e.preventDefault();
+        let that = this;
+        let form = $(that).closest('.order_change');
+        $.ajax({
+            type: 'POST',
+            dataType: 'JSON',
+            data: $(form).serialize(),
+            url:$(form).attr('action'),
+            success: function (responce) {
+                console.log(responce)
+            }
+
+        });
+    });
+
     $(".mobile-auth-btn").click(function () {
         //открыть модальное окно с class="remove-product"
         $(".mobile-auth").modal('show');

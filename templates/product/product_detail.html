@@ -153,6 +153,8 @@
             <div class="item">
                 <form id='review_form' class="product_review" action="{% url 'product:add_review' slug=object.slug %}" method="post">
                     {% csrf_token %}
+
+                    {% if user.is_authenticated %}
                     <div class="name">
                         <h5>Добавить отзыв</h5>
 
@@ -186,6 +188,11 @@
                         </div>
                         <button type="submit">Отправить</button>
                     </div>
+                    {% else %}
+                         <div class="name">
+                        <h5>Чтобы добавить отзыв авторизуйтесь</h5>
+                         </div>
+                    {% endif %}
                 </form>
             </div>
 

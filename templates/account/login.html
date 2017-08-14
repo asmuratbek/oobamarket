@@ -60,9 +60,24 @@
 {% endblock %}
 
 {% block content %}
+
+
     <section class="registration">
-        <div class="container"><br>
-            <h1 style="color: #f3481c;">Для того чтобы создать магазин и добавить товар вам необходимо зарегистрироваться или войти</h1>
+        <div class="container">
+
+                {% if messages %}
+
+                {% for message in messages %}
+                    <br>
+                    <div class="alert alert-info">
+                    <strong>Важно!</strong>{{ message }}
+                    </div>
+                {% endfor %}
+
+            {% endif %}
+
+
+
             <div class="col-md-6">
 
                 <h2>Войти</h2>
