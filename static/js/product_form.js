@@ -36,17 +36,20 @@ $('#uploading-images').on('change', function (e) {
         var img = $('<img>', {src: URL.createObjectURL(file), data_name: file.name,id: obj_id});
         var remove_link = $('<button/>', {type: 'button', class: 'delete-img-el',
                                             id: obj_id, text: 'X'});
+        var div = $('<div/>');
         if (count === 0)
         {
             img.addClass("active-border");
-            images_div.append(img)
-                      .append(remove_link);
+            div.append(img)
+               .append(remove_link);
+            images_div.append(div)
         }
         else
         {
             img.addClass("add-img-el");
-            images_div.append(img)
-                      .append(remove_link);
+            div.append(img)
+                .append(remove_link);
+            images_div.append(div);
         }
         obj_id += 1;
         count += 1;
@@ -62,6 +65,7 @@ $(document).on('click', '.delete-img-el', function () {
     var el_id = parseInt($(this).attr('id'));
     imagesFiles.splice(el_id, 1);
     $('img#' + el_id).remove();
+    $(this).parent('div').remove();
     $(this).remove();
     count = count - 1;
     if (!images_div.children().hasClass('active-border')) {
@@ -69,27 +73,50 @@ $(document).on('click', '.delete-img-el', function () {
     }
 });
 
+var validate_fields = function (elems) {
+    var error = "* Обязательное поле";
+    var errors = 0;
+    $.each(elems, function (i, el) {
+        if((!elems[i].val()) || elems[i].val() === "") {
+            elems[i].parent().find("label.label-error").text(error);
+            errors++;
+        }
+    });
+    if(errors === 0)
+        return true;
+    else
+        return false;
+};
+
 
 $(document).on('click', '#add-product-button', function () {
-    var form = $('#form');
-    var formData = new FormData(form[0]);
-    var name = $('img.active-border').attr("data_name");
-    $.each(imagesFiles, function (i, file) {
-        if(file.name === name)
-            formData.append('avatar', file);
-        else
-            formData.append('image', file);
-    });
-    formData.append('csrfmiddlewaretoken', csrftoken);
-    $.ajax({
-            url:"/product/" + slug + "/add-product/",
+    var fields_list = [$('#id_shop'), $('#global_category'), $('#category_list'), $('#subcategory_list'),
+                        $('#id_title'), $('#id_price')];
+    var not_errors = validate_fields(fields_list);
+    if(not_errors) {
+        var form = $('#form');
+        var formData = new FormData(form[0]);
+        var name = $('img.active-border').attr("data_name");
+        $.each(imagesFiles, function (i, file) {
+            if (file.name === name)
+                formData.append('avatar', file);
+            else
+                formData.append('image', file);
+        });
+        formData.append('csrfmiddlewaretoken', csrftoken);
+        $.ajax({
+            url: "/product/" + slug + "/add-product/",
             type: "POST",
             data: formData,
             processData: false,
             contentType: false,
-            success:function (data) {
-                window.location.href = redirect_path;
+            success: function (data) {
+                if (data.status === 200)
+                    window.location.href = redirect_path;
+                else
+                    console.log("Something gone wrong.")
             }
-          });
+        });
+    }
 
 });
