@@ -15,11 +15,15 @@
             {% if user.is_authenticated and user in product.shop.user.all or user.is_staff %}
 
             <div class="setting-control">
-                <a href="{% url 'product:update_product' slug=product.slug %}" class="glyphicon glyphicon-pencil" data-toggle="tooltip" title="" data-placement="top"
+                <a href="{% url 'product:update_product' slug=product.slug %}" class="glyphicon glyphicon-pencil"
+                   data-toggle="tooltip" title="" data-placement="top"
                           data-original-title="Редактировать товар"></a>
-                <a href="" class="glyphicon eye {% if product.published %}glyphicon-eye-open {% else %} glyphicon-eye-close {% endif %}" data-toggle="tooltip" title="" data-placement="top"
+                <a href="" class="glyphicon eye {% if product.published %}glyphicon-eye-open
+                            {% else %} glyphicon-eye-close {% endif %}" data-toggle="tooltip"
+                   title="" data-placement="top"
                           data-original-title="Показать товар"
-                   data-status="{% if product.published %}false{% else %}true {% endif %}" data-item="{{ product.id }}"></a>
+                   data-status="{% if product.published %}false{% else %}true {% endif %}"
+                   data-item="{{ product.id }}"></a>
                 <a class="remove glyphicon glyphicon-remove model-trigger delete-object"
                            data-url="{% url 'product:delete_product' slug=product.slug %}" data-toggle="tooltip"
                           title="" data-placement="top" data-original-title="Удалить"></a>

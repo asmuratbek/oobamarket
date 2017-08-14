@@ -122,16 +122,18 @@ var ProductList = createClass({
                     if(target.getAttribute("data-status") == "false") {
                       target.setAttribute('data-tip', 'Опубликовать');
                       target.setAttribute('data-message', "Товар успешно опубликован");
+                      target.setAttribute('data-status', 'true');
                       target.classList.remove('glyphicon-eye-open');
                       target.classList.toggle('glyphicon-eye-close');
-                      target.parentElement.parentElement.parentElement.classList.toggle('active');
+                      target.parentElement.parentElement.classList.toggle('disabled');
                     }
                     else {
                       target.setAttribute('data-tip', 'Скрыть');
                       target.setAttribute('data-message', "Товар успешно скрыт");
+                      target.setAttribute('data-status', 'false');
                       target.classList.toggle('glyphicon-eye-open');
                       target.classList.remove('glyphicon-eye-close');
-                      target.parentElement.parentElement.parentElement.classList.remove('active');
+                      target.parentElement.parentElement.classList.remove('disabled');
                     }
 
                 }
@@ -232,17 +234,22 @@ var ProductList = createClass({
             {this.props.product.is_owner ?
 
             <div className="setting-control">
-                <a href={`/products/${this.props.product.slug}/update_product/`} className="glyphicon glyphicon-pencil" data-toggle="tooltip" title="" data-placement="top"
-                          data-original-title="Редактировать товар"></a>
+                <a href={`/product/${this.props.product.slug}/update-product/`} className="glyphicon glyphicon-pencil"
+                   data-toggle="tooltip" title="" data-placement="top"
+                          data-tip="Редактировать товар"></a>
+                <ReactTooltip/>
                 <a href="#" data-message={this.props.product.published ? "Товар успешно скрыт" : "Товар успешно опубликован"}
                              className={`eye glyphicon glyphicon-eye-${this.props.product.published ? 'open' : 'close'}`}
                              data-product-id={this.props.product.id} data-toggle="tooltip" title="" data-placement="bottom"
-                             data-original-title="Скрыть" data-status={`${this.props.product.published ? false : true}`}
+                             data-tip="Скрыть" data-status={`${this.props.product.published ? false : true}`}
                              onClick={this.changePublishStatus}></a>
-                <a href="#" className="remove glyphicon glyphicon-remove-circle model-trigger"
+                <ReactTooltip/>
+                <a href="#" className="remove glyphicon glyphicon-remove model-trigger"
                              data-url={this.props.product.delete_view} data-toggle="modal" data-target="#DeleteModal" title=""
-                             data-placement="bottom" data-product-id={this.props.product.id} data-original-title="Удалить"
+                             data-placement="bottom" data-product-id={this.props.product.id} data-tip="Удалить"
                              onClick={this.deleteProduct}></a>
+                <ReactTooltip/>
+
             </div>
                 : ''}
 
