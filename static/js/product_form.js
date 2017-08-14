@@ -36,19 +36,22 @@ $('#uploading-images').on('change', function (e) {
         var img = $('<img>', {src: URL.createObjectURL(file), data_name: file.name,id: obj_id});
         var remove_link = $('<button/>', {type: 'button', class: 'delete-img-el',
                                             id: obj_id, text: 'X'});
+        var p_text = $('<p/>', {text: 'Главная'});
         var div = $('<div/>');
         if (count === 0)
         {
             img.addClass("active-border");
             div.append(img)
-               .append(remove_link);
+               .append(remove_link)
+               .append(p_text);
             images_div.append(div)
         }
         else
         {
             img.addClass("add-img-el");
             div.append(img)
-                .append(remove_link);
+                .append(remove_link)
+                .append("<p></p>");
             images_div.append(div);
         }
         obj_id += 1;
@@ -56,8 +59,10 @@ $('#uploading-images').on('change', function (e) {
     });
 
 $(document).on('click', '.add-img-el', function () {
-    $('img.active-border').attr('class', 'add-img-el');
+    $('img.active-border').attr('class', 'add-img-el')
+                            .parent().find("p").text("");
     $(this).attr('class', 'active-border')
+            .parent().find("p").text("Главная");
 });
 });
 
@@ -69,7 +74,8 @@ $(document).on('click', '.delete-img-el', function () {
     $(this).remove();
     count = count - 1;
     if (!images_div.children().hasClass('active-border')) {
-        images_div.children().first().attr("class", "active-border")
+        images_div.find("div").first().find("img").attr("class", "active-border");
+        images_div.find("div").first().find("p").text("Главная")
     }
 });
 
@@ -111,10 +117,7 @@ $(document).on('click', '#add-product-button', function () {
             processData: false,
             contentType: false,
             success: function (data) {
-                if (data.status === 200)
-                    window.location.href = redirect_path;
-                else
-                    console.log("Something gone wrong.")
+                window.location.href = redirect_path;
             }
         });
     }
