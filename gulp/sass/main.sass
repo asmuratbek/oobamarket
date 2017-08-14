@@ -805,6 +805,7 @@ header
       transition: 0.3s
       border: 1px solid #eee
       padding-bottom: 60px
+      overflow: hidden
       &:hover
         -webkit-box-shadow: 0px 0px 40px -15px rgba(0,0,0,0.75)
         -moz-box-shadow: 0px 0px 40px -15px rgba(0,0,0,0.75)
@@ -903,14 +904,19 @@ header
           height: 30px
           overflow: hidden
           font-weight: 300
+          text-transform: capitalize
         span
           display: block
           font-size: 14px
+          span
+            display: inline-block
+            margin-right: 1px
+          span:last-child
+            margin-right: 0
         strike
           display: block
           color: #bdbdbd
           font-size: 14px
-
   .col-md-3.old-design:hover, .col-md-4.old-design:hover
     .cover
       border-color: #cecece
@@ -2486,6 +2492,8 @@ ul.category-tab
     overflow: hidden
     li:first-child
       width: 5%
+      z-index: 10
+      position: relative
     li:nth-child(2)
       width: 5%
     li:nth-child(3)
