@@ -124,14 +124,14 @@ var ProductList = createClass({
                       target.setAttribute('data-message', "Товар успешно опубликован");
                       target.classList.remove('glyphicon-eye-open');
                       target.classList.toggle('glyphicon-eye-close');
-                      target.parentElement.parentElement.parentElement.classList.toggle('active');
+                      target.classList.toggle('enable');
                     }
                     else {
                       target.setAttribute('data-tip', 'Скрыть');
                       target.setAttribute('data-message', "Товар успешно скрыт");
                       target.classList.toggle('glyphicon-eye-open');
                       target.classList.remove('glyphicon-eye-close');
-                      target.parentElement.parentElement.parentElement.classList.remove('active');
+                      target.classList.remove('enable');
                     }
 
                 }
@@ -232,7 +232,7 @@ var ProductList = createClass({
             {this.props.product.is_owner ?
 
             <div className="setting-control">
-                <a href={`/products/${this.props.product.slug}/update_product/`} className="glyphicon glyphicon-pencil" data-toggle="tooltip" title="" data-placement="top"
+                <a href={`/product/${this.props.product.slug}/update_product/`} className="glyphicon glyphicon-pencil" data-toggle="tooltip" title="" data-placement="top"
                           data-original-title="Редактировать товар"></a>
                 <a href="#" data-message={this.props.product.published ? "Товар успешно скрыт" : "Товар успешно опубликован"}
                              className={`eye glyphicon glyphicon-eye-${this.props.product.published ? 'open' : 'close'}`}
