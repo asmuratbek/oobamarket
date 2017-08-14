@@ -4193,16 +4193,28 @@ ul.category-tab
       div
         position: relative
         margin-bottom: 15px
-      img
-        width: 100%
-        position: relative
+        width: 50%
+        float: left
         padding: 20px
+        height: 200px
+      img
+        position: absolute
+        top: -9999px
+        bottom: -9999px
+        right: -9999px
+        left: -9999px
+        margin: auto
+        display: block
+        max-width: 80%
+
+        padding: 10px 20px
       .active-border
         border: 1px solid #ddd
 
       .delete-img-el
         position: absolute
         top: 5px
+        border: 0
         right: 5px
         border-radius: 50%
         padding: 5px
