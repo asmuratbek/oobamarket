@@ -110,6 +110,11 @@ class Product(PublishBaseModel, Counter):
     def get_category_title(self):
         return self.category.title
 
+    def get_avatar_image(self):
+        if self.productimage_set.filter(is_avatar=True):
+            return self.productimage_set.filter(is_avatar=True).first().image.url
+        else:
+            return self.get_main_image()
 
 
 class FavoriteProduct(models.Model):
@@ -161,6 +166,7 @@ class ProductImage(models.Model):
 
     product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name="Товар", null=True)
     image = models.ImageField(upload_to="products/image")
+    is_avatar = models.BooleanField(verbose_name='Аватар продукта', default=False)
 
     def delete(self, *args, **kwargs):
         storage, path = self.image.storage, self.image.path

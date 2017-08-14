@@ -1,42 +1,100 @@
 {% for shop in shops %}
-    <div class="col-md-3 col-sm-6">
-        <div class="single-magazin">
-            <div class="cover">
-                <a class="url-item" href="{{ shop.get_absolute_url }}"></a>
-                <div class="top-line">
-                    <h3>{{ shop.title|truncatechars:28 }}</h3>
-                </div>
-                <div class="img-wrapper">
-                    <img src="{{ shop.get_logo }}" alt="">
-                </div>
-                <div class="clearfix"></div>
-                <div class="bottom-line">
-                    {% if shop.contacts_set.first.phone %}
-                        <div>
-                            <a href="tel: {{ shop.contacts_set.first.phone }}" class="">
-                                <span class="glyphicon glyphicon-earphone"></span>
-                                {{ shop.contacts_set.first.phone }}
-                            </a>
-                        </div>
+    {#    <div class="col-md-3 col-sm-6">#}
+    {#        <div class="single-magazin">#}
+    {#            <div class="cover">#}
+    {#                <a class="url-item" href="{{ shop.get_absolute_url }}"></a>#}
+    {#                <div class="top-line">#}
+    {#                    <h3>{{ shop.title|truncatechars:28 }}</h3>#}
+    {#                </div>#}
+    {#                <div class="img-wrapper">#}
+    {#                    <img src="{{ shop.get_logo }}" alt="">#}
+    {#                </div>#}
+    {#                <div class="clearfix"></div>#}
+    {#                <div class="bottom-line">#}
+    {#                    {% if shop.contacts_set.first.phone %}#}
+    {#                        <div>#}
+    {#                            <a href="tel: {{ shop.contacts_set.first.phone }}" class="">#}
+    {#                                <span class="glyphicon glyphicon-earphone"></span>#}
+    {#                                {{ shop.contacts_set.first.phone }}#}
+    {#                            </a>#}
+    {#                        </div>#}
+    {##}
+    {#                    {% else %}#}
+    {##}
+    {#                        <div>#}
+    {#                            <a href="tel: 0312 89 53 33" class="">#}
+    {#                                <span class="glyphicon glyphicon-earphone"></span>#}
+    {#                                не указан#}
+    {#                            </a>#}
+    {#                        </div>#}
+    {##}
+    {#                    {% endif %}#}
+    {#                    <div>#}
+    {#                        <a href="mailto:{{ shop.email }}" class="">#}
+    {#                            <span class="glyphicon glyphicon-envelope"></span>#}
+    {#                            {{ shop.email }}#}
+    {#                        </a>#}
+    {#                    </div>#}
+    {#                </div>#}
+    {#            </div>#}
+    {#        </div>#}
+    {#    </div>#}
 
-                    {% else %}
 
-                        <div>
-                            <a href="tel: 0312 89 53 33" class="">
-                                <span class="glyphicon glyphicon-earphone"></span>
-                                не указан
-                            </a>
-                        </div>
+    <div class="col-md-3 col-sm-6 new-design">
+        <div class="single-magazin new-design">
+            <div class="img-wrapper ">
 
-                    {% endif %}
-                    <div>
-                        <a href="mailto:{{ shop.email }}" class="">
-                            <span class="glyphicon glyphicon-envelope"></span>
-                            {{ shop.email }}
-                        </a>
+                <img src="{{ shop.get_logo }}" alt="">
+
+                <div class="back-fade">
+
+                    <a class="url" href="{{ shop.get_absolute_url }}"></a>
+
+                    <div class="name-magazin-title">
+                        <h3>{{ shop.title|truncatechars:28 }}</h3>
                     </div>
+
+                    <div class="info">
+                        {% if shop.contacts_set.first.phone %}
+                            <div>
+                                <a href="tel: {{ shop.contacts_set.first.phone }}" class="">
+                                    <span class="glyphicon glyphicon-earphone"></span>
+                                    {{ shop.contacts_set.first.phone }}
+                                </a>
+                            </div>
+
+                        {% else %}
+
+                            <div>
+                                <a href="tel: 0312 89 53 33" class="">
+                                    <span class="glyphicon glyphicon-earphone"></span>
+                                    не указан
+                                </a>
+                            </div>
+
+                        {% endif %}
+                        <div>
+                            <a href="mailto:{{ shop.email }}" class="">
+                                <span class="glyphicon glyphicon-envelope"></span>
+                                {{ shop.email }}
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="bottom-line">
+                        <div class="col-md-6">
+                            <h3> {{ shop.title|truncatechars:28 }} </h3>
+                        </div>
+                        <div class="col-md-6">
+                            <a href="">подписаться</a>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
     </div>
+
+
 {% endfor %}

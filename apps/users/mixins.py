@@ -24,7 +24,7 @@ class UpdateProductMixin(object):
         user = request.user
         my_product = get_object_or_404(Product, slug=kwargs.get('slug'))
         my_shop = user.shop_set.all()
-        if my_product.shop not in my_shop:
+        if my_product.shop not in my_shop and not user.is_staff:
             return HttpResponseForbidden()
         return super(UpdateProductMixin, self).dispatch(request, *args, **kwargs)
 
@@ -33,7 +33,7 @@ class DeleteProductMixin(object):
     def dispatch(self, request, *args, **kwargs):
         user = request.user
         product = get_object_or_404(Product, slug=self.kwargs.get('slug'))
-        if not user in product.shop.user.all():
+        if not user in product.shop.user.all() and not user.is_staff:
             return HttpResponseForbidden()
 
         return super(DeleteProductMixin, self).dispatch(request, *args, **kwargs)

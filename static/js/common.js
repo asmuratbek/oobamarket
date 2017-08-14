@@ -412,7 +412,7 @@ $(document).ready(function () {
     });
 
 
-    $(".hearth.pull-right").click(function (event) {
+    $(".glyphicon-heart").click(function (event) {
         event.preventDefault();
         var thisIcon = $(this);
         var productId = $(this).attr("data-product-id");
@@ -469,9 +469,9 @@ $(document).ready(function () {
         $(this).toggleClass("glyphicon-eye-open glyphicon-eye-close");
         if (!$(this).hasAttr('data-status')) $(this).attr('data-status', 'false');
         if ($(this).attr('data-status') === 'false') {
-            $(this).attr('data-original-title', 'Скрытый');
+            $(this).attr('data-original-title', 'Опубликовать');
             $(this).attr('data-status', 'true');
-            $(this).parent().parent().addClass('active');
+            $(this).parent().parent().addClass('disabled');
             $.ajax({
                 url: '/product/change_publish_status/',
                 type: 'GET',
@@ -487,7 +487,7 @@ $(document).ready(function () {
         } else {
             $(this).attr('data-original-title', 'Скрыть');
             $(this).attr('data-status', 'false');
-            $(this).parent().parent().removeClass('active');
+            $(this).parent().parent().removeClass('disabled');
             $.ajax({
                 url: '/product/change_publish_status/',
                 type: 'GET',
@@ -641,7 +641,6 @@ $(document).ready(function () {
         event.preventDefault();
         var thisItem = $(this);
         var productId = thisItem.attr("data-product-id");
-        // var button = thisItem.closest('.basket-text');
         $.ajax({
             type: "GET",
             url: "/cart/",
@@ -654,12 +653,12 @@ $(document).ready(function () {
                 console.log(data.total_items);
                 $('.cart-count').text(data.total_items);
                 if (data.item_added) {
-                    thisItem.html('<span class="glyphicon glyphicon-shopping-cart"></span>В корзине');
-                    thisItem.toggleClass("in-the-basket");
+                    thisItem.toggleClass("enable");
+                    thisItem.attr('data-original-title', "В корзине");
                 }
                 else if (data.deleted) {
-                    thisItem.html('<span class="glyphicon glyphicon-shopping-cart"></span>Добавить в корзину');
-                    thisItem.removeClass("in-the-basket");
+                    thisItem.removeClass("enable");
+                    thisItem.attr('data-original-title', "Добавить в корзину");
                 }
             },
             error: function (response, error) {

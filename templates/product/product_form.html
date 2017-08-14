@@ -7,9 +7,7 @@
         <div class="container">
 
             <div class="form-filter">
-                <form class="form-inline" method="post" enctype="multipart/form-data"
-                      data-media-upload-url="{% url 'product:upload_images' %}"
-                      data-remove-uploaded-media-url="{% url 'product:remove_images' %}" id="form">
+                <form class="form-inline" id="form">
                     {% csrf_token %}
                     {#                {{ form.errors }}#}
                     <div class="col-md-8">
@@ -163,7 +161,7 @@
 
                         <div class="form-group btn-group-form col-md-12">
                             {#                            <button type="submit" class="btn cancel"> Отменить</button>#}
-                            <button type="submit" class="btn add">Добавить товар</button>
+                            <button type="submit" id="add-product-button" class="btn add">Добавить товар</button>
                         </div>
                     </div>
 
@@ -202,6 +200,7 @@
                             <span id="file-counter" style="color: red;"></span>
                         </div>
                         <input type="file" id="uploading-images" style="display: none;" multiple>
+                        <input type="file" id="images-list" style="display: none" multiple>
                         {% render_field form.image %}
                         {% render_field form.removed_images type='hidden' %}
                         {% render_field form.uploaded_images type='hidden' %}
@@ -271,7 +270,7 @@
     {{ block.super }}
     <script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
     <script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
-    <script src="{% static "js/image.uploading.multiple.js" %}"></script>
+{#    <script src="{% static "js/image.uploading.multiple.js" %}"></script>#}
     <script src="{% static "js/product_form.js" %}"></script>
 {% endblock %}
 

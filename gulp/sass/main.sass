@@ -788,6 +788,12 @@ header
   .col-md-3.new-design, .col-md-4.new-design
     margin-bottom: 20px
     padding: 0 10px
+    .img-wrapper:hover
+      .back-fade
+        background-color: rgba(255, 255, 255, 0.95)
+    .img-wrapper.disabled
+      img
+        filter: grayscale(100%)
     .img-wrapper
       position: relative
       height: 340px
@@ -819,7 +825,7 @@ header
       bottom: 0
       right: 0
       left: 0
-      background-color: rgba(255, 255, 255, 0.6)
+      transition: 0.3s
       a
         position: absolute
         top: 0
@@ -1603,76 +1609,177 @@ header
         color: #ed1c24
         span
           color: #ed1c24
-  .single-magazin
-    width: 250px
-    float: left
-    margin-left: 35px
-    h3
-      text-align: center
-      font-size: 15px
-      font-weight: 300
+.single-magazin
+  width: 250px
+  float: left
+  margin-left: 35px
+  h3
+    text-align: center
+    font-size: 15px
+    font-weight: 300
+    margin-bottom: 20px
+    color: #808080
+  .cover
+    border: 1px solid #eee
+    background-color: #fff
+    transition: 0.3s
+    position: relative
+    a.url-item
+      position: absolute
+      top: 0
+      bottom: 0
+      right: 0
+      left: 0
+      z-index: 1
+    .top-line
+      background-color: #ECECEC
+      padding: 5px
       margin-bottom: 20px
-      color: #808080
-    .cover
-      border: 1px solid #eee
-      background-color: #fff
       transition: 0.3s
-      position: relative
-      a.url-item
-        position: absolute
-        top: 0
-        bottom: 0
-        right: 0
-        left: 0
-        z-index: 1
-      .top-line
-        background-color: #ECECEC
-        padding: 5px
-        margin-bottom: 20px
-        transition: 0.3s
-        h2
-          text-align: center
-          color: #808080
-          font-size: 12px
-          text-transform: uppercase
-          font-weight: 400
-          a
-            display: block
-            color: #808080
-            z-index: 9
-            position: relative
-            &:hover
-              color: #F3481C
-      .img-wrapper
-        width: 100%
-        height: 220px
-        overflow: hidden
-        position: relative
-        margin: 0 auto
-
-        img
-          position: absolute
-          top: -9999px
-          bottom: -9999px
-          right: -9999px
-          left: -9999px
-          margin: auto
+      h2
+        text-align: center
+        color: #808080
+        font-size: 12px
+        text-transform: uppercase
+        font-weight: 400
+        a
           display: block
-          max-width: 80%
-      .bottom-line
-        width: 100%
-        padding-left: 20px
-        z-index: 2
-        position: relative
-        margin-bottom: 20px
-        margin-top: 20px
-        div
-          margin-bottom: 10px
-          a
-            font-size: 14px
-            color: #686868
-            span
-              color: #CCCCCC
+          color: #808080
+          z-index: 9
+          position: relative
+          &:hover
+            color: #F3481C
+    .img-wrapper
+      width: 100%
+      height: 220px
+      overflow: hidden
+      position: relative
+      margin: 0 auto
+
+      img
+        position: absolute
+        top: -9999px
+        bottom: -9999px
+        right: -9999px
+        left: -9999px
+        margin: auto
+        display: block
+        max-width: 80%
+    .bottom-line
+      width: 100%
+      padding-left: 20px
+      z-index: 2
+      position: relative
+      margin-bottom: 20px
+      margin-top: 20px
+      div
+        margin-bottom: 10px
+        a
+          font-size: 14px
+          color: #686868
+          span
+            color: #CCCCCC
+.single-magazin.new-design
+  .img-wrapper:hover
+    .back-fade
+      background-color: rgba(255, 255, 255, 0.95)
+  .img-wrapper
+    position: relative
+    height: 300px
+    transition: 0.3s
+    border: 1px solid #eee
+    padding-bottom: 60px
+    background-color: #fff
+    &:hover
+      -webkit-box-shadow: 0px 0px 40px -15px rgba(0,0,0,0.75)
+      -moz-box-shadow: 0px 0px 40px -15px rgba(0,0,0,0.75)
+      box-shadow: 0px 0px 40px -15px rgba(0,0,0,0.75)
+      .name-magazin-title, .info
+        opacity: 1
+    img
+      object-fit: cover
+      position: absolute
+      top: -10050px
+      bottom: -9999px
+      right: -9999px
+      left: -9999px
+      margin: auto
+      display: block
+      max-width: 80%
+  .back-fade
+    position: absolute
+    top: 0
+    bottom: 0
+    right: 0
+    left: 0
+    transition: 0.3s
+    a.url
+      position: absolute
+      top: 0
+      bottom: 0
+      right: 0
+      left: 0
+      z-index: 1
+    .name-magazin-title
+      text-align: center
+      padding-top: 40px
+      opacity: 0
+      transition: 0.4s
+      h3
+        text-transform: uppercase
+        margin-bottom: 15px
+        font-weight: 400
+        height: 50px
+        overflow: hidden
+        color: #333
+
+    .info
+      margin-top: 20px
+      transition: 0.4s
+      padding: 0 20px
+      opacity: 0
+      overflow: hidden
+      text-align: left
+      a
+        color: #333
+        display: inline-block
+        margin-bottom: 10px
+        span
+          margin-right: 10px
+
+    .bottom-line
+      height: 60px
+      padding: 15px 0
+      position: absolute
+      bottom: 0
+      right: 0
+      left: 0
+      background-color: #fff
+      overflow: hidden
+      display: -webkit-inline-box
+      display: -ms-inline-flexbox
+      display: inline-flex
+      -webkit-box-align: center
+      -ms-flex-align: center
+      align-items: center
+      .col-md-6
+        padding: 0 6px
+        h3
+          color: #333
+
+        a
+          color: #fff
+          font-size: 15px
+          text-transform: capitalize
+          -webkit-box-shadow: none!important
+          box-shadow: none!important
+          border-radius: 3px
+          background-color: #e94d09!important
+          padding: 7px 10px
+          font-weight: 300
+          z-index: 2
+          position: relative
+
 .reviews.edit
   margin-bottom: 300px
   h5
@@ -2314,8 +2421,20 @@ ul.category-tab
       a
         color: #fff !important
 .tab-simpleorder
+  border: 2px solid #e9e9e9
+  border-radius: 3px
+
+  border-bottom: 0
+  label > input:checked + .indicator:after
+    transform: scale(1, 1)
   label
     position: relative
+    width: 15px
+    height: 15px
+    cursor: pointer
+    display: block
+    margin: 0 auto
+    z-index: 2
     input
       display: none
     .indicator
@@ -2324,31 +2443,78 @@ ul.category-tab
       bottom: 0
       right: 0
       left: 0
+      width: 15px
+      height: 15px
+      margin-right: 5px
       &:before
         position: absolute
         top: 0
         left: 0
-        width: 10px
-        height: 10px
-        border: 1px solid #ccc
+        width: 15px
+        height: 15px
+        border: 1px solid #aeaeae
+        background-color: #f6f6f6
         content: ''
+        border-radius: 2px
       &:after
         content: "\e013"
         position: absolute
         font-family: 'Glyphicons Halflings'
         top: 0
-        left: 0
+        left: 1px
+        font-size: 11px
+        line-height: 15px
+        transform: scale(0, 0)
+        transition: 0.3s
+  ul
+    padding: 15px 0
+    overflow: hidden
+    li:first-child
+      width: 5%
+    li:nth-child(2)
+      width: 5%
+    li:nth-child(3)
+      width: 10%
+    li:nth-child(6)
+      width: 20%
+      padding: 0 10px
+    li
+      width: 12%
+      float: left
+      align-items: center
+      display: grid
+      height: 40px
+      text-align: center
+      overflow: hidden
 
-        font-size: 14px
-  table
-    thead
-      tr
-        td
+  .head
+    background-color: #e9e9e9
+    ul
+      li
+        font-weight: 300
 
-    tbody
-      tr
-        td
+  .child-order:hover
+    background-color: #f4f4f4
+  .child-order
+    border-bottom: 2px solid #e9e9e9
+    transition: 0.3s
+    position: relative
+    a
+      position: absolute
+      top: 0
+      bottom: 0
+      right: 0
+      left: 0
+    ul
+      li
 
+      li
+        vertical-align: middle !important
+        transition: 0.3s
+
+  select
+    width: 100%
+    z-index: 2
 .shop-category
   margin-bottom: 200px
   .form-filter
@@ -2618,8 +2784,8 @@ ul.category-tab
         width: 100%
         z-index: 2
         position: relative
-        border-bottom: 1px solid #ccc;
-        padding-bottom: 4px;
+        border-bottom: 1px solid #ccc
+        padding-bottom: 4px
         .in-the-basket:hover
 
         .in-the-basket
@@ -3993,6 +4159,7 @@ ul.category-tab
         font-size: 16px
         color: #fff
         font-weight: 300
+
     .info
       text-align: center
       span
@@ -4000,6 +4167,32 @@ ul.category-tab
         display: inline-block
         margin-bottom: 10px
     #wrapper-files
+      div
+        position: relative
+        margin-bottom: 15px
+      img
+        width: 100%
+        position: relative
+        padding: 20px
+      .active-border
+        border: 1px solid #ddd
+
+      .delete-img-el
+        position: absolute
+        top: 5px
+        right: 5px
+        border-radius: 50%
+        padding: 5px
+        text-align: center
+        cursor: pointer
+        color: #fff
+        font-weight: 300
+        width: 30px
+        height: 30px
+        outline: 0 !important
+        background-color: #f3481c
+        &:hover
+          background-color: #d03e19
       .product-images-block
         img
           width: 100% !important
@@ -4848,8 +5041,9 @@ body.landing
 
       li.active
         background-color: #f3481c
-        color: #fff
+
         a
+          color: #fff
       li
         padding: 13px 20px
         background-color: #fff
