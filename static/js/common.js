@@ -653,12 +653,12 @@ $(document).ready(function () {
                 console.log(data.total_items);
                 $('.cart-count').text(data.total_items);
                 if (data.item_added) {
-                    thisItem.html('<span class="glyphicon glyphicon-shopping-cart"></span>В корзине');
-                    thisItem.toggleClass("in-the-basket");
+                    thisItem.toggleClass("enable");
+                    thisItem.attr('data-original-title', "В корзине");
                 }
                 else if (data.deleted) {
-                    thisItem.html('<span class="glyphicon glyphicon-shopping-cart"></span>Добавить в корзину');
-                    thisItem.removeClass("in-the-basket");
+                    thisItem.removeClass("enable");
+                    thisItem.attr('data-original-title', "Добавить в корзину");
                 }
             },
             error: function (response, error) {

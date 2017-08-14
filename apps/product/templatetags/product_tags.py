@@ -39,7 +39,7 @@ def cart_message(request, product):
         cart, created = Cart.objects.get_or_create(id=cart_id)
         if cart.cartitem_set.filter(product=product).exists():
             cart_message = """                               
-                    <span class="glyphicon glyphicon-shopping-cart add-basket in-the-basket" data-toggle="tooltip"
+                    <span class="glyphicon glyphicon-shopping-cart add-basket enable" data-toggle="tooltip"
                      title="" data-placement="top" data-product-id="{product}"
                           data-original-title="В корзине"></span>
             """.format(product=product.id)
