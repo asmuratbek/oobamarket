@@ -631,7 +631,6 @@ header
       background-color: #FAFAFA
       .img-wrapper
         transform: rotateY(360deg)
-
 .goods-of-week
   margin-bottom: 40px
   h2.index-title
@@ -764,7 +763,7 @@ header
       color: #333
       text-decoration: none
   .add-product
-    padding: 149px 30px
+    padding: 82px 30px
     background-color: #fff
     text-align: center
     i
@@ -788,6 +787,12 @@ header
   .col-md-3.new-design, .col-md-4.new-design
     margin-bottom: 20px
     padding: 0 10px
+    .url-item
+      position: absolute
+      top: 0
+      bottom: 0
+      right: 0
+      left: 0
     .img-wrapper:hover
       .back-fade
         background-color: rgba(255, 255, 255, 0.95)
@@ -1154,6 +1159,7 @@ header
 .magazin
   margin-bottom: 40px
   text-align: center
+  overflow: hidden
   a.add
     margin-top: 20px
   h2
@@ -1672,6 +1678,8 @@ header
       position: relative
       margin-bottom: 20px
       margin-top: 20px
+      h3
+        margin-bottom: 0
       div
         margin-bottom: 10px
         a
@@ -1679,7 +1687,12 @@ header
           color: #686868
           span
             color: #CCCCCC
+
 .single-magazin.new-design
+  width: 100%
+  float: none
+  margin: 0
+  overflow: hidden
   .img-wrapper:hover
     .back-fade
       background-color: rgba(255, 255, 255, 0.95)
@@ -1766,6 +1779,7 @@ header
         padding: 0 6px
         h3
           color: #333
+          margin-bottom: 0
 
         a
           color: #fff
@@ -1779,7 +1793,8 @@ header
           font-weight: 300
           z-index: 2
           position: relative
-
+          &:hover
+            background-color: #d03e19 !important
 .reviews.edit
   margin-bottom: 300px
   h5
