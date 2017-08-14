@@ -216,6 +216,7 @@ class ShopSerializer(ModelSerializer):
 
         )
 
+
     # def get_used_categories(self, obj):
     #     return obj.get_used_categories()
 
