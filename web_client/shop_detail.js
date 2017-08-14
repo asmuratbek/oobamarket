@@ -370,7 +370,7 @@ var MainInterface = createClass({
                         onChangePriceTo={ this.changePriceTo }
                     />
                     {owner ?
-                        <div className="col-md-4 col-sm-6">
+                        <div className="col-md-4 col-sm-6 new-design">
                             <div className="cover">
                                 <a className="url-item" href={`/product/${this.state.shopSlug}/add-product/`}></a>
                                 <div className="add-product">

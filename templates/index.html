@@ -129,9 +129,12 @@
         <h2><a href="{% url 'shops:list' %}">Магазины</a></h2>
 
         <div class="container">
-            {% include 'shop/shops.html' with shops=shops %}
+            <div class="row">
+                {% include 'shop/shops.html' with shops=shops %}
             <div class="clearfix"></div>
             <a class="btn add" href="{% url 'shops:list' %}">Показать все магазины</a>
+            </div>
+
         </div>
 
     </section>

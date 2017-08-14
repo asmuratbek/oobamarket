@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Q
-from django.http import HttpResponseRedirect, HttpResponseBadRequest
+from django.http import HttpResponseRedirect, HttpResponseBadRequest, Http404
 from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404, render_to_response
 from django.views.decorators.csrf import csrf_exempt
