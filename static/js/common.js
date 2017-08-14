@@ -746,9 +746,11 @@ $(document).ready(function () {
             success: function (data) {
                 if ($('.search-index').length) {
                     $('.search-index').append(data);
+                    $('.see-more').attr('href', '/search?q=' + query);
                 }
                 else {
                     $('header').append(data);
+                    $('.see-more').attr('href', '/search?q=' + query);
                 }
 
             }
