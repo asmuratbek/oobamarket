@@ -137,10 +137,14 @@ class SimpleOrderListView(ListView):
     model = SimpleOrder
     slug_field = 'username'
     slug_url_kwarg = 'username'
+    template_name = 'order/user_order_history.html'
 
     def get_queryset(self):
         return SimpleOrder.objects.filter(user__username=self.kwargs['username'])
 
+    # def get_context_data(self, **kwargs):
+    #     context = super(SimpleOrderListView, self).get_context_data(**kwargs)
+    #     context['shop'] = Shop.objects.first()
 
 class SimpleOrderUpdateView(LoginRequiredMixin, UpdateView):
     model = SimpleOrder
