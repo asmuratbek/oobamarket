@@ -20,6 +20,7 @@
         return this.attr(value) !== undefined;
     };
 
+
     let formSetsCounter = 0;
     $(function () {
         $('#add-new-contact').click(function (ev) {
@@ -28,7 +29,6 @@
             formSetsCounter = count;
             let tmplMarkup = $('#contact-template').html();
             let compiledTmpl = tmplMarkup.replace(/__prefix__/g, count)
-            console.log(compiledTmpl);
             $('div.inline-appended').append(compiledTmpl);
             $('#id_contacts_set-TOTAL_FORMS').attr('value', count + 1);
             initSetMarkerButton();
@@ -37,9 +37,25 @@
             Disabled();
             Switch();
             TimepickerFrom();
+            DeleteForm();
             //openMarkerModal(formSetsCounter);
         });
     });
+
+    function DeleteForm(){
+        let count = parseInt($('#id_contacts_set-TOTAL_FORMS').attr('value'), 10);
+        $('.close-additional').click(function (e) {
+        e.preventDefault();
+        let parent = $(this).closest('.inline-');
+        parent.remove();
+        if (parent.remove()){
+            $('#id_contacts_set-TOTAL_FORMS').attr('value', count - 1);
+        }
+
+        console.log(parent);
+
+    });
+    }
 
 
     $(".btn-toggle-day").click(function (e) {
@@ -146,7 +162,6 @@
     }
 
     function initToggle() {
-        console.log('Function called');
         $(".btn-toggle-day").each(function () {
             $(this).unbind('click').bind('click', function (e) {
                 $('.toggle-days[data-id=' + $(this).attr('data-target') + ']').slideToggle("100");
@@ -193,9 +208,9 @@
 
 
             }
-            marker.addListener('click', function () {
-                removeMarker(marker);
-            });
+{#            marker.addListener('click', function () {#}
+{#                removeMarker(marker);#}
+{#            });#}
         }
 
 
@@ -224,10 +239,12 @@
             marker.setMap(map);
         }
 
-
-        marker.addListener('click', function () {
+        if (markers.length > 0){
+           marker.addListener('click', function () {
             removeMarker(marker);
         });
+        }
+
     }
 
     function removeMarker(marker) {

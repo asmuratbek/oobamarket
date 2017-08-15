@@ -37,7 +37,7 @@ var MainInterface = createClass({
         params.forEach(function (i) {
             if (i.split("=")[0] == "q") {
                 this.setState({
-                    queryText: i.split("=")[1].toLowerCase()
+                    queryText: i.split("=")[1]
                 })
             }
         }.bind(this));
@@ -164,7 +164,7 @@ var MainInterface = createClass({
             type: "GET",
               url: this.state.baseUrl + '?ordering=' + this.state.orderBy + '&page=1' +
               '&priceFrom=' + this.state.priceFrom + '&priceTo=' + this.state.priceTo +
-              '&q=' + q.toLowerCase() + '&category=' + this.state.activeCategory,
+              '&q=' + q + '&category=' + this.state.activeCategory,
               success: function (data) {
                     var products = data.results.map(obj => obj);
                     var pagesCount = Math.ceil(data.count / 20);
@@ -173,7 +173,7 @@ var MainInterface = createClass({
                         loaded: true,
                         pagesCount: pagesCount,
                         productsCount: data.count,
-                        queryText: q.toLowerCase(),
+                        queryText: q,
                         activePage: 1
                     });
               }.bind(this),

@@ -6,7 +6,9 @@
         data-original-title="{{ category.title }}">
         <div class="img-wrapper">
             <a href="{{ category.get_absolute_url }}">
-                <img src="{{ category.get_icon }}" alt="">
+                {% if category.get_icon %}
+                    <img src="{{ category.get_icon }}" alt="">
+                {% endif %}
             </a>
         </div>
     </li>

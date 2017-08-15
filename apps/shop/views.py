@@ -1,5 +1,6 @@
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, AccessMixin
 from django.http import JsonResponse, HttpResponseRedirect, HttpResponseBadRequest
 from django.shortcuts import render, get_object_or_404, redirect, render_to_response
 from django.urls import reverse
@@ -24,6 +25,8 @@ import random
 
 
 # Create your views here.
+class ShopListView(generic.ListView):
+    model = Shop
 
 
 class ShopDetailView(generic.DetailView):
@@ -39,6 +42,57 @@ class ShopDetailView(generic.DetailView):
         context['sub_types'] = SUBSCRIPTION_TYPES
         context['admin'] = self.object.user.all()
         return context
+
+
+class LoginRequiredMixin1(AccessMixin):
+    """
+    CBV mixin which verifies that the current user is authenticated.
+    """
+
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            messages.info(request,
+                          'Для того чтобы создать магазин и добавить товар вам необходимо зарегистрироваться или войти.')
+            return self.handle_no_permission()
+        return super(LoginRequiredMixin1, self).dispatch(request, *args, **kwargs)
+
+
+class ShopCreateView(LoginRequiredMixin1, FormsetMixin, CreateView):
+    form_class = ShopForm
+    formset_class = ShopInlineFormSet
+    model = Shop
+    template_name = 'shop/shop_form.html'
+
+    def get_success_url(self):
+        return reverse('shops:detail', args=(self.object.slug,))
+
+    def form_valid(self, form, formset):
+        random_int = random.randrange(0, 1010)
+        form.instance.slug = slugify(form.instance.title, max_length=32) + str(random_int)
+        self.object = form.save()
+        form.instance.user.add(self.request.user)
+        formset.instance = self.object
+        formset.save()
+        return super(ShopCreateView, self).form_valid(form, formset)
+
+
+class ShopUpdateView(LoginRequiredMixin, FormsetMixin, ShopMixin, UpdateView):
+    model = Shop
+    is_update_view = True
+    form_class = ShopForm
+    formset_class = ShopInlineFormSet
+    template_name = 'shop/shop_form.html'
+
+
+class ShopDeleteView(LoginRequiredMixin, ShopMixin, DeleteView):
+    model = Shop
+    template_name = 'layout/modal_shop_delete_confirm.html'
+    success_url = '/'
+
+
+class ShopAboutUsDetailView(generic.DetailView):
+    model = Shop
+    template_name = 'shop/about-us.html'
 
 
 class ShopSaleListView(generic.DetailView):
@@ -94,170 +148,9 @@ class SalesUpdateView(LoginRequiredMixin, ShopMixin, UpdateView):
         return reverse('shops:sale', kwargs={'slug': self.kwargs['slug']})
 
 
-class ShopAboutUsDetailView(generic.DetailView):
-    model = Shop
-    template_name = 'shop/about-us.html'
-
-
-class ShopListView(generic.ListView):
-    model = Shop
-
-
-class ShopContactsView(generic.DetailView):
-    model = Shop
-    template_name = 'shop/contacts.html'
-
-
-class ShopCreateView(LoginRequiredMixin, FormsetMixin, CreateView):
-    form_class = ShopForm
-    formset_class = ShopInlineFormSet
-    model = Shop
-    template_name = 'shop/shop_form.html'
-
-    def get_success_url(self):
-        return reverse('shops:detail', args=(self.object.slug,))
-
-    def form_valid(self, form, formset):
-        random_int = random.randrange(0, 1010)
-        form.instance.slug = slugify(form.instance.title, max_length=32) + str(random_int)
-        self.object = form.save()
-        form.instance.user.add(self.request.user)
-        formset.instance = self.object
-        formset.save()
-        return super(ShopCreateView, self).form_valid(form, formset)
-
-
-class ShopUpdateView(LoginRequiredMixin, FormsetMixin, ShopMixin, UpdateView):
-    model = Shop
-    is_update_view = True
-    form_class = ShopForm
-    formset_class = ShopInlineFormSet
-    template_name = 'shop/shop_form.html'
-
-
-
-
-
-
-class ShopDeleteView(LoginRequiredMixin, ShopMixin, DeleteView):
-    model = Shop
-    template_name = 'layout/modal_shop_delete_confirm.html'
-    success_url = '/'
-
-
-class ShopBannersView(LoginRequiredMixin, ShopMixin, CreateView):
-    form_class = ShopBannersForm
-    template_name = 'shop/shop_banner.html'
-
-    def get_context_data(self, **kwargs):
-        context = super(ShopBannersView, self).get_context_data(**kwargs)
-        context['slug'] = self.kwargs['slug']
-        return context
-
-    def get_success_url(self):
-        return reverse('shops:detail', kwargs={'slug': self.kwargs['slug']})
-
-    def get_initial(self):
-        return {'user': self.request.user,
-                'shop': Shop.objects.get(slug=self.kwargs['slug'])}
-
-    def form_valid(self, form, **kwargs):
-        form.instance.shop = Shop.objects.get(slug=self.kwargs['slug'])
-        form.save()
-        return super(ShopBannersView, self).form_valid(form)
-
-
-class ShopBannerDeleteView(LoginRequiredMixin, ShopMixin, DeleteView):
-    pass
-
-
-class ShopSocialLinksUpdateView(LoginRequiredMixin, ShopMixin, UpdateView):
-    model = SocialLinks
-    form_class = ShopSocialLinksForm
-    template_name = 'shop/shop_social_update.html'
-
-    def get_object(self, queryset=None):
-        try:
-            social = SocialLinks.objects.get(shop__slug=self.kwargs['slug'])
-        except SocialLinks.DoesNotExist:
-            social = SocialLinks.objects.create(shop=Shop.objects.get(slug=self.kwargs['slug']))
-        return social
-
-    def get_success_url(self):
-        return reverse('shops:detail', kwargs={'slug': self.kwargs['slug']})
-
-    def get_initial(self):
-        return {'user': self.request.user,
-                'shop': Shop.objects.get(slug=self.kwargs['slug'])}
-
-    def form_valid(self, form, **kwargs):
-        form.instance.shop = Shop.objects.get(slug=self.kwargs['slug'])
-        form.save()
-        return super(ShopSocialLinksUpdateView, self).form_valid(form)
-
-
-def agreement(request):
-    params = {
-        'shop': 'shop'
-    }
-
-    return render(request, 'shop/agreement.html', params)
-
-
-class CreateBanners(LoginRequiredMixin, ShopMixin, View):
-    def get(self, request, *args, **kwargs):
-        slug = self.kwargs['slug']
-        shop = get_object_or_404(Shop, slug=slug)
-        banners = shop.banners_set.all()
-        return render(self.request, 'shop/shop_banner.html', {'banners': banners,
-                                                              'slug': slug})
-
-    def post(self, request, *args, **kwargs):
-        form = ShopBannersForm(request.POST, request.FILES)
-        if form.is_valid():
-            shop = Shop.objects.get(slug=self.kwargs['slug'])
-            form.instance.shop = shop
-            banner = form.save()
-            data = {'is_valid': True, 'banner_id': banner.id, 'name': banner.image.name, 'url': banner.image.url}
-        else:
-            data = {'is_valid': False}
-        return JsonResponse(data)
-
-
-@login_required
-@csrf_exempt
-@delete_decorator
-def delete_banners(request):
-    if request.method == 'POST' and request.is_ajax():
-        banner_id = request.POST.get('banner_id', '')
-        if banner_id:
-            try:
-                banner = Banners.objects.get(id=banner_id)
-            except Banners.DoesNotExist:
-                return JsonResponse({'status': 3, 'message': 'Banner does not exist'})
-            banner.delete()
-            return JsonResponse({'status': 0, 'message': 'Banner is succefully delete.'})
-        return JsonResponse({'status': 1, 'message': 'banner field must not be null.'})
-    return JsonResponse({'status': 2, 'message': 'Request must be post.'})
-
-
-@csrf_exempt
-def remove_logo(request):
-    if request.method == 'POST' and request.is_ajax():
-        slug = request.POST.get('slug', '')
-        shop = get_object_or_404(Shop, slug=slug)
-        if shop.logo:
-            shop.logo = base.DEFAULT_IMAGE
-            shop.save()
-            return JsonResponse({'status': 0, 'message': 'Logo removed'})
-        return JsonResponse({'status': 1, 'message': 'Shop does not have logo'})
-    return HttpResponseBadRequest
-
-
 class ShopReviewListView(generic.DetailView):
     model = Shop
     template_name = 'shop/shop_review.html'
-
 
 
 @login_required
@@ -312,8 +205,121 @@ def update_shop_review(request, pk, slug):
 def shop_reviews(request):
     review = ShopReviews.objects.filter(shop__slug=request.POST.get('shop'))
 
-
     params = {
         'review': review
     }
     return render_to_response('layout/shop_reviews.html', params)
+
+
+class ShopContactsView(generic.DetailView):
+    model = Shop
+    template_name = 'shop/contacts.html'
+
+
+class ShopBannersView(LoginRequiredMixin, ShopMixin, CreateView):
+    form_class = ShopBannersForm
+    template_name = 'shop/shop_banner.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(ShopBannersView, self).get_context_data(**kwargs)
+        context['slug'] = self.kwargs['slug']
+        return context
+
+    def get_success_url(self):
+        return reverse('shops:detail', kwargs={'slug': self.kwargs['slug']})
+
+    def get_initial(self):
+        return {'user': self.request.user,
+                'shop': Shop.objects.get(slug=self.kwargs['slug'])}
+
+    def form_valid(self, form, **kwargs):
+        form.instance.shop = Shop.objects.get(slug=self.kwargs['slug'])
+        form.save()
+        return super(ShopBannersView, self).form_valid(form)
+
+
+class CreateBanners(LoginRequiredMixin, ShopMixin, View):
+    def get(self, request, *args, **kwargs):
+        slug = self.kwargs['slug']
+        shop = get_object_or_404(Shop, slug=slug)
+        banners = shop.banners_set.all()
+        return render(self.request, 'shop/shop_banner.html', {'banners': banners,
+                                                              'slug': slug})
+
+    def post(self, request, *args, **kwargs):
+        form = ShopBannersForm(request.POST, request.FILES)
+        if form.is_valid():
+            shop = Shop.objects.get(slug=self.kwargs['slug'])
+            form.instance.shop = shop
+            banner = form.save()
+            data = {'is_valid': True, 'banner_id': banner.id, 'name': banner.image.name, 'url': banner.image.url}
+        else:
+            data = {'is_valid': False}
+        return JsonResponse(data)
+
+
+class ShopBannerDeleteView(LoginRequiredMixin, ShopMixin, DeleteView):
+    pass
+
+
+@login_required
+@csrf_exempt
+@delete_decorator
+def delete_banners(request):
+    if request.method == 'POST' and request.is_ajax():
+        banner_id = request.POST.get('banner_id', '')
+        if banner_id:
+            try:
+                banner = Banners.objects.get(id=banner_id)
+            except Banners.DoesNotExist:
+                return JsonResponse({'status': 3, 'message': 'Banner does not exist'})
+            banner.delete()
+            return JsonResponse({'status': 0, 'message': 'Banner is succefully delete.'})
+        return JsonResponse({'status': 1, 'message': 'banner field must not be null.'})
+    return JsonResponse({'status': 2, 'message': 'Request must be post.'})
+
+
+class ShopSocialLinksUpdateView(LoginRequiredMixin, ShopMixin, UpdateView):
+    model = SocialLinks
+    form_class = ShopSocialLinksForm
+    template_name = 'shop/shop_social_update.html'
+
+    def get_object(self, queryset=None):
+        try:
+            social = SocialLinks.objects.get(shop__slug=self.kwargs['slug'])
+        except SocialLinks.DoesNotExist:
+            social = SocialLinks.objects.create(shop=Shop.objects.get(slug=self.kwargs['slug']))
+        return social
+
+    def get_success_url(self):
+        return reverse('shops:detail', kwargs={'slug': self.kwargs['slug']})
+
+    def get_initial(self):
+        return {'user': self.request.user,
+                'shop': Shop.objects.get(slug=self.kwargs['slug'])}
+
+    def form_valid(self, form, **kwargs):
+        form.instance.shop = Shop.objects.get(slug=self.kwargs['slug'])
+        form.save()
+        return super(ShopSocialLinksUpdateView, self).form_valid(form)
+
+
+def agreement(request):
+    params = {
+        'shop': 'shop'
+    }
+
+    return render(request, 'shop/agreement.html', params)
+
+
+@csrf_exempt
+def remove_logo(request):
+    if request.method == 'POST' and request.is_ajax():
+        slug = request.POST.get('slug', '')
+        shop = get_object_or_404(Shop, slug=slug)
+        if shop.logo:
+            shop.logo = base.DEFAULT_IMAGE
+            shop.save()
+            return JsonResponse({'status': 0, 'message': 'Logo removed'})
+        return JsonResponse({'status': 1, 'message': 'Shop does not have logo'})
+    return HttpResponseBadRequest
