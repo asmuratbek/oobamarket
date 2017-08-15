@@ -2,55 +2,64 @@
 {% load shop_tags staticfiles %}
 
 {% block shopcontent %}
-<section class="reviews">
-    <div class="bg-white" id="shop_review">
-        {% include 'layout/shop_reviews.html' %}
-    </div>
-</section>
-
-<section class="reviews edit">
-    <div class="bg-white">
-        <div class="item">
-            <form id='review_form' action="{% url 'shops:add_review' slug=shop.slug %}" method="post">
-                {% csrf_token %}
-                <div class="name">
-                    <h5>Добавить отзыв</h5>
-
-                    <h4>
-
-                        <div class="star-wrapper">
-                            <div class="star default">
-                                <i class="fa fa-star-o" aria-hidden="true"></i>
-                                <i class="fa fa-star-o" aria-hidden="true"></i>
-                                <i class="fa fa-star-o" aria-hidden="true"></i>
-                                <i class="fa fa-star-o" aria-hidden="true"></i>
-                                <i class="fa fa-star-o" aria-hidden="true"></i>
-                            </div>
-                            <div class="star active star-behaviour" data-save-stars="false" data-stars-count="0">
-                                <i class="fa fa-star" aria-hidden="true"></i>
-                                <i class="fa fa-star" aria-hidden="true"></i>
-                                <i class="fa fa-star" aria-hidden="true"></i>
-                                <i class="fa fa-star" aria-hidden="true"></i>
-                                <i class="fa fa-star" aria-hidden="true"></i>
-                            </div>
-                        </div>
-
-                    </h4>
-
-                </div>
-                <div class="description">
-
-                    <div class="form-group">
-                        <textarea name="text" id="prod-rev" cols="30" rows="10" class="form-control"></textarea>
-
-                    </div>
-                    <button type="submit">Отправить</button>
-                </div>
-            </form>
+    <section class="reviews">
+        <div class="bg-white" id="shop_review">
+            {% include 'layout/shop_reviews.html' %}
         </div>
+    </section>
 
-    </div>
-</section>
+    <section class="reviews edit">
+        <div class="bg-white">
+            <div class="item">
+                <form id='review_form' action="{% url 'shops:add_review' slug=shop.slug %}" method="post">
+                    {% csrf_token %}
+                    {% if user.is_authenticated %}
+                        <div class="name">
+
+                            <h5>Добавить отзыв</h5>
+
+                            <h4>
+
+                                <div class="star-wrapper">
+                                    <div class="star default">
+                                        <i class="fa fa-star-o" aria-hidden="true"></i>
+                                        <i class="fa fa-star-o" aria-hidden="true"></i>
+                                        <i class="fa fa-star-o" aria-hidden="true"></i>
+                                        <i class="fa fa-star-o" aria-hidden="true"></i>
+                                        <i class="fa fa-star-o" aria-hidden="true"></i>
+                                    </div>
+                                    <div class="star active star-behaviour" data-save-stars="false"
+                                         data-stars-count="0">
+                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+
+                            </h4>
+
+                        </div>
+                        <div class="description">
+
+                            <div class="form-group">
+                                <textarea name="text" id="prod-rev" cols="30" rows="10" class="form-control"></textarea>
+
+                            </div>
+                            <button type="submit">Отправить</button>
+                        </div>
+                    {% else %}
+                        <div class="name">
+                            <h5>Чтобы добавить отзыв вам необходимо авторизоваться</h5>
+                        </div>
+                    {% endif %}
+
+                </form>
+            </div>
+
+        </div>
+    </section>
 {% endblock %}
 
 {% block js %}
@@ -60,41 +69,41 @@
     <script src="{% static 'js/owl.carousel.min.js' %}"></script>
 
     <script>
-    var form = $('#review_form');
-    $(form).unbind('submit').bind('submit', function (event) {
-        var data = $(form).serialize();
-        console.log(data);
-        data += '&rating=' + $('.star-behaviour').getRating();
-        event.preventDefault();
-        console.log('Send data function is called!');
-        $.ajax({
-            method: 'POST',
-            url: $(form).attr('action'),
-            dataType: 'JSON',
-            data: data,
-            success: function (response) {
-                if (response.success) {
-                    $.ajax({
-                        method: 'POST',
-                        dataType: 'HTML',
-                        url: '{% url "shop_reviews" %}',
-                        data: { 'csrfmiddlewaretoken': '{{ csrf_token }}', 'shop': '{{ shop.slug }}' },
-                        success: function (response) {
-                            console.log(response);
-                            $('#shop_review').html(response);
-                        },
-                        error: function () {
-                            console.error('Can\'t send ajax to load all comments');
-                        }
-                    });
-                    $('.star-behaviour').clearRating();
-                    $('#prod-rev').val('');
-                } else if(response.url) {
-                    document.location.href = response.url;
+        var form = $('#review_form');
+        $(form).unbind('submit').bind('submit', function (event) {
+            var data = $(form).serialize();
+            console.log(data);
+            data += '&rating=' + $('.star-behaviour').getRating();
+            event.preventDefault();
+            console.log('Send data function is called!');
+            $.ajax({
+                method: 'POST',
+                url: $(form).attr('action'),
+                dataType: 'JSON',
+                data: data,
+                success: function (response) {
+                    if (response.success) {
+                        $.ajax({
+                            method: 'POST',
+                            dataType: 'HTML',
+                            url: '{% url "shop_reviews" %}',
+                            data: {'csrfmiddlewaretoken': '{{ csrf_token }}', 'shop': '{{ shop.slug }}'},
+                            success: function (response) {
+                                console.log(response);
+                                $('#shop_review').html(response);
+                            },
+                            error: function () {
+                                console.error('Can\'t send ajax to load all comments');
+                            }
+                        });
+                        $('.star-behaviour').clearRating();
+                        $('#prod-rev').val('');
+                    } else if (response.url) {
+                        document.location.href = response.url;
+                    }
                 }
-            }
+            });
         });
-    });
 
 
     </script>

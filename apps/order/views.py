@@ -1,10 +1,10 @@
 from django.contrib import messages
 from django.http import Http404, HttpResponseRedirect, JsonResponse
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404, render_to_response
 from django.urls import reverse
 from django.views import View
 from django.views.generic import TemplateView
-from django.views.generic.edit import CreateView, FormView, UpdateView
+from django.views.generic.edit import CreateView, FormView, UpdateView, DeleteView
 from django.views.generic.detail import DetailView
 from  django.views.generic.list import ListView
 # Create your views here.
@@ -137,14 +137,19 @@ class SimpleOrderListView(ListView):
     model = SimpleOrder
     slug_field = 'username'
     slug_url_kwarg = 'username'
+    template_name = 'order/user_order_history.html'
 
     def get_queryset(self):
         return SimpleOrder.objects.filter(user__username=self.kwargs['username'])
 
+    # def get_context_data(self, **kwargs):
+    #     context = super(SimpleOrderListView, self).get_context_data(**kwargs)
+    #     context['shop'] = Shop.objects.first()
 
-class SimpleOrderDetailView(DetailView):
+class SimpleOrderUpdateView(LoginRequiredMixin, UpdateView):
     model = SimpleOrder
     template_name = 'order/order_detail.html'
+    form_class = SimpleOrderForm
 
 
 # class SimpleOrderShopListUpdateView(UpdateView):
@@ -179,23 +184,37 @@ def simple_order_shop_list_update(request, slug):
     object_list = SimpleOrder.objects.filter(cart__cartitem__product__shop__slug=slug)
     shop = Shop.objects.get(slug=slug)
 
-    form = SimpleOrderForm(request.GET)
-
-    if request.method == 'POST':
-        form = SimpleOrderForm(request.POST)
-        simple_order = SimpleOrder.objects.get(id=request.POST['id'])
-        simple_order.status = request.POST['status']
-        simple_order.save()
-
+    form = SimpleOrderForm()
 
     context = {
         'shop': shop,
         'object_list': object_list,
         'form': form,
+        'object': shop,
 
     }
 
     return render(request, 'order/simpleorder_list.html', context)
+
+
+def change_status(request):
+    if request.method == 'POST':
+        form = SimpleOrderForm(request.POST)
+        simple_order = SimpleOrder.objects.get(id=request.POST.get('id'))
+        simple_order.status = request.POST.get('status')
+        simple_order.save()
+
+        return JsonResponse(dict(messages=True))
+    return JsonResponse(dict(messages=False))
+
+
+class DeleteSimpleOrderShop(LoginRequiredMixin, DeleteView):
+    model = SimpleOrder
+    template_name = 'layout/modal_order_delete_confirm.html'
+
+    def get_success_url(self):
+        print('lala')
+        return reverse("order:shop_order_list", kwargs={'slug': self.object.user.shop_set.first().slug})
 
 
 class SimpleOrderShopDetailView(DetailView):
