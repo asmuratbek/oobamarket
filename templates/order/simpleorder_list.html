@@ -1,10 +1,15 @@
 {% extends 'shop/shop_detail.html' %}
-{% load staticfiles widget_tweaks  shop_tags %}
+{% load staticfiles widget_tweaks shop_tags %}
 
 {% block shopcontent %}
+
     <div class="simpleorder">
-        <div class="container">
+
+            <a href="" class="remove-item">Удалить</a>
+            <a href="" class="load-to-excel">Выгрузить в Excel</a>
+            <div class="clearfix"></div>
             <div class="tab-simpleorder">
+
                 <div class="head">
                     <div class="parets">
                         <ul>
@@ -41,13 +46,13 @@
                                    style="position: relative;">{{ order.created_at|date:"d.m.y H:i" }}</a></li>
                             <li>{{ order.name }}</li>
                             <li>
-                                <form method="POST"  action="{% url 'order:change_status' %}" class="order_change">
+                                <form method="POST" action="{% url 'order:change_status' %}" class="order_change">
                                     {% csrf_token %}
                                     <select class="form-control" id="id_status"
                                             name="status" required="">
                                         {% for x,y in form.fields.status.choices %}
                                             <option value="{{ x }}"
-                                            {% if order.status == x %}selected{% endif %}>{{ y }}</option>
+                                                    {% if order.status == x %}selected{% endif %}>{{ y }}</option>
                                         {% endfor %}
                                     </select>
                                     <input type="hidden" name="id" value="{{ order.id }}">
@@ -63,7 +68,7 @@
                     </div>
                 {% endfor %}
             </div>
-        </div>
+
     </div>
 {% endblock %}
 
