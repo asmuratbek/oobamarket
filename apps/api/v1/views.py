@@ -254,7 +254,6 @@ class ShopApiView(MultipleModelAPIView):
         return queryList
 
 
-
 class ShopUpdateApiView(RetrieveUpdateAPIView):
     queryset = Shop.objects.all()
     serializer_class = ShopSerializer
@@ -272,3 +271,6 @@ class ShopDeleteApiView(DestroyAPIView):
 class ShopCreateApiView(CreateAPIView):
     queryset = Shop.objects.all()
     serializer_class = ShopCreateSerializer
+#
+#
+# class UserShop

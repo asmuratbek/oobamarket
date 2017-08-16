@@ -110,7 +110,7 @@ class ProductSerializer(ModelSerializer):
         request = self.context.get("request")
         if request and hasattr(request, "user"):
             user = request.user
-            return obj.shop.is_owner(user)
+            return obj.shop.is_owner(user) or user.is_staff
         return False
 
     def get_delivery_type_display(self, obj):
