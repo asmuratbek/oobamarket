@@ -292,6 +292,10 @@ class UserDetailView(MultipleModelAPIView):
 
 
 class ShopDetailView(MultipleModelAPIView):
+    """
+    Возвращает поля Магазина и его Товары
+    """
+
     filter_backends = (filters.OrderingFilter,)
     serializer_class = ShopSerializer
 
@@ -307,6 +311,9 @@ class ShopDetailView(MultipleModelAPIView):
 
 
 class ShopSalesView(MultipleModelAPIView):
+    """
+    Возвращает поля Магазина и его Акции
+    """
     filter_backends = (filters.OrderingFilter,)
     serializer_class = ShopSerializer
 
@@ -322,6 +329,9 @@ class ShopSalesView(MultipleModelAPIView):
 
 
 class ShopReviewsView(MultipleModelAPIView):
+    """
+    Возвращает поля Магазина и его Отзывы
+    """
     filter_backends = (filters.OrderingFilter,)
     serializer_class = ShopSerializer
 
@@ -337,6 +347,9 @@ class ShopReviewsView(MultipleModelAPIView):
 
 
 class ShopContactsView(MultipleModelAPIView):
+    """
+    Возвращает поля Магазина и его Контакты
+    """
     filter_backends = (filters.OrderingFilter,)
     serializer_class = ShopSerializer
 
