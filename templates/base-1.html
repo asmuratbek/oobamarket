@@ -21,13 +21,29 @@
 {% block categories %}
 {% endblock %}
 
-
+ {% block messages %}
+      {% if messages %}
+<div class='container container-alert-flash' style="display: block">
+    <div class='col-sm-3 col-sm-offset-8'>
+        {% for message in messages %}
+        <div {% if message.tags %} class="alert alert-{{ message.tags }} alert-dismissible"{% endif %} role='alert'>
+           <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+           <span aria-hidden='true'>&times;</span></button>
+		{{ message|capfirst }}
+        </div>
+        {% endfor %}
+    </div>
+</div>
+     {% endif %}
+    {% endblock messages %}
 
 {% block content %}
+
 
 {% endblock content %}
 
 {% block modal %}
+
     <div class="modal fade remove-product" id="DeleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
