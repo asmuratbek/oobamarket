@@ -310,55 +310,49 @@ class ShopDetailView(MultipleModelAPIView):
         return queryList
 
 
-class ShopSalesView(MultipleModelAPIView):
+class ShopSalesView(ListAPIView):
     """
     Возвращает поля Магазина и его Акции
     """
-    filter_backends = (filters.OrderingFilter,)
-    serializer_class = ShopSerializer
+    serializer_class = SalesSerializer
+    filter_backends = [SearchFilter, OrderingFilter]
+    pagination_class = ShopProductsLimitPagination
+    permission_classes = [AllowAny]
 
-    def get_queryList(self):
+    def get_queryset(self):
         slug = self.kwargs.get('slug')
         shop = Shop.objects.filter(slug=slug)
         sales = Sales.objects.filter(shop=shop)
-        queryList = [
-            (shop, ShopSerializer),
-            (sales, SalesSerializer),
-        ]
-        return queryList
+        return sales
 
 
-class ShopReviewsView(MultipleModelAPIView):
+class ShopReviewsView(ListAPIView):
     """
     Возвращает поля Магазина и его Отзывы
     """
-    filter_backends = (filters.OrderingFilter,)
-    serializer_class = ShopSerializer
+    serializer_class = ShopReviewsSerializer
+    filter_backends = [SearchFilter, OrderingFilter]
+    pagination_class = ShopProductsLimitPagination
+    permission_classes = [AllowAny]
 
-    def get_queryList(self):
+    def get_queryset(self):
         slug = self.kwargs.get('slug')
         shop = Shop.objects.filter(slug=slug)
         reviews = ShopReviews.objects.filter(shop=shop)
-        queryList = [
-            (shop, ShopSerializer),
-            (reviews, ShopReviewsSerializer),
-        ]
-        return queryList
+        return reviews
 
 
-class ShopContactsView(MultipleModelAPIView):
+class ShopContactsView(ListAPIView):
     """
     Возвращает поля Магазина и его Контакты
     """
-    filter_backends = (filters.OrderingFilter,)
-    serializer_class = ShopSerializer
+    serializer_class = ShopContactsSerializer
+    filter_backends = [SearchFilter, OrderingFilter]
+    pagination_class = ShopProductsLimitPagination
+    permission_classes = [AllowAny]
 
-    def get_queryList(self):
+    def get_queryset(self):
         slug = self.kwargs.get('slug')
         shop = Shop.objects.filter(slug=slug)
         contacts = Contacts.objects.filter(shop=shop)
-        queryList = [
-            (shop, ShopSerializer),
-            (contacts, ShopContactsSerializer),
-        ]
-        return queryList
+        return contacts
