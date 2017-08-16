@@ -28,6 +28,22 @@ function getCookie(name) {
 var csrftoken = getCookie('csrftoken');
 
 
+function showFlashMessage(message) {
+    // var template = "{% include 'alert.html' with message='" + message + "' %}"
+    var template = "<div class='container container-alert-flash'>" +
+        "<div class='col-sm-3 col-sm-offset-8'> " +
+        "<div class='alert alert-success alert-dismissible' role='alert'>" +
+        "<button type='button' class='close' data-dismiss='alert' aria-label='Close'>" +
+        "<span aria-hidden='true'>&times;</span></button>"
+        + message + "</div></div></div>";
+    $("body").append(template);
+    $(".container-alert-flash").fadeIn();
+    setTimeout(function () {
+        $(".container-alert-flash").fadeOut().remove();
+    }, 1800);
+}
+
+
 $('#uploading-images').on('change', function (e) {
     var files = e.target.files;
     var that = $(this);
@@ -68,12 +84,13 @@ $(document).on('click', '.add-img-el', function () {
 
 $(document).on('click', '.delete-img-el', function () {
     var el_id = parseInt($(this).attr('id'));
-    imagesFiles.splice(el_id, 1);
+    // imagesFiles.splice(el_id, 1);
+    delete imagesFiles[el_id];
     $('img#' + el_id).remove();
     $(this).parent('div').remove();
     $(this).remove();
     count = count - 1;
-    if (!images_div.children().hasClass('active-border')) {
+    if (!images_div.find("*").hasClass('active-border')) {
         images_div.find("div").first().find("img").attr("class", "active-border");
         images_div.find("div").first().find("p").text("Главная")
     }
@@ -103,7 +120,9 @@ $(document).on('click', '#add-product-button', function () {
         var form = $('#form');
         var formData = new FormData(form[0]);
         var name = $('img.active-border').attr("data_name");
-        $.each(imagesFiles, function (i, file) {
+        var new_array = [];
+        imagesFiles.filter(function (n) {if(n !== undefined) new_array.push(n)});
+        $.each(new_array, function (i, file) {
             if (file.name === name)
                 formData.append('avatar', file);
             else
@@ -120,6 +139,8 @@ $(document).on('click', '#add-product-button', function () {
                 window.location.href = redirect_path;
             }
         });
+    } else {
+        showFlashMessage("Заполните все обязательные поля.");
     }
 
 });
