@@ -130,7 +130,6 @@ var MainInterface = createClass({
     },
 
     searchApts(q) {
-        console.log(q);
         this.setState({
             loaded: false,
         });

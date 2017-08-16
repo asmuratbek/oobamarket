@@ -20,10 +20,7 @@ var SearchForm = createClass({
 
   search: function (e) {
       var query = e.target.value;
-     debounce(1000, function(query){
       this.props.onSearch(query)
-    }.bind(this))()
-
   },
 
   render: function(){
