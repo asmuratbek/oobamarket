@@ -4,8 +4,6 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.views.generic import TemplateView
 from django.views import defaults as default_views
-from rest_framework.documentation import include_docs_urls
-
 from apps.global_category.views import IndexView, landing
 from apps.product.views import FavoriteCreateView, product_reviews
 from apps.shop.views import agreement, shop_reviews
@@ -17,7 +15,7 @@ from apps.category.views import mail_confirm_view
 urlpatterns = [
     url(r'^$', IndexView.as_view(), name='home'),
     url(r'^api/v1/', include('apps.api.v1.urls', namespace='api')),
-    url(r'^docs/', include_docs_urls(title='Ooba market API')),
+    url(r'^docs/', include('rest_framework_docs.urls')),
     url(r'^favorite/add/', FavoriteCreateView.as_view(), name="create_favorite"),
     url(r'^shops/', include('apps.shop.urls', namespace='shops')),
     url(r'^order/', include('apps.order.urls', namespace='order')),

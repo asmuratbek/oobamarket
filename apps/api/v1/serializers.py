@@ -300,6 +300,15 @@ class ShopReviewsSerializer(ModelSerializer):
 
 
 class ShopContactsSerializer(ModelSerializer):
+    """
+       API endpoint that allows users to be viewed or edited.
+
+       retrieve:
+       Return a user instance.
+
+       list:
+       Return all users, ordered by most recently joined.
+       """
 
     class Meta:
         model = Contacts
