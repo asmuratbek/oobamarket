@@ -276,19 +276,20 @@ class ShopCreateApiView(CreateAPIView):
     serializer_class = ShopCreateSerializer
 
 
-class UserDetailView(MultipleModelAPIView):
-    filter_backends = (filters.OrderingFilter,)
+class UserDetailView(ListAPIView):
+    """
+       Возвращает все Магазины пользователя
+    """
     serializer_class = ShopSerializer
+    filter_backends = [SearchFilter, OrderingFilter]
+    pagination_class = ShopProductsLimitPagination
+    permission_classes = [AllowAny]
 
-    def get_queryList(self):
+    def get_queryset(self):
         user_id = self.kwargs.get('pk')
         user = User.objects.filter(id=user_id)
         shops = Shop.objects.filter(user=user)
-        queryList = [
-            (user, UserSerializer),
-            (shops, ShopSerializer),
-        ]
-        return queryList
+        return shops
 
 
 class ShopDetailView(MultipleModelAPIView):
