@@ -7,6 +7,7 @@ import CategoryList from './components/CategoryList';
 import _ from 'lodash';
 import Pagination from 'react-js-pagination';
 import Loader from 'react-loader';
+import $ from 'jquery';
 
 
 
@@ -34,7 +35,7 @@ var MainInterface = createClass({
         params.forEach(function (i) {
             if (i.split("=")[0] == "q") {
                 this.setState({
-                    queryText: i.split("=")[1].toLowerCase()
+                    queryText: i.split("=")[1]
                 })
             }
         }.bind(this));
@@ -129,6 +130,7 @@ var MainInterface = createClass({
     },
 
     searchApts(q) {
+        console.log(q);
         this.setState({
             loaded: false,
         });
@@ -136,7 +138,7 @@ var MainInterface = createClass({
             type: "GET",
               url: this.state.baseUrl + '?ordering=' + this.state.orderBy + '&page=1' +
               '&priceFrom=' + this.state.priceFrom + '&priceTo=' + this.state.priceTo +
-              '&q=' + q.toLowerCase(),
+              '&q=' + q,
               success: function (data) {
                     var products = data.results.map(obj => obj);
                     var pagesCount = Math.ceil(data.count / 20);
@@ -145,7 +147,7 @@ var MainInterface = createClass({
                         loaded: true,
                         pagesCount: pagesCount,
                         productsCount: data.count,
-                        queryText: q.toLowerCase(),
+                        queryText: q,
                         activePage: 1
                     });
               }.bind(this),

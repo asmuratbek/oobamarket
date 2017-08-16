@@ -338,7 +338,6 @@ $(document).ready(function () {
                         "category": $("#subcategory_list option:selected").val()
                     },
                     success: function (data) {
-                        console.log(data);
                         $('#property_list').html(data);
                         $('#empty_properties').fadeOut();
 
@@ -449,8 +448,8 @@ $(document).ready(function () {
                 else {
                     thisIcon.removeClass("like");
                     thisIcon.attr("data-original-title", "Добавить в избранное");
-                    if (thisIcon.parent().parent().parent().parent().hasClass('favorite-products')) {
-                        thisIcon.parent().parent().parent().fadeOut();
+                    if (thisIcon.parent().parent().parent().parent().parent().parent().hasClass('favorite-products')) {
+                        thisIcon.parent().parent().parent().parent().fadeOut();
                     }
                 }
                 $('.favorites_count').text(data.favorites_count)
