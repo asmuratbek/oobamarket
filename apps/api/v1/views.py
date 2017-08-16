@@ -30,6 +30,7 @@ from apps.api.v1.serializers import (
 
 from apps.product.models import Product
 from apps.shop.models import Shop
+from apps.users.models import User
 from .pagination import (
     CategoryLimitPagination,
     ProductLimitPagination,
@@ -271,6 +272,20 @@ class ShopDeleteApiView(DestroyAPIView):
 class ShopCreateApiView(CreateAPIView):
     queryset = Shop.objects.all()
     serializer_class = ShopCreateSerializer
-#
-#
-# class UserShop
+
+
+class UserShopList(MultipleModelAPIView):
+    pagination_class = ShopLimitPagination
+    flat = True
+    filter_backends = (filters.OrderingFilter,)
+    serializer_class = ProductSerializer
+
+    def get_queryList(self):
+        user_id = self.kwargs.get('pk')
+        print(user_id)
+        user = get_object_or_404(User, id=user_id)
+        shops = Shop.objects.filter(user=user)
+        queryList = [
+            (shops, ShopSerializer),
+        ]
+        return queryList
