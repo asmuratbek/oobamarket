@@ -288,3 +288,18 @@ class UserDetailView(MultipleModelAPIView):
             (shops, ShopSerializer),
         ]
         return queryList
+
+
+class ShopDetailView(MultipleModelAPIView):
+    filter_backends = (filters.OrderingFilter,)
+    serializer_class = ShopSerializer
+
+    def get_queryList(self):
+        slug = self.kwargs.get('slug')
+        shop = Shop.objects.filter(slug=slug)
+        products = Product.objects.filter(shop=shop)
+        queryList = [
+            (shop, ShopSerializer),
+            (products, ProductSerializer),
+        ]
+        return queryList
