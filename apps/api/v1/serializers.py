@@ -6,6 +6,8 @@ from rest_framework.serializers import (
 from slugify import slugify
 from apps.product.models import Category
 from apps.global_category.models import GlobalCategory
+from apps.reviews.models import ShopReviews
+from apps.shop.models import Sales, Contacts
 from apps.users.models import User
 
 
@@ -264,4 +266,59 @@ class UserSerializer(ModelSerializer):
             'email',
             'phone',
             'address'
+        )
+
+
+class SalesSerializer(ModelSerializer):
+
+    class Meta:
+        model = Sales
+        fields = (
+            'id',
+            'title',
+            'short_description',
+            'description',
+            'discount',
+            'image',
+            'created_at',
+            'updated_at'
+        )
+
+
+class ShopReviewsSerializer(ModelSerializer):
+
+    class Meta:
+        model = ShopReviews
+        fields = (
+            'id',
+            'user',
+            'text',
+            'stars',
+            'created_at',
+            'updated_at'
+        )
+
+
+class ShopContactsSerializer(ModelSerializer):
+
+    class Meta:
+        model = Contacts
+        fields = (
+            'id',
+            'address',
+            'phone',
+            'place',
+            'latitude',
+            'longitude',
+            'monday',
+            'tuesday',
+            'wednesday',
+            'thursday',
+            'friday',
+            'saturday',
+            'sunday',
+            'round_the_clock',
+            'created_at',
+            'updated_at'
+
         )

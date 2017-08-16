@@ -19,7 +19,10 @@ from .views import (
     FacebookLogin,
     GoogleLogin,
     UserDetailView,
-    ShopDetailView
+    ShopDetailView,
+    ShopSalesView,
+    ShopReviewsView,
+    ShopContactsView
 )
 from rest_framework.documentation import include_docs_urls
 
@@ -38,6 +41,9 @@ urlpatterns = [
     url(r'^product/$', ProductListApiView.as_view(), name='product_list'),
     url(r'^shop/create/$', ShopCreateApiView.as_view(), name='shop_create'),
     # url(r'^category/(?P<slug>[-_\w]+)/$', views.CategoryDetailView.as_view(), name='category_detail'),
+    url(r'^shop/detail/(?P<slug>[-_\w]+)/sales/$', ShopSalesView.as_view(), name="shop_sales"),
+    url(r'^shop/detail/(?P<slug>[-_\w]+)/reviews/$', ShopReviewsView.as_view(), name="shop_reviews"),
+    url(r'^shop/detail/(?P<slug>[-_\w]+)/contacts/$', ShopContactsView.as_view(), name="shop_contacts"),
     url(r'^shop/detail/(?P<slug>[-_\w]+)/$', ShopDetailView.as_view(), name="shop"),
     url(r'^shop/(?P<slug>[-_\w]+)/$', ShopDetailApiView.as_view(), name='shop_detail'),
     url(r'^shop/(?P<slug>[-_\w]+)/shop/$', ShopApiView.as_view(), name='shop_categories'),

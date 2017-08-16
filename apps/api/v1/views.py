@@ -26,11 +26,12 @@ from apps.api.v1.serializers import (
     ShopCreateSerializer,
     CategorySerializer,
     GlobalCategorySerializer,
-    UserSerializer
-)
+    UserSerializer,
+    SalesSerializer, ShopReviewsSerializer, ShopContactsSerializer)
 
 from apps.product.models import Product
-from apps.shop.models import Shop
+from apps.reviews.models import ShopReviews
+from apps.shop.models import Shop, Sales, Contacts
 from apps.users.models import User
 from .pagination import (
     CategoryLimitPagination,
@@ -301,5 +302,50 @@ class ShopDetailView(MultipleModelAPIView):
         queryList = [
             (shop, ShopSerializer),
             (products, ProductSerializer),
+        ]
+        return queryList
+
+
+class ShopSalesView(MultipleModelAPIView):
+    filter_backends = (filters.OrderingFilter,)
+    serializer_class = ShopSerializer
+
+    def get_queryList(self):
+        slug = self.kwargs.get('slug')
+        shop = Shop.objects.filter(slug=slug)
+        sales = Sales.objects.filter(shop=shop)
+        queryList = [
+            (shop, ShopSerializer),
+            (sales, SalesSerializer),
+        ]
+        return queryList
+
+
+class ShopReviewsView(MultipleModelAPIView):
+    filter_backends = (filters.OrderingFilter,)
+    serializer_class = ShopSerializer
+
+    def get_queryList(self):
+        slug = self.kwargs.get('slug')
+        shop = Shop.objects.filter(slug=slug)
+        reviews = ShopReviews.objects.filter(shop=shop)
+        queryList = [
+            (shop, ShopSerializer),
+            (reviews, ShopReviewsSerializer),
+        ]
+        return queryList
+
+
+class ShopContactsView(MultipleModelAPIView):
+    filter_backends = (filters.OrderingFilter,)
+    serializer_class = ShopSerializer
+
+    def get_queryList(self):
+        slug = self.kwargs.get('slug')
+        shop = Shop.objects.filter(slug=slug)
+        contacts = Contacts.objects.filter(shop=shop)
+        queryList = [
+            (shop, ShopSerializer),
+            (contacts, ShopContactsSerializer),
         ]
         return queryList
