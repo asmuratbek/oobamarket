@@ -18,7 +18,8 @@ from .views import (
     ShopCreateApiView,
     FacebookLogin,
     GoogleLogin,
-    UserShopList
+    UserShopList,
+    UserDetailView,
 )
 from rest_framework.documentation import include_docs_urls
 
@@ -42,8 +43,7 @@ urlpatterns = [
     url(r'^shop/(?P<slug>[-_\w]+)/update/$', ShopUpdateApiView.as_view(), name='shop_update'),
     url(r'^shop/(?P<slug>[-_\w]+)/delete/$', ShopDeleteApiView.as_view(), name='shop_delete'),
     url(r'^shop/$', ShopListApiView.as_view(), name='shop_list'),
-    url(r'^user/shops/(?P<pk>[0-9]+)/$', UserShopList.as_view(), name='user_shop_list'),
-
+    url(r'^user/(?P<pk>[0-9]+)/$', UserDetailView.as_view(), name="user_detail"),
     url(r'^rest-auth/', include('rest_auth.urls')),
     url(r'^rest-auth/registration/', include('rest_auth.registration.urls')),
     url(r'^rest-auth/facebook/$', FacebookLogin.as_view(), name='fb_login'),

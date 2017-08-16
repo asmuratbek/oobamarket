@@ -25,7 +25,8 @@ from apps.api.v1.serializers import (
     ShopSerializer,
     ShopCreateSerializer,
     CategorySerializer,
-    GlobalCategorySerializer
+    GlobalCategorySerializer,
+    UserSerializer
 )
 
 from apps.product.models import Product
@@ -282,10 +283,24 @@ class UserShopList(MultipleModelAPIView):
 
     def get_queryList(self):
         user_id = self.kwargs.get('pk')
-        print(user_id)
         user = get_object_or_404(User, id=user_id)
         shops = Shop.objects.filter(user=user)
         queryList = [
+            (shops, ShopSerializer),
+        ]
+        return queryList
+
+
+class UserDetailView(MultipleModelAPIView):
+    filter_backends = (filters.OrderingFilter,)
+    serializer_class = ShopSerializer
+
+    def get_queryList(self):
+        user_id = self.kwargs.get('pk')
+        user = User.objects.filter(id=user_id)
+        shops = Shop.objects.filter(user=user)
+        queryList = [
+            (user, UserSerializer),
             (shops, ShopSerializer),
         ]
         return queryList

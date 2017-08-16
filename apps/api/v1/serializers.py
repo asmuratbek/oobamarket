@@ -6,6 +6,7 @@ from rest_framework.serializers import (
 from slugify import slugify
 from apps.product.models import Category
 from apps.global_category.models import GlobalCategory
+from apps.users.models import User
 
 
 class CategorySerializer(ModelSerializer):
@@ -250,3 +251,15 @@ class ShopCreateSerializer(ModelSerializer):
 
     def get_slug(self, obj):
         return slugify(obj.title)
+
+
+class UserSerializer(ModelSerializer):
+
+    class Meta:
+        model = User
+        fields = (
+            'id',
+            'name',
+            'phone',
+            'address'
+        )
