@@ -204,6 +204,7 @@ class ShopSerializer(ModelSerializer):
             'delete_url',
             'id',
             'title',
+            'slug',
             'user',
             'email',
             'is_owner',
@@ -260,6 +261,7 @@ class UserSerializer(ModelSerializer):
         fields = (
             'id',
             'name',
+            'email',
             'phone',
             'address'
         )
