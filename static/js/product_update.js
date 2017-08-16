@@ -164,7 +164,7 @@ $(document).on("click", "#update-product-button", function () {
             processData: false,
             contentType: false,
             success: function (data) {
-                var url = redirect_path + "/" + data.section + "/" + data.category + "/" + slug + "/";
+                var url = redirect_path + "/" + data.section + "/" + data.category + "/" + data.product_slug + "/";
                 $(location).attr("href", url);
             }
         });

@@ -227,7 +227,8 @@ class ProductUpdateView(LoginRequiredMixin, UpdateProductMixin, UpdateView):
                 ProductImage.objects.create(product=product, image=avatar, is_avatar=True)
             other_images = [ProductImage(product=product, image=img) for img in images]
             ProductImage.objects.bulk_create(other_images)
-        data = dict(category=product.category.slug, section=product.category.section.slug)
+        data = dict(category=product.category.slug, section=product.category.section.slug,
+                    product_slug=product.slug)
         # response = super(ProductUpdateView, self).form_valid(form)
         return JsonResponse(data)
 
