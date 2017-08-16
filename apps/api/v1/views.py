@@ -275,22 +275,6 @@ class ShopCreateApiView(CreateAPIView):
     serializer_class = ShopCreateSerializer
 
 
-class UserShopList(MultipleModelAPIView):
-    pagination_class = ShopLimitPagination
-    flat = True
-    filter_backends = (filters.OrderingFilter,)
-    serializer_class = ProductSerializer
-
-    def get_queryList(self):
-        user_id = self.kwargs.get('pk')
-        user = get_object_or_404(User, id=user_id)
-        shops = Shop.objects.filter(user=user)
-        queryList = [
-            (shops, ShopSerializer),
-        ]
-        return queryList
-
-
 class UserDetailView(MultipleModelAPIView):
     filter_backends = (filters.OrderingFilter,)
     serializer_class = ShopSerializer
