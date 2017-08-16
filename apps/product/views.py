@@ -195,7 +195,7 @@ class ProductUpdateView(LoginRequiredMixin, UpdateProductMixin, UpdateView):
 
     def form_valid(self, form):
         product = form.instance
-        product.slug = slugify(product.title)
+        product.slug = slugify(product.title) + '-' + str(product.id)
         product.save()
         product.values_set.clear()
         for key, value in self.request.POST.items():
