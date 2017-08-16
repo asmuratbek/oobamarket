@@ -205,7 +205,6 @@ class Command(BaseCommand):
                                 extra_slug = ".".join(thrd_lvl_cat[0])
                                 title = thrd_lvl_cat[1]
                                 slug = slugify(title) + "-" + slugify(section.title) + "-" + extra_slug
-                                print(slug)
                                 thrd_cat, thrd_cat_created = Category.objects.get_or_create(title=title, slug=slug, parent=sec_cat, section=section)
                                 if thrd_cat_created:
                                     self.stdout.write(self.style.SUCCESS('Создана категория 3-ого уровня "%s"' % title))
