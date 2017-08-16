@@ -70,6 +70,7 @@ THIRD_PARTY_APPS = [
     'ckeditor',
     'ckeditor_uploader',
     'drf_multiple_model',
+    'rest_framework_docs',
 ]
 
 # Apps specific for this project go here.

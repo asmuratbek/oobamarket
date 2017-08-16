@@ -9,12 +9,6 @@
     <section class="user_update">
         <div class="container">
             <div class="col-md-7 col-md-offset-1">
-                {% if messages %}
-                    {% for message in messages %}
-                        <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">{{ message }}</div>
-                    {% endfor %}
-                {% endif %}
-
 
                 <h2>{{ object.username }}</h2>
 

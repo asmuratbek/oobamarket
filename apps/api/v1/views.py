@@ -25,11 +25,14 @@ from apps.api.v1.serializers import (
     ShopSerializer,
     ShopCreateSerializer,
     CategorySerializer,
-    GlobalCategorySerializer
-)
+    GlobalCategorySerializer,
+    UserSerializer,
+    SalesSerializer, ShopReviewsSerializer, ShopContactsSerializer)
 
 from apps.product.models import Product
-from apps.shop.models import Shop
+from apps.reviews.models import ShopReviews
+from apps.shop.models import Shop, Sales, Contacts
+from apps.users.models import User
 from .pagination import (
     CategoryLimitPagination,
     ProductLimitPagination,
@@ -254,7 +257,6 @@ class ShopApiView(MultipleModelAPIView):
         return queryList
 
 
-
 class ShopUpdateApiView(RetrieveUpdateAPIView):
     queryset = Shop.objects.all()
     serializer_class = ShopSerializer
@@ -272,3 +274,86 @@ class ShopDeleteApiView(DestroyAPIView):
 class ShopCreateApiView(CreateAPIView):
     queryset = Shop.objects.all()
     serializer_class = ShopCreateSerializer
+
+
+class UserDetailView(ListAPIView):
+    """
+       Возвращает все Магазины пользователя
+    """
+    serializer_class = ShopSerializer
+    filter_backends = [SearchFilter, OrderingFilter]
+    pagination_class = ShopProductsLimitPagination
+    permission_classes = [AllowAny]
+
+    def get_queryset(self):
+        user_id = self.kwargs.get('pk')
+        user = User.objects.filter(id=user_id)
+        shops = Shop.objects.filter(user=user)
+        return shops
+
+
+class ShopDetailView(MultipleModelAPIView):
+    """
+    Возвращает поля Магазина и его Товары
+    """
+
+    filter_backends = (filters.OrderingFilter,)
+    serializer_class = ShopSerializer
+
+    def get_queryList(self):
+        slug = self.kwargs.get('slug')
+        shop = Shop.objects.filter(slug=slug)
+        products = Product.objects.filter(shop=shop)
+        queryList = [
+            (shop, ShopSerializer),
+            (products, ProductSerializer),
+        ]
+        return queryList
+
+
+class ShopSalesView(ListAPIView):
+    """
+    Возвращает поля Магазина и его Акции
+    """
+    serializer_class = SalesSerializer
+    filter_backends = [SearchFilter, OrderingFilter]
+    pagination_class = ShopProductsLimitPagination
+    permission_classes = [AllowAny]
+
+    def get_queryset(self):
+        slug = self.kwargs.get('slug')
+        shop = Shop.objects.filter(slug=slug)
+        sales = Sales.objects.filter(shop=shop)
+        return sales
+
+
+class ShopReviewsView(ListAPIView):
+    """
+    Возвращает поля Магазина и его Отзывы
+    """
+    serializer_class = ShopReviewsSerializer
+    filter_backends = [SearchFilter, OrderingFilter]
+    pagination_class = ShopProductsLimitPagination
+    permission_classes = [AllowAny]
+
+    def get_queryset(self):
+        slug = self.kwargs.get('slug')
+        shop = Shop.objects.filter(slug=slug)
+        reviews = ShopReviews.objects.filter(shop=shop)
+        return reviews
+
+
+class ShopContactsView(ListAPIView):
+    """
+    Возвращает поля Магазина и его Контакты
+    """
+    serializer_class = ShopContactsSerializer
+    filter_backends = [SearchFilter, OrderingFilter]
+    pagination_class = ShopProductsLimitPagination
+    permission_classes = [AllowAny]
+
+    def get_queryset(self):
+        slug = self.kwargs.get('slug')
+        shop = Shop.objects.filter(slug=slug)
+        contacts = Contacts.objects.filter(shop=shop)
+        return contacts

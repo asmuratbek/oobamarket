@@ -11,7 +11,7 @@ class ProductForm(forms.ModelForm):
         model = Product
         exclude = ['slug', 'objects', 'sell_count', 'counter']
 
-    section = forms.ModelChoiceField(queryset=GlobalCategory.objects.all())
+    section = forms.ModelChoiceField(queryset=GlobalCategory.objects.filter(published=True))
     parent_categories = CustomField(queryset=Category.objects.filter(parent=None))
     removed_images = forms.CharField(required=False)
     uploaded_images = forms.CharField(required=False)
@@ -53,7 +53,7 @@ class ProductUpdateForm(forms.ModelForm):
         model = Product
         exclude = ['objects', 'sell_count', 'counter']
 
-    section = forms.ModelChoiceField(queryset=GlobalCategory.objects.all())
+    section = forms.ModelChoiceField(queryset=GlobalCategory.objects.filter(published=True))
     parent_categories = forms.ModelChoiceField(queryset=Category.objects.filter(parent=None))
     removed_images = forms.CharField(required=False)
     uploaded_images = forms.CharField(required=False)

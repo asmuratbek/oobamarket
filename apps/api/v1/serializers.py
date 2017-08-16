@@ -6,6 +6,9 @@ from rest_framework.serializers import (
 from slugify import slugify
 from apps.product.models import Category
 from apps.global_category.models import GlobalCategory
+from apps.reviews.models import ShopReviews
+from apps.shop.models import Sales, Contacts
+from apps.users.models import User
 
 
 class CategorySerializer(ModelSerializer):
@@ -110,7 +113,7 @@ class ProductSerializer(ModelSerializer):
         request = self.context.get("request")
         if request and hasattr(request, "user"):
             user = request.user
-            return obj.shop.is_owner(user)
+            return obj.shop.is_owner(user) or user.is_staff
         return False
 
     def get_delivery_type_display(self, obj):
@@ -203,6 +206,7 @@ class ShopSerializer(ModelSerializer):
             'delete_url',
             'id',
             'title',
+            'slug',
             'user',
             'email',
             'is_owner',
@@ -215,6 +219,7 @@ class ShopSerializer(ModelSerializer):
             # 'used_categories',
 
         )
+
 
     # def get_used_categories(self, obj):
     #     return obj.get_used_categories()
@@ -249,3 +254,80 @@ class ShopCreateSerializer(ModelSerializer):
 
     def get_slug(self, obj):
         return slugify(obj.title)
+
+
+class UserSerializer(ModelSerializer):
+
+    class Meta:
+        model = User
+        fields = (
+            'id',
+            'name',
+            'email',
+            'phone',
+            'address'
+        )
+
+
+class SalesSerializer(ModelSerializer):
+
+    class Meta:
+        model = Sales
+        fields = (
+            'id',
+            'title',
+            'short_description',
+            'description',
+            'discount',
+            'image',
+            'created_at',
+            'updated_at'
+        )
+
+
+class ShopReviewsSerializer(ModelSerializer):
+
+    class Meta:
+        model = ShopReviews
+        fields = (
+            'id',
+            'user',
+            'text',
+            'stars',
+            'created_at',
+            'updated_at'
+        )
+
+
+class ShopContactsSerializer(ModelSerializer):
+    """
+       API endpoint that allows users to be viewed or edited.
+
+       retrieve:
+       Return a user instance.
+
+       list:
+       Return all users, ordered by most recently joined.
+       """
+
+    class Meta:
+        model = Contacts
+        fields = (
+            'id',
+            'address',
+            'phone',
+            'place',
+            'latitude',
+            'longitude',
+            'monday',
+            'tuesday',
+            'wednesday',
+            'thursday',
+            'friday',
+            'saturday',
+            'sunday',
+            'round_the_clock',
+            'created_at',
+            'updated_at'
+
+        )

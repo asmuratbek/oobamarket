@@ -1,5 +1,6 @@
 import React from 'react';
 import createClass from 'create-react-class';
+import {debounce} from 'throttle-debounce';
 
 
 var SearchForm = createClass({
@@ -18,7 +19,8 @@ var SearchForm = createClass({
   },
 
   search: function (e) {
-    this.props.onSearch(e.target.value)
+      var query = e.target.value;
+      this.props.onSearch(query)
   },
 
   render: function(){
@@ -50,7 +52,7 @@ var SearchForm = createClass({
                             {/*<option value="paid">Платная</option>*/}
                             {/*<option value="self">Самовывоз</option>*/}
                         {/*</select>*/}
-                         <input type="text" className="form-control" placeholder="Поиск товара" onChange={this.search} value={this.props.query} />
+                         <input type="text" className="form-control" placeholder="Поиск товара" onChange={this.search} />
                          {/*<button type="submit">*/}
                             {/*<span className="glyphicon glyphicon-search"></span>*/}
                         {/*</button>*/}

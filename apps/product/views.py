@@ -84,8 +84,6 @@ def add_product_review(request, slug):
 
         exists_review = ProductReviews.objects.filter(user=review.user, product=review.product)
 
-        print(exists_review)
-
         if exists_review.count() <= 0:
             review.save()
             return JsonResponse(dict(success=True))
@@ -196,7 +194,7 @@ class ProductUpdateView(LoginRequiredMixin, UpdateProductMixin, UpdateView):
 
     def form_valid(self, form):
         product = form.instance
-        product.slug = slugify(product.title)
+        product.slug = slugify(product.title) + '-' + str(product.id)
         product.save()
         product.values_set.clear()
         # for key, value in self.request.POST.items():
