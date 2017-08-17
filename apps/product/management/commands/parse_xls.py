@@ -13,10 +13,12 @@ class Command(BaseCommand):
     def add_arguments(self, parser):
         parser.add_argument('file_name', nargs='+', type=str)
         parser.add_argument('shop_slug', nargs='+', type=str)
+        parser.add_argument('cat_slug', nargs='+', type=str)
 
     def handle(self, *args, **options):
         file_name = options['file_name'][0]
         shop_slug = options['shop_slug'][0]
+        cat_slug = options['cat_slug'][0]
         dump_dir = os.listdir(str(settings.DUMP_ROOT))
         file = [f for f in dump_dir if f == str(file_name)]
         if not file:
@@ -25,7 +27,10 @@ class Command(BaseCommand):
             shop = Shop.objects.get(slug=shop_slug)
         except Shop.DoesNotExist:
             return self.stdout.write(self.style.ERROR("Магазин не найден"))
-        category = Category.objects.filter(title__icontains='Разное').first()
+        try:
+            category = Category.objects.get(slug=cat_slug)
+        except Category.DoesNotExist:
+            return self.stdout.write(self.style.ERROR("Категория не найдена"))
         wb = xlrd.open_workbook(settings.DUMP_ROOT + "/" + file_name)
         sheet = wb.sheet_by_index(0)
         data = [[sheet.cell_value(r, c) for c in range(3, sheet.ncols)] for r in range(sheet.nrows) if \

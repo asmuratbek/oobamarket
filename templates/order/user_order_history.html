@@ -9,10 +9,10 @@
                     <div class="parets">
                         <ul>
                             <li>
-                                <label for="parent">
-                                    <input type="checkbox" id="parent">
-                                    <div class="indicator"></div>
-                                </label>
+{#                                <label for="parent">#}
+{#                                    <input type="checkbox" id="parent">#}
+{#                                    <div class="indicator"></div>#}
+{#                                </label>#}
                             </li>
                             <li>Номер заказа</li>
                             <li>Дата</li>
@@ -21,7 +21,7 @@
                             <li>Адрес доставки</li>
                             <li>Телефон</li>
                             <li>Сумма заказа</li>
-                            <li>Комиссия</li>
+{#                            <li>Комиссия</li>#}
                         </ul>
 
                     </div>
@@ -31,12 +31,12 @@
 
                         <ul>
                             <li>
-                                <label for="child">
-                                    <input type="checkbox" id="child">
-                                    <div class="indicator"></div>
-                                </label>
+{#                                <label for="child">#}
+{#                                    <input type="checkbox" id="child">#}
+{#                                    <div class="indicator"></div>#}
+{#                                </label>#}
                             </li>
-                            <li>{{ order.id }}</li>
+                            <li>{{ order.cart.id }}</li>
                             <li><a href="{% url 'order:simple_update' pk=order.id %}"
                                    style="position: relative;">{{ order.created_at|date:"d.m.y H:i" }}</a></li>
                             <li>{{ order.name }}</li>
@@ -46,8 +46,8 @@
                             <li>{{ order.address }}
                             </li>
                             <li>{{ order.phone }}</li>
-                            <li>{{ order.cart.cartitem_set.product.total }}</li>
-                            <li>0 сом</li>
+                            <li>{{ order.cart.subtotal }}</li>
+{#                            <li>0 сом</li>#}
                         </ul>
                     </div>
                 {% endfor %}

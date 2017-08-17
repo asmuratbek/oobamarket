@@ -1,4 +1,3 @@
-
 // $(window).load(function () {
 //     $(".search-index").addClass('animated fade')
 // });
@@ -75,9 +74,6 @@ $(document).ready(function () {
     $(wrapper).append('<img class="img-responsive" src="' + link + '">');
 
 
-
-
-
     // var dropParents = $('.category-link .dropdown');
     //
     // $(dropParents).each(function (i, obj) {
@@ -152,6 +148,8 @@ $(document).ready(function () {
         $(".remove-product").modal('show');
     });
 
+
+    //функция изменения статуса заказа в истории заказов магазина
     $('.form-control').on('change', function (e) {
         e.preventDefault();
         let that = this;
@@ -160,13 +158,62 @@ $(document).ready(function () {
             type: 'POST',
             dataType: 'JSON',
             data: $(form).serialize(),
-            url:$(form).attr('action'),
+            url: $(form).attr('action'),
             success: function (responce) {
                 console.log(responce)
             }
 
         });
     });
+
+
+    var arr = [];//переменная массив для фукции записи в нее id списка заказов
+
+    //функция записи данных в переменную arr выше
+    function AddToArray() {
+
+        $('input[name=todelete]').on('click', function () {
+            let data_id = $(this).attr('data-id');
+            if (!$.inArray(data_id, arr)) {
+                arr.splice(arr.indexOf(data_id), 1);
+            }
+            else {
+                arr.push(data_id);
+            }
+
+            console.log(arr)
+        });
+    }
+
+    //фукция удаления одного или массива списков с истории продаж магазина
+    $('.remove-item').on('click', function (e) {
+        e.preventDefault();
+        var self = $(this);
+        var elems = $('input[name=todelete]:checked');
+        $.ajax({
+            url: self.attr('href'),
+            type: 'POST',
+            dataType: 'JSON',
+            data: {'ids': arr},
+            success: function (responce) {
+                console.log(arr)
+            }
+
+        });
+
+    });
+
+    // //функция выделения всех чекбоксов на странице истории заказов при клике на родительский чекбокс
+    // $('#parent').on('click', function (e) {
+    //     let data_id = $(this).attr('data-id');
+    //     $('.child-order ul li label input[name="todelete"]').each(function () {
+    //         $(this).attr('checked', true);
+    //         if ($(this).hasAttr('checked', true)) {
+    //
+    //         }
+    //     });
+    // });
+
 
     $(".mobile-auth-btn").click(function () {
         //открыть модальное окно с class="remove-product"
@@ -287,15 +334,15 @@ $(document).ready(function () {
                         subcategoryList.html('<option>Выберите подкатегорию</option>');
                         $.each(data.category_list, function (index, category) {
                             if (category[2].length) {
-                                    subcategoryList.append('<option value=' + category[0] + ' disabled>' + category[1] + '</option>');
-                                    $.each(category[2], function (index, cat) {
+                                subcategoryList.append('<option value=' + category[0] + ' disabled>' + category[1] + '</option>');
+                                $.each(category[2], function (index, cat) {
                                     subcategoryList.append('<option value=' + cat[0] + '>' + '--- ' + cat[1] + '</option>')
                                 })
                             }
 
                             else {
                                 subcategoryList.append('<option value=' + category[0] + '>' + category[1] + '</option>');
-                                    $.each(category[2], function (index, cat) {
+                                $.each(category[2], function (index, cat) {
                                     subcategoryList.append('<option value=' + cat[0] + '>' + '--- ' + cat[1] + '</option>')
                                 })
                             }
@@ -467,7 +514,6 @@ $(document).ready(function () {
     $(".filter-clone .btn-toggle-setting").click(function () {
         $("#toggle-setting-1").slideToggle("0");
     });
-
 
 
     $.fn.hasAttr = function (value) {

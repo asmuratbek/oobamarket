@@ -1,6 +1,6 @@
 from apps.order.views import OrderDetail, SimpleOrderCreateView, ThankYouView, SimpleOrderListView, \
     SimpleOrderUpdateView, SimpleOrderShopDetailView, simple_order_shop_list_update, DeleteSimpleOrderShop, \
-    change_status
+    change_status, delete_simple_order_list
 from django.conf.urls import url
 
 urlpatterns = [
@@ -12,6 +12,7 @@ urlpatterns = [
     url(r'^(?P<slug>[\w.@+-]+)/order-detail/(?P<pk>\d+)/$', SimpleOrderShopDetailView.as_view(), name='shop_order_detail'),
     url(r'^(?P<pk>\d+)/$', OrderDetail.as_view(), name='detail'),
     url(r'^change_status/$', change_status, name='change_status'),
+    url(r'^delete_items/$', delete_simple_order_list, name='delete_items'),
 
     url(
         regex=r'^(?P<username>[\w.@+-]+)/order-history/$',
