@@ -5,26 +5,14 @@
 
     <div class="basket-page">
     <div class="container">
-{#        <div class="history-object">#}
-{#            <h3>Заказ от {{ object.created_at|date:"d.m.y H:i" }}</h3>#}
-{#            <p>#}
-{#                <strong>ФИО</strong>: {{ object.name }} {{ object.last_name }}#}
-{#            </p>#}
-{#            <p>#}
-{#                <strong>Телефон</strong>: {{ object.phone }}#}
-{#            </p>#}
-{#            <p>#}
-{#                <strong>Адрес</strong>:{{ object.address }}#}
-{#            </p>#}
-{#        </div>#}
         <div class="tab-simpleorder">
         <div class="head">
                     <div class="parets">
                         <ul>
                             <li>
-                                <label for="parent">
-                                    <input type="checkbox" id="parent">
-                                    <div class="indicator"></div>
+{#                                <label for="parent">#}
+{#                                    <input type="checkbox" id="parent">#}
+{#                                    <div class="indicator"></div>#}
                                 </label>
                             </li>
                             <li>Номер заказа</li>
@@ -47,7 +35,7 @@
                                     <div class="indicator"></div>
                                 </label>
                             </li>
-                            <li>{{ object.id }}</li>
+                            <li>{{ object.cart.id }}</li>
                             <li>{{ object.created_at|date:"d.m.y H:i" }}</li>
                             <li>{{ object.name }}</li>
                             <li>
@@ -67,7 +55,7 @@
                             <li>{{ object.address }}
                             </li>
                             <li>{{ object.phone }}</li>
-                            <li>{{ object.cart.cartitem_set.product.total }}</li>
+                            <li>{{ object.cart.subtotal }}</li>
                             <li>0 сом</li>
                         </ul>
                     </div>

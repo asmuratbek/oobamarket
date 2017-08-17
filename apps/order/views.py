@@ -3,6 +3,7 @@ from django.http import Http404, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404, render_to_response
 from django.urls import reverse
 from django.views import View
+from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import TemplateView
 from django.views.generic.edit import CreateView, FormView, UpdateView, DeleteView
 from django.views.generic.detail import DetailView
@@ -142,15 +143,19 @@ class SimpleOrderListView(ListView):
     def get_queryset(self):
         return SimpleOrder.objects.filter(user__username=self.kwargs['username'])
 
-    # def get_context_data(self, **kwargs):
-    #     context = super(SimpleOrderListView, self).get_context_data(**kwargs)
-    #     context['shop'] = Shop.objects.first()
+        # def get_context_data(self, **kwargs):
+        #     context = super(SimpleOrderListView, self).get_context_data(**kwargs)
+        #     context['shop'] = Shop.objects.first()
+
 
 class SimpleOrderUpdateView(LoginRequiredMixin, UpdateView):
     model = SimpleOrder
     template_name = 'order/order_detail.html'
     form_class = SimpleOrderForm
 
+
+def delete_user_order_history(request):
+    pass
 
 # class SimpleOrderShopListUpdateView(UpdateView):
 #     model = SimpleOrder
@@ -181,7 +186,7 @@ class SimpleOrderUpdateView(LoginRequiredMixin, UpdateView):
 
 
 def simple_order_shop_list_update(request, slug):
-    object_list = SimpleOrder.objects.filter(cart__cartitem__product__shop__slug=slug)
+    object_list = SimpleOrder.objects.filter(cart__cartitem__product__shop__slug=slug).distinct()
     shop = Shop.objects.get(slug=slug)
 
     form = SimpleOrderForm()
@@ -215,6 +220,15 @@ class DeleteSimpleOrderShop(LoginRequiredMixin, DeleteView):
     def get_success_url(self):
         print('lala')
         return reverse("order:shop_order_list", kwargs={'slug': self.object.user.shop_set.first().slug})
+
+
+@csrf_exempt
+def delete_simple_order_list(request):
+    if request.POST.get('ids[]'):
+        for id in request.POST.getlist('ids[]'):
+            SimpleOrder.objects.get(pk=id).delete()
+        return JsonResponse(dict(messages=True))
+    return JsonResponse(dict(messages=False))
 
 
 class SimpleOrderShopDetailView(DetailView):
