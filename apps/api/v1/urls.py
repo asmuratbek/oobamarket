@@ -22,13 +22,15 @@ from .views import (
     ShopDetailView,
     ShopSalesView,
     ShopReviewsView,
-    ShopContactsView
+    ShopContactsView,
+    PlaceListView
 )
 from rest_framework.documentation import include_docs_urls
 
 
 urlpatterns = [
     # url(r'^shop/(?P<slug>[-_\w]+)/$', GetUsedCategoriesFromShop.as_view(), name="shops_used_categories"),
+    url(r'^place/$', PlaceListView.as_view(), name='place_list'),
     url(r'^category/(?P<slug>[-_.\w]+)/$', CategoryDetailApiView.as_view(), name='category_detail'),
     url(r'^category/$', CategoryListApiView.as_view(), name='category_list'),
     url(r'^globalcategory/(?P<slug>[-_.\w]+)/$', GlobalCategoryDetailApiView.as_view(), name='globalcategory_detail'),

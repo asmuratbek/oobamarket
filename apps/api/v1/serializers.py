@@ -7,7 +7,7 @@ from slugify import slugify
 from apps.product.models import Category
 from apps.global_category.models import GlobalCategory
 from apps.reviews.models import ShopReviews
-from apps.shop.models import Sales, Contacts
+from apps.shop.models import Sales, Contacts, Place
 from apps.users.models import User
 
 
@@ -197,6 +197,10 @@ class ShopSerializer(ModelSerializer):
 
     # used_categories = SerializerMethodField()
     is_owner = SerializerMethodField()
+    phone = SerializerMethodField()
+    is_authenticated = SerializerMethodField()
+    is_subscribed = SerializerMethodField()
+    places = SerializerMethodField()
 
     class Meta:
         model = Shop
@@ -209,6 +213,10 @@ class ShopSerializer(ModelSerializer):
             'slug',
             'user',
             'email',
+            'phone',
+            'places',
+            'is_authenticated',
+            'is_subscribed',
             'is_owner',
             'description',
             'short_description',
@@ -231,6 +239,40 @@ class ShopSerializer(ModelSerializer):
             user = request.user
             return obj.is_owner(user) or user.is_staff
         return False
+
+    def get_phone(self, obj):
+        if obj.contacts_set.first():
+            return obj.contacts_set.first().phone
+        else:
+            return None
+
+    def get_is_authenticated(self, obj):
+        user = None
+        request = self.context.get("request")
+        if request and hasattr(request, "user"):
+            user = request.user
+            if user.is_authenticated:
+                return True
+            else:
+                return False
+
+    def get_is_subscribed(self, obj):
+        user = None
+        request = self.context.get("request")
+        if request and hasattr(request, "user"):
+            user = request.user
+            if user.is_authenticated:
+                subs = [sub.subscription.id for sub in user.subscription_set.all()]
+                if obj.id in subs:
+                    return True
+                else:
+                    return False
+            else:
+                return False
+
+    def get_places(self, obj):
+        places = [contact.place.id if contact.place else None for contact in obj.contacts_set.all()]
+        return places
 
 
 class ShopCreateSerializer(ModelSerializer):
@@ -331,3 +373,20 @@ class ShopContactsSerializer(ModelSerializer):
             'updated_at'
 
         )
+
+
+class PlaceSerializer(ModelSerializer):
+
+    class Meta:
+        model = Place
+        fields = (
+            'id',
+            'title',
+            'ttype',
+        )
+
+    ttype = SerializerMethodField()
+
+
+    def get_ttype(self, obj):
+        return obj.get_type_display()
