@@ -9,9 +9,7 @@
     <section class="add-product">
         <div class="container">
             <div class="form-filter">
-                <form class="form-inline" action="{% url 'product:update_product' slug=object.slug %}" method="post"
-                      enctype="multipart/form-data" data-media-upload-url="{% url 'product:upload_images' %}"
-                      data-remove-uploaded-media-url="{% url 'product:remove_images' %}" id="form">
+                <form class="form-inline" id="form">
                     {% csrf_token %}
                     <div class="col-md-8">
 
@@ -20,19 +18,23 @@
                             <div class="form-group select col-md-6">
 
                                 {% render_field form.shop|add_error_attr:"aria-invalid:true" %}
+                                <label class="label-error"></label>
 
                             </div>
 
                             <div class="form-group select col-md-6">
                                 {% render_field form.section|attr:"id:global_category" %}
+                                <label class="label-error"></label>
                             </div>
 
                             <div class="form-group select col-md-6">
                                 {% render_field form.parent_categories|attr:"id:category_list" %}
+                                <label class="label-error"></label>
                             </div>
 
                             <div class="form-group select col-md-6">
                                 {% render_field form.category|attr:"id:subcategory_list" %}
+                                <label class="label-error"></label>
                             </div>
 
                             <div class="form-group input col-md-12">
@@ -41,11 +43,13 @@
                                 {#                                   data-original-title="Рекомендация: для лучшего поиска, пишите тип товара в начале названия. Автомобильные шины MAXXIS AT-771 Bravo"#}
                                 {#                                   aria-describedby="tooltip200612" class="form-control" placeholder="Название товара">#}
                                 {% render_field form.title|add_error_attr:"aria-invalid:true"|attr:"data-toggle:tooltip"|attr:"data-placement:top"|attr:"aria-describedby:tooltip200612"|attr:"required"|attr:"data-original-title:Рекомендация - для лучшего поиска, пишите тип товара в начале названия. Автомобильные шины MAXXIS AT-771 Bravo" placeholder="Название товара" %}
+                                <label class="label-error"></label>
                             </div>
 
                             <div class="form-group input col-md-12">
                                 {#                                <input type="text" class="form-control mini price" placeholder="Цена">#}
                                 {% render_field form.price|add_error_attr:"aria-invalid:true"|attr:"required"|attr:"class:form-control mini price" placeholder="Цена" %}
+                                <label class="label-error"></label>
 
                                 <div class="select">
                                     {% render_field form.currency|add_error_attr:"aria-invalid:true"|attr:"required" %}
@@ -149,7 +153,7 @@
 
                         <div class="form-group btn-group-form col-md-12">
                             {#                            <button type="submit" class="btn cancel"> Отменить</button>#}
-                            <button type="submit" class="btn add">Добавить товар</button>
+                            <button type="button" class="btn add" id="update-product-button">Сохранить изменения</button>
                         </div>
 
                     {#                    <div class="col-md-4">#}
@@ -186,9 +190,7 @@
                             <br>
                             <span id="file-counter" style="color: red;"></span>
                         </div>
-                        <input class="hidden" type="file" data-product-slug="{{ object.slug }}" id="uploading-images" name="image" style="display: none;" multiple
-                        data-url="{% url 'product:upload_product_images' slug=object.slug %}"
-                        data-form-data='{"csrfmiddlewaretoken": "{{ csrf_token }}"}' >
+                        <input class="hidden" type="file" id="uploading-images" style="display: none;" multiple>
 {#                        {% render_field form.image %}#}
 {#                        {% render_field form.removed_images type='hidden' %}#}
 {#                        {% render_field form.uploaded_images type='hidden' %}#}
@@ -198,8 +200,10 @@
                             {% for i in product.get_all_images %}
 {#                                <h6>{{ i.image.name }}</h6>#}
                                 <div class="product-images-block">
-                                <img src="{{ i.image.url }}" style="width: 200px; height: auto;"/>
-                                <span class="delete_prod_images" data-productimage-id="{{ i.id }}">x</span>
+                                <img src="{{ i.image.url }}" class="{% if i.is_avatar %}active-border{% else %}add-img-el{% endif %}"
+                                     style="width: 200px; height: auto;" data-productimage-id="{{ i.id }}"/>
+                                <span class="delete_prod_images" data-productimage-id="{{ i.id }}">X</span>
+                                    <p>{% if i.is_avatar %}Главная{% endif %}</p>
                                 </div>
                             {% endfor %}
                         </div>
@@ -221,9 +225,10 @@
     <script src="{% static 'js/jquery.ui.widget.js' %}"></script>
     <script src="{% static 'js/jquery.iframe-transport.js' %}"></script>
     <script src="{% static 'js/jquery.fileupload.js' %}"></script>
-    <script src="{% static 'js/images_upload.js' %}"></script>
-    <script src="{% static 'js/jquery.uploadPreview.js' %}"></script>
-    <script>
-        console.log($('#uploading-images').attr('data-product-slug'));
-    </script>
+{#    <script src="{% static 'js/images_upload.js' %}"></script>#}
+{#    <script src="{% static 'js/jquery.uploadPreview.js' %}"></script>#}
+{#    <script>#}
+{#        console.log($('#uploading-images').attr('data-product-slug'));#}
+{#    </script>#}
+    <script src="{% static 'js/product_update.js' %}"></script>
 {% endblock %}

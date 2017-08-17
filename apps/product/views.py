@@ -1,5 +1,5 @@
 import os
-import random
+import random, json
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -166,10 +166,11 @@ class ProductCreateView(LoginRequiredMixin, AddProductMixin, CreateView):
         #     elif key.startswith("man-") and value:
         #         my_value, created = Values.objects.get_or_create(value=value, properties_id=int(key[4:]))
         #         my_value.products.add(product)
-        if self.request.FILES.get('image'):
+        if self.request.FILES:
             avatar = self.request.FILES.get('avatar')
             images = self.request.FILES.getlist('image')
-            ProductImage.objects.create(product=product, image=avatar, is_avatar=True)
+            if avatar:
+                ProductImage.objects.create(product=product, image=avatar, is_avatar=True)
             other_images = [ProductImage(product=product, image=img) for img in images]
             ProductImage.objects.bulk_create(other_images)
         return super(ProductCreateView, self).form_valid(form)
@@ -196,17 +197,40 @@ class ProductUpdateView(LoginRequiredMixin, UpdateProductMixin, UpdateView):
         product.slug = slugify(product.title) + '-' + str(product.id)
         product.save()
         product.values_set.clear()
-        for key, value in self.request.POST.items():
-            if key.startswith('val'):
-                value = get_object_or_404(Values, id=int(key[4:]))
-                value.products.add(product)
-            elif key.startswith('property') and '---' not in value:
-                value = get_object_or_404(Values, id=int(value))
-                value.products.add(product)
-            elif key.startswith("man-") and value:
-                my_value, created = Values.objects.get_or_create(value=value, properties_id=int(key[4:]))
-                my_value.products.add(product)
-        return super(ProductUpdateView, self).form_valid(form)
+        # for key, value in self.request.POST.items():
+        #     if key.startswith('val'):
+        #         value = get_object_or_404(Values, id=int(key[4:]))
+        #         value.products.add(product)
+        #     elif key.startswith('property') and '---' not in value:
+        #         value = get_object_or_404(Values, id=int(value))
+        #         value.products.add(product)
+        #     elif key.startswith("man-") and value:
+        #         my_value, created = Values.objects.get_or_create(value=value, properties_id=int(key[4:]))
+        #         my_value.products.add(product)
+        if form.data.get("old_avatar"):
+            old_img_id = int(form.data.get("old_avatar", ""))
+            old_image = get_object_or_404(ProductImage, id=old_img_id)
+            old_image.is_avatar = False
+            old_image.save()
+        if form.data.get("new_avatar"):
+            image_id = int(form.data.get("new_avatar", ""))
+            image = get_object_or_404(ProductImage, id=image_id)
+            image.is_avatar = True
+            image.save()
+        if form.data.get("delete_images"):
+            del_list = [int(i) for i in form.data.get("delete_images").split(",")]
+            product.productimage_set.filter(id__in=del_list).delete()
+        if self.request.FILES:
+            avatar = self.request.FILES.get('avatar', '')
+            images = self.request.FILES.getlist('image')
+            if avatar:
+                ProductImage.objects.create(product=product, image=avatar, is_avatar=True)
+            other_images = [ProductImage(product=product, image=img) for img in images]
+            ProductImage.objects.bulk_create(other_images)
+        data = dict(category=product.category.slug, section=product.category.section.slug,
+                    product_slug=product.slug)
+        # response = super(ProductUpdateView, self).form_valid(form)
+        return JsonResponse(data)
 
     def get_context_data(self, **kwargs):
         context = super(ProductUpdateView, self).get_context_data(**kwargs)

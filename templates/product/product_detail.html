@@ -28,14 +28,14 @@
 {#                      data-placement="bottom" data-original-title="Используйте скролл для детального просмотра"#}
 {#                      aria-describedby="tooltip409378"></span>#}
                 {% if object.get_main_image %}
-                    <img style="border:1px solid #e8e8e6;" class="my-foto-container" src="{{ object.get_main_image }}"  data-large="{{ object.get_main_image }}" title="Фото">
+                    <img style="border:1px solid #e8e8e6;" class="my-foto-container" src="{{ object.get_avatar_image }}"  data-large="{{ object.get_avatar_image }}" title="Фото">
                 {% else %}
                     <img style="border:1px solid #e8e8e6;" class="my-foto-container" src="http://via.placeholder.com/378x378"
                          data-zoom-image="http://via.placeholder.com/378x378" width="380"/>
                 {% endif %}
                 <div id="gal1">
                     {% for image in object.productimage_set.all %}
-                        <img {% if forloop.first %} active {% endif %} class="my-foto" src="{{ image.image.url }}"  data-large="{{ image.image.url }}" title="Фото1">
+                        <img {% if image.is_avatar %} active {% endif %} class="my-foto" src="{{ image.image.url }}"  data-large="{{ image.image.url }}" title="Фото1">
 
                     {% endfor %}
                 </div>
