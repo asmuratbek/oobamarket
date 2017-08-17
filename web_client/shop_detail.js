@@ -32,10 +32,10 @@ var MainInterface = createClass({
         }
     },
 
-    componentDidMount() {
+    componentWillMount() {
         var params = location.search.substr(1).split("&")
         params.forEach(function (i) {
-            if (i.split("=")[0] == "q") {
+            if (i.split("=")[0] == "q") {q
                 this.setState({
                     queryText: i.split("=")[1]
                 })
@@ -157,6 +157,7 @@ var MainInterface = createClass({
     // },
 
     searchApts(q) {
+        console.log(q);
         this.setState({
             loaded: false,
         });

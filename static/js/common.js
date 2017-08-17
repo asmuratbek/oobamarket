@@ -243,7 +243,6 @@ $(document).ready(function () {
                     "global_category": $("#global_category option:selected").text()
                 },
                 success: function (data) {
-                    console.log(data);
                     if (data.count > 0) {
                         categoryList.removeAttr('disabled');
                         subcategoryList.html("").attr('disabled', "");
@@ -305,7 +304,6 @@ $(document).ready(function () {
                     }
 
                     else {
-                        console.log('Noooo');
                         subcategoryList.html("").attr('disabled', "");
                     }
 
@@ -407,8 +405,6 @@ $(document).ready(function () {
             data: formData,
             success: function (data) {
                 showFlashMessage(data.flash_message);
-                console.log(data);
-                console.log(data.total_items);
                 $('.cart-count').text(data.total_items);
                 if (data.item_added) {
                     $(this).toggleClass("active");
@@ -495,7 +491,6 @@ $(document).ready(function () {
                 },
                 success: function (data) {
                     showFlashMessage(data.message);
-                    console.log(data)
 
                 }
             });
@@ -511,7 +506,6 @@ $(document).ready(function () {
                 },
                 success: function (data) {
                     showFlashMessage(data.message);
-                    console.log(data)
 
                 }
             });
@@ -639,8 +633,6 @@ $(document).ready(function () {
             data: formData,
             success: function (data) {
                 showFlashMessage(data.flash_message);
-                console.log(data);
-                console.log(data.line_total);
                 $('.cart-count').text(data.total_items);
                 $('#line-total-' + data.id).text(data.line_total + ' сом');
                 $('#subtotal').text(data.subtotal + ' сом');

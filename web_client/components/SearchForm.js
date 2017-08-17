@@ -1,6 +1,5 @@
 import React from 'react';
 import createClass from 'create-react-class';
-import {debounce} from 'throttle-debounce';
 
 
 var SearchForm = createClass({
