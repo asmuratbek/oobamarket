@@ -28,7 +28,7 @@
                 </div>
 
                 {% for order in object_list %}
-
+                    {% if order.is_visible == True %}
                     <div class="child-order">
 
                         <ul>
@@ -39,7 +39,7 @@
                                 </label>
                             </li>
                             <li>{{ order.cart.id }}</li>
-                            <li><a href="{% url 'order:simple_update' pk=order.id %}"
+                            <li><a href="{% url 'order:shop_simple_order_update' pk=order.id %}"
                                    style="position: relative;">{{ order.created_at|date:"d.m.y H:i" }}</a></li>
                             <li>{{ order.name }}</li>
                             <li>
@@ -63,6 +63,7 @@
 {#                            <li>0 сом</li>#}
                         </ul>
                     </div>
+                    {% endif %}
                 {% endfor %}
             </div>
 
