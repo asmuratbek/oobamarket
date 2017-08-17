@@ -28,6 +28,12 @@ import random
 class ShopListView(generic.ListView):
     model = Shop
 
+    def get_context_data(self, **kwargs):
+        context = super(ShopListView, self).get_context_data(**kwargs)
+        if self.request.user.is_authenticated:
+            context['subscribe_shops'] = [sub.subscription.id for sub in self.request.user.subscription_set.all()]
+        return context
+
 
 class ShopDetailView(generic.DetailView):
     model = Shop

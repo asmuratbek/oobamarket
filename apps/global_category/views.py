@@ -22,7 +22,7 @@ class IndexView(generic.TemplateView):
         context = super(IndexView, self).get_context_data(**kwargs)
         context['shops'] = Shop.objects.all()[:12]
         if self.request.user.is_authenticated:
-            context['subscribe_shops'] = [sub.subscription for sub in self.request.user.subscription_set.all()]
+            context['subscribe_shops'] = [sub.subscription.id for sub in self.request.user.subscription_set.all()]
         context["weeks_best_products"] = Product.objects.all()[:12]
         return context
 
