@@ -27,11 +27,11 @@ from apps.api.v1.serializers import (
     CategorySerializer,
     GlobalCategorySerializer,
     UserSerializer,
-    SalesSerializer, ShopReviewsSerializer, ShopContactsSerializer)
+    SalesSerializer, ShopReviewsSerializer, ShopContactsSerializer, PlaceSerializer)
 
 from apps.product.models import Product
 from apps.reviews.models import ShopReviews
-from apps.shop.models import Shop, Sales, Contacts
+from apps.shop.models import Shop, Sales, Contacts, Place
 from apps.users.models import User
 from .pagination import (
     CategoryLimitPagination,
@@ -195,22 +195,26 @@ class ProductCreateApiView(CreateAPIView):
 class ShopListApiView(ListAPIView):
     serializer_class = ShopSerializer
     filter_backends = [SearchFilter, OrderingFilter]
-    search_fields = ['title', 'description']
     pagination_class = ShopProductsLimitPagination
     permission_classes = [AllowAny]
 
     def get_queryset(self):
-        objects = Shop.objects.all()
+        shops = Shop.objects.all()
 
-        if self.request.GET.get('search'):
-            q = self.request.GET.get('search')
-            objects = Shop.objects.filter(
+        if self.request.GET.get('q'):
+            q = self.request.GET.get('q')
+            shops = shops.filter(
                 Q(title__icontains=q)
             ).distinct()
-            return objects
-        else:
-            objects = Shop.objects.all()
-            return objects
+        if self.request.GET.get('place'):
+            place = self.request.GET.get('place')
+            shops = shops.filter(contacts__place_id=place).distinct()
+        return shops
+
+
+class PlaceListView(ListAPIView):
+    serializer_class = PlaceSerializer
+    queryset = Place.objects.all()
 
 
 class ShopDetailApiView(MultipleModelAPIView):

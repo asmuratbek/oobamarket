@@ -37,7 +37,7 @@
 {#                                </label>#}
                             </li>
                             <li>{{ order.cart.id }}</li>
-                            <li><a href="{% url 'order:simple_update' pk=order.id %}"
+                            <li><a href="{% url 'order:user_order_detail' pk=order.id %}"
                                    style="position: relative;">{{ order.created_at|date:"d.m.y H:i" }}</a></li>
                             <li>{{ order.name }}</li>
                             <li>
