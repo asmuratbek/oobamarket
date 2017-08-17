@@ -60,3 +60,14 @@ $.ajax({
 });
 
 
+$(document).on("click", ".subscribe_shop", function () {
+    var shop_slug = $(this).closest("div.back-fade").find("a.url").attr("href").split("/")[2];
+    var that = $(this);
+    $.post("/users/subscribe/", {"shop_slug": shop_slug}, function (data) {
+        if(data.status === 0)
+            that.text("Подписаться");
+        else
+            that.text("Отписаться");
+    });
+});
+

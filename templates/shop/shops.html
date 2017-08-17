@@ -87,7 +87,11 @@
                             <h3> {{ shop.title|truncatechars:28 }} </h3>
                         </div>
                         <div class="col-md-6">
-                            <a href="">подписаться</a>
+                        {% if user.is_authenticated %}
+                            {% if user not in shop.user.all %}
+                            <a class="subscribe_shop">{% if shop in subscribe_shops %}Отписаться{% else %}Подписаться{% endif %}</a>
+                            {% endif %}
+                        {% endif %}
                         </div>
                     </div>
 

@@ -240,5 +240,10 @@
 
 {% endblock %}
 
+{% block js %}
+    {{ block.super }}
+    <script src="{% static "js/subscribe.js" %}"></script>
+{% endblock %}
+
 
 
