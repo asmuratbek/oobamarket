@@ -137,6 +137,7 @@ class SimpleOrder(PublishBaseModel):
     cart = models.ForeignKey(Cart, blank=True, null=True)
     status = models.CharField(max_length=120, choices=ORDER_STATUS_CHOICES, default='created')
     is_visible = models.BooleanField(verbose_name='Не скрыт', default=True)
+    comments = models.TextField(verbose_name='Комментарий к заказу', null=True, blank=True)
 
     def __str__(self):
         return str(self.name) + str(self.last_name)

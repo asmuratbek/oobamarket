@@ -132,7 +132,10 @@ def subscribe(request):
 
 
 class SubscribeListView(LoginRequiredMixin, View):
-    def get(self, request, *args, **kwargs):
+
+    def post(self, request, *args, **kwargs):
+        from django.core.paginator import Paginator
+
         user = self.request.user
         sub_list = list()
         for sub in user.subscription_set.all():
@@ -143,6 +146,17 @@ class SubscribeListView(LoginRequiredMixin, View):
             else:
                 [sub_list.append(item) for item in sub.subscription.sales_set.all().order_by("-created_at")]
                 [sub_list.append(item) for item in sub.subscription.product_set.all().order_by("-created_at")]
-        return render(self.request, 'users/sub_list.html', {'sub_objects': sub_list})
+        p = Paginator(sub_list, 8)
+        pages_count = p.num_pages
+        page = self.request.GET.get('page')
+        print(page)
+        if page and int(page) <= pages_count:
+            p = p.page(int(page))
+            return render(self.request, 'users/subs.html', {'sub_objects': p.object_list})
+        else:
+            return render(self.request, 'users/subs.html', {})
+
+    def get(self, request, *args, **kwargs):
+        return render(self.request, 'users/sub_list.html', {})
 
 

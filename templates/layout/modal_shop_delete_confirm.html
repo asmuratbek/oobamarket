@@ -1,4 +1,11 @@
+{% extends 'base-1.html' %}
+
+{% block content %}
+    <<div class="container">
 <form action="{% url 'shops:delete' slug=object.slug %}" method="post" id="ProductDelete">{% csrf_token %}
-    <p>Вы уверены что хотите удалить магазин"{{ object }}"?</p>
+    <h1>Вы уверены что хотите удалить магазин "{{ object }}" ?</h1><br>
+    <p>Удалив магазин вы его не востановите. Все данные связанные с магазином удалятся!</p><br>
     <button class="btn" type="submit">Подтвердить</button>
 </form>
+    </div>
+{% endblock %}

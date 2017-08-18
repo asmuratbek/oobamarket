@@ -100,7 +100,7 @@
                                 <div class="form-group btn-group-form col-md-12">
                                     <button type="submit" class="btn add">Сохранить</button>
                                      {% if object %}
-                                    <a class="remove delete-object model-trigger btn add"  data-url="{% url 'shops:delete' slug=object.slug %}" style="cursor: pointer;"> <span class="glyphicon glyphicon-warning-sign"></span> Удалить магазин</a>
+                                    <a href="{% url 'shops:delete' slug=object.slug %}" class="remove delete-object model-trigger btn add" style="cursor: pointer;"> <span class="glyphicon glyphicon-warning-sign"></span> Удалить магазин</a>
                                     {% endif %}
                                 </div>
 
