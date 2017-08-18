@@ -120,7 +120,7 @@ class ProductSerializer(ModelSerializer):
         return obj.get_delivery_type()
 
     def get_main_image(self, obj):
-        return obj.get_main_image()
+        return obj.get_avatar_image()
 
     def get_is_in_cart(self, product):
         request = self.context.get("request")
