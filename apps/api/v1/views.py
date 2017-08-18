@@ -88,7 +88,12 @@ class CategoryDetailApiView(MultipleModelAPIView):
         price_from = self.request.GET.get('priceFrom')
         price_to = self.request.GET.get('priceTo')
         category = Category.objects.get(slug=slug)
-        products = Product.objects.filter(category=category)
+        if category.get_level() == 0:
+            products = Product.objects.filter(
+                Q(category__in=category.get_children()),
+            ).distinct()
+        else:
+            products = Product.objects.filter(category=category)
         if q:
             products = products.filter(
                 Q(title__icontains=str(q))
