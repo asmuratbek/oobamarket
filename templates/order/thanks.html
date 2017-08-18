@@ -5,11 +5,11 @@
     <div class="container">
         <h1>Спасибо что сделали заказ</h1>
         <p>Ваш заказ оформлен,мы оповестили владелеца магазина и он свяжется с Вами</p>
-        <p>Если возникли проблемы с работой магазина свяжитесь с нами по email: asmuratbek@gmail.com</p>
+        <p>Если возникли проблемы с работой магазина свяжитесь с нами по email: sunrisestudiopro@gmail.com</p>
         <h2>Вы оформили корзину товара</h2>
         <div class="go">
             {% if user.is_authenticated %}
-            <a class="btn add" href="{% url 'order:order-history' username=request.user.username %}">Посетить историю покупок</a>
+            <a class="btn add" href="{% url 'order:user_order_list' username=request.user.username %}">Посетить историю покупок</a>
             {% endif %}
             <a class="btn add" href="/">Продолжить покупку</a>
         </div>
