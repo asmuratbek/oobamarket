@@ -11,7 +11,7 @@ from  django.views.generic.list import ListView
 # Create your views here.
 from apps.cart.models import Cart
 from apps.shop.models import Shop
-from .forms import AddressForm, UserAddressForm, SimpleOrderForm
+from .forms import AddressForm, UserAddressForm, SimpleOrderForm, ShopSimpleOrderForm
 from .mixins import CartOrderMixin, LoginRequiredMixin
 from .models import UserAddress, UserCheckout, Order, SimpleOrder
 
@@ -138,7 +138,7 @@ def shop_simple_order_list_update(request, slug):
     object_list = SimpleOrder.objects.filter(cart__cartitem__product__shop__slug=slug).distinct()
     shop = Shop.objects.get(slug=slug)
 
-    form = SimpleOrderForm()
+    form = ShopSimpleOrderForm()
 
     context = {
         'shop': shop,
@@ -159,12 +159,19 @@ class ShopSimpleOrderDetailView(DetailView):
 class ShopSimpleOrderUpdateView(LoginRequiredMixin, UpdateView):
     model = SimpleOrder
     template_name = 'order/shop_order_detail.html'
-    form_class = SimpleOrderForm
+    form_class = ShopSimpleOrderForm
+
+    def form_valid(self, form):
+        form.save()
+        return self.get_success_url()
+
+    def get_success_url(self):
+        return redirect(self.request.META['HTTP_REFERER'])
 
 
 def shop_change_status(request):
     if request.method == 'POST':
-        form = SimpleOrderForm(request.POST)
+        form = ShopSimpleOrderForm(request.POST)
         simple_order = SimpleOrder.objects.get(id=request.POST.get('id'))
         simple_order.status = request.POST.get('status')
         simple_order.save()
@@ -195,8 +202,6 @@ class UserSimpleOrderListView(ListView):
 class UserSimpleOrderDetailView(LoginRequiredMixin, DetailView):
     model = SimpleOrder
     template_name = 'order/user_order_detail.html'
-
-
 
 # class SimpleOrderShopListUpdateView(UpdateView):
 #     model = SimpleOrder

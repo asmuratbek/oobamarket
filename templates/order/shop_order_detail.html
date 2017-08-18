@@ -5,6 +5,9 @@
 
     <div class="basket-page">
     <div class="container">
+    {% if form.errors %}
+        {{ form.errors }}
+    {% endif %}
         <div class="tab-simpleorder">
         <div class="head">
                     <div class="parets">
@@ -28,7 +31,7 @@
                     </div>
                 </div>
         <div class="child-object">
-                        <form method="POST"  action="{% url 'order:change_status' %}" class="order_change">
+                        <form method="POST"  action="{% url 'order:shop_simple_order_update' pk=object.pk %}" class="order_change">
                         <ul>
                             <li>
                                 <label for="child">

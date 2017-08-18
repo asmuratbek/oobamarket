@@ -58,9 +58,20 @@ class SimpleOrderForm(forms.ModelForm):
             'status',
             'comments',
         ]
+
     def __init__(self, *args, **kwargs):
         super(SimpleOrderForm, self).__init__(*args, **kwargs)
         # self.status = kwargs['initial']['status']
 
 
+class ShopSimpleOrderForm(forms.ModelForm):
+    class Meta:
+        model = SimpleOrder
+        fields = [
+            'status',
+            'comments',
+        ]
 
+    def __init__(self, *args, **kwargs):
+        super(ShopSimpleOrderForm, self).__init__(*args, **kwargs)
+        # self.status = kwargs['initial']['status']
