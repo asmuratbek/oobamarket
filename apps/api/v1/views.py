@@ -219,7 +219,7 @@ class ShopListApiView(ListAPIView):
 
 class PlaceListView(ListAPIView):
     serializer_class = PlaceSerializer
-    queryset = Place.objects.all()
+    queryset = Place.objects.all().order_by('title')
 
 
 class ShopDetailApiView(MultipleModelAPIView):

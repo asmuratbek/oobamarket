@@ -162,7 +162,7 @@ var MainInterface = createClass({
                             return (
                               <option
                                 key={index}
-                                value={item.id}>{item.ttype} {item.title}</option>
+                                value={item.id}>{item.title} {item.ttype}</option>
                             );
                           })}
                     </select>
