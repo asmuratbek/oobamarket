@@ -149,7 +149,7 @@ def create_social_links(sender, **kwargs):
 post_save.connect(create_social_links, sender=Shop)
 
 PlACE_TYPE = (
-    ('mall', "Торговый центр"),
+    ('mall', "ТЦ"),
     ('market', "Рынок")
 )
 
