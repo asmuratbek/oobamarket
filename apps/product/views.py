@@ -67,7 +67,8 @@ def product_detail(request, global_slug, category_slug, slug):
     context = {
         'review': review,
         "object": product,
-        "global_slug": global_slug
+        "global_slug": global_slug,
+        'subscribe_shops': [sub.subscription.id for sub in request.user.subscription_set.all()]
     }
     return render(request, template, context)
 
