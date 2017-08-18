@@ -18,45 +18,15 @@
 
 {% block content %}
 
-    <section class="shop-list">
-        <div class="container">
-            <div class="row">
-                <h1 class="pull-left">Магазины</h1>
-                <form action="" class="pull-right col-md-6">
-                    <select id="select-beast-empty" class="demo-default col-md-5" data-placeholder="Выбрать ТЦ">
-                        <option value="">Thomqwqas Edison</option>
-                        {#                    одну опцию не трогать !!#}
-                        <option>Опция 1</option>
-                        <option>Опция 2</option>
-                        <option>Опция 3</option>
-                        <option>Опция 4</option>
-                        <option>Опция 5</option>
-                        <option>Опция 6</option>
-                        <option>Nikola</option>
-                        <option>Nikola Tesla</option>
-                        <option>Arnold Schwarzenegger</option>
-                    </select>
-                    <div class="form-search col-md-7">
-                        <input class="form-control" type="search" placeholder="Поиск магазина...">
-                        <button type="submit">
-                            <span class="glyphicon glyphicon-search"></span>
-                        </button>
-                    </div>
-                </form>
-                <div class="clearfix"></div>
+    <section class="shop-list" id="root">
 
-                <div class="bg-white">
-                   {% include 'shop/shops.html' with shops=object_list %}
-                </div>
-
-            </div>
-        </div>
     </section>
 {% endblock %}
 
 {% block js %}
     {{ block.super }}
     <script src="{% static 'js/select2.js' %}"></script>
+    <script src="{% static 'js/shop_list.js' %}"></script>
     <script src="{% static 'js/subscribe.js' %}"></script>
     <script>
         $('#select-beast-empty').selectize({});

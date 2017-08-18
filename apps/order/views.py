@@ -11,7 +11,7 @@ from  django.views.generic.list import ListView
 # Create your views here.
 from apps.cart.models import Cart
 from apps.shop.models import Shop
-from .forms import AddressForm, UserAddressForm, SimpleOrderForm
+from .forms import AddressForm, UserAddressForm, SimpleOrderForm, ShopSimpleOrderForm
 from .mixins import CartOrderMixin, LoginRequiredMixin
 from .models import UserAddress, UserCheckout, Order, SimpleOrder
 
@@ -134,28 +134,74 @@ class ThankYouView(TemplateView):
     template_name = 'order/thanks.html'
 
 
-class SimpleOrderListView(ListView):
+def shop_simple_order_list_update(request, slug):
+    object_list = SimpleOrder.objects.filter(cart__cartitem__product__shop__slug=slug).distinct()
+    shop = Shop.objects.get(slug=slug)
+
+    form = ShopSimpleOrderForm()
+
+    context = {
+        'shop': shop,
+        'object_list': object_list,
+        'form': form,
+        'object': shop,
+
+    }
+
+    return render(request, 'order/shop_order_list.html', context)
+
+
+class ShopSimpleOrderDetailView(DetailView):
+    model = SimpleOrder
+    template_name = 'order/shop_order_detail.html'
+
+
+class ShopSimpleOrderUpdateView(LoginRequiredMixin, UpdateView):
+    model = SimpleOrder
+    template_name = 'order/shop_order_detail.html'
+    form_class = ShopSimpleOrderForm
+
+    def form_valid(self, form):
+        form.save()
+        return self.get_success_url()
+
+    def get_success_url(self):
+        return redirect(self.request.META['HTTP_REFERER'])
+
+
+def shop_change_status(request):
+    if request.method == 'POST':
+        form = ShopSimpleOrderForm(request.POST)
+        simple_order = SimpleOrder.objects.get(id=request.POST.get('id'))
+        simple_order.status = request.POST.get('status')
+        simple_order.save()
+
+        return JsonResponse(dict(messages=True))
+    return JsonResponse(dict(messages=False))
+
+
+@csrf_exempt
+def shop_delete_simple_order_list(request):
+    if request.POST.get('ids[]'):
+        for id in request.POST.getlist('ids[]'):
+            SimpleOrder.objects.filter(pk=id).update(is_visible=False)
+        return JsonResponse(dict(messages=True))
+    return JsonResponse(dict(messages=False))
+
+
+class UserSimpleOrderListView(ListView):
     model = SimpleOrder
     slug_field = 'username'
     slug_url_kwarg = 'username'
-    template_name = 'order/user_order_history.html'
+    template_name = 'order/user_order_list.html'
 
     def get_queryset(self):
         return SimpleOrder.objects.filter(user__username=self.kwargs['username'])
 
-        # def get_context_data(self, **kwargs):
-        #     context = super(SimpleOrderListView, self).get_context_data(**kwargs)
-        #     context['shop'] = Shop.objects.first()
 
-
-class SimpleOrderUpdateView(LoginRequiredMixin, UpdateView):
+class UserSimpleOrderDetailView(LoginRequiredMixin, DetailView):
     model = SimpleOrder
-    template_name = 'order/order_detail.html'
-    form_class = SimpleOrderForm
-
-
-def delete_user_order_history(request):
-    pass
+    template_name = 'order/user_order_detail.html'
 
 # class SimpleOrderShopListUpdateView(UpdateView):
 #     model = SimpleOrder
@@ -185,52 +231,16 @@ def delete_user_order_history(request):
 #         return super(SimpleOrderShopListUpdateView, self).form_valid(form)
 
 
-def simple_order_shop_list_update(request, slug):
-    object_list = SimpleOrder.objects.filter(cart__cartitem__product__shop__slug=slug).distinct()
-    shop = Shop.objects.get(slug=slug)
-
-    form = SimpleOrderForm()
-
-    context = {
-        'shop': shop,
-        'object_list': object_list,
-        'form': form,
-        'object': shop,
-
-    }
-
-    return render(request, 'order/simpleorder_list.html', context)
 
 
-def change_status(request):
-    if request.method == 'POST':
-        form = SimpleOrderForm(request.POST)
-        simple_order = SimpleOrder.objects.get(id=request.POST.get('id'))
-        simple_order.status = request.POST.get('status')
-        simple_order.save()
-
-        return JsonResponse(dict(messages=True))
-    return JsonResponse(dict(messages=False))
 
 
-class DeleteSimpleOrderShop(LoginRequiredMixin, DeleteView):
-    model = SimpleOrder
-    template_name = 'layout/modal_order_delete_confirm.html'
-
-    def get_success_url(self):
-        print('lala')
-        return reverse("order:shop_order_list", kwargs={'slug': self.object.user.shop_set.first().slug})
 
 
-@csrf_exempt
-def delete_simple_order_list(request):
-    if request.POST.get('ids[]'):
-        for id in request.POST.getlist('ids[]'):
-            SimpleOrder.objects.get(pk=id).delete()
-        return JsonResponse(dict(messages=True))
-    return JsonResponse(dict(messages=False))
-
-
-class SimpleOrderShopDetailView(DetailView):
-    model = SimpleOrder
-    template_name = 'order/order_detail.html'
+# class DeleteSimpleOrderShop(LoginRequiredMixin, DeleteView):
+#     model = SimpleOrder
+#     template_name = 'layout/modal_order_delete_confirm.html'
+#
+#     def get_success_url(self):
+#         print('lala')
+#         return reverse("order:shop_order_list", kwargs={'slug': self.object.user.shop_set.first().slug})

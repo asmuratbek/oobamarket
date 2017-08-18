@@ -170,20 +170,20 @@ $(document).ready(function () {
     var arr = [];//переменная массив для фукции записи в нее id списка заказов
 
     //функция записи данных в переменную arr выше
-    function AddToArray() {
 
-        $('input[name=todelete]').on('click', function () {
-            let data_id = $(this).attr('data-id');
-            if (!$.inArray(data_id, arr)) {
-                arr.splice(arr.indexOf(data_id), 1);
-            }
-            else {
-                arr.push(data_id);
-            }
 
-            console.log(arr)
-        });
-    }
+    $('input[name=todelete]').on('click', function () {
+        let data_id = $(this).attr('data-id');
+        if (!$.inArray(data_id, arr)) {
+            arr.splice(arr.indexOf(data_id), 1);
+        }
+        else {
+            arr.push(data_id);
+        }
+
+        console.log(arr)
+    });
+
 
     //фукция удаления одного или массива списков с истории продаж магазина
     $('.remove-item').on('click', function (e) {
