@@ -89,6 +89,7 @@ $(document).on('click', '.delete-img-el', function () {
     $('img#' + el_id).remove();
     $(this).parent('div').remove();
     $(this).remove();
+    $('#uploading-images').val("");
     count = count - 1;
     if (!images_div.find("*").hasClass('active-border')) {
         images_div.find("div").first().find("img").attr("class", "active-border");
