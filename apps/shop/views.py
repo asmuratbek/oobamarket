@@ -96,6 +96,7 @@ class ShopDeleteView(LoginRequiredMixin, ShopMixin, DeleteView):
     success_url = '/'
 
 
+
 class ShopAboutUsDetailView(generic.DetailView):
     model = Shop
     template_name = 'shop/about-us.html'

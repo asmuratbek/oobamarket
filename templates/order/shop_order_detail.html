@@ -1,10 +1,13 @@
 {% extends 'base-1.html' %}
-
+{% load widget_tweaks %}
 {% block content %}
 
 
     <div class="basket-page">
     <div class="container">
+    {% if form.errors %}
+        {{ form.errors }}
+    {% endif %}
         <div class="tab-simpleorder">
         <div class="head">
                     <div class="parets">
@@ -28,6 +31,7 @@
                     </div>
                 </div>
         <div class="child-object">
+                        <form method="POST"  action="{% url 'order:shop_simple_order_update' pk=object.pk %}" class="order_change">
                         <ul>
                             <li>
                                 <label for="child">
@@ -39,7 +43,7 @@
                             <li>{{ object.created_at|date:"d.m.y H:i" }}</li>
                             <li>{{ object.name }}</li>
                             <li>
-                                <form method="POST"  action="{% url 'order:change_status' %}" class="order_change">
+
                                     {% csrf_token %}
                                     <select class="form-control " id="id_status"
                                             name="status" required="">
@@ -50,7 +54,7 @@
                                     </select>
                                     <input type="hidden" name="id" value="{{ object.id }}">
                                     {#<button class="btn" type="submit">Подтвердить</button>#}
-                                </form>
+
                             </li>
                             <li>{{ object.address }}
                             </li>
@@ -58,6 +62,9 @@
                             <li>{{ object.cart.subtotal }}</li>
                             <li>0 сом</li>
                         </ul>
+                        Комментарий к заказу: {{ form.comments|attr:"class:form-control" }}
+                        <button class="btn add">Сохранить</button>
+                        </form>
                     </div>
         </div>
 {#        <h1>Корзина</h1>#}

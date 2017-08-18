@@ -27,7 +27,7 @@
 {#                <span class="help glyphicon glyphicon-exclamation-sign" data-toggle="tooltip" title=""#}
 {#                      data-placement="bottom" data-original-title="Используйте скролл для детального просмотра"#}
 {#                      aria-describedby="tooltip409378"></span>#}
-                {% if object.get_main_image %}
+                {% if object.get_avatar_image %}
                     <img style="border:1px solid #e8e8e6;" class="my-foto-container" src="{{ object.get_avatar_image }}"  data-large="{{ object.get_avatar_image }}" title="Фото">
                 {% else %}
                     <img style="border:1px solid #e8e8e6;" class="my-foto-container" src="http://via.placeholder.com/378x378"
