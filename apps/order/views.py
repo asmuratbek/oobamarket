@@ -196,6 +196,8 @@ class UserSimpleOrderDetailView(LoginRequiredMixin, DetailView):
     model = SimpleOrder
     template_name = 'order/user_order_detail.html'
 
+
+
 # class SimpleOrderShopListUpdateView(UpdateView):
 #     model = SimpleOrder
 #     form_class = SimpleOrderForm

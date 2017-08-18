@@ -19,6 +19,8 @@
                                 </li>
                                 <li>
                                     <i class="fa fa-clock-o" aria-hidden="true"></i>
+                                    {% if contact.round_the_clock == False %}
+
                                     {% if contact.monday %}
                                         <p>Понедельник:{{ contact.monday }}</p>
                                     {% endif %}
@@ -65,6 +67,9 @@
                                     {% endif %}
                                     {% if not contact.sunday %}
                                         <p>Воскресенье</p>
+                                    {% endif %}
+                                    {% else %}
+                                        <p><strong>Всегда открыто</strong></p>
                                     {% endif %}
                                 </li>
 

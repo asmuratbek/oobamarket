@@ -56,6 +56,7 @@ class SimpleOrderForm(forms.ModelForm):
             'phone',
             'address',
             'status',
+            'comments',
         ]
     def __init__(self, *args, **kwargs):
         super(SimpleOrderForm, self).__init__(*args, **kwargs)
