@@ -68,7 +68,7 @@ def product_detail(request, global_slug, category_slug, slug):
         'review': review,
         "object": product,
         "global_slug": global_slug,
-        'subscribe_shops': [sub.subscription.id for sub in request.user.subscription_set.all()]
+        'subscribe_shops': [sub.subscription.id for sub in request.user.subscription_set.all()] if request.user.is_authenticated else None
     }
     return render(request, template, context)
 
