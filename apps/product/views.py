@@ -153,10 +153,10 @@ class ProductCreateView(LoginRequiredMixin, AddProductMixin, CreateView):
 
     def form_valid(self, form, **kwargs):
         random_int = random.randrange(0, 1010)
-        product = form.instance
-        product.slug = slugify(form.instance.title, max_length=32) + str(random_int)
-        product.shop = Shop.objects.get(slug=self.kwargs['slug'])
-        product.save()
+        # product = form.instance
+        # product.slug = slugify(form.instance.title, max_length=32) + str(random_int)
+        # product.shop = Shop.objects.get(slug=self.kwargs['slug'])
+        # product.save()
         # for key, value in self.request.POST.items():
         #     if key.startswith('val'):
         #         my_value = get_object_or_404(Values, id=int(key[4:]))
@@ -171,8 +171,8 @@ class ProductCreateView(LoginRequiredMixin, AddProductMixin, CreateView):
             avatar = self.request.FILES.get('avatar')
             images = self.request.FILES.getlist('image')
             if avatar:
-                ProductImage.objects.create(product=product, image=avatar, is_avatar=True)
-            other_images = [ProductImage(product=product, image=img) for img in images]
+                ProductImage.objects.create(product=form.instance, image=avatar, is_avatar=True)
+            other_images = [ProductImage(product=form.instance, image=img) for img in images]
             ProductImage.objects.bulk_create(other_images)
         return super(ProductCreateView, self).form_valid(form)
 
