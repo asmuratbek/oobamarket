@@ -69,7 +69,7 @@ $(document).on("click", ".subscribe_shop", function () {
             that.addClass("enable");
             that.removeClass("disabled");
         } else {
-            that.text("Отписаться");
+            that.text("Подписаны");
             that.addClass("disabled");
             that.removeClass("enable");
         }

@@ -57,7 +57,7 @@ var ShopDetail = createClass({
                                                     ""
                                                 ):(
                                                     <a className={`subscribe_shop ${this.props.shop.is_subscribed ? 'disabled' : 'enable'}`}>
-                                                        {this.props.shop.is_subscribed ? "Отписаться" : "Подписаться" }</a>
+                                                        {this.props.shop.is_subscribed ? "Подписаны" : "Подписаться" }</a>
                                                 )}
                                             </div>
                                         </div>
