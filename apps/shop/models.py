@@ -158,6 +158,7 @@ class Place(PublishBaseModel):
     class Meta:
         verbose_name = "Торговая точка"
         verbose_name_plural = "Торговые точки"
+        ordering = ('title',)
 
     title = models.CharField(_("Название"), max_length=255)
     type = models.CharField(_("Тип торговой точки"), choices=PlACE_TYPE, max_length=255)
