@@ -1784,17 +1784,29 @@ header
           color: #333
           margin-bottom: 0
         a
-          color: #fff
+          border: 1px solid #e94d09
           font-size: 15px
           text-transform: capitalize
           -webkit-box-shadow: none!important
           box-shadow: none!important
           border-radius: 3px
-          background-color: #e94d09!important
           padding: 7px 10px
           font-weight: 300
           z-index: 2
           position: relative
+          cursor: pointer
+        a.disabled
+          background-color: #fff !important
+          color: #e94d09
+          border-color: #e94d09
+          &:hover
+            background-color: #d03e19 !important
+            color: #fff
+            border-color: #d03e19
+        a.enable
+          color: #fff
+          background-color: #e94d09!important
+
           &:hover
             background-color: #d03e19 !important
 .reviews.edit
