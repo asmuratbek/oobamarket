@@ -3,7 +3,7 @@ var gulp         	= require('gulp'),
     browserify      = require('browserify'),
     sass         	= require('gulp-sass'),
     source          = require('vinyl-source-stream'),
-    autoprefixer 	= require('gulp-autoprefixer'),
+    // autoprefixer 	= require('gulp-autoprefixer'),
     cleanCSS    	= require('gulp-clean-css'),
     rename       	= require('gulp-rename'),
     browserSync  	= require('browser-sync').create(),
@@ -18,7 +18,7 @@ gulp.task('styles', function () {
             includePaths: require('node-bourbon').includePaths
         }).on('error', sass.logError))
         .pipe(rename({suffix: '.min', prefix : ''}))
-        .pipe(autoprefixer({browsers: ['last 15 versions'], cascade: false}))
+        // .pipe(autoprefixer({browsers: ['last 15 versions'], cascade: false}))
         .pipe(cleanCSS())
         .pipe(gulp.dest('static/css'))
         .pipe(browserSync.stream());
