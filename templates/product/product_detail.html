@@ -147,7 +147,11 @@
                                     <div class="col-md-6">
                                     {% if user.is_authenticated %}
                                         {% if user not in object.shop.user.all %}
-                                        <a class="subscribe_shop">{% if object.shop.id in subscribe_shops %}Отписаться{% else %}Подписаться{% endif %}</a>
+                                            {% if object.shop.id in subscribe_shops %}
+                                        <a class="subscribe_shop disabled">Подписаны</a>
+                                                {% else %}
+                                        <a class="subscribe_shop enable">Подписаться</a>
+                                                {% endif %}
                                         {% endif %}
                                     {% endif %}
                                     </div>

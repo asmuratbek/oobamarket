@@ -1784,17 +1784,47 @@ header
           color: #333
           margin-bottom: 0
         a
-          color: #fff
+          width: 112px
+          height: 34px
+          float: right
+          text-align: center
+          border: 1px solid #e94d09
           font-size: 15px
           text-transform: capitalize
           -webkit-box-shadow: none!important
           box-shadow: none!important
           border-radius: 3px
-          background-color: #e94d09!important
           padding: 7px 10px
           font-weight: 300
           z-index: 2
           position: relative
+          cursor: pointer
+        a.disabled
+          background-color: #fff !important
+          color: #e94d09
+          border-color: #e94d09
+          &:hover
+            background-color: #d03e19 !important
+            color: #fff
+            border-color: #d03e19
+            font-size: 0
+        a.disabled::before
+          content: 'Отписаться'
+          position: absolute
+          top: 0
+          bottom: 0
+          left: 0
+          right: 0
+          font-size: 0
+          padding: 7px 10px
+        a.disabled:hover:before
+          font-size: 15px
+
+
+        a.enable
+          color: #fff
+          background-color: #e94d09!important
+
           &:hover
             background-color: #d03e19 !important
 .reviews.edit
@@ -4652,6 +4682,32 @@ form.add_email
       background-image: none !important
       box-shadow: none !important
       border: 1px solid #ccc
+    .form-group.col-md-5
+      position: relative
+      &:before
+        position: absolute
+        content: ''
+        right: 25px
+        top: 10px
+        width: 10px
+        height: 13px
+        background: url(../img/png/arrow0.png) 0 0 no-repeat
+        transform: rotate(-90deg)
+        background-size: 35px
+    select
+      border: 1px solid #ccc!important
+      width: 100%
+      background-color: #fff
+      padding-left: 10px
+      border-radius: 0!important
+      height: 35px
+      box-shadow: none!important
+      cursor: pointer
+      -webkit-appearance: none
+      -moz-appearance: none
+      -ms-appearance: none
+      appearance: none
+      padding-right: 25px
     input.form-control
       border: 1px solid #ccc !important
     input

@@ -237,7 +237,7 @@ class ShopSerializer(ModelSerializer):
         request = self.context.get("request")
         if request and hasattr(request, "user"):
             user = request.user
-            return obj.is_owner(user) or user.is_staff
+            return obj.is_owner(user)
         return False
 
     def get_phone(self, obj):
