@@ -59,11 +59,13 @@ var ProductList = createClass({
             success: function (data) {
                 if (data.created) {
                     target.classList.toggle("enable");
+                    target.classList.toggle("like");
                     target.setAttribute('data-message', "Товар удален из избранных");
                     target.setAttribute('data-tip', "Удалить из избранных");
                 }
                 else {
                     target.classList.remove("enable");
+                    target.classList.remove("like");
                     target.setAttribute('data-message', "Товар добавлен в избранное");
                     target.setAttribute('data-tip', "Добавить в избранное");
                 }
@@ -265,7 +267,7 @@ var ProductList = createClass({
 
                 <div className="button-basket-favorite">
                     {this.isInCart(this.props.product)}
-                    <span className={`glyphicon glyphicon-heart ${this.props.product.is_favorite && 'enable'}`}
+                    <span className={`glyphicon glyphicon-heart ${this.props.product.is_favorite && 'enable like'}`}
                           data-product-id={this.props.product.id} data-toggle="tooltip" title=""
                           data-placement="top"
                           data-tip={this.props.product.is_favorite ? "Удалить из избранных" : "Добавить в избранное"}

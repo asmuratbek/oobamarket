@@ -237,7 +237,7 @@ class ShopSerializer(ModelSerializer):
         request = self.context.get("request")
         if request and hasattr(request, "user"):
             user = request.user
-            return obj.is_owner(user) or user.is_staff
+            return obj.is_owner(user)
         return False
 
     def get_phone(self, obj):
@@ -329,16 +329,21 @@ class SalesSerializer(ModelSerializer):
 
 class ShopReviewsSerializer(ModelSerializer):
 
+    username = SerializerMethodField()
+
     class Meta:
         model = ShopReviews
         fields = (
             'id',
-            'user',
+            'username',
             'text',
             'stars',
             'created_at',
             'updated_at'
         )
+
+    def get_username(self, obj):
+        return obj.user.username if obj.user.username else obj.user.email
 
 
 class ShopContactsSerializer(ModelSerializer):

@@ -149,7 +149,7 @@ def create_social_links(sender, **kwargs):
 post_save.connect(create_social_links, sender=Shop)
 
 PlACE_TYPE = (
-    ('mall', "Торговый центр"),
+    ('mall', "ТЦ"),
     ('market', "Рынок")
 )
 
@@ -158,6 +158,7 @@ class Place(PublishBaseModel):
     class Meta:
         verbose_name = "Торговая точка"
         verbose_name_plural = "Торговые точки"
+        ordering = ('title',)
 
     title = models.CharField(_("Название"), max_length=255)
     type = models.CharField(_("Тип торговой точки"), choices=PlACE_TYPE, max_length=255)

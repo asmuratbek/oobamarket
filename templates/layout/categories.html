@@ -7,8 +7,8 @@
                 <li class="item item-{{ object.get_parent_categories|length }}" data-toggle="tooltip" title=""
                          data-placement="top" data-original-title="{{ category.title }}">
                     <div class="dropdown" data-id="#dropdown-{{ category.id }}" >
-                        <a class="enter btn" type="button" data-toggle="dropdown" aria-haspopup="true"
-                           aria-expanded="false">
+                        <a href="{% url 'categories:detail' global_slug=global_slug slug=category.slug %}" class="enter btn" type="button" aria-haspopup="true"
+                           >
                             {% if category.image %}
                                 <img src="{{ category.image.url }}" alt="" >
                             {% else %}

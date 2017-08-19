@@ -41,7 +41,7 @@
                 </div>
             </div>
 
-            <div class="about-product">
+            <div class="about-product" style="margin-right: 30px;">
                 <ol class="breadcrumb">
                     <li><a href="{{ object.category.section.get_absolute_url }}">{{ object.category.section.title }}</a>
                     </li>
@@ -100,34 +100,66 @@
             </div>
             <div class="single-magazin">
                 <h3>Магазин / Продавец:</h3>
-                <div class="cover">
-                    <a class="url-item" data-toggle="tooltip" title="" data-placement="top" data-original-title="Перейти в магазин" href="{{ object.shop.get_absolute_url }}"></a>
-                    <div class="top-line">
-                        <h2>{{ object.shop.title }}</h2>
-                    </div>
-                    <div class="img-wrapper">
-                        <img src="{{ object.shop.get_logo }}" alt="">
-                    </div>
-                    <div class="clearfix"></div>
-                    <div class="bottom-line">
-                        {% if object.shop.contacts_set.all %}
-                        <div>
-                            <a href="tel: 0312 89 53 33" class="">
-                                <span class="glyphicon glyphicon-earphone"></span>
-                                {{ object.shop.contacts_set.first.phone }}
-                            </a>
-                        </div>
-                        {% endif %}
-                        <div>
-                            <a href="mailto:{{ object.shop.email }}" class="">
-                                <span class="glyphicon glyphicon-envelope"></span>
-                                {{ object.shop.email }}
-                            </a>
-                        </div>
+                    <div class="single-magazin new-design">
+                        <div class="img-wrapper ">
 
+                            <img src="{{ object.shop.get_logo }}" alt="">
 
+                            <div class="back-fade">
+
+                                <a class="url" href="{{ object.shop.get_absolute_url }}"></a>
+
+                                <div class="name-magazin-title">
+                                    <h3>{{ object.shop.title|truncatechars:28 }}</h3>
+                                </div>
+
+                                <div class="info">
+                                    {% if object.shop.contacts_set.first.phone %}
+                                        <div>
+                                            <a href="tel: {{ object.shop.contacts_set.first.phone }}" class="">
+                                                <span class="glyphicon glyphicon-earphone"></span>
+                                                {{ object.shop.contacts_set.first.phone }}
+                                            </a>
+                                        </div>
+
+                                    {% else %}
+
+                                        <div>
+                                            <a href="tel: 0312 89 53 33" class="">
+                                                <span class="glyphicon glyphicon-earphone"></span>
+                                                не указан
+                                            </a>
+                                        </div>
+
+                                    {% endif %}
+                                    <div>
+                                        <a href="mailto:{{ object.shop.email }}" class="">
+                                            <span class="glyphicon glyphicon-envelope"></span>
+                                            {{ object.shop.email }}
+                                        </a>
+                                    </div>
+                                </div>
+
+                                <div class="bottom-line">
+                                    <div class="col-md-6">
+                                        <h3> {{ object.shop.title|truncatechars:28 }} </h3>
+                                    </div>
+                                    <div class="col-md-6">
+                                    {% if user.is_authenticated %}
+                                        {% if user not in object.shop.user.all %}
+                                            {% if object.shop.id in subscribe_shops %}
+                                        <a class="subscribe_shop disabled">Подписаны</a>
+                                                {% else %}
+                                        <a class="subscribe_shop enable">Подписаться</a>
+                                                {% endif %}
+                                        {% endif %}
+                                    {% endif %}
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
                     </div>
-                </div>
             </div>
         </div>
     </section>
@@ -211,6 +243,7 @@
     <![endif]-->
     {{ block.super }}
     <script src={% static 'js/jquare-zoom.js' %}></script>
+    <script src={% static 'js/subscribe.js' %}></script>
     <script src="{% static 'js/counter.js' %}"></script>
 
 
