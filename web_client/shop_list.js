@@ -156,16 +156,19 @@ var MainInterface = createClass({
             <div className="row">
                 <h1 className="pull-left">Магазины</h1>
                 <form action="" className="pull-right col-md-6">
-                    <select className="demo-default col-md-5" onChange={this.handleChangePlace}>
+                    <div className="form-group col-md-5">
+                        <select className="demo-default " onChange={this.handleChangePlace}>
                         <option>Выбрать ТЦ</option>
                           {this.state.places.map(function (item, index) {
                             return (
                               <option
                                 key={index}
-                                value={item.id}>{item.ttype} {item.title}</option>
+                                value={item.id}>{item.title} {item.ttype}</option>
                             );
                           })}
                     </select>
+                    </div>
+
                     <div className="form-search col-md-7">
                         <input className="form-control" type="search" placeholder="Поиск магазина..." onChange={this.searchApts} />
                         <button type="submit">

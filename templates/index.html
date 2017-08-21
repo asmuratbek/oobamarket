@@ -98,7 +98,11 @@
             <ul class="category">
                 {% for object in fixed_categories %}
                     <li>
+                        {% if object.title == 'Еда' %}
+                        <a href="#"></a>
+                        {% else %}
                         <a href="{{ object.get_absolute_url }}"></a>
+                        {% endif %}
                         <div class="img-wrapper">
                             <img src="{{ object.get_icon }}" alt="">
                         </div>

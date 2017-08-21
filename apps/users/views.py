@@ -140,16 +140,16 @@ class SubscribeListView(LoginRequiredMixin, View):
         sub_list = list()
         for sub in user.subscription_set.all():
             if sub.subscription_type == 'only_actions':
-                [sub_list.append(item) for item in sub.subscription.sales_set.all().order_by("-created_at")]
+                [sub_list.append(item) for item in sub.subscription.sales_set.all().order_by("created_at")]
             elif sub.subscription_type == 'only_products':
-                [sub_list.append(item) for item in sub.subscription.product_set.all().order_by("-created_at")]
+                [sub_list.append(item) for item in sub.subscription.product_set.all().order_by("created_at")]
             else:
-                [sub_list.append(item) for item in sub.subscription.sales_set.all().order_by("-created_at")]
-                [sub_list.append(item) for item in sub.subscription.product_set.all().order_by("-created_at")]
-        p = Paginator(sub_list, 8)
+                [sub_list.append(item) for item in sub.subscription.sales_set.all().order_by("created_at")]
+                [sub_list.append(item) for item in sub.subscription.product_set.all().order_by("created_at")]
+        sorted_list = sorted(sub_list, key=lambda x: x.created_at, reverse=True)
+        p = Paginator(sorted_list, 8)
         pages_count = p.num_pages
         page = self.request.GET.get('page')
-        print(page)
         if page and int(page) <= pages_count:
             p = p.page(int(page))
             return render(self.request, 'users/subs.html', {'sub_objects': p.object_list})
