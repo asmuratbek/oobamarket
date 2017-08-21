@@ -45,13 +45,14 @@ class Command(BaseCommand):
             desc = product[8]
             try:
                 prod = Product.objects.get(slug=slug)
-                prod.price = price
-                prod.title = title
-                prod.short_description = short_desc
-                prod.availability = available
-                prod.long_description = desc
-                prod.save()
-                self.stdout.write(self.style.SUCCESS("{} изменен.".format(title)))
+                if prod:
+                    prod.price = price
+                    prod.title = title
+                    prod.short_description = short_desc
+                    prod.availability = available
+                    prod.long_description = desc
+                    prod.save()
+                    self.stdout.write(self.style.SUCCESS("{} изменен.".format(title)))
             except Product.DoesNotExist:
                 imgs_list = product[6].split(",")
                 product_create = Product.objects.create(shop=shop, category=category, title=title, slug=slug,
