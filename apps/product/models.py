@@ -165,7 +165,7 @@ class ProductImage(models.Model):
         verbose_name_plural = "Изображения товара"
 
     product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name="Товар", null=True)
-    image = models.ImageField(upload_to="products/image")
+    image = models.ImageField(upload_to="products/image", max_length=230)
     is_avatar = models.BooleanField(verbose_name='Аватар продукта', default=False)
 
     def delete(self, *args, **kwargs):
