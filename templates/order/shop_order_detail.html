@@ -1,21 +1,21 @@
 {% extends 'base-1.html' %}
-{% load widget_tweaks %}
+{% load widget_tweaks staticfiles%}
 {% block content %}
 
 
     <div class="basket-page">
-    <div class="container">
-    {% if form.errors %}
-        {{ form.errors }}
-    {% endif %}
-        <div class="tab-simpleorder">
-        <div class="head">
+        <div class="container">
+            {% if form.errors %}
+                {{ form.errors }}
+            {% endif %}
+            <div class="tab-simpleorder">
+                <div class="head">
                     <div class="parets">
                         <ul>
                             <li>
-{#                                <label for="parent">#}
-{#                                    <input type="checkbox" id="parent">#}
-{#                                    <div class="indicator"></div>#}
+                                {#                                <label for="parent">#}
+                                {#                                    <input type="checkbox" id="parent">#}
+                                {#                                    <div class="indicator"></div>#}
                                 </label>
                             </li>
                             <li>Номер заказа</li>
@@ -30,8 +30,9 @@
 
                     </div>
                 </div>
-        <div class="child-object">
-                        <form method="POST"  action="{% url 'order:shop_simple_order_update' pk=object.pk %}" class="order_change">
+                <div class="child-object">
+                    <form method="POST" action="{% url 'order:shop_simple_order_update' pk=object.pk %}"
+                          class="order_change">
                         <ul>
                             <li>
                                 <label for="child">
@@ -44,16 +45,16 @@
                             <li>{{ object.name }}</li>
                             <li>
 
-                                    {% csrf_token %}
-                                    <select class="form-control " id="id_status"
-                                            name="status" required="">
-                                        {% for x,y in form.fields.status.choices %}
-                                            <option value="{{ x }}"
-                                            {% if object.status == x %}selected{% endif %}>{{ y }}</option>
-                                        {% endfor %}
-                                    </select>
-                                    <input type="hidden" name="id" value="{{ object.id }}">
-                                    {#<button class="btn" type="submit">Подтвердить</button>#}
+                                {% csrf_token %}
+                                <select class="form-control " id="id_status"
+                                        name="status" required="">
+                                    {% for x,y in form.fields.status.choices %}
+                                        <option value="{{ x }}"
+                                                {% if object.status == x %}selected{% endif %}>{{ y }}</option>
+                                    {% endfor %}
+                                </select>
+                                <input type="hidden" name="id" value="{{ object.id }}">
+                                {#<button class="btn" type="submit">Подтвердить</button>#}
 
                             </li>
                             <li>{{ object.address }}
@@ -64,92 +65,102 @@
                         </ul>
                         Комментарий к заказу: {{ form.comments|attr:"class:form-control" }}
                         <button class="btn add">Сохранить</button>
-                        </form>
-                    </div>
-        </div>
-{#        <h1>Корзина</h1>#}
-        <div class="cover">
-
-        </div>
-        <div class="thead">
-            <div class="col-md-6">
-                Товар
-            </div>
-            <div class="col-md-2">
-                Продавец
-            </div>
-            <div class="col-md-2">
-                Количество
-            </div>
-            <div class="col-md-2">
-                Цена
-            </div>
-        </div>
-        <div class="tbody">
-
-            {% for product in object.cart.cartitem_set.all %}
-
-            <div class="cover">
-                <div class="col-md-2">
-                    <div class="img-wrapper">
-                        <img src="{{ product.product.get_main_image }}" alt="{{ product.product.title }}" class="img-responsive">
-                    </div>
+                    </form>
                 </div>
-                <div class="col-md-4">
-                    <h2><a href="{{ product.product.get_absolute_url }}">{{ product.product.title }}</a></h2>
-                    <div class="availability">
+            </div>
+            {#        <h1>Корзина</h1>#}
+            <div class="cover">
+
+            </div>
+            <div class="thead">
+                <div class="col-md-6">
+                    Товар
+                </div>
+                <div class="col-md-2">
+                    Продавец
+                </div>
+                <div class="col-md-2">
+                    Количество
+                </div>
+                <div class="col-md-2">
+                    Цена
+                </div>
+            </div>
+            <div class="tbody">
+
+                {% for product in object.cart.cartitem_set.all %}
+
+                    <div class="cover">
+                        <div class="col-md-2">
+                            <div class="img-wrapper">
+                                <img src="{{ product.product.get_main_image }}" alt="{{ product.product.title }}"
+                                     class="img-responsive">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <h2><a href="{{ product.product.get_absolute_url }}">{{ product.product.title }}</a></h2>
+                            <div class="availability">
                         <span>Наличие: <span class="{% if product.product.availability == "available" %} stock
                                                 {% elif product.product.availability == "waiting" %} expectation
                                                 {% else %} not-stock {% endif %}">{{ product.product.get_availability }}</span></span>
 
-                        <span class="truck">
+                                <span class="truck">
                     <i class="fa fa-truck" aria-hidden="true" {% if product.product.delivery_type == 'paid' %} yellow
                     {% elif product.product.delivery_type == 'free' %} green {% endif %}></i>
                     {{ product.product.get_delivery_type }}
                 </span>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="img-wrapper">
+                                <img src="{{ product.product.shop.get_logo }}" alt="{{ product.product.shop.title }}"
+                                     class="img-responsive">
+                            </div>
+                        </div>
+                        <form action="." class="cart-form">
+                            <input type="hidden" name="item" value="{{ product.product.id }}">
+                            <div class="col-md-2">
+                                <div class="quantity">
+                                    {{ product.quantity }}
+                                </div>
+
+                            </div>
+
+                        </form>
+
+                        <div class="col-md-2 price">
+                            {% if product.product.discount %}
+                                <strike>{{ product.product.price }} {{ product.product.currency }}</strike>
+                                <p id="line-total-{{ product.product.id }}">{{ product.total }} {{ product.product.currency }}</p>
+                            {% else %}
+                                <p id="line-total-{{ product.product.id }}">{{ product.total }} {{ product.product.currency }}</p>
+                            {% endif %}
+                            <a href="{% url 'order:shop_simple_order_update' pk=object.pk %}" class="close remove_product"
+                               name="remove_product" id="{{ product.product.id }}">X</a>
+                        </div>
                     </div>
-                </div>
-                <div class="col-md-2">
-                    <div class="img-wrapper">
-                        <img src="{{ product.product.shop.get_logo }}" alt="{{ product.product.shop.title }}" class="img-responsive">
+                {% endfor %}
+
+                <div class="total">
+                    <div class="col-md-offset-8 col-md-3">
+                        <p>Доставка: <span>0 сом</span></p>
+                        <p>Итого: <span class="red" id="subtotal">{{ object.cart.subtotal }} сом </span></p>
                     </div>
+                    <div class="clearfix"></div>
                 </div>
-                <form action="." class="cart-form">
-                <input type="hidden" name="item" value="{{ product.product.id }}">
-                <div class="col-md-2">
-                    <div class="quantity">
-                        {{ product.quantity }}
-                    </div>
-
-                </div>
-
-                </form>
-
-                <div class="col-md-2 price">
-                    {% if product.product.discount %}
-                    <strike>{{ product.product.price }} {{ product.product.currency }}</strike>
-                    <p id="line-total-{{ product.product.id }}">{{ product.total }} {{ product.product.currency }}</p>
-                        {% else %}
-                        <p id="line-total-{{ product.product.id }}">{{ product.total }} {{ product.product.currency }}</p>
-                    {% endif %}
-{#                    <a href="{{ product.product.remove_from_cart }}" class="close">X</a>#}
-                </div>
-            </div>
-            {% endfor %}
-
-            <div class="total">
-                <div class="col-md-offset-8 col-md-3">
-                    <p>Доставка: <span>0 сом</span></p>
-                    <p>Итого: <span class="red" id="subtotal">{{ object.cart.subtotal }} сом </span></p>
-                </div>
-                <div class="clearfix"></div>
             </div>
         </div>
     </div>
-</div>
 
 
 
 
 
+{% endblock %}
+
+{% block js %}
+        <script src="{% static 'js/jquery.2.2.4.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/common.js' %}"></script>
+    <script src="{% static 'js/owl.carousel.min.js' %}"></script>
 {% endblock %}

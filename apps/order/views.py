@@ -1,6 +1,7 @@
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.http import Http404, HttpResponseRedirect, JsonResponse
-from django.shortcuts import render, redirect, get_object_or_404, render_to_response
+from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views import View
 from django.views.decorators.csrf import csrf_exempt
@@ -11,6 +12,7 @@ from  django.views.generic.list import ListView
 # Create your views here.
 from apps.cart.models import Cart
 from apps.shop.models import Shop
+from apps.users.mixins import ShopMixin,  UserOderListPermMixin, UserOrderDetailPermMixin
 from .forms import AddressForm, UserAddressForm, SimpleOrderForm, ShopSimpleOrderForm
 from .mixins import CartOrderMixin, LoginRequiredMixin
 from .models import UserAddress, UserCheckout, Order, SimpleOrder
@@ -134,29 +136,47 @@ class ThankYouView(TemplateView):
     template_name = 'order/thanks.html'
 
 
-def shop_simple_order_list_update(request, slug):
-    object_list = SimpleOrder.objects.filter(cart__cartitem__product__shop__slug=slug).distinct()
-    shop = Shop.objects.get(slug=slug)
+# @login_required
+# def shop_simple_order_list_update(request, slug):
+#     object_list = SimpleOrder.objects.filter(cart__cartitem__product__shop__slug=slug).distinct()
+#     form = ShopSimpleOrderForm()
+#     _shop = Shop.objects.get(slug=slug)
+#
+#     context = {
+#         'shop': _shop,
+#         'object_list': object_list,
+#         'form': form,
+#         'object': _shop,
+#
+#     }
+#
+#     return render(request, 'order/shop_order_list.html', context)
 
-    form = ShopSimpleOrderForm()
 
-    context = {
-        'shop': shop,
-        'object_list': object_list,
-        'form': form,
-        'object': shop,
-
-    }
-
-    return render(request, 'order/shop_order_list.html', context)
-
-
-class ShopSimpleOrderDetailView(DetailView):
+class ShopSimpleOrderDetailView(LoginRequiredMixin, ShopMixin, DetailView):
     model = SimpleOrder
     template_name = 'order/shop_order_detail.html'
 
 
-class ShopSimpleOrderUpdateView(LoginRequiredMixin, UpdateView):
+class ShopSimpleOrderListView(LoginRequiredMixin, ShopMixin, ListView):
+    model = SimpleOrder
+    template_name = 'order/shop_order_list.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(ShopSimpleOrderListView, self).get_context_data(**kwargs)
+        context['form'] = ShopSimpleOrderForm()
+        context['shop'] = self.__shop_queryset()
+        context['object'] = context['shop']
+        return context
+
+    def __shop_queryset(self):
+        return Shop.objects.get(slug=self.kwargs['slug'])
+
+    def get_queryset(self):
+        return SimpleOrder.objects.filter(cart__cartitem__product__shop__slug=self.kwargs.get('slug'))
+
+
+class ShopSimpleOrderUpdateView(LoginRequiredMixin, ShopMixin, UpdateView):
     model = SimpleOrder
     template_name = 'order/shop_order_detail.html'
     form_class = ShopSimpleOrderForm
@@ -169,6 +189,16 @@ class ShopSimpleOrderUpdateView(LoginRequiredMixin, UpdateView):
         return redirect(self.request.META['HTTP_REFERER'])
 
 
+@login_required
+def shop_delete_cartitem_product(request):
+    if request.POST.get('id[]'):
+        for id in request.POST.getlist('id[]'):
+            SimpleOrder.objects.filter(cart__cartitem__product__id=id).update(published=False)
+        return JsonResponse(dict(messages=True))
+    return JsonResponse(dict(messages=False))
+
+
+@login_required
 def shop_change_status(request):
     if request.method == 'POST':
         form = ShopSimpleOrderForm(request.POST)
@@ -180,6 +210,7 @@ def shop_change_status(request):
     return JsonResponse(dict(messages=False))
 
 
+@login_required
 @csrf_exempt
 def shop_delete_simple_order_list(request):
     if request.POST.get('ids[]'):
@@ -189,7 +220,7 @@ def shop_delete_simple_order_list(request):
     return JsonResponse(dict(messages=False))
 
 
-class UserSimpleOrderListView(ListView):
+class UserSimpleOrderListView(LoginRequiredMixin, UserOderListPermMixin, ListView):
     model = SimpleOrder
     slug_field = 'username'
     slug_url_kwarg = 'username'
@@ -199,7 +230,7 @@ class UserSimpleOrderListView(ListView):
         return SimpleOrder.objects.filter(user__username=self.kwargs['username'])
 
 
-class UserSimpleOrderDetailView(LoginRequiredMixin, DetailView):
+class UserSimpleOrderDetailView(LoginRequiredMixin, UserOrderDetailPermMixin, DetailView):
     model = SimpleOrder
     template_name = 'order/user_order_detail.html'
 
