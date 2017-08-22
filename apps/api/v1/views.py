@@ -90,10 +90,12 @@ class CategoryDetailApiView(MultipleModelAPIView):
         category = Category.objects.get(slug=slug)
         if category.get_level() == 0:
             products = Product.objects.filter(
-                Q(category__in=category.get_children()),
+                Q(category__in=category.get_descendants()),
             ).distinct()
         else:
-            products = Product.objects.filter(category=category)
+            products = Product.objects.filter(
+                Q(category__in=category.get_descendants()),
+            )
         if q:
             products = products.filter(
                 Q(title__icontains=str(q))
