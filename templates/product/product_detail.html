@@ -4,7 +4,7 @@
 
 
 {% block header %}
-    {% include 'layout/header.html' with global_title=object.shop.get_global_category.title %}
+    {% include 'layout/header.html' with global=object.shop.get_global_category %}
 {% endblock %}
 
 

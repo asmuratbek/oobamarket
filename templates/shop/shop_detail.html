@@ -8,7 +8,7 @@
 {% endblock %}
 
 {% block header %}
-    {% include 'layout/header.html' with global_title=object.get_global_category.title %}
+    {% include 'layout/header.html' with global=object.get_global_category %}
 {% endblock %}
 
 {#{% block categories %}#}
