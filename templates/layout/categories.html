@@ -1,20 +1,19 @@
-<div class="container">
-    <div class="pull-left col-md-12 parent">
+<div class="container" style="padding: 0;">
+    <div class="parent">
 
-        <ul class="content demo-x">
+        <ul class="content">
             {% for category in object.get_parent_categories %}
 
-                <li class="item item-{{ object.get_parent_categories|length }}" data-toggle="tooltip" title=""
-                         data-placement="top" data-original-title="{{ category.title }}">
+                <li class="item item-{{ object.get_parent_categories|length }}">
                     <div class="dropdown" data-id="#dropdown-{{ category.id }}" >
-                        <a href="{% url 'categories:detail' global_slug=global_slug slug=category.slug %}" class="enter btn" type="button" aria-haspopup="true"
-                           >
-                            {% if category.image %}
-                                <img src="{{ category.image.url }}" alt="" >
-                            {% else %}
-                                {{ category.title }}
-                            {% endif %}
-                            <span class="glyphicon glyphicon-menu-down"></span>
+                        <a href="{% url 'categories:detail' global_slug=global_slug slug=category.slug %}" class="enter btn" type="button" aria-haspopup="true">
+{#                            {% if category.image %}#}
+{#                                <img src="{{ category.image.url }}" alt="" >#}
+{#                            {% else %}#}
+{#                                #}
+{#                            {% endif %}#}
+                        {{ category.title }}
+{#                            <span class="glyphicon glyphicon-menu-down"></span>#}
                         </a>
                     </div>
 
@@ -33,20 +32,13 @@
 
 
             {% endfor %}
+          <div class="clearfix"></div>
         </ul>
-    </div>
-
-
-    <div class="child">
 
     </div>
 
-    {#<div class="pull-right col-md-1">#}
-    {#    <a href="" class="back-page">#}
-    {#        <span class="glyphicon glyphicon-menu-left"></span>#}
-    {#        Назад</a>#}
-    {#</div>#}
-    <div class="clearfix"></div>
+
+
 </div>
 
 
