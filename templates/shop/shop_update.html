@@ -1,0 +1,286 @@
+{% extends 'base-1.html' %}
+{% block head %}
+    {{ block.super }}
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
+{% endblock %}
+{% load widget_tweaks %}
+{% load staticfiles %}
+{% block content %}
+    <section class="edit-shop-detail">
+        <div class="container">
+            <h3>Редактирование магазина</h3>
+            <div class="form-filter">
+                <form class="form-inline" method="post" action="{% url 'shops:update' slug=object.slug %}"
+                      enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="col-md-8">
+                        <div class="form-group input col-md-6">
+                            {% if not form.title.errors %}
+                                <label for="">Название магазина{% else %}{{ form.title.errors }}</label>{% endif %}
+                            {{ form.title|attr:"type:text" }}
+                        </div>
+
+                        <div class="form-group {% if form.email.errors %}has-error{% endif %} input col-md-6">
+                            {% if not form.email.errors %}
+                                <label for="">E-mail магазина:</label>{% else %}
+                                <label for="">E-mail магазина:{{ form.email.errors }}</label>{% endif %}
+                            {% render_field form.email|attr:"type:email" placeholder="" %}
+                        </div>
+
+                        <div class="inlines">
+
+                            {% include 'shop/partials/shop_inline_form.html' %}
+
+                            <div class="form-group input col-md-12">
+                                <label for="">Короткое описание магазина:</label>
+                                {% render_field form.short_description|attr:"rows:6" placeholder="Введите до 300 символов" %}
+                            </div>
+                            <div class="form-group input col-md-12">
+                                <label for="">О компании</label>
+
+                                {% render_field form.description|attr:"rows:6" placeholder="Введите полное описание" %}
+                            </div>
+                            <div class="inline-appended"></div>
+
+                            <div class="form-group col-md-12" style="margin-top: 10px; margin-bottom: 40px">
+                                <p>Если у вас есть филиалы, добавьте их</p><br>
+
+                            </div>
+
+                        </div>
+
+                        <div class="form-group btn-group-form col-md-12">
+                            <button type="button" id="add-new-contact" class="btn add">Добавить филиал</button>
+                            <button type="submit" class="btn add">Сохранить</button>
+                        </div>
+
+                    </div>
+
+
+                    <div class="col-md-4 upload-image-magazin" id="shop-update-form">
+                        <div class="form-group input">
+                            <label for="id_logo" class="upload">
+
+                                <i class="glyphicon glyphicon-plus-sign"></i>
+                                <div class="add-photo">
+                                    Добавить<br>фотографии
+                                </div>
+                            </label>
+                            <div class="info">
+                                <span>Рекомендация для фото:</span>
+                                <p>Размер: 380x380 или больше</p>
+                                <p>Фон: белый или прозрачный</p>
+                                <br>
+                                <span id="file-counter" style="color: red;"></span>
+                            </div>
+                            <div class="img-upload">
+                                {% render_field form.logo|attr:"type:file" %}
+                            </div>
+
+                        </div>
+                        <div class="img-wrapper">
+                            {% if object.logo.name != "/default.jpg" %}
+                                <img src="{{ object.logo.url }}" alt="" id="id_logo2">
+                                <span class="remove-logo-update">X</span>
+                            {% else %}
+                                <img src="" alt="" id="id_logo2">
+                            {% endif %}
+                            <input type="hidden" id="slug" value="{{ object.get_slug }}"/>
+                        </div>
+
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+
+    <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+         id="set-marker-modal">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">Поставьте маркер на карте</div>
+                <div class="modal-body">
+                    <div id="custom-map" style="width: 100%; height: 500px;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+{% block js %}
+    <script src="{% static 'js/jquery.2.2.4.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/previewLogos.js' %}"></script>
+
+    <script type="text/html" id="contact-template">
+        <div class="inline-__prefix__">
+
+                {% include 'shop/partials/additional-form.html' %}
+
+        </div>
+    </script>
+    <script>
+        let formSetCounter = 0;
+        $(function () {
+            $('#add-new-contact').click(function (ev) {
+                ev.preventDefault();
+                var count = parseInt($('#id_contacts_set-TOTAL_FORMS').attr('value'), 10);
+                formSetCounter = count;
+                var tmplMarkup = $('#contact-template').html();
+                var compiledTmpl = tmplMarkup.replace(/__prefix__/g, count)
+                console.log(compiledTmpl);
+                $('div.inline-appended').append(compiledTmpl);
+                $('#id_contacts_set-TOTAL_FORMS').attr('value', count + 1);
+                initSetMarkerButton();
+            });
+        });
+
+
+    </script>
+     ahubaeva 119a/tynystanova
+
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDXEuBW9AIFcfHx1UHvceIvCz0JnRNjGyo&callback=initMap">
+    </script>
+
+    <script>
+        let map = null;
+        let markers = [
+            {% for marker in shop.contacts_set.all %}
+                {% if marker.longitude and marker.latitude %}
+                    {
+                        'id': {{ forloop.counter }},
+                        'data': {lng: {{ marker.longitude }}, lat: {{ marker.latitude }}}
+                    }{% if forloop.counter < shop.contacts_set.count %},{% endif %}
+                {% endif %}
+            {% endfor %}
+        ];
+        let mapCenter = {lat: 42.864272, lng: 74.579775};
+        let workingIndex = -1;
+        let center = null;
+
+        function initMap() {
+            map = new google.maps.Map(document.getElementById('custom-map'), {
+                center: mapCenter,
+                zoom: 15,
+                mapTypeId: google.maps.MapTypeId.TERRAIN
+            });
+
+            map.addListener('click', function (event) {
+                addMarker(event.latLng);
+            });
+
+            if (markers.length > 0) {
+                for (let k = 0; k < markers.length; ++k) {
+                    let _marker = new google.maps.Marker({
+                        position: markers[k]['data'],
+                        map: map
+                    });
+                    markers[k]['data'] = marker;
+                    center = marker.position;
+                }
+            }
+
+            // Adds a marker at the center of the map.
+        }
+
+
+        function addMarker(_location) {
+            let currId = -1;
+            for (let i = 0; i < markers.length; ++i) {
+                if (markers[i]['id'] === workingIndex) currId = i;
+            }
+
+            $('#id_contacts_set-' + workingIndex + '-longitude').val(_location['lng']);
+            $('#id_contacts_set-' + workingIndex + '-latitude').val(_location['lat']);
+            let marker = new google.maps.Marker({
+                position: _location,
+                input_id: workingIndex
+            });
+            if (markers.length > 0 && currId > -1)
+                markers[currId]['data'].setPosition(_location);
+            else
+                marker.setMap(map);
+            markers.push({
+                'id': workingIndex,
+                'data': marker
+            });
+
+            marker.addListener('click', function () {
+                console.log('Clicked on marker...');
+                removeMarker(marker);
+            });
+
+
+        }
+
+        function removeMarker(marker) {
+            console.log(marker);
+            marker.setMap(null);
+            markers.splice(markers.indexOf(marker.input_id), 1);
+            $('#id_contacts_set-' + marker.input_id + '-longitude').val('');
+            $('#id_contacts_set-' + marker.input_id + '-latitude').val('');
+        }
+
+        // Sets the map on all markers in the array.
+        function setMapOnAll(map) {
+            for (let i = 0; i < markers.length; i++) {
+                markers[i].setMap(map);
+            }
+        }
+
+        // Removes the markers from the map, but keeps them in the array.
+        function clearMarkers() {
+            setMapOnAll(null);
+        }
+
+        // Shows any markers currently in the array.
+        function showMarkers() {
+            setMapOnAll(map);
+        }
+
+        // Deletes all markers in the array by removing references to them.
+        function deleteMarkers() {
+            clearMarkers();
+            markers = [];
+        }
+
+        function openMarkerModal(index) {
+            console.log(index);
+            workingIndex = index;
+            $('#set-marker-modal').modal('show');
+            setTimeout(function () {
+                google.maps.event.trigger(map, "resize");
+                if (center !== null) {
+                    map.setCenter(center);
+                } else {
+                    map.setCenter(mapCenter);
+                }
+
+            }, 1000);
+        }
+
+        function closeMarkerModal() {
+            $('#set-marker-modal').modal('hide');
+        }
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            $('#add-new-contact').on('click', function (e) {
+                openMarkerModal(formSetCounter);
+            });
+            initSetMarkerButton();
+        });
+
+        function initSetMarkerButton() {
+            $('.set-marker-trigger').unbind('click').bind('click', function (e) {
+                e.preventDefault();
+                openMarkerModal(parseInt($(this).attr('data-id')));
+            });
+        }
+    </script>
+
+{% endblock %}
