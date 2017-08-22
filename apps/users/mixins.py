@@ -2,6 +2,7 @@ from django.http import HttpResponseRedirect, HttpResponseForbidden
 from django.shortcuts import get_object_or_404
 from django.urls import reverse
 
+from apps.order.models import SimpleOrder
 from apps.product.models import Product
 from apps.shop.models import Shop
 
@@ -62,3 +63,23 @@ class UserPermMixin(object):
                 return HttpResponseRedirect(reverse('users:detail', kwargs={'username': user.username}))
         return super(UserPermMixin, self).dispatch(request, *args, **kwargs)
 
+
+class UserOderListPermMixin(object):
+    def dispatch(self, request, *args, **kwargs):
+        if request.method == 'GET':
+            user = request.user
+            username = kwargs.get('username')
+            if user.username != username:
+                return HttpResponseRedirect(reverse('order:user_order_list', kwargs={'username': user.username}))
+        return super(UserOderListPermMixin, self).dispatch(request, *args, **kwargs)
+
+
+class UserOrderDetailPermMixin(object):
+    def dispatch(self, request, *args, **kwargs):
+        if request.method == 'GET':
+            user = request.user
+            order = SimpleOrder.objects.get(pk=self.kwargs['pk'])
+            order.id = kwargs.get('pk')
+            if order.user != user:
+                return HttpResponseRedirect(reverse('order:user_order_list', kwargs={'username': user.username}))
+        return super(UserOrderDetailPermMixin, self).dispatch(request, *args, **kwargs)

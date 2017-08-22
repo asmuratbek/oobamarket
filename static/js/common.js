@@ -203,16 +203,34 @@ $(document).ready(function () {
 
     });
 
-    // //функция выделения всех чекбоксов на странице истории заказов при клике на родительский чекбокс
-    // $('#parent').on('click', function (e) {
-    //     let data_id = $(this).attr('data-id');
-    //     $('.child-order ul li label input[name="todelete"]').each(function () {
-    //         $(this).attr('checked', true);
-    //         if ($(this).hasAttr('checked', true)) {
-    //
-    //         }
-    //     });
-    // });
+    //фукция удаления одного или массива списков с истории продаж магазина
+    $('.remove_product').on('click', function (e) {
+        e.preventDefault();
+        var self = $(this);
+        var id = $(self).attr('.id')
+        $.ajax({
+            url: self.attr('href'),
+            type: 'POST',
+            dataType: 'JSON',
+            data: {'id': id},
+            success: function (responce) {
+                console.log(id)
+            }
+
+        });
+
+    });
+
+    //функция выделения всех чекбоксов на странице истории заказов при клике на родительский чекбокс
+    $('#parent').on('click', function (e) {
+        let data_id = $(this).attr('data-id');
+        $('.child-order ul li label input[name="todelete"]').each(function () {
+            $(this).attr('checked', true);
+            if ($(this).hasAttr('checked', true)) {
+
+            }
+        });
+    });
 
 
     $(".mobile-auth-btn").click(function () {
