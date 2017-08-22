@@ -384,9 +384,9 @@ body
 header.padding
   padding: 10px 0
 header
-  -webkit-box-shadow: 0px 4px 26px -5px rgba(0,0,0,0.15)
-  -moz-box-shadow: 0px 4px 26px -5px rgba(0,0,0,0.15)
-  box-shadow: 0px 4px 26px -5px rgba(0,0,0,0.15)
+  //-webkit-box-shadow: 0px 4px 26px -5px rgba(0,0,0,0.15)
+  //-moz-box-shadow: 0px 4px 26px -5px rgba(0,0,0,0.15)
+  //box-shadow: 0px 4px 26px -5px rgba(0,0,0,0.15)
   background-color: #fff
   padding: 20px 0
   transition: 0.2s
@@ -495,6 +495,7 @@ header
       padding-right: 52px
       padding-left: 20px
       margin-left: 0!important
+
       &:before
         position: absolute
         width: 1px
@@ -1351,17 +1352,21 @@ header
   overflow-x: auto
   -webkit-overflow-scrolling: touch
 .category-link
-  background-color: #eaeaea
+  background-color: #fff
   border: 1px solid #ccc
+  border-bottom: 0
   z-index: 1040
   margin-bottom: 40px
-  margin-top: 130px
+  margin-top: -38px
   position: relative
-  img
-    width: 40px
-  .tooltip-inner
-    min-width: 140px
-    max-width: 100%
+  -webkit-box-shadow: 0 4px 26px -5px rgba(0,0,0,.15)
+  -moz-box-shadow: 0 4px 26px -5px rgba(0,0,0,.15)
+  box-shadow: 0 4px 26px -5px rgba(0,0,0,.15)
+  //img
+  //  width: 40px
+  //.tooltip-inner
+  //  min-width: 140px
+  //  max-width: 100%
   //.mCSB_container
   //  margin-bottom: 0 !important
   //.mCSB_scrollTools.mCSB_scrollTools_horizontal
@@ -1373,7 +1378,7 @@ header
   //  .mCSB_draggerRail
   //    margin: 2px 0 !important
   .content.demo-x
-    ul
+
   .item-9
     width: 11% !important
   .item-8
@@ -1386,17 +1391,30 @@ header
   .item-7
     width: 14% !important
   .item
+    padding: 0 5px
     float: left
     width: 6%
     position: relative
     text-align: center
+    &:before
+      position: absolute
+      right: -3px
+      top: 50%
+      margin-top: -2.5px
+      width: 5px
+      height: 5px
+      background-color: #ccc
+      content: ''
+      border-radius: 50%
+    &:hover
+      .enter.btn
+        color: #f3481c
   .item
     .dropdown-menu.open
       display: none
   .item:hover
     .dropdown-menu.open
       display: block
-  .pull-left
 
   .nav .open>a, .nav .open>a:focus, .nav .open>a:hover
     background-color: #eee
@@ -1409,6 +1427,10 @@ header
         background-color: transparent!important
     .enter.btn
       margin-left: 0!important
+      display: inline-flex
+      height: 70px
+      align-items: center
+      transition: 0.3s
 
     .glyphicon
       display: none
@@ -1437,7 +1459,6 @@ header
     padding: 0
     margin: 0
     min-width: 300px
-
     -webkit-box-shadow: 0px 6px 16px -5px rgba(0,0,0,0.75) !important
     -moz-box-shadow: 0px 6px 16px -5px rgba(0,0,0,0.75) !important
     box-shadow: 0px 6px 16px -5px rgba(0,0,0,0.75) !important
@@ -1450,13 +1471,12 @@ header
       transform: rotate(180deg)
       color: #808080
   a
-    font-size: 16px
+    white-space: normal !important
+    font-size: 14px
     font-weight: 300
-    color: #eee
+    color: #333
     display: block
     padding: 15px 0
-    &:hover
-      color: #ccc
   .pull-right
     a
       span
