@@ -7,7 +7,11 @@
         </a>
 
         <ul class="dropdown-menu" aria-labelledby="dLabel">
-            <li><a href="{{ DOMAIN_URL }}{% url 'account_login' %}"><strong>Кабинет</strong></a></li>
+            {% if user.is_authenticated %}
+            <li><a href="{% url 'users:detail' username=user.username %}"><strong>Кабинет</strong></a></li>
+                {% else %}
+                <li><a href="{% url 'account_login' %}"><strong>Кабинет</strong></a></li>
+                {% endif %}
             <li><a href="{{ DOMAIN_URL }}{% url 'shops:create' %}"><strong>Создать магазин</strong></a></li>
             <li><a href="{{ DOMAIN_URL }}{% url 'order:user_order_list' username=request.user.username %}"><strong>История заказов</strong></a></li>
                 <li><a href="{{ DOMAIN_URL }}{% url 'product:add_product_index' %}">
