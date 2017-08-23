@@ -1,4 +1,5 @@
 from django import template
+from django.conf import settings
 from django.http import request
 from django.utils.html import mark_safe
 from django.urls import reverse
@@ -25,7 +26,7 @@ def show_add_product_button(shop, user):
                                     </div>
                                 </div>
                             </div>
-                                    ''' % reverse('product:add_product', kwargs={'slug': shop.slug}))
+                                    ''' % (settings.DOMAIN_URL + reverse('product:add_product', kwargs={'slug': shop.slug})))
             elif not shop.is_owner(user):
                 return mark_safe('')
     else:
@@ -43,7 +44,7 @@ def show_add_banner_button(shop, user):
                                        Редактировать баннер
                                     </a>
                                 </div>
-                                    ''' % reverse('shops:add_banner', kwargs={'slug': shop.slug}))
+                                    ''' % (settings.DOMAIN_URL + reverse('shops:add_banner', kwargs={'slug': shop.slug})))
             elif not shop.is_owner(user):
                 return mark_safe('')
     else:
@@ -57,7 +58,7 @@ def show_order_history_button(shop, user):
             if shop.is_owner(user):
                 return mark_safe('''
                                     <li class="always" ><a href="%s">История заказов</a></li>
-                                ''' % reverse('order:shop_order_list', kwargs={'slug': shop.slug}))
+                                ''' % (settings.DOMAIN_URL + reverse('order:shop_order_list', kwargs={'slug': shop.slug})))
             elif not shop.is_owner(user):
                 return mark_safe('')
     else:
@@ -70,7 +71,7 @@ def show_add_social_button(shop, user):
             if shop.is_owner(user):
                 return mark_safe('''
                                     <a href="%s" class="edit-social">+ Добавить соц.сети</a>
-                                    ''' % reverse('shops:update_social', kwargs={'slug': shop.slug}))
+                                    ''' % (settings.DOMAIN_URL + reverse('shops:update_social', kwargs={'slug': shop.slug})))
             elif not shop.is_owner(user):
                 return mark_safe('')
     else:
@@ -88,7 +89,7 @@ def show_edit_shop_button(shop, user):
                                         Редактировать
                                     </a>
                                 </div>
-                                    ''' % reverse('shops:update', kwargs={'slug': shop.slug}))
+                                    ''' % (settings.DOMAIN_URL + reverse('shops:update', kwargs={'slug': shop.slug})))
             elif not shop.is_owner(user):
                 return mark_safe('')
     else:
@@ -101,7 +102,7 @@ def show_create_sale_button(shop, user):
             if shop.is_owner(user):
                 return mark_safe('''
                                     <li class="active"><a href="%s">Создать Акцию</a></li>
-                                ''' % reverse('shops:add_sale', kwargs={'slug': shop.slug}))
+                                ''' % (settings.DOMAIN_URL + reverse('shops:add_sale', kwargs={'slug': shop.slug})))
             elif not shop.is_owner(user):
                 return mark_safe('')
     else:
@@ -114,7 +115,7 @@ def show_update_sale_button(shop, sale, user):
             if shop.is_owner(user):
                 return mark_safe('''
                                     <a class="btn add" href="%s">Редактировать</a>
-                                ''' % reverse('shops:update_sale', kwargs={'slug': shop.slug, 'pk': sale.pk}))
+                                ''' % (settings.DOMAIN_URL +reverse('shops:update_sale', kwargs={'slug': shop.slug, 'pk': sale.pk})))
             elif not shop.is_owner(user):
                 return mark_safe('')
     else:

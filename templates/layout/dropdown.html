@@ -7,22 +7,22 @@
         </a>
 
         <ul class="dropdown-menu" aria-labelledby="dLabel">
-            <li><a href="{% url 'account_login' %}"><strong>Кабинет</strong></a></li>
-            <li><a href="{% url 'shops:create' %}"><strong>Создать магазин</strong></a></li>
-            <li><a href="{% url 'order:user_order_list' username=request.user.username %}"><strong>История заказов</strong></a></li>
-                <li><a href="{% url 'product:add_product_index' %}">
+            <li><a href="{{ DOMAIN_URL }}{% url 'account_login' %}"><strong>Кабинет</strong></a></li>
+            <li><a href="{{ DOMAIN_URL }}{% url 'shops:create' %}"><strong>Создать магазин</strong></a></li>
+            <li><a href="{{ DOMAIN_URL }}{% url 'order:user_order_list' username=request.user.username %}"><strong>История заказов</strong></a></li>
+                <li><a href="{{ DOMAIN_URL }}{% url 'product:add_product_index' %}">
                     <strong>Добавить товар</strong>
                     </a>
                 </li>
 
             {% for shop in request.user.shops_name %}
-                <li><a href="{{ shop.get_absolute_url }}">{{ shop.title }}</a></li>
+                <li><a href="{{ DOMAIN_URL }}{{ shop.get_absolute_url }}">{{ shop.title }}</a></li>
             {% endfor %}
-            <li><a href="{% url 'account_logout' %}"><strong>Выйти</strong></a></li>
+            <li><a href="{{ DOMAIN_URL }}{% url 'account_logout' %}"><strong>Выйти</strong></a></li>
         </ul>
     </div>
 {% else %}
-    <a href="{% url 'account_login' %}" class="enter btn" type="button">
+    <a href="{{ DOMAIN_URL }}{% url 'account_login' %}" class="enter btn" type="button">
         Войти</a>
 {% endif %}
 
