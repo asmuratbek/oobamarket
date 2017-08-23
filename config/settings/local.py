@@ -83,3 +83,4 @@ CELERY_ALWAYS_EAGER = True
 # Your local stuff: Below this line define 3rd party library settings
 # ------------------------------------------------------------------------------
 
+DOMAIN_URL = "http://localhost:8000"
