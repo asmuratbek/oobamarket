@@ -87,9 +87,9 @@
                     {{ object.get_delivery_type }}
                 </span> -->
                 </div>
-                {% if product.delivery_type == 'paid' %}
+                <!-- {% if product.delivery_type == 'paid' %}
                     <p>Стоимость доставки:{{ product.delivery_cost }}</p>
-                {% endif %}
+                {% endif %} -->
                 <form action="" id="favorite-form" style="display: none;">
                     <input type="hidden" name="item" value="{{ object.id }}">
                 </form>
