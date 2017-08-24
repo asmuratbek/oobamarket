@@ -28,7 +28,7 @@ var MainInterface = createClass({
             categories: [],
             activeCategory: '',
             owner: false,
-            shopSlug: location.href.split("/")[4]
+            shopSlug: location.href.split("/")[4] ? location.href.split("/")[4] : location.href.split(".")[0].split("http://")[1]
         }
     },
 

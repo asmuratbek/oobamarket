@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.db import models
 
 # Create your models here.
@@ -19,7 +20,7 @@ class GlobalCategory(PublishBaseModel):
         return self.title
 
     def get_absolute_url(self):
-        return reverse("categories:global_detail", kwargs={'slug': self.slug})
+        return settings.DOMAIN_URL + "/" + str(self.slug) + "/"
 
     def get_icon(self):
         return self.icon.url if self.icon else None

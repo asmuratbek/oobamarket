@@ -2,6 +2,7 @@ from django.db.models import Q
 from django.shortcuts import get_object_or_404
 from drf_multiple_model.views import MultipleModelAPIView
 from rest_framework import filters
+from rest_framework.authentication import SessionAuthentication, TokenAuthentication
 from rest_framework.generics import (
     ListAPIView,
     RetrieveAPIView,
@@ -64,6 +65,7 @@ class CategoryListApiView(ListAPIView):
 
 class GetUsedCategoriesFromShop(ListAPIView):
     serializer_class = CategorySerializer
+    permission_classes = (AllowAny,)
 
     def get_queryset(self):
         slug = self.kwargs.get('slug')
@@ -81,6 +83,8 @@ class CategoryDetailApiView(MultipleModelAPIView):
     pagination_class = CategoryLimitPagination
     flat = True
     filter_backends = (filters.OrderingFilter,)
+    permission_classes = (AllowAny,)
+    authentication_classes = (SessionAuthentication, TokenAuthentication)
 
     def get_queryList(self):
         slug = self.kwargs.get('slug')
@@ -90,10 +94,12 @@ class CategoryDetailApiView(MultipleModelAPIView):
         category = Category.objects.get(slug=slug)
         if category.get_level() == 0:
             products = Product.objects.filter(
-                Q(category__in=category.get_children()),
+                Q(category__in=category.get_descendants()),
             ).distinct()
         else:
-            products = Product.objects.filter(category=category)
+            products = Product.objects.filter(
+                Q(category__in=category.get_descendants()),
+            )
         if q:
             products = products.filter(
                 Q(title__icontains=str(q))
@@ -112,6 +118,8 @@ class GlobalCategoryListApiView(ListAPIView):
     serializer_class = GlobalCategorySerializer
     queryset = GlobalCategory.objects.all()
     filter_backends = (filters.OrderingFilter,)
+    permission_classes = (AllowAny,)
+    authentication_classes = (SessionAuthentication, TokenAuthentication)
 
 
 class GlobalCategoryDetailApiView(MultipleModelAPIView):
@@ -123,6 +131,8 @@ class GlobalCategoryDetailApiView(MultipleModelAPIView):
     flat = True
     filter_backends = (filters.OrderingFilter,)
     serializer_class = ProductSerializer
+    permission_classes = (AllowAny, )
+    authentication_classes = (SessionAuthentication, TokenAuthentication)
 
     def get_queryList(self):
         slug = self.kwargs.get('slug')
@@ -150,7 +160,8 @@ class ProductListApiView(ListAPIView):
     filter_backends = [SearchFilter, OrderingFilter]
     search_fields = ['title', 'short_description']
     pagination_class = ProductLimitPagination#PageNumberPagination
-    permission_classes = [AllowAny]
+    permission_classes = (AllowAny,)
+    authentication_classes = (SessionAuthentication, TokenAuthentication)
 
     def get_queryset(self):
         objects = Product.objects.all()
@@ -173,6 +184,7 @@ class ProductDetailApiView(RetrieveAPIView):
     serializer_class = ProductSerializer
     lookup_field = 'slug'
     permission_classes = [AllowAny]
+    authentication_classes = (SessionAuthentication, TokenAuthentication)
 
 
 class ProductUpdateApiView(RetrieveUpdateAPIView):
@@ -180,6 +192,7 @@ class ProductUpdateApiView(RetrieveUpdateAPIView):
     serializer_class = ProductSerializer
     lookup_field = 'slug'
     permission_classes = [IsOwnerOrReadOnly]
+    authentication_classes = (SessionAuthentication, TokenAuthentication)
 
 
 class ProductDeleteApiView(DestroyAPIView):
@@ -202,6 +215,7 @@ class ShopListApiView(ListAPIView):
     filter_backends = [SearchFilter, OrderingFilter]
     pagination_class = ShopProductsLimitPagination
     permission_classes = [AllowAny]
+    authentication_classes = (SessionAuthentication, TokenAuthentication)
 
     def get_queryset(self):
         shops = Shop.objects.all()
@@ -220,6 +234,8 @@ class ShopListApiView(ListAPIView):
 class PlaceListView(ListAPIView):
     serializer_class = PlaceSerializer
     queryset = Place.objects.all().order_by('title')
+    permission_classes = (AllowAny,)
+    authentication_classes = (SessionAuthentication, TokenAuthentication)
 
 
 class ShopDetailApiView(MultipleModelAPIView):
@@ -227,6 +243,8 @@ class ShopDetailApiView(MultipleModelAPIView):
     flat = True
     filter_backends = (filters.OrderingFilter,)
     serializer_class = ProductSerializer
+    permission_classes = (AllowAny,)
+    authentication_classes = (SessionAuthentication, TokenAuthentication)
 
     def get_queryList(self):
         slug = self.kwargs.get('slug')
@@ -255,6 +273,8 @@ class ShopDetailApiView(MultipleModelAPIView):
 
 
 class ShopApiView(MultipleModelAPIView):
+    permission_classes = (AllowAny,)
+    authentication_classes = (SessionAuthentication, TokenAuthentication)
 
     def get_queryList(self):
         slug = self.kwargs.get('slug')
@@ -293,6 +313,7 @@ class UserDetailView(ListAPIView):
     filter_backends = [SearchFilter, OrderingFilter]
     pagination_class = ShopProductsLimitPagination
     permission_classes = [AllowAny]
+    authentication_classes = (SessionAuthentication, TokenAuthentication)
 
     def get_queryset(self):
         user_id = self.kwargs.get('pk')
@@ -308,6 +329,8 @@ class ShopDetailView(MultipleModelAPIView):
 
     filter_backends = (filters.OrderingFilter,)
     serializer_class = ShopSerializer
+    permission_classes = (AllowAny,)
+    authentication_classes = (SessionAuthentication, TokenAuthentication)
 
     def get_queryList(self):
         slug = self.kwargs.get('slug')
@@ -328,6 +351,7 @@ class ShopSalesView(ListAPIView):
     filter_backends = [SearchFilter, OrderingFilter]
     pagination_class = ShopProductsLimitPagination
     permission_classes = [AllowAny]
+    authentication_classes = (SessionAuthentication, TokenAuthentication)
 
     def get_queryset(self):
         slug = self.kwargs.get('slug')
@@ -344,6 +368,7 @@ class ShopReviewsView(ListAPIView):
     filter_backends = [SearchFilter, OrderingFilter]
     pagination_class = ShopProductsLimitPagination
     permission_classes = [AllowAny]
+    authentication_classes = (SessionAuthentication, TokenAuthentication)
 
     def get_queryset(self):
         slug = self.kwargs.get('slug')
@@ -360,6 +385,7 @@ class ShopContactsView(ListAPIView):
     filter_backends = [SearchFilter, OrderingFilter]
     pagination_class = ShopProductsLimitPagination
     permission_classes = [AllowAny]
+    authentication_classes = (SessionAuthentication, TokenAuthentication)
 
     def get_queryset(self):
         slug = self.kwargs.get('slug')

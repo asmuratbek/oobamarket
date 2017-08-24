@@ -14,12 +14,12 @@ from django.forms.models import model_to_dict
 def category_detail(request, global_slug, slug):
     category = Category.objects.get(slug=slug)
     global_category = get_object_or_404(GlobalCategory, slug=global_slug)
-    _property = Properties.objects.filter(category=category.id)
-    properties = list()
-    for prop in _property:
-        item = model_to_dict(prop)
-        item['values'] = Values.objects.filter(properties=prop.id)
-        properties.append(item)
+    # _property = Properties.objects.filter(category=category.id)
+    # properties = list()
+    # for prop in _property:
+    #     item = model_to_dict(prop)
+    #     item['values'] = Values.objects.filter(properties=prop.id)
+    #     properties.append(item)
 
     # print(properties)
 
@@ -27,7 +27,6 @@ def category_detail(request, global_slug, slug):
 
     context = {
         "object": category,
-        "properties": properties,
         "global_slug": global_slug,
     }
     return render(request, template, context)

@@ -1,6 +1,6 @@
 {% extends 'base-1.html' %}
-    {% load staticfiles product_tags %}
-{% load shop_tags %}
+    {% load staticfiles product_tags shop_tags %}
+
 
 {% block head %}
     {{ block.super }}
@@ -8,7 +8,7 @@
 {% endblock %}
 
 {% block header %}
-    {% include 'layout/header.html' with global_title=object.get_global_category.title %}
+    {% include 'layout/header.html' with global=object.get_global_category %}
 {% endblock %}
 
 {#{% block categories %}#}
@@ -129,16 +129,16 @@
                             <div class="pull-right">
                                 {% show_add_social_button shop request.user %}
                                 {% if object.sociallinks.facebook %}
-                                    <a href="{{ object.sociallinks.facebook }}" class="facebook social"></a>
+                                    <a href="{{ DOMAIN_URL }}{{ object.sociallinks.facebook }}" class="facebook social"></a>
                                 {% endif %}
                                 {% if object.sociallinks.twitter %}
-                                    <a href="{{ object.sociallinks.twitter }}" class="tweet social"></a>
+                                    <a href="{{ DOMAIN_URL }}{{ object.sociallinks.twitter }}" class="tweet social"></a>
                                 {% endif %}
                                 {% if object.sociallinks.vk %}
-                                    <a href="{{ object.sociallinks.vk }}" class="vk social"></a>
+                                    <a href="{{ DOMAIN_URL }}{{ object.sociallinks.vk }}" class="vk social"></a>
                                 {% endif %}
                                 {% if object.sociallinks.instagram %}
-                                    <a href="{{ object.sociallinks.instagram }}" class="instagram social"></a>
+                                    <a href="{{ DOMAIN_URL }}{{ object.sociallinks.instagram }}" class="instagram social"></a>
                                 {% endif %}
 
                             </div>
@@ -159,13 +159,13 @@
                 {% url 'shops:sale' slug=shop.slug as sale %}
                 {% url 'shops:review' slug=shop.slug as review %}
                 {% url 'shops:contacts_detail' slug=shop.slug as contacts %}
-                <li {% if request.path == shop_detail %}class="active"{% endif %}><a href="{{ shop_detail }}">Товары</a>
+                <li {% if request.path == shop_detail %}class="active"{% endif %}><a href="{{ DOMAIN_URL }}{{ shop_detail }}">Товары</a>
                 </li>
-                <li {% if request.path == about_us %}class="active"{% endif %}><a href="{{ about_us }}">О компании</a>
+                <li {% if request.path == about_us %}class="active"{% endif %}><a href="{{ DOMAIN_URL }}{{ about_us }}">О компании</a>
                 </li>
-                <li {% if request.path == sale %}class="active"{% endif %}><a href="{{ sale }}">Акции</a></li>
-                <li {% if request.path == review %}class="active"{% endif %}><a href="{{ review }}">Отзывы</a></li>
-                <li {% if request.path == contacts %}class="active"{% endif %}><a href="{{ contacts }}">Контакты</a>
+                <li {% if request.path == sale %}class="active"{% endif %}><a href="{{ DOMAIN_URL }}{{ sale }}">Акции</a></li>
+                <li {% if request.path == review %}class="active"{% endif %}><a href="{{ DOMAIN_URL }}{{ review }}">Отзывы</a></li>
+                <li {% if request.path == contacts %}class="active"{% endif %}><a href="{{ DOMAIN_URL }}{{ contacts }}">Контакты</a>
                 </li>
 
             </ul>
