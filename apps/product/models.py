@@ -1,15 +1,21 @@
 # coding=utf-8
 from __future__ import unicode_literals
 
+import os
+from io import BytesIO
 from ckeditor_uploader.fields import RichTextUploadingField
+from django.core.files.storage import default_storage
+from django.core.files.uploadedfile import SimpleUploadedFile
 from django.db import models
+from django.db.models.signals import post_delete
 from django.urls import reverse
 from django.utils.translation import ugettext as _
-
+from django.conf import settings
 from apps.category.models import Category
 from apps.shop.models import Shop
 from apps.users.models import User
 from apps.utils.models import PublishBaseModel, Counter
+from PIL import Image
 
 DELIVERY_TYPES = (
     ('self', u'Самовывоз'),
@@ -166,12 +172,63 @@ class ProductImage(models.Model):
 
     product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name="Товар", null=True)
     image = models.ImageField(upload_to="products/image", max_length=230)
+    thumb_image = models.ImageField(upload_to="products/thumb", max_length=230, null=True)
     is_avatar = models.BooleanField(verbose_name='Аватар продукта', default=False)
 
-    def delete(self, *args, **kwargs):
-        storage, path = self.image.storage, self.image.path
-        super(ProductImage, self).delete(*args, **kwargs)
-        storage.delete(path)
+    def create_thumbnail(self):
+        if not self.image:
+            return
+        thumbnail_size = (340, 340)
 
+        if self.image.name.endswith(".jpg") or self.image.name.endswith(".jpeg"):
+            pil_type = 'jpeg'
+            file_extension = 'jpg'
+            image_type = 'image/jpeg'
+
+        elif self.image.name.endswith(".png"):
+            pil_type = 'png'
+            file_extension = 'png'
+            image_type = 'image/png'
+        elif self.image.name.endswith(".gif"):
+            pil_type = 'gif'
+            file_extension = 'gif'
+            image_type = 'image/gif'
+        else:
+            pil_type = 'jpeg'
+            file_extension = 'jpg'
+            image_type = 'image/jpeg'
+
+        image = Image.open(BytesIO(self.image.read()))
+        image.thumbnail(thumbnail_size, Image.ANTIALIAS)
+        output = BytesIO()
+        image.save(output, pil_type)
+        output.seek(0)
+        thumb_image = SimpleUploadedFile(os.path.split(self.image.name)[-1], output.read(), content_type=image_type)
+        self.thumb_image.save('%s_thumbnail.%s' % (os.path.splitext(thumb_image.name)[0], file_extension),
+                              thumb_image, save=False)
+
+    def save(self, *args, **kwargs):
+        if self.image and self.is_avatar and not self.thumb_image:
+            self.create_thumbnail()
+        force_update = False
+        if self.id:
+            force_update = True
+        super(ProductImage, self).save(force_update=force_update)
+
+    # def delete(self, *args, **kwargs):
+    #     # storage, path = self.image.storage, self.image.path
+    #     # thumb_storage, thumb_path = self.thumb_image.storage, self.thumb_image.path
+    #     # storage.delete(path), thumb_storage.delete(thumb_path)
+    #     os.remove(os.path.join(settings.MEDIA_ROOT, self.image.name))
+    #     os.remove(os.path.join(settings.MEDIA_ROOT, self.thumb_image.name))
+    #     super(ProductImage, self).delete(*args, **kwargs)
+
+
+def delete_files(sender, **kwargs):
+    image = kwargs.get('instance')
+    default_storage.delete(image.image.path)
+    default_storage.delete(image.thumb_image.path)
+
+post_delete.connect(delete_files, ProductImage)
 
 

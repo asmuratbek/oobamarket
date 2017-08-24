@@ -37,7 +37,7 @@ class Command(BaseCommand):
                 sheet.row(r)[3].value != ""]
         for product in data:
             slug = product[7].lower()
-            price = Decimal(product[3])
+            price = Decimal(product[3]) if product[3] != "" else 0
             title = product[0]
             short_desc = product[2]
             active = str(product[5])
@@ -61,12 +61,14 @@ class Command(BaseCommand):
                                                         long_description=desc)
                 img_i = 0
                 for img in imgs_list:
+                    img_format = img[-4:].replace(".", "")
                     img_i += 1
                     try:
                         download_imgs = urllib.request.urlretrieve(img, settings.MEDIA_ROOT + "/products/image/" +
-                                                                    str(slug) + "-{}.jpg".format(img_i))
+                                                                    str(slug) + "-{}.{}".format(img_i, img_format))
                         product_images = ProductImage.objects.create(product=product_create, image="products/image/" + str(slug) +
-                                                                                                   "-{}.jpg".format(img_i))
+                                                                                                   "-{}.{}".format(img_i,
+                                                                                                                   img_format))
                     except ValueError:
                         continue
                     except urllib.request.URLError:
