@@ -6,6 +6,8 @@ from django.db import models
 from django.db.models.signals import post_save
 from django.urls import reverse
 from django.utils.translation import ugettext as _
+from slugify import slugify
+
 from config.settings import base as settings
 from apps.users.models import User
 from apps.utils.models import PublishBaseModel, Counter
@@ -36,6 +38,11 @@ class Shop(PublishBaseModel, Counter):
 
     def __str__(self):
         return self.title
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.title)
+        super(Shop, self).save(*args, **kwargs)
 
     def get_slug(self):
         return self.slug
