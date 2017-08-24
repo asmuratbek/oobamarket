@@ -179,33 +179,33 @@ class ProductImage(models.Model):
         if not self.image:
             return
         thumbnail_size = (340, 340)
+        if not self.thumb_image:
+            if self.image.name.endswith(".jpg") or self.image.name.endswith(".jpeg"):
+                pil_type = 'jpeg'
+                file_extension = 'jpg'
+                image_type = 'image/jpeg'
 
-        if self.image.name.endswith(".jpg") or self.image.name.endswith(".jpeg"):
-            pil_type = 'jpeg'
-            file_extension = 'jpg'
-            image_type = 'image/jpeg'
+            elif self.image.name.endswith(".png"):
+                pil_type = 'png'
+                file_extension = 'png'
+                image_type = 'image/png'
+            elif self.image.name.endswith(".gif"):
+                pil_type = 'gif'
+                file_extension = 'gif'
+                image_type = 'image/gif'
+            else:
+                pil_type = 'jpeg'
+                file_extension = 'jpg'
+                image_type = 'image/jpeg'
 
-        elif self.image.name.endswith(".png"):
-            pil_type = 'png'
-            file_extension = 'png'
-            image_type = 'image/png'
-        elif self.image.name.endswith(".gif"):
-            pil_type = 'gif'
-            file_extension = 'gif'
-            image_type = 'image/gif'
-        else:
-            pil_type = 'jpeg'
-            file_extension = 'jpg'
-            image_type = 'image/jpeg'
-
-        image = Image.open(BytesIO(self.image.read()))
-        image.thumbnail(thumbnail_size, Image.ANTIALIAS)
-        output = BytesIO()
-        image.save(output, pil_type)
-        output.seek(0)
-        thumb_image = SimpleUploadedFile(os.path.split(self.image.name)[-1], output.read(), content_type=image_type)
-        self.thumb_image.save('%s_thumbnail.%s' % (os.path.splitext(thumb_image.name)[0], file_extension),
-                              thumb_image, save=False)
+            image = Image.open(BytesIO(self.image.read()))
+            image.thumbnail(thumbnail_size, Image.ANTIALIAS)
+            output = BytesIO()
+            image.save(output, pil_type)
+            output.seek(0)
+            thumb_image = SimpleUploadedFile(os.path.split(self.image.name)[-1], output.read(), content_type=image_type)
+            self.thumb_image.save('%s_thumbnail.%s' % (os.path.splitext(thumb_image.name)[0], file_extension),
+                                  thumb_image, save=False)
 
     def save(self, *args, **kwargs):
         if self.image and self.is_avatar and not self.thumb_image:

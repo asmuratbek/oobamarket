@@ -50,14 +50,14 @@ def create_thumbnails():
             if avatar_image:
                 try:
                     avatar_image.save()
-                except FileNotFoundError:
+                except Exception:
                     continue
                 name = os.path.split(avatar_image.thumb_image.name)[-1]
             else:
                 try:
                     first_image.create_thumbnail()
                     first_image.save()
-                except FileNotFoundError:
+                except Exception:
                     continue
                 name = os.path.split(first_image.thumb_image.name)[-1]
             print("Миниатюра для {} создана.".format(name))
