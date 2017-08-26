@@ -22,6 +22,8 @@ var MainInterface = createClass({
             productsCount: 0,
             activePage: 1,
             pagesCount: 0,
+            fromPage: 0,
+            productsByPage: 21,
             products: [],
             shops: [],
             loaded: false,
@@ -63,9 +65,14 @@ var MainInterface = createClass({
         var query = {
                 'query': {
                     'match': {
-                        'title': "Костюм"
+                        'shop_slug': this.state.shopSlug
                     }
-                }
+                },
+                "size":  this.state.productsByPage,
+                "from": this.state.fromPage,
+                "sort": [
+                    {"created_at": "desc"},
+                ]
               };
 
         $.ajax({
@@ -76,10 +83,10 @@ var MainInterface = createClass({
               dataType : 'json',
               success: function (data) {
                     var products = data.hits.hits.map(obj => obj._source);
-                    var pagesCount = Math.ceil(data.hits.length / 21);
+                    var pagesCount = Math.ceil(data.hits.total / this.state.productsByPage);
                     this.setState({
                         products: products,
-                        productsCount: data.hits.length,
+                        productsCount: data.hits.total,
                         activePage: 1,
                         pagesCount: pagesCount,
                         loaded: true,
@@ -104,7 +111,7 @@ var MainInterface = createClass({
     productDelete: function (item) {
         var allProducts = this.state.products;
         var deleted = _.remove(allProducts, function (n) {
-            return n.id == item;
+            return n.pk == item;
         });
         var newProducts = _.without(allProducts, deleted);
         this.setState({
@@ -112,19 +119,33 @@ var MainInterface = createClass({
         }); //setState
     },
     handlePageChange: function(pageNumber) {
+        var query = {
+                'query': {
+                    'match': {
+                        'shop_slug': this.state.shopSlug
+                    }
+                },
+                "size":  this.state.productsByPage,
+                "from": this.state.fromPage * pageNumber,
+                "sort": [
+                    {"created_at": "desc"},
+                ]
+              };
         this.setState({
-           loaded: false
+           loaded: false,
         });
         $.ajax({
-            type: "GET",
-              url: this.state.baseUrl + '?ordering=' + this.state.orderBy + '&page=' + pageNumber +
-              '&priceFrom=' + this.state.priceFrom + '&priceTo=' + this.state.priceTo + '&q=' + this.state.queryText
-               + '&category=' + this.state.activeCategory,
+            type: "POST",
+              url: `http://localhost:9200/_search/`,
+              data: JSON.stringify(query),
+              contentType: 'application/json',
+              dataType : 'json',
               success: function (data) {
-                    var products = data.results.map(obj => obj);
+                    var products = data.hits.hits.map(obj => obj._source);
                     this.setState({
                         products: products,
-                        activePage: pageNumber,
+                        activePlace: pageNumber,
+                        fromPage: this.state.productsByPage * pageNumber,
                         loaded: true,
                     });
               }.bind(this),
@@ -403,7 +424,7 @@ var MainInterface = createClass({
                      {this.state.pagesCount > 1 ?
                         <Pagination
                           activePage={this.state.activePage}
-                          itemsCountPerPage={21}
+                          itemsCountPerPage={this.state.productsByPage}
                           totalItemsCount={this.state.productsCount}
                           pageRangeDisplayed={5}
                           onChange={this.handlePageChange}

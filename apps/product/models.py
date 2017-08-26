@@ -115,6 +115,9 @@ class Product(PublishBaseModel, Counter):
     def get_shop_url(self):
         return self.shop.get_absolute_url()
 
+    def get_shop_slug(self):
+        return self.shop.slug
+
     def get_category_title(self):
         return self.category.title
 
