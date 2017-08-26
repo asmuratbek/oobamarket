@@ -1,4 +1,6 @@
 from django import forms
+from haystack.forms import SearchForm
+
 from .fields import CustomField
 from apps.category.models import Category
 from apps.global_category.models import GlobalCategory
@@ -75,3 +77,24 @@ class ProductImagesForm(forms.ModelForm):
         model = ProductImage
         fields = ['image']
 
+
+class ProductSearchForm(SearchForm):
+    models = [Product]
+
+    def get_models(self):
+        return self.models
+
+    def search(self):
+        sqs = super(ProductSearchForm, self).search().models(*self.get_models())
+        return sqs
+
+
+class ShopSearchForm(SearchForm):
+    models = [Shop]
+
+    def get_models(self):
+        return self.models
+
+    def search(self):
+        sqs = super(ShopSearchForm, self).search().models(*self.get_models())
+        return sqs

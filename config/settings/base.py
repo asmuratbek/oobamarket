@@ -46,6 +46,8 @@ DJANGO_APPS = [
 
     # Useful template tags:
     # 'django.contrib.humanize',
+    'haystack',
+    'elasticsearch',
 
     # Admin
     'mptt',
@@ -106,6 +108,14 @@ LOCAL_APPS = [
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
 # HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
+
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        'ENGINE': 'haystack.backends.elasticsearch_backend.ElasticsearchSearchEngine',
+        'URL': 'http://127.0.0.1:9200/',
+        'INDEX_NAME': 'haystack',
+    },
+}
 
 # MIDDLEWARE CONFIGURATION
 # ------------------------------------------------------------------------------
@@ -311,6 +321,19 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.TokenAuthentication',
     )
 }
+
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379/1",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient"
+        },
+        "KEY_PREFIX": "example"
+    }
+}
+
+CACHE_TTL = 60 * 15
 
 # Some really nice defaults
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
