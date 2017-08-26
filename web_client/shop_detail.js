@@ -60,16 +60,26 @@ var MainInterface = createClass({
               }
         })
 
+        var query = {
+                'query': {
+                    'match': {
+                        'title': "Костюм"
+                    }
+                }
+              };
+
         $.ajax({
-            type: "GET",
-              url: `/api/v1/shop/` + this.state.shopSlug + '?ordering=' + this.state.orderBy + '&page=' + this.state.activePage +
-              '&priceFrom=' + this.state.priceFrom + '&priceTo=' + this.state.priceTo + '&category=' + this.state.activeCategory,
+            type: "POST",
+              url: `http://localhost:9200/_search/`,
+              data: JSON.stringify(query),
+              contentType: 'application/json',
+              dataType : 'json',
               success: function (data) {
-                    var products = data.results.map(obj => obj);
-                    var pagesCount = Math.ceil(data.count / 21);
+                    var products = data.hits.hits.map(obj => obj._source);
+                    var pagesCount = Math.ceil(data.hits.length / 21);
                     this.setState({
                         products: products,
-                        productsCount: data.count,
+                        productsCount: data.hits.length,
                         activePage: 1,
                         pagesCount: pagesCount,
                         loaded: true,
