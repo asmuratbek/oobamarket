@@ -119,6 +119,11 @@ var MainInterface = createClass({
         }); //setState
     },
     handlePageChange: function(pageNumber) {
+        var from = this.productsCount > this.state.productsByPage * pageNumber ? (
+            this.state.productsByPage * pageNumber
+        ) : (
+            this.state.activePage * this.state.productsByPage
+        );
         var query = {
                 'query': {
                     'match': {
@@ -126,7 +131,7 @@ var MainInterface = createClass({
                     }
                 },
                 "size":  this.state.productsByPage,
-                "from": this.state.fromPage * pageNumber,
+                "from": pageNumber == 1 ? 0 : from,
                 "sort": [
                     {"created_at": "desc"},
                 ]
@@ -144,7 +149,7 @@ var MainInterface = createClass({
                     var products = data.hits.hits.map(obj => obj._source);
                     this.setState({
                         products: products,
-                        activePlace: pageNumber,
+                        activePage: pageNumber,
                         fromPage: this.state.productsByPage * pageNumber,
                         loaded: true,
                     });
