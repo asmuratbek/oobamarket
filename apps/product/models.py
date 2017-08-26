@@ -68,7 +68,9 @@ class Product(PublishBaseModel, Counter):
 
     def get_main_image(self):
         if self.productimage_set.all():
-            return self.productimage_set.first().image.url
+            return self.productimage_set.first().thumb_image.url \
+                    if self.productimage_set.first().thumb_image \
+                    else  self.productimage_set.first().image.url
         else:
             return None
 
@@ -117,8 +119,8 @@ class Product(PublishBaseModel, Counter):
         return self.category.title
 
     def get_avatar_image(self):
-        if self.productimage_set.filter(is_avatar=True):
-            return self.productimage_set.filter(is_avatar=True).first().image.url
+        if self.productimage_set.filter(is_avatar=True) and self.productimage_set.filter(is_avatar=True).first().thumb_image:
+            return self.productimage_set.filter(is_avatar=True).first().thumb_image.url
         else:
             return self.get_main_image()
 
