@@ -1,13 +1,12 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import createClass from 'create-react-class';
-import Product from './components/ShopDetailProducts';
-import SearchForm from './components/SearchForm';
-import CategoryList from './components/ShopDetailCategory';
-import _ from 'lodash';
-import Pagination from 'react-js-pagination';
-import Loader from 'react-loader';
-
+import React from "react";
+import ReactDOM from "react-dom";
+import createClass from "create-react-class";
+import Product from "./components/ShopDetailProducts";
+import SearchForm from "./components/SearchForm";
+import CategoryList from "./components/ShopDetailCategory";
+import _ from "lodash";
+import Pagination from "react-js-pagination";
+import Loader from "react-loader";
 
 
 var MainInterface = createClass({
@@ -76,7 +75,7 @@ var MainInterface = createClass({
 
         $.ajax({
             type: "POST",
-              url: `http://localhost:9200/_search/`,
+              url: `127.0.0.1:9200/_search/`,
               data: JSON.stringify(query),
               contentType: 'application/json',
               dataType : 'json',
@@ -186,7 +185,7 @@ var MainInterface = createClass({
         });
         $.ajax({
             type: "POST",
-              url: `http://localhost:9200/_search/`,
+              url: `127.0.0.1:9200/_search/`,
               data: JSON.stringify(query),
               contentType: 'application/json',
               dataType : 'json',
@@ -271,7 +270,7 @@ var MainInterface = createClass({
         });
         $.ajax({
             type: "POST",
-              url: `http://localhost:9200/_search/`,
+              url: `127.0.0.1:9200/_search/`,
               data: JSON.stringify(query),
               contentType: 'application/json',
               dataType : 'json',
@@ -362,7 +361,7 @@ var MainInterface = createClass({
         });
         $.ajax({
             type: "POST",
-              url: `http://localhost:9200/_search/`,
+              url: `127.0.0.1:9200/_search/`,
               data: JSON.stringify(query),
               contentType: 'application/json',
               dataType : 'json',
@@ -451,7 +450,7 @@ var MainInterface = createClass({
         });
         $.ajax({
             type: "POST",
-              url: `http://localhost:9200/_search/`,
+              url: `127.0.0.1:9200/_search/`,
               data: JSON.stringify(query),
               contentType: 'application/json',
               dataType : 'json',
@@ -539,7 +538,7 @@ var MainInterface = createClass({
         });
         $.ajax({
            type: "POST",
-              url: `http://localhost:9200/_search/`,
+              url: `127.0.0.1:9200/_search/`,
               data: JSON.stringify(query),
               contentType: 'application/json',
               dataType : 'json',
@@ -634,7 +633,7 @@ var MainInterface = createClass({
         });
         $.ajax({
             type: "POST",
-              url: `http://localhost:9200/_search/`,
+              url: `127.0.0.1:9200/_search/`,
               data: JSON.stringify(query),
               contentType: 'application/json',
               dataType : 'json',
@@ -711,7 +710,7 @@ var MainInterface = createClass({
       });
         $.ajax({
             type: "POST",
-              url: `http://localhost:9200/_search/`,
+              url: `127.0.0.1:9200/_search/`,
               data: JSON.stringify(query),
               contentType: 'application/json',
               dataType : 'json',
