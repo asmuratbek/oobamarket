@@ -75,7 +75,7 @@ var MainInterface = createClass({
 
         $.ajax({
             type: "POST",
-              url: `127.0.0.1:9200/_search/`,
+              url: `http://127.0.0.1:9200/_search/`,
               data: JSON.stringify(query),
               contentType: 'application/json',
               dataType : 'json',
@@ -185,7 +185,7 @@ var MainInterface = createClass({
         });
         $.ajax({
             type: "POST",
-              url: `127.0.0.1:9200/_search/`,
+              url: `http://127.0.0.1:9200/_search/`,
               data: JSON.stringify(query),
               contentType: 'application/json',
               dataType : 'json',
@@ -270,7 +270,7 @@ var MainInterface = createClass({
         });
         $.ajax({
             type: "POST",
-              url: `127.0.0.1:9200/_search/`,
+              url: `http://127.0.0.1:9200/_search/`,
               data: JSON.stringify(query),
               contentType: 'application/json',
               dataType : 'json',
@@ -361,7 +361,7 @@ var MainInterface = createClass({
         });
         $.ajax({
             type: "POST",
-              url: `127.0.0.1:9200/_search/`,
+              url: `http://127.0.0.1:9200/_search/`,
               data: JSON.stringify(query),
               contentType: 'application/json',
               dataType : 'json',
@@ -450,7 +450,7 @@ var MainInterface = createClass({
         });
         $.ajax({
             type: "POST",
-              url: `127.0.0.1:9200/_search/`,
+              url: `http://127.0.0.1:9200/_search/`,
               data: JSON.stringify(query),
               contentType: 'application/json',
               dataType : 'json',
@@ -538,7 +538,7 @@ var MainInterface = createClass({
         });
         $.ajax({
            type: "POST",
-              url: `127.0.0.1:9200/_search/`,
+              url: `http://127.0.0.1:9200/_search/`,
               data: JSON.stringify(query),
               contentType: 'application/json',
               dataType : 'json',
@@ -633,7 +633,7 @@ var MainInterface = createClass({
         });
         $.ajax({
             type: "POST",
-              url: `127.0.0.1:9200/_search/`,
+              url: `http://127.0.0.1:9200/_search/`,
               data: JSON.stringify(query),
               contentType: 'application/json',
               dataType : 'json',
@@ -710,7 +710,7 @@ var MainInterface = createClass({
       });
         $.ajax({
             type: "POST",
-              url: `127.0.0.1:9200/_search/`,
+              url: `http://127.0.0.1:9200/_search/`,
               data: JSON.stringify(query),
               contentType: 'application/json',
               dataType : 'json',
