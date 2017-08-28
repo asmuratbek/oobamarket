@@ -2,7 +2,77 @@
 {% load staticfiles widget_tweaks shop_tags %}
 
 {% block shopcontent %}
-    {% include 'order/partials/order_list.html' %}
+        <div class="simpleorder">
+
+            <a href="" name='delete' class="remove-item">Удалить</a>
+{#            <a href="" class="load-to-excel">Выгрузить в Excel</a>#}
+            <div class="clearfix"></div>
+            <div class="tab-simpleorder">
+
+                <div class="head">
+                    <div class="parets">
+                        <ul>
+                            <li>
+{#                                <label for="parent">#}
+{#                                    <input type="checkbox" id="parent">#}
+{#                                    <div class="indicator"></div>#}
+{#                                </label>#}
+                            </li>
+                            <li>Номер заказа</li>
+                            <li>Дата</li>
+                            <li>Заказчик</li>
+                            <li>Статус</li>
+                            <li>Адрес доставки</li>
+                            <li>Телефон</li>
+                            <li>Сумма заказа</li>
+{#                            <li>Комиссия</li>#}
+                        </ul>
+
+                    </div>
+                </div>
+
+                {% for order in object_list %}
+
+                    {% if order.is_visible == True %}
+                    <div class="child-order">
+
+                        <ul>
+                            <li>
+                                <label for="child-{{ order.id }}">
+                                    <input type="checkbox" id="child-{{ order.id }}" data-id="{{ order.id }}" name="todelete" value="{{ order.id }}">
+                                    <div class="indicator"></div>
+                                </label>
+                            </li>
+                            <li>{{ order.cart.id }}</li>
+                            <li><a href="{% url 'order:shop_simple_order_update' pk=order.id %}"
+                                   style="position: relative;">{{ order.created_at|date:"d.m.y H:i" }}</a></li>
+                            <li>{{ order.name }}</li>
+                            <li>
+                                <form method="POST" action="{% url 'order:change_status' %}" class="order_change">
+                                    {% csrf_token %}
+                                    <select class="form-control" id="id_status"
+                                            name="status" required="">
+                                        {% for x,y in form.fields.status.choices %}
+                                            <option value="{{ x }}"
+                                                    {% if order.status == x %}selected{% endif %}>{{ y }}</option>
+                                        {% endfor %}
+                                    </select>
+                                    <input type="hidden" name="id" value="{{ order.id }}">
+                                    {#<button class="btn" type="submit">Подтвердить</button>#}
+                                </form>
+                            </li>
+                            <li>{{ order.address }}
+                            </li>
+                            <li>{{ order.phone }}</li>
+                            <li>{{ order.cart.subtotal }}</li>
+{#                            <li>0 сом</li>#}
+                        </ul>
+                    </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+
+    </div>
 {% endblock %}
 
 
@@ -11,6 +81,46 @@
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
     <script src="{% static 'js/common.js' %}"></script>
     <script src="{% static 'js/owl.carousel.min.js' %}"></script>
+    <script>
+
+     var arr = [];//переменная массив для фукции записи в нее id списка заказов
+
+    //функция записи данных в переменную arr выше
+
+
+    $('input[name=todelete]').on('click', function () {
+        let data_id = $(this).attr('data-id');
+        if (!$.inArray(data_id, arr)) {
+            arr.splice(arr.indexOf(data_id), 1);
+        }
+        else {
+            arr.push(data_id);
+        }
+
+        console.log(arr)
+    });
+
+
+    //фукция удаления одного или массива списков с истории продаж магазина
+    $('.remove-item').on('click', function (e) {
+        console.log('zashel')
+{#        e.preventDefault();#}
+        var self = $(this);
+        var elems = $('input[name=todelete]:checked');
+        $.ajax({
+            url: '{% url 'order:shop_order_list' shop.slug %}',
+            type: 'POST',
+            dataType: 'JSON',
+            data: { csrfmiddlewaretoken:'{{ csrf_token }}',
+                'ids': arr},
+            success: function () {
+                location.reload();
+            }
+
+        });
+
+    });
+    </script>
 {% endblock %}
 {##}
 {#            <h1>Заказы магазина {{ shop }}</h1>#}

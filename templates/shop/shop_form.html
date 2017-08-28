@@ -17,14 +17,16 @@
                         <div class="form-group {% if form.title.errors %}has-error{% endif %} input col-md-6">
                             {% if not form.title.errors %}
                                 <label for="">Название магазина</label>{% else %}
-                                <label for="" style="color:red;">Название магазина:{{ form.title.errors }}</label>{% endif %}
+                                <label for="" style="color:red;">Название
+                                    магазина:{{ form.title.errors }}</label>{% endif %}
                             {{ form.title|attr:"type:text" }}
                         </div>
 
                         <div class="form-group {% if form.email.errors %}has-error{% endif %} input col-md-6">
                             {% if not form.email.errors %}
                                 <label for="">E-mail магазина:</label>{% else %}
-                                <label for="" style="color:red;">E-mail магазина:{{ form.email.errors }}</label>{% endif %}
+                                <label for="" style="color:red;">E-mail
+                                    магазина:{{ form.email.errors }}</label>{% endif %}
                             {% render_field form.email|attr:"type:email" placeholder="" %}
                         </div>
 
@@ -41,6 +43,43 @@
                                 <label for="">О компании</label>
 
                                 {% render_field form.description|attr:"rows:6" placeholder="Введите полное описание" %}
+                            </div>
+
+                            <div class="form-group input col-md-12">
+                                <label for="">Мета заголовок магазина:</label>
+                                {% render_field form.meta_title|attr:"type:text" placeholder="" %}
+                                <i>Введи до 45 символов название которое будет отображаться с посковиках. Для лучшего
+                                    отображения введите ключевое слово товаров которые вы продаете в на сайте. Например
+                                    если вы продаете кроссовки от найка и адидас. Правильный заголовок будет: "Купить
+                                    кроссовки adidas и nike". Мы добавим в конце Бишкек и Ваше название магазина. Т.е.
+                                    заголовок в последующем будет выглядеть так:"Купить кроссовки adidas и nike Бишкек -
+                                    Кроссовки Центр."
+                                </i>
+                            </div>
+                            <div class="form-group input col-md-12">
+                                <label for="">Мета описание магазина:</label>
+                                {% render_field form.meta_description|attr:"rows:6" placeholder="Введите до 220 символов" %}
+                                <i>В мета описании вы можете описать в кратце, какие товары вы продаете и чем занимаетесь.
+                                    Лучше всего описание формируется, где включены несколько ключевых слов по которым вас
+                                    будут искать. Чем лучше соответсвие,тем выше позиция.
+                                </i>
+                            </div>
+                            <div class="form-group input col-md-12">
+                                <label for="">Мета ключевые слова магазина:</label>
+                                {% render_field form.meta_keywords|attr:"rows:6" placeholder="Введите до 10 ключевых слов" %}
+                                <i>В поле нужно вводить ключевые слова, например, если вы продаете кроссовки. То правильным
+                                    набором ключевых слов будет: "Кроссовки, адидас, найк, бишкек, adidas, nike, купить и т.д."
+                                </i>
+                            </div>
+                            <div class="form-group input col-md-12">
+                                <label for="">СЕО текс магазина:</label>
+                                {% render_field form.seo_text|attr:"rows:6" placeholder="Введите сео описание магазина" %}
+                                <i>Это поле не ограничено в заполнении. Но лучше всего чтобы он был не более 500 знаков.
+                                   Сео описание влияет на продвижение вашего интернет магазина в поисковике, так что вам
+                                    нужно самому написать текст. Мы настоятельно не рекомендуем копировать чужой текст,
+                                    так как это не продвинет ваш магазин, а даже снизит его рейтинг в поисковике. Самым
+                                    лучшим способом является составить текст из ключевых слов.
+                                </i>
                             </div>
 
 
@@ -99,8 +138,10 @@
                                 </div>
                                 <div class="form-group btn-group-form col-md-12">
                                     <button type="submit" class="btn add">Сохранить</button>
-                                     {% if object %}
-                                    <a href="{% url 'shops:delete' slug=object.slug %}" class="remove delete-object model-trigger btn add" style="cursor: pointer;"> <span class="glyphicon glyphicon-warning-sign"></span> Удалить магазин</a>
+                                    {% if object %}
+                                        <a href="{% url 'shops:delete' slug=object.slug %}"
+                                           class="remove delete-object model-trigger btn add" style="cursor: pointer;">
+                                            <span class="glyphicon glyphicon-warning-sign"></span> Удалить магазин</a>
                                     {% endif %}
                                 </div>
 

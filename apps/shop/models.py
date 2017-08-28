@@ -35,6 +35,11 @@ class Shop(PublishBaseModel, Counter):
     description = models.TextField(verbose_name='Полное описание магазина', blank=True, null=True)
     logo = models.ImageField(upload_to='images/shop/logo/', default=settings.DEFAULT_IMAGE,
                              verbose_name='Логотип')
+    meta_title = models.CharField(max_length=60, verbose_name='Мета заголовок', blank=True, null=True)
+    meta_description = models.CharField(max_length=255, verbose_name='Мета описание', blank=True, null=True)
+    meta_keywords = models.CharField(max_length=255, verbose_name='Мета ключевые слова', blank=True, null=True)
+    seo_text = models.TextField(verbose_name='SEO Текст', null=True, blank=True)
+
 
     def __str__(self):
         return self.title
@@ -77,6 +82,9 @@ class Shop(PublishBaseModel, Counter):
             category_ids.append(product.category.id)
         categories = Category.objects.filter(id__in=category_ids)
         return categories
+
+    def get_used_categories_title(self):
+        return ", ".join([i.title for i in self.get_used_categories()])
 
     def get_global_category(self):
         if self.product_set.exists():
