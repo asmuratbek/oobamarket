@@ -117,6 +117,8 @@ $(document).on('click', '#add-product-button', function () {
     var fields_list = [$('#id_shop'), $('#global_category'), $('#category_list'), $('#subcategory_list'),
                         $('#id_title'), $('#id_price')];
     var not_errors = validate_fields(fields_list);
+    for (var instance in CKEDITOR.instances)
+             CKEDITOR.instances[instance].updateElement();
     if(not_errors) {
         var form = $('#form');
         var formData = new FormData(form[0]);
