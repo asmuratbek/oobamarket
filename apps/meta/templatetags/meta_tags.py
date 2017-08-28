@@ -1,9 +1,9 @@
 from django import template
 from django.utils.translation import ugettext_lazy as _
 
+from apps.category.models import Category
+from apps.global_category.models import GlobalCategory
 from apps.meta.models import MetaData
-from apps.product.models import Product
-from apps.shop.models import Shop
 
 register = template.Library()
 
@@ -23,8 +23,8 @@ def get_seo_data(request, object):
             }
 
     except MetaData.DoesNotExist:
-        if isinstance(object, Shop):
-            seo_data = MetaData.objects.filter(shop=object).first()
+        if isinstance(object, GlobalCategory):
+            seo_data = MetaData.objects.filter(global_category=object).first()
             if seo_data:
                 return {
                     'title': seo_data.title,
@@ -35,14 +35,14 @@ def get_seo_data(request, object):
                 }
             else:
                 return {
-                    'title': "Ооба интернет магазин",
-                    'description': "Ооба интернет магазин",
-                    'keywords': "Ооба интернет магазин",
+                    'title': "Интернет магазины Бишкек. Открыть интернет магазин.",
+                    'description': " Интернет магазины Бишкек.Вы можете создать интернет магазин.",
+                    'keywords': "интернет магазин, бишкек, интернет магазины бишкеке, купить",
                     'h1': "Ооба интернет магазин",
                     'seo_text': "Ооба интернет магазин"
                 }
-        elif isinstance(object, Product):
-            seo_data = MetaData.objects.filter(product=object).first()
+        elif isinstance(object, Category):
+            seo_data = MetaData.objects.filter(category=object).first()
             if seo_data:
                 return {
                     'title': seo_data.title,
@@ -53,17 +53,17 @@ def get_seo_data(request, object):
                 }
             else:
                 return {
-                    'title': "Ооба интернет магазин",
-                    'description': "Ооба интернет магазин",
-                    'keywords': "Ооба интернет магазин",
+                    'title': "Интернет магазины Бишкек. Открыть интернет магазин.",
+                    'description': " Интернет магазины Бишкек.Вы можете создать интернет магазин.",
+                    'keywords': "интернет магазин, бишкек, интернет магазины бишкеке, купить",
                     'h1': "Ооба интернет магазин",
                     'seo_text': "Ооба интернет магазин"
                 }
         else:
             return {
-                'title': "Ооба интернет магазин",
-                'description': "Ооба интернет магазин",
-                'keywords': "Ооба интернет магазин",
+                'title': "Интернет магазины Бишкек. Открыть интернет магазин.",
+                'description': " Интернет магазины Бишкек.Вы можете создать интернет магазин.",
+                'keywords': "интернет магазин, бишкек, интернет магазины бишкеке, купить",
                 'h1': "Ооба интернет магазин",
                 'seo_text': "Ооба интернет магазин"
             }

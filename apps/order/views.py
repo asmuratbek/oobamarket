@@ -176,6 +176,17 @@ class ShopSimpleOrderListView(LoginRequiredMixin, ShopMixin, ListView):
         return SimpleOrder.objects.filter(cart__cartitem__product__shop__slug=self.kwargs.get('slug'))
 
 
+    def post(self, request, *args, **kwargs):
+        # if request.POST.get('ids[]'):
+        for id in request.POST.getlist('ids[]'):
+            SimpleOrder.objects.filter(pk=id).update(is_visible=False)
+        return redirect(request.path)
+        # return JsonResponse(dict(messages=False))
+
+
+
+
+
 class ShopSimpleOrderUpdateView(LoginRequiredMixin, ShopMixin, UpdateView):
     model = SimpleOrder
     template_name = 'order/shop_order_detail.html'
@@ -210,14 +221,14 @@ def shop_change_status(request):
     return JsonResponse(dict(messages=False))
 
 
-@login_required
-@csrf_exempt
-def shop_delete_simple_order_list(request):
-    if request.POST.get('ids[]'):
-        for id in request.POST.getlist('ids[]'):
-            SimpleOrder.objects.filter(pk=id).update(is_visible=False)
-        return JsonResponse(dict(messages=True))
-    return JsonResponse(dict(messages=False))
+# @login_required
+# @csrf_exempt
+# def shop_delete_simple_order_list(request):
+#     if request.POST.get('ids[]'):
+#         for id in request.POST.getlist('ids[]'):
+#             SimpleOrder.objects.filter(pk=id).update(is_visible=False)
+#         return JsonResponse(dict(messages=True))
+#     return JsonResponse(dict(messages=False))
 
 
 class UserSimpleOrderListView(LoginRequiredMixin, UserOderListPermMixin, ListView):

@@ -2,9 +2,11 @@
     {% load staticfiles product_tags shop_tags %}
 
 
-{% block head %}
-    {{ block.super }}
-    <link rel="stylesheet" type="text/css" href="{% static 'css/selectize.css' %}">
+{% block meta %}
+ <meta name="description" content="{% if object.meta_description %}{{ object.meta_description }}{% else %}{{ object.title }} инетрнет-магазин Бишкек.{% if object.contacts_set.first.phone %} Телефон:{{ object.contacts_set.first.phone }}, {% endif %}{{ object.email }}.{% if not object.short_description %} {{ object.get_used_categories_title }},{% else %}{{ object.short_description }}{% endif %} {{ object.get_used_categories_title }}{% endif %}">
+    <meta name="keywords" content="{% if object.meta_keywords %}{{ object.meta_keywords }}{% else %}{{ object.title }}, интернет магазин, купить, в бишкеке, отзывы магазина, {{ object.get_used_categories_title }}{% endif %}">
+    <meta name="author" content="Oobamarket.kg интернет магазин в Бишкеке">
+    <title>{% block title %} {% if object.meta_title %}{{ object.meta_title }} интернет-магазин в Бишкеке{% else %}{{object.title}} - интернет-магазин в Бишкеке.Товары, Акции, Отзывы, Контакты{% endif %} {% endblock %}</title>
 {% endblock %}
 
 {% block header %}
@@ -36,7 +38,7 @@
                     </div>
                 {% endif %}
                 <h2>{{ object.title|truncatechars:27 }}</h2>
-                <p class="see-more-toogle">{{ object.description|truncatechars:70  }}</p>
+                <p class="see-more-toogle">{{ object.short_description|truncatechars:70  }}</p>
                 <div class="bottom-line">
                     {% if object.contacts_set.all %}
                         <div>
@@ -187,7 +189,7 @@
     {{ block.super }}
     <script src="{% static 'js/readmore.min.js' %}"></script>
     <script src="{% static 'js/shop_detail.js' %}"></script>
-    <script src="{% static 'js/select2.js' %}"></script>
+
     <script src="{% static 'js/subscribe.js' %}"></script>
     <script src="{% static 'js/counter.js' %}"></script>
 {% endblock %}

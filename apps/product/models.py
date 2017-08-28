@@ -62,6 +62,11 @@ class Product(PublishBaseModel, Counter):
     long_description = RichTextUploadingField(null=True, blank=True, verbose_name='Полное описание')
     # images = models.ManyToManyField('Media', verbose_name='Изображения продукта', blank=True)
     objects = ProductPublishedManager()
+    meta_title = models.CharField(max_length=60, verbose_name='Мета заголовок', blank=True, null=True)
+    meta_description = models.CharField(max_length=255, verbose_name='Мета описание', blank=True, null=True)
+    meta_keywords = models.CharField(max_length=255, verbose_name='Мета ключевые слова', blank=True, null=True)
+    seo_text = models.TextField(verbose_name='SEO Текст', null=True, blank=True)
+
 
     def __str__(self):
         return "{shop} - {category} - {title}".format(shop=self.shop.title, category=self.category, title=self.title)

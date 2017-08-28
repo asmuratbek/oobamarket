@@ -167,59 +167,25 @@ $(document).ready(function () {
     });
 
 
-    var arr = [];//переменная массив для фукции записи в нее id списка заказов
-
-    //функция записи данных в переменную arr выше
 
 
-    $('input[name=todelete]').on('click', function () {
-        let data_id = $(this).attr('data-id');
-        if (!$.inArray(data_id, arr)) {
-            arr.splice(arr.indexOf(data_id), 1);
-        }
-        else {
-            arr.push(data_id);
-        }
-
-        console.log(arr)
-    });
-
-
-    //фукция удаления одного или массива списков с истории продаж магазина
-    $('.remove-item').on('click', function (e) {
-        e.preventDefault();
-        var self = $(this);
-        var elems = $('input[name=todelete]:checked');
-        $.ajax({
-            url: self.attr('href'),
-            type: 'POST',
-            dataType: 'JSON',
-            data: {'ids': arr},
-            success: function (responce) {
-                console.log(arr)
-            }
-
-        });
-
-    });
-
-    //фукция удаления одного или массива списков с истории продаж магазина
-    $('.remove_product').on('click', function (e) {
-        e.preventDefault();
-        var self = $(this);
-        var id = $(self).attr('.id')
-        $.ajax({
-            url: self.attr('href'),
-            type: 'POST',
-            dataType: 'JSON',
-            data: {'id': id},
-            success: function (responce) {
-                console.log(id)
-            }
-
-        });
-
-    });
+    // //фукция удаления одного или массива списков с истории продаж магазина
+    // $('.remove_product').on('click', function (e) {
+    //     e.preventDefault();
+    //     var self = $(this);
+    //     var id = $(self).attr('.id')
+    //     $.ajax({
+    //         url: self.attr('href'),
+    //         type: 'POST',
+    //         dataType: 'JSON',
+    //         data: {'id': id},
+    //         success: function () {
+    //             location.reload();
+    //         }
+    //
+    //     });
+    //
+    // });
 
     //функция выделения всех чекбоксов на странице истории заказов при клике на родительский чекбокс
     $('#parent').on('click', function (e) {
