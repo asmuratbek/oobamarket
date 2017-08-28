@@ -1,5 +1,5 @@
 {{ object.title }}
-{{ object.price }}
+{{ object.get_price_function }}
 {{ object.get_shop_title }}
 {{ object.get_main_image }}
 {{ object.get_absolute_url }}
