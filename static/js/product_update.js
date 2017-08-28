@@ -136,6 +136,8 @@ var validate_fields = function (elems) {
 };
 
 $(document).on("click", "#update-product-button", function () {
+    for (var instance in CKEDITOR.instances)
+                CKEDITOR.instances[instance].updateElement();
     var fields_list = [$('#id_shop'), $('#global_category'), $('#category_list'), $('#subcategory_list'),
                         $('#id_title'), $('#id_price')];
     var not_errors = validate_fields(fields_list);
