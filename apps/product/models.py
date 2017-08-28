@@ -120,8 +120,14 @@ class Product(PublishBaseModel, Counter):
     def get_shop_url(self):
         return self.shop.get_absolute_url()
 
+    def get_shop_slug(self):
+        return self.shop.slug
+
     def get_category_title(self):
         return self.category.title
+
+    def get_category_id(self):
+        return self.category.id
 
     def get_avatar_image(self):
         if self.productimage_set.filter(is_avatar=True) and self.productimage_set.filter(is_avatar=True).first().thumb_image:

@@ -54,7 +54,7 @@ var ProductList = createClass({
             type: "GET",
             url: "/favorite/add",
             data: {
-                'item': this.props.product.id
+                'item': this.props.product.pk
             },
             success: function (data) {
                 if (data.created) {
@@ -87,7 +87,7 @@ var ProductList = createClass({
           url: "/cart/",
           data:
               {
-                  "item":  this.props.product.id
+                  "item":  this.props.product.pk
               },
           success: function (data) {
               $('.cart-count').text(data.total_items);
@@ -145,7 +145,7 @@ var ProductList = createClass({
   inCart : function (product) {
     return (
         <span className="glyphicon glyphicon-shopping-cart enable" data-toggle="tooltip"
-              data-placement="top" data-product-id={this.props.product.id}
+              data-placement="top" data-product-id={this.props.product.pk}
                           data-tip="В корзине" onClick={this.addOrRemoveFromCart}></span>
     )
   },
@@ -153,7 +153,7 @@ var ProductList = createClass({
   notInCart : function (product) {
     return (
         <span className="glyphicon glyphicon-shopping-cart" data-toggle="tooltip"
-              data-placement="top" data-product-id={this.props.product.id}
+              data-placement="top" data-product-id={this.props.product.pk}
                           data-tip="Добавить в корзину" onClick={this.addOrRemoveFromCart}></span>
     )
   },
@@ -241,13 +241,13 @@ var ProductList = createClass({
                 <ReactTooltip/>
                 <a href="#" data-message={this.props.product.published ? "Товар успешно скрыт" : "Товар успешно опубликован"}
                              className={`eye glyphicon glyphicon-eye-${this.props.product.published ? 'open' : 'close'}`}
-                             data-product-id={this.props.product.id} data-toggle="tooltip" title="" data-placement="bottom"
+                             data-product-id={this.props.product.pk} data-toggle="tooltip" title="" data-placement="bottom"
                              data-tip="Скрыть" data-status={`${this.props.product.published ? false : true}`}
                              onClick={this.changePublishStatus}></a>
                 <ReactTooltip/>
                 <a href="#" className="remove glyphicon glyphicon-remove model-trigger"
                              data-url={this.props.product.delete_view} data-toggle="modal" data-target="#DeleteModal" title=""
-                             data-placement="bottom" data-product-id={this.props.product.id} data-tip="Удалить"
+                             data-placement="bottom" data-product-id={this.props.product.pk} data-tip="Удалить"
                              onClick={this.deleteProduct}></a>
                 <ReactTooltip/>
 
@@ -268,7 +268,7 @@ var ProductList = createClass({
                 <div className="button-basket-favorite">
                     {this.isInCart(this.props.product)}
                     <span className={`glyphicon glyphicon-heart ${this.props.product.is_favorite && 'enable like'}`}
-                          data-product-id={this.props.product.id} data-toggle="tooltip" title=""
+                          data-product-id={this.props.product.pk} data-toggle="tooltip" title=""
                           data-placement="top"
                           data-tip={this.props.product.is_favorite ? "Удалить из избранных" : "Добавить в избранное"}
                         onClick={this.AddOrRemoveFavorite}></span>

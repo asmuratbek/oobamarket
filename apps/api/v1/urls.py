@@ -23,7 +23,8 @@ from .views import (
     ShopSalesView,
     ShopReviewsView,
     ShopContactsView,
-    PlaceListView
+    PlaceListView,
+    search_predict_html,
 )
 from rest_framework.documentation import include_docs_urls
 
@@ -47,7 +48,7 @@ urlpatterns = [
     url(r'^shop/detail/(?P<slug>[-_\w]+)/reviews/$', ShopReviewsView.as_view(), name="shop_reviews"),
     url(r'^shop/detail/(?P<slug>[-_\w]+)/contacts/$', ShopContactsView.as_view(), name="shop_contacts"),
     url(r'^shop/detail/(?P<slug>[-_\w]+)/$', ShopDetailView.as_view(), name="shop"),
-    url(r'^shop/(?P<slug>[-_\w]+)/$', ShopDetailApiView.as_view(), name='shop_detail'),
+    url(r'^shop/(?P<slug>[-_\w]+)/$', search_predict_html, name='shop_detail'),
     url(r'^shop/(?P<slug>[-_\w]+)/shop/$', ShopApiView.as_view(), name='shop_categories'),
     url(r'^shop/(?P<slug>[-_\w]+)/update/$', ShopUpdateApiView.as_view(), name='shop_update'),
     url(r'^shop/(?P<slug>[-_\w]+)/delete/$', ShopDeleteApiView.as_view(), name='shop_delete'),
