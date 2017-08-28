@@ -129,7 +129,6 @@ class Product(PublishBaseModel, Counter):
     def get_category_id(self):
         return self.category.id
 
-
     def get_avatar_image(self):
         if self.productimage_set.filter(is_avatar=True) and self.productimage_set.filter(is_avatar=True).first().thumb_image:
             return self.productimage_set.filter(is_avatar=True).first().thumb_image.url
