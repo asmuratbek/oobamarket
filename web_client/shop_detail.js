@@ -28,6 +28,7 @@ var MainInterface = createClass({
             categories: [],
             activeCategory: '',
             owner: false,
+            domain: location.href.split("/")[2].split(":")[0],
             shopSlug: location.href.split("/")[4] ? location.href.split("/")[4] : location.href.split(".")[0].split("http://")[1]
         }
     },
@@ -75,7 +76,7 @@ var MainInterface = createClass({
 
         $.ajax({
             type: "POST",
-              url: `http://oobamarket.kg:9200/_search/`,
+              url: `http://${this.state.domain}:9200/_search/`,
               data: JSON.stringify(query),
               contentType: 'application/json',
               dataType : 'json',
@@ -185,7 +186,7 @@ var MainInterface = createClass({
         });
         $.ajax({
             type: "POST",
-              url: `http://oobamarket.kg/_search/`,
+              url: `http://${this.state.domain}:9200/_search/`,
               data: JSON.stringify(query),
               contentType: 'application/json',
               dataType : 'json',
@@ -270,7 +271,7 @@ var MainInterface = createClass({
         });
         $.ajax({
             type: "POST",
-              url: `http://oobamarket.kg/_search/`,
+              url: `http://${this.state.domain}:9200/_search/`,
               data: JSON.stringify(query),
               contentType: 'application/json',
               dataType : 'json',
@@ -361,7 +362,7 @@ var MainInterface = createClass({
         });
         $.ajax({
             type: "POST",
-              url: `http://oobamarket.kg/_search/`,
+              url: `http://${this.state.domain}:9200/_search/`,
               data: JSON.stringify(query),
               contentType: 'application/json',
               dataType : 'json',
@@ -450,7 +451,7 @@ var MainInterface = createClass({
         });
         $.ajax({
             type: "POST",
-              url: `http://oobamarket.kg/_search/`,
+              url: `http://${this.state.domain}:9200/_search/`,
               data: JSON.stringify(query),
               contentType: 'application/json',
               dataType : 'json',
@@ -538,7 +539,7 @@ var MainInterface = createClass({
         });
         $.ajax({
            type: "POST",
-              url: `http://oobamarket.kg/_search/`,
+              url: `http://${this.state.domain}:9200/_search/`,
               data: JSON.stringify(query),
               contentType: 'application/json',
               dataType : 'json',
@@ -633,7 +634,7 @@ var MainInterface = createClass({
         });
         $.ajax({
             type: "POST",
-              url: `http://oobamarket.kg/_search/`,
+              url: `http://${this.state.domain}:9200/_search/`,
               data: JSON.stringify(query),
               contentType: 'application/json',
               dataType : 'json',
@@ -710,7 +711,7 @@ var MainInterface = createClass({
       });
         $.ajax({
             type: "POST",
-              url: `http://oobamarket.kg/_search/`,
+              url: `http://${this.state.domain}:9200/_search/`,
               data: JSON.stringify(query),
               contentType: 'application/json',
               dataType : 'json',

@@ -117,6 +117,8 @@ HAYSTACK_CONNECTIONS = {
     },
 }
 
+HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
+
 # MIDDLEWARE CONFIGURATION
 # ------------------------------------------------------------------------------
 MIDDLEWARE = [
@@ -407,8 +409,6 @@ SOCIALACCOUNT_PROVIDERS = {
 BRAINTREE_MERCHANT_ID = "9spk2t7jt6xcgy9p"
 BRAINTREE_PUBLIC = "t2sxn5r5jx8knbcd"
 BRAINTREE_PRIVATE = "a5324df2de5e4da5331f91551bdee1c7"
-
-import os
 
 CKEDITOR_JQUERY_URL = '//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js'
 CKEDITOR_UPLOAD_PATH = "uploads/"

@@ -3,6 +3,8 @@ from __future__ import unicode_literals
 
 import os
 from io import BytesIO
+
+from PIL import Image
 from ckeditor_uploader.fields import RichTextUploadingField
 from django.core.files.storage import default_storage
 from django.core.files.uploadedfile import SimpleUploadedFile
@@ -10,12 +12,11 @@ from django.db import models
 from django.db.models.signals import post_delete
 from django.urls import reverse
 from django.utils.translation import ugettext as _
-from django.conf import settings
+
 from apps.category.models import Category
 from apps.shop.models import Shop
 from apps.users.models import User
 from apps.utils.models import PublishBaseModel, Counter
-from PIL import Image
 
 DELIVERY_TYPES = (
     ('self', u'Самовывоз'),
@@ -128,6 +129,12 @@ class Product(PublishBaseModel, Counter):
 
     def get_category_id(self):
         return self.category.id
+
+    def get_category_slug(self):
+        return self.category.slug
+
+    def get_global_slug(self):
+        return self.category.section.slug
 
     def get_avatar_image(self):
         if self.productimage_set.filter(is_avatar=True) and self.productimage_set.filter(is_avatar=True).first().thumb_image:
