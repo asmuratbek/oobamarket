@@ -13,6 +13,7 @@ class ProductIndex(indexes.SearchIndex, indexes.Indexable):
     category_title = indexes.CharField(model_attr='get_category_title')
     category_id = indexes.FacetIntegerField(model_attr='get_category_id')
     category_slug = indexes.CharField(model_attr='get_category_slug')
+    global_slug = indexes.CharField(model_attr='get_global_slug')
     published = indexes.BooleanField(model_attr='published')
     currency = indexes.CharField(model_attr='currency')
     shop = indexes.CharField(model_attr='get_shop_title')

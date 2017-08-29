@@ -43,7 +43,7 @@ var MainInterface = createClass({
         var query = {
                 'query': {
                     'match': {
-                        'category_slug': this.state.categorySlug
+                        'global_slug': this.state.categorySlug
                     }
                 },
                 "size":  this.state.productsByPage,
@@ -109,11 +109,11 @@ var MainInterface = createClass({
         if (this.state.queryText) {
             var q = [
                 { "match": { "text":  this.state.queryText }},
-                { "match": { "category_slug":  this.state.categorySlug }},
+                { "match": { "global_slug":  this.state.categorySlug }},
             ]
         } else {
             var q = [
-                { "match": { "category_slug":  this.state.categorySlug }}
+                { "match": { "global_slug":  this.state.categorySlug }}
             ]
         }
         var query = {
@@ -200,11 +200,11 @@ var MainInterface = createClass({
         if (this.state.queryText) {
             var q = [
                 {"match": {"text": this.state.queryText}},
-                {"match": {"category_slug": this.state.categorySlug}},
+                {"match": {"global_slug": this.state.categorySlug}},
             ]
         } else {
             var q = [
-                { "match": { "category_slug":  this.state.categorySlug }}
+                { "match": { "global_slug":  this.state.categorySlug }}
             ]
         }
         var query = {
@@ -273,11 +273,11 @@ var MainInterface = createClass({
         if (q) {
             var queryset = [
                 {"match": {"text": q}},
-                {"match": {"category_slug": this.state.categorySlug}},
+                {"match": {"global_slug": this.state.categorySlug}},
             ]
         } else {
             var queryset = [
-                { "match": { "category_slug":  this.state.categorySlug }}
+                { "match": { "global_slug":  this.state.categorySlug }}
             ]
         }
         var query = {
@@ -349,11 +349,11 @@ var MainInterface = createClass({
         if (this.state.queryText) {
             var q = [
                 {"match": {"text": this.state.queryText}},
-                {"match": {"category_slug": this.state.categorySlug}},
+                {"match": {"global_slug": this.state.categorySlug}},
             ]
         } else {
             var q = [
-                { "match": { "category_slug":  this.state.categorySlug }}
+                { "match": { "global_slug":  this.state.categorySlug }}
             ]
         }
         var query = {
@@ -426,11 +426,11 @@ var MainInterface = createClass({
         if (this.state.queryText) {
             var q = [
                 {"match": {"text": this.state.queryText}},
-                {"match": {"category_slug": this.state.categorySlug}},
+                {"match": {"global_slug": this.state.categorySlug}},
             ]
         } else {
             var q = [
-                { "match": { "category_slug":  this.state.categorySlug }}
+                { "match": { "global_slug":  this.state.categorySlug }}
             ]
         }
         var query = {
