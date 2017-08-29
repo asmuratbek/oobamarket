@@ -28,7 +28,7 @@ var MainInterface = createClass({
             categories: [],
             activeCategory: '',
             owner: false,
-            baseUrl: location.href.split("/")[2].split(":")[0],
+            domain: location.href.split("/")[2].split(":")[0],
             shopSlug: location.href.split("/")[4] ? location.href.split("/")[4] : location.href.split(".")[0].split("http://")[1]
         }
     },
@@ -76,7 +76,7 @@ var MainInterface = createClass({
 
         $.ajax({
             type: "POST",
-              url: `http://${this.state.baseUrl}:9200/_search/`,
+              url: `http://${this.state.domain}:9200/_search/`,
               data: JSON.stringify(query),
               contentType: 'application/json',
               dataType : 'json',
@@ -186,7 +186,7 @@ var MainInterface = createClass({
         });
         $.ajax({
             type: "POST",
-              url: `http://${this.state.baseUrl}:9200/_search/`,
+              url: `http://${this.state.domain}:9200/_search/`,
               data: JSON.stringify(query),
               contentType: 'application/json',
               dataType : 'json',
@@ -271,7 +271,7 @@ var MainInterface = createClass({
         });
         $.ajax({
             type: "POST",
-              url: `http://${this.state.baseUrl}:9200/_search/`,
+              url: `http://${this.state.domain}:9200/_search/`,
               data: JSON.stringify(query),
               contentType: 'application/json',
               dataType : 'json',
@@ -362,7 +362,7 @@ var MainInterface = createClass({
         });
         $.ajax({
             type: "POST",
-              url: `http://${this.state.baseUrl}:9200/_search/`,
+              url: `http://${this.state.domain}:9200/_search/`,
               data: JSON.stringify(query),
               contentType: 'application/json',
               dataType : 'json',
@@ -451,7 +451,7 @@ var MainInterface = createClass({
         });
         $.ajax({
             type: "POST",
-              url: `http://${this.state.baseUrl}:9200/_search/`,
+              url: `http://${this.state.domain}:9200/_search/`,
               data: JSON.stringify(query),
               contentType: 'application/json',
               dataType : 'json',
@@ -539,7 +539,7 @@ var MainInterface = createClass({
         });
         $.ajax({
            type: "POST",
-              url: `http://${this.state.baseUrl}:9200/_search/`,
+              url: `http://${this.state.domain}:9200/_search/`,
               data: JSON.stringify(query),
               contentType: 'application/json',
               dataType : 'json',
@@ -634,7 +634,7 @@ var MainInterface = createClass({
         });
         $.ajax({
             type: "POST",
-              url: `http://${this.state.baseUrl}:9200/_search/`,
+              url: `http://${this.state.domain}:9200/_search/`,
               data: JSON.stringify(query),
               contentType: 'application/json',
               dataType : 'json',
@@ -711,7 +711,7 @@ var MainInterface = createClass({
       });
         $.ajax({
             type: "POST",
-              url: `http://${this.state.baseUrl}:9200/_search/`,
+              url: `http://${this.state.domain}:9200/_search/`,
               data: JSON.stringify(query),
               contentType: 'application/json',
               dataType : 'json',
