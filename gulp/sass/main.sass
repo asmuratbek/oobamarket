@@ -2721,208 +2721,58 @@ ul.category-tab
         font-weight: 400
         margin-bottom: 10px
   .sale-page
-    .disabled
-      .descount
-        background-color: gray
-      .img-wrapper
-        img
-          filter: grayscale(100%)
-    .col-md-6
-      margin-bottom: 30px
+    .product:hover
+      .box-shadow
+        -webkit-box-shadow: 0px 0px 38px -10px rgba(102,102,102,1)
+        -moz-box-shadow: 0px 0px 38px -10 rgba(102,102,102,1)
+        box-shadow: 0px 0px 38px -10px rgba(102,102,102,1)
     .product
-      .top-line
-        background-color: #ececec
-        padding: 5px
-        margin-bottom: 20px
-        -webkit-transition: .3s
-        transition: .3s
-        position: absolute
-        right: 0
-        left: 15px
-        top: 0
-        h2
-          text-align: center
-          color: #808080
-          font-size: 12px
-          text-transform: uppercase
-          font-weight: 400
-          a
-            color: #808080
-            z-index: 9
-            position: relative
-            display: block
-            &:hover
-              color: #F3481C
-        .edited
-          position: absolute
-          width: 17px
-          height: 15px
-          overflow: hidden
-          right: 24px
-          top: 3px
-          font-size: 17px
-          z-index: 10
-          &:hover
-            animation: rotate 1.875s linear infinite
-            @keyframes rotate
-              0%
-                transform: rotate(0deg)
-              100%
-                transform: rotate(360deg)
-        .glyphicon-eye-open
-          color: #808080 !important
-          position: absolute
-          right: 44px
-          top: 3px
-          font-size: 17px
-          z-index: 10
-          &:hover
-            animation: fade-yes 1.6s ease infinite
-            transform-origin: 50% 50%
-            @keyframes fade-yes
-              0%
-                opacity: 1
-              25%
-                opacity: 0
-              50%
-                opacity: 1
-              75%
-                opacity: 0
-              100%
-                opacity: 1
-        .glyphicon-remove-circle
-          cursor: pointer
-          color: #f3481c !important
-          position: absolute
-          right: 5px
-          top: 3px
-          font-size: 17px
-          z-index: 10
-          &:hover
-            animation: fade-yes 1.6s ease infinite
-            transform-origin: 50% 50%
-            @keyframes fade-yes
-              0%
-                opacity: 1
-              25%
-                opacity: 0
-              50%
-                opacity: 1
-              75%
-                opacity: 0
-              100%
-                opacity: 1
-        .glyphicon-eye-close
-          color: #F3481C !important
-          position: absolute
-          top: 3px
-          right: 44px
-          font-size: 17px
-          z-index: 10
-      .border
-        border: 1px solid #ccc
-        padding: 15px
-      .img-wrapper
-        height: 254px !important
-        margin: 0
-        border: 1px solid #ccc
-        img
-          max-width: 80% !important
+      margin-bottom: 30px
+      .box-shadow
+        -webkit-box-shadow: 0px 0px 38px -20px rgba(102,102,102,1)
+        -moz-box-shadow: 0px 0px 38px -20px rgba(102,102,102,1)
+        box-shadow: 0px 0px 38px -20px rgba(102,102,102,1)
+        transition: 0.3s all
       .description
-        border: 0 !important
-        margin: 0
-        overflow: visible !important
-        height: 254px !important
-        padding: 15px 0 15px 15px !important
-        h3
-          height: 50px !important
-          margin-bottom: 10px
-          margin-top: 15px
-        p
-          height: 100px !important
-          margin-bottom: 5px
-      .title
-        span
-          display: block
-          margin-bottom: 2px
-      .bottom-line
-        width: 100%
-        z-index: 2
-        position: relative
-        border-bottom: 1px solid #ccc
-        padding-bottom: 4px
-        .in-the-basket:hover
-
-        .in-the-basket
-          color: #0071BC!important
-          span
-            color: #0071BC !important
-        .add-basket
-          color: #686868
-          padding: 1px 0 10px 0 !important
-          display: inline-block
-          font-size: 14px
-          font-weight: 300
-          float: left
-          margin-left: 0 !important
-          &:hover
-            color: #000
-            span
-              color: #686868
-          span
-            padding-right: 5px
-            color: #ccc
-        .hearth.like
-          background-color: #ED1C24
-        .hearth
-          display: inline-block
-          width: 30px
-          height: 30px
-          text-align: center
-          background-color: #ccc
-          margin-right: 2px
-          padding: 4px
-          cursor: pointer
-          i
-            font-size: 20px
-            color: #fff
-        .truck
-          display: inline-block
-          width: 30px
-          height: 30px
-          text-align: center
-          background-color: #ccc
-          margin-right: 2px
-          padding: 4px
-          cursor: pointer
-          i
-            font-size: 20px
-            color: #fff
-        .truck.yellow
-          background-color: #FFDA00
-        .truck.green
-          background-color: #39B54A
-
-    .col-md-6
-      span.descount
-        position: absolute
-        right: 11px
-        top: 35px
-        width: 80px
-        text-align: center
-        background: #f3481c
-        line-height: 35px
-        font-size: 20px
-        color: #fff
-        -webkit-border-radius: 1px
-        border-radius: 1px
-        z-index: 10
-        margin-bottom: 30px
-      .img-wrapper
-        position: relative
-        height: 200px
+        background-color: #fff
         overflow: hidden
+        padding: 10px 15px
+        display: flex
+        align-items: center
+        .title
+          width: 80%
+          float: left
+          h3
+            font-size: 18px
+            font-weight: 400
+            height: 20px
+            overflow: hidden
+            padding-right: 10px
+          p
+            font-weight: 300
+            height: 20px
+            overflow: hidden
+        span
 
+          width: 20%
+          float: left
+      .img-wrapper
+        height: 350px
+        position: relative
+        overflow: hidden
+        .descount
+          position: absolute
+          left: 0
+          top: 50px
+          display: inline-block
+          z-index: 1
+          background: #f3481c
+          padding: 5px
+          width: 60px
+          text-align: center
+          color: #fff
+          border-top-right-radius: 3px
+          border-bottom-right-radius: 3px
         img
           position: absolute
           top: -9999px
@@ -2931,27 +2781,48 @@ ul.category-tab
           left: -9999px
           margin: auto
           display: block
-          max-width: 100% !important
-          object-fit: cover
-          min-height: 100%
-
-      .description
-        padding: 20px 15px 20px 20px
-        overflow: hidden
-        border: 1px solid #ccc
-        h3
-          font-weight: 300
-          height: 28px
-          overflow: hidden
-        p
-          font-weight: 300
-          height: 40px
-          overflow: hidden
-        a.btn.add
-          float: right
-          padding: 10px 30px !important
-          margin: 0  0 0 10px!important
-
+          max-width: 100%
+        .back-fade
+          position: absolute
+          top: 0
+          bottom: 0
+          right: 0
+          left: 0
+          transition: .3s
+          opacity: 0
+          .name-magazin-title
+            padding-top: 80px
+            text-align: center
+            h2
+              margin-bottom: 15px
+              a
+                color: #333
+                font-weight: 400
+            p
+              height: 100px
+              overflow: hidden
+          .button-basket-favorite
+            margin-top: 30px
+            transition: .4s
+            text-align: center
+            .glyphicon-shopping-cart
+              font-size: 30px
+              z-index: 2
+              cursor: pointer
+              float: left
+              margin-left: 20%
+              color: #a0a0a0
+            .glyphicon-heart
+              font-size: 30px
+              cursor: pointer
+              z-index: 2
+              margin-right: 20%
+              float: right
+              color: #a0a0a0
+        &:hover
+          .back-fade
+            background-color: rgba(255,255,255,.95)
+            opacity: 1
   ul.category-tab
     text-align: center
     margin-bottom: 30px

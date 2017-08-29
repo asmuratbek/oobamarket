@@ -1,63 +1,84 @@
 {% load product_tags class_name %}
 
 {% for sub in sub_objects %}
+
     {% if sub|class_name == "Sales" %}
-<div class="col-md-6">
-    <span class="descount">{{ sub.discount }}%</span>
-    <div class="img-wrapper">
-        <img src="{{ sub.image.url }}" alt="">
-    </div>
-    <div class="description">
-        <h3>{{ sub.title }}</h3>
-        <p>{{ sub.short_description }}</p>
-        <a class="btn add" href="{% url 'shops:sale_detail' slug=sub.shop.slug pk=sub.pk %}">Просмотреть</a>
 
-    </div>
-</div>
-    {% elif  sub|class_name == "Product" %}
-<div class="col-md-6 product">
-    <div class="border">
-        <div class="img-wrapper col-md-6">
-            <a href="/{{ sub.category.section.slug }}/{{ sub.category.slug}}/{{ sub.slug }}">
-                <img src="{{ sub.get_all_images.first.image.url }}" alt=""></a>
-        </div>
-        <div class="description col-md-6">
-            <div class="top-line">
-
-                <h2>
-                    <a href="{% url 'shops:detail' slug=sub.shop.slug %}">
-                        {{ sub.shop.title }}
-                    </a>
-                </h2>
+        <div class="col-md-6">
+            <span class="descount">{{ sub.discount }}%</span>
+            <div class="img-wrapper">
+                <img src="{{ sub.image.url }}" alt="">
             </div>
-            <h3>{{ sub.title }}</h3>
-            <div class="title">
+            <div class="description">
+                <h3>{{ sub.title }}</h3>
                 <p>{{ sub.short_description }}</p>
+                <a class="btn add" href="{% url 'shops:sale_detail' slug=sub.shop.slug pk=sub.pk %}">Просмотреть</a>
 
-                <span>{{ sub.price }} {{ sub.currency }}</span>
-
-            </div>
-            <div class="bottom-line">
-
-
-                <a href="#" class="add-basket" data-product-id="{{ sub.id }}">
-                    <span class="glyphicon glyphicon-shopping-cart"></span>
-                    Добавить в корзину
-                </a>
-
-{#                                <span class="truck pull-right " data-toggle="tooltip" title="" data-placement="top"#}
-{#                                      data-original-title="Самовывоз"><i class="fa fa-truck"#}
-{#                                                                         aria-hidden="true"></i></span>#}
-                <span class="hearth pull-right {% is_favorite_for_like sub request.user %}"
-                      data-product-id="{{ sub.id }}" data-toggle="tooltip" title=""
-                      data-placement="top" data-original-title="{% is_favorite_for_tooltip sub request.user %}"><i
-                        class="glyphicon glyphicon-heart"></i></span>
-                <div class="clearfix"></div>
             </div>
         </div>
-        <div class="clearfix"></div>
-    </div>
 
-</div>
+    {% elif sub|class_name == "Product" %}
+
+        <div class="col-md-4 product">
+            <div class="box-shadow">
+                <div class="img-wrapper">
+                    <span class="descount">40%</span>
+                    <a href="/{{ sub.category.section.slug }}/{{ sub.category.slug }}/{{ sub.slug }}">
+                        <img src="{{ sub.get_all_images.first.image.url }}" alt="">
+                    </a>
+                    <div class="back-fade">
+
+                        <div class="name-magazin-title">
+                            <h2>
+                                <a href="{% url 'shops:detail' slug=sub.shop.slug %}">
+                                    {{ sub.shop.title }}
+                                </a>
+                            </h2>
+                            <p>TRUE-MASS® 1200 — это гейнер класса ультра-премиум, разработанный для лиц с повышенными
+                                требованиями к энергетической ценности питания, а также для лиц, испытывающих трудности
+                                в
+                                наборе и сохранении массы.</p>
+                        </div>
+
+                        <div class="button-basket-favorite">
+                        <span class="glyphicon glyphicon-shopping-cart add-basket"
+                              data-product-id="{{ sub.id }}"
+                              data-toggle="tooltip"
+                              data-placement="top"
+                              data-original-title="Добавить в корзину">
+
+                        </span>
+
+                            <span class="glyphicon glyphicon-heart
+                            {% is_favorite_for_like sub request.user %}"
+                                  data-toggle="tooltip"
+                                  data-placement="top"
+                                  data-product-id="{{ sub.id }}"
+                                  data-original-title="{% is_favorite_for_tooltip sub request.user %}">
+                        </span>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="description">
+
+                    <div class="title">
+                        <h3>{{ sub.title }}</h3>
+                        <p>{{ sub.short_description }}</p>
+                    </div>
+                    <span>{{ sub.price }} {{ sub.currency }}</span>
+                </div>
+            </div>
+
+        </div>
+
+
+
     {% endif %}
 {% endfor %}
+<script>
+    if ($('[data-original-title]').length > 0) {
+        $('[data-original-title]').tooltip({});
+    }
+</script>
