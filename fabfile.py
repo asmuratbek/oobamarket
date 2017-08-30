@@ -26,7 +26,7 @@ def update():
 
 def update_dev():
     with cd(STAGING_ROOT):
-        local('git pull origin dev')
+        local("git pull -b dev '%s'" % REPO)
         with prefix('source ' + VENV_DIR + '/bin/activate'):
             run('pip install -r requirements/production.txt')
             run('./manage.py collectstatic --noinput')
