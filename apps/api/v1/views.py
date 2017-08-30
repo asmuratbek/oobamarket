@@ -269,6 +269,7 @@ class ShopDetailApiView(MultipleModelAPIView):
         ]
         return queryList
 
+
 class ShopApiView(MultipleModelAPIView):
     permission_classes = (AllowAny,)
     authentication_classes = (SessionAuthentication, TokenAuthentication)

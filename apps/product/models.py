@@ -133,6 +133,9 @@ class Product(PublishBaseModel, Counter):
     def get_category_slug(self):
         return self.category.slug
 
+    def get_category_level(self):
+        return self.category.get_level()
+
     def get_global_slug(self):
         return self.category.section.slug
 
