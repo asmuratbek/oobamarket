@@ -136,6 +136,12 @@ class Product(PublishBaseModel, Counter):
     def get_global_slug(self):
         return self.category.section.slug
 
+    def get_parent_category_slug(self):
+        if self.category.parent:
+            return self.category.parent.slug
+        else:
+            return self.category.slug
+
     def get_avatar_image(self):
         if self.productimage_set.filter(is_avatar=True) and self.productimage_set.filter(is_avatar=True).first().thumb_image:
             return self.productimage_set.filter(is_avatar=True).first().thumb_image.url
