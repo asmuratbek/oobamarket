@@ -247,7 +247,8 @@ class ProductImage(models.Model):
 def delete_files(sender, **kwargs):
     image = kwargs.get('instance')
     default_storage.delete(image.image.path)
-    default_storage.delete(image.thumb_image.path)
+    if image.thumb_image:
+        default_storage.delete(image.thumb_image.path)
 
 post_delete.connect(delete_files, ProductImage)
 
