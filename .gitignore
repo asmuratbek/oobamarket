@@ -68,7 +68,7 @@ node_modules/
 
 # User-uploaded media
 media/
-
+deployment/
 staticfiles/
 
 .cache/
