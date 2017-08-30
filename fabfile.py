@@ -26,9 +26,9 @@ def update():
 
 def update_dev():
     with cd(STAGING_ROOT):
-        local("git pull -b dev '%s'" % REPO)
+        local("git pull origin dev")
         with prefix('source ' + VENV_DIR + '/bin/activate'):
             run('pip install -r requirements/production.txt')
             run('./manage.py collectstatic --noinput')
             run('./manage.py migrate --settings=config.settings.prod')
-            run('supervisorctl restart ooba_dev')
+            run('supervisorctl restart ooba_market_dev')
