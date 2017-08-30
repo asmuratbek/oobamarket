@@ -1,19 +1,20 @@
-import json
-
-from django.core import serializers
+from allauth.socialaccount.providers.facebook.views import FacebookOAuth2Adapter
+from allauth.socialaccount.providers.google.views import GoogleOAuth2Adapter
 from django.db.models import Q
-from django.http import JsonResponse, HttpResponse
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
 from drf_multiple_model.views import MultipleModelAPIView
-from haystack.generic_views import SearchView
+from rest_auth.registration.views import SocialLoginView
 from rest_framework import filters
 from rest_framework.authentication import SessionAuthentication, TokenAuthentication
+from rest_framework.filters import (
+    SearchFilter,
+    OrderingFilter
+)
 from rest_framework.generics import (
     ListAPIView,
     RetrieveAPIView,
-    UpdateAPIView,
     DestroyAPIView,
     CreateAPIView,
     RetrieveUpdateAPIView
@@ -21,10 +22,6 @@ from rest_framework.generics import (
 from rest_framework.permissions import (
     AllowAny,
     IsAdminUser
-)
-from rest_framework.filters import (
-    SearchFilter,
-    OrderingFilter
 )
 
 from apps.api.v1.serializers import (
@@ -34,10 +31,9 @@ from apps.api.v1.serializers import (
     ShopCreateSerializer,
     CategorySerializer,
     GlobalCategorySerializer,
-    UserSerializer,
     SalesSerializer, ShopReviewsSerializer, ShopContactsSerializer, PlaceSerializer)
-from apps.product.forms import ProductSearchForm, ShopSearchForm
-
+from apps.category.models import Category
+from apps.global_category.models import GlobalCategory
 from apps.product.models import Product
 from apps.reviews.models import ShopReviews
 from apps.shop.models import Shop, Sales, Contacts, Place
@@ -48,13 +44,7 @@ from .pagination import (
     ShopLimitPagination,
     ShopProductsLimitPagination
 )
-
 from .permissions import IsOwnerOrReadOnly
-from apps.category.models import Category
-from apps.global_category.models import GlobalCategory
-from allauth.socialaccount.providers.facebook.views import FacebookOAuth2Adapter
-from allauth.socialaccount.providers.google.views import GoogleOAuth2Adapter
-from rest_auth.registration.views import SocialLoginView
 
 
 class FacebookLogin(SocialLoginView):
@@ -278,11 +268,6 @@ class ShopDetailApiView(MultipleModelAPIView):
             (products, ProductSerializer),
         ]
         return queryList
-
-def search_predict_html(request, slug):
-    from haystack.query import SearchQuerySet
-    all = serializers.serialize("json", [x.object for x in SearchQuerySet().models(Shop).filter(content='Bookingem')])
-    return HttpResponse(SearchQuerySet().all())
 
 class ShopApiView(MultipleModelAPIView):
     permission_classes = (AllowAny,)
