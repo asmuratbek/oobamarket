@@ -25,6 +25,7 @@ var MainInterface = createClass({
             categories: [],
             loaded: false,
             activeCategories: [],
+            categoryLevel: location.href.split("/").length,
             domain: location.href.split("/")[2].split(":")[0],
             categorySlug: location.href.split("/")[location.href.split("/").length - 2]
         }
@@ -39,12 +40,18 @@ var MainInterface = createClass({
                 })
             }
         }.bind(this));
-
+        if (this.state.categoryLevel == 5){
+            var category = {
+                "parent_category_slug": this.state.categorySlug
+            }
+        } else if (this.state.categoryLevel == 6){
+            var category = {
+                "category_slug": this.state.categorySlug
+            }
+        }
         var query = {
                 'query': {
-                    'match': {
-                        'category_slug': this.state.categorySlug
-                    }
+                    'match_phrase': category
                 },
                 "size":  this.state.productsByPage,
                 "from": 0,
@@ -106,14 +113,23 @@ var MainInterface = createClass({
                 {"range": {"get_price_function": {"lte": this.state.priceTo}}}
             ]
         }
+         if (this.state.categoryLevel == 5){
+            var category = {
+                "parent_category_slug": this.state.categorySlug
+            }
+        } else if (this.state.categoryLevel == 6){
+            var category = {
+                "category_slug": this.state.categorySlug
+            }
+        }
         if (this.state.queryText) {
             var q = [
                 { "match": { "text":  this.state.queryText }},
-                { "match": { "category_slug":  this.state.categorySlug }},
+                { "match_phrase": category},
             ]
         } else {
             var q = [
-                { "match": { "category_slug":  this.state.categorySlug }}
+                { "match_phrase": category}
             ]
         }
         var query = {
@@ -197,14 +213,23 @@ var MainInterface = createClass({
                 {"range": {"get_price_function": {"lte": this.state.priceTo}}}
             ]
         }
+        if (this.state.categoryLevel == 5){
+            var category = {
+                "parent_category_slug": this.state.categorySlug
+            }
+        } else if (this.state.categoryLevel == 6){
+            var category = {
+                "category_slug": this.state.categorySlug
+            }
+        }
         if (this.state.queryText) {
             var q = [
                 {"match": {"text": this.state.queryText}},
-                {"match": {"category_slug": this.state.categorySlug}},
+                {"match_phrase": category},
             ]
         } else {
             var q = [
-                { "match": { "category_slug":  this.state.categorySlug }}
+                { "match_phrase": category}
             ]
         }
         var query = {
@@ -270,14 +295,23 @@ var MainInterface = createClass({
                 {"range": {"get_price_function": {"lte": this.state.priceTo}}}
             ]
         }
+        if (this.state.categoryLevel == 5){
+            var category = {
+                "parent_category_slug": this.state.categorySlug
+            }
+        } else if (this.state.categoryLevel == 6){
+            var category = {
+                "category_slug": this.state.categorySlug
+            }
+        }
         if (q) {
             var queryset = [
                 {"match": {"text": q}},
-                {"match": {"category_slug": this.state.categorySlug}},
+                {"match_phrase": category},
             ]
         } else {
             var queryset = [
-                { "match": { "category_slug":  this.state.categorySlug }}
+                { "match_phrase": category}
             ]
         }
         var query = {
@@ -346,14 +380,23 @@ var MainInterface = createClass({
                 {"range": {"get_price_function": {"lte": this.state.priceTo}}}
             ]
         }
+        if (this.state.categoryLevel == 5){
+            var category = {
+                "parent_category_slug": this.state.categorySlug
+            }
+        } else if (this.state.categoryLevel == 6){
+            var category = {
+                "category_slug": this.state.categorySlug
+            }
+        }
         if (this.state.queryText) {
             var q = [
                 {"match": {"text": this.state.queryText}},
-                {"match": {"category_slug": this.state.categorySlug}},
+                {"match_phrase": category},
             ]
         } else {
             var q = [
-                { "match": { "category_slug":  this.state.categorySlug }}
+                { "match_phrase": category}
             ]
         }
         var query = {
@@ -423,14 +466,23 @@ var MainInterface = createClass({
                 {"range": {"get_price_function": {"lte": parseInt(price)}}}
             ]
         }
+        if (this.state.categoryLevel == 5){
+            var category = {
+                "parent_category_slug": this.state.categorySlug
+            }
+        } else if (this.state.categoryLevel == 6){
+            var category = {
+                "category_slug": this.state.categorySlug
+            }
+        }
         if (this.state.queryText) {
             var q = [
                 {"match": {"text": this.state.queryText}},
-                {"match": {"category_slug": this.state.categorySlug}},
+                {"match_phrase": category},
             ]
         } else {
             var q = [
-                { "match": { "category_slug":  this.state.categorySlug }}
+                { "match_phrase": category}
             ]
         }
         var query = {

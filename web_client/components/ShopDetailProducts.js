@@ -1,7 +1,7 @@
-import React from 'react';
-import createClass from 'create-react-class';
-import AlertContainer from 'react-alert';
-import ReactTooltip from 'react-tooltip';
+import React from "react";
+import createClass from "create-react-class";
+import AlertContainer from "react-alert";
+import ReactTooltip from "react-tooltip";
 
 
 var ProductList = createClass({
@@ -232,7 +232,7 @@ var ProductList = createClass({
         <div className="col-md-4 col-sm-6 new-design">
             <AlertContainer ref={a => this.msg = a} {...alertOptions} />
         <div className={this.props.product.published ? "img-wrapper" : "img-wrapper disabled"}>
-            {this.props.product.is_owner ?
+            {this.props.owner ?
 
             <div className="setting-control">
                 <a href={`/product/${this.props.product.slug}/update-product/`} className="glyphicon glyphicon-pencil"

@@ -753,7 +753,9 @@ var MainInterface = createClass({
             return (
                 <Product key={ index }
                          onProductDelete={productDelete}
-                         product={ item }/>
+                         product={ item }
+                         owner={ this.state.owner }
+                />
             ) //return
         }.bind(this));
 
