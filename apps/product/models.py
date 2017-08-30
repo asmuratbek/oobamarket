@@ -74,6 +74,12 @@ class Product(PublishBaseModel, Counter):
 
     def get_main_image(self):
         if self.productimage_set.all():
+            return self.productimage_set.first().image.url
+        else:
+            return None
+
+    def get_main_thumb_image(self):
+        if self.productimage_set.all():
             return self.productimage_set.first().thumb_image.url \
                     if self.productimage_set.first().thumb_image \
                     else  self.productimage_set.first().image.url
@@ -146,10 +152,16 @@ class Product(PublishBaseModel, Counter):
             return self.category.slug
 
     def get_avatar_image(self):
+        if self.productimage_set.filter(is_avatar=True):
+            return self.productimage_set.filter(is_avatar=True).first().image.url
+        else:
+            return self.get_main_image()
+
+    def get_avatar_thumb_image(self):
         if self.productimage_set.filter(is_avatar=True) and self.productimage_set.filter(is_avatar=True).first().thumb_image:
             return self.productimage_set.filter(is_avatar=True).first().thumb_image.url
         else:
-            return self.get_main_image()
+            return self.get_main_thumb_image()
 
 
 class FavoriteProduct(models.Model):
