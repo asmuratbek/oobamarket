@@ -1,14 +1,12 @@
 from django.contrib.auth.decorators import login_required
-from django.core import serializers
 from django.http import HttpResponseBadRequest
 from django.http import JsonResponse
-from django.shortcuts import get_object_or_404, render, render_to_response
-from django.views import generic
+from django.shortcuts import get_object_or_404, render
+
 from apps.category.models import Category
 from apps.global_category.models import GlobalCategory
 from apps.product.models import Product
 from apps.properties.models import Properties, Values
-from django.forms.models import model_to_dict
 
 
 def category_detail(request, global_slug, slug):
@@ -22,8 +20,10 @@ def category_detail(request, global_slug, slug):
     #     properties.append(item)
 
     # print(properties)
-
-    template = "category/category_detail.html"
+    if category.get_level() == 0:
+        template = "category/category_parent_detail.html"
+    else:
+        template = "category/category_detail.html"
 
     context = {
         "object": category,
