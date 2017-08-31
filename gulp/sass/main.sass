@@ -3149,132 +3149,102 @@ ul.category-tab
     margin-bottom: 30px
     font-size: 26px
     font-weight: 400
-  .thead
+  .head
     overflow: hidden
     background-color: #EEEEEE
     text-align: center
     font-size: 14px
     color: #333
     padding: 3px 0
-  .tbody
-    margin-bottom: 200px
+  .body > .col-lg-6
+    padding: 20px 15px
+  .body
     background-color: #fff
     overflow: hidden
-    .cover
-      background-color: #fff
+    border-bottom: 2px solid #f6f6f6
+    h3
+      font-size: 20px
+      font-weight: 400
+      margin-bottom: 5px
+      white-space: nowrap
       overflow: hidden
-      border: 1px solid #eee
-      padding: 20px 0
-      h2
-        margin-top: 45px
-        font-size: 20px
-        a
-          color: #333
-      strike
-        font-size: 18px
-        color: #808080
-        font-weight: 300
-      p
-        font-size: 18px
-        font-weight: bold
-        color: #333
-      .quantity
-        position: relative
-        padding-right: 0
-        margin-top: 57px
-        width: 60px
-        margin: 60px auto
-      input
-        width: 65px
-        height: 40px
-        position: relative
-        border: 1px solid #ccc
-        text-align: center
-        padding: 0 5px
-      a.up
-        width: 20px
-        height: 20px
-        right: 0
-        top: 0
-        position: absolute
-        border: 1px solid #ccc
-        &:before
-          position: absolute
-          content: ''
-          top: 0
-          bottom: 0
-          right: 0
-          left: 0
-          background: url(../img/png/arrow0.png) 4px 1px no-repeat
-          transform: rotate(90deg)
-          background-size: 39px
-      a.down
-        width: 20px
-        height: 20px
-        position: absolute
-        right: 0
-        bottom: 0
-        border: 1px solid #ccc
-        &:before
-          position: absolute
-          content: ''
-          top: 0
-          bottom: 0
-          right: 0
-          left: 0
-          background: url(../img/png/arrow0.png) 4px 1px no-repeat
-          transform: rotate(-90deg)
-          background-size: 39px
-      .col-md-2.price
-        position: relative
-        padding-top: 60px
-        .close
-          position: absolute
-          right: 30px
-          top: 60px
-      .img-wrapper
-        width: 160px
-        height: 160px
-        overflow: hidden
-        position: relative
-        img
-          position: absolute
-          top: -9999px
-          bottom: -9999px
-          right: -9999px
-          left: -9999px
-          margin: auto
-          display: block
-          max-width: 90%
-    .total
-      padding: 20px 0
+      text-overflow: ellipsis
+    p.description-shop
+      color: #a2a5a7
+      height: 60px
       overflow: hidden
-      p
-        font-size: 18px
-        color: #333333
-        text-align: right
-        margin-bottom: 10px
-        span
-          display: inline-block
-          margin-left: 10px
-        .red
-          color: #F3481C
-      .btn-modal
-        width: 225px
-        line-height: 40px
-        border-radius: 5px
-        color: #fff
-        background-color: #F3481C
-        border: 1px solid #F3481C
-        margin: 20px auto
-        display: block
-        height: 40px
-        text-align: center
-        font-size: 16px
+    .price
+      font-size: 20px
+      font-weight: 400
+      text-align: center
+      color: #343434
+    .col-lg-1
+      padding: 0
+      position: absolute
+      top: 0
+      right: 0
+      bottom: 0
+      display: block
+      height: 100%
+      a
+        background: #f9f9f9
+        position: absolute
+        height: 100%
+        display: flex
+        align-items: center
+        color: #cbcbcb
+        width: 100%
+        padding: 0 15px
         &:hover
-          background-color: #fff
-          color: #F3481C
-
+          background: #e8e8e8
+          color: #333
+    .availability
+      p
+        color: #000
+        font-weight: 300
+    .truck
+      padding-left: 0
+      border-left: 0
+      margin: 5px 0
+    textarea
+      box-shadow: none !important
+  .cync-shop
+    overflow: hidden
+    margin-bottom: 30px
+  .total
+    position: relative
+    .border-top
+      padding: 20px 0
+      overflow: hidden
+      background-color: #fff
+    h6, h5
+      font-size: 20px
+      color: #343434
+      font-weight: 400
+  .total-price
+    background-color: #fff
+    overflow: hidden
+    margin-left: 4px
+    padding: 20px 0
+    h6, h5
+      font-size: 20px
+      color: #343434
+      font-weight: 400
+  .btn-modal
+    width: 225px
+    line-height: 40px
+    border-radius: 5px
+    color: #fff
+    background-color: #f3481c
+    border: 1px solid #f3481c
+    margin: 20px auto 50px auto
+    display: block
+    height: 40px
+    text-align: center
+    font-size: 16px
+    &:hover
+      background-color: #fff
+      color: #f3481c
 .lost-pass
   display: inline-block
   margin-top: 5px
