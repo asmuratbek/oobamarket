@@ -1999,12 +1999,16 @@ header
       //        transform: rotate(0deg)
       //      100%
       //        transform: rotate(360deg)
+
     .bottom-line
       width: 100%
       z-index: 2
       position: relative
       margin-top: 10px
       div
+        white-space: nowrap
+        overflow: hidden
+        text-overflow: ellipsis
         a
           font-size: 14px
           color: #686868
@@ -2803,6 +2807,8 @@ ul.category-tab
           opacity: 0
           .name-magazin-title
             padding-top: 80px
+            padding-left: 5px
+            padding-right: 5px
             text-align: center
             h2
               margin-bottom: 15px
@@ -3425,6 +3431,30 @@ ul.category-tab
       display: block
       max-width: 90%
 .add-product
+  #add-product-button
+    margin-top: 50px
+  .btn.seo
+    display: block
+    padding: 9px 60px
+    border-radius: 4px
+    height: 40px
+    margin: 10px 5px
+    color: #f3481c
+    border: 1px solid #f3481c
+    background-color: #fff
+    transition: 0.3s
+    &:hover
+      background-color: #f3481c
+      color: #fff
+  .well
+    overflow: hidden
+    margin: 0 5px
+    i
+      display: block
+      margin-top: 10px
+      font-weight: 100
+    textarea
+      box-shadow: none !important
   .step_3
     .params
       overflow: hidden
@@ -3485,7 +3515,6 @@ ul.category-tab
       left: 4px
       width: 10px
       height: 10px
-
       background-color: #F3481C
       opacity: 0
       content: ''
@@ -3508,8 +3537,31 @@ ul.category-tab
   label.title
     margin-bottom: 10px
     display: block
+
 .edit-shop-detail
   padding-bottom: 100px
+  .btn.seo
+    display: block
+    padding: 9px 60px
+    border-radius: 4px
+    height: 40px
+    margin: 10px 15px
+    color: #f3481c
+    border: 1px solid #f3481c
+    background-color: #fff
+    transition: 0.3s
+    &:hover
+      background-color: #f3481c
+      color: #fff
+  .well
+    overflow: hidden
+    margin: 0 15px
+    i
+      display: block
+      margin-top: 10px
+      font-weight: 100
+    textarea
+      box-shadow: none !important
   .toggle-days
     padding: 0
     display: none
