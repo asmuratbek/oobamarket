@@ -212,8 +212,8 @@ class ProductImage(models.Model):
         verbose_name_plural = "Изображения товара"
 
     product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name="Товар", null=True)
-    image = models.ImageField(upload_to="products/image", max_length=230)
-    thumb_image = models.ImageField(upload_to="products/thumb", max_length=230, null=True)
+    image = models.ImageField(upload_to="products/image", max_length=300)
+    thumb_image = models.ImageField(upload_to="products/thumb", max_length=300, null=True)
     is_avatar = models.BooleanField(verbose_name='Аватар продукта', default=False)
 
     def create_thumbnail(self):
