@@ -25,6 +25,7 @@ var MainInterface = createClass({
             products: [],
             shops: [],
             loaded: false,
+            parentCategories: [],
             categories: [],
             activeCategory: '',
             owner: false,
@@ -48,10 +49,12 @@ var MainInterface = createClass({
               url: `/api/v1/shop/` + this.state.shopSlug + '/shop/',
               success: function (data) {
                    var owner = data[0].shop[0].is_owner;
-                    var categories = data[1].category.map(obj =>obj);
+                    var parentCategories = data[1].category.map(obj =>obj);
+                    var categories = data[2].category.map(obj =>obj);
                     this.setState({
                         owner: owner,
-                        categories:categories,
+                        parentCategories:parentCategories,
+                        categories: categories
 
                     });
               }.bind(this),
@@ -748,6 +751,7 @@ var MainInterface = createClass({
         var productDelete = this.productDelete;
         var owner = this.state.owner;
         var handleCategorySort = this.handleCategorySort;
+        var descendants = [];
 
         filteredProducts = this.state.products.map(function (item, index) {
             return (
@@ -760,11 +764,17 @@ var MainInterface = createClass({
         }.bind(this));
 
 
-        categories = this.state.categories.map(function (item, index) {
+        categories = this.state.parentCategories.map(function (parent, parentIndex) {
+            descendants = this.state.categories.map(function (item, index) {
+                if (item.parent_id == parent.id) {
+                    return true
+                }
+            });
             return (
                 <CategoryList
-                    key={index}
-                    category={item}
+                    key={parentIndex}
+                    category={parent}
+                    descendants={descendants}
                     onChangeCategory={changeCategory}
                     activeCategory={activeCategory}
                     categorySort={handleCategorySort}
@@ -772,17 +782,41 @@ var MainInterface = createClass({
             )
         });
 
-        var productsCount = filteredProducts.length;
-
         return (
             <div>
                 <div className="col-md-12 col-lg-3">
-                    <ul>
+                    <ul id="accordion" role="tablist" aria-multiselectable="true">
 
                         <li className={this.state.activeCategory == '' ? 'active' : ''}>
                             <a href="#" onClick={this.deleteActiveCategory}>Все категории</a></li>
                         {categories}
                     </ul>
+
+<ul id="accordion" role="tablist" aria-multiselectable="true">
+  <li className="panel panel-default">
+
+    <div className="panel-heading" role="tab" id="headingOne">
+      <h4 className="panel-title">
+        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+          Collapsible Group Item #1
+        </a>
+      </h4>
+    </div>
+
+    <div id="collapseOne" className="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+      <div className="panel-body">
+          <p><a href="">ссылка</a></p>
+          <p><a href="">ссылка</a></p>
+          <p><a href="">ссылка</a></p>
+          <p><a href="">ссылка</a></p>
+          <p><a href="">ссылка</a></p>
+          <p><a href="">ссылка</a></p>
+      </div>
+    </div>
+
+  </li> {/*panel*/}
+</ul> {/*end panel-group*/}
+
                 </div>
                 <div className="col-md-12 col-lg-9">
                     <SearchForm

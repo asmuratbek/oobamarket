@@ -31,7 +31,7 @@ from apps.api.v1.serializers import (
     ShopCreateSerializer,
     CategorySerializer,
     GlobalCategorySerializer,
-    SalesSerializer, ShopReviewsSerializer, ShopContactsSerializer, PlaceSerializer)
+    SalesSerializer, ShopReviewsSerializer, ShopContactsSerializer, PlaceSerializer, ParentCategorySerializer)
 from apps.category.models import Category
 from apps.global_category.models import GlobalCategory
 from apps.product.models import Product
@@ -279,6 +279,7 @@ class ShopApiView(MultipleModelAPIView):
         shop = Shop.objects.filter(slug=slug)
         queryList = [
             (shop, ShopSerializer),
+            (shop.first().get_parent_categories_of_used(), ParentCategorySerializer),
             (shop.first().get_used_categories(), CategorySerializer)
         ]
         return queryList

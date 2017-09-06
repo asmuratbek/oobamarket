@@ -37,6 +37,7 @@ var CategoryList = createClass({
   render: function(){
     // var children = [];
     var parent_id = this.props.index;
+    var descendants = this.props.descendants;
     //
     // children = this.props.category.descendants.map(function(item, index) {
     //   return (
@@ -48,16 +49,43 @@ var CategoryList = createClass({
     //     />
     //   )
     // });
+      {descendants ? (
+        descendants = descendants.map(function (item, index) {
+            return (
+                <ChildCategory key={ index }
+                         category={ item }
+                />
+            ) //return
+        }.bind(this))
+      ) : (
+        ''
+      )
+      }
 
     return (
               <li className={this.props.category.id == this.props.activeCategory ? "active":""}>
-                  <a  role="button" data-toggle="collapse" href='#' aria-expanded="false" aria-controls="collapseExample" onClick={this.handleCategoriesSort} data-id={this.props.category.id}>{this.props.category.title}</a>
-                    {this.props.category.descendants.length ?
-                        <div className="collapse category-in-category" id={this.props.index}>
+                  <div className="panel-heading">
+                  <a  role="button" data-toggle="collapse" href={`#${this.props.category.id}`}
+                      aria-expanded="false" aria-controls={this.props.category.id} onClick={this.handleCategoriesSort}
+                      data-id={this.props.category.id}
+                  data-parent="#accordion">{this.props.category.title}</a>
+                    {this.props.descendants.length ?
+                        <div className="collapse category-in-category">
                         </div>
                     : ""}
 
+                    <div id={this.props.category.id} className="panel-collapse collapse" role="tabpanel" aria-labelledby={this.props.category.id}>
+                        {descendants ?
+                            <div className="panel-body">
+                                {descendants}
+                          </div>
+                            : ''
+                        }
+
+            </div>
+                      </div>
               </li>
+
           )
   }
 });

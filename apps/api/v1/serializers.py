@@ -18,9 +18,17 @@ class CategorySerializer(ModelSerializer):
         fields = (
             'id',
             'title',
-            'descendants',
-            'created_at',
-            'updated_at',
+            'parent_id'
+            )
+
+
+class ParentCategorySerializer(ModelSerializer):
+
+    class Meta:
+        model = Category
+        fields = (
+            'id',
+            'title',
             )
 
 
