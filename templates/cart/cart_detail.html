@@ -1,5 +1,5 @@
 {% extends 'base-1.html' %}
-
+{% load staticfiles %}
 {% block categories %}
 {% endblock %}
 
@@ -7,139 +7,469 @@
 {% block content %}
 
 
-<div class="basket-page">
-    <div class="container">
-        <h1>Моя корзина</h1>
-        <div class="cover">
+    <section class="basket-page">
+        <div class="container">
+            <div class="row">
+                {#            <div class="tbody">#}
+                {##}
+                {#                {% for product in object.cartitem_set.all %}#}
+                {##}
+                {#                    <div class="cover">#}
+                {#                        <div class="col-md-2">#}
+                {#                            <div class="img-wrapper">#}
+                {#                                <img src="{{ product.product.get_main_image }}" alt="{{ product.product.title }}"#}
+                {#                                     class="img-responsive">#}
+                {#                            </div>#}
+                {#                        </div>#}
+                {#                        <div class="col-md-4">#}
+                {#                            <h2><a href="{{ product.product.get_absolute_url }}">{{ product.product.title }}</a></h2>#}
+                {#                            <div class="availability">#}
+                {#                        <span>Наличие: <span class="{% if product.product.availability == "available" %} stock#}
+                {#                                                {% elif product.product.availability == "waiting" %} expectation#}
+                {#                                                {% else %} not-stock {% endif %}">{{ product.product.get_availability }}</span></span>#}
+                {##}
+                {#                                <span class="truck">#}
+                {#                    <i class="fa fa-truck" aria-hidden="true" {% if product.product.delivery_type == 'paid' %} yellow#}
+                {#                    {% elif product.product.delivery_type == 'free' %} green {% endif %}></i>#}
+                {#                    {{ product.product.get_delivery_type }}#}
+                {#                </span>#}
+                {#                            </div>#}
+                {#                        </div>#}
+                {#                        <div class="col-md-2">#}
+                {#                            <div class="img-wrapper">#}
+                {#                                <img src="{{ product.product.shop.get_logo }}" alt="{{ product.product.shop.title }}"#}
+                {#                                     class="img-responsive">#}
+                {#                            </div>#}
+                {#                        </div>#}
+                {#                        <form action="." class="cart-form">#}
+                {#                            <input type="hidden" name="item" value="{{ product.product.id }}">#}
+                {#                            <div class="col-md-2">#}
+                {#                                <div class="quantity">#}
+                {##}
+                {#                                    <input type="number" value="{{ product.quantity }}" name="qty" class="item-qty"#}
+                {#                                           min="1">#}
+                {#                                    <input type="submit" value="Update" class="btn-update" style="display: none;">#}
+                {##}
+                {#                                </div>#}
+                {##}
+                {#                            </div>#}
+                {##}
+                {#                        </form>#}
+                {##}
+                {#                        <div class="col-md-2 price">#}
+                {#                            {% if product.product.discount %}#}
+                {#                                <strike>{{ product.product.price }} {{ product.product.currency }}</strike>#}
+                {#                                <p id="line-total-{{ product.product.id }}">{{ product.total }} {{ product.product.currency }}</p>#}
+                {#                            {% else %}#}
+                {#                                <p id="line-total-{{ product.product.id }}">{{ product.total }} {{ product.product.currency }}</p>#}
+                {#                            {% endif %}#}
+                {#                            <a href="{{ product.product.remove_from_cart }}" class="close">X</a>#}
+                {#                        </div>#}
+                {#                    </div>#}
+                {#                {% endfor %}#}
+                {##}
+                {#                <div class="total">#}
+                {#                    <div class="col-md-offset-8 col-md-3">#}
+                {#                        <p>Доставка: <span>0 сом</span></p>#}
+                {#                        <p>Итого: <span class="red" id="subtotal">{{ object.subtotal }} сом </span></p>#}
+                {#                    </div>#}
+                {#                    <div class="clearfix"></div>#}
+                {#                    <a href="" class="btn-modal" class="btn btn-primary btn-lg" data-toggle="modal"#}
+                {#                       data-target="#myModal">Оформить покупку</a>#}
+                {#                </div>#}
+                {#            </div>#}
+                <div class="cync-shop">
+                    <div class="col-lg-2 image-magazin">
+                        <div class="img-wrapper">
+                            <img src="{% static 'img/vk_com1600.png' %}" alt=""
+                                 class="img-responsive">
+                            картинка магазина
+                        </div>
+                    </div>
+
+                    <div class="col-lg-10">
+
+                        <div class="head">
+                            <div class="col-lg-6">
+                                Товар
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="col-lg-6">
+                                    Количество
+                                </div>
+                                <div class="col-lg-6">
+                                    Цена
+                                </div>
+                            </div>
+                        </div>
+                        {#   end head#}
+
+                        <div class="body">
+                            <div class="col-lg-6">
+                                <div class="col-lg-4">
+                                    <img src="{% static 'img/vk_com1600.png' %}" class="img-responsive" alt="">
+                                    Картинка товара
+                                </div>
+                                <div class="col-lg-8">
+                                    <h3>Название товара</h3>
+                                    <p class="description-shop"> описание товара Lorem ipsum dolor sit amet, consectetur
+                                        adipisicing elit. Quasi,
+                                        tempore?</p>
+                                    <div class="availability">
+                                        <p>
+                                            Наличие:
+                                            <span class="{% if product.product.availability == "available" %} stock
+                                                        {% elif product.product.availability == "waiting" %} expectation
+                                                        {% else %} not-stock {% endif %}">{{ product.product.get_availability }}
+                                    </span>
+                                        </p>
+
+                                        <p class="truck">
+                                            <i class="fa fa-truck" aria-hidden="true"
+                                                    {% if product.product.delivery_type == 'paid' %} yellow
+                                                    {% elif product.product.delivery_type == 'free' %}
+                                               green {% endif %}>
+                                            </i>
+                                            {{ product.product.get_delivery_type }}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6" style="padding-right: 0;">
+                                <form action="">
+                                    <div class="col-lg-6">
+
+                                        <div class="form-group col-lg-6 col-lg-offset-3">
+                                            <input type="number" class="form-control" value="1">
+                                        </div>
+
+                                    </div>
+                                    <div class="col-lg-5">
+
+                                        <p class="price">1200 Сом</p>
+
+
+                                    </div>
+                                    <div class="col-lg-1" style="padding: 0;">
+                                        <a href="">X</a>
+                                    </div>
+                                    <div class="col-lg-11">
+
+                                        <div class="form-group">
+                                            <textarea name="" class="form-control" id="" cols="30" rows="5"
+                                                      placeholder="Ваш коментарий к данному товару"></textarea>
+
+                                        </div>
+
+                                    </div>
+                                </form>
+                            </div>
+
+
+                        </div>
+                        {# end body#}
+                        <div class="body">
+                            <div class="col-lg-6">
+                                <div class="col-lg-4">
+                                    <img src="{% static 'img/vk_com1600.png' %}" class="img-responsive" alt="">
+                                    Картинка товара
+                                </div>
+                                <div class="col-lg-8">
+                                    <h3>Название товара</h3>
+                                    <p class="description-shop"> описание товара Lorem ipsum dolor sit amet, consectetur
+                                        adipisicing elit. Quasi,
+                                        tempore?</p>
+                                    <div class="availability">
+                                        <p>
+                                            Наличие:
+                                            <span class="{% if product.product.availability == "available" %} stock
+                                                        {% elif product.product.availability == "waiting" %} expectation
+                                                        {% else %} not-stock {% endif %}">{{ product.product.get_availability }}
+                                    </span>
+                                        </p>
+
+                                        <p class="truck">
+                                            <i class="fa fa-truck" aria-hidden="true"
+                                                    {% if product.product.delivery_type == 'paid' %} yellow
+                                                    {% elif product.product.delivery_type == 'free' %}
+                                               green {% endif %}>
+                                            </i>
+                                            {{ product.product.get_delivery_type }}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6" style="padding-right: 0;">
+                                <form action="">
+                                    <div class="col-lg-6">
+
+                                        <div class="form-group col-lg-6 col-lg-offset-3">
+                                            <input type="number" class="form-control" value="1">
+                                        </div>
+
+                                    </div>
+                                    <div class="col-lg-5">
+
+                                        <p class="price">1200 Сом</p>
+
+
+                                    </div>
+                                    <div class="col-lg-1" style="padding: 0;">
+                                        <a href="">X</a>
+                                    </div>
+                                    <div class="col-lg-11">
+                                        <div class="form-group">
+                                            <textarea name="" class="form-control" id="" cols="30" rows="5"
+                                                      placeholder="Ваш коментарий к данному товару"></textarea>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+
+
+                        </div>
+                        {# end body#}
+
+
+                    </div>
+                    <div class="col-lg-10 col-lg-offset-2 text-center total">
+                        <div class="border-top">
+                            <div class="col-lg-6">
+                                <h6>Доставка</h6>
+                            </div>
+                            <div class="col-lg-6">
+                                <h5>2000 сом</h5>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="cync-shop">
+                    <div class="col-lg-2 image-magazin">
+                        <div class="img-wrapper">
+                            <img src="{% static 'img/vk_com1600.png' %}" alt=""
+                                 class="img-responsive">
+                            картинка магазина
+                        </div>
+                    </div>
+
+                    <div class="col-lg-10">
+
+                        <div class="head">
+                            <div class="col-lg-6">
+                                Товар
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="col-lg-6">
+                                    Количество
+                                </div>
+                                <div class="col-lg-6">
+                                    Цена
+                                </div>
+                            </div>
+                        </div>
+                        {#   end head#}
+
+                        <div class="body">
+                            <div class="col-lg-6">
+                                <div class="col-lg-4">
+                                    <img src="{% static 'img/vk_com1600.png' %}" class="img-responsive" alt="">
+                                    Картинка товара
+                                </div>
+                                <div class="col-lg-8">
+                                    <h3>Название товара</h3>
+                                    <p class="description-shop"> описание товара Lorem ipsum dolor sit amet, consectetur
+                                        adipisicing elit. Quasi,
+                                        tempore?</p>
+                                    <div class="availability">
+                                        <p>
+                                            Наличие:
+                                            <span class="{% if product.product.availability == "available" %} stock
+                                                        {% elif product.product.availability == "waiting" %} expectation
+                                                        {% else %} not-stock {% endif %}">{{ product.product.get_availability }}
+                                    </span>
+                                        </p>
+                                        <p class="truck">
+                                            <i class="fa fa-truck" aria-hidden="true"
+                                                    {% if product.product.delivery_type == 'paid' %} yellow
+                                                    {% elif product.product.delivery_type == 'free' %}
+                                               green {% endif %}>
+                                            </i>
+                                            {{ product.product.get_delivery_type }}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6" style="padding-right: 0;">
+                                <form action="">
+                                    <div class="col-lg-6">
+                                        <div class="form-group col-lg-6 col-lg-offset-3">
+                                            <input type="number" class="form-control" value="1">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-5">
+                                        <p class="price">1200 Сом</p>
+                                    </div>
+                                    <div class="col-lg-1" style="padding: 0;">
+                                        <a href="">X</a>
+                                    </div>
+                                    <div class="col-lg-11">
+                                        <div class="form-group">
+                                            <textarea name="" class="form-control" id="" cols="30" rows="5"
+                                                      placeholder="Ваш коментарий к данному товару"></textarea>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+
+
+                        </div>
+                        {# end body#}
+                        <div class="body">
+                            <div class="col-lg-6">
+                                <div class="col-lg-4">
+                                    <img src="{% static 'img/vk_com1600.png' %}" class="img-responsive" alt="">
+                                    Картинка товара
+                                </div>
+                                <div class="col-lg-8">
+                                    <h3>Название товара</h3>
+                                    <p class="description-shop">loreasd as</p>
+                                    <div class="availability">
+                                        <p>
+                                            Наличие:
+                                            <span class="{% if product.product.availability == "available" %} stock
+                                                        {% elif product.product.availability == "waiting" %} expectation
+                                                        {% else %} not-stock {% endif %}">{{ product.product.get_availability }}
+                                    </span>
+                                        </p>
+
+                                        <p class="truck">
+                                            <i class="fa fa-truck" aria-hidden="true"
+                                                    {% if product.product.delivery_type == 'paid' %} yellow
+                                                    {% elif product.product.delivery_type == 'free' %}
+                                               green {% endif %}>
+                                            </i>
+                                            {{ product.product.get_delivery_type }}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6" style="padding-right: 0;">
+                                <form action="">
+                                    <div class="col-lg-6">
+                                        <div class="form-group col-lg-6 col-lg-offset-3">
+                                            <input type="number" class="form-control" value="1">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-5">
+                                        <p class="price">1200 Сом</p>
+                                    </div>
+                                    <div class="col-lg-1" style="padding: 0;">
+                                        <a href="">X</a>
+                                    </div>
+                                    <div class="col-lg-11">
+                                        <div class="form-group">
+                                            <textarea name="" class="form-control" id="" cols="30" rows="5"
+                                                      placeholder="Ваш коментарий к данному товару"></textarea>
+
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        {# end body#}
+                    </div>
+                    <div class="col-lg-10 col-lg-offset-2 text-center total">
+                        <div class="border-top">
+                            <div class="col-lg-6">
+                                <h6>Доставка</h6>
+                            </div>
+                            <div class="col-lg-6">
+                                <h5>2000 сом</h5>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-lg-offset-2 col-lg-10 text-center">
+                <div class="row">
+                     <div class="total-price ">
+                    <div class="col-lg-6">
+                        <h6>Итого к оплате</h6>
+                    </div>
+                    <div class="col-lg-6">
+                        <h5>2000 сом</h5>
+                    </div>
+                </div>
+                </div>
+
+            </div>
+            <div class="col-lg-offset-2 col-lg-10">
+                <a href="" class="btn-modal" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">Оформить
+                    покупку</a>
+            </div>
 
         </div>
-        <div class="thead">
-            <div class="col-md-6">
-                Товар
-            </div>
-            <div class="col-md-2">
-                Продавец
-            </div>
-            <div class="col-md-2">
-                Количество
-            </div>
-            <div class="col-md-2">
-                Цена
-            </div>
-        </div>
-        <div class="tbody">
+    </section>
 
-            {% for product in object.cartitem_set.all %}
 
-            <div class="cover">
-                <div class="col-md-2">
-                    <div class="img-wrapper">
-                        <img src="{{ product.product.get_main_image }}" alt="{{ product.product.title }}" class="img-responsive">
-                    </div>
+    <!-- Modal -->
+    <div class="modal fade basket-modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
                 </div>
-                <div class="col-md-4">
-                    <h2><a href="{{ product.product.get_absolute_url }}">{{ product.product.title }}</a></h2>
-                    <div class="availability">
-                        <span>Наличие: <span class="{% if product.product.availability == "available" %} stock
-                                                {% elif product.product.availability == "waiting" %} expectation
-                                                {% else %} not-stock {% endif %}">{{ product.product.get_availability }}</span></span>
+                <div class="modal-body">
+                    <form action="{% url 'order:create' %}" method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" name="cart" value="{{ object }}">
+                        {% if user.is_authenticated %}
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Имя" name="name"
+                                       {% if object.user.first_name %}value="{{ object.user.first_name }}"{% endif %}
+                                       required>
+                            </div>
 
-                        <span class="truck">
-                    <i class="fa fa-truck" aria-hidden="true" {% if product.product.delivery_type == 'paid' %} yellow
-                    {% elif product.product.delivery_type == 'free' %} green {% endif %}></i>
-                    {{ product.product.get_delivery_type }}
-                </span>
-                    </div>
-                </div>
-                <div class="col-md-2">
-                    <div class="img-wrapper">
-                        <img src="{{ product.product.shop.get_logo }}" alt="{{ product.product.shop.title }}" class="img-responsive">
-                    </div>
-                </div>
-                <form action="." class="cart-form">
-                <input type="hidden" name="item" value="{{ product.product.id }}">
-                <div class="col-md-2">
-                    <div class="quantity">
-
-                        <input type="number" value="{{ product.quantity }}" name="qty" class="item-qty" min="1">
-                        <input type="submit" value="Update" class="btn-update" style="display: none;">
-
-                    </div>
-
-                </div>
-
-                </form>
-
-                <div class="col-md-2 price">
-                    {% if product.product.discount %}
-                    <strike>{{ product.product.price }} {{ product.product.currency }}</strike>
-                    <p id="line-total-{{ product.product.id }}">{{ product.total }} {{ product.product.currency }}</p>
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Фамилия" name="last_name"
+                                       {% if object.user.last_name %}value="{{ object.user.last_name }}"{% endif %}>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Номер телефона" name="phone"
+                                       {% if object.user.phone %}value="{{ object.user.phone }}"{% endif %} required>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Ваш адрес" name="address"
+                                       {% if object.user.address %}value="{{ object.user.address }}"{% endif %}
+                                       required>
+                            </div>
                         {% else %}
-                        <p id="line-total-{{ product.product.id }}">{{ product.total }} {{ product.product.currency }}</p>
-                    {% endif %}
-                    <a href="{{ product.product.remove_from_cart }}" class="close">X</a>
-                </div>
-            </div>
-            {% endfor %}
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Имя" name="name" required>
+                            </div>
 
-            <div class="total">
-                <div class="col-md-offset-8 col-md-3">
-                    <p>Доставка: <span>0 сом</span></p>
-                    <p>Итого: <span class="red" id="subtotal">{{ object.subtotal }} сом </span></p>
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Фамилия" name="last_name">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Номер телефона" name="phone"
+                                       required>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Ваш адрес" name="address" required>
+                            </div>
+                        {% endif %}
+                        <button type="submit" class="btn btn-default">Отправить</button>
+                    </form>
                 </div>
-                <div class="clearfix"></div>
-                <a href=""  class="btn-modal" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">Оформить покупку</a>
             </div>
         </div>
     </div>
-</div>
-
-
-<!-- Modal -->
-<div class="modal fade basket-modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            </div>
-            <div class="modal-body">
-                <form action="{% url 'order:create' %}" method="POST">
-                    {% csrf_token %}
-                    <input type="hidden" name="cart" value="{{ object }}">
-                    {% if user.is_authenticated %}
-                    <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Имя" name="name" {% if object.user.first_name %}value="{{ object.user.first_name }}"{% endif %} required>
-                    </div>
-
-                    <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Фамилия" name="last_name" {% if object.user.last_name %}value="{{ object.user.last_name }}"{% endif %}>
-                    </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Номер телефона" name="phone" {% if object.user.phone %}value="{{ object.user.phone }}"{% endif %} required>
-                    </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Ваш адрес" name="address" {% if object.user.address %}value="{{ object.user.address }}"{% endif %} required>
-                    </div>
-                    {% else %}
-                        <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Имя" name="name"  required>
-                    </div>
-
-                    <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Фамилия" name="last_name" >
-                    </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Номер телефона" name="phone" required>
-                    </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Ваш адрес" name="address" required>
-                    </div>
-                    {% endif %}
-                    <button type="submit" class="btn btn-default">Отправить</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
 
 {% endblock %}

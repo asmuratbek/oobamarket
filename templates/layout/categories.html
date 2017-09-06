@@ -1,43 +1,84 @@
 <div class="container" style="padding: 0;">
-    <div class="parent">
+    <div class="mobile-nav hidden-md hidden-lg">
+        <button type="button" class="" data-toggle="modal" data-target="#mobile-category">
+            Категории
+        </button>
+    </div>
+    <div class="parent hidden-sm hidden-xs">
 
         <ul class="content">
             {% for category in object.get_parent_categories %}
 
                 <li class="item item-{{ object.get_parent_categories|length }}">
-                    <div class="dropdown" data-id="#dropdown-{{ category.id }}" >
-                        <a href="{% url 'categories:detail' global_slug=global_slug slug=category.slug %}" class="enter btn" type="button" aria-haspopup="true">
-{#                            {% if category.image %}#}
-{#                                <img src="{{ category.image.url }}" alt="" >#}
-{#                            {% else %}#}
-{#                                #}
-{#                            {% endif %}#}
-                        {{ category.title }}
-{#                            <span class="glyphicon glyphicon-menu-down"></span>#}
+                    <div class="dropdown" data-id="#dropdown-{{ category.id }}">
+                        <a href="{% url 'categories:detail' global_slug=global_slug slug=category.slug %}"
+                           class="enter btn" type="button" aria-haspopup="true">
+                            {{ category.title }}
                         </a>
                     </div>
 
-
-                        <ul class="dropdown-menu open" id="dropdown-{{ category.id }}" aria-labelledby="dLabel">
-                            {% for subcategory in category.get_children %}
-                                <li>
-                                    <a href="{% url 'categories:detail' global_slug=global_slug slug=subcategory.slug %}">{{ subcategory.title }}</a>
-                                </li>
-                            {% endfor %}
-                        </ul>
-
-
+                    <ul class="dropdown-menu open" id="dropdown-{{ category.id }}" aria-labelledby="dLabel">
+                        {% for subcategory in category.get_children %}
+                            <li>
+                                <a href="{% url 'categories:detail' global_slug=global_slug slug=subcategory.slug %}">{{ subcategory.title }}</a>
+                            </li>
+                        {% endfor %}
+                    </ul>
                 </li>
 
-
-
             {% endfor %}
-          <div class="clearfix"></div>
+            <div class="clearfix"></div>
         </ul>
 
     </div>
 
-
+    <!-- Modal -->
+    <div class="modal fade" id="mobile-category" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+{#                <div class="modal-header">#}
+{#                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span#}
+{#                            aria-hidden="true">&times;</span></button>#}
+{#                </div>#}
+                <div class="modal-body">
+                    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                        {% for category in object.get_parent_categories %}
+                            <div class="panel panel-default">
+                                <div class="panel-heading" role="tab" id="headingOne">
+                                    <h4 class="panel-title" data-id="#dropdown-{{ category.id }}">
+                                        <a role="button" data-toggle="collapse" data-parent="#accordion"
+                                           href="#collapse-{{ forloop.counter }}"
+                                           aria-expanded="true" aria-controls="collapseOne">
+                                            {{ category.title }}
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="collapse-{{ forloop.counter }}" class="panel-collapse collapse" role="tabpanel"
+                                     aria-labelledby="headingOne">
+                                    <div class="panel-body">
+                                        <a href="{% url 'categories:detail' global_slug=global_slug slug=category.slug %}"
+                                           class="" type="button" aria-haspopup="true">
+                                            {{ category.title }}
+                                        </a>
+                                        <ul class="dropdown-menu-mobile open" id="dropdown-{{ category.id }}">
+                                            {% for subcategory in category.get_children %}
+                                                <li>
+                                                    <a href="{% url 'categories:detail' global_slug=global_slug slug=subcategory.slug %}">{{ subcategory.title }}</a>
+                                                </li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 </div>
 

@@ -69,15 +69,15 @@
                                     {#                                    <input type="text" class="form-control" id="discount_id" placeholder="0%" disabled>#}
                                     {% render_field form.discount|add_error_attr:"aria-invalid:true"|attr:"id:discount_id"|attr:"disabled" placeholder="0%" %}
                                 </div>
-                            <label class="label-error">{{ form.price.errors }}</label>
-{#                            {% render_field form.partner_price|attr:"class:form-control price" placeholder="Партнерская цена" %}#}
+                                <label class="label-error">{{ form.price.errors }}</label>
+                                {#                            {% render_field form.partner_price|attr:"class:form-control price" placeholder="Партнерская цена" %}#}
                             </div>
 
-{#                            <div class="form-group select col-md-6">#}
-{##}
-{#                                {% render_field form.availability|add_error_attr:"aria-invalid:true" %}#}
-{##}
-{#                            </div>#}
+                            {#                            <div class="form-group select col-md-6">#}
+                            {##}
+                            {#                                {% render_field form.availability|add_error_attr:"aria-invalid:true" %}#}
+                            {##}
+                            {#                            </div>#}
 
                             <div class="form-group input col-md-12">
                                 <label class="switch">
@@ -118,32 +118,32 @@
                             {#                            </div>#}
                         </div>
 
-{#                        <div class="step_2">#}
-{#                            <h3><span>2.</span> Доставка</h3>#}
-{##}
-{##}
-{#                            <div class="form-group select col-md-6">#}
-{#                                {% render_field form.delivery_type|add_error_attr:"aria-invalid:true" %}#}
-{#                            </div>#}
-{##}
-{#                            <div class="form-group input col-md-6">#}
-{#                                {% render_field form.delivery_cost|add_error_attr:"aria-invalid:true"|attr:"class:form-control mini"|attr:"disabled" placeholder="Стоимость доставки" %}#}
-{#                            </div>#}
-{#                        </div>#}
-{##}
-{#                        <div class="step_3">#}
-{#                            <h3 style="margin-bottom: 10px;"><span>3.</span> Параметры товара</h3>#}
-{#                            <p style="margin-bottom: 30px;">Рекомендуется заполнить для лучшего отображения результатов#}
-{#                                поиска</p>#}
-{##}
-{#                            <div class="col-md-12" id="property_list">#}
-{##}
-{#                            </div>#}
-{#                            <div class="clearfix"></div>#}
-{##}
-{#                            <p id="empty_properties" style="display: block;">Параметры для данной категории#}
-{#                                отсутствуют</p>#}
-{#                        </div>#}
+                        {#                        <div class="step_2">#}
+                        {#                            <h3><span>2.</span> Доставка</h3>#}
+                        {##}
+                        {##}
+                        {#                            <div class="form-group select col-md-6">#}
+                        {#                                {% render_field form.delivery_type|add_error_attr:"aria-invalid:true" %}#}
+                        {#                            </div>#}
+                        {##}
+                        {#                            <div class="form-group input col-md-6">#}
+                        {#                                {% render_field form.delivery_cost|add_error_attr:"aria-invalid:true"|attr:"class:form-control mini"|attr:"disabled" placeholder="Стоимость доставки" %}#}
+                        {#                            </div>#}
+                        {#                        </div>#}
+                        {##}
+                        {#                        <div class="step_3">#}
+                        {#                            <h3 style="margin-bottom: 10px;"><span>3.</span> Параметры товара</h3>#}
+                        {#                            <p style="margin-bottom: 30px;">Рекомендуется заполнить для лучшего отображения результатов#}
+                        {#                                поиска</p>#}
+                        {##}
+                        {#                            <div class="col-md-12" id="property_list">#}
+                        {##}
+                        {#                            </div>#}
+                        {#                            <div class="clearfix"></div>#}
+                        {##}
+                        {#                            <p id="empty_properties" style="display: block;">Параметры для данной категории#}
+                        {#                                отсутствуют</p>#}
+                        {#                        </div>#}
 
                         <div class="step_4 {% if form.short_description.errors %}has-error{% endif %}">
                             <h3><span>2.</span> Короткое описание товара <span>(Опционально)</span></h3>
@@ -159,42 +159,76 @@
                             {% render_field form.long_description|attr:"rows:6" %}
                         </div>
 
-                       <div class="form-group input col-md-12">
-                                <label for="">Мета заголовок товара:</label>
-                                {% render_field form.meta_title|attr:"type:text" placeholder="" %}
-                                <i>Введи до 45 символов название которое будет отображаться с посковиках. Для лучшего
-                                    отображения введите ключевое слово товара которое вы продаете на сайте. Например
-                                    если вы продаете кроссовки от найка и адидас. Правильный заголовок будет: "Крассные
-                                    кроссовки  adidas за 4550 сомов". Мы добавим в конце Бишкек и Ваше название магазина. Т.е.
-                                    заголовок в последующем будет выглядеть так:"Купить кроссовки adidas за 4500 сомов Бишкек -
-                                    Кроссовки Центр."
-                                </i>
+                        <a class="btn seo" role="button" data-toggle="collapse" href="#collapseExample"
+                           aria-expanded="false" aria-controls="collapseExample">
+                            SEO
+                        </a>
+
+                        <div class="collapse" id="collapseExample">
+                            <div class="well">
+
+
+                                <div class="form-group input col-md-12">
+                                    <label for="">Мета заголовок товара:</label>
+                                    {% render_field form.meta_title|attr:"type:text" placeholder="" %}
+                                    <i>Введи до 45 символов название которое будет отображаться с посковиках. Для
+                                        лучшего
+                                        отображения введите ключевое слово товара которое вы продаете на сайте. Например
+                                        если вы продаете кроссовки от найка и адидас. Правильный заголовок будет:
+                                        "Крассные
+                                        кроссовки adidas за 4550 сомов". Мы добавим в конце Бишкек и Ваше название
+                                        магазина.
+                                        Т.е.
+                                        заголовок в последующем будет выглядеть так:"Купить кроссовки adidas за 4500
+                                        сомов
+                                        Бишкек -
+                                        Кроссовки Центр."
+                                    </i>
+                                </div>
+                                <div class="form-group input col-md-12">
+                                    <label for="">Мета описание товара:</label>
+                                    {% render_field form.meta_description|attr:"rows:6" placeholder="Введите до 220 символов" %}
+                                    <i>В мета описании вы можете описать в кратце, какие характеристики имеет товар и
+                                        адрес
+                                        продажи.
+                                        Лучше всего описание формируется, где включены несколько 2-3 ключевых слова по
+                                        которым
+                                        вас
+                                        будут искать. Чем лучше соответсвие,тем выше позиция.
+                                    </i>
+                                </div>
+                                <div class="form-group input col-md-12">
+                                    <label for="">Мета ключевые слова товара:</label>
+                                    {% render_field form.meta_keywords|attr:"rows:6" placeholder="Введите до 10 ключевых слов" %}
+                                    <i>В поле нужно вводить ключевые слова, например, если вы продаете кроссовки. То
+                                        правильным
+                                        набором ключевых слов будет: "Кроссовки, адидас, найк, бишкек, adidas, nike,
+                                        купить
+                                        и
+                                        т.д."
+                                    </i>
+                                </div>
+                                <div class="form-group input col-md-12">
+                                    <label for="">СЕО текс товара:</label>
+                                    {% render_field form.seo_text|attr:"rows:6" placeholder="Введите сео описание магазина" %}
+                                    <i>Это поле не ограничено в заполнении. Но лучше всего чтобы он был не более 500
+                                        знаков.
+                                        Сео описание влияет на продвижение вашего товара интернет магазина в поисковике,
+                                        так
+                                        что
+                                        вам
+                                        нужно самостоятельно написать текст. Мы настоятельно не рекомендуем копировать
+                                        чужой
+                                        текст,
+                                        так как это не продвинет ваш магазин, а даже снизит его рейтинг в поисковике.
+                                        Самым
+                                        лучшим способом является составить текст из ключевых слов, которые популярны в
+                                        поисковике.
+                                    </i>
+                                </div>
                             </div>
-                            <div class="form-group input col-md-12">
-                                <label for="">Мета описание товара:</label>
-                                {% render_field form.meta_description|attr:"rows:6" placeholder="Введите до 220 символов" %}
-                                <i>В мета описании вы можете описать в кратце, какие характеристики имеет товар и адрес продажи.
-                                    Лучше всего описание формируется, где включены несколько 2-3 ключевых слова по которым вас
-                                    будут искать. Чем лучше соответсвие,тем выше позиция.
-                                </i>
-                            </div>
-                            <div class="form-group input col-md-12">
-                                <label for="">Мета ключевые слова товара:</label>
-                                {% render_field form.meta_keywords|attr:"rows:6" placeholder="Введите до 10 ключевых слов" %}
-                                <i>В поле нужно вводить ключевые слова, например, если вы продаете кроссовки. То правильным
-                                    набором ключевых слов будет: "Кроссовки, адидас, найк, бишкек, adidas, nike, купить и т.д."
-                                </i>
-                            </div>
-                            <div class="form-group input col-md-12">
-                                <label for="">СЕО текс товара:</label>
-                                {% render_field form.seo_text|attr:"rows:6" placeholder="Введите сео описание магазина" %}
-                                <i>Это поле не ограничено в заполнении. Но лучше всего чтобы он был не более 500 знаков.
-                                   Сео описание влияет на продвижение вашего товара интернет магазина в поисковике, так что вам
-                                    нужно самостоятельно написать текст. Мы настоятельно не рекомендуем копировать чужой текст,
-                                    так как это не продвинет ваш магазин, а даже снизит его рейтинг в поисковике. Самым
-                                    лучшим способом является составить текст из ключевых слов, которые популярны в поисковике.
-                                </i>
-                            </div>
+                        </div>
+
 
                         <div class="form-group btn-group-form col-md-12">
                             {#                            <button type="submit" class="btn cancel"> Отменить</button>#}
@@ -307,7 +341,7 @@
     {{ block.super }}
     <script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
     <script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
-{#    <script src="{% static "js/image.uploading.multiple.js" %}"></script>#}
+    {#    <script src="{% static "js/image.uploading.multiple.js" %}"></script>#}
     <script src="{% static "js/product_form.js" %}"></script>
 {% endblock %}
 
