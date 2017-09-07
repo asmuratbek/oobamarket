@@ -4,6 +4,7 @@ import createClass from "create-react-class";
 import Product from "./components/ShopDetailProducts";
 import SearchForm from "./components/SearchForm";
 import CategoryList from "./components/ShopDetailCategory";
+import ChildCategory from "./components/ChildCategory";
 import _ from "lodash";
 import Pagination from "react-js-pagination";
 import Loader from "react-loader";
@@ -767,9 +768,17 @@ var MainInterface = createClass({
         categories = this.state.parentCategories.map(function (parent, parentIndex) {
             descendants = this.state.categories.map(function (item, index) {
                 if (item.parent_id == parent.id) {
-                    return true
+                    return (
+                        <ChildCategory
+                            key={index}
+                            category={item}
+                            onChangeCategory={changeCategory}
+                            activeCategory={activeCategory}
+                            categorySort={handleCategorySort}
+                        />
+                    )
                 }
-            });
+            }.bind(this));
             return (
                 <CategoryList
                     key={parentIndex}
@@ -780,7 +789,7 @@ var MainInterface = createClass({
                     categorySort={handleCategorySort}
                 />
             )
-        });
+        }.bind(this));
 
         return (
             <div>

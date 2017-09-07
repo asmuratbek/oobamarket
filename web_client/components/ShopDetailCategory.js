@@ -49,18 +49,6 @@ var CategoryList = createClass({
     //     />
     //   )
     // });
-      {descendants ? (
-        descendants = descendants.map(function (item, index) {
-            return (
-                <ChildCategory key={ index }
-                         category={ item }
-                />
-            ) //return
-        }.bind(this))
-      ) : (
-        ''
-      )
-      }
 
     return (
               <li className={this.props.category.id == this.props.activeCategory ? "active":""}>
