@@ -885,31 +885,6 @@ var MainInterface = createClass({
                         {categories}
                     </ul>
 
-<ul id="accordion" role="tablist" aria-multiselectable="true">
-  <li className="panel panel-default">
-
-    <div className="panel-heading" role="tab" id="headingOne">
-      <h4 className="panel-title">
-        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-          Collapsible Group Item #1
-        </a>
-      </h4>
-    </div>
-
-    <div id="collapseOne" className="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
-      <div className="panel-body">
-          <p><a href="">ссылка</a></p>
-          <p><a href="">ссылка</a></p>
-          <p><a href="">ссылка</a></p>
-          <p><a href="">ссылка</a></p>
-          <p><a href="">ссылка</a></p>
-          <p><a href="">ссылка</a></p>
-      </div>
-    </div>
-
-  </li> {/*panel*/}
-</ul> {/*end panel-group*/}
-
                 </div>
                 <div className="col-md-12 col-lg-9">
                     <SearchForm
