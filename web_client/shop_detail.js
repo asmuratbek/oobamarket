@@ -607,6 +607,89 @@ var MainInterface = createClass({
             var q = [
                 { "match": { "text":  this.state.queryText }},
                 { "match": { "shop_slug":  this.state.shopSlug }},
+                { "match": { "parent_category_id": id }}
+            ]
+        } else if (id) {
+            var q = [
+                { "match": { "shop_slug":  this.state.shopSlug }},
+                { "match": { "parent_category_id": id }}
+            ]
+        } else {
+            var q = [
+                { "match": { "shop_slug":  this.state.shopSlug }}
+            ]
+        }
+         var query = {
+                'query': {
+                        "bool": {
+                            "must": q,
+                            "filter": sorting
+                        }
+
+                      },
+                "size":  this.state.productsByPage,
+                "from": 0,
+                "sort": [
+                    sort,
+                ],
+              };
+        this.setState({
+            loaded: false
+        });
+        $.ajax({
+            type: "POST",
+              url: `http://${this.state.domain}:9200/_search/`,
+              data: JSON.stringify(query),
+              contentType: 'application/json',
+              dataType : 'json',
+              success: function (data) {
+                    var products = data.hits.hits.map(obj => obj._source);
+                    var pagesCount = Math.ceil(data.hits.total / 20);
+                    this.setState({
+                        products: products,
+                        loaded: true,
+                        pagesCount: pagesCount,
+                        productsCount: data.hits.total,
+                        activePage: 1,
+                        activeCategory: id
+                    });
+              }.bind(this),
+              error: function (response, error) {
+                  console.log(response);
+                  console.log(error);
+              }
+        })
+    },
+
+    handleChildCategorySort(id){
+        console.log("heey");
+        var from = this.state.activePage * this.state.productsByPage;
+        if (this.state.orderBy == '-created_at') {
+            var sort = {'created_at': 'desc'}
+        } else if (this.state.orderBy == 'title'){
+            var sort = {'title': 'asc'}
+        } else if (this.state.orderBy == 'price') {
+            var sort = {'get_price_function': 'asc'}
+        } else if (this.state.orderBy == '-price') {
+            var sort = {'get_price_function': 'desc'}
+        }
+
+        if (this.state.priceTo && this.state.priceFrom) {
+            var sorting = [{"range": {"get_price_function": {"gte": this.state.priceFrom}}},
+                {"range": {"get_price_function": {"lte": this.state.priceTo}}}]
+        } else if (this.state.priceFrom) {
+            var sorting = [
+                {"range": {"get_price_function": {"gte": this.state.priceFrom}}}
+            ]
+        } else if (this.state.priceTo) {
+            var sorting = [
+                {"range": {"get_price_function": {"lte": this.state.priceTo}}}
+            ]
+        }
+        if (this.state.queryText && id) {
+            var q = [
+                { "match": { "text":  this.state.queryText }},
+                { "match": { "shop_slug":  this.state.shopSlug }},
                 { "match": { "category_id": id }}
             ]
         } else if (id) {
@@ -752,6 +835,7 @@ var MainInterface = createClass({
         var productDelete = this.productDelete;
         var owner = this.state.owner;
         var handleCategorySort = this.handleCategorySort;
+        var handleChildCategorySort = this.handleChildCategorySort;
         var descendants = [];
 
         filteredProducts = this.state.products.map(function (item, index) {
@@ -774,7 +858,7 @@ var MainInterface = createClass({
                             category={item}
                             onChangeCategory={changeCategory}
                             activeCategory={activeCategory}
-                            categorySort={handleCategorySort}
+                            categorySort={handleChildCategorySort}
                         />
                     )
                 }
