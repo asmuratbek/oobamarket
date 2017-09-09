@@ -111,16 +111,16 @@ var MainInterface = createClass({
             products: newProducts
         }); //setState
     },
-    productDelete: function (item) {
-        var allProducts = this.state.products;
-        var deleted = _.remove(allProducts, function (n) {
-            return n.pk == item;
-        });
-        var newProducts = _.without(allProducts, deleted);
-        this.setState({
-            products: newProducts
-        }); //setState
-    },
+    // productDelete: function (item) {
+    //     var allProducts = this.state.products;
+    //     var deleted = _.remove(allProducts, function (n) {
+    //         return n.pk == item;
+    //     });
+    //     var newProducts = _.without(allProducts, deleted);
+    //     this.setState({
+    //         products: newProducts
+    //     }); //setState
+    // },
     handlePageChange: function(pageNumber) {
         var from = this.state.productsCount > this.state.productsByPage * pageNumber ? (
             this.state.productsByPage * pageNumber
@@ -832,7 +832,7 @@ var MainInterface = createClass({
         var deliveryType = this.state.deliveryType;
         var changeCategory = this.changeCategory;
         var activeCategory = this.state.activeCategory;
-        var productDelete = this.productDelete;
+        // var productDelete = this.productDelete;
         var owner = this.state.owner;
         var handleCategorySort = this.handleCategorySort;
         var handleChildCategorySort = this.handleChildCategorySort;
@@ -841,7 +841,7 @@ var MainInterface = createClass({
         filteredProducts = this.state.products.map(function (item, index) {
             return (
                 <Product key={ index }
-                         onProductDelete={productDelete}
+                         // onProductDelete={productDelete}
                          product={ item }
                          owner={ this.state.owner }
                 />

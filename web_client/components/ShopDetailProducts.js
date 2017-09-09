@@ -170,53 +170,53 @@ var ProductList = createClass({
       }
   },
 
-  handleDelete: function(product_id){
-    this.props.onProductDelete(product_id)
-  },
-
-  deleteProduct: function(e) {
-    e.preventDefault();
-    var handleDelete = this.handleDelete;
-    var product_id = e.target.getAttribute('data-product-id')
-    function initForm() {
-        $('#ProductDelete').on('submit', function (event) {
-            event.preventDefault();
-            // $("#DeleteModal").fadeOut();
-            $("#DeleteModal").modal('hide');
-            var that = this;
-            $(that).addClass('hidden');
-            $.ajax({
-                method: 'POST',
-                dataType: 'JSON',
-                data: $(that).serialize(),
-                url: $(that).attr('action'),
-                success: function (response) {
-                },
-                error: function (error) {
-                }
-            });
-            handleDelete(product_id);
-        });
-    }
-
-    var target = e.target;
-    var link = target.getAttribute('data-url');
-
-    $.ajax({
-        method: 'GET',
-        dataType: 'HTML',
-        url: link,
-        success: function (response) {
-            $('#ajax-modal-body').html(response);
-            initForm();
-            $('#application-form').append("{% csrf_token %}");
-
-        },
-        error: function () {
-
-        }
-    });
-  },
+  // handleDelete: function(product_id){
+  //   this.props.onProductDelete(product_id)
+  // },
+  //
+  // deleteProduct: function(e) {
+  //   e.preventDefault();
+  //   var handleDelete = this.handleDelete;
+  //   var product_id = e.target.getAttribute('data-product-id')
+  //   function initForm() {
+  //       $('#ProductDelete').on('submit', function (event) {
+  //           event.preventDefault();
+  //           // $("#DeleteModal").fadeOut();
+  //           $("#DeleteModal").modal('hide');
+  //           var that = this;
+  //           $(that).addClass('hidden');
+  //           $.ajax({
+  //               method: 'POST',
+  //               dataType: 'JSON',
+  //               data: $(that).serialize(),
+  //               url: $(that).attr('action'),
+  //               success: function (response) {
+  //               },
+  //               error: function (error) {
+  //               }
+  //           });
+  //           handleDelete(product_id);
+  //       });
+  //   }
+  //
+  //   var target = e.target;
+  //   var link = target.getAttribute('data-url');
+  //
+  //   $.ajax({
+  //       method: 'GET',
+  //       dataType: 'HTML',
+  //       url: link,
+  //       success: function (response) {
+  //           $('#ajax-modal-body').html(response);
+  //           initForm();
+  //           $('#application-form').append("{% csrf_token %}");
+  //
+  //       },
+  //       error: function () {
+  //
+  //       }
+  //   });
+  // },
 
   render: function(){
 
@@ -246,9 +246,9 @@ var ProductList = createClass({
                              onClick={this.changePublishStatus}></a>
                 <ReactTooltip/>
                 <a href="#" className="remove glyphicon glyphicon-remove model-trigger"
-                             data-url={this.props.product.delete_view} data-toggle="modal" data-target="#DeleteModal" title=""
+                             data-url={`/product/${this.props.product.slug}/delete-product/`} data-toggle="modal" data-target="#DeleteModal" title=""
                              data-placement="bottom" data-product-id={this.props.product.pk} data-tip="Удалить"
-                             onClick={this.deleteProduct}></a>
+                             ></a>
                 <ReactTooltip/>
 
             </div>
