@@ -67,7 +67,7 @@ var MainInterface = createClass({
 
         var query = {
                 'query': {
-                    'match': {
+                    'match_phrase': {
                         'shop_slug': this.state.shopSlug
                     }
                 },
@@ -152,23 +152,23 @@ var MainInterface = createClass({
         if (this.state.queryText && this.state.activeCategory) {
           var q = [
               { "match": { "text":  this.state.queryText }},
-              { "match": { "shop_slug":  this.state.shopSlug }},
+              { "match_phrase": { "shop_slug":  this.state.shopSlug }},
               { "match": { "category_id": this.state.activeCategory }}
 
           ]
         } else if (this.state.queryText) {
             var q = [
                 { "match": { "text":  this.state.queryText }},
-                { "match": { "shop_slug":  this.state.shopSlug }},
+                { "match_phrase": { "shop_slug":  this.state.shopSlug }},
             ]
         } else if (this.state.activeCategory) {
            var q = [
                 { "match": { "category_id": this.state.activeCategory }},
-                {"match": {"shop_slug": this.state.shopSlug}},
+                {"match_phrase": {"shop_slug": this.state.shopSlug}},
             ]
         } else {
             var q = [
-                { "match": { "shop_slug":  this.state.shopSlug }}
+                { "match_phrase": { "shop_slug":  this.state.shopSlug }}
             ]
         }
         var query = {
@@ -237,23 +237,23 @@ var MainInterface = createClass({
         if (this.state.queryText && this.state.activeCategory) {
           var q = [
               { "match": { "text":  this.state.queryText }},
-              { "match": { "shop_slug":  this.state.shopSlug }},
+              { "match_phrase": { "shop_slug":  this.state.shopSlug }},
               { "match": { "category_id": this.state.activeCategory }}
 
           ]
         } else if (this.state.queryText) {
             var q = [
                 {"match": {"text": this.state.queryText}},
-                {"match": {"shop_slug": this.state.shopSlug}},
+                {"match_phrase": {"shop_slug": this.state.shopSlug}},
             ]
         } else if (this.state.activeCategory) {
            var q = [
                 { "match": { "category_id": this.state.activeCategory }},
-                {"match": {"shop_slug": this.state.shopSlug}},
+                {"match_phrase": {"shop_slug": this.state.shopSlug}},
             ]
         } else {
             var q = [
-                { "match": { "shop_slug":  this.state.shopSlug }}
+                { "match_phrase": { "shop_slug":  this.state.shopSlug }}
             ]
         }
         var query = {
@@ -328,23 +328,23 @@ var MainInterface = createClass({
         if (q && this.state.activeCategory) {
           var queryset = [
               { "match": { "text":  q }},
-              { "match": { "shop_slug":  this.state.shopSlug }},
+              { "match_phrase": { "shop_slug":  this.state.shopSlug }},
               { "match": { "category_id": this.state.activeCategory }}
 
           ]
         } else if (q) {
             var queryset = [
                 {"match": {"text": q}},
-                {"match": {"shop_slug": this.state.shopSlug}},
+                {"match_phrase": {"shop_slug": this.state.shopSlug}},
             ]
         } else if (this.state.activeCategory) {
            var queryset = [
                 { "match": { "category_id": this.state.activeCategory }},
-                {"match": {"shop_slug": this.state.shopSlug}},
+                {"match_phrase": {"shop_slug": this.state.shopSlug}},
             ]
         } else {
             var queryset = [
-                { "match": { "shop_slug":  this.state.shopSlug }}
+                { "match_phrase": { "shop_slug":  this.state.shopSlug }}
             ]
         }
         var query = {
@@ -416,23 +416,23 @@ var MainInterface = createClass({
         if (this.state.queryText && this.state.activeCategory) {
           var q = [
               { "match": { "text":  this.state.queryText }},
-              { "match": { "shop_slug":  this.state.shopSlug }},
+              { "match_phrase": { "shop_slug":  this.state.shopSlug }},
               { "match": { "category_id": this.state.activeCategory }}
 
           ]
         } else if (this.state.queryText) {
             var q = [
                 {"match": {"text": this.state.queryText}},
-                {"match": {"shop_slug": this.state.shopSlug}},
+                {"match_phrase": {"shop_slug": this.state.shopSlug}},
             ]
         } else if (this.state.activeCategory) {
            var q = [
                 { "match": { "category_id": this.state.activeCategory }},
-                {"match": {"shop_slug": this.state.shopSlug}},
+                {"match_phrase": {"shop_slug": this.state.shopSlug}},
             ]
         } else {
             var q = [
-                { "match": { "shop_slug":  this.state.shopSlug }}
+                { "match_phrase": { "shop_slug":  this.state.shopSlug }}
             ]
         }
         var query = {
@@ -505,19 +505,19 @@ var MainInterface = createClass({
         if (this.state.queryText && this.state.activeCategory) {
           var q = [
               { "match": { "text":  this.state.queryText }},
-              { "match": { "shop_slug":  this.state.shopSlug }},
+              { "match_phrase": { "shop_slug":  this.state.shopSlug }},
               { "match": { "category_id": this.state.activeCategory }}
 
           ]
         } else if (this.state.queryText) {
             var q = [
                 {"match": {"text": this.state.queryText}},
-                {"match": {"shop_slug": this.state.shopSlug}},
+                {"match_phrase": {"shop_slug": this.state.shopSlug}},
             ]
         } else if (this.state.activeCategory) {
            var q = [
                 { "match": { "category_id": this.state.activeCategory }},
-                {"match": {"shop_slug": this.state.shopSlug}},
+                {"match_phrase": {"shop_slug": this.state.shopSlug}},
             ]
         } else {
             var q = [
@@ -606,17 +606,17 @@ var MainInterface = createClass({
         if (this.state.queryText && id) {
             var q = [
                 { "match": { "text":  this.state.queryText }},
-                { "match": { "shop_slug":  this.state.shopSlug }},
+                { "match_phrase": { "shop_slug":  this.state.shopSlug }},
                 { "match": { "parent_category_id": id }}
             ]
         } else if (id) {
             var q = [
-                { "match": { "shop_slug":  this.state.shopSlug }},
+                { "match_phrase": { "shop_slug":  this.state.shopSlug }},
                 { "match": { "parent_category_id": id }}
             ]
         } else {
             var q = [
-                { "match": { "shop_slug":  this.state.shopSlug }}
+                { "match_phrase": { "shop_slug":  this.state.shopSlug }}
             ]
         }
          var query = {
@@ -662,7 +662,7 @@ var MainInterface = createClass({
     },
 
     handleChildCategorySort(id){
-        console.log("heey");
+        console.log(id);
         var from = this.state.activePage * this.state.productsByPage;
         if (this.state.orderBy == '-created_at') {
             var sort = {'created_at': 'desc'}
@@ -689,17 +689,17 @@ var MainInterface = createClass({
         if (this.state.queryText && id) {
             var q = [
                 { "match": { "text":  this.state.queryText }},
-                { "match": { "shop_slug":  this.state.shopSlug }},
+                { "match_phrase": { "shop_slug":  this.state.shopSlug }},
                 { "match": { "category_id": id }}
             ]
         } else if (id) {
             var q = [
-                { "match": { "shop_slug":  this.state.shopSlug }},
+                { "match_phrase": { "shop_slug":  this.state.shopSlug }},
                 { "match": { "category_id": id }}
             ]
         } else {
             var q = [
-                { "match": { "shop_slug":  this.state.shopSlug }}
+                { "match_phrase": { "shop_slug":  this.state.shopSlug }}
             ]
         }
          var query = {
@@ -772,11 +772,11 @@ var MainInterface = createClass({
         if (this.state.queryText) {
             var q = [
                 { "match": { "text":  this.state.queryText }},
-                { "match": { "shop_slug":  this.state.shopSlug }},
+                { "match_phrase": { "shop_slug":  this.state.shopSlug }},
             ]
         } else {
             var q = [
-                { "match": { "shop_slug":  this.state.shopSlug }}
+                { "match_phrase": { "shop_slug":  this.state.shopSlug }}
             ]
         }
          var query = {
