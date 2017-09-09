@@ -4,6 +4,7 @@ import createClass from "create-react-class";
 import Product from "./components/ShopDetailProducts";
 import SearchForm from "./components/SearchForm";
 import CategoryList from "./components/ShopDetailCategory";
+import ChildCategory from "./components/ChildCategory";
 import _ from "lodash";
 import Pagination from "react-js-pagination";
 import Loader from "react-loader";
@@ -25,6 +26,7 @@ var MainInterface = createClass({
             products: [],
             shops: [],
             loaded: false,
+            parentCategories: [],
             categories: [],
             activeCategory: '',
             owner: false,
@@ -48,10 +50,12 @@ var MainInterface = createClass({
               url: `/api/v1/shop/` + this.state.shopSlug + '/shop/',
               success: function (data) {
                    var owner = data[0].shop[0].is_owner;
-                    var categories = data[1].category.map(obj =>obj);
+                    var parentCategories = data[1].category.map(obj =>obj);
+                    var categories = data[2].category.map(obj =>obj);
                     this.setState({
                         owner: owner,
-                        categories:categories,
+                        parentCategories:parentCategories,
+                        categories: categories
 
                     });
               }.bind(this),
@@ -107,16 +111,16 @@ var MainInterface = createClass({
             products: newProducts
         }); //setState
     },
-    productDelete: function (item) {
-        var allProducts = this.state.products;
-        var deleted = _.remove(allProducts, function (n) {
-            return n.pk == item;
-        });
-        var newProducts = _.without(allProducts, deleted);
-        this.setState({
-            products: newProducts
-        }); //setState
-    },
+    // productDelete: function (item) {
+    //     var allProducts = this.state.products;
+    //     var deleted = _.remove(allProducts, function (n) {
+    //         return n.pk == item;
+    //     });
+    //     var newProducts = _.without(allProducts, deleted);
+    //     this.setState({
+    //         products: newProducts
+    //     }); //setState
+    // },
     handlePageChange: function(pageNumber) {
         var from = this.state.productsCount > this.state.productsByPage * pageNumber ? (
             this.state.productsByPage * pageNumber
@@ -603,6 +607,89 @@ var MainInterface = createClass({
             var q = [
                 { "match": { "text":  this.state.queryText }},
                 { "match": { "shop_slug":  this.state.shopSlug }},
+                { "match": { "parent_category_id": id }}
+            ]
+        } else if (id) {
+            var q = [
+                { "match": { "shop_slug":  this.state.shopSlug }},
+                { "match": { "parent_category_id": id }}
+            ]
+        } else {
+            var q = [
+                { "match": { "shop_slug":  this.state.shopSlug }}
+            ]
+        }
+         var query = {
+                'query': {
+                        "bool": {
+                            "must": q,
+                            "filter": sorting
+                        }
+
+                      },
+                "size":  this.state.productsByPage,
+                "from": 0,
+                "sort": [
+                    sort,
+                ],
+              };
+        this.setState({
+            loaded: false
+        });
+        $.ajax({
+            type: "POST",
+              url: `http://${this.state.domain}:9200/_search/`,
+              data: JSON.stringify(query),
+              contentType: 'application/json',
+              dataType : 'json',
+              success: function (data) {
+                    var products = data.hits.hits.map(obj => obj._source);
+                    var pagesCount = Math.ceil(data.hits.total / 20);
+                    this.setState({
+                        products: products,
+                        loaded: true,
+                        pagesCount: pagesCount,
+                        productsCount: data.hits.total,
+                        activePage: 1,
+                        activeCategory: id
+                    });
+              }.bind(this),
+              error: function (response, error) {
+                  console.log(response);
+                  console.log(error);
+              }
+        })
+    },
+
+    handleChildCategorySort(id){
+        console.log("heey");
+        var from = this.state.activePage * this.state.productsByPage;
+        if (this.state.orderBy == '-created_at') {
+            var sort = {'created_at': 'desc'}
+        } else if (this.state.orderBy == 'title'){
+            var sort = {'title': 'asc'}
+        } else if (this.state.orderBy == 'price') {
+            var sort = {'get_price_function': 'asc'}
+        } else if (this.state.orderBy == '-price') {
+            var sort = {'get_price_function': 'desc'}
+        }
+
+        if (this.state.priceTo && this.state.priceFrom) {
+            var sorting = [{"range": {"get_price_function": {"gte": this.state.priceFrom}}},
+                {"range": {"get_price_function": {"lte": this.state.priceTo}}}]
+        } else if (this.state.priceFrom) {
+            var sorting = [
+                {"range": {"get_price_function": {"gte": this.state.priceFrom}}}
+            ]
+        } else if (this.state.priceTo) {
+            var sorting = [
+                {"range": {"get_price_function": {"lte": this.state.priceTo}}}
+            ]
+        }
+        if (this.state.queryText && id) {
+            var q = [
+                { "match": { "text":  this.state.queryText }},
+                { "match": { "shop_slug":  this.state.shopSlug }},
                 { "match": { "category_id": id }}
             ]
         } else if (id) {
@@ -745,14 +832,16 @@ var MainInterface = createClass({
         var deliveryType = this.state.deliveryType;
         var changeCategory = this.changeCategory;
         var activeCategory = this.state.activeCategory;
-        var productDelete = this.productDelete;
+        // var productDelete = this.productDelete;
         var owner = this.state.owner;
         var handleCategorySort = this.handleCategorySort;
+        var handleChildCategorySort = this.handleChildCategorySort;
+        var descendants = [];
 
         filteredProducts = this.state.products.map(function (item, index) {
             return (
                 <Product key={ index }
-                         onProductDelete={productDelete}
+                         // onProductDelete={productDelete}
                          product={ item }
                          owner={ this.state.owner }
                 />
@@ -760,29 +849,42 @@ var MainInterface = createClass({
         }.bind(this));
 
 
-        categories = this.state.categories.map(function (item, index) {
+        categories = this.state.parentCategories.map(function (parent, parentIndex) {
+            descendants = this.state.categories.map(function (item, index) {
+                if (item.parent_id == parent.id) {
+                    return (
+                        <ChildCategory
+                            key={index}
+                            category={item}
+                            onChangeCategory={changeCategory}
+                            activeCategory={activeCategory}
+                            categorySort={handleChildCategorySort}
+                        />
+                    )
+                }
+            }.bind(this));
             return (
                 <CategoryList
-                    key={index}
-                    category={item}
+                    key={parentIndex}
+                    category={parent}
+                    descendants={descendants}
                     onChangeCategory={changeCategory}
                     activeCategory={activeCategory}
                     categorySort={handleCategorySort}
                 />
             )
-        });
-
-        var productsCount = filteredProducts.length;
+        }.bind(this));
 
         return (
             <div>
                 <div className="col-md-12 col-lg-3">
-                    <ul>
+                    <ul id="accordion" role="tablist" aria-multiselectable="true">
 
                         <li className={this.state.activeCategory == '' ? 'active' : ''}>
-                            <a href="#" onClick={this.deleteActiveCategory}>Все категории</a></li>
+                            <a href="#" className="parent" onClick={this.deleteActiveCategory}>Все категории</a></li>
                         {categories}
                     </ul>
+
                 </div>
                 <div className="col-md-12 col-lg-9">
                     <SearchForm

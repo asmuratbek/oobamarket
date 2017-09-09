@@ -55,5 +55,5 @@ class Category(MPTTModel, PublishBaseModel):
         return Shop.objects.filter(product__category=self)
 
     def descendants(self):
-        return self.get_descendants().values('id', 'title', 'slug')
+        return Category.objects.filter(parent_id=self.id).values('id', 'title', 'slug')
 
