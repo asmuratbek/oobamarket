@@ -10,6 +10,12 @@ from django.views import View
 
 # Create your views here.
 
+def get_summ(items):
+    total = 0
+    for i in items:
+        total += i.total
+    return total
+
 
 class CartDetailView(SingleObjectMixin, View):
     model = Cart
@@ -31,6 +37,11 @@ class CartDetailView(SingleObjectMixin, View):
 
     def get(self, request, *args, **kwargs):
         cart = self.get_object()
+        # shops = cart.get_shops()
+        # total_by_shop = dict()
+        # for shop in shops:
+        #     items = cart.cartitem_set.filter(product__shop=shop)
+        #     total_by_shop[shop.title] = get_summ(items)
         item_id = request.GET.get("item", "")
         delete_item = request.GET.get("delete", False)
         flash_message = ""
@@ -48,8 +59,8 @@ class CartDetailView(SingleObjectMixin, View):
             if created:
                 flash_message = "Продукт успешно добавлен в корзину"
                 item_added = True
-            elif not created and cart_item.quantity == qty:
-                delete_item = True
+            # elif not created and cart_item.quantity == qty:
+            #     delete_item = True
             if delete_item:
                 flash_message = "Продукт успешно удален из корзины"
                 cart_item.delete()
@@ -57,6 +68,9 @@ class CartDetailView(SingleObjectMixin, View):
                 if not created:
                     flash_message = "Количество продукта изменено"
                 cart_item.quantity = qty
+                text = request.GET.get('text', "")
+                if text:
+                    cart_item.comments = text
                 cart_item.save()
             if not request.is_ajax():
                 return HttpResponseRedirect(reverse("cart:detail"))
@@ -67,6 +81,10 @@ class CartDetailView(SingleObjectMixin, View):
                 total = cart_item.total
             except:
                 total = None
+            try:
+                id = cart_item.product.id
+            except:
+                id = None
             try:
                 subtotal = cart_item.cart.subtotal
             except:
@@ -90,7 +108,7 @@ class CartDetailView(SingleObjectMixin, View):
                 "cart_total": cart_total,
                 "flash_message": flash_message,
                 "total_items": total_items,
-                "id": cart_item.product.id
+                "id": id
             }
 
             return JsonResponse(data)

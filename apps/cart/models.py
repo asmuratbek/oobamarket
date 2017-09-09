@@ -25,11 +25,22 @@ class Cart(PublishBaseModel):
     def __str__(self):
         return str(self.id)
 
+    def get_delivery_total(self):
+        delivery_total = 0
+        for index, shop in enumerate(range(self.get_shops().count())):
+            if index == 0:
+                delivery_total += 150
+            else:
+                delivery_total += 100
+        return delivery_total
+
+
     def update_subtotal(self):
         subtotal = 0
         items = self.cartitem_set.all()
         for item in items:
             subtotal += item.total
+        subtotal += self.get_delivery_total()
         self.subtotal = "%.2f" % (subtotal)
         self.save()
 
@@ -53,6 +64,7 @@ class CartItem(models.Model):
     cart = models.ForeignKey(Cart, verbose_name='Корзина')
     product = models.ForeignKey(Product, verbose_name='Продукт', null=True, blank=True)
     quantity = models.PositiveIntegerField(_("Количество"), default=1)
+    comments = models.TextField(_("Комментарии к продукту"), null=True, blank=True)
     total = models.DecimalField(_("Общая цена"), max_digits=10, decimal_places=2)
 
     def __str__(self):
