@@ -70,17 +70,17 @@
                                 </div>
                             </div>
 
-{#                            <div class="form-group input col-md-12">#}
-                                {#                                <input type="text" class="form-control mini" placeholder="Количество">#}
-{#                                {% render_field form.quantity|add_error_attr:"aria-invalid:true"|attr:"class:form-control mini" placeholder="Количество" %}#}
-{#                                <label for="">Количество</label>#}
-{#                            </div>#}
+                            {#                            <div class="form-group input col-md-12">#}
+                            {#                                <input type="text" class="form-control mini" placeholder="Количество">#}
+                            {#                                {% render_field form.quantity|add_error_attr:"aria-invalid:true"|attr:"class:form-control mini" placeholder="Количество" %}#}
+                            {#                                <label for="">Количество</label>#}
+                            {#                            </div>#}
 
-{#                            <div class="form-group select col-md-6">#}
-{##}
-{#                                {% render_field form.availability|add_error_attr:"aria-invalid:true" %}#}
-{##}
-{#                            </div>#}
+                            {#                            <div class="form-group select col-md-6">#}
+                            {##}
+                            {#                                {% render_field form.availability|add_error_attr:"aria-invalid:true" %}#}
+                            {##}
+                            {#                            </div>#}
 
                             <div class="form-group input col-md-12">
                                 <label class="switch">
@@ -121,23 +121,23 @@
                             </div>
                         </div>
 
-{#                        <div class="step_2">#}
-{#                            <h3><span>2.</span> Доставка</h3>#}
-{##}
-{##}
-{#                            <div class="form-group select col-md-6">#}
-{#                                {% render_field form.delivery_type|add_error_attr:"aria-invalid:true" %}#}
-{#                            </div>#}
-{##}
-{#                            <div class="form-group input col-md-6">#}
-{#                                {% render_field form.delivery_cost|add_error_attr:"aria-invalid:true"|attr:"class:form-control mini"|attr:"disabled" placeholder="Стоимость доставки" %}#}
-{#                            </div>#}
-{#                        </div>#}
-{##}
-{#                        <div class="step_3">#}
-{#                            <h3><span>3.</span> Параметры товара</h3>#}
-{#                                {% include 'product/property_list.html' with values=values %}#}
-{#                        </div>#}
+                        {#                        <div class="step_2">#}
+                        {#                            <h3><span>2.</span> Доставка</h3>#}
+                        {##}
+                        {##}
+                        {#                            <div class="form-group select col-md-6">#}
+                        {#                                {% render_field form.delivery_type|add_error_attr:"aria-invalid:true" %}#}
+                        {#                            </div>#}
+                        {##}
+                        {#                            <div class="form-group input col-md-6">#}
+                        {#                                {% render_field form.delivery_cost|add_error_attr:"aria-invalid:true"|attr:"class:form-control mini"|attr:"disabled" placeholder="Стоимость доставки" %}#}
+                        {#                            </div>#}
+                        {#                        </div>#}
+                        {##}
+                        {#                        <div class="step_3">#}
+                        {#                            <h3><span>3.</span> Параметры товара</h3>#}
+                        {#                                {% include 'product/property_list.html' with values=values %}#}
+                        {#                        </div>#}
 
                         <div class="step_4">
                             <h3><span>2.</span> Короткое описание товара <span>(Опционально)</span></h3>
@@ -151,65 +151,89 @@
                             {% render_field form.long_description|attr:"rows:6" %}
                         </div>
 
-                         <div class="form-group input col-md-12">
-                                <label for="">Мета заголовок товара:</label>
-                                {% render_field form.meta_title|attr:"type:text" placeholder="" %}
-                                <i>Введи до 45 символов название которое будет отображаться с посковиках. Для лучшего
-                                    отображения введите ключевое слово товара которое вы продаете на сайте. Например
-                                    если вы продаете кроссовки от найка и адидас. Правильный заголовок будет: "Крассные
-                                    кроссовки  adidas за 4550 сомов". Мы добавим в конце Бишкек и Ваше название магазина. Т.е.
-                                    заголовок в последующем будет выглядеть так:"Купить кроссовки adidas за 4500 сомов Бишкек -
-                                    Кроссовки Центр."
-                                </i>
-                            </div>
-                            <div class="form-group input col-md-12">
-                                <label for="">Мета описание товара:</label>
-                                {% render_field form.meta_description|attr:"rows:6" placeholder="Введите до 220 символов" %}
-                                <i>В мета описании вы можете описать в кратце, какие характеристики имеет товар и адрес продажи.
-                                    Лучше всего описание формируется, где включены несколько 2-3 ключевых слова по которым вас
-                                    будут искать. Чем лучше соответсвие,тем выше позиция.
-                                </i>
-                            </div>
-                            <div class="form-group input col-md-12">
-                                <label for="">Мета ключевые слова товара:</label>
-                                {% render_field form.meta_keywords|attr:"rows:6" placeholder="Введите до 10 ключевых слов" %}
-                                <i>В поле нужно вводить ключевые слова, например, если вы продаете кроссовки. То правильным
-                                    набором ключевых слов будет: "Кроссовки, адидас, найк, бишкек, adidas, nike, купить и т.д."
-                                </i>
-                            </div>
-                            <div class="form-group input col-md-12">
-                                <label for="">СЕО текс товара:</label>
-                                {% render_field form.seo_text|attr:"rows:6" placeholder="Введите сео описание магазина" %}
-                                <i>Это поле не ограничено в заполнении. Но лучше всего чтобы он был не более 500 знаков.
-                                   Сео описание влияет на продвижение вашего товара интернет магазина в поисковике, так что вам
-                                    нужно самостоятельно написать текст. Мы настоятельно не рекомендуем копировать чужой текст,
-                                    так как это не продвинет ваш магазин, а даже снизит его рейтинг в поисковике. Самым
-                                    лучшим способом является составить текст из ключевых слов, которые популярны в поисковике.
-                                </i>
-                            </div>
+                        <a class="btn seo" role="button" data-toggle="collapse" href="#collapseExample"
+                           aria-expanded="false" aria-controls="collapseExample">
+                            Для SEO
+                        </a>
 
-                        <div class="form-group btn-group-form col-md-12">
-                            {#                            <button type="submit" class="btn cancel"> Отменить</button>#}
-                            <button type="button" class="btn add" id="update-product-button">Сохранить изменения</button>
+                        <div class="collapse" id="collapseExample">
+                            <div class="well">
+                                <div class="form-group input col-md-12">
+                                    <label for="">Мета заголовок товара:</label>
+                                    {% render_field form.meta_title|attr:"type:text" placeholder="" %}
+                                    <i>Введи до 45 символов название которое будет отображаться с посковиках. Для
+                                        лучшего
+                                        отображения введите ключевое слово товара которое вы продаете на сайте. Например
+                                        если вы продаете кроссовки от найка и адидас. Правильный заголовок будет:
+                                        "Крассные
+                                        кроссовки adidas за 4550 сомов". Мы добавим в конце Бишкек и Ваше название
+                                        магазина. Т.е.
+                                        заголовок в последующем будет выглядеть так:"Купить кроссовки adidas за 4500
+                                        сомов Бишкек -
+                                        Кроссовки Центр."
+                                    </i>
+                                </div>
+                                <div class="form-group input col-md-12">
+                                    <label for="">Мета описание товара:</label>
+                                    {% render_field form.meta_description|attr:"rows:6" placeholder="Введите до 220 символов" %}
+                                    <i>В мета описании вы можете описать в кратце, какие характеристики имеет товар и
+                                        адрес продажи.
+                                        Лучше всего описание формируется, где включены несколько 2-3 ключевых слова по
+                                        которым вас
+                                        будут искать. Чем лучше соответсвие,тем выше позиция.
+                                    </i>
+                                </div>
+                                <div class="form-group input col-md-12">
+                                    <label for="">Мета ключевые слова товара:</label>
+                                    {% render_field form.meta_keywords|attr:"rows:6" placeholder="Введите до 10 ключевых слов" %}
+                                    <i>В поле нужно вводить ключевые слова, например, если вы продаете кроссовки. То
+                                        правильным
+                                        набором ключевых слов будет: "Кроссовки, адидас, найк, бишкек, adidas, nike,
+                                        купить и т.д."
+                                    </i>
+                                </div>
+                                <div class="form-group input col-md-12">
+                                    <label for="">СЕО текс товара:</label>
+                                    {% render_field form.seo_text|attr:"rows:6" placeholder="Введите сео описание магазина" %}
+                                    <i>Это поле не ограничено в заполнении. Но лучше всего чтобы он был не более 500
+                                        знаков.
+                                        Сео описание влияет на продвижение вашего товара интернет магазина в поисковике,
+                                        так что вам
+                                        нужно самостоятельно написать текст. Мы настоятельно не рекомендуем копировать
+                                        чужой текст,
+                                        так как это не продвинет ваш магазин, а даже снизит его рейтинг в поисковике.
+                                        Самым
+                                        лучшим способом является составить текст из ключевых слов, которые популярны в
+                                        поисковике.
+                                    </i>
+                                </div>
+                            </div>
                         </div>
 
-                    {#                    <div class="col-md-4">#}
-                    {#                        <label class="upload" for="id_images">#}
-                    {#                            <i class="glyphicon glyphicon-plus-sign"></i>#}
-                    {#                            <div class="add-photo">#}
-                    {#                                Добавить<br>фотографии#}
-                    {#                             </div>#}
-                    {#                        </label>#}
-                    {##}
-                    {#                        <div class="info">#}
-                    {#                            <span>Рекомендация для фото:</span>#}
-                    {#                            <p>Размер: 380x380 или больше</p>#}
-                    {#                            <p>Фон: белый или прозрачный</p>#}
-                    {#                            <br>#}
-                    {#                            <span id="file-counter" style="color: red;"></span>#}
-                    {#                        </div>#}
-                    {#                        <input type="file" id="id_images" style="display: none;" multiple>#}
-                                        </div>
+
+                        <div class="form-group btn-group-form col-md-12" style="padding-left: 0; margin-top: 30px;">
+                            {#                            <button type="submit" class="btn cancel"> Отменить</button>#}
+                            <button type="button" class="btn add" id="update-product-button">Сохранить изменения
+                            </button>
+                        </div>
+
+                        {#                    <div class="col-md-4">#}
+                        {#                        <label class="upload" for="id_images">#}
+                        {#                            <i class="glyphicon glyphicon-plus-sign"></i>#}
+                        {#                            <div class="add-photo">#}
+                        {#                                Добавить<br>фотографии#}
+                        {#                             </div>#}
+                        {#                        </label>#}
+                        {##}
+                        {#                        <div class="info">#}
+                        {#                            <span>Рекомендация для фото:</span>#}
+                        {#                            <p>Размер: 380x380 или больше</p>#}
+                        {#                            <p>Фон: белый или прозрачный</p>#}
+                        {#                            <br>#}
+                        {#                            <span id="file-counter" style="color: red;"></span>#}
+                        {#                        </div>#}
+                        {#                        <input type="file" id="id_images" style="display: none;" multiple>#}
+                    </div>
 
 
                     <div class="col-md-4">
@@ -228,18 +252,19 @@
                             <span id="file-counter" style="color: red;"></span>
                         </div>
                         <input class="hidden" type="file" id="uploading-images" style="display: none;" multiple>
-{#                        {% render_field form.image %}#}
-{#                        {% render_field form.removed_images type='hidden' %}#}
-{#                        {% render_field form.uploaded_images type='hidden' %}#}
+                        {#                        {% render_field form.image %}#}
+                        {#                        {% render_field form.removed_images type='hidden' %}#}
+                        {#                        {% render_field form.uploaded_images type='hidden' %}#}
                     </div>
                     <div class="col-md-4">
                         <div id="wrapper-files">
                             {% for i in product.get_all_images %}
-{#                                <h6>{{ i.image.name }}</h6>#}
+                                {#                                <h6>{{ i.image.name }}</h6>#}
                                 <div class="product-images-block">
-                                <img src="{{ i.image.url }}" class="{% if i.is_avatar %}active-border{% else %}add-img-el{% endif %}"
-                                     style="width: 200px; height: auto;" data-productimage-id="{{ i.id }}"/>
-                                <span class="delete_prod_images" data-productimage-id="{{ i.id }}">X</span>
+                                    <img src="{{ i.image.url }}"
+                                         class="{% if i.is_avatar %}active-border{% else %}add-img-el{% endif %}"
+                                         style="width: 200px; height: auto;" data-productimage-id="{{ i.id }}"/>
+                                    <span class="delete_prod_images" data-productimage-id="{{ i.id }}">X</span>
                                     <p>{% if i.is_avatar %}Главная{% endif %}</p>
                                 </div>
                             {% endfor %}
@@ -262,10 +287,10 @@
     <script src="{% static 'js/jquery.ui.widget.js' %}"></script>
     <script src="{% static 'js/jquery.iframe-transport.js' %}"></script>
     <script src="{% static 'js/jquery.fileupload.js' %}"></script>
-{#    <script src="{% static 'js/images_upload.js' %}"></script>#}
-{#    <script src="{% static 'js/jquery.uploadPreview.js' %}"></script>#}
-{#    <script>#}
-{#        console.log($('#uploading-images').attr('data-product-slug'));#}
-{#    </script>#}
+    {#    <script src="{% static 'js/images_upload.js' %}"></script>#}
+    {#    <script src="{% static 'js/jquery.uploadPreview.js' %}"></script>#}
+    {#    <script>#}
+    {#        console.log($('#uploading-images').attr('data-product-slug'));#}
+    {#    </script>#}
     <script src="{% static 'js/product_update.js' %}"></script>
 {% endblock %}

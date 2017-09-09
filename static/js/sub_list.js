@@ -15,36 +15,6 @@ $(document).ready(function () {
               console.log(error);
           }
     });
-   $('.add-basket').click(function (event) {
-        event.preventDefault();
-        var thisItem = $(this);
-        var productId = thisItem.attr("data-product-id");
-        $.ajax({
-            type: "GET",
-            url: "/cart/",
-            data: {
-                "item": productId
-            },
-            success: function (data) {
-                showFlashMessage(data.flash_message);
-                console.log(data);
-                console.log(data.total_items);
-                $('.cart-count').text(data.total_items);
-                if (data.item_added) {
-                    thisItem.html('<span class="glyphicon glyphicon-shopping-cart"></span>В корзине');
-                    thisItem.toggleClass("in-the-basket");
-                }
-                else if (data.deleted) {
-                    thisItem.html('<span class="glyphicon glyphicon-shopping-cart"></span>Добавить в корзину');
-                    thisItem.removeClass("in-the-basket");
-                }
-            },
-            error: function (response, error) {
-                console.log(response);
-                console.log(error);
-            }
-        })
-    });
 
    function isVisible(tag) {
         var t = $(tag);
