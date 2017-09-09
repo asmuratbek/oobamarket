@@ -905,11 +905,13 @@ header
           font-size: 14px
           height: 30px
           overflow: hidden
-          font-weight: 300
+          font-weight: 500
           text-transform: capitalize
         span
           display: block
-          font-size: 14px
+          font-size: 15px
+          font-weight: 600
+          color: #f3481c
           span
             display: inline-block
             margin-right: 1px
@@ -5126,20 +5128,26 @@ body.landing
   .col-md-3, .col-lg-3
     ul
       li:first-child
-
       li.active
-        background-color: #f3481c
-
-        a
+        a.parent
           color: #fff
+          background-color: #f3481c
       li
-        padding: 13px 20px
         background-color: #fff
         a
-          color: #000
+          color: #333
+        .panel-heading
+          padding: 0
+        .parent
+          padding: 13px 20px
+          display: block
         .category-in-category
           padding-left: 20px
           a
+        .panel-body
+          padding: 13px 15px 13px 35px
+          .active
+            color: #f3481c
   .form-filter
     background-color: #fff
     margin: 0 11px

@@ -33,7 +33,7 @@ var ChildCategory = createClass({
   render: function(){
     return (
               <div>
-                <a href={this.props.category.id} className="active" onClick={this.handleCategoriesSort}>{this.props.category.title}</a>
+                <a href={this.props.category.id} className="children" onClick={this.handleCategoriesSort}>{this.props.category.title}</a>
               </div>
           )
   }

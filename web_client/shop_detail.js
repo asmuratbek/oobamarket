@@ -881,7 +881,7 @@ var MainInterface = createClass({
                     <ul id="accordion" role="tablist" aria-multiselectable="true">
 
                         <li className={this.state.activeCategory == '' ? 'active' : ''}>
-                            <a href="#" onClick={this.deleteActiveCategory}>Все категории</a></li>
+                            <a href="#" className="parent" onClick={this.deleteActiveCategory}>Все категории</a></li>
                         {categories}
                     </ul>
 
