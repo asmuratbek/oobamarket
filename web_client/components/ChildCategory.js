@@ -6,16 +6,11 @@ import _ from 'lodash';
 var ChildCategory = createClass({
   displayName: 'ChildCategory',
 
-  handleCategoriesSort: function(e){
-    e.preventDefault();
-    // if (_.indexOf(this.props.activeCategories, this.props.category)!=-1){
-    //   e.target.parentElement.className = "";
-    // }
-    // else {
-    //   e.target.parentElement.className += "active ";
-    // }
-    // this.props.onChangeCategory(e.target.text);
-  },
+  handleCategoriesSort: function (e) {
+        e.preventDefault();
+        console.log(e.target.getAttribute('data-id'));
+        this.props.categorySort(e.target.getAttribute('data-id'));
+    },
 
   getDescendants: function(category){
 
@@ -33,7 +28,7 @@ var ChildCategory = createClass({
   render: function(){
     return (
               <div>
-                <a href={this.props.category.id} className="children" onClick={this.handleCategoriesSort}>{this.props.category.title}</a>
+                <a href="#" className={this.props.category.id == this.props.activeCategory ? "active children" : "children"} data-id={this.props.category.id} onClick={this.handleCategoriesSort}>{this.props.category.title}</a>
               </div>
           )
   }

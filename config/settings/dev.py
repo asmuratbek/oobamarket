@@ -238,4 +238,4 @@ RAVEN_CONFIG = {
 # Your production stuff: Below this line define 3rd party library settings
 # ------------------------------------------------------------------------------
 
-DOMAIN_URL = "http://145.239.33.4/"
+DOMAIN_URL = "http://145.239.33.4"

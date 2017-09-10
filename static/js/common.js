@@ -674,6 +674,26 @@ $(document).ready(function () {
         })
     });
 
+    $('.item-comment').bind('keyup change paste', function () {
+        var itemId = $(this).attr('data-product-id');
+        var text = $(this).val();
+        $.ajax({
+            type: "GET",
+            url: "/cart/",
+            data: {
+                "item": itemId,
+                "text": text
+            },
+            success: function (data) {
+                return;
+            },
+            error: function (response, error) {
+                console.log(response);
+                console.log(error);
+            }
+        });
+    })
+
     $('.add-basket').click(function (event) {
         event.preventDefault();
         var thisItem = $(this);
@@ -728,8 +748,6 @@ $(document).ready(function () {
     });
 
     function showFlashMessage(message) {
-
-        console.log('yeah');
         // var template = "{% include 'alert.html' with message='" + message + "' %}"
         var template = "<div class='container container-alert-flash'>" +
             "<div class='col-sm-3 col-sm-offset-8'> " +
