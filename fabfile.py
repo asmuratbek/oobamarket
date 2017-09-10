@@ -26,11 +26,12 @@ def update():
 
 
 def update_dev():
-    with cd(STAGING_ROOT) and settings(user='admin_dev', password='sunrise226417'):
-        local("git pull origin dev")
-        with prefix('source ' + VENV_DEV_DIR + '/bin/activate'):
-            run('pip install -r requirements/production.txt')
-            run('./manage.py collectstatic --noinput')
-            run('./manage.py migrate --settings=config.settings.dev')
-            sudo('service supervisor stop')
-            sudo('service supervisor start')
+    with cd(STAGING_ROOT):
+        with settings(user='admin_dev', password='sunrise226417'):
+            local("git pull origin dev")
+            with prefix('source ' + VENV_DEV_DIR + '/bin/activate'):
+                run('pip install -r requirements/production.txt')
+                run('./manage.py collectstatic --noinput')
+                run('./manage.py migrate --settings=config.settings.dev')
+                sudo('service supervisor stop')
+                sudo('service supervisor start')
