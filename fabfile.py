@@ -1,4 +1,4 @@
-from fabric.api import cd, env, prefix, put, prompt, local, sudo, run, task
+from fabric.api import cd, env, prefix, put, prompt, local, sudo, run, task, settings
 
 
 PROJECT_NAME = 'ooba'
@@ -26,7 +26,7 @@ def update():
 
 
 def update_dev():
-    with cd(STAGING_ROOT):
+    with cd(STAGING_ROOT) and settings(user='admin_dev', password='sunrise226417'):
         local("git pull origin dev")
         with prefix('source ' + VENV_DEV_DIR + '/bin/activate'):
             run('pip install -r requirements/production.txt')
