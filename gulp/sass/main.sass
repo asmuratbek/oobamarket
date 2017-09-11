@@ -454,18 +454,13 @@ header
     font-weight: 300
   .magazin-btn
     background-color: transparent !important
-
-
     span
       color: gold
   .for-magazin
-    border: 1px solid #e94d09
     border-radius: 2px !important
-    background-color: #e94d09 !important
-    color: #fff !important
     font-weight: bold
     span
-      color: #fff
+
   .favorites
     background-color: transparent!important
     span
@@ -852,6 +847,9 @@ header
           font-weight: 400
           height: 50px
           overflow: hidden
+          small
+            margin-bottom: 10px
+            display: block
         p
           padding: 0 20px
           height: 80px
@@ -1405,18 +1403,18 @@ header
   //  .mCSB_draggerRail
   //    margin: 2px 0 !important
   .content.demo-x
-
   .item-9
     width: 11% !important
   .item-8
     width: 12% !important
-
   .item-11
     width: 9% !important
   .item-10
     width: 10% !important
   .item-7
     width: 14% !important
+  .item-6
+    width: 16% !important
   .item
     padding: 0 5px
     float: left
@@ -1798,6 +1796,9 @@ header
         height: 50px
         overflow: hidden
         color: #333
+        small
+          display: block
+          margin-bottom: 10px
     .info
       margin-top: 20px
       transition: 0.4s
@@ -5133,12 +5134,18 @@ body.landing
       li:first-child
       li.active
         a.parent
+
           color: #fff
           background-color: #f3481c
+
       li
+        border-bottom: 1px solid #eee
         background-color: #fff
         a
           color: #333
+        a.parent
+          border-bottom: 1px solid #eee
+          font-weight: 500
         .panel-heading
           padding: 0
         .parent
@@ -5148,7 +5155,12 @@ body.landing
           padding-left: 20px
           a
         .panel-body
+          padding: 0
+        .panel-body > div:last-child
+          border: 0
+        .panel-body > div
           padding: 13px 15px 13px 35px
+          border-bottom: 1px solid #eee
           .active
             color: #f3481c
   .form-filter
