@@ -42,7 +42,10 @@
                     <a href="{{ product.get_absolute_url }}"></a>
 
                     <div class="name-magazin-title">
-                        <h3>{{ product.shop.title }}</h3>
+                        <h3>
+                            <small>Магaзин</small>
+                            {{ product.shop.title }}
+                        </h3>
                         <p>{{ product.short_description }}</p>
                     </div>
 

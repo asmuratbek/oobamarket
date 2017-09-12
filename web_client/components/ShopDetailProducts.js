@@ -261,7 +261,10 @@ var ProductList = createClass({
                 <a href={this.props.product.detail_view}></a>
 
                 <div className="name-magazin-title">
-                    <h3>{this.props.product.shop}</h3>
+                    <h3>
+                        <small>Магазин</small>
+                        {this.props.product.shop}
+                    </h3>
                     <p>{this.props.product.short_description}</p>
                 </div>
 
