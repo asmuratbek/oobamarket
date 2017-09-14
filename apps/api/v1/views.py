@@ -120,6 +120,24 @@ class GlobalCategoryListApiView(ListAPIView):
     authentication_classes = (SessionAuthentication, TokenAuthentication)
 
 
+class GlobalCategoryGetChildrenApiView(ListAPIView):
+    serializer_class = CategorySerializer
+    permission_classes = (AllowAny,)
+    authentication_classes = (SessionAuthentication, TokenAuthentication)
+
+    def get_queryset(self):
+        return Category.objects.filter(section__slug=self.kwargs.get('slug'), parent__isnull=True)
+
+
+class CategoryDetailChildrenApiView(ListAPIView):
+    serializer_class = CategorySerializer
+    permission_classes = (AllowAny,)
+    authentication_classes = (SessionAuthentication, TokenAuthentication)
+
+    def get_queryset(self):
+        return Category.objects.filter(parent__slug=self.kwargs.get('slug'), parent__isnull=False)
+
+
 class GlobalCategoryDetailApiView(MultipleModelAPIView):
     # queryList = [
     #     (Shop.objects.all(), ShopSerializer),

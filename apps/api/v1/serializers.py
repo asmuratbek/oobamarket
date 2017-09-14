@@ -19,6 +19,7 @@ class CategorySerializer(ModelSerializer):
         fields = (
             'id',
             'title',
+            'slug',
             'parent_id'
             )
 
@@ -190,6 +191,7 @@ class ProductDetailSerializer(ModelSerializer):
             'id',
             'title',
             'short_description',
+            "description",
             'slug',
             'category_title',
             'shop',
