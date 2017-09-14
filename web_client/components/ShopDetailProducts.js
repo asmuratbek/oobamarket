@@ -245,7 +245,7 @@ var ProductList = createClass({
                              data-tip="Скрыть" data-status={`${this.props.product.published ? false : true}`}
                              onClick={this.changePublishStatus}></a>
                 <ReactTooltip/>
-                <a href="#" className="remove glyphicon glyphicon-remove model-trigger"
+                <a href="#" className="remove glyphicon glyphicon-remove model-trigger delete-object"
                              data-url={`/product/${this.props.product.slug}/delete-product/`} data-toggle="modal" data-target="#DeleteModal" title=""
                              data-placement="bottom" data-product-id={this.props.product.pk} data-tip="Удалить"
                              ></a>
