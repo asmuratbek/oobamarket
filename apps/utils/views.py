@@ -161,8 +161,8 @@ def change_to_right_format(slug):
         images = [img for img in images if img.startswith(product_slug)]
         if images:
             [image.delete() for image in product.productimage_set.all()]
-            prod_images = [ProductImage(product=product, image="products/image/" + img) for img in images]
-            ProductImage.objects.bulk_create(prod_images)
+            [ProductImage.objects.create(product=product, image="products/image/" + img) for img in images]
+            print("Картинки для {} созданы.".format(product.title))
     print("Done!!!")
 
 
