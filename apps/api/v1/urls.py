@@ -24,14 +24,18 @@ from .views import (
     ShopReviewsView,
     ShopContactsView,
     PlaceListView,
+    GlobalCategoryGetChildrenApiView,
+    CategoryDetailChildrenApiView
 )
 
 urlpatterns = [
     # url(r'^shop/(?P<slug>[-_\w]+)/$', GetUsedCategoriesFromShop.as_view(), name="shops_used_categories"),
     url(r'^place/$', PlaceListView.as_view(), name='place_list'),
     url(r'^category/(?P<slug>[-_.\w]+)/$', CategoryDetailApiView.as_view(), name='category_detail'),
+    url(r'^category/(?P<slug>[-_.\w]+)/children/$', CategoryDetailChildrenApiView.as_view(), name='category_detail'),
     url(r'^category/$', CategoryListApiView.as_view(), name='category_list'),
     url(r'^globalcategory/(?P<slug>[-_.\w]+)/$', GlobalCategoryDetailApiView.as_view(), name='globalcategory_detail'),
+    url(r'^globalcategory/(?P<slug>[-_.\w]+)/children/$', GlobalCategoryGetChildrenApiView.as_view(), name='globalcategory_children'),
     url(r'^globalcategory/$', GlobalCategoryListApiView.as_view(), name='globalcategory_list'),
     url(r'^product/create/$', ProductCreateApiView.as_view(), name='product_create'),
     # url(r'^category/(?P<slug>[-_\w]+)/$', views.CategoryDetailView.as_view(), name='category_detail'),

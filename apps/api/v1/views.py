@@ -14,7 +14,6 @@ from rest_framework.filters import (
 )
 from rest_framework.generics import (
     ListAPIView,
-    RetrieveAPIView,
     DestroyAPIView,
     CreateAPIView,
     RetrieveUpdateAPIView
@@ -31,10 +30,11 @@ from apps.api.v1.serializers import (
     ShopCreateSerializer,
     CategorySerializer,
     GlobalCategorySerializer,
-    SalesSerializer, ShopReviewsSerializer, ShopContactsSerializer, PlaceSerializer, ParentCategorySerializer)
+    SalesSerializer, ShopReviewsSerializer, ShopContactsSerializer, PlaceSerializer, ParentCategorySerializer,
+    ProductDetailSerializer, ProductImageSerializer)
 from apps.category.models import Category
 from apps.global_category.models import GlobalCategory
-from apps.product.models import Product
+from apps.product.models import Product, ProductImage
 from apps.reviews.models import ShopReviews
 from apps.shop.models import Shop, Sales, Contacts, Place
 from apps.users.models import User
@@ -120,6 +120,24 @@ class GlobalCategoryListApiView(ListAPIView):
     authentication_classes = (SessionAuthentication, TokenAuthentication)
 
 
+class GlobalCategoryGetChildrenApiView(ListAPIView):
+    serializer_class = CategorySerializer
+    permission_classes = (AllowAny,)
+    authentication_classes = (SessionAuthentication, TokenAuthentication)
+
+    def get_queryset(self):
+        return Category.objects.filter(section__slug=self.kwargs.get('slug'), parent__isnull=True)
+
+
+class CategoryDetailChildrenApiView(ListAPIView):
+    serializer_class = CategorySerializer
+    permission_classes = (AllowAny,)
+    authentication_classes = (SessionAuthentication, TokenAuthentication)
+
+    def get_queryset(self):
+        return Category.objects.filter(parent__slug=self.kwargs.get('slug'), parent__isnull=False)
+
+
 class GlobalCategoryDetailApiView(MultipleModelAPIView):
     # queryList = [
     #     (Shop.objects.all(), ShopSerializer),
@@ -177,12 +195,25 @@ class ProductListApiView(ListAPIView):
         return objects
 
 
-class ProductDetailApiView(RetrieveAPIView):
-    queryset = Product.objects.all()
-    serializer_class = ProductSerializer
+class ProductDetailApiView(MultipleModelAPIView):
+    """
+    Возвращает продукт, с его картинками
+    """
+    serializer_class = ProductDetailSerializer
     lookup_field = 'slug'
+    flat = True
     permission_classes = [AllowAny]
     authentication_classes = (SessionAuthentication, TokenAuthentication)
+
+    def get_queryList(self):
+        slug = self.kwargs.get('slug')
+        product = Product.objects.filter(slug=slug)
+        product_images = ProductImage.objects.filter(product__slug=slug)
+        queryList = [
+            (product, ProductDetailSerializer),
+            (product_images, ProductImageSerializer)
+        ]
+        return queryList
 
 
 class ProductUpdateApiView(RetrieveUpdateAPIView):
