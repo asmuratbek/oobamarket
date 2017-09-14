@@ -4,8 +4,9 @@ from rest_framework.serializers import (
     SerializerMethodField,
 )
 from slugify import slugify
-from apps.product.models import Category
+
 from apps.global_category.models import GlobalCategory
+from apps.product.models import Category, ProductImage
 from apps.reviews.models import ShopReviews
 from apps.shop.models import Sales, Contacts, Place
 from apps.users.models import User
@@ -18,6 +19,7 @@ class CategorySerializer(ModelSerializer):
         fields = (
             'id',
             'title',
+            'slug',
             'parent_id'
             )
 
@@ -163,6 +165,92 @@ class ProductSerializer(ModelSerializer):
         return obj.get_delete_url()
 
 
+class ProductDetailSerializer(ModelSerializer):
+    update_url = HyperlinkedIdentityField(
+        view_name='api:product_update',
+        lookup_field="slug"
+    )
+
+    delete_url = HyperlinkedIdentityField(
+        view_name='api:product_delete',
+        lookup_field="slug"
+    )
+    shop = SerializerMethodField()
+    category_title = SerializerMethodField()
+    is_owner = SerializerMethodField()
+    main_image = SerializerMethodField()
+    is_in_cart = SerializerMethodField()
+    is_favorite = SerializerMethodField()
+    get_price_function = SerializerMethodField()
+
+    class Meta:
+        model = Product
+        fields = (
+            'update_url',
+            'delete_url',
+            'id',
+            'title',
+            'short_description',
+            "description",
+            'slug',
+            'category_title',
+            'shop',
+            'currency',
+            'published',
+            'is_owner',
+            'main_image',
+            'is_in_cart',
+            'is_favorite',
+            'get_price_function',
+            'created_at',
+            'updated_at',
+            'get_category_title'
+        )
+
+    def get_shop(self, obj):
+        return str(obj.shop)
+
+    def get_category_title(self, obj):
+        return obj.category.title
+
+    def get_get_price_function(self, obj):
+        return obj.get_price()
+
+    def get_is_owner(self, obj):
+        user = None
+        request = self.context.get("request")
+        if request and hasattr(request, "user"):
+            user = request.user
+            return obj.shop.is_owner(user) or user.is_staff
+        return False
+
+    def get_main_image(self, obj):
+        return obj.get_avatar_image()
+
+    def get_is_in_cart(self, product):
+        request = self.context.get("request")
+        if request.session.get("cart_id"):
+            cart_id = request.session.get("cart_id")
+            cart, created = Cart.objects.get_or_create(id=cart_id)
+            if cart.cartitem_set.filter(product=product).exists():
+                return True
+            else:
+               return False
+        else:
+            return False
+
+    def get_is_favorite(self, product):
+        user = None
+        request = self.context.get("request")
+        if request and hasattr(request, "user"):
+            user = request.user
+            if user.is_authenticated:
+                if product.favorite.filter(user=user).exists():
+                    return True
+                else:
+                    return False
+
+
 class ProductCreateSerializer(ModelSerializer):
 
     class Meta:
@@ -182,6 +270,15 @@ class ProductCreateSerializer(ModelSerializer):
 
     def get_slug(self, obj):
         return slugify(obj.title)
+
+
+class ProductImageSerializer(ModelSerializer):
+
+    class Meta:
+        model = ProductImage
+        fields = (
+            'image',
+        )
 
 
 from apps.product.models import Shop

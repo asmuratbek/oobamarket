@@ -9,7 +9,7 @@ REPO = 'git@bitbucket.org:monokbaev/oobamarket.git'
 STAGING_NAME = 'oobamarket'
 STAGING_ROOT = '/home/admin_dev/oobamarket'
 
-
+# Production
 def update():
     env.host_string = '176.31.28.85'
     env.user = 'admin'
@@ -22,7 +22,7 @@ def update():
             run('./manage.py migrate --settings=config.settings.prod')
             sudo('supervisorctl restart ooba_market')
 
-
+# Dev
 def update_dev():
     env.host_string = '145.239.33.4'
     env.user = 'admin_dev'
