@@ -18,9 +18,9 @@ class Command(BaseCommand):
         images = os.listdir(settings.MEDIA_ROOT + "/products/image/")
         for product in shop.product_set.all():
             product_slug = "-".join(product.slug.lower().split("-")[:-1])
-            images = [img for img in images if img.startswith(product_slug)]
-            if images:
+            images_list = [img for img in images if img.startswith(product_slug)]
+            if images_list:
                 [image.delete() for image in product.productimage_set.all()]
-                [ProductImage.objects.create(product=product, image="products/image/" + img) for img in images]
+                [ProductImage.objects.create(product=product, image="products/image/" + img) for img in images_list]
                 self.stdout.write(self.style.SUCCESS("Картинки для {} созданы.".format(product.title)))
         self.stdout.write(self.style.SUCCESS("Done!!!"))
