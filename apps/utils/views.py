@@ -153,17 +153,6 @@ def download_images_from_optovik():
         print("Картинки {} скачаны.".format(title))
 
 
-def change_to_right_format(slug):
-    shop = get_object_or_404(Shop, slug=slug)
-    images = os.listdir(settings.MEDIA_ROOT + "/products/image/")
-    for product in shop.product_set.all():
-        product_slug = "-".join(product.slug.lower().split("-")[:-1])
-        images = [img for img in images if img.startswith(product_slug)]
-        if images:
-            [image.delete() for image in product.productimage_set.all()]
-            [ProductImage.objects.create(product=product, image="products/image/" + img) for img in images]
-            print("Картинки для {} созданы.".format(product.title))
-    print("Done!!!")
 
 
 
