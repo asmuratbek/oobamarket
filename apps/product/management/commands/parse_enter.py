@@ -33,7 +33,7 @@ class Command(BaseCommand):
         for l, product in enumerate(product_links):
             prod_html = requests.get(product).content
             prod_soup = BeautifulSoup(prod_html, "lxml")
-            title = str(prod_soup.find("span", class_="prouct_name").string).strip()
+            title = str(prod_soup.find("span", class_="prouct_name").string).strip()[:255]
             short_desc = ""
             code = ""
             variables = ""
@@ -42,8 +42,8 @@ class Command(BaseCommand):
             images = url + str(image_a.get("href")) if image_a != "" and "www.google" not in str(image_a.get("href")) else ""
             price_span = prod_soup.find("span", class_="price")
             price = re.findall("\d+", str(price_span.string).split("/")[0])[0] if price_span else 0
-            slug = slugify(title) + "-enter-" + str(l)
-            desc = ""
+            slug = slugify(title[:230]) + "-enter-" + str(l)
+            desc = "<div class='row'></div>"
             available = "Есть"
             product_fields = [title, code, short_desc, str(price), variables, available, str(images), str(slug), str(desc)]
             endrange = 3 + len(product_fields)
