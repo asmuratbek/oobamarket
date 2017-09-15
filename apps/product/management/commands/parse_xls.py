@@ -38,7 +38,7 @@ class Command(BaseCommand):
         for product in data:
             slug = product[7].lower() if len(product[7]) <= 255 else product[7].lower()[:255]
             price = Decimal(product[3]) if product[3] != "" else 0
-            title = product[0]
+            title = product[0] if len(product[0]) <= 255 else product[0][:255]
             short_desc = product[2]
             active = str(product[5])
             available = 'available' if active.startswith("Есть") else "not_available"
