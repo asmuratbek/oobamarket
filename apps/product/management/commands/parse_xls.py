@@ -36,7 +36,7 @@ class Command(BaseCommand):
         data = [[sheet.cell_value(r, c) for c in range(3, sheet.ncols)] for r in range(sheet.nrows) if \
                 sheet.row(r)[3].value != ""]
         for product in data:
-            slug = product[7].lower()
+            slug = product[7].lower() if len(product[7]) <= 255 else product[7].lower()[:255]
             price = Decimal(product[3]) if product[3] != "" else 0
             title = product[0]
             short_desc = product[2]
