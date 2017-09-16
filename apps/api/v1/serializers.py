@@ -42,6 +42,7 @@ class GlobalCategorySerializer(ModelSerializer):
             'id',
             'title',
             'slug',
+            'icon'
             )
 
 from apps.cart.models import Cart

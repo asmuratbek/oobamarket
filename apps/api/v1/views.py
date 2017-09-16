@@ -1,9 +1,14 @@
 from allauth.socialaccount.providers.facebook.views import FacebookOAuth2Adapter
 from allauth.socialaccount.providers.google.views import GoogleOAuth2Adapter
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
+from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 from django.utils.decorators import method_decorator
+from django.views import View
 from django.views.decorators.cache import cache_page
+from django.views.decorators.http import require_GET
 from drf_multiple_model.views import MultipleModelAPIView
 from rest_auth.registration.views import SocialLoginView
 from rest_framework import filters
@@ -22,6 +27,7 @@ from rest_framework.permissions import (
     AllowAny,
     IsAdminUser
 )
+from rest_framework.views import APIView
 
 from apps.api.v1.serializers import (
     ProductSerializer,
@@ -44,7 +50,7 @@ from .pagination import (
     ShopLimitPagination,
     ShopProductsLimitPagination
 )
-from .permissions import IsOwnerOrReadOnly
+from .permissions import IsOwnerOrReadOnly, IsUserOwner
 
 
 class FacebookLogin(SocialLoginView):
@@ -335,7 +341,7 @@ class ShopCreateApiView(CreateAPIView):
     serializer_class = ShopCreateSerializer
 
 
-class UserDetailView(ListAPIView):
+class UserShopsListView(ListAPIView):
     """
        Возвращает все Магазины пользователя
     """
@@ -350,6 +356,74 @@ class UserDetailView(ListAPIView):
         user = User.objects.filter(id=user_id)
         shops = Shop.objects.filter(user=user)
         return shops
+
+
+class UserDetailView(APIView):
+    permission_classes = (IsUserOwner,)
+    authentication_classes = (SessionAuthentication, TokenAuthentication)
+
+    def get(self, request, pk):
+        user = get_object_or_404(User, id=pk)
+
+        return JsonResponse({
+            "status": "success",
+            "username": user.username,
+            "email": user.email,
+            "address": user.address,
+            "phone": user.phone,
+            "cart_count": user.get_cart_count(),
+            "favorites_count": user.get_favorites_count()
+        })
+
+
+class UserCartItemsView(APIView):
+    permission_classes = (IsUserOwner,)
+    authentication_classes = (SessionAuthentication, TokenAuthentication)
+
+    def get(self, request, pk):
+        user = get_object_or_404(User, id=pk)
+        cartitems = list()
+
+        for item in user.cart_set.last().cartitem_set.all():
+            cartitems.append({
+                "title": item.product.title,
+                "short_description": item.product.short_description,
+                "shop": item.product.get_shop_title(),
+                "price": item.product.get_price(),
+                "image": item.product.get_main_thumb_image(),
+                "is_favorite": item.product.favorite.filter(user=user).exists(),
+                "is_in_cart": True
+            })
+
+        return JsonResponse({
+            "status": "success",
+            "items": cartitems
+        })
+
+
+class UserFavoritesView(APIView):
+    permission_classes = (IsUserOwner,)
+    authentication_classes = (SessionAuthentication, TokenAuthentication)
+
+    def get(self, request, pk):
+        user = get_object_or_404(User, id=pk)
+        favorites = list()
+
+        for item in user.get_favorites():
+            favorites.append({
+                "title": item.product.title,
+                "short_description": item.product.short_description,
+                "shop": item.product.get_shop_title(),
+                "price": item.product.get_price(),
+                "image": item.product.get_main_thumb_image(),
+                "is_favorite": item.product.favorite.filter(user=user).exists(),
+                "is_in_cart": True
+            })
+
+        return JsonResponse({
+            "status": "success",
+            "items": favorites
+        })
 
 
 class ShopDetailView(MultipleModelAPIView):
