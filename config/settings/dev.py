@@ -172,8 +172,16 @@ CACHES = {
 
 
 # Sentry Configuration
-# SENTRY_DSN = env('DJANGO_SENTRY_DSN')
+SENTRY_DSN = 'https://3ab826543fcd48df9eb4d1cf3c7048b3:9ae3a131f73142c6988ddbb162bc288f@sentry.io/217872'
 SENTRY_CLIENT = env('DJANGO_SENTRY_CLIENT', default='raven.contrib.django.raven_compat.DjangoClient')
+
+RAVEN_CONFIG = {
+    'dsn': SENTRY_DSN,
+    # If you are using git, you can also automatically configure the
+    # release based on the git info.
+    'release': raven.fetch_git_sha(os.path.dirname(os.pardir)),
+}
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': True,
