@@ -173,50 +173,66 @@ var ProductList = createClass({
   // handleDelete: function(product_id){
   //   this.props.onProductDelete(product_id)
   // },
-  //
-  // deleteProduct: function(e) {
-  //   e.preventDefault();
-  //   var handleDelete = this.handleDelete;
-  //   var product_id = e.target.getAttribute('data-product-id')
-  //   function initForm() {
-  //       $('#ProductDelete').on('submit', function (event) {
-  //           event.preventDefault();
-  //           // $("#DeleteModal").fadeOut();
-  //           $("#DeleteModal").modal('hide');
-  //           var that = this;
-  //           $(that).addClass('hidden');
-  //           $.ajax({
-  //               method: 'POST',
-  //               dataType: 'JSON',
-  //               data: $(that).serialize(),
-  //               url: $(that).attr('action'),
-  //               success: function (response) {
-  //               },
-  //               error: function (error) {
-  //               }
-  //           });
-  //           handleDelete(product_id);
-  //       });
-  //   }
-  //
-  //   var target = e.target;
-  //   var link = target.getAttribute('data-url');
-  //
-  //   $.ajax({
-  //       method: 'GET',
-  //       dataType: 'HTML',
-  //       url: link,
-  //       success: function (response) {
-  //           $('#ajax-modal-body').html(response);
-  //           initForm();
-  //           $('#application-form').append("{% csrf_token %}");
-  //
-  //       },
-  //       error: function () {
-  //
-  //       }
-  //   });
-  // },
+
+  deleteProduct: function(e) {
+    e.preventDefault();
+    console.log("hey")
+    // var handleDelete = this.handleDelete;
+    var product_id = e.target.getAttribute('data-product-id');
+    $.ajax({
+        method: 'GET',
+        dataType: 'HTML',
+        url: e.target.getAttribute('data-url'),
+        success: function (response) {
+            $('#ajax-modal-body').html(response);
+            // initForm();
+            // $('#application-form').append("{% csrf_token %}");
+
+        },
+        error: function () {
+            console.log("error")
+        }
+    });
+
+    // function initForm() {
+    //     $('#ProductDelete').on('submit', function (event) {
+    //         event.preventDefault();
+    //         // $("#DeleteModal").fadeOut();
+    //         $("#DeleteModal").modal('hide');
+    //         var that = this;
+    //         $(that).addClass('hidden');
+    //         $.ajax({
+    //             method: 'POST',
+    //             dataType: 'JSON',
+    //             data: $(that).serialize(),
+    //             url: $(that).attr('action'),
+    //             success: function (response) {
+    //             },
+    //             error: function (error) {
+    //             }
+    //         });
+    //         handleDelete(product_id);
+    //     });
+    // }
+
+    // var target = e.target;
+    // var link = target.getAttribute('data-url');
+    //
+    // $.ajax({
+    //     method: 'GET',
+    //     dataType: 'HTML',
+    //     url: link,
+    //     success: function (response) {
+    //         $('#ajax-modal-body').html(response);
+    //         initForm();
+    //         $('#application-form').append("{% csrf_token %}");
+    //
+    //     },
+    //     error: function () {
+    //
+    //     }
+    // });
+  },
 
   render: function(){
 
@@ -245,10 +261,10 @@ var ProductList = createClass({
                              data-tip="Скрыть" data-status={`${this.props.product.published ? false : true}`}
                              onClick={this.changePublishStatus}></a>
                 <ReactTooltip/>
-                <a href="#" className="remove glyphicon glyphicon-remove model-trigger delete-object"
+                <a href="#" className="glyphicon glyphicon-remove model-trigger"
                              data-url={`/product/${this.props.product.slug}/delete-product/`} data-toggle="modal" data-target="#DeleteModal" title=""
                              data-placement="bottom" data-product-id={this.props.product.pk} data-tip="Удалить"
-                             ></a>
+                             onClick={this.deleteProduct}></a>
                 <ReactTooltip/>
 
             </div>
