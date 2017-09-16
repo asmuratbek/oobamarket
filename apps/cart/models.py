@@ -54,6 +54,9 @@ class Cart(PublishBaseModel):
         for item in self.cartitem_set.all():
             item.delete()
 
+    def get_cart_items_count(self):
+        return self.cartitem_set.count()
+
 
 class CartItem(models.Model):
 
