@@ -15,7 +15,8 @@ def update():
     env.user = 'admin'
     env.password = 'sunrise226417'
     with cd(PROJECT_ROOT):
-        run('git pull origin master')
+        sudo('git stash')
+        sudo('git pull origin master')
         with prefix('source ' + VENV_DIR + '/bin/activate'):
             run('pip install -r requirements/production.txt')
             run('./manage.py collectstatic --noinput')
@@ -28,7 +29,8 @@ def update_dev():
     env.user = 'admin_dev'
     env.password = 'sunrise226417'
     with cd(STAGING_ROOT):
-        run("git pull origin dev")
+        sudo('git stash')
+        sudo("git pull origin dev")
         with prefix('source ' + VENV_DEV_DIR + '/bin/activate'):
             run('pip install -r requirements/production.txt')
             run('./manage.py collectstatic --noinput')
