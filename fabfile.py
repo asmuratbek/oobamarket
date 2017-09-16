@@ -29,8 +29,8 @@ def update_dev():
     env.user = 'admin_dev'
     env.password = 'sunrise226417'
     with cd(STAGING_ROOT):
-        sudo('git stash')
-        sudo("git pull origin dev")
+        run('git stash')
+        run("git pull origin dev")
         with prefix('source ' + VENV_DEV_DIR + '/bin/activate'):
             run('pip install -r requirements/production.txt')
             run('./manage.py collectstatic --noinput')
