@@ -191,7 +191,7 @@ class ProductDetailSerializer(ModelSerializer):
             'id',
             'title',
             'short_description',
-            "description",
+            "long_description",
             'slug',
             'category_title',
             'shop',
