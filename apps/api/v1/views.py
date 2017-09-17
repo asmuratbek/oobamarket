@@ -201,25 +201,29 @@ class ProductListApiView(ListAPIView):
         return objects
 
 
-class ProductDetailApiView(MultipleModelAPIView):
+class ProductDetailApiView(APIView):
     """
     Возвращает продукт, с его картинками
     """
-    serializer_class = ProductDetailSerializer
-    lookup_field = 'slug'
-    flat = True
     permission_classes = [AllowAny]
     authentication_classes = (SessionAuthentication, TokenAuthentication)
 
-    def get_queryList(self):
-        slug = self.kwargs.get('slug')
-        product = Product.objects.filter(slug=slug)
-        product_images = ProductImage.objects.filter(product__slug=slug)
-        queryList = [
-            (product, ProductDetailSerializer),
-            (product_images, ProductImageSerializer)
-        ]
-        return queryList
+    def get(self, request, slug):
+        product = Product.objects.filter(slug=slug).first()
+        images = list()
+        for image in ProductImage.objects.filter(product__slug=slug):
+            images.append({
+                "image": image.image.url
+            })
+        return JsonResponse({
+            "title": product.title,
+            "short_description": product.short_description,
+            "shop": product.get_shop_title(),
+            "price": product.get_price(),
+            "images": images,
+            "is_favorite": product.favorite.filter(user=self.request.user).exists(),
+            "is_in_cart": True
+        })
 
 
 class ProductUpdateApiView(RetrieveUpdateAPIView):
