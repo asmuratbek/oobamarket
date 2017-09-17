@@ -21,6 +21,7 @@ var MainInterface = createClass({
             queryText: '',
             productsCount: 0,
             activePage: 1,
+            fromPage: 0,
             pagesCount: 0,
             productsByPage: 21,
             products: [],
@@ -127,6 +128,7 @@ var MainInterface = createClass({
         ) : (
             this.state.activePage * this.state.productsByPage
         );
+        console.log(this.state.fromPage);
         if (this.state.orderBy == '-created_at') {
             var sort = {'created_at': 'desc'}
         } else if (this.state.orderBy == 'title'){
@@ -153,7 +155,7 @@ var MainInterface = createClass({
           var q = [
               { "match": { "text":  this.state.queryText }},
               { "match_phrase": { "shop_slug":  this.state.shopSlug }},
-              { "match": { "category_id": this.state.activeCategory }}
+              { "match_phrase": { "category_id": this.state.activeCategory }}
 
           ]
         } else if (this.state.queryText) {
@@ -161,9 +163,14 @@ var MainInterface = createClass({
                 { "match": { "text":  this.state.queryText }},
                 { "match_phrase": { "shop_slug":  this.state.shopSlug }},
             ]
-        } else if (this.state.activeCategory) {
+        } else if (this.state.activeCategory && this.state.parent) {
            var q = [
-                { "match": { "category_id": this.state.activeCategory }},
+                { "match_phrase": { "parent_category_id": this.state.activeCategory }},
+                {"match_phrase": {"shop_slug": this.state.shopSlug}},
+            ]
+        } else if (!this.state.parent) {
+           var q = [
+                { "match_phrase": { "category_id": this.state.activeCategory }},
                 {"match_phrase": {"shop_slug": this.state.shopSlug}},
             ]
         } else {
@@ -180,7 +187,7 @@ var MainInterface = createClass({
 
                       },
                 "size":  this.state.productsByPage,
-                "from": pageNumber == 1 ? 0 : from,
+                "from": pageNumber == 1 ? 0 : this.state.fromPage,
                 "sort": [
                     sort,
                 ],
@@ -199,7 +206,7 @@ var MainInterface = createClass({
                     this.setState({
                         products: products,
                         activePage: pageNumber,
-                        fromPage: this.state.productsByPage * pageNumber,
+                        fromPage: from,
                         loaded: true,
                     });
               }.bind(this),
@@ -651,7 +658,8 @@ var MainInterface = createClass({
                         pagesCount: pagesCount,
                         productsCount: data.hits.total,
                         activePage: 1,
-                        activeCategory: id
+                        activeCategory: id,
+                        parent: true,
                     });
               }.bind(this),
               error: function (response, error) {
@@ -734,7 +742,8 @@ var MainInterface = createClass({
                         pagesCount: pagesCount,
                         productsCount: data.hits.total,
                         activePage: 1,
-                        activeCategory: id
+                        activeCategory: id,
+                        parent: false
                     });
               }.bind(this),
               error: function (response, error) {
