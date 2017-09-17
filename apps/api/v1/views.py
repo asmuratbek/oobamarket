@@ -221,7 +221,7 @@ class ProductDetailApiView(APIView):
             "shop": product.get_shop_title(),
             "price": product.get_price(),
             "images": images,
-            "is_favorite": product.favorite.filter(user=self.request.user).exists(),
+            "is_favorite": product.favorite.filter(user=self.request.user).exists() if self.request.user.is_authenticated else 0,
             "is_in_cart": True
         })
 
