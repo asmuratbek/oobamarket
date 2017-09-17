@@ -164,6 +164,8 @@ var MainInterface = createClass({
                 { "match_phrase": { "shop_slug":  this.state.shopSlug }},
             ]
         } else if (this.state.activeCategory && this.state.parent) {
+            console.log("here");
+            console.log(from);
            var q = [
                 { "match_phrase": { "parent_category_id": this.state.activeCategory }},
                 {"match_phrase": {"shop_slug": this.state.shopSlug}},
@@ -660,6 +662,7 @@ var MainInterface = createClass({
                         activePage: 1,
                         activeCategory: id,
                         parent: true,
+                        fromPage: 21
                     });
               }.bind(this),
               error: function (response, error) {
@@ -743,7 +746,8 @@ var MainInterface = createClass({
                         productsCount: data.hits.total,
                         activePage: 1,
                         activeCategory: id,
-                        parent: false
+                        parent: false,
+                        fromPage: 21,
                     });
               }.bind(this),
               error: function (response, error) {
