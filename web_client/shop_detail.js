@@ -21,7 +21,7 @@ var MainInterface = createClass({
             queryText: '',
             productsCount: 0,
             activePage: 1,
-            fromPage: 0,
+            fromPage: 21,
             pagesCount: 0,
             productsByPage: 21,
             products: [],
