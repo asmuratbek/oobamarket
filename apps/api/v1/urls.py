@@ -28,7 +28,9 @@ from .views import (
     ShopContactsView,
     PlaceListView,
     GlobalCategoryGetChildrenApiView,
-    CategoryDetailChildrenApiView
+    CategoryDetailChildrenApiView,
+    ProductAddToFavoriteView,
+    ProductAddToCartView
 )
 
 urlpatterns = [
@@ -43,6 +45,8 @@ urlpatterns = [
     url(r'^product/create/$', ProductCreateApiView.as_view(), name='product_create'),
     # url(r'^category/(?P<slug>[-_\w]+)/$', views.CategoryDetailView.as_view(), name='category_detail'),
     url(r'^product/(?P<slug>[-_\w]+)/$', ProductDetailApiView.as_view(), name='product_detail'),
+    url(r'^product/(?P<slug>[-_\w]+)/add-to-favorite/$', ProductAddToFavoriteView.as_view()),
+    url(r'^product/(?P<slug>[-_\w]+)/add-to-cart/$', ProductAddToCartView.as_view()),
     url(r'^product/(?P<slug>[-_\w]+)/update/$', ProductUpdateApiView.as_view(), name='product_update'),
     url(r'^product/(?P<slug>[-_\w]+)/delete/$', ProductDeleteApiView.as_view(), name='product_delete'),
     url(r'^product/$', ProductListApiView.as_view(), name='product_list'),

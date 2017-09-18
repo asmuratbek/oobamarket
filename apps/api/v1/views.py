@@ -25,8 +25,8 @@ from rest_framework.generics import (
 )
 from rest_framework.permissions import (
     AllowAny,
-    IsAdminUser
-)
+    IsAdminUser,
+    IsAuthenticated)
 from rest_framework.views import APIView
 
 from apps.api.v1.serializers import (
@@ -38,9 +38,10 @@ from apps.api.v1.serializers import (
     GlobalCategorySerializer,
     SalesSerializer, ShopReviewsSerializer, ShopContactsSerializer, PlaceSerializer, ParentCategorySerializer,
     ProductDetailSerializer, ProductImageSerializer)
+from apps.cart.models import Cart, CartItem
 from apps.category.models import Category
 from apps.global_category.models import GlobalCategory
-from apps.product.models import Product, ProductImage
+from apps.product.models import Product, ProductImage, FavoriteProduct
 from apps.reviews.models import ShopReviews
 from apps.shop.models import Shop, Sales, Contacts, Place
 from apps.users.models import User
@@ -65,6 +66,45 @@ class CategoryListApiView(ListAPIView):
     serializer_class = CategorySerializer
     # pagination_class = ShopLimitPagination#PageNumberPagination
     queryset = Category.objects.all()
+
+
+class ProductAddToFavoriteView(APIView):
+    permission_classes = (IsAuthenticated,)
+    authentication_classes = (SessionAuthentication, TokenAuthentication)
+
+    def post(self, request, slug):
+        favorite, created = FavoriteProduct.objects.get_or_create(product__slug=slug)
+        if created:
+            status = "success"
+            message = "added to favorites"
+        else:
+            status = "error"
+            message = "already in favorites list"
+        return JsonResponse({
+            "status": status,
+            "message": message
+        })
+
+
+class ProductAddToCartView(APIView):
+    permission_classes = (IsAuthenticated,)
+    authentication_classes = (SessionAuthentication, TokenAuthentication)
+
+    def post(self, request, slug):
+        cart = Cart.objects.filter(user=request.user).last()
+        if not cart:
+            cart = Cart.objects.create(user=request.user)
+        cart_item, created = CartItem.objects.get_or_create(cart=cart, product__slug=slug)
+        if created:
+            status = "success"
+            message = "added to cart"
+        else:
+            status = "error"
+            message = "already in cart"
+        return JsonResponse({
+            "status": status,
+            "message": message
+        })
 
 
 class GetUsedCategoriesFromShop(ListAPIView):
