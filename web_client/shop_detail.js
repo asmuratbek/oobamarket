@@ -164,13 +164,11 @@ var MainInterface = createClass({
                 { "match_phrase": { "shop_slug":  this.state.shopSlug }},
             ]
         } else if (this.state.activeCategory && this.state.parent) {
-            console.log("here");
-            console.log(from);
            var q = [
                 { "match_phrase": { "parent_category_id": this.state.activeCategory }},
                 {"match_phrase": {"shop_slug": this.state.shopSlug}},
             ]
-        } else if (!this.state.parent) {
+        } else if (this.state.activeCategory && !this.state.parent ) {
            var q = [
                 { "match_phrase": { "category_id": this.state.activeCategory }},
                 {"match_phrase": {"shop_slug": this.state.shopSlug}},
