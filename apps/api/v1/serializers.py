@@ -88,18 +88,11 @@ class ProductSerializer(ModelSerializer):
             'slug',
             'category_title',
             'shop',
-            'price',
-            'sell_count',
             'discount',
-            'currency',
-            'delivery_type',
-            'delivery_cost',
-            'availability',
             'published',
             'is_owner',
             'main_image',
             'is_in_cart',
-            'delivery_type_display',
             'is_favorite',
             'detail_view',
             'update_view',
@@ -107,7 +100,6 @@ class ProductSerializer(ModelSerializer):
             'get_price_function',
             'created_at',
             'updated_at',
-            'get_category_title'
         )
 
     def get_shop(self, obj):
