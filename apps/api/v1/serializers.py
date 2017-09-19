@@ -69,7 +69,6 @@ class ProductSerializer(ModelSerializer):
     is_owner = SerializerMethodField()
     main_image = SerializerMethodField()
     is_in_cart = SerializerMethodField()
-    delivery_type_display = SerializerMethodField()
     is_favorite = SerializerMethodField()
     detail_view = SerializerMethodField()
     update_view = SerializerMethodField()
@@ -118,9 +117,6 @@ class ProductSerializer(ModelSerializer):
             user = request.user
             return obj.shop.is_owner(user) or user.is_staff
         return False
-
-    def get_delivery_type_display(self, obj):
-        return obj.get_delivery_type()
 
     def get_main_image(self, obj):
         return obj.get_avatar_image()
