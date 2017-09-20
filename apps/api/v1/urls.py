@@ -64,7 +64,7 @@ urlpatterns = [
     url(r'^user/(?P<pk>[0-9]+)/shops/$', UserShopsListView.as_view(), name="user_shops_list"),
     url(r'^user/(?P<pk>[0-9]+)/cart/$', UserCartItemsView.as_view(), name="user_cart"),
     url(r'^user/(?P<pk>[0-9]+)/favorites/$', UserFavoritesView.as_view(), name="user_cart"),
-    url(r'^user/(?P<pk>[0-9]+)/$', UserDetailView.as_view(), name="user_detail"),
+    url(r'^user/$', UserDetailView.as_view(), name="user_detail"),
     url(r'^rest-auth/', include('rest_auth.urls')),
     url(r'^rest-auth/registration/', include('rest_auth.registration.urls')),
     url(r'^rest-auth/facebook/$', FacebookLogin.as_view(), name='fb_login'),

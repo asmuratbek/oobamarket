@@ -412,11 +412,11 @@ class UserShopsListView(ListAPIView):
 
 
 class UserDetailView(APIView):
-    permission_classes = (IsUserOwner,)
+    permission_classes = (IsAuthenticated, IsUserOwner,)
     authentication_classes = (SessionAuthentication, TokenAuthentication)
 
-    def get(self, request, pk):
-        user = get_object_or_404(User, id=pk)
+    def get(self, request):
+        user = get_object_or_404(User, id=request.user.id)
 
         return JsonResponse({
             "status": "success",
