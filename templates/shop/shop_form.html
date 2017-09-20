@@ -3,7 +3,7 @@
 {% load staticfiles %}
 {% block head %}
     {{ block.super }}
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
+
 {% endblock %}
 {% block content %}
 
@@ -195,4 +195,10 @@
 {% block js %}
 
     {% include 'shop/partials/js_for_shop_cr_up_tmp.html' %}
+<script src="{% static 'js/picker.js' %}"></script>
+<script src="{% static 'js/picker.time.js' %}"></script>
+  <script>
+    $('.timepicker').pickatime()
+    </script>
 {% endblock %}
+
