@@ -412,7 +412,7 @@ class UserShopsListView(ListAPIView):
 
 
 class UserDetailView(APIView):
-    permission_classes = (IsAuthenticated, IsUserOwner,)
+    permission_classes = (IsAuthenticated,)
     authentication_classes = (SessionAuthentication, TokenAuthentication)
 
     def get(self, request):
