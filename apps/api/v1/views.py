@@ -73,13 +73,18 @@ class ProductAddToFavoriteView(APIView):
     authentication_classes = (SessionAuthentication, TokenAuthentication)
 
     def post(self, request, slug):
-        favorite, created = FavoriteProduct.objects.get_or_create(product__slug=slug)
-        if created:
+        favorite = FavoriteProduct.objects.filter(product__slug=slug, user=request.user)
+        if favorite:
+            favorite.first().delete()
             status = "success"
-            message = "added to favorites"
+            message = "deleted from favorite"
         else:
-            status = "error"
-            message = "already in favorites list"
+            product = get_object_or_404(Product, slug=slug)
+            favorite = FavoriteProduct(product=product, user=request.user)
+            favorite.save()
+            # FavoriteProduct.objects.create(product=product)
+            status = "success"
+            message = "added to favorites list"
         return JsonResponse({
             "status": status,
             "message": message
@@ -94,13 +99,17 @@ class ProductAddToCartView(APIView):
         cart = Cart.objects.filter(user=request.user).last()
         if not cart:
             cart = Cart.objects.create(user=request.user)
-        cart_item, created = CartItem.objects.get_or_create(cart=cart, product__slug=slug)
-        if created:
+        cart_item = CartItem.objects.filter(cart=cart, product__slug=slug)
+        if cart_item:
+            cart_item.first().delete()
+            status = "success"
+            message = "removed from cart"
+        else:
+            product = get_object_or_404(Product, slug=slug)
+            cart_item = CartItem(cart=cart, product=product)
+            cart_item.save()
             status = "success"
             message = "added to cart"
-        else:
-            status = "error"
-            message = "already in cart"
         return JsonResponse({
             "status": status,
             "message": message
