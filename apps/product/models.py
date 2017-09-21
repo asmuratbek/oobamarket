@@ -10,7 +10,6 @@ from django.core.files.storage import default_storage
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.db import models
 from django.db.models.signals import post_delete
-from django.template.loader import render_to_string
 from django.urls import reverse
 from django.utils.translation import ugettext as _
 from django.conf import settings
@@ -83,9 +82,9 @@ class Product(PublishBaseModel, Counter):
         if self.productimage_set.all():
             return self.productimage_set.first().thumb_image.url \
                     if self.productimage_set.first().thumb_image \
-                    else  self.productimage_set.first().image.url
+                    else self.productimage_set.first().image.url
         else:
-            return render_to_string(settings.MEDIA_URL + "default.jpg")
+            return str(settings.MEDIA_URL) + "default.jpg"
 
     def get_all_images(self):
         return self.productimage_set.all()
