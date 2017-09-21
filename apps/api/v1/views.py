@@ -432,7 +432,7 @@ class UserDetailView(APIView):
 
 
 class UserCartItemsView(APIView):
-    permission_classes = (IsUserOwner,)
+    permission_classes = (IsAuthenticated,)
     authentication_classes = (TokenAuthentication,)
 
     def get(self, request):
@@ -457,7 +457,7 @@ class UserCartItemsView(APIView):
 
 
 class UserFavoritesView(APIView):
-    permission_classes = (IsUserOwner,)
+    permission_classes = (IsAuthenticated,)
     authentication_classes = (TokenAuthentication,)
 
     def get(self, request, pk):
