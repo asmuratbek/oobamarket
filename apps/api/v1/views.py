@@ -70,7 +70,7 @@ class CategoryListApiView(ListAPIView):
 
 class ProductAddToFavoriteView(APIView):
     permission_classes = (IsAuthenticated,)
-    authentication_classes = (SessionAuthentication, TokenAuthentication)
+    authentication_classes = (TokenAuthentication, )
 
     def post(self, request, slug):
         favorite = FavoriteProduct.objects.filter(product__slug=slug, user=request.user)
@@ -93,7 +93,7 @@ class ProductAddToFavoriteView(APIView):
 
 class ProductAddToCartView(APIView):
     permission_classes = (IsAuthenticated,)
-    authentication_classes = (SessionAuthentication, TokenAuthentication)
+    authentication_classes = (TokenAuthentication,)
 
     def post(self, request, slug):
         cart = Cart.objects.filter(user=request.user).last()
@@ -255,7 +255,7 @@ class ProductDetailApiView(APIView):
     Возвращает продукт, с его картинками
     """
     permission_classes = [AllowAny]
-    authentication_classes = (SessionAuthentication, TokenAuthentication)
+    authentication_classes = (TokenAuthentication,)
 
     def get(self, request, slug):
         product = Product.objects.filter(slug=slug).first()
@@ -433,10 +433,10 @@ class UserDetailView(APIView):
 
 class UserCartItemsView(APIView):
     permission_classes = (IsUserOwner,)
-    authentication_classes = (SessionAuthentication, TokenAuthentication)
+    authentication_classes = (TokenAuthentication,)
 
-    def get(self, request, pk):
-        user = get_object_or_404(User, id=pk)
+    def get(self, request):
+        user = get_object_or_404(User, id=request.user.id)
         cartitems = list()
 
         for item in user.cart_set.last().cartitem_set.all():
@@ -458,10 +458,10 @@ class UserCartItemsView(APIView):
 
 class UserFavoritesView(APIView):
     permission_classes = (IsUserOwner,)
-    authentication_classes = (SessionAuthentication, TokenAuthentication)
+    authentication_classes = (TokenAuthentication,)
 
     def get(self, request, pk):
-        user = get_object_or_404(User, id=pk)
+        user = get_object_or_404(User, id=request.user.id)
         favorites = list()
 
         for item in user.get_favorites():
