@@ -413,7 +413,7 @@ class UserShopsListView(ListAPIView):
 
 class UserDetailView(APIView):
     permission_classes = (IsAuthenticated,)
-    authentication_classes = (SessionAuthentication, TokenAuthentication)
+    authentication_classes = (TokenAuthentication,)
 
     def get(self, request):
         user = get_object_or_404(User, id=request.user.id)
@@ -421,6 +421,8 @@ class UserDetailView(APIView):
         return JsonResponse({
             "status": "success",
             "username": user.username,
+            "first_name": user.first_name,
+            "last_name": user.last_name,
             "email": user.email,
             "address": user.address,
             "phone": user.phone,
