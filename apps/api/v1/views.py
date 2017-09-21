@@ -460,7 +460,7 @@ class UserFavoritesView(APIView):
     permission_classes = (IsAuthenticated,)
     authentication_classes = (TokenAuthentication,)
 
-    def get(self, request, pk):
+    def get(self, request):
         user = get_object_or_404(User, id=request.user.id)
         favorites = list()
 
