@@ -24,3 +24,13 @@ class Counter(models.Model):
 
     class Meta:
         abstract = True
+
+
+class MetaBaseModel(models.Model):
+    meta_title = models.CharField(max_length=60, verbose_name='Мета заголовок', blank=True, null=True)
+    meta_description = models.CharField(max_length=255, verbose_name='Мета описание', blank=True, null=True)
+    meta_keywords = models.CharField(max_length=255, verbose_name='Мета ключевые слова', blank=True, null=True)
+    seo_text = models.TextField(verbose_name='SEO Текст', null=True, blank=True)
+
+    class Meta:
+        abstract = True

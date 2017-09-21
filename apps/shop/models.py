@@ -10,7 +10,7 @@ from slugify import slugify
 
 from config.settings import base as settings
 from apps.users.models import User
-from apps.utils.models import PublishBaseModel, Counter
+from apps.utils.models import PublishBaseModel, Counter, MetaBaseModel
 
 
 # Create your models here.
@@ -22,7 +22,7 @@ SOCIAL_LINKS = (
 )
 
 
-class Shop(PublishBaseModel, Counter):
+class Shop(PublishBaseModel, MetaBaseModel, Counter):
     class Meta:
         verbose_name = 'Магазин'
         verbose_name_plural = 'Магазины'
@@ -35,10 +35,6 @@ class Shop(PublishBaseModel, Counter):
     description = models.TextField(verbose_name='Полное описание магазина', blank=True, null=True)
     logo = models.ImageField(upload_to='images/shop/logo/', default=settings.DEFAULT_IMAGE,
                              verbose_name='Логотип')
-    meta_title = models.CharField(max_length=60, verbose_name='Мета заголовок', blank=True, null=True)
-    meta_description = models.CharField(max_length=255, verbose_name='Мета описание', blank=True, null=True)
-    meta_keywords = models.CharField(max_length=255, verbose_name='Мета ключевые слова', blank=True, null=True)
-    seo_text = models.TextField(verbose_name='SEO Текст', null=True, blank=True)
 
 
     def __str__(self):
