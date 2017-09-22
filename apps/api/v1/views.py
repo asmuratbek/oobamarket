@@ -438,7 +438,6 @@ class UserCartItemsView(APIView):
     def get(self, request):
         user = get_object_or_404(User, id=request.user.id)
         cartitems = list()
-
         for item in user.cart_set.last().cartitem_set.all():
             cartitems.append({
                 "title": item.product.title,
@@ -448,6 +447,13 @@ class UserCartItemsView(APIView):
                 "image": item.product.get_main_thumb_image(),
                 "is_favorite": item.product.favorite.filter(user=user).exists(),
                 "is_in_cart": True
+            })
+        shops = list()
+        for shop in user.cart_set.last().get_shops():
+            shops.append({
+                "title": shop.title,
+                "logo": shop.get_logo(),
+                "items": [item if item.shop == shop.title else None for  item in cartitems]
             })
 
         return JsonResponse({
