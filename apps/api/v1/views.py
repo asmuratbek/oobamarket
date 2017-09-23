@@ -441,6 +441,7 @@ class UserCartItemsView(APIView):
         for item in user.cart_set.last().cartitem_set.all():
             cartitems.append({
                 "title": item.product.title,
+                "slug": item.product.slug,
                 "short_description": item.product.short_description,
                 "shop": item.product.get_shop_title(),
                 "price": item.product.get_price(),
@@ -473,6 +474,7 @@ class UserFavoritesView(APIView):
         for item in user.get_favorites():
             favorites.append({
                 "title": item.product.title,
+                "slug": item.product.slug,
                 "short_description": item.product.short_description,
                 "shop": item.product.get_shop_title(),
                 "price": item.product.get_price(),
