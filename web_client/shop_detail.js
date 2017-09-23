@@ -48,7 +48,7 @@ var MainInterface = createClass({
 
         $.ajax({
             type: "GET",
-              url: `/api/v1/shop/` + this.state.shopSlug + '/shop/',
+              url: `/api/v1/shop/` + this.state.shopSlug + '/shop/for-react/',
               success: function (data) {
                    var owner = data[0].shop[0].is_owner;
                     var parentCategories = data[1].category.map(obj =>obj);

@@ -83,18 +83,13 @@ class Shop(PublishBaseModel, MetaBaseModel, Counter):
 
     def get_used_categories(self):
         from apps.category.models import Category
-        # category_ids = list()
-        # for product in self.product_set.all():
-        #     category_ids.append(product.category.id)
-        categories = Category.objects.filter(id__in=[prod.category.id for prod in self.product_set.all()])
+        category_ids = self.product_set.values_list('category_id')
+        categories = Category.objects.filter(id__in=category_ids)
         return categories
 
     def get_parent_categories_of_used(self):
         from apps.category.models import Category
-        category_ids = list()
-        for product in self.product_set.all():
-            category_ids.append(product.category.id)
-        categories = Category.objects.filter(id__in=category_ids)
+        categories = self.get_used_categories()
         parents = Category.objects.none()
         for i in categories:
             parents = parents | Category.objects.filter(id=i.parent.id) if i.parent else None

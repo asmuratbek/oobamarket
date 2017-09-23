@@ -31,7 +31,8 @@ from .views import (
     CategoryDetailChildrenApiView,
     ProductAddToFavoriteView,
     ProductAddToCartView,
-    ProductChangeCartView
+    ProductChangeCartView,
+    ShopApiMobileView
 )
 
 urlpatterns = [
@@ -59,7 +60,8 @@ urlpatterns = [
     url(r'^shop/detail/(?P<slug>[-_\w]+)/contacts/$', ShopContactsView.as_view(), name="shop_contacts"),
     url(r'^shop/detail/(?P<slug>[-_\w]+)/$', ShopDetailView.as_view(), name="shop"),
     url(r'^shop/(?P<slug>[-_\w]+)/$', ShopDetailApiView.as_view(), name='shop_detail'),
-    url(r'^shop/(?P<slug>[-_\w]+)/shop/$', ShopApiView.as_view(), name='shop_categories'),
+    url(r'^shop/(?P<slug>[-_\w]+)/shop/for-react/$', ShopApiView.as_view(), name='shop_categories'),
+    url(r'^shop/(?P<slug>[-_\w]+)/shop/$', ShopApiMobileView.as_view(), name='shop_categories'),
     url(r'^shop/(?P<slug>[-_\w]+)/update/$', ShopUpdateApiView.as_view(), name='shop_update'),
     url(r'^shop/(?P<slug>[-_\w]+)/delete/$', ShopDeleteApiView.as_view(), name='shop_delete'),
     url(r'^shop/$', ShopListApiView.as_view(), name='shop_list'),

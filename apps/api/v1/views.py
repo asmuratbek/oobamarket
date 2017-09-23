@@ -375,6 +375,46 @@ class ShopApiView(MultipleModelAPIView):
         return queryList
 
 
+class ShopApiMobileView(APIView):
+    permission_classes = (AllowAny,)
+    authentication_classes = (TokenAuthentication,)
+
+    def get(self, request, slug):
+        shop = get_object_or_404(Shop, slug=slug)
+        is_authenticated = request.user.is_authenticated
+        categories = list()
+        for category in shop.get_used_categories():
+            categories.append({
+                "title": category.title,
+                "id": category.id,
+                "slug": category.slug,
+                "parent_id": category.parent.id if category.parent else None
+            })
+        parent_categories = list()
+        for parent_category in shop.get_parent_categories_of_used():
+            children = list()
+            for child in categories:
+                if child.get('parent_id') == parent_category.id:
+                    children.append(child)
+            parent_categories.append({
+                "id": parent_category.id,
+                "title": parent_category.title,
+                "slug": parent_category.slug,
+                "children": children
+            })
+
+        return JsonResponse({
+            "title": shop.title,
+            "slug": shop.slug,
+            "short_description": shop.short_description,
+            "description": shop.description,
+            "logo": shop.get_logo(),
+            "is_owner": shop.is_owner(request.user) if is_authenticated else False,
+            "is_subscribed": request.user.subscription_set.filter(subscription=shop).exists() if is_authenticated else False,
+            "categories": parent_categories
+        })
+
+
 class ShopUpdateApiView(RetrieveUpdateAPIView):
     queryset = Shop.objects.all()
     serializer_class = ShopSerializer
