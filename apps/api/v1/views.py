@@ -470,6 +470,31 @@ class UserCartItemsView(APIView):
         })
 
 
+class ProductChangeCartView(APIView):
+    permission_classes = (IsAuthenticated,)
+    authentication_classes = (TokenAuthentication,)
+
+    def get(self, request, slug):
+        product = get_object_or_404(Product, slug=slug)
+        user = get_object_or_404(User, id=request.user.id)
+        cart = user.cart_set.last()
+        quantity = request.GET.get('quantity')
+        if cart.cartitem_set.filter(product__slug=slug):
+            status = "success"
+            cartitem = cart.cartitem_set.filter(product__slug=slug).first()
+            cartitem.quantity = quantity
+            cartitem.save()
+            return JsonResponse({
+                "status": status,
+                "total": cartitem.total
+            })
+        else:
+            status = "error"
+            return JsonResponse({
+                "status": status
+            })
+
+
 class UserFavoritesView(APIView):
     permission_classes = (IsAuthenticated,)
     authentication_classes = (TokenAuthentication,)
