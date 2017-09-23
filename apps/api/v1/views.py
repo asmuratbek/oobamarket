@@ -474,11 +474,11 @@ class ProductChangeCartView(APIView):
     permission_classes = (IsAuthenticated,)
     authentication_classes = (TokenAuthentication,)
 
-    def get(self, request, slug):
+    def post(self, request, slug):
         product = get_object_or_404(Product, slug=slug)
         user = get_object_or_404(User, id=request.user.id)
         cart = user.cart_set.last()
-        quantity = request.GET.get('quantity')
+        quantity = request.POST.get('quantity')
         if cart.cartitem_set.filter(product__slug=slug):
             status = "success"
             cartitem = cart.cartitem_set.filter(product__slug=slug).first()
