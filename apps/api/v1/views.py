@@ -465,6 +465,7 @@ class UserCartItemsView(APIView):
 
         return JsonResponse({
             "status": "success",
+            "delivery_total": user.cart_set.last().get_delivery_total(),
             "shops": shops
         })
 
