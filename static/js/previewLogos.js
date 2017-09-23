@@ -32,7 +32,6 @@ remove_logo.click(function () {
 var logo_view_update = $('#id_logo2');
 var remove_logo_update = $('.remove-logo-update');
 var logo = $('#id_logo');
-console.log(logo.val());
 logo.change(function () {
     previewImage(this, logo_view_update);
     remove_logo_update.show();
@@ -40,16 +39,8 @@ logo.change(function () {
     console.log(logo.val());
 });
 
-console.log(logo.val());
 remove_logo_update.on('click', function () {
     logo_view_update.attr('src', null);
     logo.replaceWith(logo.val('').clone(true));
-    console.log($("form input[name='csrfmiddlewaretoken']").val());
-    console.log($('#slug').val());
-    $.post("/shops/remove-logo/", {
-        'slug': $("#slug").val(),
-        'csrfmiddlewaretoken': $("form input[name='csrfmiddlewaretoken']").val()
-    }, function (data) {
-    });
     remove_logo_update.hide();
 });

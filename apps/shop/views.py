@@ -20,7 +20,7 @@ from config.settings import base
 from apps.shop.decorators import delete_decorator
 from apps.shop.forms import ShopForm, ShopBannersForm, ShopSocialLinksForm, ShopInlineFormSet, SalesCreateForm
 from apps.users.mixins import ShopMixin
-from .models import Shop, SocialLinks, Banners, Contacts, Sales
+from .models import Shop, SocialLinks, Banners, Contacts, Sales, DAYS
 import random
 
 
@@ -72,6 +72,11 @@ class ShopCreateView(LoginRequiredMixin1, FormsetMixin, CreateView):
     def get_success_url(self):
         return reverse('shops:detail', args=(self.object.slug,))
 
+    def get_context_data(self, **kwargs):
+        context = super(ShopCreateView, self).get_context_data(**kwargs)
+        context['days'] = DAYS
+        return context
+
     def form_valid(self, form, formset):
         random_int = random.randrange(0, 1010)
         form.instance.slug = slugify(form.instance.title, max_length=32) + str(random_int)
@@ -87,7 +92,24 @@ class ShopUpdateView(LoginRequiredMixin, FormsetMixin, ShopMixin, UpdateView):
     is_update_view = True
     form_class = ShopForm
     formset_class = ShopInlineFormSet
-    template_name = 'shop/shop_form.html'
+    template_name = 'shop/shop_update.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(ShopUpdateView, self).get_context_data(**kwargs)
+        context['days'] = DAYS
+        contact = self.object.contacts_set.first()
+        if contact:
+            context['longitude'] = contact.place.longitude if contact.place else contact.longitude
+            context['latitude'] = contact.place.latitude if contact.place else contact.latitude
+        else:
+            context['longitude'] = ""
+            context['latitude'] = ""
+        return context
+
+    def form_valid(self, form, formset):
+        form.save()
+        formset.save()
+        return super(ShopUpdateView, self).form_valid(form, formset)
 
 
 class ShopDeleteView(LoginRequiredMixin, ShopMixin, DeleteView):
@@ -317,16 +339,3 @@ def agreement(request):
     }
 
     return render(request, 'shop/agreement.html', params)
-
-
-@csrf_exempt
-def remove_logo(request):
-    if request.method == 'POST' and request.is_ajax():
-        slug = request.POST.get('slug', '')
-        shop = get_object_or_404(Shop, slug=slug)
-        if shop.logo:
-            shop.logo = base.DEFAULT_IMAGE
-            shop.save()
-            return JsonResponse({'status': 0, 'message': 'Logo removed'})
-        return JsonResponse({'status': 1, 'message': 'Shop does not have logo'})
-    return HttpResponseBadRequest

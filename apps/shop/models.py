@@ -10,7 +10,7 @@ from slugify import slugify
 
 from config.settings import base as settings
 from apps.users.models import User
-from apps.utils.models import PublishBaseModel, Counter, MetaBaseModel
+from apps.utils.models import PublishBaseModel, Counter, MetaBaseModel, PostionMapModel
 
 
 # Create your models here.
@@ -19,6 +19,16 @@ SOCIAL_LINKS = (
     ('vk', u'Vk.com'),
     ('ok', u'Odnoklassniki.ru'),
     ('instagram', u'Instagram.com')
+)
+
+DAYS = (
+    ('monday', "Понедельник"),
+    ('tuesday', "Вторник"),
+    ('wednesday', "Среда"),
+    ('thursday', "Четверг"),
+    ('friday', "Пятница"),
+    ('saturday', "Суббота"),
+    ('sunday', "Воскресенье"),
 )
 
 
@@ -33,7 +43,7 @@ class Shop(PublishBaseModel, MetaBaseModel, Counter):
     email = models.EmailField(verbose_name='E-mail магазина')
     short_description = models.TextField(verbose_name='Короткое описание магазина', null=True, blank=True)
     description = models.TextField(verbose_name='Полное описание магазина', blank=True, null=True)
-    logo = models.ImageField(upload_to='images/shop/logo/', default=settings.DEFAULT_IMAGE,
+    logo = models.ImageField(upload_to='images/shop/logo/', null=True, blank=True,
                              verbose_name='Логотип')
 
 
@@ -57,7 +67,7 @@ class Shop(PublishBaseModel, MetaBaseModel, Counter):
     def get_logo(self):
         if self.logo:
             return self.logo.url
-        return None
+        return settings.DEFAULT_IMAGE
 
     def get_shop_user(self):
         return str(self.user.username)
@@ -129,7 +139,7 @@ class Banners(models.Model):
         return self.title
 
 
-class Contacts(PublishBaseModel):
+class Contacts(PublishBaseModel, PostionMapModel):
     class Meta:
         verbose_name = 'Контакт'
         verbose_name_plural = 'Контакты'
@@ -138,8 +148,6 @@ class Contacts(PublishBaseModel):
     phone = models.CharField(max_length=255, verbose_name='Телефон', null=True, blank=True)
     shop = models.ForeignKey(Shop, verbose_name='Магазин', null=True)
     place = models.ForeignKey('Place', verbose_name='Торговая точка', null=True, blank=True)
-    latitude = models.CharField(max_length=255, verbose_name='Широта', null=True, blank=True)
-    longitude = models.CharField(max_length=255, verbose_name='Долгота', null=True, blank=True)
     monday = models.CharField(max_length=255, verbose_name='Понедельник', null=True, blank=True)
     tuesday = models.CharField(max_length=255, verbose_name='Вторник', null=True, blank=True)
     wednesday = models.CharField(max_length=255, verbose_name='Среда', null=True, blank=True)
@@ -181,7 +189,7 @@ PlACE_TYPE = (
 )
 
 
-class Place(PublishBaseModel):
+class Place(PublishBaseModel, PostionMapModel):
     class Meta:
         verbose_name = "Торговая точка"
         verbose_name_plural = "Торговые точки"

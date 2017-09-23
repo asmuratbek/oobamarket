@@ -76,7 +76,7 @@ class Product(PublishBaseModel, Counter):
         if self.productimage_set.all():
             return self.productimage_set.first().image.url
         else:
-            return None
+            return settings.DEFAULT_IMAGE
 
     def get_main_thumb_image(self):
         if self.productimage_set.all():
@@ -84,7 +84,7 @@ class Product(PublishBaseModel, Counter):
                     if self.productimage_set.first().thumb_image \
                     else self.productimage_set.first().image.url
         else:
-            return str(settings.MEDIA_URL) + "default.jpg"
+            return settings.DEFAULT_IMAGE
 
     def get_all_images(self):
         return self.productimage_set.all()
@@ -262,21 +262,13 @@ class ProductImage(models.Model):
             force_update = True
         super(ProductImage, self).save(force_update=force_update)
 
-    # def delete(self, *args, **kwargs):
-    #     # storage, path = self.image.storage, self.image.path
-    #     # thumb_storage, thumb_path = self.thumb_image.storage, self.thumb_image.path
-    #     # storage.delete(path), thumb_storage.delete(thumb_path)
-    #     os.remove(os.path.join(settings.MEDIA_ROOT, self.image.name))
-    #     os.remove(os.path.join(settings.MEDIA_ROOT, self.thumb_image.name))
-    #     super(ProductImage, self).delete(*args, **kwargs)
 
-
-def delete_files(sender, **kwargs):
-    image = kwargs.get('instance')
-    default_storage.delete(image.image.path)
-    if image.thumb_image:
-        default_storage.delete(image.thumb_image.path)
-
-post_delete.connect(delete_files, ProductImage)
+# def delete_files(sender, **kwargs):
+#     image = kwargs.get('instance')
+#     default_storage.delete(image.image.path)
+#     if image.thumb_image:
+#         default_storage.delete(image.thumb_image.path)
+#
+# post_delete.connect(delete_files, ProductImage)
 
 

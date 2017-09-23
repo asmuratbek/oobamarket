@@ -70,6 +70,7 @@ THIRD_PARTY_APPS = [
     'rest_auth',
     'rest_auth.registration',
     'widget_tweaks',
+    'django_cleanup',
     'ckeditor',
     'ckeditor_uploader',
     'drf_multiple_model',
@@ -271,7 +272,7 @@ DUMP_ROOT = str(ROOT_DIR('dump'))
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#media-url
 MEDIA_URL = '/media/'
-DEFAULT_IMAGE = '/default.jpg'
+DEFAULT_IMAGE = MEDIA_URL + 'default.jpg'
 # URL Configuration
 # ------------------------------------------------------------------------------
 ROOT_URLCONF = 'config.urls'

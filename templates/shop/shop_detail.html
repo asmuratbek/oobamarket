@@ -28,15 +28,9 @@
         <div class="container">
             <div class="col-md-12 col-lg-3">
                 {% show_edit_shop_button shop request.user %}
-                {% if object.logo %}
                     <div class="img-wrapper">
                         <img src="{{ object.get_logo }}" alt="">
                     </div>
-                {% else %}
-                    <div class="img-wrapper">
-                        <img class="placehold" src="http://via.placeholder.com/240x190" alt="">
-                    </div>
-                {% endif %}
                 <h2>{{ object.title|truncatechars:27 }}</h2>
                 <p class="see-more-toogle">{{ object.short_description|truncatechars:70  }}</p>
                 <div class="bottom-line">

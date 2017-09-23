@@ -34,3 +34,11 @@ class MetaBaseModel(models.Model):
 
     class Meta:
         abstract = True
+
+
+class PostionMapModel(models.Model):
+    latitude = models.CharField(max_length=255, verbose_name='Широта', null=True, blank=True)
+    longitude = models.CharField(max_length=255, verbose_name='Долгота', null=True, blank=True)
+
+    class Meta:
+        abstract = True

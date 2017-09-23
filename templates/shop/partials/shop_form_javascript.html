@@ -1,0 +1,249 @@
+{% load staticfiles %}
+
+<script src="{% static 'js/jquery.2.2.4.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/previewLogos.js' %}"></script>
+<script src="{% static 'js/common.js' %}"></script>
+{#<script async defer#}
+{#        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDXEuBW9AIFcfHx1UHvceIvCz0JnRNjGyo&callback=initMap">#}
+{#</script>#}
+<script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
+<script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
+<script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
+<script type="text/javascript">
+    ymaps.ready(init);
+    var modal_button = $('.set-marker-trigger');
+    $(document).on('change', '#id_contacts_set-0-place', function () {
+       if ($(this).val() === "") {
+           modal_button.show();
+       }
+       else{
+           modal_button.hide();}
+    });
+    $(".btn-toggle-day").click(function (e) {
+        e.preventDefault();
+        $(".toggle-days").slideToggle("100").attr('data-id');
+
+    });
+
+    function setCoordsPostion(lat, long) {
+        $("#id_contacts_set-0-longitude").val(long);
+        $("#id_contacts_set-0-latitude").val(lat);
+    }
+
+    function changeValue(key, data, flag) {
+        var true_input = $('#true-inputs').find('input#id_contacts_set-0-' + key);
+        var true_value = true_input.val().replace(/[^\d.]/g, '');
+        if (flag === "from") {
+            if ((true_input.val() !== "") && (true_value.length <= 4)) {
+                true_input.val(data + true_input.val());
+            }
+            else {
+                true_input.val("");
+                true_input.val(data + " - ");
+            }
+        } else {
+            if((true_input.val() !== "") && (true_value.length <= 4)) {
+                true_input.val(true_input.val() + data);
+            } else {
+                true_input.val("");
+                true_input.val(" - " + data);
+            }
+        }
+    }
+
+    var day_key;
+     $('.from_time').on('change', function () {
+        day_key = $(this).closest('.fake-input').attr('data-key');
+        var that = $(this);
+        changeValue(day_key, that.val(), "from");
+        if(that.closest('.fake-input').hasAttr('data-first')){
+            $(".from_time").not(that).each(function (i, item) {
+                if(($(item).closest('.fake-input').attr('data-key') !== 'sunday') &&
+                    ($(item).closest('.fake-input').find('input.checked_day').hasAttr('checked'))){
+                    $(item).val(that.val());
+                    var item_key = $(item).closest('.fake-input').attr('data-key');
+                    changeValue(item_key, that.val(), "from")
+                }
+            });
+        }
+    });
+
+    $('.to_time').on('change', function () {
+        day_key = $(this).closest('.fake-input').attr('data-key');
+        var that = $(this);
+        changeValue(day_key, that.val(), "to");
+        if(that.closest('.fake-input').hasAttr('data-first')){
+            $(".to_time").not(that).each(function (i, item) {
+                if(($(item).closest('.fake-input').attr('data-key') !== 'sunday') &&
+                    ($(item).closest('.fake-input').find('input.checked_day').hasAttr('checked'))){
+                    $(item).val(that.val());
+                    var item_key = $(item).closest('.fake-input').attr('data-key');
+                    changeValue(item_key, that.val(), "to")
+                }
+            });
+        }
+    });
+
+    $('.checked_day').on('click', function () {
+        let parent = $(this).closest('.fake-input');
+        var parent_key = parent.attr('data-key');
+        if($(this).hasAttr('checked')) {
+            $(this).attr('checked', false);
+            parent.find('input.from_time').attr("disabled", true)
+                                            .val("");
+            parent.find('input.to_time').attr("disabled", true)
+                                            .val("");
+            $('#true-inputs').find('input#id_contacts_set-0-' + parent_key).val("");
+        } else {
+            $(this).attr('checked', true);
+            parent.find('input.from_time').attr("disabled", false)
+                                            .val("");
+            parent.find('input.to_time').attr("disabled", false)
+                                        .val("");
+        }
+    });
+
+
+function init() {
+    var myPlacemark,
+        myMap = new ymaps.Map('yandex_map', {
+            center: [42.8758,74.6179],
+            zoom: 10,
+            controls: ['zoomControl', 'typeSelector']
+        });
+        var searchControl = new ymaps.control.SearchControl({
+            options: {
+            float: 'left',
+            floatIndex: 100,
+            noPlacemark: true
+     }
+     });
+        myMap.controls.add(searchControl);
+
+        myMap.behaviors.disable('scrollZoom');
+    // Слушаем клик на карте.
+    myMap.events.add('click', function (e) {
+        var coords = e.get('coords');
+        setCoordsPostion(coords[0], coords[1]);
+        // Если метка уже создана – просто передвигаем ее.
+        if (myPlacemark) {
+            myPlacemark.geometry.setCoordinates(coords);
+        }
+        // Если нет – создаем.
+        else {
+            myPlacemark = createPlacemark(coords);
+            myMap.geoObjects.add(myPlacemark);
+            // Слушаем событие окончания перетаскивания на метке.
+            myPlacemark.events.add('dragend', function () {
+                getAddress(myPlacemark.geometry.getCoordinates());
+                setCoordsPostion(coords[0], coords[1]);
+            });
+        }
+        getAddress(coords);
+    });
+
+    // Создание метки.
+    function createPlacemark(coords) {
+        return new ymaps.Placemark(coords, {
+            iconCaption: 'поиск...'
+        }, {
+            preset: 'islands#violetDotIconWithCaption',
+            draggable: true
+        });
+    }
+
+    // Определяем адрес по координатам (обратное геокодирование).
+    function getAddress(coords) {
+        myPlacemark.properties.set('iconCaption', 'поиск...');
+        ymaps.geocode(coords).then(function (res) {
+            var firstGeoObject = res.geoObjects.get(0);
+
+            myPlacemark.properties
+                .set({
+                    // Формируем строку с данными об объекте.
+                    iconCaption: [
+                        // Название населенного пункта или вышестоящее административно-территориальное образование.
+                        firstGeoObject.getLocalities().length ? firstGeoObject.getLocalities() : firstGeoObject.getAdministrativeAreas(),
+                        // Получаем путь до топонима, если метод вернул null, запрашиваем наименование здания.
+                        firstGeoObject.getThoroughfare() || firstGeoObject.getPremise()
+                    ].filter(Boolean).join(', '),
+                    // В качестве контента балуна задаем строку с адресом объекта.
+                    balloonContent: firstGeoObject.getAddressLine()
+                });
+        });
+    }
+}
+    function Switch() {
+        $('.switcher').on('change', function () {
+            let that = $(this);
+            let toggle = $('.toggle-days');
+            let parent = that.closest(toggle);
+            let weekDays = parent.find('.weekdays');
+            if (that.attr('data-visible') === 'true') {
+                $(weekDays).fadeOut('slow');
+                that.attr('data-visible', 'false');
+            } else {
+                $(weekDays).fadeIn('slow');
+                that.attr('data-visible', 'true');
+            }
+        });
+        $('.switcher').each(function () {
+            let that = $(this);
+            let parent = that.closest('.toggle-days');
+            let weekDays = parent.find('.weekdays');
+            let checked = parent.find('input.switch__input');
+            if (checked.hasAttr('checked')) {
+                that.attr('data-visible', 'false');
+                $(weekDays).fadeOut('slow');
+            } else {
+                that.attr('data-visible', 'true');
+                $(weekDays).fadeIn('slow');
+            }
+
+        });
+    }
+    Switch();
+{#        function initFakeInputs() {#}
+{#        $('.fake-input').each(function (i, obj) {#}
+{#            let from = $(obj).find('input.from');#}
+{#            let to = $(obj).find('input.to');#}
+{#            let trueInput = $(obj).find('input.true_input');#}
+{#            let that = $(this);#}
+{##}
+{#            from.unbind('change').bind('change', function () {#}
+{#                trueInput.val($(this).val() + ' - ' + to.val());#}
+{#                if (that.hasAttr('data-first')) {#}
+{#                    let parent = that.parent();#}
+{#                    setTime(from, to, parent);#}
+{#                }#}
+{#            });#}
+{##}
+{#            to.unbind('change').bind('change', function () {#}
+{#                trueInput.val(from.val() + ' - ' + $(this).val());#}
+{#                if (that.hasAttr('data-first')) {#}
+{#                    let parent = that.parent();#}
+{#                    setTime(from, to, parent);#}
+{#                }#}
+{#            });#}
+{#        });#}
+{#    }#}
+{##}
+{#    function setTime(_from, _to, parent) {#}
+{#        $('.fake-input', parent).each(function (i, obj) {#}
+{#            let from = $(obj).find('input.from');#}
+{#            let to = $(obj).find('input.to');#}
+{#            let trueInput = $(obj).find('input.true_input');#}
+{#            if (from[0] !== _from[0] && to[0] !== _to[0]) {#}
+{#                if (!from.hasAttr('disabled') && !to.hasAttr('disabled')) {#}
+{#                    from.val(_from.val());#}
+{#                    to.val(_to.val());#}
+{#                    from.trigger('change');#}
+{#                    to.trigger('change');#}
+{##}
+{#                }#}
+{#            }#}
+{#        });#}
+{#    }#}
+{#    initFakeInputs();#}
+</script>

@@ -22,6 +22,21 @@ class ShopForm(ModelForm):
             raise forms.ValidationError("Логотип обязателен для заполнения", code='no_logo')
         return logo
 
+    def clean(self):
+        cleaned_data = super(ShopForm, self).clean()
+        title = cleaned_data.get('title', '')
+        email = cleaned_data.get('email', '')
+        short_desc = cleaned_data.get('short_description')
+
+        error_msg = "*Обязательное поле"
+
+        if title is None or title == "":
+            self._errors['title'] = error_msg
+        if email is None or email == "":
+            self._errors['email'] = error_msg
+        if len(short_desc) > 300:
+            self._errors['short_description'] = "Вы превысили допустимое количество символов"
+
 
 
 

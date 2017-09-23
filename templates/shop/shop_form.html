@@ -9,7 +9,7 @@
 
     <section class="edit-shop-detail">
         <div class="container">
-            <h3>Создание и редактирование магазина</h3>
+            <h3>Создание магазина</h3>
             <div class="form-filter">
                 <form class="form-inline" method="post" enctype="multipart/form-data" id="add-shop-form">
                     {% csrf_token %}
@@ -148,16 +148,16 @@
                                 <div class="inline-appended"></div>
 
 
-                                <div class="form-group col-md-12" style="margin-top: 10px; margin-bottom: 10px">
-                                    <p style="margin: 0; text-align: left;">Если у вас есть филиалы, добавьте их</p><br>
-
-                                </div>
-                                <div class="form-group btn-group-form col-md-12">
-                                    <button type="button" id="add-new-contact" class="btn add no-bg-2"> + Добавить
-                                        филиал
-                                    </button>
-
-                                </div>
+{#                                <div class="form-group col-md-12" style="margin-top: 10px; margin-bottom: 10px">#}
+{#                                    <p style="margin: 0; text-align: left;">Если у вас есть филиалы, добавьте их</p><br>#}
+{##}
+{#                                </div>#}
+{#                                <div class="form-group btn-group-form col-md-12">#}
+{#                                    <button type="button" id="add-new-contact" class="btn add no-bg-2"> + Добавить#}
+{#                                        филиал#}
+{#                                    </button>#}
+{##}
+{#                                </div>#}
                                 <div class="form-group btn-group-form col-md-12">
                                     <button type="submit" class="btn add">Сохранить</button>
                                     {% if object %}
@@ -176,29 +176,17 @@
         </div>
     </section>
 
-    <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
-         id="set-marker-modal">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">Поставьте маркер на карте</div>
-                <div class="modal-body">
-                    <div id="custom-map" style="width: 100%; height: 500px;"></div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" data-dismiss="modal" aria-label="Close" class="add btn">Сохранить</button>
-                </div>
-            </div>
-        </div>
-    </div>
 
 {% endblock %}
 {% block js %}
 
-    {% include 'shop/partials/js_for_shop_cr_up_tmp.html' %}
+    {% include 'shop/partials/shop_form_javascript.html' %}
 <script src="{% static 'js/picker.js' %}"></script>
 <script src="{% static 'js/picker.time.js' %}"></script>
   <script>
-    $('.timepicker').pickatime()
+    $('.timepicker').pickatime({
+        format: 'HH:i'
+    })
     </script>
 {% endblock %}
 

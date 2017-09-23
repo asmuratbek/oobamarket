@@ -42,15 +42,15 @@
                             </div>
                             <div class="inline-appended"></div>
 
-                            <div class="form-group col-md-12" style="margin-top: 10px; margin-bottom: 40px">
-                                <p>Если у вас есть филиалы, добавьте их</p><br>
-
-                            </div>
+{#                            <div class="form-group col-md-12" style="margin-top: 10px; margin-bottom: 40px">#}
+{#                                <p>Если у вас есть филиалы, добавьте их</p><br>#}
+{##}
+{#                            </div>#}
 
                         </div>
 
                         <div class="form-group btn-group-form col-md-12">
-                            <button type="button" id="add-new-contact" class="btn add">Добавить филиал</button>
+{#                            <button type="button" id="add-new-contact" class="btn add">Добавить филиал</button>#}
                             <button type="submit" class="btn add">Сохранить</button>
                         </div>
 
@@ -79,7 +79,7 @@
 
                         </div>
                         <div class="img-wrapper">
-                            {% if object.logo.name != "/default.jpg" %}
+                            {% if object.logo %}
                                 <img src="{{ object.logo.url }}" alt="" id="id_logo2">
                                 <span class="remove-logo-update">X</span>
                             {% else %}
@@ -94,193 +94,249 @@
             </div>
         </div>
     </section>
-
-
-    <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
-         id="set-marker-modal">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">Поставьте маркер на карте</div>
-                <div class="modal-body">
-                    <div id="custom-map" style="width: 100%; height: 500px;"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-
 {% endblock %}
 {% block js %}
     <script src="{% static 'js/jquery.2.2.4.js' %}"></script>
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
     <script src="{% static 'js/previewLogos.js' %}"></script>
-
-    <script type="text/html" id="contact-template">
-        <div class="inline-__prefix__">
-
-                {% include 'shop/partials/additional-form.html' %}
-
-        </div>
-    </script>
-    <script>
-        let formSetCounter = 0;
-        $(function () {
-            $('#add-new-contact').click(function (ev) {
-                ev.preventDefault();
-                var count = parseInt($('#id_contacts_set-TOTAL_FORMS').attr('value'), 10);
-                formSetCounter = count;
-                var tmplMarkup = $('#contact-template').html();
-                var compiledTmpl = tmplMarkup.replace(/__prefix__/g, count)
-                console.log(compiledTmpl);
-                $('div.inline-appended').append(compiledTmpl);
-                $('#id_contacts_set-TOTAL_FORMS').attr('value', count + 1);
-                initSetMarkerButton();
-            });
+    <script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
+    <script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
+    <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
+    <script type="text/javascript">
+        ymaps.ready(init);
+        $.fn.hasAttr = function(name) {
+           return this.attr(name) !== undefined;
+        };
+        var modal_button = $('.set-marker-trigger');
+        checkPlaceValue();
+        $(document).on('change', '#id_contacts_set-0-place', function () {
+            console.log($(this).val());
+           if ($(this).val() === "") {
+               modal_button.show();
+           }
+           else{
+               modal_button.hide();}
         });
 
-
-    </script>
-     ahubaeva 119a/tynystanova
-
-    <script async defer
-            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDXEuBW9AIFcfHx1UHvceIvCz0JnRNjGyo&callback=initMap">
-    </script>
-
-    <script>
-        let map = null;
-        let markers = [
-            {% for marker in shop.contacts_set.all %}
-                {% if marker.longitude and marker.latitude %}
-                    {
-                        'id': {{ forloop.counter }},
-                        'data': {lng: {{ marker.longitude }}, lat: {{ marker.latitude }}}
-                    }{% if forloop.counter < shop.contacts_set.count %},{% endif %}
-                {% endif %}
-            {% endfor %}
-        ];
-        let mapCenter = {lat: 42.864272, lng: 74.579775};
-        let workingIndex = -1;
-        let center = null;
-
-        function initMap() {
-            map = new google.maps.Map(document.getElementById('custom-map'), {
-                center: mapCenter,
-                zoom: 15,
-                mapTypeId: google.maps.MapTypeId.TERRAIN
-            });
-
-            map.addListener('click', function (event) {
-                addMarker(event.latLng);
-            });
-
-            if (markers.length > 0) {
-                for (let k = 0; k < markers.length; ++k) {
-                    let _marker = new google.maps.Marker({
-                        position: markers[k]['data'],
-                        map: map
-                    });
-                    markers[k]['data'] = marker;
-                    center = marker.position;
-                }
-            }
-
-            // Adds a marker at the center of the map.
-        }
-
-
-        function addMarker(_location) {
-            let currId = -1;
-            for (let i = 0; i < markers.length; ++i) {
-                if (markers[i]['id'] === workingIndex) currId = i;
-            }
-
-            $('#id_contacts_set-' + workingIndex + '-longitude').val(_location['lng']);
-            $('#id_contacts_set-' + workingIndex + '-latitude').val(_location['lat']);
-            let marker = new google.maps.Marker({
-                position: _location,
-                input_id: workingIndex
-            });
-            if (markers.length > 0 && currId > -1)
-                markers[currId]['data'].setPosition(_location);
+        function checkPlaceValue() {
+            if($('#id_contacts_set-0-place').val() === "")
+                modal_button.show();
             else
-                marker.setMap(map);
-            markers.push({
-                'id': workingIndex,
-                'data': marker
-            });
-
-            marker.addListener('click', function () {
-                console.log('Clicked on marker...');
-                removeMarker(marker);
-            });
-
-
+                modal_button.hide();
         }
+{#        var xCor, yCor;#}
+{#        if(($("#id_contacts_set-0-longitude").val() === "") ||#}
+{#            ($("#id_contacts_set-0-latitude").val() === "")){#}
+{##}
+{#        }#}
+        $(".btn-toggle-day").click(function (e) {
+            e.preventDefault();
+            $(".toggle-days").slideToggle("100").attr('data-id');
 
-        function removeMarker(marker) {
-            console.log(marker);
-            marker.setMap(null);
-            markers.splice(markers.indexOf(marker.input_id), 1);
-            $('#id_contacts_set-' + marker.input_id + '-longitude').val('');
-            $('#id_contacts_set-' + marker.input_id + '-latitude').val('');
-        }
-
-        // Sets the map on all markers in the array.
-        function setMapOnAll(map) {
-            for (let i = 0; i < markers.length; i++) {
-                markers[i].setMap(map);
-            }
-        }
-
-        // Removes the markers from the map, but keeps them in the array.
-        function clearMarkers() {
-            setMapOnAll(null);
-        }
-
-        // Shows any markers currently in the array.
-        function showMarkers() {
-            setMapOnAll(map);
-        }
-
-        // Deletes all markers in the array by removing references to them.
-        function deleteMarkers() {
-            clearMarkers();
-            markers = [];
-        }
-
-        function openMarkerModal(index) {
-            console.log(index);
-            workingIndex = index;
-            $('#set-marker-modal').modal('show');
-            setTimeout(function () {
-                google.maps.event.trigger(map, "resize");
-                if (center !== null) {
-                    map.setCenter(center);
-                } else {
-                    map.setCenter(mapCenter);
-                }
-
-            }, 1000);
-        }
-
-        function closeMarkerModal() {
-            $('#set-marker-modal').modal('hide');
-        }
-    </script>
-
-    <script>
-        $(document).ready(function () {
-            $('#add-new-contact').on('click', function (e) {
-                openMarkerModal(formSetCounter);
-            });
-            initSetMarkerButton();
         });
 
-        function initSetMarkerButton() {
-            $('.set-marker-trigger').unbind('click').bind('click', function (e) {
-                e.preventDefault();
-                openMarkerModal(parseInt($(this).attr('data-id')));
+
+        function setCoordsPostion(lat, long) {
+            $("#id_contacts_set-0-longitude").val(long);
+            $("#id_contacts_set-0-latitude").val(lat);
+        }
+
+        function changeValue(key, data, flag) {
+        var true_input = $('#true-inputs').find('input#id_contacts_set-0-' + key);
+        var true_value = true_input.val().replace(/[^\d.]/g, '');
+        if (flag === "from") {
+            if ((true_input.val() !== "") && (true_value.length <= 4)) {
+                true_input.val(data + true_input.val());
+            }
+            else {
+                true_input.val("");
+                true_input.val(data + " - ");
+            }
+        } else {
+            if((true_input.val() !== "") && (true_value.length <= 4)) {
+                true_input.val(true_input.val() + data);
+            } else {
+                true_input.val("");
+                true_input.val(" - " + data);
+            }
+        }
+    }
+
+    var day_key;
+     $('.from_time').on('change', function () {
+        day_key = $(this).closest('.fake-input').attr('data-key');
+        var that = $(this);
+        changeValue(day_key, that.val(), "from");
+        if(that.closest('.fake-input').hasAttr('data-first')){
+            console.log("hey!");
+            $(".from_time").not(that).each(function (i, item) {
+                if(($(item).closest('.fake-input').attr('data-key') !== 'sunday') &&
+                    ($(item).closest('.fake-input').find('input.checked_day').hasAttr('checked'))){
+                    $(item).val(that.val());
+                    var item_key = $(item).closest('.fake-input').attr('data-key');
+                    changeValue(item_key, that.val(), "from")
+                }
             });
         }
-    </script>
+    });
 
+    $('.to_time').on('change', function () {
+        day_key = $(this).closest('.fake-input').attr('data-key');
+        var that = $(this);
+        changeValue(day_key, that.val(), "to");
+        if(that.closest('.fake-input').hasAttr('data-first')){
+            $(".to_time").not(that).each(function (i, item) {
+                if(($(item).closest('.fake-input').attr('data-key') !== 'sunday') &&
+                    ($(item).closest('.fake-input').find('input.checked_day').hasAttr('checked'))){
+                    $(item).val(that.val());
+                    var item_key = $(item).closest('.fake-input').attr('data-key');
+                    changeValue(item_key, that.val(), "to")
+                }
+            });
+        }
+    });
+
+    $('.checked_day').on('click', function () {
+        let parent = $(this).closest('.fake-input');
+        var parent_key = parent.attr('data-key');
+        if($(this).hasAttr('checked')) {
+            $(this).attr('checked', false);
+            parent.find('input.from_time').attr("disabled", true)
+                                            .val("");
+            parent.find('input.to_time').attr("disabled", true)
+                                            .val("");
+            $('#true-inputs').find('input#id_contacts_set-0-' + parent_key).val("");
+        } else {
+            $(this).attr('checked', true);
+            parent.find('input.from_time').attr("disabled", false)
+                                            .val("");
+            parent.find('input.to_time').attr("disabled", false)
+                                        .val("");
+        }
+    });
+
+
+        $('.fake-input').each(function (i, item) {
+            var data_key = $(item).attr('data-key');
+            var true_value = $('#true-inputs').find('input#id_contacts_set-0-' + data_key).val();
+            $(item).find('input.from_time').val(true_value.split("-")[0]);
+            $(item).find('input.to_time').val(true_value.split("-")[1]);
+        });
+
+        function init() {
+        var myPlacemark,
+        myMap = new ymaps.Map('yandex_map', {
+            center: [42.8758,74.6179],
+            zoom: 10,
+            controls: ['zoomControl', 'typeSelector']
+        });
+        var searchControl = new ymaps.control.SearchControl({
+            options: {
+            float: 'left',
+            floatIndex: 100,
+            noPlacemark: true
+     }
+     });
+        myMap.controls.add(searchControl);
+        myMap.behaviors.disable('scrollZoom');
+        myPlacemark = createPlacemark(["{{ latitude }}", "{{ longitude  }}"]);
+        myMap.geoObjects.add(myPlacemark);
+    // Слушаем клик на карте.
+    myMap.events.add('click', function (e) {
+        var coords = e.get('coords');
+        setCoordsPostion(coords[0], coords[1]);
+        // Если метка уже создана – просто передвигаем ее.
+        if (myPlacemark) {
+            myPlacemark.geometry.setCoordinates(coords);
+        }
+        // Если нет – создаем.
+        else {
+            myPlacemark = createPlacemark(coords);
+            myMap.geoObjects.add(myPlacemark);
+            // Слушаем событие окончания перетаскивания на метке.
+            myPlacemark.events.add('dragend', function () {
+                getAddress(myPlacemark.geometry.getCoordinates());
+                setCoordsPostion(coords[0], coords[1]);
+            });
+        }
+        getAddress(coords);
+    });
+
+    // Создание метки.
+    function createPlacemark(coords) {
+        return new ymaps.Placemark(coords, {
+            iconCaption: 'поиск...'
+        }, {
+            preset: 'islands#violetDotIconWithCaption',
+            draggable: true
+        });
+    }
+
+    // Определяем адрес по координатам (обратное геокодирование).
+    function getAddress(coords) {
+        myPlacemark.properties.set('iconCaption', 'поиск...');
+        ymaps.geocode(coords).then(function (res) {
+            var firstGeoObject = res.geoObjects.get(0);
+
+            myPlacemark.properties
+                .set({
+                    // Формируем строку с данными об объекте.
+                    iconCaption: [
+                        // Название населенного пункта или вышестоящее административно-территориальное образование.
+                        firstGeoObject.getLocalities().length ? firstGeoObject.getLocalities() : firstGeoObject.getAdministrativeAreas(),
+                        // Получаем путь до топонима, если метод вернул null, запрашиваем наименование здания.
+                        firstGeoObject.getThoroughfare() || firstGeoObject.getPremise()
+                    ].filter(Boolean).join(', '),
+                    // В качестве контента балуна задаем строку с адресом объекта.
+                    balloonContent: firstGeoObject.getAddressLine()
+                });
+        });
+    }
+}
+{#    <script type="text/html" id="contact-template">#}
+{#        <div class="inline-__prefix__">#}
+{##}
+{#                {% include 'shop/partials/additional-form.html' %}#}
+{##}
+{#        </div>#}
+{#    </script>#}
+
+     function Switch() {
+        $('.switcher').on('change', function () {
+            let that = $(this);
+            let toggle = $('.toggle-days');
+            let parent = that.closest(toggle);
+            let weekDays = parent.find('.weekdays');
+            if (that.attr('data-visible') === 'true') {
+                $(weekDays).fadeOut('slow');
+                that.attr('data-visible', 'false');
+            } else {
+                $(weekDays).fadeIn('slow');
+                that.attr('data-visible', 'true');
+            }
+        });
+        $('.switcher').each(function () {
+            let that = $(this);
+            let parent = that.closest('.toggle-days');
+            let weekDays = parent.find('.weekdays');
+            let checked = parent.find('input.switch__input');
+            if (checked.attr('checked')) {
+                that.attr('data-visible', 'false');
+                $(weekDays).fadeOut('slow');
+            } else {
+                that.attr('data-visible', 'true');
+                $(weekDays).fadeIn('slow');
+            }
+
+        });
+    }
+    Switch();
+     </script>
+    <script src="{% static 'js/picker.js' %}"></script>
+<script src="{% static 'js/picker.time.js' %}"></script>
+  <script>
+    $('.timepicker').pickatime({
+        format: 'HH:i'
+    })
+    </script>
 {% endblock %}
