@@ -441,10 +441,12 @@ class UserCartItemsView(APIView):
         for item in user.cart_set.last().cartitem_set.all():
             cartitems.append({
                 "title": item.product.title,
+                "quantity": item.quantity,
                 "slug": item.product.slug,
                 "short_description": item.product.short_description,
                 "shop": item.product.get_shop_title(),
                 "price": item.product.get_price(),
+                "total": item.total,
                 "image": item.product.get_main_thumb_image(),
                 "is_favorite": item.product.favorite.filter(user=user).exists(),
                 "is_in_cart": True
