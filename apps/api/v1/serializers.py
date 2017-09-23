@@ -132,12 +132,13 @@ class ProductSerializer(ModelSerializer):
                 return False
         elif hasattr(request, "user"):
             user = request.user
-            if user.cart_set and user.is_authenticated:
-                cart = user.cart_set.last()
-                if cart.cartitem_set.filter(product=product).exists():
-                    return True
-            else:
-                return False
+            if user.is_authenticated:
+                if user.cart_set:
+                    cart = user.cart_set.last()
+                    if cart.cartitem_set.filter(product=product).exists():
+                        return True
+                else:
+                    return False
         else:
             return False
 
