@@ -32,7 +32,9 @@ from .views import (
     ProductAddToFavoriteView,
     ProductAddToCartView,
     ProductChangeCartView,
-    ShopApiMobileView
+    ShopApiMobileView,
+    ShopCategoriesApiView,
+    ShopCategoryChildrenApiView,
 )
 
 urlpatterns = [
@@ -60,8 +62,10 @@ urlpatterns = [
     url(r'^shop/detail/(?P<slug>[-_\w]+)/contacts/$', ShopContactsView.as_view(), name="shop_contacts"),
     url(r'^shop/detail/(?P<slug>[-_\w]+)/$', ShopDetailView.as_view(), name="shop"),
     url(r'^shop/(?P<slug>[-_\w]+)/$', ShopDetailApiView.as_view(), name='shop_detail'),
-    url(r'^shop/(?P<slug>[-_\w]+)/shop/for-react/$', ShopApiView.as_view(), name='shop_categories'),
-    url(r'^shop/(?P<slug>[-_\w]+)/shop/$', ShopApiMobileView.as_view(), name='shop_categories'),
+    url(r'^shop/(?P<slug>[-_\w]+)/shop/for-react/$', ShopApiView.as_view(), name='shop_categories_for_react'),
+    url(r'^shop/(?P<slug>[-_\w]+)/shop/$', ShopApiMobileView.as_view(), name='shop-detail'),
+    url(r'^shop/(?P<slug>[-_\w]+)/categories/$', ShopCategoriesApiView.as_view(), name='shop_categories'),
+    url(r'^shop/(?P<slug>[-_\w]+)/category/(?P<category_slug>[-_\w]+)/$', ShopCategoryChildrenApiView.as_view(), name='shop_category_children'),
     url(r'^shop/(?P<slug>[-_\w]+)/update/$', ShopUpdateApiView.as_view(), name='shop_update'),
     url(r'^shop/(?P<slug>[-_\w]+)/delete/$', ShopDeleteApiView.as_view(), name='shop_delete'),
     url(r'^shop/$', ShopListApiView.as_view(), name='shop_list'),

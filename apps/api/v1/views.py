@@ -1,14 +1,10 @@
 from allauth.socialaccount.providers.facebook.views import FacebookOAuth2Adapter
 from allauth.socialaccount.providers.google.views import GoogleOAuth2Adapter
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 from django.utils.decorators import method_decorator
-from django.views import View
 from django.views.decorators.cache import cache_page
-from django.views.decorators.http import require_GET
 from drf_multiple_model.views import MultipleModelAPIView
 from rest_auth.registration.views import SocialLoginView
 from rest_framework import filters
@@ -36,8 +32,7 @@ from apps.api.v1.serializers import (
     ShopCreateSerializer,
     CategorySerializer,
     GlobalCategorySerializer,
-    SalesSerializer, ShopReviewsSerializer, ShopContactsSerializer, PlaceSerializer, ParentCategorySerializer,
-    ProductDetailSerializer, ProductImageSerializer)
+    SalesSerializer, ShopReviewsSerializer, ShopContactsSerializer, PlaceSerializer, ParentCategorySerializer)
 from apps.cart.models import Cart, CartItem
 from apps.category.models import Category
 from apps.global_category.models import GlobalCategory
@@ -51,7 +46,7 @@ from .pagination import (
     ShopLimitPagination,
     ShopProductsLimitPagination
 )
-from .permissions import IsOwnerOrReadOnly, IsUserOwner
+from .permissions import IsOwnerOrReadOnly
 
 
 class FacebookLogin(SocialLoginView):
@@ -382,27 +377,6 @@ class ShopApiMobileView(APIView):
     def get(self, request, slug):
         shop = get_object_or_404(Shop, slug=slug)
         is_authenticated = request.user.is_authenticated
-        categories = list()
-        for category in shop.get_used_categories():
-            categories.append({
-                "title": category.title,
-                "id": category.id,
-                "slug": category.slug,
-                "parent_id": category.parent.id if category.parent else None
-            })
-        parent_categories = list()
-        for parent_category in shop.get_parent_categories_of_used():
-            children = list()
-            for child in categories:
-                if child.get('parent_id') == parent_category.id:
-                    children.append(child)
-            parent_categories.append({
-                "id": parent_category.id,
-                "title": parent_category.title,
-                "slug": parent_category.slug,
-                "children": children
-            })
-
         return JsonResponse({
             "title": shop.title,
             "slug": shop.slug,
@@ -411,7 +385,59 @@ class ShopApiMobileView(APIView):
             "logo": shop.get_logo(),
             "is_owner": shop.is_owner(request.user) if is_authenticated else False,
             "is_subscribed": request.user.subscription_set.filter(subscription=shop).exists() if is_authenticated else False,
+        })
+
+
+class ShopCategoriesApiView(APIView):
+    permission_classes = (AllowAny,)
+    authentication_classes = (TokenAuthentication,)
+
+    def get(self, request, slug):
+        shop = get_object_or_404(Shop, slug=slug)
+        # categories = list()
+        # for category in shop.get_used_categories():
+        #     categories.append({
+        #         "title": category.title,
+        #         "id": category.id,
+        #         "slug": category.slug,
+        #         "parent_id": category.parent.id if category.parent else None
+        #     })
+        parent_categories = list()
+        for parent_category in shop.get_parent_categories_of_used():
+            # children = list()
+            # for child in categories:
+            #     if child.get('parent_id') == parent_category.id:
+            #         children.append(child)
+            parent_categories.append({
+                "id": parent_category.id,
+                "title": parent_category.title,
+                "slug": parent_category.slug
+            })
+
+        return JsonResponse({
+            "status": "success",
             "categories": parent_categories
+        })
+
+
+class ShopCategoryChildrenApiView(APIView):
+    permission_classes = (AllowAny,)
+    authentication_classes = (TokenAuthentication,)
+
+    def get(self, request, slug, category_slug):
+        shop = get_object_or_404(Shop, slug=slug)
+        category = get_object_or_404(Category, slug=category_slug)
+        children = list()
+        for child in category.get_children().filter(id__in=shop.get_used_category_ids()):
+            children.append({
+                "title": child.title,
+                "id": child.id,
+                "slug": child.slug
+            })
+
+        return JsonResponse({
+            "status": "success",
+            "children": children
         })
 
 
