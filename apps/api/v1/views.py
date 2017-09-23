@@ -394,20 +394,8 @@ class ShopCategoriesApiView(APIView):
 
     def get(self, request, slug):
         shop = get_object_or_404(Shop, slug=slug)
-        # categories = list()
-        # for category in shop.get_used_categories():
-        #     categories.append({
-        #         "title": category.title,
-        #         "id": category.id,
-        #         "slug": category.slug,
-        #         "parent_id": category.parent.id if category.parent else None
-        #     })
         parent_categories = list()
         for parent_category in shop.get_parent_categories_of_used():
-            # children = list()
-            # for child in categories:
-            #     if child.get('parent_id') == parent_category.id:
-            #         children.append(child)
             parent_categories.append({
                 "id": parent_category.id,
                 "title": parent_category.title,
@@ -417,6 +405,80 @@ class ShopCategoriesApiView(APIView):
         return JsonResponse({
             "status": "success",
             "categories": parent_categories
+        })
+
+
+class ShopSalesView(APIView):
+    permission_classes = (AllowAny,)
+    authentication_classes = (TokenAuthentication,)
+
+    def get(self, request, slug):
+        shop = get_object_or_404(Shop, slug=slug)
+        sales = list()
+        for sale in shop.sales_set.all():
+            sales.append({
+                "title": sale.title,
+                "short_description": sale.short_description,
+                "description": sale.description,
+                "discount": sale.discount,
+                "image": sale.image.url
+            })
+
+        return JsonResponse({
+            "status": "success",
+            "sales": sales
+        })
+
+
+class ShopContactsView(APIView):
+    permission_classes = (AllowAny,)
+    authentication_classes = (TokenAuthentication,)
+
+    def get(self, request, slug):
+        shop = get_object_or_404(Shop, slug=slug)
+        contacts = list()
+        for contact in shop.contacts_set.all():
+            places = list()
+            contacts.append({
+                "address": contact.address,
+                "phone": contact.phone,
+                "monday": contact.monday,
+                "tuesday": contact.tuesday,
+                "wednesday": contact.wednesday,
+                "thursday": contact.thursday,
+                "friday": contact.friday,
+                "saturday": contact.saturday,
+                "sunday": contact.sunday,
+                "round_the_clock": contact.round_the_clock,
+                "place": contact.place.__str__() if contact.place else "",
+                "latitude": contact.place.latitude,
+                "longitude": contact.place.longitude
+
+            })
+
+        return JsonResponse({
+            "status": "success",
+            "contacts": contacts
+        })
+
+
+class ShopReviewsView(APIView):
+    permission_classes = (AllowAny,)
+    authentication_classes = (TokenAuthentication,)
+
+    def get(self, request, slug):
+        shop = get_object_or_404(Shop, slug=slug)
+        reviews = list()
+        for review in shop.shopreviews_set.all():
+            reviews.append({
+                "user": review.user.username if review.user.username else review.user.email,
+                "text": review.text,
+                "stars": review.stars
+            })
+
+        return JsonResponse({
+            "status": "success",
+            "reviews": reviews
         })
 
 
@@ -612,52 +674,52 @@ class ShopDetailView(MultipleModelAPIView):
         return super(ShopDetailView, self).dispatch(*args, **kwargs)
 
 
-class ShopSalesView(ListAPIView):
-    """
-    Возвращает поля Магазина и его Акции
-    """
-    serializer_class = SalesSerializer
-    filter_backends = [SearchFilter, OrderingFilter]
-    pagination_class = ShopProductsLimitPagination
-    permission_classes = [AllowAny]
-    authentication_classes = (SessionAuthentication, TokenAuthentication)
-
-    def get_queryset(self):
-        slug = self.kwargs.get('slug')
-        shop = Shop.objects.filter(slug=slug)
-        sales = Sales.objects.filter(shop=shop)
-        return sales
-
-
-class ShopReviewsView(ListAPIView):
-    """
-    Возвращает поля Магазина и его Отзывы
-    """
-    serializer_class = ShopReviewsSerializer
-    filter_backends = [SearchFilter, OrderingFilter]
-    pagination_class = ShopProductsLimitPagination
-    permission_classes = [AllowAny]
-    authentication_classes = (SessionAuthentication, TokenAuthentication)
-
-    def get_queryset(self):
-        slug = self.kwargs.get('slug')
-        shop = Shop.objects.filter(slug=slug)
-        reviews = ShopReviews.objects.filter(shop=shop)
-        return reviews
+# class ShopSalesView(ListAPIView):
+#     """
+#     Возвращает поля Магазина и его Акции
+#     """
+#     serializer_class = SalesSerializer
+#     filter_backends = [SearchFilter, OrderingFilter]
+#     pagination_class = ShopProductsLimitPagination
+#     permission_classes = [AllowAny]
+#     authentication_classes = (SessionAuthentication, TokenAuthentication)
+#
+#     def get_queryset(self):
+#         slug = self.kwargs.get('slug')
+#         shop = Shop.objects.filter(slug=slug)
+#         sales = Sales.objects.filter(shop=shop)
+#         return sales
 
 
-class ShopContactsView(ListAPIView):
-    """
-    Возвращает поля Магазина и его Контакты
-    """
-    serializer_class = ShopContactsSerializer
-    filter_backends = [SearchFilter, OrderingFilter]
-    pagination_class = ShopProductsLimitPagination
-    permission_classes = [AllowAny]
-    authentication_classes = (SessionAuthentication, TokenAuthentication)
+# class ShopReviewsView(ListAPIView):
+#     """
+#     Возвращает поля Магазина и его Отзывы
+#     """
+#     serializer_class = ShopReviewsSerializer
+#     filter_backends = [SearchFilter, OrderingFilter]
+#     pagination_class = ShopProductsLimitPagination
+#     permission_classes = [AllowAny]
+#     authentication_classes = (SessionAuthentication, TokenAuthentication)
+#
+#     def get_queryset(self):
+#         slug = self.kwargs.get('slug')
+#         shop = Shop.objects.filter(slug=slug)
+#         reviews = ShopReviews.objects.filter(shop=shop)
+#         return reviews
 
-    def get_queryset(self):
-        slug = self.kwargs.get('slug')
-        shop = Shop.objects.filter(slug=slug)
-        contacts = Contacts.objects.filter(shop=shop)
-        return contacts
+
+# class ShopContactsView(ListAPIView):
+#     """
+#     Возвращает поля Магазина и его Контакты
+#     """
+#     serializer_class = ShopContactsSerializer
+#     filter_backends = [SearchFilter, OrderingFilter]
+#     pagination_class = ShopProductsLimitPagination
+#     permission_classes = [AllowAny]
+#     authentication_classes = (SessionAuthentication, TokenAuthentication)
+#
+#     def get_queryset(self):
+#         slug = self.kwargs.get('slug')
+#         shop = Shop.objects.filter(slug=slug)
+#         contacts = Contacts.objects.filter(shop=shop)
+#         return contacts
