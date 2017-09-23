@@ -451,10 +451,14 @@ class UserCartItemsView(APIView):
             })
         shops = list()
         for shop in user.cart_set.last().get_shops():
+            items = list()
+            for item in cartitems:
+                if item.get('shop') == shop.title:
+                    items.append(item)
             shops.append({
                 "title": shop.title,
                 "logo": shop.get_logo(),
-                "items": [item if item.get('shop') == shop.title else "" for item in cartitems]
+                "items": items
             })
 
         return JsonResponse({
