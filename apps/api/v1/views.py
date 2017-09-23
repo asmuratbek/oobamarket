@@ -438,22 +438,61 @@ class UserCartItemsView(APIView):
     def get(self, request):
         user = get_object_or_404(User, id=request.user.id)
         cartitems = list()
-
         for item in user.cart_set.last().cartitem_set.all():
             cartitems.append({
                 "title": item.product.title,
+                "quantity": item.quantity,
+                "slug": item.product.slug,
                 "short_description": item.product.short_description,
                 "shop": item.product.get_shop_title(),
                 "price": item.product.get_price(),
+                "total": item.total,
                 "image": item.product.get_main_thumb_image(),
                 "is_favorite": item.product.favorite.filter(user=user).exists(),
                 "is_in_cart": True
             })
+        shops = list()
+        for shop in user.cart_set.last().get_shops():
+            items = list()
+            for item in cartitems:
+                if item.get('shop') == shop.title:
+                    items.append(item)
+            shops.append({
+                "title": shop.title,
+                "logo": shop.get_logo(),
+                "items": items
+            })
 
         return JsonResponse({
             "status": "success",
-            "items": cartitems
+            "delivery_total": user.cart_set.last().get_delivery_total(),
+            "shops": shops
         })
+
+
+class ProductChangeCartView(APIView):
+    permission_classes = (IsAuthenticated,)
+    authentication_classes = (TokenAuthentication,)
+
+    def post(self, request, slug):
+        product = get_object_or_404(Product, slug=slug)
+        user = get_object_or_404(User, id=request.user.id)
+        cart = user.cart_set.last()
+        quantity = request.POST.get('quantity')
+        if cart.cartitem_set.filter(product__slug=slug):
+            status = "success"
+            cartitem = cart.cartitem_set.filter(product__slug=slug).first()
+            cartitem.quantity = quantity
+            cartitem.save()
+            return JsonResponse({
+                "status": status,
+                "total": cartitem.total
+            })
+        else:
+            status = "error"
+            return JsonResponse({
+                "status": status
+            })
 
 
 class UserFavoritesView(APIView):
@@ -467,6 +506,7 @@ class UserFavoritesView(APIView):
         for item in user.get_favorites():
             favorites.append({
                 "title": item.product.title,
+                "slug": item.product.slug,
                 "short_description": item.product.short_description,
                 "shop": item.product.get_shop_title(),
                 "price": item.product.get_price(),
