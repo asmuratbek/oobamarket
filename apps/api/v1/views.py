@@ -454,7 +454,7 @@ class UserCartItemsView(APIView):
             shops.append({
                 "title": shop.title,
                 "logo": shop.get_logo(),
-                "items": [item if item.get('shop') == shop.title else None for  item in cartitems]
+                "items": [item if item.get('shop') == shop.title else "" for item in cartitems]
             })
 
         return JsonResponse({
