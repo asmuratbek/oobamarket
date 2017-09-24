@@ -525,6 +525,28 @@ class ShopCreateApiView(CreateAPIView):
 
     def perform_create(self, serializer):
         serializer.save(user=[self.request.user.id])
+        slug = self.request.POST.get("slug")
+        phone = self.request.POST.get("phone")
+        address = self.request.POST.get("address")
+        monday = self.request.POST.get("monday")
+        tuesday = self.request.POST.get("tuesday")
+        wednesday = self.request.POST.get("wednesday")
+        thursday = self.request.POST.get("thursday")
+        friday = self.request.POST.get("friday")
+        saturday = self.request.POST.get("saturday")
+        sunday = self.request.POST.get("sunday")
+        round_the_clock = self.request.get("round_the_clock")
+        longitude = self.request.POST.get("longitude")
+        lattitude = self.request.POST.get("lattitude")
+        place = self.request.POST.get("place")
+        shop = get_object_or_404(Shop, slug=slug)
+        if phone or address or monday or tuesday or wednesday or thursday or friday or saturday or sunday or round_the_clock:
+             contact = Contacts.objects.create(shop=shop, phone=phone, address=address,
+                                    monday=monday, tuesday=tuesday, wednesday=wednesday,
+                                    thursday=thursday, friday=friday, saturday=saturday,
+                                    sunday=sunday, round_the_clock=round_the_clock)
+             if longitude and lattitude or place:
+                 Place.objects.create(contact=contact, longitude=longitude, lattitude=lattitude, place=place)
 
 
 
