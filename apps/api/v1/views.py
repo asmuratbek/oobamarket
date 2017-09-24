@@ -520,6 +520,12 @@ class ShopDeleteApiView(DestroyAPIView):
 class ShopCreateApiView(CreateAPIView):
     queryset = Shop.objects.all()
     serializer_class = ShopCreateSerializer
+    permission_classes = (IsAuthenticated,)
+    authentication_classes = (TokenAuthentication,)
+
+    def perform_create(self, serializer):
+        serializer.save(user=[self.request.user.id])
+
 
 
 class UserShopsListView(ListAPIView):

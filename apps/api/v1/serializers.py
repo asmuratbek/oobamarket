@@ -1,8 +1,10 @@
+from rest_framework import serializers
 from rest_framework.serializers import (
     ModelSerializer,
     HyperlinkedIdentityField,
     SerializerMethodField,
 )
+from rest_framework.validators import UniqueTogetherValidator
 from slugify import slugify
 
 from apps.global_category.models import GlobalCategory
@@ -379,9 +381,17 @@ class ShopSerializer(ModelSerializer):
 
 
 class ShopCreateSerializer(ModelSerializer):
+    user = serializers.PrimaryKeyRelatedField(
+        many=True, queryset=User.objects.all())
 
     class Meta:
         model = Shop
+        validators = [
+            UniqueTogetherValidator(
+                queryset=Shop.objects.all(),
+                fields=('slug',)
+            )
+        ]
         fields = (
             'id',
             'title',
@@ -394,11 +404,6 @@ class ShopCreateSerializer(ModelSerializer):
             'updated_at',
             'logo'
         )
-
-    slug = SerializerMethodField()
-
-    def get_slug(self, obj):
-        return slugify(obj.title)
 
 
 class UserSerializer(ModelSerializer):
