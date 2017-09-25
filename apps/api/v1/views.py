@@ -451,8 +451,8 @@ class ShopContactsView(APIView):
                 "sunday": contact.sunday,
                 "round_the_clock": contact.round_the_clock,
                 "place": contact.place.__str__() if contact.place else "",
-                "latitude": contact.place.latitude,
-                "longitude": contact.place.longitude
+                "latitude": contact.place.latitude if contact.place.latitude else None,
+                "longitude": contact.place.longitude if contact.place.longitude else None
 
             })
 
