@@ -112,9 +112,11 @@ var validate_fields = function (elems) {
         return false;
 };
 
-
-$(document).on('click', '#add-product-button', function (e) {
-    e.preventDefault();
+var clickCount = 0;
+$('#add-product-button').on('click', function () {
+    clickCount++;
+    if(clickCount > 1)
+        return;
     var fields_list = [$('#id_shop'), $('#global_category'), $('#category_list'), $('#subcategory_list'),
                         $('#id_title'), $('#id_price')];
     var not_errors = validate_fields(fields_list);
