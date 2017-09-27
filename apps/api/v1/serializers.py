@@ -176,12 +176,12 @@ class ProductDetailSerializer(ModelSerializer):
         lookup_field="slug"
     )
     shop = SerializerMethodField()
+    price = SerializerMethodField()
     category_title = SerializerMethodField()
     is_owner = SerializerMethodField()
     main_image = SerializerMethodField()
     is_in_cart = SerializerMethodField()
     is_favorite = SerializerMethodField()
-    get_price_function = SerializerMethodField()
 
     class Meta:
         model = Product
@@ -201,7 +201,7 @@ class ProductDetailSerializer(ModelSerializer):
             'main_image',
             'is_in_cart',
             'is_favorite',
-            'get_price_function',
+            'price',
             'created_at',
             'updated_at',
             'get_category_title'
@@ -210,11 +210,11 @@ class ProductDetailSerializer(ModelSerializer):
     def get_shop(self, obj):
         return str(obj.shop)
 
+    def get_price(self, obj):
+        return obj.get_price()
+
     def get_category_title(self, obj):
         return obj.category.title
-
-    def get_get_price_function(self, obj):
-        return obj.get_price()
 
     def get_is_owner(self, obj):
         user = None
