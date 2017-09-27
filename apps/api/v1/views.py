@@ -636,9 +636,19 @@ class UserDetailView(APIView):
 
     def get(self, request):
         user = get_object_or_404(User, id=request.user.id)
+        shops = list()
+        for shop in user.shop_set.all():
+            shops.append({
+                "title": shop.title,
+                "slug": shop.slug,
+                "logo": shop.get_logo(),
+                "short_description": shop.short_description,
+                "email": shop.email
+            })
 
         return JsonResponse({
             "status": "success",
+            "shops": shops,
             "username": user.username,
             "first_name": user.first_name,
             "last_name": user.last_name,

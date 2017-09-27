@@ -285,20 +285,20 @@ from apps.product.models import Shop
 
 
 class ShopSerializer(ModelSerializer):
-    detail_url = HyperlinkedIdentityField(
-        view_name='api:shop_detail',
-        lookup_field='slug'
-    )
-
-    update_url = HyperlinkedIdentityField(
-        view_name='api:shop_update',
-        lookup_field="slug"
-    )
-
-    delete_url = HyperlinkedIdentityField(
-        view_name='api:shop_delete',
-        lookup_field="slug"
-    )
+    # detail_url = HyperlinkedIdentityField(
+    #     view_name='api:shop_detail',
+    #     lookup_field='slug'
+    # )
+    #
+    # update_url = HyperlinkedIdentityField(
+    #     view_name='api:shop_update',
+    #     lookup_field="slug"
+    # )
+    #
+    # delete_url = HyperlinkedIdentityField(
+    #     view_name='api:shop_delete',
+    #     lookup_field="slug"
+    # )
 
     # used_categories = SerializerMethodField()
     is_owner = SerializerMethodField()
@@ -310,9 +310,9 @@ class ShopSerializer(ModelSerializer):
     class Meta:
         model = Shop
         fields = (
-            'detail_url',
-            'update_url',
-            'delete_url',
+            # 'detail_url',
+            # 'update_url',
+            # 'delete_url',
             'id',
             'title',
             'slug',
