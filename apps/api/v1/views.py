@@ -537,7 +537,7 @@ class ShopCreateApiView(CreateAPIView):
         sunday = self.request.POST.get("sunday")
         round_the_clock = self.request.get("round_the_clock")
         longitude = self.request.POST.get("longitude")
-        lattitude = self.request.POST.get("lattitude")
+        latitude = self.request.POST.get("latitude")
         place = self.request.POST.get("place")
         shop = get_object_or_404(Shop, slug=slug)
         if phone or address or monday or tuesday or wednesday or thursday or friday or saturday or sunday or round_the_clock:
@@ -545,9 +545,8 @@ class ShopCreateApiView(CreateAPIView):
                                     monday=monday, tuesday=tuesday, wednesday=wednesday,
                                     thursday=thursday, friday=friday, saturday=saturday,
                                     sunday=sunday, round_the_clock=round_the_clock)
-             if longitude and lattitude or place:
-                 Place.objects.create(contact=contact, longitude=longitude, lattitude=lattitude, place=place)
-
+             if longitude and latitude or place:
+                 Place.objects.create(contact=contact, longitude=longitude, latitude=latitude, place=place)
 
 
 class UserShopsListView(ListAPIView):
