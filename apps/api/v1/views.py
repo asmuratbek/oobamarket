@@ -32,13 +32,12 @@ from apps.api.v1.serializers import (
     ShopCreateSerializer,
     CategorySerializer,
     GlobalCategorySerializer,
-    SalesSerializer, ShopReviewsSerializer, ShopContactsSerializer, PlaceSerializer, ParentCategorySerializer)
+    PlaceSerializer, ParentCategorySerializer)
 from apps.cart.models import Cart, CartItem
 from apps.category.models import Category
 from apps.global_category.models import GlobalCategory
 from apps.product.models import Product, ProductImage, FavoriteProduct
-from apps.reviews.models import ShopReviews
-from apps.shop.models import Shop, Sales, Contacts, Place
+from apps.shop.models import Shop, Contacts, Place
 from apps.users.models import User
 from .pagination import (
     CategoryLimitPagination,
@@ -535,18 +534,19 @@ class ShopCreateApiView(CreateAPIView):
         friday = self.request.POST.get("friday")
         saturday = self.request.POST.get("saturday")
         sunday = self.request.POST.get("sunday")
-        round_the_clock = self.request.get("round_the_clock")
+        round_the_clock = self.request.POST.get("round_the_clock")
         longitude = self.request.POST.get("longitude")
         latitude = self.request.POST.get("latitude")
-        place = self.request.POST.get("place")
+        place_id = self.request.POST.get("place_id")
+        place = get_object_or_404(Place, id=place_id)
         shop = get_object_or_404(Shop, slug=slug)
         if phone or address or monday or tuesday or wednesday or thursday or friday or saturday or sunday or round_the_clock:
              contact = Contacts.objects.create(shop=shop, phone=phone, address=address,
                                     monday=monday, tuesday=tuesday, wednesday=wednesday,
                                     thursday=thursday, friday=friday, saturday=saturday,
-                                    sunday=sunday, round_the_clock=round_the_clock)
-             if longitude and latitude or place:
-                 Place.objects.create(contact=contact, longitude=longitude, latitude=latitude, place=place)
+                                    sunday=sunday, round_the_clock=round_the_clock if round_the_clock else False,
+                                    longitude=longitude, latitude=latitude, place=place if place else None
+                                               )
 
 
 class UserShopsListView(ListAPIView):
