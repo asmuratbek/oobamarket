@@ -96,6 +96,7 @@ $(document).on('click', '.delete-img-el', function () {
         images_div.find("div").first().find("p").text("Главная")
     }
 });
+var clickCount = 0;
 
 var validate_fields = function (elems) {
     var error = "* Обязательное поле";
@@ -106,13 +107,16 @@ var validate_fields = function (elems) {
             errors++;
         }
     });
-    if(errors === 0)
+    if(errors === 0) {
         return true;
-    else
+    }
+    else {
+        clickCount = 0;
         return false;
+    }
 };
 
-var clickCount = 0;
+
 $('#add-product-button').on('click', function () {
     clickCount++;
     if(clickCount > 1)
