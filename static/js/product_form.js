@@ -96,6 +96,7 @@ $(document).on('click', '.delete-img-el', function () {
         images_div.find("div").first().find("p").text("Главная")
     }
 });
+var clickCount = 0;
 
 var validate_fields = function (elems) {
     var error = "* Обязательное поле";
@@ -106,15 +107,20 @@ var validate_fields = function (elems) {
             errors++;
         }
     });
-    if(errors === 0)
+    if(errors === 0) {
         return true;
-    else
+    }
+    else {
+        clickCount = 0;
         return false;
+    }
 };
 
 
-$(document).on('click', '#add-product-button', function (e) {
-    e.preventDefault();
+$('#add-product-button').on('click', function () {
+    clickCount++;
+    if(clickCount > 1)
+        return;
     var fields_list = [$('#id_shop'), $('#global_category'), $('#category_list'), $('#subcategory_list'),
                         $('#id_title'), $('#id_price')];
     var not_errors = validate_fields(fields_list);

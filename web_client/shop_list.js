@@ -89,7 +89,7 @@ var MainInterface = createClass({
         });
         $.ajax({
             type: "GET",
-              url: '/api/v1/shop/?page=' + this.state.activePage + '&q=' + this.state.queryText + '&place=' + activePlace,
+              url: '/api/v1/shop/?page=1' + '&q=' + this.state.queryText + '&place=' + activePlace,
               success: function (data) {
                     var shops = data.results.map(obj => obj);
                     var pagesCount = Math.ceil(data.count / 8);
