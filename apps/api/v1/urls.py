@@ -18,7 +18,7 @@ from .views import (
     ShopCreateApiView,
     FacebookLogin,
     GoogleLogin,
-    UserShopsListView,
+    # UserShopsListView,
     UserCartItemsView,
     UserFavoritesView,
     UserDetailView,
