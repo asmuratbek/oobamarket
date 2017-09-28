@@ -501,7 +501,6 @@ class ShopContactsView(APIView):
         shop = get_object_or_404(Shop, slug=slug)
         contacts = list()
         for contact in shop.contacts_set.all():
-            places = list()
             contacts.append({
                 "address": contact.address,
                 "phone": contact.phone,
@@ -613,21 +612,21 @@ class ShopCreateApiView(CreateAPIView):
                                                )
 
 
-class UserShopsListView(ListAPIView):
-    """
-       Возвращает все Магазины пользователя
-    """
-    serializer_class = ShopSerializer
-    filter_backends = [SearchFilter, OrderingFilter]
-    pagination_class = ShopProductsLimitPagination
-    permission_classes = [AllowAny]
-    authentication_classes = (SessionAuthentication, TokenAuthentication)
-
-    def get_queryset(self):
-        user_id = self.kwargs.get('pk')
-        user = User.objects.filter(id=user_id)
-        shops = Shop.objects.filter(user=user)
-        return shops
+# class UserShopsListView(ListAPIView):
+#     """
+#        Возвращает все Магазины пользователя
+#     """
+#     serializer_class = ShopSerializer
+#     filter_backends = [SearchFilter, OrderingFilter]
+#     pagination_class = ShopProductsLimitPagination
+#     permission_classes = [AllowAny]
+#     authentication_classes = (SessionAuthentication, TokenAuthentication)
+#
+#     def get_queryset(self):
+#         user_id = self.kwargs.get('pk')
+#         user = User.objects.filter(id=user_id)
+#         shops = Shop.objects.filter(user=user)
+#         return shops
 
 
 class UserDetailView(APIView):
