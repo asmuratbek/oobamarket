@@ -22,6 +22,7 @@ class SectionSitemap(Sitemap):
         return obj.get_url()
 
 
+
 class CategorySitemap(Sitemap):
     def items(self):
         return Category.objects.all()
