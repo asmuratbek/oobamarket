@@ -1,24 +1,15 @@
 from django.contrib.sitemaps import Sitemap
+from django.contrib.sites.models import Site
 from django.urls import reverse
 import datetime
-
-from twisted.web.server import Site
 
 from apps.category.models import Category
 from apps.global_category.models import GlobalCategory
 from apps.product.models import Product
 from apps.shop.models import Shop
 
-class SiteMapDomainMixin(Sitemap):
 
-    def get_urls(self, page=1, site=None, protocol=None):
-        # give a check in https://github.com/django/django/blob/1.5.1/django/contrib/sitemaps/__init__.py
-        # There's also a "protocol" argument.
-        fake_site = Site(domain='oobamarket.kg', name='oobamarket.kg')
-        return super(SiteMapDomainMixin, self).get_urls(page, fake_site, protocol=None)
-
-
-class SectionSitemap(SiteMapDomainMixin):
+class SectionSitemap(Sitemap):
     def items(self):
         return GlobalCategory.objects.all()
 
@@ -32,7 +23,7 @@ class SectionSitemap(SiteMapDomainMixin):
         return obj.get_absolute_url()
 
 
-class CategorySitemap(SiteMapDomainMixin):
+class CategorySitemap(Sitemap):
     def items(self):
         return Category.objects.all()
 
@@ -46,7 +37,7 @@ class CategorySitemap(SiteMapDomainMixin):
         return obj.get_absolute_url()
 
 
-class ProductSitemap(SiteMapDomainMixin):
+class ProductSitemap(Sitemap):
     def items(self):
         return Product.objects.all()
 
@@ -56,12 +47,15 @@ class ProductSitemap(SiteMapDomainMixin):
     def lastmod(self, obj):
         return obj.updated_at
 
+    def get_urls(self, site=None, **kwargs):
+        site = Site(domain='oobamarket.kg', name='oobamarket.kg')
+        return super(ProductSitemap, self).get_urls(site=site, **kwargs)
 
     def location(self, obj):
         return obj.get_absolute_url()
 
 
-class ShopSitemap(SiteMapDomainMixin):
+class ShopSitemap(Sitemap):
     def items(self):
         return Shop.objects.all()
 
@@ -72,4 +66,4 @@ class ShopSitemap(SiteMapDomainMixin):
         return obj.updated_at
 
     def location(self, obj):
-        return self.get_absolute_url()
+        return obj.get_absolute_url()
