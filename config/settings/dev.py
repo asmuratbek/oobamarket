@@ -23,7 +23,8 @@ from .base import *  # noqa
 # ------------------------------------------------------------------------------
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#secret-key
 # Raises ImproperlyConfigured exception if DJANGO_SECRET_KEY not in os.environ
-DEBUG = env.bool('DJANGO_DEBUG', default=False)
+# DEBUG = env.bool('DJANGO_DEBUG', default=False)
+DEBUG = True
 SECRET_KEY = 'gSma.dG/C]J`;YWr8,FOL3/_wy[EQG,;AaC<5j<9B7usoRPLFT'
 
 
