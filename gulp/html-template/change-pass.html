@@ -1,0 +1,117 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta property="og:image" content="path/to/image.jpg">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="author" content="">
+    <title>Главная</title>
+    <link rel="shortcut icon" href="img/favicon/favicon.ico" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700&amp;subset=cyrillic" rel="stylesheet">
+    <link rel="stylesheet" href="css/main.css">
+</head>
+
+<body>
+<div class="uk-offcanvas-content">
+
+
+    <header uk-sticky="media: 320" class="uk-sticky uk-sticky-fixed ">
+        <a href="" class="mobile-logo uk-hidden@m"> <img width="120" src="img/logo.svg" alt=""></a>
+        <button class="mobile-button-nav uk-button uk-button-default uk-hidden@m" type="button" uk-toggle="target: #offcanvas-reveal">
+            <span uk-icon="icon: grid"></span>
+        </button>
+        <div class="uk-container uk-visible@m">
+            <nav class="uk-navbar-container " uk-navbar >
+                <div class="uk-navbar-right">
+                    <ul class="uk-navbar-nav">
+                        <li class="for-shop"><a href="#"><span class="uk-margin-small-right uk-icon" uk-icon="icon: star"></span> Для Магазина</a></li>
+                        <li class="sub-list"><a href="#"><span class="uk-margin-small-right uk-icon" uk-icon="icon: bookmark"></span>Лента</a></li>
+                        <li class="create-shop"><a href="#" title="Добавьте свой магазин!" uk-tooltip="pos: bottom"><span class="uk-margin-small-right uk-icon" uk-icon="icon: world"></span> Добавить магазин</a></li>
+                        <li class="favorite"><a href="#"><span class="uk-margin-small-right uk-icon" uk-icon="icon: heart"></span> Избранные (<span>2</span>)</a></li>
+                        <li class="basket"><a href="#"><span class="uk-margin-small-right uk-icon" uk-icon="icon: cart"></span> Корзина (<span>10</span>)</a></li>
+                        <li class="enter">
+                            <a href="#">Войти</a>
+                            <div class="uk-navbar-dropdown uk-padding-remove">
+                                <ul class="uk-nav uk-navbar-dropdown-nav">
+                                    <li><a href="#"><b>Кабинет</b></a></li>
+                                    <li><a href="#"><b>Создать магазин</b></a></li>
+                                    <li><a href="#"><b>Добавить товар</b></a></li>
+                                    <li><a href="#"><b>История заказов</b></a></li>
+                                    <li><a href="#">Ооба Маркет</a></li>
+                                    <li><a href="#">Альянс</a></li>
+                                    <li><a href="#"><b>Выйти</b></a></li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+
+        <div id="offcanvas-reveal" class="mobile-nav" uk-offcanvas="mode: reveal; overlay: true">
+            <div class="uk-offcanvas-bar">
+                <button class="uk-offcanvas-close" type="button" uk-close></button>
+                <a href=""> <img src="img/logo.png" alt=""></a>
+                <ul class="">
+                    <li class="for-shop"><a href="#"><span class="uk-margin-small-right uk-icon" uk-icon="icon: star"></span> Для Магазина</a></li>
+                    <li class="sub-list"><a href="#"><span class="uk-margin-small-right uk-icon" uk-icon="icon: bookmark"></span>Лента</a></li>
+                    <li class="create-shop"><a href="#"><span class="uk-margin-small-right uk-icon" uk-icon="icon: world"></span> Добавить магазин</a></li>
+                    <li class="favorite"><a href="#"><span class="uk-margin-small-right uk-icon" uk-icon="icon: heart"></span> Избранные (<span> 2 </span>)</a></li>
+                    <li class="basket"><a href="#"><span class="uk-margin-small-right uk-icon" uk-icon="icon: cart"></span> Корзина (<span> 10 </span>)</a></li>
+                    <li class="enter"><a href="#">Войти</a></li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+<section class="change-pass  uk-margin-medium-top">
+    <div class="uk-container">
+        <div class="shadow uk-padding-large">
+            <div class="uk-grid uk-flex-center" uk-grid>
+                <div class="uk-width-1-2@l ">
+                    <form>
+                        <fieldset class="uk-fieldset">
+                            <legend class="uk-legend uk-text-center">Сменить пароль</legend>
+                            <div class="uk-margin">
+                                <label class="uk-form-label">Текущий пароль*</label>
+                                <div class="uk-form-controls">
+                                    <input class="uk-input" type="text">
+                                </div>
+                            </div>
+                            <div class="uk-margin">
+                                <label class="uk-form-label">Новый пароль*</label>
+                                <div class="uk-form-controls">
+                                    <input class="uk-input" type="text">
+                                </div>
+                            </div>
+                            <div class="uk-margin">
+                                <label class="uk-form-label">Новый пароль (ещё раз)*</label>
+                                <div class="uk-form-controls">
+                                    <input class="uk-input" type="text">
+                                </div>
+                            </div>
+                            <div class="uk-margin uk-text-center">
+                                <button type="submit" class="save uk-button uk-button-default">
+                                    Сменить пароль
+                                </button>
+                            </div>
+
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+</div> <!--end uk-offcanvas-content-->
+<script src="js/main.js"></script>
+
+</body>
+</html>

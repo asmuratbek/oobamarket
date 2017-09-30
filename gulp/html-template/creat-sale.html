@@ -1,0 +1,184 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta property="og:image" content="path/to/image.jpg">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="author" content="">
+    <title>Главная</title>
+    <link rel="shortcut icon" href="img/favicon/favicon.ico" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700&amp;subset=cyrillic" rel="stylesheet">
+    <link rel="stylesheet" href="css/main.css">
+</head>
+
+<body>
+<div class="uk-offcanvas-content">
+
+    <header uk-sticky="media: 320" class="uk-sticky uk-sticky-fixed ">
+        <a href="" class="logo-svg uk-hidden@l mobile-logo">
+            <img src="img/logo.svg" alt="" width="120">
+        </a>
+        <button class="mobile-button-nav uk-button uk-button-default uk-margin-small-right uk-hidden@l" type="button" uk-toggle="target: #offcanvas-reveal">
+            <span uk-icon="icon: grid"></span>
+            Навигация
+        </button>
+        <button class="mobile-button-category uk-button uk-button-default uk-margin-small-right uk-hidden@l" type="button" uk-toggle="target: #global-category-slide">
+            <span class="uk-margin-small-right" uk-icon="icon: list"></span>Категории
+        </button>
+        <div class="uk-container uk-visible@l">
+            <nav class="uk-navbar-container " uk-navbar >
+                
+                <div class="uk-navbar-left logo">
+                    <a href="" class="logo-svg">
+                        <img src="img/logo.svg" alt="" width="120">
+                    </a>
+                    <a href="" class="name-category">Одежда, обувь</a>
+                </div>
+                <div class="uk-navbar-right search">
+                    <form class="uk-flex-center uk-grid">
+                        <input class="uk-input uk-form-width-large" type="text" placeholder="Поиск товаров...">
+                        <button class="uk-button uk-button-default">Найти</button>
+                    </form>
+                </div>
+                <div class="uk-navbar-left">
+                    <ul class="uk-navbar-nav">
+                        <li class="favorite"><a href="#"><span class="uk-margin-small-right uk-icon" uk-icon="icon: heart"></span> Избранные (<span>2</span>)</a></li>
+                        <li class="basket"><a href="#"><span class="uk-margin-small-right uk-icon" uk-icon="icon: cart"></span> Корзина (<span>10</span>)</a></li>
+                        <li class="enter">
+                            <a href="#">Войти</a>
+                            <div class="uk-navbar-dropdown uk-padding-remove">
+                                <ul class="uk-nav uk-navbar-dropdown-nav">
+                                    <li><a href="#"><b>Кабинет</b></a></li>
+                                    <li><a href="#"><b>Создать магазин</b></a></li>
+                                    <li><a href="#"><b>Добавить товар</b></a></li>
+                                    <li><a href="#"><b>История заказов</b></a></li>
+                                    <li><a href="#">Ооба Маркет</a></li>
+                                    <li><a href="#">Альянс</a></li>
+                                    <li><a href="#"><b>Выйти</b></a></li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+
+        <div id="offcanvas-reveal" class="mobile-nav" uk-offcanvas="mode: reveal; overlay: true">
+            <div class="uk-offcanvas-bar">
+                <button class="uk-offcanvas-close" type="button" uk-close></button>
+                <a href=""> <img src="img/logo.png" alt=""></a>
+                <ul class="">
+                    <li class="for-shop"><a href="#"><span class="uk-margin-small-right uk-icon" uk-icon="icon: star"></span> Для Магазина</a></li>
+                    <li class="sub-list"><a href="#"><span class="uk-margin-small-right uk-icon" uk-icon="icon: bookmark"></span>Лента</a></li>
+                    <li class="create-shop"><a href="#"><span class="uk-margin-small-right uk-icon" uk-icon="icon: world"></span> Добавить магазин</a></li>
+                    <li class="favorite"><a href="#"><span class="uk-margin-small-right uk-icon" uk-icon="icon: heart"></span> Избранные (<span> 2 </span>)</a></li>
+                    <li class="basket"><a href="#"><span class="uk-margin-small-right uk-icon" uk-icon="icon: cart"></span> Корзина (<span> 10 </span>)</a></li>
+                    <li class="enter"><a href="#">Войти</a></li>
+                </ul>
+            </div>
+        </div>
+    </header>
+<section class="creat-product  uk-margin-medium-top">
+    <div class="uk-container">
+        <div class="shadow uk-padding-large">
+            <form class="uk-grid">
+                <fieldset class="uk-fieldset uk-width-1-1@l">
+                    <legend class="uk-legend uk-margin-medium-bottom">Добавление акций</legend>
+                    <div class="uk-grid uk-child-width-1-1@l uk-margin-medium-bottom" uk-grid>
+                        <div>
+                            <label class="uk-form-label">Название акции</label>
+                            <div class="uk-form-controls">
+                                <input class="uk-input" type="email" placeholder="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="uk-width-1-5@s ">
+                        <label class="uk-form-label">Размер скидки </label>
+                        <div class="uk-form-controls uk-display-block">
+                            <input class="uk-input" type="text" placeholder="%">
+                        </div>
+                    </div>
+                    <div class="uk-grid uk-child-width-1-1@l uk-margin-medium-top" uk-grid>
+                        <label class="label-checkbox uk-display-block"><input class="uk-checkbox" type="checkbox">
+                            Опубликовать на сайте </label>
+                    </div>
+
+                    <hr class="uk-divider-icon uk-margin-medium-top uk-margin-medium-bottom">
+                    <div class="uk-grid uk-child-width-1-1@l" uk-grid>
+                        <div class="uk-form-controls">
+                            <legend class="uk-legend uk-margin-medium-bottom"> Короткое описание </legend>
+                            <textarea class="uk-textarea " rows="5" placeholder="Введите до 300 символов"></textarea>
+                        </div>
+                    </div>
+                    <hr class="uk-divider-icon uk-margin-medium-top uk-margin-medium-bottom">
+                    <div class="uk-grid uk-child-width-1-1@l" uk-grid>
+                        <div class="uk-form-controls">
+                            <legend class="uk-legend uk-margin-medium-bottom"> Полное описание товара</legend>
+                            ck-editor
+                        </div>
+                    </div>
+
+                </fieldset>
+
+
+                <div class="uk-fieldset uk-width-1-1@l upload-product-image uk-margin-remove-top">
+                    <hr class="uk-divider-icon uk-margin-medium-top uk-margin-medium-bottom">
+                    <legend class="uk-legend uk-text-center uk-margin-small-bottom">Добавьте лого вашей фирмы</legend>
+                    <small class="uk-text-center uk-display-block uk-margin-medium-bottom uk-alert-danger">Размер
+                        картинки должен быть 1:1
+                    </small>
+                    <div class="uk-child-width-1-4@m uk-grid">
+                        <div class="image-preview-parent">
+                            <div class="wrapper">
+                                <label for="image-upload" class="image-label">Выбрать изображения</label>
+                                <input type="file" name="image" id="image-upload"/>
+                            </div>
+                        </div>
+                        <div class="image-preview active">
+                            <div class="wrapper">
+                                <a class="remove-image" href="" uk-icon="icon:  minus-circle" title="Удалить изображение" uk-tooltip></a>
+                                <img src="img/cat11.png" alt="">
+                            </div>
+                        </div>
+                        <div class="image-preview">
+                            <div class="wrapper">
+                                <a class="remove-image" href="" uk-icon="icon:  minus-circle" title="Удалить изображение" uk-tooltip></a>
+                                <img src="img/t2.jpg" alt="">
+                            </div>
+                        </div>
+                        <div class="image-preview">
+                            <div class="wrapper">
+                                <a class="remove-image" href="" uk-icon="icon:  minus-circle" title="Удалить изображение" uk-tooltip></a>
+                                <img src="img/template.jpg" alt="">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div class="uk-width-1-1@l">
+                    <div class=" uk-width-1-2@s uk-margin-medium-top">
+                        <a href="" class="uk-button uk-button-default border-red bg-red uk-width-1-2@l"><span
+                                class="uk-margin-small-right" uk-icon="icon: check"> </span>Сохранить</a>
+                    </div>
+                </div>
+
+
+            </form>
+        </div>
+    </div>
+</section>
+
+
+
+
+</div> <!--end uk-offcanvas-content-->
+<script src="js/main.js"></script>
+
+</body>
+</html>

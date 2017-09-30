@@ -1,0 +1,376 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta property="og:image" content="path/to/image.jpg">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="author" content="">
+    <title>Главная</title>
+    <link rel="shortcut icon" href="img/favicon/favicon.ico" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700&amp;subset=cyrillic" rel="stylesheet">
+    <link rel="stylesheet" href="css/main.css">
+</head>
+
+<body>
+<div class="uk-offcanvas-content">
+
+    <header uk-sticky="media: 320" class="uk-sticky uk-sticky-fixed ">
+        <a href="" class="logo-svg uk-hidden@l mobile-logo">
+            <img src="img/logo.svg" alt="" width="120">
+        </a>
+        <button class="mobile-button-nav uk-button uk-button-default uk-margin-small-right uk-hidden@l" type="button" uk-toggle="target: #offcanvas-reveal">
+            <span uk-icon="icon: grid"></span>
+            Навигация
+        </button>
+        <button class="mobile-button-category uk-button uk-button-default uk-margin-small-right uk-hidden@l" type="button" uk-toggle="target: #global-category-slide">
+            <span class="uk-margin-small-right" uk-icon="icon: list"></span>Категории
+        </button>
+        <div class="uk-container uk-visible@l">
+            <nav class="uk-navbar-container " uk-navbar >
+                
+                <div class="uk-navbar-left logo">
+                    <a href="" class="logo-svg">
+                        <img src="img/logo.svg" alt="" width="120">
+                    </a>
+                    <a href="" class="name-category">Одежда, обувь</a>
+                </div>
+                <div class="uk-navbar-right search">
+                    <form class="uk-flex-center uk-grid">
+                        <input class="uk-input uk-form-width-large" type="text" placeholder="Поиск товаров...">
+                        <button class="uk-button uk-button-default">Найти</button>
+                    </form>
+                </div>
+                <div class="uk-navbar-left">
+                    <ul class="uk-navbar-nav">
+                        <li class="favorite"><a href="#"><span class="uk-margin-small-right uk-icon" uk-icon="icon: heart"></span> Избранные (<span>2</span>)</a></li>
+                        <li class="basket"><a href="#"><span class="uk-margin-small-right uk-icon" uk-icon="icon: cart"></span> Корзина (<span>10</span>)</a></li>
+                        <li class="enter">
+                            <a href="#">Войти</a>
+                            <div class="uk-navbar-dropdown uk-padding-remove">
+                                <ul class="uk-nav uk-navbar-dropdown-nav">
+                                    <li><a href="#"><b>Кабинет</b></a></li>
+                                    <li><a href="#"><b>Создать магазин</b></a></li>
+                                    <li><a href="#"><b>Добавить товар</b></a></li>
+                                    <li><a href="#"><b>История заказов</b></a></li>
+                                    <li><a href="#">Ооба Маркет</a></li>
+                                    <li><a href="#">Альянс</a></li>
+                                    <li><a href="#"><b>Выйти</b></a></li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+
+        <div id="offcanvas-reveal" class="mobile-nav" uk-offcanvas="mode: reveal; overlay: true">
+            <div class="uk-offcanvas-bar">
+                <button class="uk-offcanvas-close" type="button" uk-close></button>
+                <a href=""> <img src="img/logo.png" alt=""></a>
+                <ul class="">
+                    <li class="for-shop"><a href="#"><span class="uk-margin-small-right uk-icon" uk-icon="icon: star"></span> Для Магазина</a></li>
+                    <li class="sub-list"><a href="#"><span class="uk-margin-small-right uk-icon" uk-icon="icon: bookmark"></span>Лента</a></li>
+                    <li class="create-shop"><a href="#"><span class="uk-margin-small-right uk-icon" uk-icon="icon: world"></span> Добавить магазин</a></li>
+                    <li class="favorite"><a href="#"><span class="uk-margin-small-right uk-icon" uk-icon="icon: heart"></span> Избранные (<span> 2 </span>)</a></li>
+                    <li class="basket"><a href="#"><span class="uk-margin-small-right uk-icon" uk-icon="icon: cart"></span> Корзина (<span> 10 </span>)</a></li>
+                    <li class="enter"><a href="#">Войти</a></li>
+                </ul>
+            </div>
+        </div>
+    </header>
+<section class="creat-product  uk-margin-medium-top">
+    <div class="uk-container">
+        <div class="shadow uk-padding-large">
+            <form class="uk-grid">
+                <fieldset class="uk-fieldset uk-width-1-1@l">
+                    <legend class="uk-legend uk-margin-medium-bottom">1. Основные данные</legend>
+                    <div class="uk-grid uk-child-width-1-2@s" uk-grid>
+                        <div>
+                            <div class="">
+                                <div class="uk-form-controls">
+                                    <select class="selectize demo-default" placeholder="Выбрать магазин ">
+                                        <option value="" selected="selected"></option>
+                                        <option value="27">ТЦ-Beta Stores</option>
+                                        <option value="28">ТЦ-Beta Stores 2</option>
+                                        <option value="8">ТЦ-Bishkek Park</option>
+                                        <option value="13">ТЦ-Caravan</option>
+                                        <option value="25">ТЦ-Gallery</option>
+                                        <option value="22">ТЦ-Grand Stone</option>
+                                        <option value="7">ТЦ-Red Centre</option>
+                                        <option value="21">ТЦ-Баумаркт</option>
+                                        <option value="19">ТЦ-Береке</option>
+                                        <option value="12">ТЦ-Берекет Гранд</option>
+                                        <option value="9">ТЦ-Берен Голд</option>
+                                        <option value="14">ТЦ-Бишкек-Сити</option>
+                                        <option value="4">ТЦ-Весна</option>
+                                        <option value="17">ТЦ-Гоин</option>
+                                        <option value="26">ТЦ-Гранд Комфорт</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="">
+                                <div class="uk-form-controls">
+                                    <select class="selectize demo-default" placeholder="Выбрать глобальную категорию "
+                                            disabled>
+                                        <option value="" selected="selected"></option>
+                                        <option value="27">ТЦ-Beta Stores</option>
+                                        <option value="28">ТЦ-Beta Stores 2</option>
+                                        <option value="8">ТЦ-Bishkek Park</option>
+                                        <option value="13">ТЦ-Caravan</option>
+                                        <option value="25">ТЦ-Gallery</option>
+                                        <option value="22">ТЦ-Grand Stone</option>
+                                        <option value="7">ТЦ-Red Centre</option>
+                                        <option value="21">ТЦ-Баумаркт</option>
+                                        <option value="19">ТЦ-Береке</option>
+                                        <option value="12">ТЦ-Берекет Гранд</option>
+                                        <option value="9">ТЦ-Берен Голд</option>
+                                        <option value="14">ТЦ-Бишкек-Сити</option>
+                                        <option value="4">ТЦ-Весна</option>
+                                        <option value="17">ТЦ-Гоин</option>
+                                        <option value="26">ТЦ-Гранд Комфорт</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="">
+                                <div class="uk-form-controls">
+                                    <select class="selectize demo-default" placeholder="Выбрать категорию " disabled>
+                                        <option value="" selected="selected"></option>
+                                        <option value="27">ТЦ-Beta Stores</option>
+                                        <option value="28">ТЦ-Beta Stores 2</option>
+                                        <option value="8">ТЦ-Bishkek Park</option>
+                                        <option value="13">ТЦ-Caravan</option>
+                                        <option value="25">ТЦ-Gallery</option>
+                                        <option value="22">ТЦ-Grand Stone</option>
+                                        <option value="7">ТЦ-Red Centre</option>
+                                        <option value="21">ТЦ-Баумаркт</option>
+                                        <option value="19">ТЦ-Береке</option>
+                                        <option value="12">ТЦ-Берекет Гранд</option>
+                                        <option value="9">ТЦ-Берен Голд</option>
+                                        <option value="14">ТЦ-Бишкек-Сити</option>
+                                        <option value="4">ТЦ-Весна</option>
+                                        <option value="17">ТЦ-Гоин</option>
+                                        <option value="26">ТЦ-Гранд Комфорт</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="">
+                                <div class="uk-form-controls">
+                                    <select class="selectize demo-default" placeholder="Выбрать подкатегорию " disabled>
+                                        <option value="" selected="selected"></option>
+                                        <option value="27">ТЦ-Beta Stores</option>
+                                        <option value="28">ТЦ-Beta Stores 2</option>
+                                        <option value="8">ТЦ-Bishkek Park</option>
+                                        <option value="13">ТЦ-Caravan</option>
+                                        <option value="25">ТЦ-Gallery</option>
+                                        <option value="22">ТЦ-Grand Stone</option>
+                                        <option value="7">ТЦ-Red Centre</option>
+                                        <option value="21">ТЦ-Баумаркт</option>
+                                        <option value="19">ТЦ-Береке</option>
+                                        <option value="12">ТЦ-Берекет Гранд</option>
+                                        <option value="9">ТЦ-Берен Голд</option>
+                                        <option value="14">ТЦ-Бишкек-Сити</option>
+                                        <option value="4">ТЦ-Весна</option>
+                                        <option value="17">ТЦ-Гоин</option>
+                                        <option value="26">ТЦ-Гранд Комфорт</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="uk-grid uk-child-width-1-1@l" uk-grid>
+                        <div>
+                            <label class="uk-form-label">Название товара</label>
+                            <div class="uk-form-controls">
+                                <input class="uk-input" type="email" placeholder=""
+                                       title="Рекомендация - для лучшего поиска, пишите тип товара в начале названия. Автомобильные шины MAXXIS AT-771 Bravo"
+                                       uk-tooltip>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="uk-grid-small uk-margin-medium-top uk-width-1-1@l" uk-grid>
+                        <div class="uk-width-1-5@s">
+                            <label class="uk-form-label">Цена</label>
+                            <div class="uk-form-controls">
+                                <input class="uk-input" type="number" placeholder="1000">
+                            </div>
+                        </div>
+                        <div class="uk-width-1-6@s">
+                            <label class="uk-form-label">Валюта</label>
+                            <div class="uk-form-controls">
+                                <input class="uk-input" type="text" value="Сом">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="uk-grid uk-child-width-1-1@l uk-margin-small-bottom" uk-grid>
+                        <label class="label-checkbox"><input class="uk-checkbox" type="checkbox"> Скидка </label>
+                    </div>
+                    <div class="uk-width-1-5@s ">
+                        <label class="uk-form-label">Размер скидки </label>
+                        <div class="uk-form-controls uk-display-block">
+                            <input class="uk-input" type="text" placeholder="%">
+                        </div>
+                    </div>
+                    <div class="uk-grid uk-child-width-1-1@l uk-margin-medium-top" uk-grid>
+                        <label class="label-checkbox uk-display-block"><input class="uk-checkbox" type="checkbox">
+                            Опубликовать на сайте </label>
+                    </div>
+
+                    <hr class="uk-divider-icon uk-margin-medium-top uk-margin-medium-bottom">
+                    <div class="uk-grid uk-child-width-1-1@l" uk-grid>
+                        <div class="uk-form-controls">
+                            <legend class="uk-legend uk-margin-medium-bottom">2. Короткое описание товара
+                                (Опционально)
+                            </legend>
+                            <textarea class="uk-textarea " rows="5" placeholder="Введите до 300 символов"></textarea>
+                        </div>
+                    </div>
+                    <hr class="uk-divider-icon uk-margin-medium-top uk-margin-medium-bottom">
+                    <div class="uk-grid uk-child-width-1-1@l" uk-grid>
+                        <div class="uk-form-controls">
+                            <legend class="uk-legend uk-margin-medium-bottom">3. Полное описание товара (Опционально)
+                            </legend>
+                            ck-editor
+                        </div>
+                    </div>
+
+                    <div class="seo">
+                        <hr class="uk-divider-icon uk-margin-medium-top uk-margin-medium-bottom">
+                        <button href="#toggle-animation"
+                                class="uk-button uk-button-default uk-width-1-3@l border-red" type="button"
+                                uk-toggle="target: #seo; animation: uk-animation-fade"
+                                title="Служит для продвижения ваших товаров в сети" uk-tooltip><span
+                                class="uk-margin-small-right" uk-icon="icon:  info"></span>Для Seo
+                        </button>
+                        <div id="seo"
+                             class="uk-card uk-card-default uk-card-body uk-margin-small uk-width-1-1@l "
+                             hidden>
+                            <div class="uk-grid uk-child-width-1-1@l" uk-grid>
+                                <div class="">
+                                    <label class="uk-form-label">Мета заголовок товара:</label>
+                                    <div class="uk-form-controls">
+                                        <input class="uk-input" id="id_meta_title" maxlength="60" name="meta_title"
+                                               placeholder="" type="text">
+                                    </div>
+                                    <small>Введи до 45 символов название которое будет отображаться с посковиках. Для
+                                        лучшего отображения введите ключевое слово товара которое вы продаете на сайте.
+                                        Например если вы продаете кроссовки от найка и адидас. Правильный заголовок
+                                        будет: "Крассные кроссовки adidas за 4550 сомов". Мы добавим в конце Бишкек и
+                                        Ваше название магазина. Т.е. заголовок в последующем будет выглядеть так:"Купить
+                                        кроссовки adidas за 4500 сомов Бишкек - Кроссовки Центр."
+                                    </small>
+                                </div>
+                                <div class="">
+                                    <label class="uk-form-label">Мета описание товара:</label>
+                                    <div class="uk-form-controls">
+                                        <input class="uk-input" id="id_meta_description" maxlength="255"
+                                               name="meta_description" placeholder="Введите до 220 символов" rows="6"
+                                               type="text">
+                                    </div>
+                                    <small>В мета описании вы можете описать в кратце, какие характеристики имеет товар
+                                        и адрес продажи. Лучше всего описание формируется, где включены несколько 2-3
+                                        ключевых слова по которым вас будут искать. Чем лучше соответсвие,тем выше
+                                        позиция.
+                                    </small>
+                                </div>
+                                <div class="">
+                                    <label class="uk-form-label">Мета ключевые слова товара:</label>
+                                    <div class="uk-form-controls">
+                                        <input class="uk-input" id="id_meta_keywords" maxlength="255"
+                                               name="meta_keywords" placeholder="Введите до 10 ключевых слов" rows="6"
+                                               type="text">
+                                    </div>
+                                    <small>В поле нужно вводить ключевые слова, например, если вы продаете кроссовки. То
+                                        правильным набором ключевых слов будет: "Кроссовки, адидас, найк, бишкек,
+                                        adidas, nike, купить и т.д."
+                                    </small>
+                                </div>
+                                <div class="">
+                                    <label class="uk-form-label">СЕО текс товара:</label>
+                                    <div class="uk-form-controls">
+                                        <textarea class="uk-textarea" cols="40" id="id_seo_text" name="seo_text"
+                                                  placeholder="Введите сео описание магазина" rows="6"></textarea>
+                                    </div>
+
+                                    <small>Это поле не ограничено в заполнении. Но лучше всего чтобы он был не более 500
+                                        знаков. Сео описание влияет на продвижение вашего товара интернет магазина в
+                                        поисковике, так что вам нужно самостоятельно написать текст. Мы настоятельно не
+                                        рекомендуем копировать чужой текст, так как это не продвинет ваш магазин, а даже
+                                        снизит его рейтинг в поисковике. Самым лучшим способом является составить текст
+                                        из ключевых слов, которые популярны в поисковике.
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </fieldset>
+
+
+                <div class="uk-fieldset uk-width-1-1@l upload-product-image uk-margin-remove-top">
+                    <hr class="uk-divider-icon uk-margin-medium-top uk-margin-medium-bottom">
+                    <legend class="uk-legend uk-text-center uk-margin-small-bottom">Добавьте лого вашей фирмы</legend>
+                    <small class="uk-text-center uk-display-block uk-margin-medium-bottom uk-alert-danger">Размер
+                        картинки должен быть 1:1
+                    </small>
+                    <div class="uk-child-width-1-4@m uk-grid">
+                        <div class="image-preview-parent">
+                            <div class="wrapper">
+                                <label for="image-upload" class="image-label">Выбрать изображения</label>
+                                <input type="file" name="image" id="image-upload"/>
+                            </div>
+                        </div>
+                        <div class="image-preview active">
+                            <div class="wrapper">
+                                <a class="remove-image" href="" uk-icon="icon:  minus-circle" title="Удалить изображение" uk-tooltip></a>
+                                <img src="img/cat11.png" alt="">
+                            </div>
+                        </div>
+                        <div class="image-preview">
+                            <div class="wrapper">
+                                <a class="remove-image" href="" uk-icon="icon:  minus-circle" title="Удалить изображение" uk-tooltip></a>
+                                <img src="img/t2.jpg" alt="">
+                            </div>
+                        </div>
+                        <div class="image-preview">
+                            <div class="wrapper">
+                                <a class="remove-image" href="" uk-icon="icon:  minus-circle" title="Удалить изображение" uk-tooltip></a>
+                                <img src="img/template.jpg" alt="">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div class="uk-width-1-1@l">
+                    <div class=" uk-width-1-2@s uk-margin-medium-top">
+                        <a href="" class="uk-button uk-button-default border-red bg-red uk-width-1-2@l"><span
+                                class="uk-margin-small-right" uk-icon="icon: check"> </span>Сохранить</a>
+                    </div>
+                </div>
+
+
+            </form>
+        </div>
+    </div>
+</section>
+
+
+
+
+</div> <!--end uk-offcanvas-content-->
+<script src="js/main.js"></script>
+
+</body>
+</html>

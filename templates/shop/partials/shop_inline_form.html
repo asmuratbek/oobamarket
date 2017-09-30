@@ -1,97 +1,149 @@
 {% load widget_tweaks %}
 {% for form in formset %}
     {{ form.id }}
-    <div class="form-group input col-md-6">
-        <label for="">Телефон</label>
-        {{ form.phone|attr:"class:form-control" }}
+    <div>
+        <label class="uk-form-label">Телефон:</label>
+        <div class="uk-form-controls">
+            {{ form.phone|attr:"class:uk-input" }}
+        </div>
     </div>
-
-    <div class="form-group input col-md-6">
-        <label for="">Адрес магазина:</label>
-        {{ form.address|attr:"class:form-control" }}
-    </div>
-
-    <div class="form-group-text col-md-6">
-    Если ваш магазин находится в ТЦ или на рынке, отметьте из списка ниже, для улучшения поиска
-        <div class="form-group select col-md-12" style="margin-top: 10px; padding: 0;">
-            <label for="">Расположение вашего магазина</label>
-            {{ form.place|attr:"class:form-control" }}
+    <div>
+        <label class="uk-form-label">Адрес магазина:</label>
+        <div class="uk-form-controls">
+            {{ form.address|attr:"class:uk-input" }}
         </div>
     </div>
 
-    <div class="clearfix"></div>
-    <div class="form-group col-md-6 btn-toggle-day" data-target="0">
-        <a class="add btn no-bg btn-toggle-day-time">Указать время работы</a>
-    </div>
-
-    <div class="col-md-12 toggle-days" data-id="0">
-        <i>Оставьте поле пустым если выходной день</i>
-        <div class="form-group input col-md-12 switcher" style="margin-top: 10px; margin-bottom: 20px;"
-             data-visible="true">
-            <label class="switch js-function">
-
-                {{ form.round_the_clock|attr:"class:switch__input"|attr:"id:id_piblished" }}
-                <div class="switch__toggle">
-                    <div class="switch__handle"></div>
-                </div>
-            </label>
-            <label>Всегда открыто</label>
-        </div>
-
-        <div class="weekdays">
-        {% for i, day in days %}
-            <div class="form-group input col-md-8 fake-input" data-key={{ i }}
-                {% if forloop.counter == 1 %}data-first{% endif %}>
-                <label class="col-md-3" for="">{{ day }}</label>
-
-                <div class=" col-md-4">
-                    <span class="span-from">С</span> <input type="text" class="from_time timepicker form-control"
-                        {% if i == 'sunday' %}disabled="disabled"{% endif %}>
-                </div>
-                <div class=" col-md-4">
-                    <span class="span-to">До</span> <input type="text" class="to_time timepicker form-control"
-                {% if i == 'sunday' %}disabled="disabled"{% endif %}>
-                </div>
-                <div class="col-md-1">
-                    <input type="checkbox" class="checked_day"
-                           {% if i != 'sunday' %}checked="checked"{% endif %}>
-                    <div class="indicator"></div>
-                </div>
+    <div class="uk-width-1-2@s">
+        <div class="uk-margin-medium-bottom">
+            <small class=" uk-display-block uk-margin-small-bottom">Если ваш магазин находится в ТЦ
+                или на рынке, отметьте из списка ниже, для улучшения поиска
+            </small>
+            <label class="uk-form-label">Расположение вашего магазина</label>
+            <div class="uk-form-controls">
+                {{ form.place|attr:"class:selectize demo-default" }}
             </div>
-            <div class="clearfix"></div>
-            {% endfor %}
         </div>
-
     </div>
 
-
-
-{#    <div class="form-group input col-md-12" style="margin-top: 10px; margin-bottom: 10px;">#}
-{#        <label class="switch">#}
+{#    <div class="uk-grid uk-child-width-1-2@s uk-margin-remove-top" uk-grid>#}
+{#        <div>#}
+{#            <button href="#toggle-animation" class="uk-button uk-button-default uk-width-1-1 border-red"#}
+{#                    type="button" uk-toggle="target: #toggle-animation; animation: uk-animation-fade">#}
+{#                <span class="uk-margin-small-right" uk-icon="icon:  clock"></span>Указать время работы#}
+{#            </button>#}
+{#            <div id="toggle-animation"#}
+{#                 class="uk-card uk-card-default uk-card-body uk-margin-small uk-width-1-1@l " hidden>#}
+{#                {{ form.round_the_clock|attr:"class:switch__input"|attr:"id:id_piblished" }}#}
+{#                <div class="weekdays">#}
+{#                    {% for i, day in days %}#}
+{#                        <div class="form-group input col-md-8 fake-input" data-key={{ i }}#}
+{#                                {% if forloop.counter == 1 %}data-first{% endif %}>#}
+{#                            <label class="col-md-3" for="">{{ day }}</label>#}
 {##}
-{#            {{ form.published|attr:"class:switch__input"|attr:"id:id_piblished"|attr:"checked:checked" }}#}
-{#            <div class="switch__toggle">#}
-{#                <div class="switch__handle"></div>#}
+{#                            <div class=" col-md-4">#}
+{#                                <span class="span-from">С</span> <input type="text"#}
+{#                                                                        class="from_time timepicker form-control"#}
+{#                                                                        {% if i == 'sunday' %}disabled="disabled"{% endif %}>#}
+{#                            </div>#}
+{#                            <div class=" col-md-4">#}
+{#                                <span class="span-to">До</span> <input type="text"#}
+{#                                                                       class="to_time timepicker form-control"#}
+{#                                                                       {% if i == 'sunday' %}disabled="disabled"{% endif %}>#}
+{#                            </div>#}
+{#                            <div class="col-md-1">#}
+{#                                <input type="checkbox" class="checked_day"#}
+{#                                       {% if i != 'sunday' %}checked="checked"{% endif %}>#}
+{#                                <div class="indicator"></div>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                        <div class="clearfix"></div>#}
+{#                    {% endfor %}#}
+{#                </div>#}
 {#            </div>#}
-{#        </label>#}
-{#        <label>Опубликовать</label>#}
+{#        </div>#}
+{#        <div>#}
+{#            <a href="#modal-map" class="uk-button uk-button-default uk-width-1-1 border-red"#}
+{#               uk-toggle><span class="uk-margin-small-right" uk-icon="icon:  location"> </span>Поставить#}
+{#                метку на карте</a>#}
+{#        </div>#}
 {#    </div>#}
 
-{#    <div class="form-group input col-md-12" style="margin-top: 10px; margin-bottom: 20px;">#}
-{#        <label class="switch">#}
-{##}
-{#            {{ form.DELETE|attr:"class:switch__input"|attr:"id:id_piblished" }}#}
-{#            <div class="switch__toggle">#}
-{#                <div class="switch__handle"></div>#}
-{#            </div>#}
-{#        </label>#}
-{#        <label>Удалить филиал <i>(удаляется тел, адрес, график работы и расположение на карте)</i></label>#}
+
+{#    <div class="clearfix"></div>#}
+{#    <div class="form-group col-md-6 btn-toggle-day" data-target="0">#}
+{#        <a class="add btn no-bg btn-toggle-day-time">Указать время работы</a>#}
 {#    </div>#}
-    <div class="col-md-6">
-        <button type="button" class="btn add no-bg set-marker-trigger" data-toggle="modal" data-target="#set-marker-modal" data-id="0">Поставить
-            метку на карте
-        </button>
-    </div>
+{##}
+{#    <div class="col-md-12 toggle-days" data-id="0">#}
+{#        <i>Оставьте поле пустым если выходной день</i>#}
+{#        <div class="form-group input col-md-12 switcher" style="margin-top: 10px; margin-bottom: 20px;"#}
+{#             data-visible="true">#}
+{#            <label class="switch js-function">#}
+{##}
+{##}
+{#                <div class="switch__toggle">#}
+{#                    <div class="switch__handle"></div>#}
+{#                </div>#}
+{#            </label>#}
+{#            <label>Всегда открыто</label>#}
+{#        </div>#}
+{##}
+{#        <div class="weekdays">#}
+{#            {% for i, day in days %}#}
+{#                <div class="form-group input col-md-8 fake-input" data-key={{ i }}#}
+{#                        {% if forloop.counter == 1 %}data-first{% endif %}>#}
+{#                    <label class="col-md-3" for="">{{ day }}</label>#}
+{##}
+{#                    <div class=" col-md-4">#}
+{#                        <span class="span-from">С</span> <input type="text" class="from_time timepicker form-control"#}
+{#                                                                {% if i == 'sunday' %}disabled="disabled"{% endif %}>#}
+{#                    </div>#}
+{#                    <div class=" col-md-4">#}
+{#                        <span class="span-to">До</span> <input type="text" class="to_time timepicker form-control"#}
+{#                                                               {% if i == 'sunday' %}disabled="disabled"{% endif %}>#}
+{#                    </div>#}
+{#                    <div class="col-md-1">#}
+{#                        <input type="checkbox" class="checked_day"#}
+{#                               {% if i != 'sunday' %}checked="checked"{% endif %}>#}
+{#                        <div class="indicator"></div>#}
+{#                    </div>#}
+{#                </div>#}
+{#                <div class="clearfix"></div>#}
+{#            {% endfor %}#}
+{#        </div>#}
+{##}
+{#    </div>#}
+
+
+
+    {#    <div class="form-group input col-md-12" style="margin-top: 10px; margin-bottom: 10px;">#}
+    {#        <label class="switch">#}
+    {##}
+    {#            {{ form.published|attr:"class:switch__input"|attr:"id:id_piblished"|attr:"checked:checked" }}#}
+    {#            <div class="switch__toggle">#}
+    {#                <div class="switch__handle"></div>#}
+    {#            </div>#}
+    {#        </label>#}
+    {#        <label>Опубликовать</label>#}
+    {#    </div>#}
+
+    {#    <div class="form-group input col-md-12" style="margin-top: 10px; margin-bottom: 20px;">#}
+    {#        <label class="switch">#}
+    {##}
+    {#            {{ form.DELETE|attr:"class:switch__input"|attr:"id:id_piblished" }}#}
+    {#            <div class="switch__toggle">#}
+    {#                <div class="switch__handle"></div>#}
+    {#            </div>#}
+    {#        </label>#}
+    {#        <label>Удалить филиал <i>(удаляется тел, адрес, график работы и расположение на карте)</i></label>#}
+    {#    </div>#}
+{#    <div class="col-md-6">#}
+{#        <button type="button" class="btn add no-bg set-marker-trigger" data-toggle="modal"#}
+{#                data-target="#set-marker-modal" data-id="0">Поставить#}
+{#            метку на карте#}
+{#        </button>#}
+{#    </div>#}
 
 
     <div class="form-group col-md-6">
@@ -102,28 +154,28 @@
     </div>
     {% if form.place %}
     {% endif %}
-    <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
-         id="set-marker-modal">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">Поставьте маркер на карте</div>
-                <div class="modal-body">
-                    <div id="yandex_map" style="width: 100%; height: 500px;"></div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" data-dismiss="modal" aria-label="Close" class="add btn">Сохранить</button>
-                </div>
-            </div>
-        </div>
-    </div>
+{#    <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"#}
+{#         id="set-marker-modal">#}
+{#        <div class="modal-dialog modal-lg" role="document">#}
+{#            <div class="modal-content">#}
+{#                <div class="modal-header">Поставьте маркер на карте</div>#}
+{#                <div class="modal-body">#}
+{#                    <div id="yandex_map" style="width: 100%; height: 500px;"></div>#}
+{#                </div>#}
+{#                <div class="modal-footer">#}
+{#                    <button type="button" data-dismiss="modal" aria-label="Close" class="add btn">Сохранить</button>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
     <div id="true-inputs">
-    {% render_field form.monday|attr:"type:hidden" class='form-control true_input' placeholder='с 9:00 до 18:00' %}
-    {% render_field form.tuesday|attr:"type:hidden" class='form-control true_input' placeholder='с 9:00 до 18:00' %}
-    {% render_field form.wednesday|attr:"type:hidden" class='form-control true_input' placeholder='с 9:00 до 18:00' %}
-    {% render_field form.thursday|attr:"type:hidden" class='form-control true_input' placeholder='с 9:00 до 18:00' %}
-    {% render_field form.friday|attr:"type:hidden" class='form-control true_input' placeholder='с 9:00 до 18:00' %}
-    {% render_field form.saturday|attr:"type:hidden" class='form-control true_input' placeholder='с 9:00 до 18:00' %}
-    {% render_field form.sunday|attr:"type:hidden" class='form-control true_input' placeholder='с 9:00 до 18:00' %}
+        {% render_field form.monday|attr:"type:hidden" class='form-control true_input' placeholder='с 9:00 до 18:00' %}
+        {% render_field form.tuesday|attr:"type:hidden" class='form-control true_input' placeholder='с 9:00 до 18:00' %}
+        {% render_field form.wednesday|attr:"type:hidden" class='form-control true_input' placeholder='с 9:00 до 18:00' %}
+        {% render_field form.thursday|attr:"type:hidden" class='form-control true_input' placeholder='с 9:00 до 18:00' %}
+        {% render_field form.friday|attr:"type:hidden" class='form-control true_input' placeholder='с 9:00 до 18:00' %}
+        {% render_field form.saturday|attr:"type:hidden" class='form-control true_input' placeholder='с 9:00 до 18:00' %}
+        {% render_field form.sunday|attr:"type:hidden" class='form-control true_input' placeholder='с 9:00 до 18:00' %}
     </div>
     {{ formset.management_form }}
 

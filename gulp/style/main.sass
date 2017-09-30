@@ -1,0 +1,1114 @@
+@import "uikit/uikit.css"
+@import "slick/slick.css"
+@import "selectize/selectize.css"
+@import "font-awesome/font-awesome.css"
+@import "css-stars/css-stars.css"
+@import "picker/classic.css"
+@import "picker/classic.time.css"
+$orange: #e94d09
+$hover-orange: #c7440b
+$red: #ed1c24
+$blue: #0071bc
+$gray: #6d6d6d
+
+// -------------------------------------------
+// query.uploadPreview.js single image
+//----------------------------------------------
+.upload-shop-logo .image-preview
+  width: 400px
+  height: 400px
+  position: relative
+  overflow: hidden
+  color: #ecf0f1
+  margin: 0 auto
+  background-color: #fff
+  border: 1px solid #ddd
+
+
+.upload-shop-logo .image-preview input
+  display: none
+.upload-shop-logo .image-preview label
+  position: absolute
+  z-index: 5
+  opacity: 0.8
+  cursor: pointer
+  background-color: #bdc3c7
+  width: 200px
+  height: 50px
+  font-size: 20px
+  line-height: 50px
+  text-transform: uppercase
+  top: 0
+  left: 0
+  right: 0
+  bottom: 0
+  margin: auto
+  text-align: center
+
+body
+  font-family: 'Open Sans', sans-serif
+  font-weight: 400
+  background-color: #f6f6f6
+  padding-bottom: 100px
+.uk-pagination
+  li.uk-active
+    span
+      color: #e94d09
+      border-bottom: 1px solid #e94d09
+.shadow
+  box-shadow: 0 0px 26px -5px rgba(0,0,0,.15)
+  background-color: #fff
+.uk-open>.modal-map.uk-modal-dialog
+  transform: translateX(-7px) !important
+.bg-red
+  background-color: #f3481c !important
+  color: #fff !important
+  &:hover
+    background-color: #c7440b !important
+    border-color: #c7440b !important
+    color: #fff
+.border-red
+  border-color: #f3481c !important
+  color: #f3481c
+  background-color: #fff
+  &:hover
+    background-color: #f3481c
+    color: #fff
+.uk-form-danger + span.uk-form-icon-flip
+  color: #f0506e !important
+.uk-form-danger
+  color: #f0506e !important
+.uk-form-controls
+  position: relative
+.uk-checkbox:focus, .uk-radio:focus
+  border-color: #e94d09
+.uk-checkbox:checked:focus, .uk-checkbox:indeterminate:focus, .uk-radio:checked:focus
+  background-color: #e94d09
+.uk-checkbox:checked, .uk-checkbox:indeterminate, .uk-radio:checked
+  background-color: #e94d09
+.label-checkbox
+  cursor: pointer
+  width: auto
+// -------------------------------------------
+// selectize
+//----------------------------------------------
+.selectize-control
+  height: 40px
+.selectize-input
+  padding: 10px
+  height: 40px
+  border-radius: 0
+  font-size: 14px
+.selectize-control.single .selectize-input, .selectize-dropdown.single
+  border-color: #e5e5e5
+  box-shadow: none
+  background: #fff
+  background-image: none
+  border-radius: 3px
+.selectize-dropdown
+  z-index: 100
+  margin: 0
+  border: 1px solid #e5e5e5
+.selectize-control.single .selectize-input:after
+  content: "\f077"
+  margin: -8px 0 0!important
+  right: 5px
+  border: 0
+  color: #d3d3d3
+  font-family: FontAwesome
+  width: 20px
+  height: 20px
+.selectize-control.single .selectize-input.dropdown-active:after
+  content: "\f077"
+  margin: -8px 0 0!important
+  right: 12px
+  border: 0
+  color: #d3d3d3
+  transform: rotate(180deg)
+  font-family: FontAwesome
+  width: 20px
+  height: 20px
+// -------------------------------------------
+// input textarea
+//----------------------------------------------
+.uk-input:focus, .uk-textarea:focus
+  border-color: #e94d09
+.uk-input, .uk-textarea
+  color: #000
+  font-size: 14px
+  border-radius: 3px
+.uk-textarea
+  padding: 10px
+.uk-button
+  border-radius: 3px
+// -------------------------------------------
+// header
+//----------------------------------------------
+
+header
+  box-shadow: 0 5px 15px rgba(0,0,0,.08)
+  background-color: #fff
+  text-align: right
+  .mobile-logo
+    float: left
+    margin: 10px
+  .mobile-button-nav
+    font-size: 12px
+    padding: 0 10px
+    margin: 10px
+    span
+      color: #e94f0e !important
+  .mobile-button-category
+    font-size: 12px
+    padding: 0 10px
+    margin: 10px 10px 10px 0 !important
+    span
+
+  [class*=uk-navbar-dropdown-bottom]
+    margin-top: 20px
+  .uk-navbar-container:not(.uk-navbar-transparent)
+    background-color: #fff
+  .uk-navbar-nav>li>a
+    color: #333
+    font-weight: 300
+  .uk-navbar-nav>li.for-shop>a
+    background-color: $orange
+    height: 40px
+    margin: 20px 10px 20px 0
+    color: #fff
+    border-radius: 3px
+    &:hover
+      background-color: $hover-orange
+  .uk-navbar-nav>li.for-shop>a>span
+  .uk-navbar-nav>li.sub-list>a
+  .uk-navbar-nav>li.sub-list>a:hover
+    color: $red
+  .uk-navbar-nav>li.sub-list>a>span
+    color: $red
+  .uk-navbar-nav>li.create-shop>a:hover
+    color: $red
+  .uk-navbar-nav>li.create-shop>a>span
+    color: $red
+  .uk-navbar-nav>li.favorite>a:hover
+    color: $red
+  .uk-navbar-nav>li.favorite>a>span
+    color: $red
+  .uk-navbar-nav>li.basket>a:hover
+    color: $blue
+  .uk-navbar-nav>li.basket>a>span
+    color: $blue
+  .uk-navbar-nav>li:last-child>a
+    border: 1px solid #ddd
+    height: 40px
+    margin: 20px 0 20px 25px
+    background-color: #f6f6f6
+    border-radius: 3px
+  .uk-navbar-dropdown-nav
+    text-align: left
+  .uk-navbar-dropdown-nav>li>a
+    color: #333
+    font-weight: 300
+    padding: 5px 15px
+    &:hover
+      background-color: #f6f6f6
+  .uk-navbar-dropdown-nav>li>a>b
+    font-weight: 700
+  .search
+    form
+      margin-right: 20px
+    .uk-form-width-large
+      width: 300px
+      padding-left: 15px
+      border-top-right-radius: 0
+      border-bottom-right-radius: 0
+      border-top-left-radius: 3px
+      border-bottom-left-radius: 3px
+    button
+      background-color: $orange
+      border-color: $orange !important
+      color: #fff
+      padding-left: 30px
+      padding-right: 30px
+      font-weight: 400
+      border-top-left-radius: 0
+      border-bottom-left-radius: 0
+      border-top-right-radius: 3px
+      border-bottom-right-radius: 3px
+      &:hover, &:focus
+        background-color: $hover-orange
+        color: #fff
+  .logo
+    .logo-svg
+      display: inline-block
+      img
+    .name-category
+      font-size: 12px
+      font-weight: 300
+      color: grey
+      display: inline-block
+      text-transform: uppercase
+      margin-left: 10px
+      line-height: 20px
+      margin-top: 10px
+      a
+
+.mobile-nav
+  img
+    width: 160px
+    margin: 40px auto
+    display: block
+  ul
+    list-style: none
+    padding-left: 0
+    li
+      margin-bottom: 20px
+      a
+        text-decoration: none
+        span
+  .uk-navbar-nav>li.for-shop>a
+    background-color: $orange
+    height: 40px
+    margin: 20px 10px 20px 0
+    color: #fff
+    border-radius: 3px
+    &:hover
+      background-color: $hover-orange
+  li.for-shop>a>span
+    color: $red
+  li.sub-list>a>span
+    color: $red
+  li.sub-list>a>span
+    color: $red
+  li.create-shop>a>span
+    color: $red
+  li.favorite>a>span
+    color: $red
+  li.basket>a>span
+   color: $blue
+  li:last-child
+    margin-top: 30px
+  li:last-child>a
+    border: 1px solid #ed1c24
+    display: block
+    text-align: center
+    background-color: #ed1c24
+    border-radius: 3px
+    color: #fff
+    padding: 10px
+// -------------------------------------------
+// global-category
+//----------------------------------------------
+
+.global-category
+  h1
+    font-size: 20px
+    text-align: center
+    color: $gray
+  .logo
+    width: 280px
+    margin: 0 auto
+    text-align: center
+    img
+      width: 100%
+  form
+    input
+      border-right: 0
+      font-weight: 400
+      border-top-right-radius: 0
+      border-bottom-right-radius: 0
+      border-top-left-radius: 3px
+      border-bottom-left-radius: 3px
+      &:focus
+        border-color: $orange
+    .uk-input, .uk-select:not([multiple]):not([size])
+      height: 50px
+    button
+      background-color: $orange
+      border-color: $orange !important
+      color: #fff
+      padding-left: 30px
+      padding-right: 30px
+      font-weight: 400
+      border-bottom-left-radius: 0
+      border-top-left-radius: 0
+      border-top-right-radius: 3px
+      border-bottom-right-radius: 3px
+      &:hover, &:focus
+        background-color: $hover-orange
+        color: #fff
+  .category.uk-grid-small>*
+    padding-left: 5px
+  *+.category.uk-grid-margin-small, .category.uk-grid+.category.uk-grid-small, .category.uk-grid-small>.uk-grid-margin
+    margin-top: 5px
+  .category
+    margin-left: -4px
+    .item
+      position: relative
+      .uk-card
+        border: 1px solid #e1e1e1
+        border-radius: 5px
+        transition: 0.3s all
+        box-shadow: none
+        &:hover
+          background-color: #fafafa
+      a
+        z-index: 1
+      .uk-margin-small-top
+        font-size: 16px
+        color: #333
+        height: 45px
+        margin-bottom: 20px
+        width: 100%
+        display: grid
+        align-items: center
+      img
+        width: 85px
+// -------------------------------------------
+// .nav-cotnrol-shop
+//----------------------------------------------
+.nav-cotnrol-shop
+  ul
+    li.uk-active
+      a
+        background-color: $orange
+        color: #fff
+        border-color: $orange
+    li
+      a
+        border-radius: 50px
+        display: block
+        text-align: center
+        padding: 0
+        font-size: 13px
+        font-weight: 300
+// -------------------------------------------
+// product-list
+//----------------------------------------------
+#shop-category-toggle-nav
+  .uk-accordion-content
+    padding-left: 20px
+.product-list
+
+  ul.uk-accordion
+    background-color: #fff
+    li
+      margin: 0
+      .uk-accordion-title::after
+        position: absolute
+        top: 50%
+        transform: translate(-50%, -50%)
+        right: 10px
+      .uk-accordion-title
+        position: relative
+        color: red
+        padding: 15px 40px 15px 15px
+        font-size: 15px
+      .uk-accordion-content
+        margin: 0
+        a.uk-open
+          background-color: #e94d09
+          color: #fff
+        a
+          color: #333
+          padding: 10px 10px 10px 40px
+          border-bottom: 1px solid #ededed
+    li.uk-open
+      .uk-accordion-title::after
+        color: #fff
+      .uk-accordion-title
+
+        background-color: #e94d09
+        color: #fff
+  .add-product-item
+    a.uk-position-cover
+      z-index: 1
+    .cover
+      position: absolute
+      top: 50%
+      left: 50%
+      transform: translate(-50%, -50%)
+    .footer
+      a
+        display: block
+        padding: 23px
+        background-color: #0071bc
+        color: #fff
+        text-decoration: none
+        border-bottom-right-radius: 3px
+        border-bottom-left-radius: 3px
+        transition: 0.3s all
+        &:hover
+          background-color: #005d9a
+  h3
+    text-align: center
+    a
+      color: #6d6d6d
+      font-weight: 400
+      text-decoration: none
+      position: relative
+      padding-bottom: 5px
+      text-transform: uppercase
+      &:before
+        position: absolute
+        content: ''
+        left: 0
+        bottom: 0
+        right: 0
+        width: 0
+        height: 2px
+        background-color: transparent
+        transition: 0.3s all
+      &:hover
+        &:before
+          width: 100%
+          background-color: #6d6d6d
+  .disabled-product
+    .uk-transition-fade
+      opacity: 1
+    .uk-overlay
+      p
+        color: #ed1c24
+        font-weight: 700
+  .uk-overlay-default
+    background: rgba(255,255,255,.96)
+  .shadow
+    border-radius: 5px
+    box-shadow: 0 5px 15px rgba(0,0,0,.08)
+    transition: 0.5s all
+    position: relative
+    .setting
+      position: absolute
+      text-align: right
+      z-index: 100
+      top: 1px
+      right: 1px
+      padding: 5px
+      background: rgba(255, 255, 255, 0.6)
+      width: auto
+      border-bottom-left-radius: 5px
+      a.product-vision.disabled
+        color: #ed1c24
+    &:hover
+      box-shadow: 0 14px 25px rgba(0,0,0,.16)
+  .border
+    background-color: #fff
+    border: 1px solid #e1e1e1
+  .uk-overlay
+    h4
+      display: inline-block
+      position: relative
+      padding-bottom: 5px
+      &:before
+        position: absolute
+        content: ''
+        left: 0
+        bottom: 0
+        right: 0
+        width: 0
+        height: 2px
+        background-color: transparent
+        transition: 0.3s all
+      &:hover
+        &:before
+          width: 100%
+          background-color: #6d6d6d
+      a
+        color: #666
+        z-index: 1
+        position: relative
+        text-decoration: none
+    p
+      height: 70px
+      overflow: hidden
+    .control
+      position: absolute
+      bottom: 40px
+      left: 0
+      right: 0
+      a
+        span
+          color: #666
+      .favorite
+        &:hover
+          span
+            color: #ed1c24
+      .basket
+        &:hover
+          span
+            color: #0071bc
+      .favorite.like
+        span
+          color: #ed1c24
+      .basket.in
+        span
+          color: #0071bc
+  .footer
+    h4
+      margin-bottom: 0
+      font-size: 14px
+      font-weight: 500
+      overflow: hidden
+      height: 40px
+      text-align: left
+    p
+      margin-bottom: 0
+      margin-top: 0
+      color: $orange
+      font-weight: 700
+      line-height: 16px
+      text-align: right
+  .see-more
+    a
+      background-color: $orange
+      color: #fff
+      border-color: $orange
+      border-radius: 3px
+      &:hover
+        background-color: $hover-orange
+        color: #fff
+
+// -------------------------------------------
+// shop-list
+//----------------------------------------------
+
+.shop-list
+  h3
+    text-align: center
+    a
+      color: #6d6d6d
+      font-weight: 400
+      text-decoration: none
+      position: relative
+      padding-bottom: 5px
+      text-transform: uppercase
+      &:before
+        position: absolute
+        content: ''
+        left: 0
+        bottom: 0
+        right: 0
+        width: 0
+        height: 2px
+        background-color: transparent
+        transition: 0.3s all
+      &:hover
+        &:before
+          width: 100%
+          background-color: #6d6d6d
+  .enabled-product
+    .uk-transition-fade
+      opacity: 1
+    .uk-overlay
+      p
+        color: #ed1c24
+        font-weight: 700
+  .uk-overlay-default
+    background: rgba(255,255,255,.96)
+  .shadow
+    border-radius: 5px
+    box-shadow: 0 5px 15px rgba(0,0,0,.08)
+    transition: 0.5s all
+    position: relative
+    .setting
+      position: absolute
+      text-align: right
+      z-index: 100
+      top: 1px
+      right: 1px
+      padding: 5px
+      background: rgba(255, 255, 255, 0.6)
+      width: auto
+      border-bottom-left-radius: 5px
+      a.product-vision.disabled
+        color: #ed1c24
+    &:hover
+      box-shadow: 0 14px 25px rgba(0,0,0,.16)
+  .border
+    background-color: #fff
+    border: 1px solid #e1e1e1
+  .uk-overlay
+    h4
+      display: inline-block
+      padding-bottom: 5px
+    .control
+      position: absolute
+      bottom: 90px
+      left: 0
+      right: 0
+      padding: 0 20px
+
+      p
+        height: 30px
+        overflow: hidden
+        margin-top: 0
+        margin-bottom: 0
+        white-space: nowrap
+        overflow: hidden
+        text-overflow: ellipsis
+  .footer
+    h4
+      margin-bottom: 0
+      font-size: 14px
+      font-weight: 500
+      white-space: nowrap
+      overflow: hidden
+      text-overflow: ellipsis
+      text-align: left
+      line-height: 30px
+    a
+      margin-bottom: 0
+      margin-top: 0
+      color: #fff
+      text-align: center
+      background-color: $orange
+      display: block
+      margin-left: 5px
+      padding: 5px
+      border-radius: 3px
+      font-size: 14px
+      text-decoration: none
+  .see-more
+    a
+      background-color: $orange
+      color: #fff
+      border-color: $orange
+      border-radius: 3px
+      &:hover
+        background-color: $hover-orange
+        color: #fff
+// -------------------------------------------
+// search-global-category
+//----------------------------------------------
+
+.search-global-category
+  margin-left: 0
+  background: #fff
+  padding: 15px
+  .button-category
+    padding: 0 37px
+    width: 100%
+    position: relative
+    background-color: $orange !important
+    border-color: $orange !important
+    color: #fff !important
+// -------------------------------------------
+// dropdown-category
+//----------------------------------------------
+
+.dropdown-category
+  background-color: #fff
+  box-shadow: 0 10px 26px -5px rgba(0,0,0,.15)
+  position: relative
+  padding: 5px 0
+  .uk-width-expand\@m
+    padding-left: 10px
+    position: relative
+    &:before
+      position: absolute
+      top: 50%
+      width: 5px
+      height: 5px
+      border-radius: 50%
+      background-color: #ccc
+      content: ''
+      transform: translateY(-50%)
+      left: 3px
+  .uk-width-expand\@m:first-child
+    &:before
+      display: none
+  .uk-button
+    line-height: 20px
+    font-size: 14px
+    text-transform: capitalize
+    padding: 5px 10px
+    font-weight: 300
+    &:hover
+      color: #e94d09
+  .uk-button + div
+    padding: 0
+    ul
+      white-space: normal
+      li
+        text-align: left
+        a
+          display: block
+          width: 85%
+          padding: 5px 15px
+          &:hover
+            background-color: #f5f5f5
+
+// -------------------------------------------
+// product-detail
+//----------------------------------------------
+
+.product-detail
+  border: 1px solid #e0e0e0
+  padding: 40px 0
+  background-color: #fff
+  .zoom-parent
+    width: 100%
+  #child-gallery
+    margin-top: 5px
+
+    text-align: center
+  .zoom-children
+    height: 100px
+    cursor: pointer
+  .about-product
+    .uk-breadcrumb
+      li
+        a
+        span
+    h1
+      font-size: 30px
+      font-weight: 300
+      color: #333
+      line-height: 30px
+      margin-bottom: 10px
+      margin-top: 0
+      padding-right: 20px
+      position: relative
+      a
+        position: absolute
+        top: 0
+        right: 0
+    .price
+      font-size: 30px
+      font-weight: 700
+      color: #f3481c
+      display: inline-block
+      margin-bottom: 10px
+    .availability
+      p
+        margin-bottom: 10px
+        margin-top: 0
+        font-size: 14px
+        font-weight: 300
+        color: #333
+        .red
+          color: #e94d09
+        .green
+          color: #39b54a
+        .gray
+          color: #afafaf
+    .short-description
+      font-size: 13px
+      font-weight: 300
+    .uk-button-group
+      a
+        width: 100%
+        font-size: 12px
+        padding: 0
+        color: #333
+      .basket.active
+        color: #0071bc
+        border-color: #0071bc
+        span
+          color: #0071bc
+      .favorite.active
+        color: #ed1c24
+        border-color: #ed1c24
+        span
+          color: #ed1c24
+
+// -------------------------------------------
+// ck-editor
+//----------------------------------------------
+
+.ck-editor
+
+  .content
+    background-color: #fff
+    border: 1px solid #e0e0e0
+    img
+      width: 100%
+    pre
+      border: 0
+      padding: 0
+      font-family: "Open Sans", sans-serif
+      overflow: visible
+      white-space: normal
+
+// -------------------------------------------
+// login
+//----------------------------------------------
+
+.login
+  .uk-form-controls
+    position: relative
+    .lost-pass
+      position: absolute
+      bottom: -25px
+      color: #f3481c
+    .facebook
+      width: 100%
+      background-color: #3b5998
+      color: #fff
+      &:hover
+        background-color: #314775
+        border-color: #314775
+      i
+        color: #fff
+        display: inline-block
+        margin-right: 5px
+    .google
+      width: 100%
+      background-color: #e2481a
+      color: #fff
+      &:hover
+        background-color: #b73711
+        border-color: #b73711
+      i
+        color: #fff
+        display: inline-block
+        margin-right: 5px
+  button
+    &:hover
+      background-color: #e2481a
+      color: #fff
+      border-color: #e2481a
+
+// -------------------------------------------
+// logout
+//----------------------------------------------
+
+.logout
+  a
+    background-color: #e2481a
+    border-color: #e2481a
+    color: #fff
+
+
+// -------------------------------------------
+// creat-product
+//----------------------------------------------
+.creat-product
+  .uk-textarea
+    max-width: 100%
+    min-width: 100%
+    width: 100% !important
+  .upload-product-image .image-preview-parent .wrapper
+    background-color: #fff
+    border: 1px solid #ddd
+    position: relative
+    height: 213px
+  .upload-product-image .image-preview.active .wrapper
+    border-color: red
+  .upload-product-image .image-preview .wrapper
+    .remove-image
+      position: absolute
+      top: 5px
+      right: 5px
+  .upload-product-image .image-preview .wrapper
+    background-color: #fff
+    border: 1px solid #ddd
+    position: relative
+  .upload-product-image .image-preview .wrapper img
+    width: 90%
+    margin: 0 auto
+    display: block
+  .upload-product-image .image-preview-parent input
+    display: none
+  .upload-product-image .image-preview-parent label
+    position: absolute
+    z-index: 5
+    opacity: 0.8
+    cursor: pointer
+    background-color: #bdc3c7
+    width: 200px
+    height: 50px
+    font-size: 14px
+    line-height: 50px
+    text-transform: uppercase
+    top: 0
+    left: 0
+    right: 0
+    bottom: 0
+    margin: auto
+    text-align: center
+
+// -------------------------------------------
+// creat-shop
+//----------------------------------------------
+
+.creat-shop
+  .uk-textarea
+    max-width: 100%
+    min-width: 100%
+    width: 100% !important
+  .append-shop-form
+    position: relative
+    .close
+      position: absolute
+      top: 35px
+      right: 0
+      &:hover
+        color: #f3481c
+
+// -------------------------------------------
+// shop-banner
+//----------------------------------------------
+
+.shop-banner
+  .image-shop
+    .uk-card
+      border-radius: 3px
+    .uk-card-media-top
+      height: 260px
+      position: relative
+      overflow: hidden
+      text-align: center
+      .uk-cover-container
+        display: inline-flex
+        height: 100%
+        align-items: center
+        text-align: center
+        img
+          width: 250px
+    .uk-card-body
+      h3
+        border-top: 1px solid #f3ebeb
+        padding-top: 10px
+        font-weight: 300
+        font-size: 18px
+      p
+        white-space: nowrap
+        overflow: hidden
+        text-overflow: ellipsis
+        font-size: 14px
+  .shadow
+    position: relative
+  .single-item-slider
+    position: relative
+    .item
+      outline: none
+    .next
+      position: absolute
+      right: 10px
+      top: 50%
+      z-index: 1
+      cursor: pointer
+      margin-top: -20px
+      border-radius: 50%
+      color: #fff
+      transition: 0.3s all
+
+    .prev
+      position: absolute
+      left: 10px
+      top: 50%
+      z-index: 1
+      cursor: pointer
+      margin-top: -20px
+      border-radius: 50%
+      color: #fff
+      transition: 0.3s all
+  .social
+    overflow: hidden
+  .edit-button
+    position: absolute
+    right: 0
+    top: 0
+    background: $orange
+    z-index: 1
+    padding: 10px
+    border-bottom-left-radius: 3px
+    border-top-right-radius: 3px
+    font-size: 10px
+    color: #fff
+    text-decoration: none
+    transition: 0.3s all
+    &:hover
+      background-color: $hover-orange
+.sale
+  .uk-card
+    border: 1px solid #ddd
+  h3, p
+    white-space: nowrap
+    overflow: hidden
+    text-overflow: ellipsis
+  h3
+    margin-bottom: 0
+  p
+    margin-top: 5px
+  a
+    background: $orange
+    font-size: 12px
+    color: #fff
+    text-decoration: none
+    transition: 0.3s all
+    border-color: $orange
+    &:hover
+      background-color: $hover-orange
+      color: #fff
+      border-color: $orange
+  .descount
+    position: absolute
+    left: 0
+    top: 60px
+    z-index: 1
+    padding: 5px 20px
+    background: #e94d09
+    color: #fff
+    font-weight: bold
+.sale.archiv
+  img
+    -webkit-filter: grayscale(100%)
+    filter: grayscale(100%)
+.review
+  button
+    background: $orange
+    border-color: $orange !important
+    font-size: 14px
+    color: #fff
+    transition: 0.3s all
+    &:hover
+      background-color: $hover-orange
+      color: #fff
+  .uk-comment-title
+    .group-star
+      margin-left: 10px
+    .star:before
+      color: #edb867
+      content: "\2605"
+.contact
+  p
+    margin: 5px 0
+  h4
+    margin-top: 10px
+.order-list
+  .uk-button
+    background-color: $orange
+    color: #fff
+    border-color: $orange
+    &:hover
+      background-color: $hover-orange
+      color: #fff
+      border-color: $hover-orange
+  h1
+    font-weight: 300
+.admin
+  a.change-pass
+    color: $orange
+  label
+    cursor: pointer
+  .save
+    background-color: $orange
+    color: #fff
+    border-color: $orange
+    &:hover
+      background-color: $hover-orange
+      color: #fff
+      border-color: $hover-orange
+  .uk-button
+    width: 100%
+.change-pass
+  button
+    background-color: $orange
+    color: #fff
+    border-color: $orange
+    &:hover
+      background-color: $hover-orange
+      color: #fff
+      border-color: $hover-orange
+@import "media.sass"

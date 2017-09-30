@@ -1,51 +1,134 @@
 {% load staticfiles %}
-<header class="navbar-fixed-top" >
-    <div class="clearfix"></div>
-    <nav class="navbar ">
-        <div class="container">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="{{ DOMAIN_URL }}">
-                    <img src="{% static 'img/logo.svg' %}" alt="Ooba market">
-                    <span><a href="{{ global.get_absolute_url }}">{{ global.title }}</a></span>
-                </a>
-            </div>
+{#<header class="navbar-fixed-top" >#}
+{#    <div class="clearfix"></div>#}
+{#    <nav class="navbar ">#}
+{#        <div class="container">#}
+{#            <!-- Brand and toggle get grouped for better mobile display -->#}
+{#            <div class="navbar-header">#}
+{#                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">#}
+{#                    <span class="sr-only">Toggle navigation</span>#}
+{#                    <span class="icon-bar"></span>#}
+{#                    <span class="icon-bar"></span>#}
+{#                    <span class="icon-bar"></span>#}
+{#                </button>#}
+{#                <a class="navbar-brand" href="{{ DOMAIN_URL }}">#}
+{#                    <img src="{% static 'img/logo.svg' %}" alt="Ooba market">#}
+{#                    <span><a href="{{ global.get_absolute_url }}">{{ global.title }}</a></span>#}
+{#                </a>#}
+{#            </div>#}
+{##}
+{#            <!-- Collect the nav links, forms, and other content for toggling -->#}
+{#            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">#}
+{##}
+{#                <div class="nav navbar-nav navbar-right">#}
+{#                    <form class="form-inline" method="get" action="/search/">#}
+{#                        {% csrf_token %}#}
+{#                        <div class="form-group">#}
+{#                            <input type="text" class="form-control" placeholder="Поиск товаров..." id="search-form-index" name="q">#}
+{#                            <button type="submit" class="btn btn-default">Найти</button>#}
+{#                        </div>#}
+{#                    </form>#}
+{#                 {% if user.is_authenticated %}#}
+{#                     <a href="{{ DOMAIN_URL }}{{ user.get_favorites_link }}"  class="favorites btn"><span class="glyphicon glyphicon-heart"></span> Избранные (<span class="favorites_count">{{ user.get_favorites_count }}</span>)</a>#}
+{#                    <a href="{{ DOMAIN_URL }}{% url 'cart:detail' %}"  class="basket btn"><span class="glyphicon glyphicon-shopping-cart"></span> Корзина (<span class="cart-count">{{ user.get_cart_count }}</span>)</a>#}
+{##}
+{#                    {% else %}#}
+{#                    <a href="{{ DOMAIN_URL }}{% url 'account_login' %}"  class="favorites btn"><span class="glyphicon glyphicon-heart"></span> Избранные</a>#}
+{#                    <a href="{{ DOMAIN_URL }}{% url 'cart:detail' %}"  class="basket btn"><span class="glyphicon glyphicon-shopping-cart"></span> Корзина (<span class="cart-count">{{ cart_count }}</span>)</a>#}
+{##}
+{#                {% endif %}#}
+{#                    <!--#}
+{#                    Когда вход выполнен!#}
+{#                    -->#}
+{#                    {% include 'layout/dropdown.html' %}#}
+{#                    </div>#}
+{#            </div><!-- /.navbar-collapse -->#}
+{#        </div><!-- /.container-fluid -->#}
+{#        </div>#}
+{#    </nav>#}
+{#    <div class="clearfix"></div>#}
+{#</header>#}
 
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 
-                <div class="nav navbar-nav navbar-right">
-                    <form class="form-inline" method="get" action="/search/">
-                        {% csrf_token %}
-                        <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Поиск товаров..." id="search-form-index" name="q">
-                            <button type="submit" class="btn btn-default">Найти</button>
-                        </div>
+    <header uk-sticky="media: 320" class="uk-sticky uk-sticky-fixed ">
+        <a href="{{ DOMAIN_URL }}" class="mobile-logo uk-hidden@m"> <img width="120" src="{% static 'img/logo.svg' %}"
+                                                                         alt=""></a>
+       <button class="mobile-button-nav uk-button uk-button-default uk-margin-small-right uk-hidden@l" type="button" uk-toggle="target: #offcanvas-reveal">
+            <span uk-icon="icon: grid"></span>
+            Навигация
+        </button>
+        <div class="uk-container uk-visible@m">
+            <nav class="uk-navbar-container " uk-navbar>
+                <div class="uk-navbar-left logo">
+                    <a href="{{ DOMAIN_URL }}" class="logo-svg">
+                        <img src="{% static 'img/logo.svg' %}" alt="" width="120">
+                    </a>
+                    <a href="{{ global.get_absolute_url }}" class="name-category">{{ global.title }}</a>
+                </div>
+                <div class="uk-navbar-right search">
+                    <form class="uk-flex-center uk-grid">
+                        <input class="uk-input uk-form-width-large" type="text" placeholder="Поиск товаров...">
+                        <button class="uk-button uk-button-default">Найти</button>
                     </form>
-                 {% if user.is_authenticated %}
-                     <a href="{{ DOMAIN_URL }}{{ user.get_favorites_link }}"  class="favorites btn"><span class="glyphicon glyphicon-heart"></span> Избранные (<span class="favorites_count">{{ user.get_favorites_count }}</span>)</a>
-                    <a href="{{ DOMAIN_URL }}{% url 'cart:detail' %}"  class="basket btn"><span class="glyphicon glyphicon-shopping-cart"></span> Корзина (<span class="cart-count">{{ user.get_cart_count }}</span>)</a>
+                </div>
+                <div class="uk-navbar-left">
+                    <ul class="uk-navbar-nav">
+                        {% if user.is_authenticated %}
+                            <li class="favorite">
+                                <a href="{{ user.get_favorites_link }}">
+                                    <span class="uk-margin-small-right uk-icon" uk-icon="icon: heart"></span> Избранные
+                                    (<span>{{ user.get_favorites_count }}</span>)
+                                </a>
+                            </li>
+                            <li class="basket">
+                                <a href="{% url 'cart:detail' %}">
+                                    <span class="uk-margin-small-right uk-icon" uk-icon="icon: cart"></span> Корзина
+                                    (<span>{{ user.get_cart_count }}</span>)
+                                </a>
+                            </li>
+                        {% else %}
+                            <li class="favorite">
+                                <a href="{% url 'account_login' %}">
+                                    <span class="uk-margin-small-right uk-icon" uk-icon="icon: heart"></span> Избранные
+                                    <span>{{ user.get_favorites_count }}</span>
+                                </a>
+                            </li>
+                            <li class="basket">
+                                <a href="{% url 'cart:detail' %}">
+                                    <span class="uk-margin-small-right uk-icon" uk-icon="icon: cart"></span> Корзина
+                                    (<span>{{ cart_count }}</span>)
+                                </a>
+                            </li>
+                        {% endif %}
+                        {% include 'layout/dropdown.html' %}
+                    </ul>
+                </div>
 
-                    {% else %}
-                    <a href="{{ DOMAIN_URL }}{% url 'account_login' %}"  class="favorites btn"><span class="glyphicon glyphicon-heart"></span> Избранные</a>
-                    <a href="{{ DOMAIN_URL }}{% url 'cart:detail' %}"  class="basket btn"><span class="glyphicon glyphicon-shopping-cart"></span> Корзина (<span class="cart-count">{{ cart_count }}</span>)</a>
-
-                {% endif %}
-                    <!--
-                    Когда вход выполнен!
-                    -->
-                    {% include 'layout/dropdown.html' %}
-                    </div>
-            </div><!-- /.navbar-collapse -->
-        </div><!-- /.container-fluid -->
+            </nav>
         </div>
-    </nav>
-    <div class="clearfix"></div>
-</header>
+
+        <div id="offcanvas-reveal" class="mobile-nav" uk-offcanvas="mode: reveal; overlay: true">
+            <div class="uk-offcanvas-bar">
+                <button class="uk-offcanvas-close" type="button" uk-close></button>
+                <a href=""> <img src="img/logo.png" alt=""></a>
+                <ul class="">
+                    <li class="for-shop"><a href="{% url 'landing' %}"><span class="uk-margin-small-right uk-icon"
+                                                                             uk-icon="icon: star"></span> Для
+                        Магазина</a></li>
+                    <li class="sub-list"><a href="#"><span class="uk-margin-small-right uk-icon"
+                                                           uk-icon="icon: bookmark"></span>Лента</a></li>
+                    <li class="create-shop"><a href="#"><span class="uk-margin-small-right uk-icon"
+                                                              uk-icon="icon: world"></span> Добавить магазин</a></li>
+                    <li class="favorite"><a href="#"><span class="uk-margin-small-right uk-icon"
+                                                           uk-icon="icon: heart"></span> Избранные
+                        (<span> 2 </span>)</a></li>
+                    <li class="basket"><a href="#"><span class="uk-margin-small-right uk-icon"
+                                                         uk-icon="icon: cart"></span> Корзина (<span> 10 </span>)</a>
+                    </li>
+                    <li class="enter"><a href="#">Войти</a></li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
 
