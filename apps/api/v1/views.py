@@ -692,13 +692,14 @@ class UserCartItemsView(APIView):
             shops.append({
                 "title": shop.title,
                 "logo": shop.get_logo(),
-                "items": items
+                "items": items,
             })
 
         return JsonResponse({
             "status": "success",
             "delivery_total": user.cart_set.last().get_delivery_total(),
-            "shops": shops
+            "shops": shops,
+            "total": user.cart_set.last().subtotal
         })
 
 
