@@ -95,43 +95,15 @@
 {% block js %}
     <script src="{% static 'js/jquery.2.2.4.js' %}"></script>
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
-<script>
-        function initMap() {
-            map = new google.maps.Map(document.getElementById('contacts-markers'), {
-                center: mapCenter,
-                zoom: 15,
-                mapTypeId: google.maps.MapTypeId.TERRAIN
-            });
-
-            if (markers.length > 0) {
-                for (let i = 0; i < markers.length; ++i) {
-                    let marker = new google.maps.Marker({
-                        position: markers[i],
-                        map: map
-                    });
-                    map.setCenter(markers[i]);
-                }
-            }
-            // Adds a marker at the center of the map.
-        }
-
-        let map = null;
-        let markers = [
-            {% for s in shop.contacts_set.all %}
-                {
-                    lat: {% if s.latitude %}{{ s.latitude }}{% else %}42.864272{% endif %},
-                    lng: {% if s.longitude %}{{ s.longitude }}{% else %}74.579775{% endif %}
-                }{% if forloop.counter < shop.contacts_set.count %},{% endif %}
-            {% endfor %}
-        ];
-        let mapCenter = {lat: 42.864272, lng: 74.579775};
-
-
-    </script>
-
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDXEuBW9AIFcfHx1UHvceIvCz0JnRNjGyo&callback=initMap">
-    </script>
-
-
-
+    <script src="https://maps.api.2gis.ru/2.0/loader.js?pkg=full"></script>
+    <script type="text/javascript">
+    var map;
+    DG.then(function () {
+        map = DG.map('contacts-markers', {
+            center: [42.86, 74.53],
+            zoom: 11
+        });
+        DG.marker([{{ longitude }}, {{ latitude }}]).addTo(map);
+    });
+</script>
 {% endblock %}
