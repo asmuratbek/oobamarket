@@ -122,13 +122,17 @@ class LentaView(APIView):
                 "price": product.get_price(),
                 "is_favorite": product.favorite.filter(
                     user=self.request.user).exists() if self.request.user.is_authenticated else False,
-                "is_in_cart": True
+                "is_in_cart": self.request.user.cart_set.last().cartitem_set.filter(product=product).exists()\
+                    if self.request.user.is_authenticated \
+                       and self.request.user.cart_set.all() \
+                    else False
             })
         return JsonResponse({
             "status": "success",
             "page": page if page else 1,
             "items" : items
         })
+
 
 class ProductAddToCartView(APIView):
     permission_classes = (IsAuthenticated,)
@@ -741,7 +745,10 @@ class UserFavoritesView(APIView):
                 "price": item.product.get_price(),
                 "image": item.product.get_main_thumb_image(),
                 "is_favorite": item.product.favorite.filter(user=user).exists(),
-                "is_in_cart": True
+                "is_in_cart": self.request.user.cart_set.last().cartitem_set.filter(product=item.product).exists()\
+                    if self.request.user.is_authenticated \
+                       and self.request.user.cart_set.all() \
+                    else False
             })
 
         return JsonResponse({
