@@ -12,7 +12,7 @@ from  django.views.generic.list import ListView
 # Create your views here.
 from apps.cart.models import Cart
 from apps.shop.models import Shop
-from apps.users.mixins import ShopMixin,  UserOderListPermMixin, UserOrderDetailPermMixin
+from apps.users.mixins import ShopMixin, UserOderListPermMixin, UserOrderDetailPermMixin
 from .forms import AddressForm, UserAddressForm, SimpleOrderForm, ShopSimpleOrderForm
 from .mixins import CartOrderMixin, LoginRequiredMixin
 from .models import UserAddress, UserCheckout, Order, SimpleOrder
@@ -175,16 +175,12 @@ class ShopSimpleOrderListView(LoginRequiredMixin, ShopMixin, ListView):
     def get_queryset(self):
         return SimpleOrder.objects.filter(cart__cartitem__product__shop__slug=self.kwargs.get('slug'))
 
-
     def post(self, request, *args, **kwargs):
         # if request.POST.get('ids[]'):
         for id in request.POST.getlist('ids[]'):
             SimpleOrder.objects.filter(pk=id).update(is_visible=False)
         return redirect(request.path)
         # return JsonResponse(dict(messages=False))
-
-
-
 
 
 class ShopSimpleOrderUpdateView(LoginRequiredMixin, ShopMixin, UpdateView):
