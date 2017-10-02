@@ -244,6 +244,17 @@ class ShopContactsView(generic.DetailView):
     model = Shop
     template_name = 'shop/contacts.html'
 
+    def get_context_data(self, **kwargs):
+        context = super(ShopContactsView, self).get_context_data()
+        contact = self.object.contacts_set.first()
+        if contact:
+            context['longitude'] = contact.place.longitude if contact.place else contact.longitude
+            context['latitude'] = contact.place.latitude if contact.place else contact.latitude
+        else:
+            context['longitude'] = ""
+            context['latitude'] = ""
+        return context
+
 
 class ShopBannersView(LoginRequiredMixin, ShopMixin, CreateView):
     form_class = ShopBannersForm

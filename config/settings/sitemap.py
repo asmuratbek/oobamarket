@@ -19,7 +19,8 @@ class SectionSitemap(Sitemap):
         return obj.updated_at
 
     def location(self, obj):
-        return obj.get_absolute_url()
+        return obj.get_url()
+
 
 
 class CategorySitemap(Sitemap):
@@ -28,6 +29,7 @@ class CategorySitemap(Sitemap):
 
     def changefreq(self, obj):
         return 'always'
+
 
     def lastmod(self, obj):
         return obj.updated_at

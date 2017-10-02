@@ -176,12 +176,12 @@ class ProductDetailSerializer(ModelSerializer):
         lookup_field="slug"
     )
     shop = SerializerMethodField()
+    price = SerializerMethodField()
     category_title = SerializerMethodField()
     is_owner = SerializerMethodField()
     main_image = SerializerMethodField()
     is_in_cart = SerializerMethodField()
     is_favorite = SerializerMethodField()
-    get_price_function = SerializerMethodField()
 
     class Meta:
         model = Product
@@ -201,7 +201,7 @@ class ProductDetailSerializer(ModelSerializer):
             'main_image',
             'is_in_cart',
             'is_favorite',
-            'get_price_function',
+            'price',
             'created_at',
             'updated_at',
             'get_category_title'
@@ -210,11 +210,11 @@ class ProductDetailSerializer(ModelSerializer):
     def get_shop(self, obj):
         return str(obj.shop)
 
+    def get_price(self, obj):
+        return obj.get_price()
+
     def get_category_title(self, obj):
         return obj.category.title
-
-    def get_get_price_function(self, obj):
-        return obj.get_price()
 
     def get_is_owner(self, obj):
         user = None
@@ -285,20 +285,20 @@ from apps.product.models import Shop
 
 
 class ShopSerializer(ModelSerializer):
-    detail_url = HyperlinkedIdentityField(
-        view_name='api:shop_detail',
-        lookup_field='slug'
-    )
-
-    update_url = HyperlinkedIdentityField(
-        view_name='api:shop_update',
-        lookup_field="slug"
-    )
-
-    delete_url = HyperlinkedIdentityField(
-        view_name='api:shop_delete',
-        lookup_field="slug"
-    )
+    # detail_url = HyperlinkedIdentityField(
+    #     view_name='api:shop_detail',
+    #     lookup_field='slug'
+    # )
+    #
+    # update_url = HyperlinkedIdentityField(
+    #     view_name='api:shop_update',
+    #     lookup_field="slug"
+    # )
+    #
+    # delete_url = HyperlinkedIdentityField(
+    #     view_name='api:shop_delete',
+    #     lookup_field="slug"
+    # )
 
     # used_categories = SerializerMethodField()
     is_owner = SerializerMethodField()
@@ -310,9 +310,9 @@ class ShopSerializer(ModelSerializer):
     class Meta:
         model = Shop
         fields = (
-            'detail_url',
-            'update_url',
-            'delete_url',
+            # 'detail_url',
+            # 'update_url',
+            # 'delete_url',
             'id',
             'title',
             'slug',

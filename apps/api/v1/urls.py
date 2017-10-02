@@ -18,7 +18,7 @@ from .views import (
     ShopCreateApiView,
     FacebookLogin,
     GoogleLogin,
-    UserShopsListView,
+    # UserShopsListView,
     UserCartItemsView,
     UserFavoritesView,
     UserDetailView,
@@ -35,11 +35,15 @@ from .views import (
     ShopApiMobileView,
     ShopCategoriesApiView,
     ShopCategoryChildrenApiView,
+    LentaView,
+    MyListView
 )
 
 urlpatterns = [
     # url(r'^shop/(?P<slug>[-_\w]+)/$', GetUsedCategoriesFromShop.as_view(), name="shops_used_categories"),
     url(r'^place/$', PlaceListView.as_view(), name='place_list'),
+    url(r'^my-list/$', MyListView.as_view(), name='my_list'),
+    url(r'^lenta/$', LentaView.as_view(), name='lenta'),
     url(r'^category/(?P<slug>[-_.\w]+)/$', CategoryDetailApiView.as_view(), name='category_detail'),
     url(r'^category/(?P<slug>[-_.\w]+)/children/$', CategoryDetailChildrenApiView.as_view(), name='category_detail'),
     url(r'^category/$', CategoryListApiView.as_view(), name='category_list'),
@@ -71,7 +75,7 @@ urlpatterns = [
     url(r'^shop/(?P<slug>[-_\w]+)/update/$', ShopUpdateApiView.as_view(), name='shop_update'),
     url(r'^shop/(?P<slug>[-_\w]+)/delete/$', ShopDeleteApiView.as_view(), name='shop_delete'),
     url(r'^shop/$', ShopListApiView.as_view(), name='shop_list'),
-    url(r'^user/(?P<pk>[0-9]+)/shops/$', UserShopsListView.as_view(), name="user_shops_list"),
+    # url(r'^user/(?P<pk>[0-9]+)/shops/$', UserShopsListView.as_view(), name="user_shops_list"),
     url(r'^user/cart/$', UserCartItemsView.as_view(), name="user_cart"),
     url(r'^user/favorites/$', UserFavoritesView.as_view(), name="user_cart"),
     url(r'^user/$', UserDetailView.as_view(), name="user_detail"),
