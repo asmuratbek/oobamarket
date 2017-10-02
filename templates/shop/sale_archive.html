@@ -1,33 +1,49 @@
 {% extends 'shop/shop_detail.html' %}
 {% load shop_tags %}
 {% block shopcontent %}
-    <div class="sale-page">
 
-        <ul class="category-tab">
-            <li><a href="{% url 'shops:sale_archive' slug=shop.slug %}">Архив акций</a></li>
-            {% show_create_sale_button shop request.user %}
-        </ul>
+    <hr class="uk-divider-icon">
+    <section class="nav-cotnrol-shop">
+        <div class="uk-container">
+            <ul class="uk-child-width-1-6@m uk-child-width-1-3@s uk-grid uk-grid-small uk-flex-center uk-text-center"
+                uk-grid>
+                <li><a href="{% url 'shops:sale_archive' slug=shop.slug %}" class="uk-button-default uk-button">Архив акций</a></li>
+                {% show_create_sale_button shop request.user %}
+            </ul>
+        </div>
+    </section>
 
-        {% for sale in shop.sales_set.all %}
-
-            {% if sale.published == False %}
-            <div class="col-md-6 disabled">
-                <span class="descount">{{ sale.discount }}%</span>
-                <div class="img-wrapper">
-                    {% if sale.image %}
-                        <img src="{{ sale.image.url }}" alt="">
-                    {% else %}
-                        <img src="http://via.placeholder.com/540x200" alt="">
-                    {% endif %}
-                </div>
-                <div class="description">
-                    <h3>{{ sale.title }}</h3>
-                    <p>{{ sale.short_description }}</p>
-                    <a href="{% url 'shops:sale_detail' slug=shop.slug pk=sale.pk %}">Смотреть</a>
-                    {% show_update_sale_button shop sale request.user %}
+    <section class="sale archiv uk-margin-medium-top">
+        <div class="uk-container">
+            <div class="shadow uk-padding-large">
+                <div class="uk-child-width-1-2@m " uk-grid>
+                    {% for sale in shop.sales_set.all %}
+                        {% if sale.published == False %}
+                            <div>
+                                <div class="uk-card uk-card-default">
+                                    <span class="descount">Акция в архиве {{ sale.discount }}%</span>
+                                    <div class="uk-card-media-top uk-cover-container">
+                                        {% if sale.image %}
+                                            <img src="{{ sale.image.url }}" alt="" uk-cover>
+                                        {% else %}
+                                            <img src="http://via.placeholder.com/540x200" alt="" uk-cover>
+                                        {% endif %}
+                                        <canvas width="700" height="300"></canvas>
+                                    </div>
+                                    <div class="uk-card-body uk-padding-small">
+                                        <h3 class="uk-card-title">{{ sale.title }}</h3>
+                                        <p>{{ sale.short_description }}</p>
+                                        <div class="control-button">
+                                            <a href="{% url 'shops:sale_detail' slug=shop.slug pk=sale.pk %}" class="uk-button-default uk-button">Смотреть</a>
+                                            {% show_update_sale_button shop sale request.user %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
                 </div>
             </div>
-            {% endif %}
-        {% endfor %}
-    </div>
+        </div>
+    </section>
 {% endblock %}

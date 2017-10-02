@@ -2,6 +2,108 @@
 {% load staticfiles %}
 {% load widget_tweaks %}
 {% block content %}
+    <section class="creat-product  uk-margin-medium-top">
+        <div class="uk-container">
+            <div class="shadow uk-padding-large">
+                <form class="uk-grid" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <fieldset class="uk-fieldset uk-width-1-1@l">
+                        <legend class="uk-legend uk-margin-medium-bottom">Добавление акций</legend>
+                        <div class="uk-grid uk-child-width-1-1@l uk-margin-medium-bottom" uk-grid>
+                            <div>
+                                {% if not form.title.errors %}
+                                    <label class="uk-form-label">Название акции</label>
+                                {% else %}
+                                    <label class="uk-form-label">Название акции:{{ form.title.errors }}</label>
+                                {% endif %}
+                                <div class="uk-form-controls {% if form.title.errors %}has-error{% endif %}">
+                                    {{ form.title|attr:"class:uk-input"|attr:"required" }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="uk-width-1-5@s ">
+                            <label class="uk-form-label">Размер скидки </label>
+                            <div class="uk-form-controls uk-display-block">
+                                <input class="uk-input" type="text" placeholder="%">
+                            </div>
+                        </div>
+                        <div class="uk-grid uk-child-width-1-1@l uk-margin-medium-top" uk-grid>
+                            <label class="label-checkbox uk-display-block"><input class="uk-checkbox" type="checkbox">
+                                Опубликовать на сайте </label>
+                        </div>
+
+                        <hr class="uk-divider-icon uk-margin-medium-top uk-margin-medium-bottom">
+                        <div class="uk-grid uk-child-width-1-1@l" uk-grid>
+                            <div class="uk-form-controls">
+                                <legend class="uk-legend uk-margin-medium-bottom"> Короткое описание</legend>
+                                <textarea class="uk-textarea " rows="5"
+                                          placeholder="Введите до 300 символов"></textarea>
+                            </div>
+                        </div>
+                        <hr class="uk-divider-icon uk-margin-medium-top uk-margin-medium-bottom">
+                        <div class="uk-grid uk-child-width-1-1@l" uk-grid>
+                            <div class="uk-form-controls">
+                                <legend class="uk-legend uk-margin-medium-bottom"> Полное описание товара</legend>
+                                ck-editor
+                            </div>
+                        </div>
+
+                    </fieldset>
+
+
+                    <div class="uk-fieldset uk-width-1-1@l upload-product-image uk-margin-remove-top">
+                        <hr class="uk-divider-icon uk-margin-medium-top uk-margin-medium-bottom">
+                        <legend class="uk-legend uk-text-center uk-margin-small-bottom">Добавьте лого вашей фирмы
+                        </legend>
+                        <small class="uk-text-center uk-display-block uk-margin-medium-bottom uk-alert-danger">Размер
+                            картинки должен быть 1:1
+                        </small>
+                        <div class="uk-child-width-1-4@m uk-grid">
+                            <div class="image-preview-parent">
+                                <div class="wrapper">
+                                    <label for="image-upload" class="image-label">Выбрать изображения</label>
+                                    <input type="file" name="image" id="image-upload"/>
+                                </div>
+                            </div>
+                            <div class="image-preview active">
+                                <div class="wrapper">
+                                    <a class="remove-image" href="" uk-icon="icon:  minus-circle"
+                                       title="Удалить изображение" uk-tooltip></a>
+                                    <img src="img/cat11.png" alt="">
+                                </div>
+                            </div>
+                            <div class="image-preview">
+                                <div class="wrapper">
+                                    <a class="remove-image" href="" uk-icon="icon:  minus-circle"
+                                       title="Удалить изображение" uk-tooltip></a>
+                                    <img src="img/t2.jpg" alt="">
+                                </div>
+                            </div>
+                            <div class="image-preview">
+                                <div class="wrapper">
+                                    <a class="remove-image" href="" uk-icon="icon:  minus-circle"
+                                       title="Удалить изображение" uk-tooltip></a>
+                                    <img src="img/template.jpg" alt="">
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <div class="uk-width-1-1@l">
+                        <div class=" uk-width-1-2@s uk-margin-medium-top">
+                            <a href="" class="uk-button uk-button-default border-red bg-red uk-width-1-2@l"><span
+                                    class="uk-margin-small-right" uk-icon="icon: check"> </span>Сохранить</a>
+                        </div>
+                    </div>
+
+
+                </form>
+            </div>
+        </div>
+    </section>
+
     <section class="add-sale add-product">
         <div class="container">
             <h1>Добавление акций</h1>
@@ -10,8 +112,10 @@
                 <div class="col-md-8">
                     <div class="form-group {% if form.title.errors %}has-error{% endif %} input col-md-6">
                         {% if not form.title.errors %}
-                            <label for="">Название акции</label>{% else %}
-                            <label for="" style="color:red;">Название акции:{{ form.title.errors }}</label>{% endif %}
+                            <label>Название акции</label>
+                        {% else %}
+                            <label>Название акции:{{ form.title.errors }}</label>
+                        {% endif %}
                         {{ form.title|attr:"class:form-control"|attr:"required" }}
                     </div>
 

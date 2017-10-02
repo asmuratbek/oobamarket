@@ -93,7 +93,7 @@ def show_create_sale_button(shop, user):
         if user.is_authenticated:
             if shop.is_owner(user):
                 return mark_safe('''
-                                    <li class="active"><a href="%s">Создать Акцию</a></li>
+                                    <li class="uk-active"><a href="%s" class="uk-button uk-button-default">Создать Акцию</a></li>
                                 ''' % (settings.DOMAIN_URL + reverse('shops:add_sale', kwargs={'slug': shop.slug})))
             elif not shop.is_owner(user):
                 return mark_safe('')
@@ -106,7 +106,7 @@ def show_update_sale_button(shop, sale, user):
         if user.is_authenticated:
             if shop.is_owner(user):
                 return mark_safe('''
-                                    <a class="btn add" href="%s">Редактировать</a>
+                                    <a href="%s"  class="uk-button-default uk-button">Редактировать</a>
                                 ''' % (settings.DOMAIN_URL +reverse('shops:update_sale', kwargs={'slug': shop.slug, 'pk': sale.pk})))
             elif not shop.is_owner(user):
                 return mark_safe('')
