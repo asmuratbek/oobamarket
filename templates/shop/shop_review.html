@@ -2,6 +2,83 @@
 {% load shop_tags staticfiles %}
 
 {% block shopcontent %}
+    <section class="review uk-margin-medium-top">
+
+        <div class="uk-container">
+            <div class="shadow uk-padding-large">
+                <article class="uk-comment">
+                    <h4 class="uk-comment-title uk-margin-remove">
+                        Автор
+                        <div class="group-star uk-display-inline-block">
+                            <span class="star"></span>
+                            <span class="star"></span>
+                            <span class="star"></span>
+                            <span class="star"></span>
+                        </div>
+                    </h4>
+                    <ul class="uk-comment-meta uk-subnav uk-subnav-divider uk-margin-remove-top">
+                        <li><a href="#">22.09.17 12:09</a></li>
+                    </ul>
+                    <div class="uk-comment-body">
+                        <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
+                            invidunt
+                            ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo
+                            duo
+                            dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum
+                            dolor
+                            sit amet.</p>
+                    </div>
+                    <hr class="uk-divider-icon">
+                </article>
+
+                <article class="uk-comment">
+                    <h4 class="uk-comment-title uk-margin-remove">
+                        Автор
+                        <div class="group-star uk-display-inline-block">
+                            <span class="star"></span>
+                            <span class="star"></span>
+                            <span class="star"></span>
+                            <span class="star"></span>
+                            <span class="star"></span>
+                        </div>
+                    </h4>
+                    <ul class="uk-comment-meta uk-subnav uk-subnav-divider uk-margin-remove-top">
+                        <li><a href="#">12 дней назад</a></li>
+                    </ul>
+                    <div class="uk-comment-body">
+                        <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
+                            invidunt
+                            ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo
+                            duo
+                            dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum
+                            dolor
+                            sit amet.</p>
+                    </div>
+                    <hr class="uk-divider-icon">
+                </article>
+
+                <form class="uk-form-stacked uk-margin-medium-top">
+                    <div class="uk-margin">
+                        <legend class="uk-legend">Добавить отзыв</legend>
+                        <select id="rating-review" class="uk-margin">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
+                        <div class="uk-form-controls">
+                            <textarea class="uk-textarea" rows="10" placeholder="Ваш отзыв"></textarea>
+                        </div>
+                    </div>
+                    <button class="uk-button uk-button-default">Отправить</button>
+                </form>
+            </div>
+
+
+        </div>
+    </section>
+
     <section class="reviews">
         <div class="bg-white" id="shop_review">
             {% include 'layout/shop_reviews.html' %}
@@ -63,10 +140,8 @@
 {% endblock %}
 
 {% block js %}
-    <script src="{% static 'js/jquery.2.2.4.js' %}"></script>
-    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
     <script src="{% static 'js/common.js' %}"></script>
-    <script src="{% static 'js/owl.carousel.min.js' %}"></script>
 
     <script>
         var form = $('#review_form');

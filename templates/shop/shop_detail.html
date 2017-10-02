@@ -150,7 +150,6 @@
                 {% url 'shops:sale' slug=shop.slug as sale %}
                 {% url 'shops:review' slug=shop.slug as review %}
                 {% url 'shops:contacts_detail' slug=shop.slug as contacts %}
-                <li><a href="#" class="uk-button uk-button-default">История заказов</a></li>
                 <li {% if request.path == shop_detail %}class="uk-active"{% endif %}><a
                         href="{{ DOMAIN_URL }}{{ shop_detail }}" class="uk-button uk-button-default">Товары</a></li>
                 <li {% if request.path == about_us %}class="uk-active"{% endif %}><a
@@ -188,7 +187,6 @@
 {% block js %}
     {{ block.super }}
     <script src="{% static 'js/shop_detail.js' %}"></script>
-
     <script src="{% static 'js/subscribe.js' %}"></script>
     <script src="{% static 'js/counter.js' %}"></script>
 {% endblock %}

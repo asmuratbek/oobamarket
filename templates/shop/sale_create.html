@@ -24,27 +24,32 @@
                         <div class="uk-width-1-5@s ">
                             <label class="uk-form-label">Размер скидки </label>
                             <div class="uk-form-controls uk-display-block">
-                                <input class="uk-input" type="text" placeholder="%">
+                                {{ form.discount|attr:"class:uk-input"|attr:"type:number"|attr:"placeholder:0%" }}
                             </div>
                         </div>
                         <div class="uk-grid uk-child-width-1-1@l uk-margin-medium-top" uk-grid>
-                            <label class="label-checkbox uk-display-block"><input class="uk-checkbox" type="checkbox">
-                                Опубликовать на сайте </label>
+                            <label class="label-checkbox uk-display-block">
+                                {% if sales.published == TRUE %}
+                                    {{ form.published|attr:"class:uk-checkbox"|attr:"id_published"|attr:"checked:checked" }}
+                                {% else %}
+                                    {{ form.published|attr:"class:uk-checkbox"|attr:"id_published" }}
+                                {% endif %}
+                                Опубликовать на сайте
+                            </label>
                         </div>
 
                         <hr class="uk-divider-icon uk-margin-medium-top uk-margin-medium-bottom">
                         <div class="uk-grid uk-child-width-1-1@l" uk-grid>
                             <div class="uk-form-controls">
                                 <legend class="uk-legend uk-margin-medium-bottom"> Короткое описание</legend>
-                                <textarea class="uk-textarea " rows="5"
-                                          placeholder="Введите до 300 символов"></textarea>
+                                {{ form.short_description|attr:"class:uk-textarea"|attr:"textarea" }}
                             </div>
                         </div>
                         <hr class="uk-divider-icon uk-margin-medium-top uk-margin-medium-bottom">
                         <div class="uk-grid uk-child-width-1-1@l" uk-grid>
                             <div class="uk-form-controls">
                                 <legend class="uk-legend uk-margin-medium-bottom"> Полное описание товара</legend>
-                                ck-editor
+                                {{ form.description|attr:"rows:10" }}
                             </div>
                         </div>
 
@@ -93,8 +98,7 @@
 
                     <div class="uk-width-1-1@l">
                         <div class=" uk-width-1-2@s uk-margin-medium-top">
-                            <a href="" class="uk-button uk-button-default border-red bg-red uk-width-1-2@l"><span
-                                    class="uk-margin-small-right" uk-icon="icon: check"> </span>Сохранить</a>
+                            <button class="uk-button uk-button-default border-red bg-red uk-width-1-2@l" type="submit" class="btn add"><span class="uk-margin-small-right" uk-icon="icon: check"> </span>Сохранить</button>
                         </div>
                     </div>
 
@@ -205,7 +209,7 @@
 {% endblock %}
 
 {% block js %}
-    <script src="{% static 'js/jquery.2.2.4.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
     <script src="{% static 'js/previewLogos.js' %}"></script>
     <script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
     <script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>

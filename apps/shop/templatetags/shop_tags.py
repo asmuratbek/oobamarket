@@ -53,7 +53,7 @@ def show_order_history_button(shop, user):
         if user.is_authenticated:
             if shop.is_owner(user):
                 return mark_safe('''
-                                    <li class="always" ><a href="%s">История заказов</a></li>
+                                    <li class="always" ><a href="%s" class="uk-button uk-button-default">История заказов</a></li>
                                 ''' % (settings.DOMAIN_URL + reverse('order:shop_order_list', kwargs={'slug': shop.slug})))
             elif not shop.is_owner(user):
                 return mark_safe('')

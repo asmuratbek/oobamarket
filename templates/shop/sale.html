@@ -9,7 +9,7 @@
                 uk-grid>
                 <li><a href="{% url 'shops:sale_archive' slug=shop.slug %}" class="uk-button uk-button-default">Архив
                     акций </a></li>
-                <li class="uk-active"><a href="#" class="uk-button uk-button-default">Создать Акцию</a></li>
+                 {% show_create_sale_button shop request.user %}
             </ul>
         </div>
     </section>
