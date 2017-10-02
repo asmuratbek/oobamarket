@@ -18,6 +18,7 @@
 
 $(document).ready(function(){
 
+
     // ---------------------------------
     // функция timepicker на странице создание магазина
     // ---------------------------------
@@ -88,11 +89,11 @@ $(document).ready(function(){
                 $('.cart-count').text(data.total_items);
                 if (data.item_added) {
                     $(this).toggleClass("active");
-                    $('.basket-btn').html('<span class="glyphicon glyphicon-shopping-cart"></span>В корзине');
+                    $('.basket-btn').html('<span class="uk-margin-small-right" uk-icon="icon:  cart"></span>В корзине');
                 }
                 else {
                     $(this).removeClass("active");
-                    $('.basket-btn').html('<span class="glyphicon glyphicon-shopping-cart"></span>Добавить в корзину');
+                    $('.basket-btn').html('<span class="uk-margin-small-right" uk-icon="icon:  cart"></span>Добавить в корзину');
                 }
             },
             error: function (response, error) {
@@ -102,8 +103,39 @@ $(document).ready(function(){
         })
     });
 
+     // ---------------------------------
+    // функция добавление в избранные на странице одного товара
     // ---------------------------------
-    // функция добавление в избранные
+    $('.favorite-btn').click(function (event) {
+        event.preventDefault();
+        var span = $(this).next();
+        var formData = $('#favorite-form').serialize();
+        $.ajax({
+            type: "GET",
+            url: "/favorite/add",
+            data: formData,
+            success: function (data) {
+                console.log(data);
+                if (data.created) {
+                    $(this).toggleClass("active");
+                    $('.favorite-btn').html('<span class="uk-margin-small-right" uk-icon="icon: heart">Удалить из избранного');
+                }
+                else {
+                    $(this).removeClass("active");
+                    $('.favorite-btn').html('<span class="uk-margin-small-right" uk-icon="icon: heart">Добавить в избранное</a>');
+                }
+                $('.favorites_count').text(data.favorites_count)
+            },
+            error: function (response, error) {
+                console.log(response);
+                console.log(error);
+            }
+        })
+    });
+
+
+    // ---------------------------------
+    // функция добавление в избранные на главной
     // ---------------------------------
 
     $(".glyphicon-heart").click(function (event) {

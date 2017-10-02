@@ -39,11 +39,7 @@ def show_add_banner_button(shop, user):
         if user.is_authenticated:
             if shop.is_owner(user):
                 return mark_safe('''
-                                <div class="auch-edit" >
-                                    <a href="%s" >
-                                       Редактировать баннер
-                                    </a>
-                                </div>
+                                <a href="%s" class="edit-button">Редактировать</a>
                                     ''' % (settings.DOMAIN_URL + reverse('shops:add_banner', kwargs={'slug': shop.slug})))
             elif not shop.is_owner(user):
                 return mark_safe('')
@@ -84,11 +80,7 @@ def show_edit_shop_button(shop, user):
         if user.is_authenticated:
             if shop.is_owner(user):
                 return mark_safe('''
-                                <div class="auch-edit">
-                                    <a href="%s" >
-                                        Редактировать
-                                    </a>
-                                </div>
+                                <a href="%s" class="edit-button">Редактировать</a>
                                     ''' % (settings.DOMAIN_URL + reverse('shops:update', kwargs={'slug': shop.slug})))
             elif not shop.is_owner(user):
                 return mark_safe('')

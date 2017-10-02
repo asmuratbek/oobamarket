@@ -10,16 +10,16 @@ register = template.Library()
 def is_favorite(product, user):
     if user.is_authenticated:
         if product.favorite.filter(user=user).exists():
-            return mark_safe('''<a class="favorite-btn active" href="">
-                        <span class="glyphicon glyphicon-heart"></span>
+            return mark_safe('''<a class="favorite-btn uk-button uk-button-default favorite active " href="">
+                        <span class="uk-margin-small-right" uk-icon="icon: heart"></span>
                         Удалить из избранного</a>''')
         else:
-            return mark_safe('''<a class="favorite-btn" href="">
-                        <span class="glyphicon glyphicon-heart"></span>
+            return mark_safe('''<a class="favorite-btn uk-button uk-button-default  favorite" href="">
+                        <span class="uk-margin-small-right" uk-icon="icon:  heart"></span>
                         Добавить в избранное</a>''')
     else:
-        return mark_safe('''<a class="favorite" href="/accounts/login/">
-                        <span class="glyphicon glyphicon-heart"></span>
+        return mark_safe('''<a class="favorite uk-button uk-button-default  favorite" href="/accounts/login/">
+                        <span class="uk-margin-small-right" uk-icon="icon:  heart"></span>
                         Добавить в избранное</a>''')
 
 
@@ -66,15 +66,24 @@ def is_in_cart(request, product):
         cart, created = Cart.objects.get_or_create(id=cart_id)
         if cart.cartitem_set.filter(product=product).exists():
             cart_message = """
-                <a class="basket-btn in-the-basket active" href=""><span class="glyphicon glyphicon-shopping-cart"></span>В корзине</a>
+                <a class="basket-btn in-the-basket uk-button uk-button-default  basket active " href="">
+                    <span class="uk-margin-small-right" uk-icon="icon:  cart"></span>
+                    В корзине
+                </a>
             """
         else:
             cart_message = """
-                 <a class="basket-btn" href=""><span class="glyphicon glyphicon-shopping-cart"></span>Добавить в корзину</a>
+                 <a class="basket-btn uk-button uk-button-default  basket" href="">
+                     <span class="uk-margin-small-right" uk-icon="icon:  cart"></span>
+                     Добавить в корзину
+                 </a>
             """
     else:
         cart_message = """
-                         <a class="basket-btn" href=""><span class="glyphicon glyphicon-shopping-cart"></span>Добавить в корзину</a>
+                         <a class="basket-btn uk-button uk-button-default  basket" href="">
+                            <span class="uk-margin-small-right" uk-icon="icon:  cart"></span>
+                            Добавить в корзину
+                        </a>
                     """
 
     return mark_safe(cart_message)
