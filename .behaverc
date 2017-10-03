@@ -2,6 +2,6 @@
 format=pretty
 show_source=False
 show_timings=False
-paths=apps/users/features
+paths=features
 tags=~skip
 no-skipped=True
