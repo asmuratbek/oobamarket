@@ -2,7 +2,7 @@ Feature: User authentication
 
   Scenario Outline:
     Given registered user with username <username>, email <email> and password <password>
-    When app sends credentials to "/rest-auth/login"
+    When app sends credentials to "/api/v1/rest-auth/login/"
     Then it should get authentication token
 
     Examples: Users
@@ -11,7 +11,7 @@ Feature: User authentication
 
   Scenario Outline:
     Given registered user with username <username>, email <email> and password <password>
-    When app sends credentials with wrong username <username_wrong> to "/rest-auth/login"
+    When app sends credentials with wrong username <username_wrong> to "/api/v1/rest-auth/login/"
     Then it should get message saying that username is invalid
 
     Examples: Users
@@ -20,7 +20,7 @@ Feature: User authentication
 
   Scenario Outline:
     Given registered user with username <username>, email <email> and password <password>
-    When app sends credentials with wrong password <password_wrong> to "/rest-auth/login"
+    When app sends credentials with wrong password <password_wrong> to "/api/v1/rest-auth/login/"
     Then it should get message saying that password is invalid
 
     Examples: Users
