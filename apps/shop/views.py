@@ -136,14 +136,16 @@ class ShopSaleArchiveView(generic.DetailView):
 
 def sale_detail(request, slug, pk):
     shop = get_object_or_404(Shop, slug=slug)
-    sale = get_object_or_404(Sales, pk=pk)
+    sale = get_object_or_404(Sales, id=pk)
+    print(sale)
 
     context = {
         'shop': shop,
-        'sale': sale
+        'sales': sale
     }
 
     return render(request, 'shop/sale_detail.html', context)
+
 
 
 class SalesCreateView(LoginRequiredMixin, ShopMixin, CreateView):

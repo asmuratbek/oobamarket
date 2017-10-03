@@ -2,149 +2,119 @@
 {% load staticfiles widget_tweaks shop_tags %}
 
 {% block shopcontent %}
-        <div class="simpleorder">
-
-            <a href="" name='delete' class="remove-item">Удалить</a>
-{#            <a href="" class="load-to-excel">Выгрузить в Excel</a>#}
-            <div class="clearfix"></div>
-            <div class="tab-simpleorder">
-
-                <div class="head">
-                    <div class="parets">
-                        <ul>
-                            <li>
-{#                                <label for="parent">#}
-{#                                    <input type="checkbox" id="parent">#}
-{#                                    <div class="indicator"></div>#}
-{#                                </label>#}
-                            </li>
-                            <li>Номер заказа</li>
-                            <li>Дата</li>
-                            <li>Заказчик</li>
-                            <li>Статус</li>
-                            <li>Адрес доставки</li>
-                            <li>Телефон</li>
-                            <li>Сумма заказа</li>
-{#                            <li>Комиссия</li>#}
-                        </ul>
-
-                    </div>
+    <section class="order-list uk-margin-medium-top">
+        <div class="uk-container">
+            <div class="shadow uk-padding-large">
+             <a href="" name='delete' class="remove-item uk-button uk-margin-medium-bottom uk-button-default">Удалить</a>
+                <div class="uk-overflow-auto">
+                    <table class="uk-table uk-text-center uk-table-small uk-table-middle uk-table-hover uk-table-striped uk-table-divider">
+                        <thead>
+                        <tr>
+                            <th class="uk-text-center"></th>
+                            <th class="uk-text-center">Номер заказа</th>
+                            <th class="uk-text-center">Дата</th>
+                            <th class="uk-text-center">Заказчик</th>
+                            <th class="uk-width-small uk-text-center">Статус</th>
+                            <th class="uk-table-expand uk-text-center">Адрес доставки</th>
+                            <th class="uk-text-center">Телефон</th>
+                            <th class="uk-width-small uk-text-center">Сумма заказа</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for order in object_list %}
+                            {% if order.is_visible == True %}
+                                <tr>
+                                    <td>
+                                        <label for="child-{{ order.id }}">
+                                            <input class="uk-checkbox" type="checkbox" id="child-{{ order.id }}"
+                                                   data-id="{{ order.id }}"
+                                                   name="todelete" value="{{ order.id }}">
+                                        </label>
+                                    </td>
+                                    <td>{{ order.cart.id }}</td>
+                                    <td><a href="{% url 'order:shop_simple_order_update' pk=order.id %}"
+                                           style="position: relative;">{{ order.created_at|date:"d.m.y H:i" }}</a>
+                                    </td>
+                                    <td>{{ order.name }}</td>
+                                    <td class="uk-text-left">
+                                        <form method="POST" action="{% url 'order:change_status' %}"
+                                              class="order_change">
+                                            {% csrf_token %}
+                                            <select class="selectize demo-default" id="id_status"
+                                                    name="status" required="">
+                                                {% for x,y in form.fields.status.choices %}
+                                                    <option value="{{ x }}"
+                                                            {% if order.status == x %}selected{% endif %}>{{ y }}
+                                                    </option>
+                                                {% endfor %}
+                                            </select>
+                                            <input type="hidden" name="id" value="{{ order.id }}">
+                                        </form>
+                                    </td>
+                                    <td>{{ order.address }}</td>
+                                    <td>{{ order.phone }}</td>
+                                    <td>{{ order.cart.subtotal }}</td>
+                                    <td></td>
+                                </tr>
+                            {% endif %}
+                        {% endfor %}
+                        </tbody>
+                    </table>
                 </div>
-
-                {% for order in object_list %}
-
-                    {% if order.is_visible == True %}
-                    <div class="child-order">
-
-                        <ul>
-                            <li>
-                                <label for="child-{{ order.id }}">
-                                    <input type="checkbox" id="child-{{ order.id }}" data-id="{{ order.id }}" name="todelete" value="{{ order.id }}">
-                                    <div class="indicator"></div>
-                                </label>
-                            </li>
-                            <li>{{ order.cart.id }}</li>
-                            <li><a href="{% url 'order:shop_simple_order_update' pk=order.id %}"
-                                   style="position: relative;">{{ order.created_at|date:"d.m.y H:i" }}</a></li>
-                            <li>{{ order.name }}</li>
-                            <li>
-                                <form method="POST" action="{% url 'order:change_status' %}" class="order_change">
-                                    {% csrf_token %}
-                                    <select class="form-control" id="id_status"
-                                            name="status" required="">
-                                        {% for x,y in form.fields.status.choices %}
-                                            <option value="{{ x }}"
-                                                    {% if order.status == x %}selected{% endif %}>{{ y }}</option>
-                                        {% endfor %}
-                                    </select>
-                                    <input type="hidden" name="id" value="{{ order.id }}">
-                                    {#<button class="btn" type="submit">Подтвердить</button>#}
-                                </form>
-                            </li>
-                            <li>{{ order.address }}
-                            </li>
-                            <li>{{ order.phone }}</li>
-                            <li>{{ order.cart.subtotal }}</li>
-{#                            <li>0 сом</li>#}
-                        </ul>
-                    </div>
-                    {% endif %}
-                {% endfor %}
+                <a href="" class="uk-button uk-margin-medium-top uk-button-default">Сохранить</a>
             </div>
+        </div>
+    </section>
 
-    </div>
 {% endblock %}
 
 
 {% block js %}
-    <script src="{% static 'js/jquery.2.2.4.js' %}"></script>
-    <script src="{% static 'js/bootstrap.min.js' %}"></script>
     <script src="{% static 'js/common.js' %}"></script>
-    <script src="{% static 'js/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
     <script>
 
-     var arr = [];//переменная массив для фукции записи в нее id списка заказов
+        var arr = [];//переменная массив для фукции записи в нее id списка заказов
 
-    //функция записи данных в переменную arr выше
-
-
-    $('input[name=todelete]').on('click', function () {
-        let data_id = $(this).attr('data-id');
-        if (!$.inArray(data_id, arr)) {
-            arr.splice(arr.indexOf(data_id), 1);
-        }
-        else {
-            arr.push(data_id);
-        }
-
-        console.log(arr)
-    });
+        //функция записи данных в переменную arr выше
 
 
-    //фукция удаления одного или массива списков с истории продаж магазина
-    $('.remove-item').on('click', function (e) {
-        console.log('zashel')
-{#        e.preventDefault();#}
-        var self = $(this);
-        var elems = $('input[name=todelete]:checked');
-        $.ajax({
-            url: '{% url 'order:shop_order_list' shop.slug %}',
-            type: 'POST',
-            dataType: 'JSON',
-            data: { csrfmiddlewaretoken:'{{ csrf_token }}',
-                'ids': arr},
-            success: function () {
-                location.reload();
+        $('input[name=todelete]').on('click', function () {
+            let data_id = $(this).attr('data-id');
+            if (!$.inArray(data_id, arr)) {
+                arr.splice(arr.indexOf(data_id), 1);
+            }
+            else {
+                arr.push(data_id);
             }
 
+            console.log(arr)
         });
 
-    });
+
+        //фукция удаления одного или массива списков с истории продаж магазина
+        $('.remove-item').on('click', function (e) {
+            console.log('zashel')
+            {#        e.preventDefault();#}
+            var self = $(this);
+            var elems = $('input[name=todelete]:checked');
+            $.ajax({
+                url: '{% url 'order:shop_order_list' shop.slug %}',
+                type: 'POST',
+                dataType: 'JSON',
+                data: {
+                    csrfmiddlewaretoken: '{{ csrf_token }}',
+                    'ids': arr
+                },
+                success: function () {
+                    location.reload();
+                }
+
+            });
+
+        });
     </script>
 {% endblock %}
-{##}
-{#            <h1>Заказы магазина {{ shop }}</h1>#}
-{#            {% for order in object_list %}#}
-{#                <div class="border">#}
-{#                    <h3><a href="{% url 'order:simple_update' pk=order.id %}">Заказ#}
-{#                        от {{ order.created_at|date:"d.m.y H:i" }}</a></h3>#}
-{#                    <p>{{ order.name }}</p>#}
-{#                    <p>{{ order.last_name }}</p>#}
-{#                    <p>{{ order.phone }}</p>#}
-{#                    <p>{{ order.address }}</p>#}
-{#                    <p>{{ order.status }}</p>#}
-{#                    <form method="post" action="" class="order_change">#}
-{#                        {% csrf_token %}#}
-{#                        <div class="form-group select col-md-6" style="margin-top: 10px">#}
-{#                            {{ form.status|attr:"class:form-control " }}#}
-{#                        </div>#}
-{#                        <input type="hidden" name="id" value="{{ order.id }}">#}
-{#                        <button class="btn" type="submit">Подтвердить</button>#}
-{#                    </form>#}
-{#                </div>#}
-{#            {% endfor %}#}
-{#        </div>#}
-{#    </div>#}
 
 
 

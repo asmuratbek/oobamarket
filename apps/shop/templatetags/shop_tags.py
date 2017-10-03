@@ -66,7 +66,7 @@ def show_add_social_button(shop, user):
         if user.is_authenticated:
             if shop.is_owner(user):
                 return mark_safe('''
-                                    <a href="%s" class="edit-social">+ Добавить соц.сети</a>
+                                    <a href="%s" class="uk-button-default uk-margin-small-left uk-button edit-social">+ Добавить соц.сети</a>
                                     ''' % (settings.DOMAIN_URL + reverse('shops:update_social', kwargs={'slug': shop.slug})))
             elif not shop.is_owner(user):
                 return mark_safe('')

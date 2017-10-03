@@ -13,25 +13,25 @@
                             <p class="uk-margin-remove"><b>Рабочие дни:</b></p>
                             {% if contact.round_the_clock == False %}
                                 {% if contact.monday %}
-                                    <p>Понедельник:{{ contact.monday }}</p>
+                                    <p>Понедельник: {{ contact.monday }}</p>
                                 {% endif %}
                                 {% if contact.tuesday %}
-                                    <p>Вторник:{{ contact.tuesday }}</p>
+                                    <p>Вторник: {{ contact.tuesday }}</p>
                                 {% endif %}
                                 {% if contact.wednesday %}
-                                    <p>Среда:{{ contact.wednesday }}</p>
+                                    <p>Среда: {{ contact.wednesday }}</p>
                                 {% endif %}
                                 {% if contact.thursday %}
-                                    <p>Четверг:{{ contact.thursday }}</p>
+                                    <p>Четверг: {{ contact.thursday }}</p>
                                 {% endif %}
                                 {% if contact.friday %}
-                                    <p>Пятница:{{ contact.friday }}</p>
+                                    <p>Пятница: {{ contact.friday }}</p>
                                 {% endif %}
                                 {% if contact.saturday %}
-                                    <p>Субота:{{ contact.saturday }}</p>
+                                    <p>Субота: {{ contact.saturday }}</p>
                                 {% endif %}
                                 {% if contact.sunday %}
-                                    <p>Воскресенье:{{ contact.sunday }}</p>
+                                    <p>Воскресенье: {{ contact.sunday }}</p>
                                 {% endif %}
                                 <p class="uk-margin-remove"><b>Выходные:</b></p>
                                 {% if not contact.monday %}

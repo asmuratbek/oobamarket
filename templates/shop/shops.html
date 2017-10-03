@@ -13,15 +13,11 @@
                     <h4 class="uk-margin-remove">{{ shop.title|truncatechars:28 }}</h4>
                     <div class="control">
                         {% if shop.contacts_set.first.phone %}
-                            <p class="phone"><span class="uk-margin-small-right"
-                                                   uk-icon="icon: phone"></span>{{ shop.contacts_set.first.phone }}</p>
+                            <p class="phone"><span class="uk-margin-small-right" uk-icon="icon: phone"></span>{{ shop.contacts_set.first.phone }}</p>
                         {% else %}
-                            <p class="phone"><span class="uk-margin-small-right" uk-icon="icon: phone"></span>не указан
-                            </p>
+                            <p class="phone"><span class="uk-margin-small-right" uk-icon="icon: phone"></span>не указан</p>
                         {% endif %}
-                        <p class="email"><span class="uk-margin-small-right"
-                                               uk-icon="icon: mail"></span> {{ shop.email }}</p>
-
+                        <p class="email"><span class="uk-margin-small-right" uk-icon="icon: mail"></span> {{ shop.email }}</p>
                     </div>
                 </div>
             </div>
