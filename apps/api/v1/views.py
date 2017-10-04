@@ -1,8 +1,10 @@
+import uuid
 from allauth.socialaccount.providers.facebook.views import FacebookOAuth2Adapter
 from allauth.socialaccount.providers.google.views import GoogleOAuth2Adapter
 from django.db.models import Q
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
+from django.conf import settings
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
 from drf_multiple_model.views import MultipleModelAPIView
@@ -24,6 +26,7 @@ from rest_framework.permissions import (
     IsAdminUser,
     IsAuthenticated)
 from rest_framework.views import APIView
+from slugify import slugify
 
 from apps.api.v1.serializers import (
     ProductSerializer,
@@ -45,7 +48,7 @@ from .pagination import (
     ShopLimitPagination,
     ShopProductsLimitPagination
 )
-from .permissions import IsOwnerOrReadOnly
+from .permissions import IsOwnerOrReadOnly, IsOwnerShop
 
 ORDER_TYPES = ["price", "-price", "title", "created_at"]
 
@@ -385,9 +388,18 @@ class ProductDeleteApiView(DestroyAPIView):
 class ProductCreateApiView(CreateAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductCreateSerializer
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated, IsOwnerShop,)
 
-    # def perform_create(self, serializer):
-    #     serializer.save(author=self.request.user)
+    def perform_create(self, serializer):
+        product = serializer.save(shop=get_object_or_404(Shop, slug=self.request.data.get('shop', '')),
+                                  category=get_object_or_404(Category, slug=self.request.data.get('category', '')),
+                                  slug=str(slugify(self.request.data.get("title", ""))) + "-" + str(uuid.uuid4())[:4])
+        images_files = self.request.FILES.getlist('images_files', '')
+        if images_files:
+            image_list = [ProductImage(product=product, image=img) for img in images_files]
+            ProductImage.objects.bulk_create(image_list)
+        return JsonResponse({'status': 0, 'message': 'Product is successfully created.'})
 
 
 class ShopListApiView(ListAPIView):

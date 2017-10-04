@@ -255,21 +255,16 @@ class ProductCreateSerializer(ModelSerializer):
 
     class Meta:
         model = Product
-        fields = (
-            'title',
-            'slug',
-            'category',
-            'shop',
-            'price',
-            'discount',
-            'currency',
-            'published',
-        )
+        exclude = ('id', 'slug', 'created_at', 'updated_at', 'counter', 'currency',
+                   'partner_price', 'sell_count', 'delivery_type', 'delivery_cost',
+                   'availability', 'meta_title', 'meta_description', 'meta_keywords', 'seo_text',
+                   'long_description',)
 
-    slug = SerializerMethodField()
+    shop = serializers.CharField(max_length=300)
+    category = serializers.CharField(max_length=300)
 
-    def get_slug(self, obj):
-        return slugify(obj.title)
+    # def get_slug(self, obj):
+    #     return slugify(obj.title)
 
 
 class ProductImageSerializer(ModelSerializer):
