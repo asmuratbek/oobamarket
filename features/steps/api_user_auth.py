@@ -9,18 +9,12 @@ use_step_matcher("re")
 
 
 def do_request_to_login(context, url, email, password):
-    context.test.assertIsNotNone(context.email_address)
-    context.test.assertIsNotNone(context.user)
-
     context.response = context.client.post(url, {
         'email': email, 'password': password
     })
 
-    return context
-
 
 def assert_response(context, status_code, expected_key_in_json):
-    context.test.assertIsNotNone(context.response)
     response = context.response
     json_content = json.loads(str(response.content, encoding='utf8'))
 

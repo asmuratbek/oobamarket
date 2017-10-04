@@ -1,5 +1,6 @@
-Feature: #Enter feature name here
-  # Enter feature description here
+Feature: Global categories list
 
-  Scenario: # Enter scenario name here
-    # Enter steps here
+  Scenario:
+    Given prepared set of global categories
+    When app sends request to "/api/v1/globalcategory/"
+    Then it should get response with list of categories

@@ -1,9 +1,11 @@
 from selenium import webdriver
 from django.test import Client
+from faker import Faker
 
 
 def before_all(context):
     context.client = Client()
+    context.faker = Faker()
     # context.browser = webdriver.Firefox()
     # context.browser.implicitly_wait(5)
     # context.server_url = 'http://localhost:8000'
