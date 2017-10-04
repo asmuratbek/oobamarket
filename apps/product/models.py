@@ -29,6 +29,10 @@ AVAILABILITY_TYPES = (
     ('waiting', u'Ожидается'),
     ('not_available', u'Нет в наличии')
 )
+CURRENCY_TYPES = (
+    ('som', u'Сом'),
+    ('dollar', u'$')
+)
 
 
 class ProductPublishedManager(models.Manager):
@@ -50,7 +54,7 @@ class Product(PublishBaseModel, Counter):
     partner_price = models.DecimalField(null=True, blank=True, verbose_name='Цена для партнера', decimal_places=0, max_digits=10)
     sell_count = models.PositiveIntegerField(_("Количество продаж"), default=0, null=True, blank=True)
     discount = models.PositiveIntegerField(null=True, blank=True, verbose_name='Скидка')
-    currency = models.CharField(null=True, max_length=255, verbose_name='Валюта', default='сом')
+    currency = models.CharField(null=True, max_length=255, choices=CURRENCY_TYPES, verbose_name='Валюта', default='som')
     # quantity = models.IntegerField(verbose_name='Количество', default=0)
     delivery_type = models.CharField(verbose_name='Вид доставки', choices=DELIVERY_TYPES, blank=True, null=True,
                                      max_length=255)
