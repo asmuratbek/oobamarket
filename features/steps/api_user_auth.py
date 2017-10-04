@@ -2,6 +2,7 @@ import json
 from allauth.account.models import EmailAddress
 from behave import *
 from allauth.utils import get_user_model
+from features.helpers import *
 
 use_step_matcher("re")
 
@@ -16,9 +17,10 @@ def do_request_to_login(context, url, email, password):
 
 def assert_response(context, status_code, expected_key_in_json):
     response = context.response
-    json_content = json.loads(str(response.content, encoding='utf8'))
 
-    context.test.assertEqual(response.status_code, status_code)
+    assert_status_code_and_content_type(context, response, status_code, 'application/json')
+
+    json_content = json.loads(str(response.content, encoding='utf8'))
     context.test.assertTrue(expected_key_in_json in json_content)
 
 
