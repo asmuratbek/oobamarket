@@ -24,41 +24,33 @@ var SearchForm = createClass({
 
   render: function(){
     return (
-      <div className="form-filter">
-                <form className="form-inline">
 
-                    <div className="form-group select">
-                        <select className="form-control" value={this.props.orderBy} onChange={this.handleSort}>
-                            <option value="-created_at">Сначала новые </option>
-                            <option value="title">По названию</option>
-                            <option value="price">Цена по возрастанию</option>
-                            <option value="-price">Цена по убыванию </option>
-                        </select>
-                    </div>
 
-                    <div className="form-group input price">
-                        <input type="number" className="form-control" placeholder="от 2000 сом" value={this.props.priceFrom} onChange={this.handlePriceFromChange} />
-                    </div>
+            <form data-uk-grid className="uk-grid-small search-global-category">
+            <div className="uk-width-1-3@l uk-width-1-2@s uk-padding-remove">
+                <div className="bg-white">
+                    <select className="selectize demo-default" placeholder="Укажите..." value={this.props.orderBy}
+                    onChange={this.handleSort}>
+                        <option selected="" value="-created_at">Сначала новые</option>
+                        <option value="title">По названию</option>
+                        <option value="price">Цена по возрастанию</option>
+                        <option value="-price">Цена по убыванию</option>
+                    </select>
+                </div>
 
-                    <div className="form-group input price">
-                        <input type="number" className="form-control" placeholder="до 4000 сом" value={this.props.priceTo} onChange={this.handlePriceToChange} />
-                    </div>
-
-                     <div className="form-group search-input">
-                        {/*<select className="form-control" value={this.props.deliveryType} onChange={this.handleDeliveryType}>*/}
-                            {/*<option value="all">Доставка (все виды)</option>*/}
-                            {/*<option value="free">Бесплатная</option>*/}
-                            {/*<option value="paid">Платная</option>*/}
-                            {/*<option value="self">Самовывоз</option>*/}
-                        {/*</select>*/}
-                         <input type="text" className="form-control" placeholder="Поиск товара" onChange={this.search} />
-                         {/*<button type="submit">*/}
-                            {/*<span className="glyphicon glyphicon-search"></span>*/}
-                        {/*</button>*/}
-                    </div>
-
-                </form>
             </div>
+            <div className="uk-width-1-6@l uk-width-1-2@s">
+                <input className="uk-input"  type="number"  placeholder="от 2000 сом"
+                       value={this.props.priceFrom} onChange={this.handlePriceFromChange} />
+            </div>
+            <div className="uk-width-1-6@l uk-width-1-2@s">
+                <input className="uk-input" type="number"  placeholder="от 4000 сом"
+                value={this.props.priceTo} onChange={this.handlePriceToChange}/>
+            </div>
+            <div className="uk-width-1-3@l uk-width-1-2@s">
+                <input className="uk-input" type="text" placeholder="Поиск товара" onChange={this.search}/>
+            </div>
+        </form>
 
     )
   }

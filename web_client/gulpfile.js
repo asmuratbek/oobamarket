@@ -10,9 +10,9 @@ var jsmin = require('gulp-jsmin');
 
 var conf = {
   // JavaScript
-  appName:  ['shop_detail.js' , 'product_list.js', 'App.js' ],
+  appName:  ['shop_detail.js' , 'product_list.js', 'globalcategory_detail.js', 'category_detail.js', 'category_parent_detail.js' ],
   srcJs:    './',
-  destName: ['shop_detail.js' , 'product_list.js', 'App.js' ],
+  destName: ['shop_detail.js' , 'product_list.js', 'globalcategory_detail.js', 'category_detail.js', 'category_parent_detail.js' ],
   destJs:   '../static/js/',
 };
 
