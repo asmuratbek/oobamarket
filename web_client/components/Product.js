@@ -243,7 +243,7 @@ var ProductList = createClass({
             <div className="uk-transition-fade uk-position-cover uk-overlay uk-overlay-default">
                 <a href="" className="uk-position-cover"></a>
                 <small className="uk-display-block">Магазин</small>
-                <h4 className="uk-margin-remove"><a href="##">{this.props.product.shop}</a></h4>d
+                <h4 className="uk-margin-remove"><a href="##">{this.props.product.shop}</a></h4>
                 <p>{this.props.product.short_description}</p>
                 <div className="control">
                     <a href="#" className={`favorite uk-margin-medium-right ${this.isInFavorites(this.props.product) && 'like'}`} title="Добавить в избранные" data-uk-tooltip

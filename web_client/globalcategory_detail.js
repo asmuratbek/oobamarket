@@ -193,6 +193,7 @@ var MainInterface = createClass({
 
 
     reOrder: function (orderBy) {
+        console.log(orderBy)
         var from = this.state.activePage * this.state.productsByPage;
         if (orderBy == '-created_at') {
             var sort = {'created_at': 'desc'}
@@ -203,7 +204,7 @@ var MainInterface = createClass({
         } else if (orderBy == '-price') {
             var sort = {'get_price_function': 'desc'}
         }
-
+        console.log(sort)
         if (this.state.priceFrom && this.state.priceTo) {
             var sorting = [{"range": {"get_price_function": {"gte": this.state.priceFrom}}},
                 {"range": {"get_price_function": {"lte": this.state.priceTo}}}]
