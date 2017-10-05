@@ -251,7 +251,7 @@ class ProductDetailSerializer(ModelSerializer):
                     return False
 
 
-class ProductCreateSerializer(ModelSerializer):
+class ProductPostSerializer(ModelSerializer):
 
     class Meta:
         model = Product

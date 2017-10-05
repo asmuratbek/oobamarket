@@ -11,6 +11,7 @@ from drf_multiple_model.views import MultipleModelAPIView
 from rest_auth.registration.views import SocialLoginView
 from rest_framework import filters
 from rest_framework.authentication import SessionAuthentication, TokenAuthentication
+from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from rest_framework.filters import (
     SearchFilter,
     OrderingFilter
@@ -27,15 +28,8 @@ from rest_framework.permissions import (
     IsAuthenticated)
 from rest_framework.views import APIView
 from slugify import slugify
-
-from apps.api.v1.serializers import (
-    ProductSerializer,
-    ProductCreateSerializer,
-    ShopSerializer,
-    ShopCreateSerializer,
-    CategorySerializer,
-    GlobalCategorySerializer,
-    PlaceSerializer, ParentCategorySerializer, ProductDetailSerializer)
+from django.forms.models import model_to_dict
+from apps.api.v1.serializers import *
 from apps.cart.models import Cart, CartItem
 from apps.category.models import Category
 from apps.global_category.models import GlobalCategory
@@ -372,10 +366,33 @@ class ProductDetailApiView(APIView):
 
 class ProductUpdateApiView(RetrieveUpdateAPIView):
     queryset = Product.objects.all()
-    serializer_class = ProductSerializer
+    serializer_class = ProductPostSerializer
     lookup_field = 'slug'
-    permission_classes = [IsOwnerOrReadOnly]
+    permission_classes = [IsAuthenticated, IsOwnerShop]
     authentication_classes = (SessionAuthentication, TokenAuthentication)
+
+    def get(self, request, *args, **kwargs):
+        product = get_object_or_404(Product, slug=kwargs['slug'])
+        product_images = [{'image_id': i.id, 'image_url': i.image.url}
+                                     for i in product.productimage_set.all()]
+        product_dict = model_to_dict(product)
+        product_dict['shop_title'] = product.shop.title
+        product_dict['shop_slug'] = product.shop.slug
+        product_dict['category_title'] = product.category.title
+        product_dict['category_slug'] = product.category.slug
+        return JsonResponse(dict(images=product_images, product=product_dict))
+
+    def perform_update(self, serializer):
+        remove_images_list = [int(i) for i in self.request.data.getlist('delete_images', [])
+                                  if i != '' and i != None]
+        delete_images = ProductImage.objects.filter(id__in=remove_images_list).delete()
+        product = serializer.save(category=get_object_or_404(Category, slug=self.request.data.get('category', '')),
+                                    shop=get_object_or_404(Shop, slug=self.request.data.get('shop', '')))
+        images_files = self.request.FILES.getlist('images_files', '')
+        if images_files:
+            image_list = [ProductImage(product=product, image=img) for img in images_files]
+            ProductImage.objects.bulk_create(image_list)
+        return JsonResponse({'status': 0, 'message': 'Product is successfully updated.'})
 
 
 class ProductDeleteApiView(DestroyAPIView):
@@ -387,7 +404,7 @@ class ProductDeleteApiView(DestroyAPIView):
 
 class ProductCreateApiView(CreateAPIView):
     queryset = Product.objects.all()
-    serializer_class = ProductCreateSerializer
+    serializer_class = ProductPostSerializer
     authentication_classes = (TokenAuthentication,)
     permission_classes = (IsAuthenticated, IsOwnerShop,)
 

@@ -15,9 +15,12 @@ class IsOwnerShop(BasePermission):
     message = "You must be owner of shop"
 
     def has_permission(self, request, view):
-        user = request.user
-        shop = get_object_or_404(Shop, slug=request.data.get("shop", ""))
-        return user in shop.user.all()
+        if request.method == 'POST' or request.method == 'PUT':
+            user = request.user
+            # shop = get_object_or_404(Shop, slug=request.data.get("shop", ""))
+            shop = get_object_or_404(Shop, slug=request.data.get("shop", ""))
+            return user in shop.user.all()
+        return True
 
 
 class IsUserOwner(BasePermission):
