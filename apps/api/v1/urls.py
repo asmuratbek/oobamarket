@@ -35,11 +35,13 @@ from .views import (
     ShopApiMobileView,
     ShopCategoriesApiView,
     ShopCategoryChildrenApiView,
+    MyListView
 )
 
 urlpatterns = [
     # url(r'^shop/(?P<slug>[-_\w]+)/$', GetUsedCategoriesFromShop.as_view(), name="shops_used_categories"),
     url(r'^place/$', PlaceListView.as_view(), name='place_list'),
+    url(r'^my-list/$', MyListView.as_view(), name='my_list'),
     url(r'^category/(?P<slug>[-_.\w]+)/$', CategoryDetailApiView.as_view(), name='category_detail'),
     url(r'^category/(?P<slug>[-_.\w]+)/children/$', CategoryDetailChildrenApiView.as_view(), name='category_detail'),
     url(r'^category/$', CategoryListApiView.as_view(), name='category_list'),

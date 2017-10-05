@@ -21,6 +21,8 @@ var MainInterface = createClass({
             products: [],
             activePage: 1,
             shops: [],
+            favorites: [],
+            cartItems: [],
             categories: [],
             loaded: false,
             activeCategories: [],
@@ -69,6 +71,23 @@ var MainInterface = createClass({
                         pagesCount: pagesCount,
                         baseUrl: `/api/v1/globalcategory/` + this.state.categorySlug + '/',
                         loaded: true
+                    });
+              }.bind(this),
+              error: function (response, error) {
+                  console.log(response);
+                  console.log(error);
+              }
+        })
+
+         $.ajax({
+            type: "GET",
+              url: `http://${this.state.domain}:8000/api/v1/my-list/`,
+              success: function (data) {
+                    var favorites = data.favorites.map(obj => obj.id);
+                    var cartItems = data.cart_items.map(obj => obj.id);
+                    this.setState({
+                        favorites: favorites,
+                        cartItems: cartItems
                     });
               }.bind(this),
               error: function (response, error) {
@@ -174,6 +193,7 @@ var MainInterface = createClass({
 
 
     reOrder: function (orderBy) {
+        console.log(orderBy)
         var from = this.state.activePage * this.state.productsByPage;
         if (orderBy == '-created_at') {
             var sort = {'created_at': 'desc'}
@@ -184,7 +204,7 @@ var MainInterface = createClass({
         } else if (orderBy == '-price') {
             var sort = {'get_price_function': 'desc'}
         }
-
+        console.log(sort)
         if (this.state.priceFrom && this.state.priceTo) {
             var sorting = [{"range": {"get_price_function": {"gte": this.state.priceFrom}}},
                 {"range": {"get_price_function": {"lte": this.state.priceTo}}}]
@@ -484,13 +504,15 @@ var MainInterface = createClass({
             return (
                 <Product key={ index }
                          onProductDelete={productDelete}
+                         favorites={this.state.favorites}
+                         cartItems={this.state.cartItems}
                          product={ item }/>
             ) //return
         }.bind(this));
 
 
         return (
-            <div>
+            <div className="uk-container">
                 <SearchForm
                     orderBy={ this.state.orderBy }
                     onReOrder={ this.reOrder }
@@ -501,11 +523,11 @@ var MainInterface = createClass({
                     onChangePriceFrom={ this.changePriceFrom }
                     onChangePriceTo={ this.changePriceTo }
                 />
-                <div className="item-filter">
-                    <Loader loaded={this.state.loaded}>
+
+                <div className="uk-child-width-1-1 uk-child-width-1-2@s uk-child-width-1-3@m  uk-child-width-1-4@l uk-grid-small" data-uk-grid>
+
                     {filteredProducts}
-                    <div className="clearfix"></div>
-                    </Loader>
+
                 </div>
 
                 {this.state.pagesCount > 1 ?

@@ -48,6 +48,7 @@ from .pagination import (
 )
 from .permissions import IsOwnerOrReadOnly
 
+ORDER_TYPES = ["price", "-price", "title", "created_at"]
 
 class FacebookLogin(SocialLoginView):
     adapter_class = FacebookOAuth2Adapter
@@ -188,25 +189,20 @@ class CategoryDetailChildrenApiView(ListAPIView):
         return Category.objects.filter(parent__slug=self.kwargs.get('slug'), parent__isnull=False)
 
 
-class GlobalCategoryDetailApiView(MultipleModelAPIView):
-    # queryList = [
-    #     (Shop.objects.all(), ShopSerializer),
-    #     (Product.objects.all(), ProductSerializer),
-    # ]
-    pagination_class = CategoryLimitPagination
-    flat = True
-    filter_backends = (filters.OrderingFilter,)
-    serializer_class = ProductSerializer
+class GlobalCategoryDetailApiView(APIView):
     permission_classes = (AllowAny, )
-    authentication_classes = (SessionAuthentication, TokenAuthentication)
+    authentication_classes = (TokenAuthentication,)
 
-    def get_queryList(self):
-        slug = self.kwargs.get('slug')
+    def get(self, request, slug):
         q = self.request.GET.get('q')
+        order = self.request.GET.get('order')
         price_from = self.request.GET.get('priceFrom')
         price_to = self.request.GET.get('priceTo')
         globalcategory = GlobalCategory.objects.get(slug=slug)
-        products = Product.objects.filter(category__section=globalcategory)
+        if order and order in ORDER_TYPES:
+            products = Product.objects.filter(category__section=globalcategory).order_by(order)
+        else:
+            products = Product.objects.filter(category__section=globalcategory)
         if q:
             products = products.filter(
                 Q(title__icontains=str(q))
@@ -215,10 +211,56 @@ class GlobalCategoryDetailApiView(MultipleModelAPIView):
             products = products.filter(price__gt=int(price_from))
         if price_to and price_to != 'NaN':
             products = products.filter(price__lt=int(price_to))
-        queryList = [
-            (products, ProductSerializer),
-        ]
-        return queryList
+
+        product_list = list()
+        for product in products:
+            product_list.append({
+                "title": product.title,
+                "slug": product.slug,
+                "short_description": product.short_description,
+                "shop": product.get_shop_title(),
+                "main_image": product.get_main_thumb_image(),
+                "price": product.get_price(),
+                "is_favorite": product.favorite.filter(
+                    user=self.request.user).exists() if self.request.user.is_authenticated else False,
+                "is_in_cart": self.request.user.cart_set.last().cartitem_set.filter(product=product).exists()\
+                    if self.request.user.is_authenticated \
+                       and self.request.user.cart_set.all() \
+                    else False
+            })
+
+        return JsonResponse({
+            "status": "success",
+            "products": product_list
+        })
+
+
+class MyListView(APIView):
+    permission_classes = (AllowAny,)
+    authentication_classes = (SessionAuthentication,)
+
+    def get(self, request):
+        cart_items = request.user.cart_set.last().cartitem_set.all().values("product__id")\
+            if request.user.is_authenticated and request.user.cart_set else False
+        items = list()
+        favs = list()
+        if cart_items:
+            for item in cart_items:
+                items.append({
+                    "id": item.get("product__id")
+                })
+        favorites = request.user.favoriteproduct_set.all()\
+            if request.user.is_authenticated and  request.user.favoriteproduct_set else False
+        if favorites:
+            for fav in favorites:
+                favs.append({
+                    "id": fav.product.id
+                })
+        return JsonResponse({
+            "favorites": favs if favs else [],
+            "cart_items": items if items else []
+        })
+
 
 
 class ProductListApiView(ListAPIView):

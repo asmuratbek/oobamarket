@@ -55,7 +55,7 @@ var ProductList = createClass({
             type: "GET",
             url: "/favorite/add",
             data: {
-                'item': this.props.product.id
+                'item': this.props.product.pk
             },
             success: function (data) {
                 if (data.created) {
@@ -88,7 +88,7 @@ var ProductList = createClass({
           url: "/cart/",
           data:
               {
-                  "item":  this.props.product.id
+                  "item":  this.props.product.pk
               },
           success: function (data) {
               $('.cart-count').text(data.total_items);
@@ -143,32 +143,28 @@ var ProductList = createClass({
     var showAlert = this.showAlert(e);
   },
 
-  inCart : function (product) {
-    return (
-        <span className="glyphicon glyphicon-shopping-cart enable" data-toggle="tooltip"
-              data-placement="top" data-product-id={this.props.product.id}
-                          data-tip="В корзине" onClick={this.addOrRemoveFromCart}></span>
-    )
-  },
-
-  notInCart : function (product) {
-    return (
-        <span className="glyphicon glyphicon-shopping-cart" data-toggle="tooltip"
-              data-placement="top" data-product-id={this.props.product.id}
-                          data-tip="Добавить в корзину" onClick={this.addOrRemoveFromCart}></span>
-    )
-  },
+  // inCart : function (product) {
+  //   return (
+  //       <span className="glyphicon glyphicon-shopping-cart enable" data-toggle="tooltip"
+  //             data-placement="top" data-product-id={this.props.product.id}
+  //                         data-tip="В корзине" onClick={this.addOrRemoveFromCart}></span>
+  //   )
+  // },
+  //
+  // notInCart : function (product) {
+  //   return (
+  //       <span className="glyphicon glyphicon-shopping-cart" data-toggle="tooltip"
+  //             data-placement="top" data-product-id={this.props.product.id}
+  //                         data-tip="Добавить в корзину" onClick={this.addOrRemoveFromCart}></span>
+  //   )
+  // },
 
   isInCart : function (product) {
-      if (this.props.product.is_in_cart) {
-          return (
-              this.inCart(product)
-          )
-      } else {
-          return (
-              this.notInCart(product)
-          )
-      }
+      return this.props.cartItems.indexOf(product.pk) !== -1
+  },
+
+  isInFavorites: function (product) {
+      return this.props.favorites.indexOf(product.pk) !== -1
   },
 
   handleDelete: function(product_id){
@@ -229,78 +225,44 @@ var ProductList = createClass({
       transition: 'scale',
     }
     return (
-
-        <div className="col-md-3 col-sm-6 new-design">
-            <AlertContainer ref={a => this.msg = a} {...alertOptions} />
-        <div className={this.props.product.published ? "img-wrapper" : "img-wrapper disabled"}>
-            {this.props.product.is_owner ?
-
-            <div className="setting-control">
-                <a href={`/product/${this.props.product.slug}/update-product/`} className="glyphicon glyphicon-pencil"
-                   data-toggle="tooltip" title="" data-placement="top"
-                          data-tip="Редактировать товар"></a>
-                <ReactTooltip/>
-                <a href="#" data-message={this.props.product.published ? "Товар успешно скрыт" : "Товар успешно опубликован"}
-                             className={`eye glyphicon glyphicon-eye-${this.props.product.published ? 'open' : 'close'}`}
-                             data-product-id={this.props.product.id} data-toggle="tooltip" title="" data-placement="bottom"
-                             data-tip="Скрыть" data-status={`${this.props.product.published ? false : true}`}
-                             onClick={this.changePublishStatus}></a>
-                <ReactTooltip/>
-                <a href="#" className="remove glyphicon glyphicon-remove model-trigger"
-                             data-url={this.props.product.delete_view} data-toggle="modal" data-target="#DeleteModal" title=""
-                             data-placement="bottom" data-product-id={this.props.product.id} data-tip="Удалить"
-                             onClick={this.deleteProduct}></a>
-                <ReactTooltip/>
-
+        <div className="uk-grid-match">
+    <div className="shadow uk-text-center">
+        <div className="setting">
+            <a href="" data-uk-icon="icon: file-edit" title="Редактировать товар" data-uk-tooltip></a>
+            <a className="product-vision" href="" data-uk-icon="icon: copy" title="Скрыть товар" data-uk-tooltip></a>
+            <a href="" data-uk-icon="icon: close" title="Удалить товар" data-uk-tooltip></a>
+        </div>
+        <div className="uk-inline-clip uk-transition-toggle">
+            <div className="border">
+                <a href="" className="uk-position-cover"></a>
+                <div className="uk-cover-container">
+                    <canvas width="400" height="500"></canvas>
+                    <img data-uk-cover src={this.props.product.main_image} alt=""/>
+                </div>
             </div>
-                : ''}
-
-                <img src={this.props.product.main_image} alt={this.props.product.title}/>
-
-            <div className="back-fade">
-
-                <a href={this.props.product.detail_view}></a>
-
-                <div className="name-magazin-title">
-                    <h3>
-                        <small>Магазин</small>
-                        {this.props.product.shop}
-                    </h3>
-                    <p>{this.props.product.short_description}</p>
+            <div className="uk-transition-fade uk-position-cover uk-overlay uk-overlay-default">
+                <a href="" className="uk-position-cover"></a>
+                <small className="uk-display-block">Магазин</small>
+                <h4 className="uk-margin-remove"><a href="##">{this.props.product.shop}</a></h4>
+                <p>{this.props.product.short_description}</p>
+                <div className="control">
+                    <a href="#" className={`favorite uk-margin-medium-right ${this.isInFavorites(this.props.product) && 'like'}`} title="Добавить в избранные" data-uk-tooltip
+                    onClick={this.AddOrRemoveFavorite}><span
+                            className=" uk-icon" data-uk-icon="icon: heart; ratio: 2"></span></a>
+                    <a href="#" className={`basket uk-margin-medium-left ${this.isInCart(this.props.product) && 'in'}`} title="Добавить в корзину" data-uk-tooltip
+                    onClick={this.addOrRemoveFromCart}><span
+                            className=" uk-icon" data-uk-icon="icon: cart; ratio: 2"></span></a>
                 </div>
-
-                <div className="button-basket-favorite">
-                    {this.isInCart(this.props.product)}
-                    <span className={`glyphicon glyphicon-heart ${this.props.product.is_favorite && 'enable like'}`}
-                          data-product-id={this.props.product.id} data-toggle="tooltip" title=""
-                          data-placement="top"
-                          data-tip={this.props.product.is_favorite ? "Удалить из избранных" : "Добавить в избранное"}
-                        onClick={this.AddOrRemoveFavorite}></span>
-                    <ReactTooltip/>
-                </div>
-
-                <div className="title-price">
-                    <div className="col-md-8">
-                        <h4>{this.props.product.title}</h4>
-                    </div>
-
-                          {this.props.product.discount ? (
-                              <div className="col-md-4">
-                                  <span>{this.props.product.get_price_function} {this.props.product.currency}</span>
-                                  <span><strike>{this.props.product.price} {this.props.product.currency}</strike></span>
-                              </div>
-                      ) : (
-                              <div className="col-md-4">
-                                <span>{this.props.product.get_price_function} {this.props.product.currency}</span>
-                              </div>
-                      )
-                  }
-
-                </div>
-
+            </div>
+        </div>
+        <div className="uk-padding-small uk-grid uk-margin-remove footer">
+            <h4 className="uk-width-3-5@l uk-width-3-5@m uk-padding-remove">{this.props.product.title}</h4>
+            <div className="uk-width-2-5@l uk-width-2-5@m uk-padding-remove">
+                <p >{this.props.product.get_price_function} сом </p>
             </div>
         </div>
     </div>
+</div>
 
     )
   }
