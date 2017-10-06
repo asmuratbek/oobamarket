@@ -12,6 +12,12 @@ $blue: #0071bc
 $gray: #6d6d6d
 
 // -------------------------------------------
+// django-ckeditor-widget
+//----------------------------------------------
+
+.django-ckeditor-widget
+  width: 100%
+// -------------------------------------------
 // query.uploadPreview.js single image
 //----------------------------------------------
 .upload-shop-logo .image-preview
@@ -58,6 +64,15 @@ body
 .shadow
   box-shadow: 0 0px 26px -5px rgba(0,0,0,.15)
   background-color: #fff
+.basket-modal
+  .send
+    background-color: $orange
+    border-color: $orange
+    color: #fff
+    &:hover
+      background-color: $hover-orange
+      color: #fff
+
 .uk-open>.modal-map.uk-modal-dialog
   transform: translateX(-7px) !important
 .bg-red
@@ -342,8 +357,11 @@ header
     margin-top: 5px
   .category
     margin-left: -4px
+    .item:hover
+      transform: translateY(-5px)
     .item
       position: relative
+      transition: 0.3s
       .uk-card
         border: 1px solid #e1e1e1
         border-radius: 5px
@@ -388,7 +406,11 @@ header
   .uk-accordion-content
     padding-left: 20px
 .product-list
-
+  .uk-grid-match
+    transition: 0.3s
+  .uk-grid-match:hover
+    transform: scale(1.05, 1.05)
+    z-index: 10
   ul.uk-accordion
     background-color: #fff
     li
@@ -810,6 +832,12 @@ header
         border-color: #ed1c24
         span
           color: #ed1c24
+  .shop-list
+    .footer
+      h4
+        text-align: center
+      a
+        width: 100%
 
 // -------------------------------------------
 // ck-editor
@@ -1109,6 +1137,34 @@ header
     width: 100%
 .change-pass
   button
+    background-color: $orange
+    color: #fff
+    border-color: $orange
+    &:hover
+      background-color: $hover-orange
+      color: #fff
+      border-color: $hover-orange
+.landing-header
+  padding: 100px 0
+  background: #f3481c url(../img/landing/p10.png) 0 0 repeat
+  h1
+    font-weight: 300
+    color: #fff
+    font-size: 30px
+    text-transform: uppercase
+.about-ooba
+  padding: 100px 0
+  img
+    padding-top: 40px
+.what-are-you-getting
+  background-color: #fff
+  padding: 100px 0
+  h3
+    margin-bottom: 0
+.basket-page
+  .body.uk-grid + hr
+    padding-bottom: 40px
+  .init-modal
     background-color: $orange
     color: #fff
     border-color: $orange

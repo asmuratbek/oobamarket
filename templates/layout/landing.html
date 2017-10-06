@@ -11,35 +11,39 @@
 {% block content %}
 
     <section class="landing-header">
-        <div class="container">
-            <div class="row">
-                <a href="{% url 'home' %}">
-                    <img src="{% static 'img/landing/logo.png' %}" width="240" alt="На главную">
-                </a>
-                <h1>Товары вашего магазина на Ооба Маркет</h1>
-            </div>
+        <div class="uk-container uk-text-center">
+            <a class="uk-display-inline-block" href="{% url 'home' %}">
+                <img src="{% static 'img/landing/logo.png' %}" width="240" alt="На главную">
+            </a>
+            <h1>Товары вашего магазина на Ооба Маркет</h1>
+
         </div>
     </section>
 
     <section class="about-ooba">
-        <div class="bg-white">
-            <div class="container">
-                <div class="row">
-                    <h3 class="col-lg-5">Ооба Маркет - это крупная онлайн площадка товаров и магазинов города
-                        Бишкек</h3>
-                    <div class="clearfix"></div>
-                    <p class="col-lg-5">Идея нашего сервиса проста - Вы размещаете товары у нас на сервисе, мы
-                        находим покупателей и доставляем товары конечному потребителю.</p>
+        <div class="shadow">
+            <div class="uk-container">
+                <div class="uk-grid uk-flex-middle uk-child-width-1-2@m">
+                    <div>
+                        <h3>Ооба Маркет - это крупная онлайн площадка товаров и магазинов города
+                            Бишкек</h3>
+                        <p>Идея нашего сервиса проста - Вы размещаете товары у нас на сервисе, мы
+                            находим покупателей и доставляем товары конечному потребителю.</p>
+                    </div>
+                    <div>
+                        <img src="{% static 'img/landing/header.png' %}" alt="">
+                    </div>
+
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="what-are-you-getting">
-        <div class="container">
-            <div class="row">
-                <h2>Что вы получаете</h2>
-                <div class="col-lg-4">
+    <section class="what-are-you-getting shadow">
+        <div class="uk-container">
+            <h2 class="uk-text-center uk-margin-medium-bottom">Что вы получаете</h2>
+            <div class=" uk-grid uk-grid-match uk-text-center uk-child-width-1-3@m" uk-grid>
+                <div>
                     <div class="img-wrapper">
                         <img src="{% static 'img/landing/ic1.png' %}" alt="">
                     </div>
@@ -47,7 +51,7 @@
                     <h3>Новый канал продаж</h3>
                     <p>Вы получите возможность увеличить охват своих потенциальных клиентов</p>
                 </div>
-                <div class="col-lg-4">
+                <div>
                     <div class="img-wrapper">
                         <img src="{% static 'img/landing/ic2.png' %}" alt="">
                     </div>
@@ -55,7 +59,7 @@
                     <h3>Повышение узнаваемости</h3>
                     <p>Еще больше покупателей узнают о Вашем ассортименте товаров</p>
                 </div>
-                <div class="col-lg-4">
+                <div>
                     <div class="img-wrapper">
                         <img src="{% static 'img/landing/ic3.png' %}" alt="">
                     </div>
@@ -63,7 +67,7 @@
                     <h3>Бесплатное продвижение</h3>
                     <p>Вы не потратите ни сома на рекламу своих товаров, мы сделаем это сами за Вас</p>
                 </div>
-                <div class="col-lg-4">
+                <div>
                     <div class="img-wrapper">
                         <img src="{% static 'img/landing/ic4.png' %}" alt="">
                     </div>
@@ -71,7 +75,7 @@
                     <h3>Доставка</h3>
                     <p>Организация быстрой доставки в любую точку страны</p>
                 </div>
-                <div class="col-lg-4">
+                <div>
                     <div class="img-wrapper">
                         <img src="{% static 'img/landing/ic5.png' %}" alt="">
                     </div>
@@ -79,7 +83,7 @@
                     <h3>Статистика</h3>
                     <p>Вся информация о посещаемости, аудитории, самых популярных товарах и многое другое</p>
                 </div>
-                <div class="col-lg-4">
+                <div>
                     <div class="img-wrapper">
                         <img src="{% static 'img/landing/ic3.png' %}" alt="">
                     </div>
@@ -90,41 +94,49 @@
             </div>
         </div>
     </section>
-    <section class="about-ooba left">
-        <div class="bg-white">
-            <div class="container">
-                <div class="row">
-                    <h3 class="col-lg-offset-6 col-lg-5">Как разместить <br> товары?</h3>
-                    <div class="clearfix"></div>
-                    <div class="col-md-offset-6 col-lg-5">
-                        <div class="col-lg-3">
-                            <div class="img-wrapper">
-                                <img src="{% static 'img/landing/01.png' %}" alt="">
+
+    <section class="about-ooba">
+        <div class="shadow">
+            <div class="uk-container">
+                <div class="uk-grid uk-flex-middle">
+                    <div class="uk-width-expand">
+                        <img src="{% static 'img/landing/footer.png' %}" alt="">
+                    </div>
+                    <div class="uk-width-1-3@m">
+                        <h3>Как разместить товары?</h3>
+                        <div class="uk-child-width-1-2@m uk-grid">
+                            <div>
+                                <div class="img-wrapper">
+                                    <img src="{% static 'img/landing/01.png' %}" alt="">
+                                </div>
+                                <p>Регистрация на сайте</p>
                             </div>
-                            <p>Регистрация на сайте</p>
-                        </div>
-                        <div class="col-lg-3">
-                            <div class="img-wrapper">
-                                <img src="{% static 'img/landing/02.png' %}" alt="">
+                            <div>
+                                <div class="img-wrapper">
+                                    <img src="{% static 'img/landing/02.png' %}" alt="">
+                                </div>
+                                <p>Создание магазина</p>
                             </div>
-                            <p>Создание магазина</p>
-                        </div>
-                        <div class="col-lg-3">
-                            <div class="img-wrapper">
-                                <img src="{% static 'img/landing/03.png' %}" alt="">
+                            <div>
+                                <div class="img-wrapper">
+                                    <img src="{% static 'img/landing/03.png' %}" alt="">
+                                </div>
+                                <p>Размещение товаров</p>
                             </div>
-                            <p>Размещение товаров</p>
+
+                            <div>
+                                <div class="img-wrapper">
+                                    <img src="{% static 'img/landing/04.png' %}" alt="">
+                                </div>
+                                <p>Продажи!</p>
+                            </div>
                         </div>
 
-                        <div class="col-lg-3">
-                            <div class="img-wrapper">
-                                <img src="{% static 'img/landing/04.png' %}" alt="">
-                            </div>
-                            <p>Продажи!</p>
-                        </div>
 
                     </div>
+
                 </div>
+
             </div>
         </div>
     </section>
@@ -142,39 +154,6 @@
             </div>
         </div>
     </section>
-
-    {#    <footer>#}
-    {#        <div class="container">#}
-    {#            <div class="row">#}
-    {#                <div class="col-md-offset-4 col-md-4">#}
-    {#                    <form action="">#}
-    {#                        <label class="title">Регистрация магазина</label>#}
-    {#                        <div class="form-group">#}
-    {#                            <input type="email" class="form-control" placeholder="E-mail">#}
-    {#                        </div>#}
-    {#                        <div class="form-group">#}
-    {#                            <input type="password" class="form-control" placeholder="Пароль">#}
-    {#                        </div>#}
-    {#                        <div class="form-group">#}
-    {#                            <input type="text" class="form-control" placeholder="Имя">#}
-    {#                        </div>#}
-    {#                        <div class="form-group -m-30">#}
-    {#                            <input type="checkbox" id="checkbox" class="form-control checkbox">#}
-    {#                            <div class="indicator"></div>#}
-    {#                            <label for="checkbox">Я принимаю <a href="">Условия сотрудничества</a></label>#}
-    {##}
-    {##}
-    {#                        </div>#}
-    {#                        <div class="form-group">#}
-    {#                            <button class="form-control">Регистрация</button>#}
-    {#                        </div>#}
-    {#                    </form>#}
-    {#                </div>#}
-    {#            </div>#}
-    {#        </div>#}
-    {#    </footer>#}
-
-
 
 {% endblock %}
 
@@ -226,7 +205,8 @@
                                 <div class="col-md-6 text">
                                     <span>3</span>
                                     <h3>О компании</h3>
-                                    <p>Здесь вы можете разместить информацию о Вашем магазине, его историю и преимущества</p>
+                                    <p>Здесь вы можете разместить информацию о Вашем магазине, его историю и
+                                        преимущества</p>
                                 </div>
 
                                 <div class="col-md-6 text">
@@ -248,7 +228,8 @@
                                 <div class="col-md-3 bg1">
                                     <div class="title">
                                         <h4>Удобная навигация</h4>
-                                        <p>Мы разбили категории таким образом, чтобы клиенты могли легко найти нужный им товар</p>
+                                        <p>Мы разбили категории таким образом, чтобы клиенты могли легко найти нужный им
+                                            товар</p>
                                     </div>
                                     <div class="img-wrapper">
                                         <img src="{% static 'img/landing/p1.png' %}" alt="">
@@ -267,8 +248,10 @@
                                 <div class="col-md-3 bg3">
                                     <div class="title">
                                         <h4>Простое управление</h4>
-                                        <p>Наши дизайнеры каждый рабочий день думают над улучшением пользовательсткого интерфейса
-                                            и идет непрерывная работа над сервисом, чтобы он был простым, логичным и понятным</p>
+                                        <p>Наши дизайнеры каждый рабочий день думают над улучшением пользовательсткого
+                                            интерфейса
+                                            и идет непрерывная работа над сервисом, чтобы он был простым, логичным и
+                                            понятным</p>
                                     </div>
                                     <div class="img-wrapper">
                                         <img src="{% static 'img/landing/monitor.png' %}" alt="">
@@ -277,7 +260,8 @@
                                 <div class="col-md-3 bg4">
                                     <div class="title">
                                         <h4>Бесплатная реклама</h4>
-                                        <p>Откровенно, мы заинтересованы в продвижении на рынке – продвигая Вас, мы продвигаем себя!</p>
+                                        <p>Откровенно, мы заинтересованы в продвижении на рынке – продвигая Вас, мы
+                                            продвигаем себя!</p>
                                     </div>
                                     <div class="img-wrapper">
                                         <img src="{% static 'img/landing/p2.png' %}" alt="">
@@ -315,8 +299,7 @@
 
 {% endblock modal %}
 {% block js %}
-    <script src="{% static 'js/jquery.2.2.4.js' %}"></script>
-    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
     <script src="{% static 'js/common.js' %}"></script>
 
 {% endblock %}

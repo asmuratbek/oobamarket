@@ -2,90 +2,57 @@
 {% load staticfiles widget_tweaks %}
 
 {% block content %}
-    <div class="simpleorder">
-        <div class="container">
-            <div class="tab-simpleorder">
-                <div class="head">
-                    <div class="parets">
-                        <ul>
-                            <li>
-{#                                <label for="parent">#}
-{#                                    <input type="checkbox" id="parent">#}
-{#                                    <div class="indicator"></div>#}
-{#                                </label>#}
-                            </li>
-                            <li>Номер заказа</li>
-                            <li>Дата</li>
-                            <li>Заказчик</li>
-                            <li>Статус</li>
-                            <li>Адрес доставки</li>
-                            <li>Телефон</li>
-                            <li>Сумма заказа</li>
-{#                            <li>Комиссия</li>#}
-                        </ul>
-
-                    </div>
+        <section class="order-list uk-margin-medium-top">
+        <div class="uk-container">
+            <div class="shadow uk-padding-large">
+                <div class="uk-overflow-auto">
+                    <table class="uk-table uk-text-center uk-table-small uk-table-middle uk-table-hover uk-table-striped uk-table-divider">
+                        <thead>
+                        <tr>
+                            <th class="uk-text-center"></th>
+                            <th class="uk-text-center">Номер заказа</th>
+                            <th class="uk-text-center">Дата</th>
+                            <th class="uk-text-center">Заказчик</th>
+                            <th class="uk-width-small uk-text-center">Статус</th>
+                            <th class="uk-table-expand uk-text-center">Адрес доставки</th>
+                            <th class="uk-text-center">Телефон</th>
+                            <th class="uk-width-small uk-text-center">Сумма заказа</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for order in object_list %}
+                                <tr>
+                                    <td>
+                                    </td>
+                                    <td>{{ order.cart.id }}</td>
+                                    <td>
+                                        <a href="{% url 'order:user_order_detail' pk=order.id %}"
+                                   style="position: relative;">{{ order.created_at|date:"d.m.y H:i" }}</a>
+                                    </td>
+                                    <td>{{ order.name }}</td>
+                                    <td>
+                                        {{ order.status }}
+                                    </td>
+                                    <td>{{ order.address }}</td>
+                                    <td>{{ order.phone }}</td>
+                                    <td>{{ order.cart.subtotal }}</td>
+                                    <td></td>
+                                </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
                 </div>
-                {% for order in object_list %}
-                    <div class="child-order">
-
-                        <ul>
-                            <li>
-{#                                <label for="child">#}
-{#                                    <input type="checkbox" id="child">#}
-{#                                    <div class="indicator"></div>#}
-{#                                </label>#}
-                            </li>
-                            <li>{{ order.cart.id }}</li>
-                            <li><a href="{% url 'order:user_order_detail' pk=order.id %}"
-                                   style="position: relative;">{{ order.created_at|date:"d.m.y H:i" }}</a></li>
-                            <li>{{ order.name }}</li>
-                            <li>
-                                {{ order.status }}
-                            </li>
-                            <li>{{ order.address }}
-                            </li>
-                            <li>{{ order.phone }}</li>
-                            <li>{{ order.cart.subtotal }}</li>
-{#                            <li>0 сом</li>#}
-                        </ul>
-                    </div>
-                {% endfor %}
             </div>
         </div>
-    </div>
+    </section>
 {% endblock %}
 
 
 {% block js %}
-    <script src="{% static 'js/jquery.2.2.4.js' %}"></script>
-    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
     <script src="{% static 'js/common.js' %}"></script>
-    <script src="{% static 'js/owl.carousel.min.js' %}"></script>
 {% endblock %}
-{##}
-{#            <h1>Заказы магазина {{ shop }}</h1>#}
-{#            {% for order in object_list %}#}
-{#                <div class="border">#}
-{#                    <h3><a href="{% url 'order:simple_update' pk=order.id %}">Заказ#}
-{#                        от {{ order.created_at|date:"d.m.y H:i" }}</a></h3>#}
-{#                    <p>{{ order.name }}</p>#}
-{#                    <p>{{ order.last_name }}</p>#}
-{#                    <p>{{ order.phone }}</p>#}
-{#                    <p>{{ order.address }}</p>#}
-{#                    <p>{{ order.status }}</p>#}
-{#                    <form method="post" action="" class="order_change">#}
-{#                        {% csrf_token %}#}
-{#                        <div class="form-group select col-md-6" style="margin-top: 10px">#}
-{#                            {{ form.status|attr:"class:form-control " }}#}
-{#                        </div>#}
-{#                        <input type="hidden" name="id" value="{{ order.id }}">#}
-{#                        <button class="btn" type="submit">Подтвердить</button>#}
-{#                    </form>#}
-{#                </div>#}
-{#            {% endfor %}#}
-{#        </div>#}
-{#    </div>#}
+
 
 
 
