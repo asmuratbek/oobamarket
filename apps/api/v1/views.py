@@ -671,7 +671,8 @@ class ShopCreateApiView(CreateAPIView):
             longitude=self.request.POST.get("longitude"),
             latitude=self.request.POST.get("latitude"),
             place=Place.objects.filter(id=place_id).first())
-        are_values = [contact_dict[k] for k in contact_dict.keys() if k != "shop" and contact_dict[k] != None]
+        are_values = [contact_dict[k] for k in contact_dict.keys()
+                      if k != "shop" and contact_dict[k] != None and contact_dict[k] != ""]
         if are_values:
              contact = Contacts.objects.create(**contact_dict)
 
