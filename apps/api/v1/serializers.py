@@ -381,24 +381,8 @@ class ShopCreateSerializer(ModelSerializer):
 
     class Meta:
         model = Shop
-        validators = [
-            UniqueTogetherValidator(
-                queryset=Shop.objects.all(),
-                fields=('slug',)
-            )
-        ]
-        fields = (
-            'id',
-            'title',
-            'slug',
-            'user',
-            'email',
-            'description',
-            'short_description',
-            'created_at',
-            'updated_at',
-            'logo'
-        )
+        exclude = ['id', 'slug', 'counter', 'meta_title', 'meta_description',
+                   'meta_keywords', 'seo_text', 'created_at', 'updated_at']
 
 
 class UserSerializer(ModelSerializer):

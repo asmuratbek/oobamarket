@@ -653,30 +653,27 @@ class ShopCreateApiView(CreateAPIView):
     authentication_classes = (TokenAuthentication,)
 
     def perform_create(self, serializer):
-        serializer.save(user=[self.request.user.id])
-        slug = self.request.POST.get("slug")
-        phone = self.request.POST.get("phone")
-        address = self.request.POST.get("address")
-        monday = self.request.POST.get("monday")
-        tuesday = self.request.POST.get("tuesday")
-        wednesday = self.request.POST.get("wednesday")
-        thursday = self.request.POST.get("thursday")
-        friday = self.request.POST.get("friday")
-        saturday = self.request.POST.get("saturday")
-        sunday = self.request.POST.get("sunday")
-        round_the_clock = self.request.POST.get("round_the_clock")
-        longitude = self.request.POST.get("longitude")
-        latitude = self.request.POST.get("latitude")
+        shop = serializer.save(user=[self.request.user.id],
+                               slug=str(slugify(self.request.POST.get("title"))) + "-" + str(uuid.uuid4())[:4])
         place_id = self.request.POST.get("place_id")
-        place = get_object_or_404(Place, id=place_id)
-        shop = get_object_or_404(Shop, slug=slug)
-        if phone or address or monday or tuesday or wednesday or thursday or friday or saturday or sunday or round_the_clock:
-             contact = Contacts.objects.create(shop=shop, phone=phone, address=address,
-                                    monday=monday, tuesday=tuesday, wednesday=wednesday,
-                                    thursday=thursday, friday=friday, saturday=saturday,
-                                    sunday=sunday, round_the_clock=round_the_clock if round_the_clock else False,
-                                    longitude=longitude, latitude=latitude, place=place if place else None
-                                               )
+        contact_dict = dict(
+            phone=self.request.POST.get("phone"),
+            address=self.request.POST.get("address"),
+            monday=self.request.POST.get("monday"),
+            tuesday=self.request.POST.get("tuesday"),
+            wednesday=self.request.POST.get("wednesday"),
+            thursday=self.request.POST.get("thursday"),
+            friday=self.request.POST.get("friday"),
+            shop=shop,
+            saturday=self.request.POST.get("saturday"),
+            sunday=self.request.POST.get("sunday"),
+            round_the_clock=self.request.POST.get("round_the_clock"),
+            longitude=self.request.POST.get("longitude"),
+            latitude=self.request.POST.get("latitude"),
+            place=Place.objects.filter(id=place_id).first())
+        are_values = [contact_dict[k] for k in contact_dict.keys() if k != "shop" and contact_dict[k] != None]
+        if are_values:
+             contact = Contacts.objects.create(**contact_dict)
 
 
 # class UserShopsListView(ListAPIView):
