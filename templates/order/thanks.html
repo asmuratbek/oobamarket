@@ -1,20 +1,23 @@
 {% extends 'base-1.html' %}
 
 {% block content %}
-<section class="thanks">
-    <div class="container">
-        <h1>Спасибо что сделали заказ</h1>
-        <p>Ваш заказ оформлен,мы оповестили владелеца магазина и он свяжется с Вами</p>
-        <p>Если возникли проблемы с работой магазина свяжитесь с нами по email: sunrisestudiopro@gmail.com</p>
-        <h2>Вы оформили корзину товара</h2>
-        <div class="go">
-            {% if user.is_authenticated %}
-            <a class="btn add" href="{% url 'order:user_order_list' username=request.user.username %}">Посетить историю покупок</a>
-            {% endif %}
-            <a class="btn add" href="/">Продолжить покупку</a>
+    <section class="thanks uk-margin-medium-top">
+        <div class="uk-container">
+            <div class="shadow uk-padding uk-text-center">
+                <h1>Спасибо что сделали заказ</h1>
+                <p>Ваш заказ оформлен,мы оповестили владелеца магазина и он свяжется с Вами</p>
+                <p>Если возникли проблемы с работой магазина свяжитесь с нами по email: sunrisestudiopro@gmail.com</p>
+                <hr class="uk-divider-icon uk-margin-medium-top">
+                <h2>Вы оформили корзину товара</h2>
+                <div class="go">
+                    {% if user.is_authenticated %}
+                        <a class="uk-button-default uk-button"
+                           href="{% url 'order:user_order_list' username=request.user.username %}">Посетить историю
+                            покупок</a>
+                    {% endif %}
+                    <a class="uk-button-default next uk-button" href="/">Продолжить покупку</a>
+                </div>
+            </div>
         </div>
-    </div>
-</section>
-
-
+    </section>
 {% endblock %}

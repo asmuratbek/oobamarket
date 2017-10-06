@@ -3,7 +3,6 @@
 
 {% block head %}
     {{ block.super }}
-    <link rel="stylesheet" type="text/css" href="{% static 'css/selectize.css' %}">
 {% endblock %}
 
 
@@ -13,11 +12,12 @@
 
 
 {% block categories %}
-    <section class="category-link hidden-sm hidden-xs">
-    <div class="container-fluid">
-        <div class="clearfix"></div>
-    {% include 'layout/categories.html' with object=object.section %}
-    </div>
+    <section class="dropdown-category">
+        <div class="uk-container">
+            <div class="uk-text-center uk-flex-middle uk-grid uk-visible@l" uk-grid="">
+                {% include 'layout/categories.html' with object=object.section %}
+            </div>
+        </div>
     </section>
 {% endblock %}
 
@@ -33,96 +33,19 @@
     {% endif %}
 
 
-    <section class="shop-category">
-{#        <div class="container">#}
-            {#        <ul class="category-tab">#}
-            {#            <li class="active"><a href="">Товары</a></li>#}
-            {#            <li><a href="">Акции</a></li>#}
-            {#            <li><a href="">Отзывы</a></li>#}
-            {#            <li><a href="">Контакты</a></li>#}
-            {#        </ul>#}
-{##}
-{#            <div class="filter">#}
-{##}
-{#                <div class="col-md-9">#}
-{#                    <div class="form-filter">#}
-{##}
-{#                        <form class="form-inline">#}
-{##}
-{#                            <div class="form-group select">#}
-{#                                <select class="form-control">#}
-{#                                    <option>Сортировка</option>#}
-{#                                    <option>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Maiores, modi?#}
-{#                                    </option>#}
-{#                                    <option>3</option>#}
-{#                                    <option>4</option>#}
-{#                                    <option>5</option>#}
-{#                                </select>#}
-{#                            </div>#}
-{##}
-{#                            <div class="form-group input">#}
-{#                                <label><span>Цена</span> от</label>#}
-{#                                <input type="text" class="form-control" placeholder="2000 сом">#}
-{#                            </div>#}
-{##}
-{#                            <div class="form-group input end">#}
-{#                                <label>до</label>#}
-{#                                <input type="text" class="form-control" placeholder="4000 сом">#}
-{#                            </div>#}
-{##}
-{#                            <div class="form-group select" style="width: 23.7%;">#}
-{#                                <select class="form-control">#}
-{#                                    <option>Доставка</option>#}
-{#                                    <option>Платная</option>#}
-{#                                    <option>3бесплатная</option>#}
-{#                                    <option>4</option>#}
-{#                                    <option>5</option>#}
-{#                                </select>#}
-{#                            </div>#}
-{##}
-{#                        </form>#}
-{##}
-{#                    </div>#}
-                    <div class="goods-of-week search_results" id="root">
+    <section class="product-list uk-margin-medium-top">
+        <div class="uk-container" id="root">
 
-{#                        {% include 'product/product_list.html' with object_list=object.get_products col=4 %}#}
-                    </div>
-{#                </div>#}
-{#                {% if properties %}#}
-{#                    <div class="col-md-3">#}
-{#                        <h3>Параметры</h3><br>#}
-{#                        {% for prop in properties %}#}
-{#                            <div class="parametrs">#}
-{#                                <h4>{{ prop.title }}</h4>#}
-{#                                <select class="js-example-placeholder-single props" name="{{ prop.slug }}" style="width: 100%;">#}
-{#                                    <option value=>---------</option>#}
-{#                                    {% for val in prop.values %}#}
-{#                                        <option value="{{ val.id }}">{{ val.value }}</option>#}
-{#                                    {% endfor %}#}
-{#                                </select>#}
-{#                            </div>#}
-{#                        {% endfor %}#}
-{#                    </div>#}
-{#                    </div>#}
-{#                {% endif %}#}
-{#        </div>#}
+
+        </div>
     </section>
 
 
-
-
-    <!--[if lt IE 9]>
-    <script src="libs/html5shiv/es5-shim.min.js"></script>
-    <script src="libs/html5shiv/html5shiv.min.js"></script>
-    <script src="libs/html5shiv/html5shiv-printshiv.min.js"></script>
-    <script src="libs/respond/respond.min.js"></script>
-<![endif]-->
 {% endblock %}
 
 {% block js %}
 
     {{ block.super }}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.1/js/standalone/selectize.min.js"></script>
     <script src="{% static 'js/category_detail.js' %}"></script>
 
 {% endblock %}

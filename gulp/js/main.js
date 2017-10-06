@@ -9,11 +9,6 @@
 //= picker-js/picker.js
 //= picker-js/picker.time.js
 
-///= Dan-js
-///= Dan-js/user_email.js
-///= Dan-js/images_upload.js
-//= Dan-js/product_form.js
-///= Dan-js/subscribe.js
 
 
 $(document).ready(function(){
@@ -77,7 +72,7 @@ $(document).ready(function(){
     // функция добавление в корзину
     // ---------------------------------
 
-    $('.basket-btn').click(function (event) {
+    $('.basket').click(function (event) {
         event.preventDefault();
         var formData = $('#favorite-form').serialize();
         $.ajax({
@@ -103,9 +98,10 @@ $(document).ready(function(){
         })
     });
 
-     // ---------------------------------
+    // ---------------------------------
     // функция добавление в избранные на странице одного товара
     // ---------------------------------
+
     $('.favorite-btn').click(function (event) {
         event.preventDefault();
         var span = $(this).next();
@@ -138,7 +134,7 @@ $(document).ready(function(){
     // функция добавление в избранные на главной
     // ---------------------------------
 
-    $(".glyphicon-heart").click(function (event) {
+    $(".favorite").click(function (event) {
         event.preventDefault();
         var thisIcon = $(this);
         var productId = $(this).attr("data-product-id");

@@ -9,8 +9,10 @@
 
 
 
+
             {% if object.meta_description %}{{ object.meta_description }}{% else %}{{ object.category.section }}, {{ object.category.parent }}, {{ object.category }}- {{ object.short_description }} {{ object.price }} {{ object.currency }} Бишкек, в Бишкеке{% endif %}">
     <meta name="keywords" content="
+
 
 
 
@@ -123,7 +125,7 @@
                 </div>
                 <div class="uk-width-1-4@l uk-width-1-2@m">
                     <div class="shop-list" title="Перейти в магазин" uk-tooltip>
-                    <h3>Магазин / Продавец:</h3>
+                        <h3>Магазин / Продавец:</h3>
                         <div class="uk-grid-match">
                             <div class="shadow uk-text-center uk-transition-toggle">
                                 <div class="uk-inline-clip uk-transition-toggle">
@@ -148,10 +150,10 @@
                                                     не указан
                                                 </p>
                                             {% endif %}
-                                                <p class="email">
-                                                    <span class="uk-margin-small-right" uk-icon="icon: mail"></span>
-                                                    {{ object.shop.email }}
-                                                </p>
+                                            <p class="email">
+                                                <span class="uk-margin-small-right" uk-icon="icon: mail"></span>
+                                                {{ object.shop.email }}
+                                            </p>
                                         </div>
                                     </div>
                                 </div>
@@ -186,134 +188,147 @@
         </div>
     </section>
 
-{#    <section class="reviews">#}
-{#        <div class="container bg-white" id="prod_review">#}
-{#            {% include 'layout/prod_reviews.html' %}#}
-{#        </div>#}
-{#    </section>#}
-{##}
-{#    <section class="reviews edit">#}
-{#        <div class="container bg-white">#}
-{#            <div class="item">#}
-{#                <form id='review_form' class="product_review" action="{% url 'product:add_review' slug=object.slug %}"#}
-{#                      method="post">#}
-{#                    {% csrf_token %}#}
-{##}
-{#                    {% if user.is_authenticated %}#}
-{#                        <div class="name">#}
-{#                            <h5>Добавить отзыв</h5>#}
-{##}
-{#                            <h4>#}
-{##}
-{#                                <div class="star-wrapper">#}
-{#                                    <div class="star default">#}
-{#                                        <i class="fa fa-star-o" aria-hidden="true"></i>#}
-{#                                        <i class="fa fa-star-o" aria-hidden="true"></i>#}
-{#                                        <i class="fa fa-star-o" aria-hidden="true"></i>#}
-{#                                        <i class="fa fa-star-o" aria-hidden="true"></i>#}
-{#                                        <i class="fa fa-star-o" aria-hidden="true"></i>#}
-{#                                    </div>#}
-{#                                    <div class="star active star-behaviour" data-save-stars="false"#}
-{#                                         data-stars-count="0">#}
-{#                                        <i class="fa fa-star" aria-hidden="true"></i>#}
-{#                                        <i class="fa fa-star" aria-hidden="true"></i>#}
-{#                                        <i class="fa fa-star" aria-hidden="true"></i>#}
-{#                                        <i class="fa fa-star" aria-hidden="true"></i>#}
-{#                                        <i class="fa fa-star" aria-hidden="true"></i>#}
-{#                                    </div>#}
-{#                                </div>#}
-{##}
-{#                            </h4>#}
-{##}
-{#                        </div>#}
-{#                        <div class="description">#}
-{##}
-{#                            <div class="form-group">#}
-{#                                <textarea name="text" id="prod-rev" cols="30" rows="10" class="form-control"></textarea>#}
-{##}
-{#                            </div>#}
-{#                            <button type="submit">Отправить</button>#}
-{#                        </div>#}
-{#                    {% else %}#}
-{#                        <div class="name">#}
-{#                            <h5>Чтобы добавить отзыв авторизуйтесь</h5>#}
-{#                        </div>#}
-{#                    {% endif %}#}
-{#                </form>#}
-{#            </div>#}
-{##}
-{#        </div>#}
-{#    </section>#}
-<section class="review uk-margin-medium-top">
+    {#    <section class="reviews">#}
+    {#        <div class="container bg-white" id="prod_review">#}
+    {#            {% include 'layout/prod_reviews.html' %}#}
+    {#        </div>#}
+    {#    </section>#}
+    {##}
+    {#    <section class="reviews edit">#}
+    {#        <div class="container bg-white">#}
+    {#            <div class="item">#}
+    {#                <form id='review_form' class="product_review" action="{% url 'product:add_review' slug=object.slug %}"#}
+    {#                      method="post">#}
+    {#                    {% csrf_token %}#}
+    {##}
+    {#                    {% if user.is_authenticated %}#}
+    {#                        <div class="name">#}
+    {#                            <h5>Добавить отзыв</h5>#}
+    {##}
+    {#                            <h4>#}
+    {##}
+    {#                                <div class="star-wrapper">#}
+    {#                                    <div class="star default">#}
+    {#                                        <i class="fa fa-star-o" aria-hidden="true"></i>#}
+    {#                                        <i class="fa fa-star-o" aria-hidden="true"></i>#}
+    {#                                        <i class="fa fa-star-o" aria-hidden="true"></i>#}
+    {#                                        <i class="fa fa-star-o" aria-hidden="true"></i>#}
+    {#                                        <i class="fa fa-star-o" aria-hidden="true"></i>#}
+    {#                                    </div>#}
+    {#                                    <div class="star active star-behaviour" data-save-stars="false"#}
+    {#                                         data-stars-count="0">#}
+    {#                                        <i class="fa fa-star" aria-hidden="true"></i>#}
+    {#                                        <i class="fa fa-star" aria-hidden="true"></i>#}
+    {#                                        <i class="fa fa-star" aria-hidden="true"></i>#}
+    {#                                        <i class="fa fa-star" aria-hidden="true"></i>#}
+    {#                                        <i class="fa fa-star" aria-hidden="true"></i>#}
+    {#                                    </div>#}
+    {#                                </div>#}
+    {##}
+    {#                            </h4>#}
+    {##}
+    {#                        </div>#}
+    {#                        <div class="description">#}
+    {##}
+    {#                            <div class="form-group">#}
+    {#                                <textarea name="text" id="prod-rev" cols="30" rows="10" class="form-control"></textarea>#}
+    {##}
+    {#                            </div>#}
+    {#                            <button type="submit">Отправить</button>#}
+    {#                        </div>#}
+    {#                    {% else %}#}
+    {#                        <div class="name">#}
+    {#                            <h5>Чтобы добавить отзыв авторизуйтесь</h5>#}
+    {#                        </div>#}
+    {#                    {% endif %}#}
+    {#                </form>#}
+    {#            </div>#}
+    {##}
+    {#        </div>#}
+    {#    </section>#}
+    <section class="review uk-margin-medium-top">
 
-    <div class="uk-container">
-        <div class="shadow uk-padding-large">
-            <article class="uk-comment">
-                <h4 class="uk-comment-title uk-margin-remove">
-                    Автор
-                    <div class="group-star uk-display-inline-block">
-                        <span class="star"></span>
-                        <span class="star"></span>
-                        <span class="star"></span>
-                        <span class="star"></span>
+        <div class="uk-container">
+            <div class="shadow uk-padding-large">
+                <article class="uk-comment">
+                    <h4 class="uk-comment-title uk-margin-remove">
+                        Автор
+                        <div class="group-star uk-display-inline-block">
+                            <span class="star"></span>
+                            <span class="star"></span>
+                            <span class="star"></span>
+                            <span class="star"></span>
+                        </div>
+                    </h4>
+                    <ul class="uk-comment-meta uk-subnav uk-subnav-divider uk-margin-remove-top">
+                        <li><a href="#">22.09.17 12:09</a></li>
+                    </ul>
+                    <div class="uk-comment-body">
+                        <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
+                            invidunt
+                            ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo
+                            duo
+                            dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum
+                            dolor
+                            sit amet.</p>
                     </div>
-                </h4>
-                <ul class="uk-comment-meta uk-subnav uk-subnav-divider uk-margin-remove-top">
-                    <li><a href="#">22.09.17 12:09</a></li>
-                </ul>
-                <div class="uk-comment-body">
-                    <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt
-                        ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo
-                        dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor
-                        sit amet.</p>
-                </div>
-                <hr class="uk-divider-icon">
-            </article>
+                    <hr class="uk-divider-icon">
+                </article>
 
-            <article class="uk-comment">
-                <h4 class="uk-comment-title uk-margin-remove">
-                    Автор
-                    <div class="group-star uk-display-inline-block">
-                        <span class="star"></span>
-                        <span class="star"></span>
-                        <span class="star"></span>
-                        <span class="star"></span>
-                        <span class="star"></span>
+                <article class="uk-comment">
+                    <h4 class="uk-comment-title uk-margin-remove">
+                        Автор
+                        <div class="group-star uk-display-inline-block">
+                            <span class="star"></span>
+                            <span class="star"></span>
+                            <span class="star"></span>
+                            <span class="star"></span>
+                            <span class="star"></span>
+                        </div>
+                    </h4>
+                    <ul class="uk-comment-meta uk-subnav uk-subnav-divider uk-margin-remove-top">
+                        <li><a href="#">12 дней назад</a></li>
+                    </ul>
+                    <div class="uk-comment-body">
+                        <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
+                            invidunt
+                            ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo
+                            duo
+                            dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum
+                            dolor
+                            sit amet.</p>
                     </div>
-                </h4>
-                <ul class="uk-comment-meta uk-subnav uk-subnav-divider uk-margin-remove-top">
-                    <li><a href="#">12 дней назад</a></li>
-                </ul>
-                <div class="uk-comment-body">
-                    <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt
-                        ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo
-                        dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor
-                        sit amet.</p>
-                </div>
-                <hr class="uk-divider-icon">
-            </article>
+                    <hr class="uk-divider-icon">
+                </article>
 
-            <form class="uk-form-stacked uk-margin-medium-top">
-                <div class="uk-margin">
-                    <legend class="uk-legend">Добавить отзыв</legend>
-                    <select id="rating-review" class="uk-margin">
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                    </select>
-                    <div class="uk-form-controls">
-                        <textarea class="uk-textarea" rows="10" placeholder="Ваш отзыв"></textarea>
-                    </div>
+                <div class="uk-alert-danger uk-alert" uk-alert="">
+                    <a class="uk-alert-close uk-close uk-icon" uk-close="">
+                    </a>
+                    <h3>Ошибка</h3>
+                    <p>Вы не можете отправить пустое сообщение!!!</p>
                 </div>
-                <button class="uk-button uk-button-default">Отправить</button>
-            </form>
+
+                <form class="uk-form-stacked uk-margin-medium-top">
+                    <div class="uk-margin">
+                        <legend class="uk-legend">Добавить отзыв</legend>
+                        <select id="rating-review" class="uk-margin">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
+                        <div class="uk-form-controls">
+                            <textarea class="uk-textarea" rows="10" placeholder="Ваш отзыв"></textarea>
+                        </div>
+                    </div>
+                    <button class="uk-button uk-button-default">Отправить</button>
+                </form>
+            </div>
+
+
         </div>
-
-
-    </div>
-</section>
+    </section>
 {% endblock content %}
 
 
