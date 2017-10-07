@@ -29,7 +29,7 @@ var SearchForm = createClass({
             <form data-uk-grid className="uk-grid-small search-global-category">
             <div className="uk-width-1-3@l uk-width-1-2@s uk-padding-remove">
                 <div className="bg-white">
-                    <select className="selectize demo-default" placeholder="Укажите..." defaultValue="-created_at"
+                    <select className="uk-select" placeholder="Укажите..." defaultValue="-created_at"
                     onChange={this.handleSort}>
                         <option value="-created_at">Сначала новые</option>
                         <option value="title">По названию</option>
