@@ -38,22 +38,20 @@ def cart_message(request, product):
         cart_id = request.session.get("cart_id")
         cart, created = Cart.objects.get_or_create(id=cart_id)
         if cart.cartitem_set.filter(product=product).exists():
-            cart_message = """                               
-                    <span class="glyphicon glyphicon-shopping-cart add-basket enable" data-toggle="tooltip"
-                     title="" data-placement="top" data-product-id="{product}"
-                          data-original-title="В корзине"></span>
+            cart_message = """ 
+                  <a href="#" class="basket in uk-margin-medium-left" title="В корзине" data-product-id="{product}" uk-tooltip>
+                  <span class=" uk-icon" uk-icon="icon: cart; ratio: 2"></span></a>
             """.format(product=product.id)
         else:
             cart_message = """
-                <span class="glyphicon glyphicon-shopping-cart add-basket" data-toggle="tooltip"
-                     title="" data-placement="top" data-product-id="{product}"
-                          data-original-title="Добавить в корзину"></span>
+            <a href="#" class="basket uk-margin-medium-left" title="Добавить в корзину" data-product-id="{product}" uk-tooltip>
+                  <span class=" uk-icon" uk-icon="icon: cart; ratio: 2"></span></a>
             """.format(product=product.id)
     else:
         cart_message = """
-                    <span class="glyphicon glyphicon-shopping-cart add-basket" data-toggle="tooltip"
-                     title="" data-placement="top" data-product-id="{product}"
-                          data-original-title="Добавить в корзину"></span>
+            <a href="#" class="basket uk-margin-medium-left" title="Добавить в корзину" data-product-id="{product}" uk-tooltip>
+                  <span class=" uk-icon" uk-icon="icon: cart; ratio: 2"></span></a>
+                  
             """.format(product=product.id)
 
     return mark_safe(cart_message)

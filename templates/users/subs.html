@@ -3,86 +3,124 @@
 {% for sub in sub_objects %}
 
     {% if sub|class_name == "Sales" %}
-
-        <div class="col-md-6">
-            <span class="descount">{{ sub.discount }}%</span>
-            <div class="img-wrapper">
-                <img src="{{ sub.image.url }}" alt="">
-            </div>
-            <div class="description">
-                <h3>{{ sub.title }}</h3>
-                <p>{{ sub.description }}</p>
-                <a class="btn add" href="{% url 'shops:sale_detail' slug=sub.shop.slug pk=sub.pk %}">Просмотреть</a>
-
+        <div>
+            <div class="uk-card uk-card-default">
+                <span class="descount">{{ sub.discount }}%</span>
+                <div class="uk-card-media-top uk-cover-container">
+                    <img src="{{ sub.image.url }}" alt="" uk-cover>
+                    <canvas width="700" height="300"></canvas>
+                </div>
+                <div class="uk-card-body uk-padding-small">
+                    <h3 class="uk-card-title">{{ sub.title }}</h3>
+                   {{ sub.description|safe }}
+                    <div class="control-button">
+                        <a href="{% url 'shops:sale_detail' slug=sub.shop.slug pk=sub.pk %}" class="uk-button-default uk-button">Просмотреть</a>
+                    </div>
+                </div>
             </div>
         </div>
 
+{#        <div class="col-md-6">#}
+{#            <span class="descount">{{ sub.discount }}%</span>#}
+{#            <div class="img-wrapper">#}
+{#                <img src="{{ sub.image.url }}" alt="">#}
+{#            </div>#}
+{#            <div class="description">#}
+{#                <h3>{{ sub.title }}</h3>#}
+{#                <p>{{ sub.description }}</p>#}
+{#                <a class="btn add" href="{% url 'shops:sale_detail' slug=sub.shop.slug pk=sub.pk %}">Просмотреть</a>#}
+{#            </div>#}
+{#        </div>#}
+
     {% elif sub|class_name == "Product" %}
-
-        <div class="col-md-4 product">
-            <div class="box-shadow">
-
-                <div class="img-wrapper">
-                    <a href="{{ sub.get_absolute_url }}" class="url-shop"></a>
-                    {% if discount %}
-                    <span class="descount">{{ sub.discount }}%</span>
-                        {% endif %}
-                    <a href="{{ sub.get_absolute_url }}">
-                        <img src="{{ sub.get_all_images.first.image.url }}" alt="">
-                    </a>
-                    <div class="back-fade">
-
-                        <div class="name-magazin-title">
-                            <h2>
-                                <a href="{% url 'shops:detail' slug=sub.shop.slug %}">
-                                    {{ sub.shop.title }}
-                                </a>
-                            </h2>
-                            <p>{{ sub.short_description }}</p>
+        <div class="uk-grid-match">
+            <div class="shadow uk-text-center">
+                <div class="uk-inline-clip uk-transition-toggle">
+                    <div class="border">
+                        <a href="{{ sub.get_absolute_url }}" class="uk-position-cover"></a>
+                        <div class="uk-cover-container">
+                            <canvas width="400" height="500"></canvas>
+                            <img uk-cover src="{{ sub.get_all_images.first.image.url }}" alt="">
                         </div>
-
-                        <div class="button-basket-favorite">
-                        {% cart_message request sub %}
-
-                        </span>
+                    </div>
+                    <div class="uk-transition-fade uk-position-cover uk-overlay uk-overlay-default">
+                        <a href="" class="uk-position-cover"></a>
+                        <small class="uk-display-block">Магазин</small>
+                        <h4 class="uk-margin-remove"><a
+                                href="{% url 'shops:detail' slug=sub.shop.slug %}"> {{ sub.shop.title }}</a></h4>
+                        <p>{{ sub.short_description }}</p>
+                        <div class="control">
+                            {#                            <a href="#" class="favorite like uk-margin-medium-right" title="Удалить с избранных"#}
+                            {#                                   uk-tooltip><span class=" uk-icon" uk-icon="icon: heart; ratio: 2"></span></a>#}
+                            {#                                <a href="#" class="basket in uk-margin-medium-left" title="Удалить из корзины" uk-tooltip><span#}
+                            {#                                        class=" uk-icon" uk-icon="icon: cart; ratio: 2"></span></a>#}
+                            {% cart_message request sub %}
 
                             <span class="glyphicon glyphicon-heart enable
                             {% is_favorite_for_like sub request.user %}"
-                                  data-toggle="tooltip"
-                                  data-placement="top"
                                   data-product-id="{{ sub.id }}"
-                                  data-original-title="{% is_favorite_for_tooltip sub request.user %}">
-                        </span>
+                                  title="{% is_favorite_for_tooltip sub request.user %}">
+                            </span>
                         </div>
-
                     </div>
                 </div>
-
-                <div class="description">
-
-                    <div class="title">
-                        <h3>{{ sub.title }}</h3>
-                        <p>{{ sub.short_description }}</p>
+                <div class="uk-padding-small uk-grid uk-margin-remove footer">
+                    <h4 class="uk-width-3-5@l uk-width-3-5@m uk-padding-remove">{{ sub.title }}</h4>
+                    <div class="uk-width-2-5@l uk-width-2-5@m uk-padding-remove">
+                        <p>{{ sub.price }} {{ sub.currency }}</p>
                     </div>
-                    <span>{{ sub.price }} {{ sub.currency }}</span>
                 </div>
             </div>
-
         </div>
+
+{#        <div class="col-md-4 product">#}
+{#            <div class="box-shadow">#}
+{#                <div class="img-wrapper">#}
+{#                    <a href="{{ sub.get_absolute_url }}" class="url-shop"></a>#}
+{#                    {% if discount %}#}
+{#                        <span class="descount">{{ sub.discount }}%</span>#}
+{#                    {% endif %}#}
+{#                    <a href="{{ sub.get_absolute_url }}">#}
+{#                        <img src="{{ sub.get_all_images.first.image.url }}" alt="">#}
+{#                    </a>#}
+{#                    <div class="back-fade">#}
+{#                        <div class="name-magazin-title">#}
+{#                            <h2>#}
+{#                                <a href="{% url 'shops:detail' slug=sub.shop.slug %}">#}
+{#                                    {{ sub.shop.title }}#}
+{#                                </a>#}
+{#                            </h2>#}
+{#                            <p>{{ sub.short_description }}</p>#}
+{#                        </div>#}
+{#                        <div class="button-basket-favorite">#}
+{#                            {% cart_message request sub %}#}
+{#                            <span class="glyphicon glyphicon-heart enable#}
+{#                            {% is_favorite_for_like sub request.user %}"#}
+{#                                  data-toggle="tooltip"#}
+{#                                  data-placement="top"#}
+{#                                  data-product-id="{{ sub.id }}"#}
+{#                                  data-original-title="{% is_favorite_for_tooltip sub request.user %}">#}
+{#                        </span>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{#                <div class="description">#}
+{#                    <div class="title">#}
+{#                        <h3>{{ sub.title }}</h3>#}
+{#                        <p>{{ sub.short_description }}</p>#}
+{#                    </div>#}
+{#                    <span>{{ sub.price }} {{ sub.currency }}</span>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
 
 
 
     {% endif %}
 {% endfor %}
-<script>
-
-    if ($('[data-original-title]').length > 0) {
-        $('[data-original-title]').tooltip({});
-    }
-</script>
 
 <script>
-    $('.add-basket').click(function (event) {
+    $('.basket').click(function (event) {
         event.preventDefault();
         var thisItem = $(this);
         var productId = thisItem.attr("data-product-id");
@@ -98,12 +136,12 @@
                 console.log(data.total_items);
                 $('.cart-count').text(data.total_items);
                 if (data.item_added) {
-                    thisItem.toggleClass("enable");
-                    thisItem.attr('data-original-title', "В корзине");
+                    thisItem.toggleClass("in");
+                    thisItem.attr('title', "В корзине");
                 }
-                else if (data.deleted) {
-                    thisItem.removeClass("enable");
-                    thisItem.attr('data-original-title', "Добавить в корзину");
+                else {
+                    thisItem.removeClass("in");
+                    thisItem.attr('title', "Добавить в корзину");
                 }
             },
             error: function (response, error) {
@@ -130,11 +168,11 @@
                 console.log(data);
                 if (data.created) {
                     thisIcon.toggleClass("like");
-                    thisIcon.attr("data-original-title", "Удалить из избранных");
+                    thisIcon.attr("title", "Удалить из избранных");
                 }
                 else {
                     thisIcon.removeClass("like");
-                    thisIcon.attr("data-original-title", "Добавить в избранное");
+                    thisIcon.attr("title", "Добавить в избранное");
                     if (thisIcon.parent().parent().parent().parent().parent().parent().hasClass('favorite-products')) {
                         thisIcon.parent().parent().parent().parent().fadeOut();
                     }
