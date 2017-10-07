@@ -882,18 +882,14 @@ var MainInterface = createClass({
 
 
         categories = this.state.parentCategories.map(function (parent, parentIndex) {
-            descendants = this.state.categories.map(function (item, index) {
+            descendants = this.state.categories.filter(function(item){
                 if (item.parent_id == parent.id) {
-                    return (
-                        <ChildCategory
-                            key={index}
-                            category={item}
-                            onChangeCategory={changeCategory}
-                            activeCategory={activeCategory}
-                            categorySort={handleChildCategorySort}
-                        />
-                    )
+                    return true
+                } else {
+                    return false
                 }
+            }).map(function (item, index) {
+                return item.id
             }.bind(this));
             return (
                 <CategoryList
@@ -921,24 +917,13 @@ var MainInterface = createClass({
                     />
                     <div className="uk-grid uk-grid-small">
                     <div className="uk-width-1-4@m">
-                        <ul data-uk-accordion="collapsible: false; duration: 600;">
-                            <li>
+                        <ul data-uk-accordion="collapsible: true; duration: 600;">
+                            <li className={this.state.activeCategory == '' && 'uk-open'}>
                                 <a className="uk-accordion-title uk-display-block uk-text-left">
-                                 Очень длинный текст категории
+                                 Все категории
                                 </a>
-                                <div className="uk-accordion-content">
-                                    <a href="" className="uk-display-block ">asdasd</a>
-                                </div>
-
                             </li>
-                            <li>
-                                <a className="uk-accordion-title uk-display-block uk-text-left">
-                                    сыылка
-                                </a>
-                                <div className="uk-accordion-content">
-                                    <a href="" className="uk-display-block">asdasd</a>
-                                </div>
-                            </li>
+                            {categories}
                         </ul>
                     </div>
                     <div className="uk-width-expand@m">

@@ -39,40 +39,28 @@ var CategoryList = createClass({
         var parent_id = this.props.index;
         var descendants = this.props.descendants;
         //
-        // children = this.props.category.descendants.map(function(item, index) {
-        //   return (
-        //     <ChildCategory
-        //       key={index}
-        //       child={item}
-        //       index={index}
-        //       parent_id={parent_id}
-        //     />
-        //   )
-        // });
+        children = this.props.category.descendants.map(function(item, index) {
+          return (
+            <ChildCategory
+                            key={index}
+                            category={item}
+                            onChangeCategory={changeCategory}
+                            activeCategory={activeCategory}
+                            categorySort={handleChildCategorySort}
+                        />
+          )
+        });
 
         return (
-            <li className={this.props.category.id == this.props.activeCategory ? "active" : ""}>
-                <div className="panel-heading">
-                    <a className="parent" role="button" data-toggle="collapse" href={`#${this.props.category.id}`}
-                       aria-expanded="false" aria-controls={this.props.category.id} onClick={this.handleCategoriesSort}
+            <li className={this.props.category.id == this.props.activeCategory ? "uk-open" : ""}>
+                    <a className="uk-accordion-title uk-display-block uk-text-left" href={`#${this.props.category.id}`}
+                       onClick={this.handleCategoriesSort}
                        data-id={this.props.category.id}
                        data-parent="#accordion">{this.props.category.title}</a>
-                    {this.props.descendants.length ?
-                        <div className="collapse category-in-category">
-                        </div>
-                        : ""}
 
-                    <div id={this.props.category.id} className="panel-collapse collapse" role="tabpanel"
-                         aria-labelledby={this.props.category.id}>
-                        {descendants ?
-                            <div className="panel-body">
-                                {descendants}
-                            </div>
-                            : ''
-                        }
+                    <div id={this.props.category.id} className="uk-accordion-content">
 
                     </div>
-                </div>
             </li>
 
         )
