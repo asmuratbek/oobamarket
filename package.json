@@ -9,7 +9,7 @@
     "url": ""
   },
   "dependencies": {
-     "react": "^0.14.2",
+    "react": "^0.14.2",
     "react-dom": "^0.14.2",
     "babelify": "^7.3.0",
     "browserify": "^14.4.0",
@@ -57,6 +57,4 @@
     "imagemin-pngquant": "^4.2.2",
     "rimraf": "^2.6.2"
   }
-
-
 }

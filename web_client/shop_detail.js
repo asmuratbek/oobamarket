@@ -909,16 +909,6 @@ var MainInterface = createClass({
 
         return (
             <div>
-                <div className="col-md-12 col-lg-3">
-                    <ul id="accordion" role="tablist" aria-multiselectable="true">
-
-                        <li className={this.state.activeCategory == '' ? 'active' : ''}>
-                            <a href="#" className="parent" onClick={this.deleteActiveCategory}>Все категории</a></li>
-                        {categories}
-                    </ul>
-
-                </div>
-                <div className="col-md-12 col-lg-9">
                     <SearchForm
                         orderBy={ this.state.orderBy }
                         onReOrder={ this.reOrder }
@@ -929,35 +919,60 @@ var MainInterface = createClass({
                         onChangePriceFrom={ this.changePriceFrom }
                         onChangePriceTo={ this.changePriceTo }
                     />
-                    {owner ?
-                        <div className="col-md-4 col-sm-6 new-design">
-                            <div className="cover">
-                                <a className="url-item" href={`/product/${this.state.shopSlug}/add-product/`}></a>
-                                <div className="add-product">
-                                    <i className="glyphicon glyphicon-plus-sign"></i>
-                                    <p>Добавить новый товар</p>
+                    <div className="uk-grid uk-grid-small">
+                    <div className="uk-width-1-4@m">
+                        <ul data-uk-accordion="collapsible: false; duration: 600;">
+                            <li>
+                                <a className="uk-accordion-title uk-display-block uk-text-left">
+                                 Очень длинный текст категории
+                                </a>
+                                <div className="uk-accordion-content">
+                                    <a href="" className="uk-display-block ">asdasd</a>
                                 </div>
 
-                                <div className="stock">
-                                    <a href={`/shops/${this.state.shopSlug}/sale/create/`}>Добавить акцию</a>
+                            </li>
+                            <li>
+                                <a className="uk-accordion-title uk-display-block uk-text-left">
+                                    сыылка
+                                </a>
+                                <div className="uk-accordion-content">
+                                    <a href="" className="uk-display-block">asdasd</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div className="uk-width-expand@m">
+                        <div className="uk-child-width-1-1 uk-child-width-1-2@s uk-child-width-1-2@m  uk-child-width-1-3@l uk-grid-small" data-uk-grid>
+
+                            <div className="uk-grid-match add-product-item">
+                                <div className="shadow uk-text-center">
+                                    <div className="uk-inline-clip uk-transition-toggle">
+                                        <div className="border">
+                                            <a href="" className="uk-position-cover">{}</a>
+                                            <div className="uk-cover-container">
+                                                <div className="cover">
+                                                    <span className="uk-display-block uk-margin-small-bottom" data-uk-icon="ratio: 3; icon:  plus-circle">{}</span>
+                                                    Добавить новый товар
+                                                </div>
+
+                                                <canvas width="400" height="500">{}</canvas>
+                                                <img data-uk-cover src="img/white.jpg" alt=""/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="uk-padding-small uk-margin-remove uk-padding-remove footer">
+                                       <a href="">Добавить акцию</a>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        : null}
-                    <Loader loaded={this.state.loaded}>
-                    {filteredProducts}
-                    </Loader>
-                    <div className="clearfix"></div>
 
-                     {this.state.pagesCount > 1 ?
-                        <Pagination
-                          activePage={this.state.activePage}
-                          itemsCountPerPage={this.state.productsByPage}
-                          totalItemsCount={this.state.productsCount}
-                          pageRangeDisplayed={5}
-                          onChange={this.handlePageChange}
-                        />
-                    : ''}
+
+                            {filteredProducts}
+
+
+                        </div>
+                    </div>
+
                 </div>
             </div>
         )
