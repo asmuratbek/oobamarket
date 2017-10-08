@@ -927,7 +927,7 @@ var MainInterface = createClass({
                     <div className="uk-width-1-4@m">
                         <ul data-uk-accordion="collapsible: true; duration: 600;">
                             <li className={this.state.activeCategory == '' && 'uk-open'}>
-                                <a className="uk-accordion-title uk-display-block uk-text-left">
+                                <a className="uk-accordion-title uk-display-block uk-text-left" onClick={this.deleteActiveCategory}>
                                  Все категории
                                 </a>
                             </li>
