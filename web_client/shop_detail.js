@@ -23,7 +23,7 @@ var MainInterface = createClass({
             activePage: 1,
             fromPage: 21,
             pagesCount: 0,
-            productsByPage: 21,
+            productsByPage: 54,
             products: [],
             favorites: [],
             cartItems: [],
@@ -487,7 +487,7 @@ var MainInterface = createClass({
               dataType : 'json',
               success: function (data) {
                     var products = data.hits.hits.map(obj => obj._source);
-                    var pagesCount = Math.ceil(data.hits.total / 20);
+                    var pagesCount = Math.ceil(data.hits.total / this.state.productsByPage);
                     this.setState({
                         products: products,
                         loaded: true,
@@ -575,7 +575,7 @@ var MainInterface = createClass({
               dataType : 'json',
               success: function (data) {
                     var products = data.hits.hits.map(obj => obj._source);
-                    var pagesCount = Math.ceil(data.hits.total / 20);
+                    var pagesCount = Math.ceil(data.hits.total / this.state.productsByPage);
                     this.setState({
                         products: products,
                         loaded: true,
@@ -670,7 +670,7 @@ var MainInterface = createClass({
               dataType : 'json',
               success: function (data) {
                     var products = data.hits.hits.map(obj => obj._source);
-                    var pagesCount = Math.ceil(data.hits.total / 20);
+                    var pagesCount = Math.ceil(data.hits.total / this.state.productsByPage);
                     this.setState({
                         products: products,
                         loaded: true,
@@ -755,7 +755,7 @@ var MainInterface = createClass({
               dataType : 'json',
               success: function (data) {
                     var products = data.hits.hits.map(obj => obj._source);
-                    var pagesCount = Math.ceil(data.hits.total / 20);
+                    var pagesCount = Math.ceil(data.hits.total / this.state.productsByPage);
                     this.setState({
                         products: products,
                         loaded: true,
@@ -834,7 +834,7 @@ var MainInterface = createClass({
               dataType : 'json',
               success: function (data) {
                     var products = data.hits.hits.map(obj => obj._source);
-                    var pagesCount = Math.ceil(data.hits.total / 20);
+                    var pagesCount = Math.ceil(data.hits.total / this.state.productsByPage);
                     this.setState({
                         products: products,
                         loaded: true,
