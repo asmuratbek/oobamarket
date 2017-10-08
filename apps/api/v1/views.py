@@ -42,7 +42,7 @@ from .pagination import (
     ShopLimitPagination,
     ShopProductsLimitPagination
 )
-from .permissions import IsOwnerOrReadOnly, IsOwnerShop
+from .permissions import IsOwnerOrReadOnly, IsOwnerShop4Product, IsOwnerShop4Shop
 
 ORDER_TYPES = ["price", "-price", "title", "created_at"]
 
@@ -368,7 +368,7 @@ class ProductUpdateApiView(RetrieveUpdateAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductPostSerializer
     lookup_field = 'slug'
-    permission_classes = [IsAuthenticated, IsOwnerShop]
+    permission_classes = [IsAuthenticated, IsOwnerShop4Product]
     authentication_classes = (SessionAuthentication, TokenAuthentication)
 
     def get(self, request, *args, **kwargs):
@@ -406,7 +406,7 @@ class ProductCreateApiView(CreateAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductPostSerializer
     authentication_classes = (TokenAuthentication,)
-    permission_classes = (IsAuthenticated, IsOwnerShop,)
+    permission_classes = (IsAuthenticated, IsOwnerShop4Product,)
 
     def perform_create(self, serializer):
         product = serializer.save(shop=get_object_or_404(Shop, slug=self.request.data.get('shop', '')),
@@ -634,9 +634,55 @@ class ShopCategoryChildrenApiView(APIView):
 
 class ShopUpdateApiView(RetrieveUpdateAPIView):
     queryset = Shop.objects.all()
-    serializer_class = ShopSerializer
+    serializer_class = ShopCreateSerializer
     lookup_field = 'slug'
-    permission_classes = [IsOwnerOrReadOnly]
+    permission_classes = [IsAuthenticated, IsOwnerShop4Shop]
+    authentication_classes = (TokenAuthentication,)
+
+    def get(self, *args, **kwargs):
+        shop = get_object_or_404(Shop, slug=kwargs['slug'])
+        shop_dict = model_to_dict(shop, exclude=['logo', 'user'])
+        shop_dict['logo'] = shop.logo.url
+        shop_dict['users'] = [user.id for user in shop.user.all()]
+        shop_dict['contact'] = model_to_dict(shop.contacts_set.first())
+        return JsonResponse(shop_dict)
+
+    def perform_update(self, serializer):
+        shop = serializer.save(user=[self.request.user.id])
+        remove_logo = self.request.data.get("remove_logo", 'false')
+        new_logo = self.request.FILES.get("new_logo")
+        if remove_logo == 'true':
+            shop.logo = None
+            shop.save()
+        if new_logo:
+            shop.logo = new_logo
+            shop.save()
+        contact = shop.contacts_set.first()
+        place_id = self.request.data.get("place_id")
+        contact_dict = dict(
+            phone=self.request.data.get("phone"),
+            address=self.request.data.get("address"),
+            monday=self.request.data.get("monday"),
+            tuesday=self.request.data.get("tuesday"),
+            wednesday=self.request.data.get("wednesday"),
+            thursday=self.request.data.get("thursday"),
+            friday=self.request.data.get("friday"),
+            shop=shop,
+            saturday=self.request.data.get("saturday"),
+            sunday=self.request.data.get("sunday"),
+            round_the_clock=self.request.data.get("round_the_clock", False),
+            longitude=self.request.data.get("longitude"),
+            latitude=self.request.data.get("latitude"),
+            place=Place.objects.filter(id=place_id).first())
+        are_values = [contact_dict[k] for k in contact_dict.keys()
+                      if k != "shop" and contact_dict[k] != None and contact_dict[k] != ""]
+        if contact:
+            contact(**contact_dict)
+            contact.save()
+        else:
+            if are_values:
+                Contacts.objects.create(**contact_dict)
+
 
 
 class ShopDeleteApiView(DestroyAPIView):

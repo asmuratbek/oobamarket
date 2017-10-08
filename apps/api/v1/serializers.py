@@ -385,6 +385,14 @@ class ShopCreateSerializer(ModelSerializer):
                    'meta_keywords', 'seo_text', 'created_at', 'updated_at']
 
 
+class ShopUpdateSerializer(ModelSerializer):
+
+    class Meta:
+        model = Shop
+        exclude = ['id', 'user', 'logo', 'slug', 'counter', 'meta_title', 'meta_description',
+                   'meta_keywords', 'seo_text', 'created_at', 'updated_at']
+
+
 class UserSerializer(ModelSerializer):
 
     class Meta:
