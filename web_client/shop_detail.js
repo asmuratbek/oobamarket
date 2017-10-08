@@ -889,7 +889,15 @@ var MainInterface = createClass({
                     return false
                 }
             }).map(function (item, index) {
-                return item.id
+                return (
+                <ChildCategory
+                    key={index}
+                    category={item}
+                    onChangeCategory={changeCategory}
+                    activeCategory={activeCategory}
+                    categorySort={this.handleChildCategorySort}
+                />
+          )
             }.bind(this));
             return (
                 <CategoryList
