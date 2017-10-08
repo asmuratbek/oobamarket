@@ -1,43 +1,6 @@
 from django.conf.urls import url, include
 
-from .views import (
-    CategoryListApiView,
-    CategoryDetailApiView,
-    GlobalCategoryListApiView,
-    GlobalCategoryDetailApiView,
-    ProductListApiView,
-    ProductDetailApiView,
-    ProductUpdateApiView,
-    ProductDeleteApiView,
-    ProductCreateApiView,
-    ShopListApiView,
-    ShopDetailApiView,
-    ShopApiView,
-    ShopUpdateApiView,
-    ShopDeleteApiView,
-    ShopCreateApiView,
-    FacebookLogin,
-    GoogleLogin,
-    # UserShopsListView,
-    UserCartItemsView,
-    UserFavoritesView,
-    UserDetailView,
-    ShopDetailView,
-    ShopSalesView,
-    ShopReviewsView,
-    ShopContactsView,
-    PlaceListView,
-    GlobalCategoryGetChildrenApiView,
-    CategoryDetailChildrenApiView,
-    ProductAddToFavoriteView,
-    ProductAddToCartView,
-    ProductChangeCartView,
-    ShopApiMobileView,
-    ShopCategoriesApiView,
-    ShopCategoryChildrenApiView,
-    LentaView,
-    MyListView
-)
+from .views import *
 
 urlpatterns = [
     # url(r'^shop/(?P<slug>[-_\w]+)/$', GetUsedCategoriesFromShop.as_view(), name="shops_used_categories"),

@@ -1,14 +1,17 @@
+import uuid
 from allauth.socialaccount.providers.facebook.views import FacebookOAuth2Adapter
 from allauth.socialaccount.providers.google.views import GoogleOAuth2Adapter
 from django.db.models import Q
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
+from django.conf import settings
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
 from drf_multiple_model.views import MultipleModelAPIView
 from rest_auth.registration.views import SocialLoginView
 from rest_framework import filters
 from rest_framework.authentication import SessionAuthentication, TokenAuthentication
+from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from rest_framework.filters import (
     SearchFilter,
     OrderingFilter
@@ -24,15 +27,9 @@ from rest_framework.permissions import (
     IsAdminUser,
     IsAuthenticated)
 from rest_framework.views import APIView
-
-from apps.api.v1.serializers import (
-    ProductSerializer,
-    ProductCreateSerializer,
-    ShopSerializer,
-    ShopCreateSerializer,
-    CategorySerializer,
-    GlobalCategorySerializer,
-    PlaceSerializer, ParentCategorySerializer, ProductDetailSerializer)
+from slugify import slugify
+from django.forms.models import model_to_dict
+from apps.api.v1.serializers import *
 from apps.cart.models import Cart, CartItem
 from apps.category.models import Category
 from apps.global_category.models import GlobalCategory
@@ -45,7 +42,7 @@ from .pagination import (
     ShopLimitPagination,
     ShopProductsLimitPagination
 )
-from .permissions import IsOwnerOrReadOnly
+from .permissions import IsOwnerOrReadOnly, IsOwnerShop4Product, IsOwnerShop4Shop
 
 ORDER_TYPES = ["price", "-price", "title", "created_at"]
 
@@ -299,15 +296,15 @@ class MyListView(APIView):
 
     def get(self, request):
         cart_items = request.user.cart_set.last().cartitem_set.all().values("product__id") if request.user.cart_set.all() else False
+        items = list()
         if cart_items:
-            items = list()
             for item in cart_items:
                 items.append({
                     "id": item.get("product__id")
                 })
         favorites = request.user.favoriteproduct_set.all() if request.user.favoriteproduct_set.all() else False
+        favs = list()
         if favorites:
-            favs = list()
             for fav in favorites:
                 favs.append({
                     "id": fav.product.id
@@ -369,10 +366,33 @@ class ProductDetailApiView(APIView):
 
 class ProductUpdateApiView(RetrieveUpdateAPIView):
     queryset = Product.objects.all()
-    serializer_class = ProductSerializer
+    serializer_class = ProductPostSerializer
     lookup_field = 'slug'
-    permission_classes = [IsOwnerOrReadOnly]
+    permission_classes = [IsAuthenticated, IsOwnerShop4Product]
     authentication_classes = (SessionAuthentication, TokenAuthentication)
+
+    def get(self, request, *args, **kwargs):
+        product = get_object_or_404(Product, slug=kwargs['slug'])
+        product_images = [{'image_id': i.id, 'image_url': i.image.url}
+                                     for i in product.productimage_set.all()]
+        product_dict = model_to_dict(product)
+        product_dict['shop_title'] = product.shop.title
+        product_dict['shop_slug'] = product.shop.slug
+        product_dict['category_title'] = product.category.title
+        product_dict['category_slug'] = product.category.slug
+        return JsonResponse(dict(images=product_images, product=product_dict))
+
+    def perform_update(self, serializer):
+        remove_images_list = [int(i) for i in self.request.data.getlist('delete_images', [])
+                                  if i != '' and i != None]
+        delete_images = ProductImage.objects.filter(id__in=remove_images_list).delete()
+        product = serializer.save(category=get_object_or_404(Category, slug=self.request.data.get('category', '')),
+                                    shop=get_object_or_404(Shop, slug=self.request.data.get('shop', '')))
+        images_files = self.request.FILES.getlist('images_files', '')
+        if images_files:
+            image_list = [ProductImage(product=product, image=img) for img in images_files]
+            ProductImage.objects.bulk_create(image_list)
+        return JsonResponse({'status': 0, 'message': 'Product is successfully updated.'})
 
 
 class ProductDeleteApiView(DestroyAPIView):
@@ -384,10 +404,19 @@ class ProductDeleteApiView(DestroyAPIView):
 
 class ProductCreateApiView(CreateAPIView):
     queryset = Product.objects.all()
-    serializer_class = ProductCreateSerializer
+    serializer_class = ProductPostSerializer
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated, IsOwnerShop4Product,)
 
-    # def perform_create(self, serializer):
-    #     serializer.save(author=self.request.user)
+    def perform_create(self, serializer):
+        product = serializer.save(shop=get_object_or_404(Shop, slug=self.request.data.get('shop', '')),
+                                  category=get_object_or_404(Category, slug=self.request.data.get('category', '')),
+                                  slug=str(slugify(self.request.data.get("title", ""))) + "-" + str(uuid.uuid4())[:4])
+        images_files = self.request.FILES.getlist('images_files', '')
+        if images_files:
+            image_list = [ProductImage(product=product, image=img) for img in images_files]
+            ProductImage.objects.bulk_create(image_list)
+        return JsonResponse({'status': 0, 'message': 'Product is successfully created.'})
 
 
 class ShopListApiView(ListAPIView):
@@ -605,9 +634,55 @@ class ShopCategoryChildrenApiView(APIView):
 
 class ShopUpdateApiView(RetrieveUpdateAPIView):
     queryset = Shop.objects.all()
-    serializer_class = ShopSerializer
+    serializer_class = ShopCreateSerializer
     lookup_field = 'slug'
-    permission_classes = [IsOwnerOrReadOnly]
+    permission_classes = [IsAuthenticated, IsOwnerShop4Shop]
+    authentication_classes = (TokenAuthentication,)
+
+    def get(self, *args, **kwargs):
+        shop = get_object_or_404(Shop, slug=kwargs['slug'])
+        shop_dict = model_to_dict(shop, exclude=['logo', 'user'])
+        shop_dict['logo'] = shop.logo.url
+        shop_dict['users'] = [user.id for user in shop.user.all()]
+        shop_dict['contact'] = model_to_dict(shop.contacts_set.first())
+        return JsonResponse(shop_dict)
+
+    def perform_update(self, serializer):
+        shop = serializer.save(user=[self.request.user.id])
+        remove_logo = self.request.data.get("remove_logo", 'false')
+        new_logo = self.request.FILES.get("new_logo")
+        if remove_logo == 'true':
+            shop.logo = None
+            shop.save()
+        if new_logo:
+            shop.logo = new_logo
+            shop.save()
+        contact = shop.contacts_set.first()
+        place_id = self.request.data.get("place_id")
+        contact_dict = dict(
+            phone=self.request.data.get("phone"),
+            address=self.request.data.get("address"),
+            monday=self.request.data.get("monday"),
+            tuesday=self.request.data.get("tuesday"),
+            wednesday=self.request.data.get("wednesday"),
+            thursday=self.request.data.get("thursday"),
+            friday=self.request.data.get("friday"),
+            shop=shop,
+            saturday=self.request.data.get("saturday"),
+            sunday=self.request.data.get("sunday"),
+            round_the_clock=self.request.data.get("round_the_clock", False),
+            longitude=self.request.data.get("longitude"),
+            latitude=self.request.data.get("latitude"),
+            place=Place.objects.filter(id=place_id).first())
+        are_values = [contact_dict[k] for k in contact_dict.keys()
+                      if k != "shop" and contact_dict[k] != None and contact_dict[k] != ""]
+        if contact:
+            contact(**contact_dict)
+            contact.save()
+        else:
+            if are_values:
+                Contacts.objects.create(**contact_dict)
+
 
 
 class ShopDeleteApiView(DestroyAPIView):
@@ -624,30 +699,28 @@ class ShopCreateApiView(CreateAPIView):
     authentication_classes = (TokenAuthentication,)
 
     def perform_create(self, serializer):
-        serializer.save(user=[self.request.user.id])
-        slug = self.request.POST.get("slug")
-        phone = self.request.POST.get("phone")
-        address = self.request.POST.get("address")
-        monday = self.request.POST.get("monday")
-        tuesday = self.request.POST.get("tuesday")
-        wednesday = self.request.POST.get("wednesday")
-        thursday = self.request.POST.get("thursday")
-        friday = self.request.POST.get("friday")
-        saturday = self.request.POST.get("saturday")
-        sunday = self.request.POST.get("sunday")
-        round_the_clock = self.request.POST.get("round_the_clock")
-        longitude = self.request.POST.get("longitude")
-        latitude = self.request.POST.get("latitude")
+        shop = serializer.save(user=[self.request.user.id],
+                               slug=str(slugify(self.request.POST.get("title"))) + "-" + str(uuid.uuid4())[:4])
         place_id = self.request.POST.get("place_id")
-        place = get_object_or_404(Place, id=place_id)
-        shop = get_object_or_404(Shop, slug=slug)
-        if phone or address or monday or tuesday or wednesday or thursday or friday or saturday or sunday or round_the_clock:
-             contact = Contacts.objects.create(shop=shop, phone=phone, address=address,
-                                    monday=monday, tuesday=tuesday, wednesday=wednesday,
-                                    thursday=thursday, friday=friday, saturday=saturday,
-                                    sunday=sunday, round_the_clock=round_the_clock if round_the_clock else False,
-                                    longitude=longitude, latitude=latitude, place=place if place else None
-                                               )
+        contact_dict = dict(
+            phone=self.request.POST.get("phone"),
+            address=self.request.POST.get("address"),
+            monday=self.request.POST.get("monday"),
+            tuesday=self.request.POST.get("tuesday"),
+            wednesday=self.request.POST.get("wednesday"),
+            thursday=self.request.POST.get("thursday"),
+            friday=self.request.POST.get("friday"),
+            shop=shop,
+            saturday=self.request.POST.get("saturday"),
+            sunday=self.request.POST.get("sunday"),
+            round_the_clock=self.request.POST.get("round_the_clock"),
+            longitude=self.request.POST.get("longitude"),
+            latitude=self.request.POST.get("latitude"),
+            place=Place.objects.filter(id=place_id).first())
+        are_values = [contact_dict[k] for k in contact_dict.keys()
+                      if k != "shop" and contact_dict[k] != None and contact_dict[k] != ""]
+        if are_values:
+             contact = Contacts.objects.create(**contact_dict)
 
 
 # class UserShopsListView(ListAPIView):
