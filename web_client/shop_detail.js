@@ -21,7 +21,7 @@ var MainInterface = createClass({
             queryText: '',
             productsCount: 0,
             activePage: 1,
-            fromPage: 21,
+            fromPage: 55,
             pagesCount: 0,
             productsByPage: 54,
             products: [],
@@ -147,7 +147,6 @@ var MainInterface = createClass({
         ) : (
             this.state.activePage * this.state.productsByPage
         );
-        console.log(this.state.fromPage);
         if (this.state.orderBy == '-created_at') {
             var sort = {'created_at': 'desc'}
         } else if (this.state.orderBy == 'title'){
@@ -679,7 +678,7 @@ var MainInterface = createClass({
                         activePage: 1,
                         activeCategory: id,
                         parent: true,
-                        fromPage: 21
+                        fromPage: 55
                     });
               }.bind(this),
               error: function (response, error) {
@@ -764,7 +763,7 @@ var MainInterface = createClass({
                         activePage: 1,
                         activeCategory: id,
                         parent: false,
-                        fromPage: 21,
+                        fromPage: 55,
                     });
               }.bind(this),
               error: function (response, error) {
