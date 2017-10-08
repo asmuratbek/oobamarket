@@ -10,7 +10,11 @@
 
         </div>
     <div id="stop"></div>
+        {% if sub_objects %}
     <a style="display: block;text-align: center;" href="#go-to-top">Вверх</a>
+        {% else %}
+        <h4 style="display: block;text-align: center;">Ваша лента пуста</h4>
+        {% endif %}
 
     </section>
 
