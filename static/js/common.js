@@ -713,7 +713,7 @@ $(document).ready(function () {
                     thisItem.toggleClass("enable");
                     thisItem.attr('data-original-title', "В корзине");
                 }
-                else if (data.deleted) {
+                else {
                     thisItem.removeClass("enable");
                     thisItem.attr('data-original-title', "Добавить в корзину");
                 }
