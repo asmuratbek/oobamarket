@@ -22,6 +22,7 @@ urlpatterns = [
     url(r'^product/(?P<slug>[-_\w]+)/update/$', ProductUpdateApiView.as_view(), name='product_update'),
     url(r'^product/(?P<slug>[-_\w]+)/delete/$', ProductDeleteApiView.as_view(), name='product_delete'),
     url(r'^product/$', ProductListApiView.as_view(), name='product_list'),
+    url(r'^subscribe/$', Subscribe.as_view(), name='subscribe'),
     url(r'^shop/create/$', ShopCreateApiView.as_view(), name='shop_create'),
     # url(r'^category/(?P<slug>[-_\w]+)/$', views.CategoryDetailView.as_view(), name='category_detail'),
     url(r'^shop/detail/(?P<slug>[-_\w]+)/sales/$', ShopSalesView.as_view(), name="shop_sales"),
