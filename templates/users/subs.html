@@ -4,15 +4,15 @@
 
     {% if sub|class_name == "Sales" %}
 
-        <div class="col-md-6">
+        <div class="col-md-4" style="height: 350px; background: #fff;">
             <span class="descount">{{ sub.discount }}%</span>
             <div class="img-wrapper">
-                <img src="{{ sub.image.url }}" alt="">
+                <img src="{{ sub.image.url }}" alt="" class="img-responsive">
             </div>
-            <div class="description">
-                <h3>{{ sub.title }}</h3>
-                <p>{{ sub.description }}</p>
-                <a class="btn add" href="{% url 'shops:sale_detail' slug=sub.shop.slug pk=sub.pk %}">Просмотреть</a>
+            <div class="description" style="margin-top: 30px;">
+                <h3 style="margin-bottom: 10px;">{{ sub.title }}</h3>
+                <p style="margin-bottom: 10px;">{{ sub.description }}</p>
+                <a class="btn add" style="margin-top: 10px;" href="{% url 'shops:sale_detail' slug=sub.shop.slug pk=sub.pk %}">Просмотреть</a>
 
             </div>
         </div>
