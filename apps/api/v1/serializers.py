@@ -251,25 +251,20 @@ class ProductDetailSerializer(ModelSerializer):
                     return False
 
 
-class ProductCreateSerializer(ModelSerializer):
+class ProductPostSerializer(ModelSerializer):
 
     class Meta:
         model = Product
-        fields = (
-            'title',
-            'slug',
-            'category',
-            'shop',
-            'price',
-            'discount',
-            'currency',
-            'published',
-        )
+        exclude = ('id', 'slug', 'created_at', 'updated_at', 'counter', 'currency',
+                   'partner_price', 'sell_count', 'delivery_type', 'delivery_cost',
+                   'availability', 'meta_title', 'meta_description', 'meta_keywords', 'seo_text',
+                   'long_description',)
 
-    slug = SerializerMethodField()
+    shop = serializers.CharField(max_length=300)
+    category = serializers.CharField(max_length=300)
 
-    def get_slug(self, obj):
-        return slugify(obj.title)
+    # def get_slug(self, obj):
+    #     return slugify(obj.title)
 
 
 class ProductImageSerializer(ModelSerializer):
@@ -386,24 +381,16 @@ class ShopCreateSerializer(ModelSerializer):
 
     class Meta:
         model = Shop
-        validators = [
-            UniqueTogetherValidator(
-                queryset=Shop.objects.all(),
-                fields=('slug',)
-            )
-        ]
-        fields = (
-            'id',
-            'title',
-            'slug',
-            'user',
-            'email',
-            'description',
-            'short_description',
-            'created_at',
-            'updated_at',
-            'logo'
-        )
+        exclude = ['id', 'slug', 'counter', 'meta_title', 'meta_description',
+                   'meta_keywords', 'seo_text', 'created_at', 'updated_at']
+
+
+class ShopUpdateSerializer(ModelSerializer):
+
+    class Meta:
+        model = Shop
+        exclude = ['id', 'user', 'logo', 'slug', 'counter', 'meta_title', 'meta_description',
+                   'meta_keywords', 'seo_text', 'created_at', 'updated_at']
 
 
 class UserSerializer(ModelSerializer):

@@ -1,4 +1,5 @@
 from django.contrib.sitemaps import Sitemap
+from django.contrib.sites.models import Site
 from django.urls import reverse
 import datetime
 
@@ -47,6 +48,10 @@ class ProductSitemap(Sitemap):
 
     def lastmod(self, obj):
         return obj.updated_at
+
+    def get_urls(self, site=None, **kwargs):
+        site = Site(domain='oobamarket.kg', name='oobamarket.kg')
+        return super(ProductSitemap, self).get_urls(site=site, **kwargs)
 
     def location(self, obj):
         return obj.get_absolute_url()
