@@ -725,7 +725,7 @@ class ShopCreateApiView(CreateAPIView):
             shop=shop,
             saturday=self.request.POST.get("saturday"),
             sunday=self.request.POST.get("sunday"),
-            round_the_clock=self.request.POST.get("round_the_clock"),
+            round_the_clock=self.request.POST.get("round_the_clock", False),
             longitude=self.request.POST.get("longitude"),
             latitude=self.request.POST.get("latitude"),
             place=Place.objects.filter(id=place_id).first())
