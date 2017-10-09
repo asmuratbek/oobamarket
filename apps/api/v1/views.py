@@ -375,11 +375,14 @@ class ProductUpdateApiView(RetrieveUpdateAPIView):
         product = get_object_or_404(Product, slug=kwargs['slug'])
         product_images = [{'image_id': i.id, 'image_url': i.image.url}
                                      for i in product.productimage_set.all()]
-        product_dict = model_to_dict(product)
-        product_dict['shop_title'] = product.shop.title
-        product_dict['shop_slug'] = product.shop.slug
-        product_dict['category_title'] = product.category.title
-        product_dict['category_slug'] = product.category.slug
+        product_dict = model_to_dict(product, exclude=['shop', 'category'])
+        product_dict['shop'] = dict(id=product.shop.id, title=product.shop.title, slug=product.shop.slug)
+        product_dict['global_category'] = dict(id=product.category.parent.section.id,
+                                               title=product.category.parent.section.title,
+                                               slug=product.category.parent.section.slug)
+        product_dict['parent_category'] = dict(id=product.category.parent.id, title=product.category.parent.title,
+                                               slug=product.category.parent.slug)
+        product_dict['category'] = dict(id=product.category.id, title=product.category.title, slug=product.category.slug)
         return JsonResponse(dict(images=product_images, product=product_dict))
 
     def perform_update(self, serializer):
