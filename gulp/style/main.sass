@@ -107,6 +107,8 @@ body
 // -------------------------------------------
 // selectize
 //----------------------------------------------
+.selectize-dropdown-content
+  max-height: 500px
 .uk-select
   border-radius: 3px
 .selectize-control
@@ -410,6 +412,38 @@ header
   .uk-accordion-content
     padding-left: 20px
 .product-list
+  .sub-sale
+    .uk-card
+      transition: 0.3s
+      border-radius: 3px
+      z-index: 10
+    .uk-card:hover
+      transform: scale(1.05,1.05)
+    .descount
+      position: absolute
+      left: 0
+      top: 60px
+      z-index: 1
+      padding: 5px 20px
+      background: #e94d09
+      color: #fff
+      font-weight: 700
+    h3
+      white-space: nowrap
+      overflow: hidden
+      text-overflow: ellipsis
+    p
+      white-space: nowrap
+      overflow: hidden
+      text-overflow: ellipsis
+      margin-bottom: 20px
+    a
+      background-color: $orange
+      color: #fff
+      border-color: $orange
+      &:hover
+        background-color: $hover-orange
+        color: #fff
   .uk-grid-match
     transition: 0.3s
   .uk-grid-match:hover

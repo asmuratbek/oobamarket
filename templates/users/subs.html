@@ -3,12 +3,12 @@
 {% for sub in sub_objects %}
 
     {% if sub|class_name == "Sales" %}
-        <div>
+        <div class="sub-sale">
             <div class="uk-card uk-card-default">
                 <span class="descount">{{ sub.discount }}%</span>
                 <div class="uk-card-media-top uk-cover-container">
                     <img src="{{ sub.image.url }}" alt="" uk-cover>
-                    <canvas width="700" height="300"></canvas>
+                    <canvas width="400" height="400"></canvas>
                 </div>
                 <div class="uk-card-body uk-padding-small">
                     <h3 class="uk-card-title">{{ sub.title }}</h3>
@@ -33,7 +33,7 @@
 {#        </div>#}
 
     {% elif sub|class_name == "Product" %}
-        <div class="uk-grid-match">
+        <div class="uk-grid-match item">
             <div class="shadow uk-text-center">
                 <div class="uk-inline-clip uk-transition-toggle">
                     <div class="border">
@@ -44,23 +44,17 @@
                         </div>
                     </div>
                     <div class="uk-transition-fade uk-position-cover uk-overlay uk-overlay-default">
-                        <a href="" class="uk-position-cover"></a>
+                        <a href="{{ sub.get_absolute_url }}" class="uk-position-cover"></a>
                         <small class="uk-display-block">Магазин</small>
                         <h4 class="uk-margin-remove"><a
                                 href="{% url 'shops:detail' slug=sub.shop.slug %}"> {{ sub.shop.title }}</a></h4>
                         <p>{{ sub.short_description }}</p>
                         <div class="control">
-                            {#                            <a href="#" class="favorite like uk-margin-medium-right" title="Удалить с избранных"#}
-                            {#                                   uk-tooltip><span class=" uk-icon" uk-icon="icon: heart; ratio: 2"></span></a>#}
-                            {#                                <a href="#" class="basket in uk-margin-medium-left" title="Удалить из корзины" uk-tooltip><span#}
-                            {#                                        class=" uk-icon" uk-icon="icon: cart; ratio: 2"></span></a>#}
-                            {% cart_message request sub %}
 
-                            <span class="glyphicon glyphicon-heart enable
-                            {% is_favorite_for_like sub request.user %}"
-                                  data-product-id="{{ sub.id }}"
-                                  title="{% is_favorite_for_tooltip sub request.user %}">
-                            </span>
+                            <a href="#" class="favorite uk-margin-medium-right {% is_favorite_for_like sub request.user %}" data-product-id="{{ sub.id }}" title="{% is_favorite_for_tooltip sub request.user %}" uk-tooltip>
+                                <span class=" uk-icon" uk-icon="icon: heart; ratio: 2"></span>
+                            </a>
+                            {% cart_message request sub %}
                         </div>
                     </div>
                 </div>
@@ -152,7 +146,7 @@
     });
 
 
-    $(".glyphicon-heart").click(function (event) {
+    $(".favorite").click(function (event) {
         event.preventDefault();
         var thisIcon = $(this);
         var productId = $(this).attr("data-product-id");
