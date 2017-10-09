@@ -35,14 +35,14 @@ from apps.category.models import Category
 from apps.global_category.models import GlobalCategory
 from apps.product.models import Product, ProductImage, FavoriteProduct
 from apps.shop.models import Shop, Contacts, Place
-from apps.users.models import User
+from apps.users.models import User, Subscription
 from .pagination import (
     CategoryLimitPagination,
     ProductLimitPagination,
     ShopLimitPagination,
     ShopProductsLimitPagination
 )
-from .permissions import IsOwnerOrReadOnly, IsOwnerShop4Product, IsOwnerShop4Shop
+from .permissions import *
 
 ORDER_TYPES = ["price", "-price", "title", "created_at"]
 
@@ -888,6 +888,20 @@ class ShopDetailView(MultipleModelAPIView):
     def dispatch(self, *args, **kwargs):
         return super(ShopDetailView, self).dispatch(*args, **kwargs)
 
+
+class Subscribe(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated, IsNotOwnerShop]
+
+    def post(self, *args, **kwargs):
+        shop_slug = self.request.POST.get("shop", "")
+        shop = get_object_or_404(Shop, slug=shop_slug)
+        user = self.request.user
+        subcribe, create = Subscription.objects.get_or_create(user=user, subscription=shop)
+        if not create:
+            subcribe.delete()
+            return JsonResponse({'status': 0, 'message': 'Вы успешно отписаны.'})
+        return JsonResponse({'status': 0, 'message': 'Вы успешно подписаны.'})
 
 # class ShopSalesView(ListAPIView):
 #     """

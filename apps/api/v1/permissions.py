@@ -23,6 +23,15 @@ class IsOwnerShop4Product(BasePermission):
         return True
 
 
+class IsNotOwnerShop(BasePermission):
+    message = "You must be not owner of shop"
+
+    def has_permission(self, request, view):
+        shop = get_object_or_404(Shop, slug=request.data.get('shop', ''))
+        user = request.user
+        return user not in shop.user.all()
+
+
 class IsOwnerShop4Shop(BasePermission):
     message = "You must be owner of shop"
 
