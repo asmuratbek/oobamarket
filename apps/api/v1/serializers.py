@@ -445,24 +445,10 @@ class ShopContactsSerializer(ModelSerializer):
 
     class Meta:
         model = Contacts
-        fields = (
+        exclude = (
             'id',
-            'address',
-            'phone',
-            'place',
-            'latitude',
-            'longitude',
-            'monday',
-            'tuesday',
-            'wednesday',
-            'thursday',
-            'friday',
-            'saturday',
-            'sunday',
-            'round_the_clock',
             'created_at',
             'updated_at'
-
         )
 
 
