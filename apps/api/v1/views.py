@@ -296,15 +296,15 @@ class MyListView(APIView):
 
     def get(self, request):
         cart_items = request.user.cart_set.last().cartitem_set.all().values("product__id") if request.user.cart_set.all() else False
+        items = list()
         if cart_items:
-            items = list()
             for item in cart_items:
                 items.append({
                     "id": item.get("product__id")
                 })
         favorites = request.user.favoriteproduct_set.all() if request.user.favoriteproduct_set.all() else False
+        favs = list()
         if favorites:
-            favs = list()
             for fav in favorites:
                 favs.append({
                     "id": fav.product.id
