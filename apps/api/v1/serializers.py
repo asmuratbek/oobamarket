@@ -410,16 +410,7 @@ class SalesSerializer(ModelSerializer):
 
     class Meta:
         model = Sales
-        fields = (
-            'id',
-            'title',
-            'short_description',
-            'description',
-            'discount',
-            'image',
-            'created_at',
-            'updated_at'
-        )
+        exclude = ['id', 'shop', 'created_at', 'updated_at']
 
 
 class ShopReviewsSerializer(ModelSerializer):

@@ -25,6 +25,7 @@ urlpatterns = [
     url(r'^subscribe/$', Subscribe.as_view(), name='subscribe'),
     url(r'^shop/create/$', ShopCreateApiView.as_view(), name='shop_create'),
     # url(r'^category/(?P<slug>[-_\w]+)/$', views.CategoryDetailView.as_view(), name='category_detail'),
+    url(r'^shop/detail/(?P<slug>[-_\w]+)/sales/create/$', ShopSalesView.as_view(), name="shop_sales_create"),
     url(r'^shop/detail/(?P<slug>[-_\w]+)/sales/$', ShopSalesView.as_view(), name="shop_sales"),
     url(r'^shop/detail/(?P<slug>[-_\w]+)/reviews/$', ShopReviewsView.as_view(), name="shop_reviews"),
     url(r'^shop/detail/(?P<slug>[-_\w]+)/contacts/$', ShopContactsView.as_view(), name="shop_contacts"),

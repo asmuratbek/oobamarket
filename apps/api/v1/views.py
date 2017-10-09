@@ -562,6 +562,15 @@ class ShopSalesView(APIView):
             "sales": sales
         })
 
+    def post(self, *args, **kwargs):
+        self.permission_classes = [IsOwnerShop4Shop]
+        shop = get_object_or_404(Shop, slug=kwargs.get('slug', ''))
+        serializer = SalesSerializer(data=self.request.POST)
+        if serializer.is_valid():
+            serializer.save(shop=shop)
+            return JsonResponse({'status': 0, 'message': 'Sale is successfully created.'})
+        return JsonResponse({'status': 1, 'message': 'Sale values is not valid.'})
+
 
 class ShopContactsView(APIView):
     permission_classes = (AllowAny,)
