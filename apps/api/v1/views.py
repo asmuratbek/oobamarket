@@ -550,11 +550,12 @@ class ShopSalesView(APIView):
         sales = list()
         for sale in shop.sales_set.all():
             sales.append({
+                "id": sale.id,
                 "title": sale.title,
                 "short_description": sale.short_description,
                 "description": sale.description,
                 "discount": sale.discount,
-                "image": sale.image.url
+                "image": sale.image.url if sale.image else None
             })
 
         return JsonResponse({
@@ -578,28 +579,15 @@ class ShopContactsView(APIView):
 
     def get(self, request, slug):
         shop = get_object_or_404(Shop, slug=slug)
-        contacts = list()
-        for contact in shop.contacts_set.all():
-            contacts.append({
-                "address": contact.address,
-                "phone": contact.phone,
-                "monday": contact.monday,
-                "tuesday": contact.tuesday,
-                "wednesday": contact.wednesday,
-                "thursday": contact.thursday,
-                "friday": contact.friday,
-                "saturday": contact.saturday,
-                "sunday": contact.sunday,
-                "round_the_clock": contact.round_the_clock,
-                "place": contact.place.__str__() if contact.place else "",
-                "latitude": contact.place.latitude if contact.place.latitude else None,
-                "longitude": contact.place.longitude if contact.place.longitude else None
-
-            })
-
+        contact = shop.contacts_set.first()
+        contact_dict = model_to_dict(contact, exclude=['place', 'latitude', 'longitude', 'shop'])
+        if contact:
+            contact_dict['latitude'] = contact.place.latitude if contact.place else contact.latitude
+            contact_dict['longitude'] = contact.place.longitude if contact.place else contact.longitude
+            contact_dict['place'] = contact.place.__str__() if contact.place else None
         return JsonResponse({
             "status": "success",
-            "contacts": contacts
+            "contacts": contact_dict
         })
 
 
