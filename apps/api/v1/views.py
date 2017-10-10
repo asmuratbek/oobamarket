@@ -699,7 +699,8 @@ class ShopCreateApiView(CreateAPIView):
 
     def perform_create(self, serializer):
         shop = serializer.save(user=[self.request.user.id],
-                               slug=str(slugify(self.request.POST.get("title"))) + "-" + str(uuid.uuid4())[:4])
+                               slug=str(slugify(self.request.POST.get("title"))) + "-" + str(uuid.uuid4())[:4],
+                               published=True)
         place_id = self.request.POST.get("place_id")
         round_the_clock = self.request.POST.get("round_the_clock", False)
         contact_dict = dict(
@@ -718,11 +719,14 @@ class ShopCreateApiView(CreateAPIView):
             latitude=self.request.POST.get("latitude"),
             place=Place.objects.filter(id=place_id).first())
         are_values = [contact_dict[k] for k in contact_dict.keys()
-                      if k != "shop" and contact_dict[k] != None and contact_dict[k] != ""]
+                      if k != "shop" and contact_dict[k] != None
+                      and contact_dict[k] != "" and contact_dict[k] != False]
         if are_values:
             contact = ShopContactsSerializer(data=contact_dict)
             if contact.is_valid():
                 contact.save()
+            else:
+                print(contact.errors)
 
 
 # class UserShopsListView(ListAPIView):
