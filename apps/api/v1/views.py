@@ -513,6 +513,7 @@ class ShopApiMobileView(APIView):
         return JsonResponse({
             "title": shop.title,
             "slug": shop.slug,
+            "email": shop.email,
             "short_description": shop.short_description,
             "description": shop.description,
             "logo": shop.get_logo(),
@@ -580,15 +581,13 @@ class ShopContactsView(APIView):
     def get(self, request, slug):
         shop = get_object_or_404(Shop, slug=slug)
         contact = shop.contacts_set.first()
-        contact_dict = model_to_dict(contact, exclude=['place', 'latitude', 'longitude', 'shop'])
         if contact:
+            contact_dict = model_to_dict(contact, exclude=['place', 'latitude', 'longitude', 'shop'])
             contact_dict['latitude'] = contact.place.latitude if contact.place else contact.latitude
             contact_dict['longitude'] = contact.place.longitude if contact.place else contact.longitude
             contact_dict['place'] = contact.place.__str__() if contact.place else None
-        return JsonResponse({
-            "status": "success",
-            "contacts": contact_dict
-        })
+            return JsonResponse({"status": "success", "contacts": contact_dict})
+        return JsonResponse({'status': "success", "contacts": None})
 
 
 class ShopReviewsView(APIView):

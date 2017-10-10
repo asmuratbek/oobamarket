@@ -447,6 +447,7 @@ class ShopContactsSerializer(ModelSerializer):
         model = Contacts
         exclude = (
             'id',
+            'published',
             'created_at',
             'updated_at'
         )
