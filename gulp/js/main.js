@@ -1,15 +1,13 @@
 //= jquery/jquery.js
 //= uikit/uikit.min.js
 //= uikit/uikit-icons.min.js
-//= slick/slick.min.js
 //= selectize/selectize.js
 //= jquery-zoom/jquery-zoom.js
 //= jquery.uploadPreview/jquery.uploadPreview.js
-//= rating/jquery.barrating.min.js
 //= picker-js/picker.js
 //= picker-js/picker.time.js
-
-
+//= rating/jquery.barrating.min.js
+//= slick/slick.js
 
 $(document).ready(function(){
 
@@ -20,7 +18,7 @@ $(document).ready(function(){
 
     $('.timepicker').pickatime({
         format: 'HH:i'
-    })
+    });
 
     // ---------------------------------
     // функция Рейтинга для отзывов
