@@ -702,6 +702,7 @@ class ShopCreateApiView(CreateAPIView):
                                slug=str(slugify(self.request.POST.get("title"))) + "-" + str(uuid.uuid4())[:4],
                                published=True)
         place_id = self.request.POST.get("place_id")
+        place = Place.objects.filter(id=int(place_id)).first()
         round_the_clock = self.request.POST.get("round_the_clock", False)
         contact_dict = dict(
             phone=self.request.POST.get("phone"),
@@ -717,7 +718,7 @@ class ShopCreateApiView(CreateAPIView):
             round_the_clock=round_the_clock,
             longitude=self.request.POST.get("longitude"),
             latitude=self.request.POST.get("latitude"),
-            place=Place.objects.filter(id=place_id).first())
+            place=place.id if place else None)
         are_values = [contact_dict[k] for k in contact_dict.keys()
                       if k != "shop" and contact_dict[k] != None
                       and contact_dict[k] != "" and contact_dict[k] != False]
