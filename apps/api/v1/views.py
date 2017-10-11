@@ -375,11 +375,14 @@ class ProductUpdateApiView(RetrieveUpdateAPIView):
         product = get_object_or_404(Product, slug=kwargs['slug'])
         product_images = [{'image_id': i.id, 'image_url': i.image.url}
                                      for i in product.productimage_set.all()]
-        product_dict = model_to_dict(product)
-        product_dict['shop_title'] = product.shop.title
-        product_dict['shop_slug'] = product.shop.slug
-        product_dict['category_title'] = product.category.title
-        product_dict['category_slug'] = product.category.slug
+        product_dict = model_to_dict(product, exclude=['shop', 'category'])
+        product_dict['shop'] = dict(id=product.shop.id, title=product.shop.title, slug=product.shop.slug)
+        product_dict['global_category'] = dict(id=product.category.parent.section.id,
+                                               title=product.category.parent.section.title,
+                                               slug=product.category.parent.section.slug)
+        product_dict['parent_category'] = dict(id=product.category.parent.id, title=product.category.parent.title,
+                                               slug=product.category.parent.slug)
+        product_dict['category'] = dict(id=product.category.id, title=product.category.title, slug=product.category.slug)
         return JsonResponse(dict(images=product_images, product=product_dict))
 
     def perform_update(self, serializer):
@@ -510,6 +513,7 @@ class ShopApiMobileView(APIView):
         return JsonResponse({
             "title": shop.title,
             "slug": shop.slug,
+            "email": shop.email,
             "short_description": shop.short_description,
             "description": shop.description,
             "logo": shop.get_logo(),
@@ -547,17 +551,48 @@ class ShopSalesView(APIView):
         sales = list()
         for sale in shop.sales_set.all():
             sales.append({
+                "id": sale.id,
                 "title": sale.title,
                 "short_description": sale.short_description,
                 "description": sale.description,
                 "discount": sale.discount,
-                "image": sale.image.url
+                "image": sale.image.url if sale.image else None
             })
 
         return JsonResponse({
             "status": "success",
             "sales": sales
         })
+
+    def post(self, *args, **kwargs):
+        self.permission_classes = [IsOwnerShop4Shop]
+        shop = get_object_or_404(Shop, slug=kwargs.get('slug', ''))
+        serializer = SalesSerializer(data=self.request.POST)
+        if serializer.is_valid():
+            serializer.save(shop=shop)
+            return JsonResponse({'status': 0, 'message': 'Sale is successfully created.'})
+        return JsonResponse({'status': 1, 'message': 'Sale values is not valid.'})
+
+
+class SalesUpdate(RetrieveUpdateAPIView):
+    queryset = Sales.objects.all()
+    serializer_class = SalesSerializer
+    lookup_field = 'pk'
+    permission_classes = [IsAuthenticated, IsOwnerShop4Shop, IsSaleOfShop]
+    authentication_classes = (SessionAuthentication, TokenAuthentication)
+
+    def get(self, *args, **kwargs):
+        sale = get_object_or_404(Sales, id=kwargs.get('pk'))
+        sale_dict = model_to_dict(sale, exclude=['image'])
+        sale_dict['image'] = sale.image.url if sale.image else None
+        return JsonResponse({'status': 0, 'sale': sale_dict})
+
+
+class SaleDelete(DestroyAPIView):
+    queryset = Sales.objects.all()
+    lookup_field = 'pk'
+    permission_classes = [IsAuthenticated, IsOwnerShop4Shop, IsSaleOfShop]
+    authentication_classes = (SessionAuthentication, TokenAuthentication)
 
 
 class ShopContactsView(APIView):
@@ -566,29 +601,14 @@ class ShopContactsView(APIView):
 
     def get(self, request, slug):
         shop = get_object_or_404(Shop, slug=slug)
-        contacts = list()
-        for contact in shop.contacts_set.all():
-            contacts.append({
-                "address": contact.address,
-                "phone": contact.phone,
-                "monday": contact.monday,
-                "tuesday": contact.tuesday,
-                "wednesday": contact.wednesday,
-                "thursday": contact.thursday,
-                "friday": contact.friday,
-                "saturday": contact.saturday,
-                "sunday": contact.sunday,
-                "round_the_clock": contact.round_the_clock,
-                "place": contact.place.__str__() if contact.place else "",
-                "latitude": contact.place.latitude if contact.place.latitude else None,
-                "longitude": contact.place.longitude if contact.place.longitude else None
-
-            })
-
-        return JsonResponse({
-            "status": "success",
-            "contacts": contacts
-        })
+        contact = shop.contacts_set.first()
+        if contact:
+            contact_dict = model_to_dict(contact, exclude=['place', 'latitude', 'longitude', 'shop'])
+            contact_dict['latitude'] = contact.place.latitude if contact.place else contact.latitude
+            contact_dict['longitude'] = contact.place.longitude if contact.place else contact.longitude
+            contact_dict['place'] = contact.place.__str__() if contact.place else None
+            return JsonResponse({"status": "success", "contacts": contact_dict})
+        return JsonResponse({'status': "success", "contacts": None})
 
 
 class ShopReviewsView(APIView):
@@ -700,8 +720,11 @@ class ShopCreateApiView(CreateAPIView):
 
     def perform_create(self, serializer):
         shop = serializer.save(user=[self.request.user.id],
-                               slug=str(slugify(self.request.POST.get("title"))) + "-" + str(uuid.uuid4())[:4])
+                               slug=str(slugify(self.request.POST.get("title"))) + "-" + str(uuid.uuid4())[:4],
+                               published=True)
         place_id = self.request.POST.get("place_id")
+        place = Place.objects.filter(id=int(place_id)).first()
+        round_the_clock = self.request.POST.get("round_the_clock", False)
         contact_dict = dict(
             phone=self.request.POST.get("phone"),
             address=self.request.POST.get("address"),
@@ -710,17 +733,22 @@ class ShopCreateApiView(CreateAPIView):
             wednesday=self.request.POST.get("wednesday"),
             thursday=self.request.POST.get("thursday"),
             friday=self.request.POST.get("friday"),
-            shop=shop,
+            shop=shop.id,
             saturday=self.request.POST.get("saturday"),
             sunday=self.request.POST.get("sunday"),
-            round_the_clock=self.request.POST.get("round_the_clock"),
+            round_the_clock=round_the_clock,
             longitude=self.request.POST.get("longitude"),
             latitude=self.request.POST.get("latitude"),
-            place=Place.objects.filter(id=place_id).first())
+            place=place.id if place else None)
         are_values = [contact_dict[k] for k in contact_dict.keys()
-                      if k != "shop" and contact_dict[k] != None and contact_dict[k] != ""]
+                      if k != "shop" and contact_dict[k] != None
+                      and contact_dict[k] != "" and contact_dict[k] != False]
         if are_values:
-             contact = Contacts.objects.create(**contact_dict)
+            contact = ShopContactsSerializer(data=contact_dict)
+            if contact.is_valid():
+                contact.save()
+            else:
+                print(contact.errors)
 
 
 # class UserShopsListView(ListAPIView):

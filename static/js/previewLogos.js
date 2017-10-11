@@ -32,15 +32,15 @@ remove_logo.click(function () {
 var logo_view_update = $('#id_logo2');
 var remove_logo_update = $('.remove-logo-update');
 var logo = $('#id_logo');
-logo.change(function () {
+$(document).on('change', '#id_logo', function () {
     previewImage(this, logo_view_update);
-    remove_logo_update.show();
-
-    console.log(logo.val());
+    // remove_logo_update.show();
+    $('div.img-wrapper').append('<span class="remove-logo-update">X</span>');
 });
 
-remove_logo_update.on('click', function () {
+$(document).on('click', '.remove-logo-update', function () {
     logo_view_update.attr('src', null);
     logo.replaceWith(logo.val('').clone(true));
-    remove_logo_update.hide();
+    $('#logo-clear_id').attr('checked', 'checked');
+    $('div.img-wrapper').find('.remove-logo-update').hide();
 });

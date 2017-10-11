@@ -120,7 +120,7 @@ class Product(PublishBaseModel, Counter):
         return "%s?item=%s&qty=1" % (reverse("cart:detail"), self.id)
 
     def remove_from_cart(self):
-        return "%s?item=%s&qty=1&delete=True" % (reverse("cart:detail"), self.id)
+        return "%s?item=%s&delete=True" % (reverse("cart:detail"), self.id)
 
     def get_update_url(self):
         return reverse("product:update_product", kwargs={'slug': self.slug})

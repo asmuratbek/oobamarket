@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404
 from rest_framework.permissions import BasePermission
 
-from apps.shop.models import Shop
+from apps.shop.models import Shop, Sales
 
 
 class IsOwnerOrReadOnly(BasePermission):
@@ -39,6 +39,15 @@ class IsOwnerShop4Shop(BasePermission):
         shop = get_object_or_404(Shop, slug=view.kwargs['slug'])
         user = request.user
         return user in shop.user.all()
+
+
+class IsSaleOfShop(BasePermission):
+    message = "Sale must be of shop."
+
+    def has_permission(self, request, view):
+        shop = get_object_or_404(Shop, slug=view.kwargs.get('slug'))
+        sale = get_object_or_404(Sales, pk=view.kwargs.get('pk'))
+        return sale.shop == shop
 
 
 class IsUserOwner(BasePermission):
