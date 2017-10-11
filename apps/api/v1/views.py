@@ -584,8 +584,7 @@ class SalesUpdate(RetrieveUpdateAPIView):
     def get(self, *args, **kwargs):
         sale = get_object_or_404(Sales, id=kwargs.get('pk'))
         sale_dict = model_to_dict(sale, exclude=['image'])
-        if sale.image:
-            sale_dict['image'] = sale.image.url
+        sale_dict['image'] = sale.image.url if sale.image else None
         return JsonResponse({'status': 0, 'sale': sale_dict})
 
 
