@@ -574,6 +574,28 @@ class ShopSalesView(APIView):
         return JsonResponse({'status': 1, 'message': 'Sale values is not valid.'})
 
 
+class SalesUpdate(RetrieveUpdateAPIView):
+    queryset = Sales.objects.all()
+    serializer_class = SalesSerializer
+    lookup_field = 'pk'
+    permission_classes = [IsAuthenticated, IsOwnerShop4Shop, IsSaleOfShop]
+    authentication_classes = (SessionAuthentication, TokenAuthentication)
+
+    def get(self, *args, **kwargs):
+        sale = get_object_or_404(Sales, id=kwargs.get('pk'))
+        sale_dict = model_to_dict(sale, exclude=['image'])
+        if sale.image:
+            sale_dict['image'] = sale.image.url
+        return JsonResponse({'status': 0, 'sale': sale_dict})
+
+
+class SaleDelete(DestroyAPIView):
+    queryset = Sales.objects.all()
+    lookup_field = 'pk'
+    permission_classes = [IsAuthenticated, IsOwnerShop4Shop, IsSaleOfShop]
+    authentication_classes = (SessionAuthentication, TokenAuthentication)
+
+
 class ShopContactsView(APIView):
     permission_classes = (AllowAny,)
     authentication_classes = (TokenAuthentication,)
