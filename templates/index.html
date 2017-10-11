@@ -36,8 +36,12 @@
                                 class="glyphicon glyphicon-star"></span> Для магазинов</a>
 
 
-                        <a href="{% url 'sub_list' %}" class="magazin-btn btn"><span class="fa fa-newspaper-o" aria-hidden="true"></span> Лента</a>
-                        <a href="{% url 'shops:create' %}" class="magazin-btn btn"><span class="fa fa-address-card" aria-hidden="true"></span> Добавить магазин</a>
+                        <a href="{% url 'sub_list' %}" class="magazin-btn btn"><span class="fa fa-newspaper-o"
+                                                                                     aria-hidden="true"></span>
+                            Лента</a>
+                        <a href="{% url 'shops:create' %}" class="magazin-btn btn"><span class="fa fa-address-card"
+                                                                                         aria-hidden="true"></span>
+                            Добавить магазин</a>
 
 
 
@@ -76,10 +80,73 @@
 {% endblock %}
 
 {% block content %}
+    <div style="background-color: #fff;margin-top: -40px;">
+        <section class="home-page">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-3">
+                        <a href="">
+                            <img src="{% static 'img/img/image-new-design-home/mini.jpg' %}" class="img-responsive"
+                                 alt="">
+                        </a>
+                    </div>
+                    <div class="col-lg-9" style="padding-left: 0;">
+                        <div class="">
+                            <div class="owl-carousel home">
+                                <div class="item"><img src="{% static 'img/img/image-new-design-home/slider01.jpg' %}"
+                                                       alt=""></div>
+                                <div class="item"><img src="{% static 'img/img/image-new-design-home/slider02.jpg' %}"
+                                                       alt=""></div>
+                                <div class="item"><img src="{% static 'img/img/image-new-design-home/slider03.jpg' %}"
+                                                       alt=""></div>
+                                <div class="item"><img src="{% static 'img/img/image-new-design-home/slider04.jpg' %}"
+                                                       alt=""></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="row">
+                            <div class="col-lg-12 mini-block">
+                                <img src="{% static 'img/img/image-new-design-home/01elecrtomica.jpg' %}" class="img-responsive" alt="">
+                            </div>
+                            <div class="col-lg-12 mini-block">
+                                <img src="{% static 'img/img/image-new-design-home/02souvenir.jpg' %}" alt="" class="img-responsive">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="row">
+                            <img src="{% static 'img/img/image-new-design-home/16sport.jpg' %}" alt="" class="img-responsive">
+                        </div>
+
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="row">
+                            <div class="col-lg-12 mini-block">
+                                <img src="{% static 'img/img/image-new-design-home/03pen.jpg' %}" alt="" class="img-responsive">
+                            </div>
+                            <div class="col-lg-12 mini-block">
+                                <img src="{% static 'img/img/image-new-design-home/04juice.jpg' %}" alt="" class="img-responsive">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-8">
+                          <img src="{% static 'img/img/image-new-design-home/15car.jpg' %}" alt="" class="img-responsive">
+                    </div>
+                    <div class="col-lg-4">
+                        <img src="{% static 'img/img/image-new-design-home/05boots.jpg' %}" alt="" class="img-responsive">
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
 
     <section class="search-index">
-
-
         <div class="container">
             <img class="center-block" src="{% static 'img/logo.png' %}" alt="">
             <h1>Лучший сервиc по поиску товаров в Бишкеке</h1>
@@ -99,9 +166,9 @@
                 {% for object in fixed_categories %}
                     <li>
                         {% if object.title == 'Еда' %}
-                        <a href="#"></a>
+                            <a href="#"></a>
                         {% else %}
-                        <a href="{{ object.get_absolute_url }}"></a>
+                            <a href="{{ object.get_absolute_url }}"></a>
                         {% endif %}
                         <div class="img-wrapper">
                             <img src="{{ object.get_icon }}" alt="">
@@ -131,26 +198,21 @@
 
     <section class="magazin">
         <h2><a href="{% url 'shops:list' %}">Магазины</a></h2>
-
         <div class="container">
             <div class="row">
                 {% include 'shop/shops.html' with shops=shops %}
-            <div class="clearfix"></div>
-            <a class="btn add" href="{% url 'shops:list' %}">Показать все магазины</a>
+                <div class="clearfix"></div>
+                <a class="btn add" href="{% url 'shops:list' %}">Показать все магазины</a>
             </div>
-
         </div>
-
     </section>
 
 
     <section class="mobile-footer-fixed-nav hidden-lg hidden-md">
-
         <div class="col-xs-3 col-sm-3">
             <a href="{% url 'landing' %}" class="magazin-btn btn"><span class="glyphicon glyphicon-star"></span> Для
                 магазинов</a>
         </div>
-
         {% if user.is_authenticated %}
             <div class="col-xs-3 col-sm-3">
                 <a href="{{ user.get_favorites_link }}" class="favorites btn"><span
@@ -162,9 +224,7 @@
                         class="glyphicon glyphicon-shopping-cart"></span> Корзина (<span
                         class="cart-count">{{ user.get_cart_count }}</span>)</a>
             </div>
-
         {% else %}
-
             <div class="col-xs-3 col-sm-3">
                 <a href="{% url 'account_login' %}" class="favorites btn"><span
                         class="glyphicon glyphicon-heart"></span> Избранные</a>
@@ -174,9 +234,7 @@
                         class="glyphicon glyphicon-shopping-cart"></span> Корзина (<span
                         class="cart-count">{{ cart_count }}</span>)</a>
             </div>
-
         {% endif %}
-
         <div class="col-xs-3 col-sm-3">
             {% if user.is_authenticated %}
                 <a class="btn quit mobile-auth-btn">
@@ -188,7 +246,6 @@
                 </a>
             {% endif %}
         </div>
-
     </section>
 
 
