@@ -189,8 +189,9 @@
 
                 {% endfor %}
             </div>
+            {% if not object.get_shops %}
                 <h4>Ваша корзина пуста</h4>
-            {% if not object.cartitem_set %}
+            {% else %}
             <div class="col-lg-offset-2 col-lg-10 text-center">
                 <div class="row">
                      <div class="total-price ">
@@ -206,10 +207,10 @@
             </div>
 
             <div class="col-lg-offset-2 col-lg-10">
-                <a href="" class="btn btn-modal btn-primary btn-lg" data-toggle="modal" data-target="#myModal">Оформить
+                <a href="" class="btn-modal" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">Оформить
                     покупку</a>
             </div>
-            {% endif %}
+        {% endif %}
 
         </div>
     </section>
