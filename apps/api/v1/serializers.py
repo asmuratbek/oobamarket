@@ -397,7 +397,7 @@ class UserSerializer(ModelSerializer):
 
     class Meta:
         model = User
-        exclude = ['id', 'is_staff', 'is_active', 'name']
+        exclude = ['id', 'is_staff', 'is_active', 'name', 'password']
 
 
 class SalesSerializer(ModelSerializer):
