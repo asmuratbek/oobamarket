@@ -1,4 +1,4 @@
-from django.http import HttpResponseRedirect, HttpResponseForbidden
+from django.http import HttpResponseRedirect, HttpResponseForbidden, HttpResponseBadRequest
 from django.shortcuts import get_object_or_404
 from django.urls import reverse
 
@@ -56,11 +56,13 @@ class ShopMixin(object):
 
 class UserPermMixin(object):
     def dispatch(self, request, *args, **kwargs):
-        if request.method == 'GET':
-            user = request.user
-            username = kwargs.get('username')
-            if user.username != username:
+        user = request.user
+        username = kwargs.get('username')
+        if user.username != username:
+            if request.method == 'GET':
                 return HttpResponseRedirect(reverse('users:detail', kwargs={'username': user.username}))
+            else:
+                return HttpResponseBadRequest()
         return super(UserPermMixin, self).dispatch(request, *args, **kwargs)
 
 

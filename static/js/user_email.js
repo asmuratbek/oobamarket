@@ -15,11 +15,12 @@ function showFlashMessage(message) {
         $(".container-alert-flash").fadeOut().remove();
     }, 1800);
 }
+var username = window.location.href.split('/')[4];
 var csrf = $('#add_email_form input[name=csrfmiddlewaretoken]').val();
 $('#add-email-button').on('click', function () {
             var email = $('.add_input_email input[type=text]');
             if(email.val() !== ""){
-                $.post('/users/detail/', {'email': email.val(), 'only_email': true, 'csrfmiddlewaretoken': csrf}, function (data) {
+                $.post('/users/' + username + '/', {'email': email.val(), 'only_email': true, 'csrfmiddlewaretoken': csrf}, function (data) {
                     if(data.status === 0){
                     $('#email-list').append("<div class='form-group input col-md-12'><label for='email_radio_" + data.email_count + "' class='primary_email radio-button radio-button--material'>" +
                         "<input class='radio-button__input radio-button--material__input' " +
@@ -36,7 +37,7 @@ $('#add-email-button').on('click', function () {
         });
 $('#remove_email').on('click', function () {
     var checked_email = $('#email-list input:checked');
-    $.post('/users/detail/', {'email': checked_email.val(), 'remove': true,'csrfmiddlewaretoken': csrf}, function (data) {
+    $.post('/users/' + username + '/', {'email': checked_email.val(), 'remove': true,'csrfmiddlewaretoken': csrf}, function (data) {
         if(data.status === 0){
             checked_email.parent().parent().remove();
         }
