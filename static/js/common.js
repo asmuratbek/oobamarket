@@ -4,6 +4,17 @@
 
 
 $(document).ready(function () {
+       if ($('.owl-carousel.home').length > 0) {
+           $('.owl-carousel.home').owlCarousel({
+               loop: true,
+               items: 1,
+               dots: true,
+               nav: true,
+               autoplay: true,
+               autoplayTimeout: 4000
+           });
+       }
+
     // $('.dropdown-toggle.custom').on('show.bs.dropdown-menu', function () {
 
 
@@ -165,8 +176,6 @@ $(document).ready(function () {
 
         });
     });
-
-
 
 
     // //фукция удаления одного или массива списков с истории продаж магазина
