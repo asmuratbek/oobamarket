@@ -787,6 +787,7 @@ class UserDetailView(APIView):
         return JsonResponse({
             "status": "success",
             "shops": shops,
+            "id": user.id,
             "username": user.username,
             "first_name": user.first_name,
             "last_name": user.last_name,
@@ -796,6 +797,14 @@ class UserDetailView(APIView):
             "cart_count": user.get_cart_count(),
             "favorites_count": user.get_favorites_count()
         })
+
+    def post(self, request, *args, **kwargs):
+        user = get_object_or_404(User, id=request.POST.get('id'))
+        serializer = UserSerializer(user, data=request.POST)
+        if serializer.is_valid():
+            serializer.save()
+            return JsonResponse({'status': 0, 'message': 'User is successfully updated.'})
+        return JsonResponse({'status': 1, 'message': serializer.errors})
 
 
 class UserCartItemsView(APIView):

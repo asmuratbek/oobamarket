@@ -2,7 +2,7 @@ from allauth.account.models import EmailAddress
 from allauth.account.views import EmailView
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse, Http404, HttpResponseRedirect, HttpResponseBadRequest, JsonResponse
-from django.shortcuts import get_object_or_404, redirect, render
+from django.shortcuts import get_object_or_404, redirect, render, render_to_response
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import DetailView, ListView, RedirectView, UpdateView, View
 from django.db import IntegrityError
@@ -14,13 +14,13 @@ from .mixins import UserPermMixin
 
 
 class UserDetailView(LoginRequiredMixin, UserPermMixin, View):
-    def get(self, *args, **kwargs):
-        return render(self.request, 'users/user_form.html')
+    def get(self, request, *args, **kwargs):
+        return render(request, 'users/user_form.html')
 
     def post(self, request, *args, **kwargs):
         user = self.request.user
+        email = self.request.POST.get('email', '')
         if self.request.POST.get('only_email'):
-            email = self.request.POST.get('email', '')
             if '@' not in email:
                 return JsonResponse(dict(message='Введите павильный email', status=2))
             try:
@@ -35,7 +35,6 @@ class UserDetailView(LoginRequiredMixin, UserPermMixin, View):
             if user.emailaddress_set.count() == 1:
                 message = "Вы не можете удалить единственный email."
                 return JsonResponse(dict(message=message, status=1))
-            email = self.request.POST.get('email', '')
             email_address = get_object_or_404(EmailAddress, email=email)
             if email_address.primary is True:
                 next_email = user.emailaddress_set.exclude(email=email).first()
@@ -56,9 +55,10 @@ class UserDetailView(LoginRequiredMixin, UserPermMixin, View):
             userform.last_name = self.request.POST.get('last_name', '')
             userform.address = self.request.POST.get('address', '')
             userform.save()
-            email_address = get_object_or_404(EmailAddress, email=self.request.POST.get('email', ''))
-            email_address.primary = True
-            email_address.save()
+            if email:
+                email_address = get_object_or_404(EmailAddress, email=email)
+                email_address.primary = True
+                email_address.save()
             return HttpResponseRedirect(reverse('users:detail', kwargs={'username': user.username}))
 
 
