@@ -622,13 +622,25 @@ class ShopReviewsView(APIView):
             reviews.append({
                 "user": review.user.username if review.user.username else review.user.email,
                 "text": review.text,
-                "stars": review.stars
+                "stars": len(review.stars) if review.stars else None
             })
 
         return JsonResponse({
             "status": "success",
             "reviews": reviews
         })
+
+    def post(self, request, slug):
+        self.permission_classes = [IsAuthenticated]
+        shop = get_object_or_404(Shop, slug=slug)
+        stars_count = request.POST.get("stars", None)
+        stars = "*" * int(stars_count) if stars_count else None
+        serializer = ShopReviewsSerializer(data=request.POST)
+        if serializer.is_valid():
+            serializer.save(stars=stars, user=request.user, shop=shop)
+            return JsonResponse({'status': 0, 'message': 'Review is successfully created.'})
+        else:
+            return JsonResponse({'status': 1, 'message': serializer.errors})
 
 
 class ShopCategoryChildrenApiView(APIView):
