@@ -634,6 +634,10 @@ class ShopReviewsView(APIView):
         self.permission_classes = [IsAuthenticated]
         shop = get_object_or_404(Shop, slug=slug)
         stars_count = request.POST.get("stars", None)
+        if int(stars_count) > 5:
+            stars_count = 5
+        elif int(stars_count) < 1:
+            stars_count = 1
         stars = "*" * int(stars_count) if stars_count else None
         serializer = ShopReviewsSerializer(data=request.POST)
         if serializer.is_valid():
