@@ -4,7 +4,7 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.views.generic import TemplateView
 from django.views import defaults as default_views
-from apps.global_category.views import IndexView, landing
+from apps.global_category.views import IndexView
 from apps.product.views import FavoriteCreateView, product_reviews
 from apps.shop.views import agreement, shop_reviews
 from apps.product.views import search_predict_html, search
@@ -13,6 +13,7 @@ from apps.users.views import SubscribeListView
 from apps.category.views import mail_confirm_view
 from config.settings.sitemap import ProductSitemap, ShopSitemap, SectionSitemap, CategorySitemap
 from django.contrib.sitemaps.views import sitemap
+from apps.meta.views import ClaimCreate
 
 sitemaps = {
     'sections': SectionSitemap,
@@ -39,7 +40,7 @@ urlpatterns = [
                   url(r'^search_results', search_predict_html),
                   url(r'^search', search),
                   url(r'^ckeditor/', include('ckeditor_uploader.urls')),
-                  url(r'^landing/', landing, name='landing'),
+                  url(r'^landing/', ClaimCreate.as_view(), name='landing'),
                   url(r'^product_reviews/$', product_reviews, name='product_reviews'),
                   url(r'^shop_reviews/$', shop_reviews, name='shop_reviews'),
                   url(r'^sitemap\.xml$', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),

@@ -35,7 +35,3 @@ class GlobalDetailView(generic.DetailView):
         context['global_slug'] = self.object.slug
         return context
 
-
-
-def landing(request):
-    return render(request, 'layout/landing.html')

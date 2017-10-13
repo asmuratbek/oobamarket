@@ -174,41 +174,24 @@
                         <div class="socialaccount_ballot">
                             <ul class="socialaccount_providers">
                                 {% include 'socialaccount/snippets/provider_list.html' %}
-{#                                <li style="list-style: none">#}
-{#                                    <a title="Facebook" class="socialaccount_provider facebook"#}
-{#                                       href="/accounts/facebook/login/?process=login">#}
-{##}
-{#                                        <i class="fa fa-facebook-square" aria-hidden="true"></i>#}
-{#                                        Войти через Facebook#}
-{##}
-{#                                    </a>#}
-{#                                </li>#}
-{#                                <li style="list-style: none">#}
-{#                                    <a title="Google" class="socialaccount_provider google vk"#}
-{#                                       href="/accounts/google/login/?process=login">#}
-{##}
-{#                                        <i class="fa fa-google" aria-hidden="true"></i>#}
-{#                                        Войти через Google#}
-{##}
-{#                                    </a>#}
-{#                                </li>#}
                             </ul>
                         </div>
 
                         <button type="submit" name="submit" class="btn btn-default">Регистрация</button>
                     </div>
                     </form>
-                <form>
+                <form method="post" action="{% url 'landing' %}">{% csrf_token %}
                     <div class="col-lg-6">
                         <h2>Оставить заявку </h2>
-                        <div class="form-group">
-
-                            <input type="text" class="form-control" placeholder="Название магазина " name="username"
+                        <div class="form-group {% if form.name.errors %}has-error{% endif %}">
+                            <input type="text" class="form-control" placeholder="Название магазина " name="name"
                                    required>
+                            <label class="label-error">{{ form.name.errors }}</label>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group {% if form.phone.errors %}has-error{% endif %}">
 
-                            <input type="email" class="form-control" placeholder="Телефон" name="email" required>
+                            <input type="text" class="form-control" placeholder="Телефон" name="phone" required>
+                            <label class="label-error">{{ form.phone.errors }}</label>
                         </div>
                         <button type="submit" name="submit" class="btn btn-default">Оставить завку</button>
                     </div>
