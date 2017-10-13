@@ -449,7 +449,7 @@ header
     box-shadow: none!important
     border-radius: 0
     background-color: #F6F6F6
-    margin-left: 10px
+    margin-left: 0
     padding: 7px 15px
     font-weight: 300
   .magazin-btn
@@ -1407,6 +1407,12 @@ header
     width: 11% !important
   .item-8
     width: 12% !important
+  .item-12
+    width: 8.3% !important
+    &:before
+      display: none
+    a
+      font-size: 12px
   .item-11
     width: 9% !important
   .item-10
@@ -4905,18 +4911,18 @@ body.landing
     font-weight: 300
   .form-control
     height: 40px
-  footer
-    background-color: #333
-    padding: 50px 0
-    img
-      width: 100%
-    hr
-      margin: 40px 0
-    a
-      color: #fff
-      display: inline-block
-    p
-      margin-bottom: 10px
+footer
+  background-color: #333
+  padding: 50px 0
+  img
+    width: 100%
+  hr
+    margin: 40px 0
+  a
+    color: #fff
+    display: inline-block
+  p
+    margin-bottom: 10px
 .add-sale
   padding-bottom: 50px
   h1
@@ -5182,10 +5188,10 @@ form.form-inline.sm-form
       width: 1200px !important
 .home-page
   padding: 50px 0
-  .col-lg-12:last-child
-    margin-bottom: 0
-  .col-lg-12
-    margin-bottom: 13px
+  .owl-carousel
+    .owl-item
+      img
+        height: 280px
   .owl-prev
     font-size: 0
     position: absolute
@@ -5208,5 +5214,9 @@ form.form-inline.sm-form
       font-family: FontAwesome
       content: "\f105"
       font-size: 50px
+  .img-wrapper
+    border: 1px solid #ccc
+  .col-lg-12
+    margin-bottom: 30px
 //ALWAYS END
 @import "media"
