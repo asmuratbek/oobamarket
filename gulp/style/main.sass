@@ -192,15 +192,18 @@ header
   .uk-navbar-nav>li>a
     color: #333
     font-weight: 300
+    font-size: 0.8rem
   .uk-navbar-nav>li.for-shop>a
-    background-color: $orange
+    //background-color: $orange
     height: 40px
     margin: 20px 10px 20px 0
-    color: #fff
     border-radius: 3px
-    &:hover
-      background-color: $hover-orange
+    //&:hover
+    //  background-color: $hover-orange
+  .uk-navbar-nav>li.for-shop>a:hover
+    color: $red
   .uk-navbar-nav>li.for-shop>a>span
+    color: $red
   .uk-navbar-nav>li.sub-list>a
   .uk-navbar-nav>li.sub-list>a:hover
     color: $red
@@ -230,27 +233,33 @@ header
     color: #333
     font-weight: 300
     padding: 5px 15px
+    font-size: 0.8rem
     &:hover
       background-color: #f6f6f6
   .uk-navbar-dropdown-nav>li>a>b
     font-weight: 700
   .search
     form
-      margin-right: 20px
+      margin: 0 10%
+      position: relative
     .uk-form-width-large
-      width: 300px
+      width: 100%
       padding-left: 15px
       border-top-right-radius: 0
       border-bottom-right-radius: 0
       border-top-left-radius: 3px
       border-bottom-left-radius: 3px
     button
+      position: absolute
+      right: 0
+      top: 0
       background-color: $orange
       border-color: $orange !important
       color: #fff
       padding-left: 30px
       padding-right: 30px
       font-weight: 400
+      margin-left: -5px
       border-top-left-radius: 0
       border-bottom-left-radius: 0
       border-top-right-radius: 3px
@@ -272,7 +281,32 @@ header
       line-height: 20px
       margin-top: 10px
       a
-
+.uk-sticky-placeholder
+.smart-search
+  background-color: #fff
+  position: fixed
+  right: 0
+  left: 0
+  z-index: 100
+  .item
+    position: relative
+    transition: 0.3s
+  .item:hover
+    background-color: #efefef
+  *+.uk-grid-margin, .uk-grid+.uk-grid, .uk-grid>.uk-grid-margin
+    margin-top: 15px
+  .url-product
+    position: absolute
+    top: 0
+    bottom: 0
+    right: 0
+    left: 0
+    z-index: 1
+  .name-shop
+    font-size: 12px
+    color: #999
+    position: relative
+    z-index: 2
 .mobile-nav
   img
     width: 160px
@@ -286,14 +320,15 @@ header
       a
         text-decoration: none
         span
+
   .uk-navbar-nav>li.for-shop>a
-    background-color: $orange
+    //background-color: $orange
     height: 40px
     margin: 20px 10px 20px 0
     color: #fff
     border-radius: 3px
-    &:hover
-      background-color: $hover-orange
+    //&:hover
+    //  background-color: $hover-orange
   li.for-shop>a>span
     color: $red
   li.sub-list>a>span

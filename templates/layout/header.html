@@ -50,29 +50,37 @@
 {#</header>#}
 
 
-    <header uk-sticky="media: 320" class="uk-sticky uk-sticky-fixed ">
-        <a href="{{ DOMAIN_URL }}" class="mobile-logo uk-hidden@m"> <img width="120" src="{% static 'img/logo.svg' %}"
+<header uk-sticky="media: 320" class="uk-sticky uk-sticky-fixed uk-animation-toggle uk-animation-slide-top-medium">
+        <a href="{{ DOMAIN_URL }}" class="mobile-logo uk-hidden@l"> <img width="120" src="{% static 'img/logo.svg' %}"
                                                                          alt=""></a>
-       <button class="mobile-button-nav uk-button uk-button-default uk-margin-small-right uk-hidden@l" type="button" uk-toggle="target: #offcanvas-reveal">
+        <button class="mobile-button-nav uk-button uk-button-default uk-hidden@l" type="button"
+                uk-toggle="target: #offcanvas-reveal">
             <span uk-icon="icon: grid"></span>
-            Навигация
         </button>
-        <div class="uk-container uk-visible@m">
+        <div class="uk-container uk-visible@l">
             <nav class="uk-navbar-container " uk-navbar>
-                <div class="uk-navbar-left logo">
-                    <a href="{{ DOMAIN_URL }}" class="logo-svg">
-                        <img src="{% static 'img/logo.svg' %}" alt="" width="120">
+                <div class="uk-navbar-left uk-width-expand search">
+                    <a href="{{ DOMAIN_URL }}">
+                        <img src="{% static 'img/logo.png' %}" alt="" width="120">
                     </a>
-                    <a href="{{ global.get_absolute_url }}" class="name-category">{{ global.title }}</a>
-                </div>
-                <div class="uk-navbar-right search">
-                    <form class="uk-flex-center uk-grid">
+
+                    <form class="uk-width-expand">
                         <input class="uk-input uk-form-width-large" type="text" placeholder="Поиск товаров...">
-                        <button class="uk-button uk-button-default">Найти</button>
+                        <button class="uk-button uk-button-default">Найти <span uk-icon="icon: search"></span></button>
                     </form>
                 </div>
-                <div class="uk-navbar-left">
+                <div class="uk-navbar-right">
                     <ul class="uk-navbar-nav">
+                        <li class="for-shop"><a href="{% url 'landing' %}"><span class="uk-margin-small-right uk-icon"
+                                                                                 uk-icon="icon: star"></span>Магазины</a>
+                        </li>
+                        <li class="sub-list"><a href="{% url 'sub_list' %}"><span class="uk-margin-small-right uk-icon"
+                                                                                  uk-icon="icon: bookmark"></span>Лента</a>
+                        </li>
+                        {#                        <li class="create-shop"><a href="{% url 'shops:create' %}" title="Добавьте свой магазин!"#}
+                        {#                                                   uk-tooltip="pos: bottom"><span class="uk-margin-small-right uk-icon"#}
+                        {#                                                                                  uk-icon="icon: world"></span> Добавить#}
+                        {#                            магазин</a></li>#}
                         {% if user.is_authenticated %}
                             <li class="favorite">
                                 <a href="{{ user.get_favorites_link }}">
@@ -105,12 +113,14 @@
                 </div>
 
             </nav>
+
         </div>
+
 
         <div id="offcanvas-reveal" class="mobile-nav" uk-offcanvas="mode: reveal; overlay: true">
             <div class="uk-offcanvas-bar">
                 <button class="uk-offcanvas-close" type="button" uk-close></button>
-                <a href=""> <img src="img/logo.png" alt=""></a>
+                <a href="{{ DOMAIN_URL }}"> <img src="img/logo.png" alt=""></a>
                 <ul class="">
                     <li class="for-shop"><a href="{% url 'landing' %}"><span class="uk-margin-small-right uk-icon"
                                                                              uk-icon="icon: star"></span> Для
@@ -130,5 +140,52 @@
             </div>
         </div>
     </header>
+
+{#    для того чтобы скрыть умный поиск добавь атрибудт hidden#}
+    <div hidden class="smart-search uk-grid uk-flex-middle uk-grid-divider uk-padding uk-margin-remove" uk-grid uk-alert>
+            <button class="uk-alert-close uk-padding-remove" type="button" uk-close title="Закрыть" uk-tooltip="pos: left"></button>
+            <div class="uk-width-1-4 uk-text-center">Товары</div>
+            <div class="uk-width-expand">
+                <div class="item uk-grid uk-flex-middle uk-padding-small">
+                    <a href="" class="url-product"></a>
+                    <div class="uk-width-1-6 image">
+                        <img src="{% static 'img/Alliance-infogr.png' %}" alt="">
+                    </div>
+                    <div class="uk-width-expand uk-text-left description">
+                        <p class="uk-margin-remove">Telephone Panasonic KX-TG8621 Gigarange Cordless Color</p>
+                        <a href="" class="name-shop" title="Перейти в магазин" uk-tooltip>Enter.kg</a>
+                    </div>
+                    <div class="uk-width-1-6 price uk-text-right">
+                        1300 сом
+                    </div>
+                </div>
+                <div class="item uk-grid uk-flex-middle uk-padding-small">
+                    <a href="" class="url-product"></a>
+                    <div class="uk-width-1-6 image">
+                        <img src="{% static 'img/Alliance-infogr.png' %}" alt="">
+                    </div>
+                    <div class="uk-width-expand uk-text-left description">
+                        <p class="uk-margin-remove">Telephone Panasonic KX-TG8621 Gigarange Cordless Color</p>
+                        <a href="" class="name-shop" title="Перейти в магазин" uk-tooltip>Enter.kg</a>
+                    </div>
+                    <div class="uk-width-1-6 price uk-text-right">
+                        1300 сом
+                    </div>
+                </div>
+                <div class="item uk-grid uk-flex-middle uk-padding-small">
+                    <a href="" class="url-product"></a>
+                    <div class="uk-width-1-6 image">
+                        <img src="{% static 'img/Alliance-infogr.png' %}" alt="">
+                    </div>
+                    <div class="uk-width-expand uk-text-left description">
+                        <p class="uk-margin-remove">Telephone Panasonic KX-TG8621 Gigarange Cordless Color</p>
+                        <a href="" class="name-shop" title="Перейти в магазин" uk-tooltip>Enter.kg</a>
+                    </div>
+                    <div class="uk-width-1-6 price uk-text-right">
+                        1300 сом
+                    </div>
+                </div>
+            </div>
+        </div>
 
 
