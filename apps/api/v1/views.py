@@ -633,12 +633,18 @@ class ShopReviewsView(APIView):
     def post(self, request, slug):
         self.permission_classes = [IsAuthenticated]
         shop = get_object_or_404(Shop, slug=slug)
-        stars_count = request.POST.get("stars", None)
-        if int(stars_count) > 5:
-            stars_count = 5
-        elif int(stars_count) < 1:
-            stars_count = 1
-        stars = "*" * int(stars_count) if stars_count else None
+        stars_count = request.POST.get("stars")
+        if stars_count:
+            try:
+                if int(stars_count) > 5:
+                    stars_count = 5
+                elif int(stars_count) < 1:
+                    stars_count = 1
+                stars = "*" * int(stars_count)
+            except (ValueError, TypeError):
+                stars = None
+        else:
+            stars = None
         serializer = ShopReviewsSerializer(data=request.POST)
         if serializer.is_valid():
             serializer.save(stars=stars, user=request.user, shop=shop)
