@@ -37,7 +37,13 @@ class UserFavoritesListView(LoginRequiredMixin, ListView):
 class FavoriteCreateView(LoginRequiredMixin, View):
     def get(self, request):
         item_id = request.GET.get("item")
-        favorite, created = FavoriteProduct.objects.get_or_create(product_id=item_id, user=request.user)
+        if item_id:
+            favorite, created = FavoriteProduct.objects.get_or_create(product_id=item_id, user=request.user)
+        else:
+            return JsonResponse({
+                "status": "error",
+                "message": "item query param is required"
+            })
         if not created:
             favorite.delete()
             flash_message = "Продукт успешно удален из избранных"
