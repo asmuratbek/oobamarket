@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import client from './elasticconfig'
+import client from './elasticconfig';
+import urlmaker from './urlmaker';
 
 class App extends Component {
 
@@ -77,73 +78,16 @@ class App extends Component {
   }
 
   handlePageChange = (pageNumber) => {
-      var from = this.state.productsCount > this.state.productsByPage * pageNumber ? (
-            this.state.productsByPage * pageNumber
-        ) : (
-            this.state.activePage * this.state.productsByPage
-        );
-
-      var sort = () => {
-        if (this.state.orderBy === '-created_at') {
-            return {'created_at': 'desc'}
-        } else if (this.state.orderBy === 'title'){
-            return {'title': 'asc'}
-        } else if (this.state.orderBy === 'price') {
-            return {'get_price_function': 'asc'}
-        } else if (this.state.orderBy === '-price') {
-            return {'get_price_function': 'desc'}
-        }
-      }
-
-      var sorting = () => {
-            if (this.state.priceFrom && this.state.priceTo) {
-                return [{"range": {"get_price_function": {"gte": this.state.priceFrom}}},
-                    {"range": {"get_price_function": {"lte": this.state.priceTo}}}]
-            } else if (this.state.priceFrom) {
-                return [
-                    {"range": {"get_price_function": {"gte": this.state.priceFrom}}}
-                ]
-            } else if (this.state.priceTo) {
-                return [
-                    {"range": {"get_price_function": {"lte": this.state.priceTo}}}
-                ]
-            }
-      }
-
-
-      var q = () => {
-        if (this.state.queryText) {
-            return [
-                { "match": { "text":  this.state.queryText }},
-                { "match_phrase": { "global_slug":  this.state.categorySlug }},
-            ]
-        } else {
-            return [
-                { "match_phrase": { "global_slug":  this.state.categorySlug }}
-            ]
-        }
-      }
-
-        var query = {
-                'query': {
-                        "bool": {
-                            "must": q,
-                            "filter": sorting
-                        }
-
-                      },
-                "size":  this.state.productsByPage,
-                "from": pageNumber === 1 ? 0 : from,
-                "sort": [
-                    sort,
-                ],
-              };
         this.setState({
            loaded: false
         });
 
+        var query = urlmaker(this.state.productsCount, this.state.productsByPage, pageNumber,
+                            this.state.activePage, this.state.orderBy, this.state.priceFrom,
+                            this.state.priceTo, this.state.queryText, this.state.categorySlug);
+
       client.search({
-              query
+                query
             }).then(function (data) {
                 const products = data.hits.hits.map(obj => obj._source);
                 this.setState({
