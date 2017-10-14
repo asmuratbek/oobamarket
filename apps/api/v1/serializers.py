@@ -413,7 +413,7 @@ class ShopReviewsSerializer(ModelSerializer):
 
     class Meta:
         model = ShopReviews
-        exclude = ['id', 'user', 'shop', 'created_at', 'updated_at']
+        exclude = ['id', 'user', 'shop', 'created_at', 'updated_at', 'stars']
 
     def get_username(self, obj):
         return obj.user.username if obj.user.username else obj.user.email
