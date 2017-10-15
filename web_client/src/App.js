@@ -71,9 +71,11 @@ class App extends Component {
               success: function (data) {
                     let favorites = data.favorites.map(obj => obj.id);
                     let cartItems = data.cart_items.map(obj => obj.id);
+                    let shops = data.shops.map(obj => obj.title);
                     this.setState({
                         favorites: favorites,
-                        cartItems: cartItems
+                        cartItems: cartItems,
+                        shops: shops
                     });
               }.bind(this),
               error: function (response, error) {
@@ -252,6 +254,7 @@ class App extends Component {
                          onProductDelete={productDelete}
                          favorites={this.state.favorites}
                          cartItems={this.state.cartItems}
+                         shops={this.state.shops}
                          product={ item }/>
             ) //return
         }.bind(this));

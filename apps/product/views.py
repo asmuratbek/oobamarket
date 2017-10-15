@@ -340,11 +340,11 @@ def change_publish_status(request):
             })
         message = ""
         if product.published:
-            message = "Продукт успешно опубликован"
+            message = "Продукт успешно скрыт"
             product.published = False
 
         else:
-            message = "Продукт успешно скрыт"
+            message = "Продукт успешно опубликован"
             product.published = True
         product.save()
         status = "success"

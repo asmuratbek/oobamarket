@@ -25,6 +25,10 @@ class Product extends Component {
         return this.props.favorites.indexOf(product.pk) !== -1
     };
 
+    isOwner = (product) => {
+        return this.props.shops.indexOf(product.shop) !== -1
+    };
+
     handleDelete = (product_id) => {
         console.log('delete')
     };
@@ -38,15 +42,18 @@ class Product extends Component {
         return (
             <div className="uk-grid-match">
         <div className="shadow uk-text-center">
-            <div className="setting">
-                <a href={`${this.props.product.detail_view}${this.props.product.slug}/update-product/`}
-                   data-uk-icon="icon: file-edit" title="Редактировать товар" data-uk-tooltip></a>
-                <a className={`product-vision ${!this.props.product.published && ' disabled'}`} href="#"
-                   data-uk-icon="icon: copy" title={this.props.product.published ? "Скрыть товар" : "Опубликовать товар"} data-uk-tooltip
-                data-item-id={this.props.product.pk}></a>
-                <a href="#" data-uk-icon="icon: close" title="Удалить товар" data-uk-tooltip
-                data-item-id={this.props.product.pk}></a>
-            </div>
+            {this.isOwner(this.props.product) ? (
+                <div className="setting">
+                    <a href={`${this.props.product.detail_view}${this.props.product.slug}/update-product/`}
+                       data-uk-icon="icon: file-edit" title="Редактировать товар" data-uk-tooltip></a>
+                    <a className={`product-vision ${!this.props.product.published && ' disabled'}`} href="#"
+                       data-uk-icon="icon: copy" title={this.props.product.published ? "Скрыть товар" : "Опубликовать товар"} data-uk-tooltip
+                    data-item-id={this.props.product.pk}></a>
+                    <a href="#" data-uk-icon="icon: close" title="Удалить товар" data-uk-tooltip
+                    data-item-id={this.props.product.pk}></a>
+                </div>
+            ): ''}
+
             <div className="uk-inline-clip uk-transition-toggle">
                 <div className="border">
                     <a href="" className="uk-position-cover"></a>
