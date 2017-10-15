@@ -88,6 +88,6 @@
     "extends": "react-app"
   },
   "devDependencies": {
-    "elasticsearch": "^13.3.1"
+    "react-js-pagination": "^3.0.0"
   }
 }

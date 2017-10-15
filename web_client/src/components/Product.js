@@ -1,0 +1,105 @@
+import React, {Component} from 'react';
+
+class Product extends Component {
+    deliveryColor = (product) => {
+      if (this.props.product.delivery_type === 'paid') {
+          return (
+              <span className="truck pull-right yellow" data-toggle="tooltip" title=""
+                        data-placement="top" data-original-title={this.props.product.delivery_type_display}>
+                  <i className="fa fa-truck" aria-hidden="true"></i></span>
+          )
+      }
+      else if (this.props.product.delivery_type === 'free') {
+          return (
+              <span className="truck pull-right green" data-toggle="tooltip" title=""
+                        data-placement="top" data-original-title={this.props.product.delivery_type_display}>
+                  <i className="fa fa-truck" aria-hidden="true"></i></span>
+          )
+      }
+      else {
+          return (
+              <span className="truck pull-right" data-toggle="tooltip" title=""
+                        data-placement="top" data-original-title={this.props.product.delivery_type_display}>
+                  <i className="fa fa-truck" aria-hidden="true"></i></span>
+          )
+      }
+    };
+
+    AddOrRemoveFavorite = (e) => {
+        e.preventDefault();
+        console.log('fav')
+    };
+
+    addOrRemoveFromCart = (e) => {
+        e.preventDefault();
+        console.log('cart')
+    };
+
+    changePublishStatus = (e) => {
+        e.preventDefault();
+        console.log('pub')
+    };
+
+    isInCart = (product) => {
+        return this.props.cartItems.indexOf(product.pk) !== -1
+    };
+
+    isInFavorites = (product) => {
+        return this.props.favorites.indexOf(product.pk) !== -1
+    };
+
+    handleDelete = (product_id) => {
+        console.log('delete')
+    };
+
+    deleteProduct = (e) => {
+        e.preventDefault();
+        console.log('do del')
+    };
+
+    render () {
+        return (
+            <div className="uk-grid-match">
+        <div className="shadow uk-text-center">
+            <div className="setting">
+                <a href="" data-uk-icon="icon: file-edit" title="Редактировать товар" data-uk-tooltip></a>
+                <a className="product-vision" href="" data-uk-icon="icon: copy" title="Скрыть товар" data-uk-tooltip></a>
+                <a href="" data-uk-icon="icon: close" title="Удалить товар" data-uk-tooltip></a>
+            </div>
+            <div className="uk-inline-clip uk-transition-toggle">
+                <div className="border">
+                    <a href="" className="uk-position-cover"></a>
+                    <div className="uk-cover-container">
+                        <canvas width="400" height="500"></canvas>
+                        <img data-uk-cover src={this.props.product.main_image} alt=""/>
+                    </div>
+                </div>
+                <div className="uk-transition-fade uk-position-cover uk-overlay uk-overlay-default">
+                    <a href="" className="uk-position-cover"></a>
+                    <small className="uk-display-block">Магазин</small>
+                    <h4 className="uk-margin-remove"><a href="##">{this.props.product.shop}</a></h4>
+                    <p>{this.props.product.short_description}</p>
+                    <div className="control">
+                        <a href="#" className={`favorite uk-margin-medium-right ${this.isInFavorites(this.props.product) && 'like'}`} title="Добавить в избранные" data-uk-tooltip
+                        onClick={this.AddOrRemoveFavorite}><span
+                                className=" uk-icon" data-uk-icon="icon: heart; ratio: 2"></span></a>
+                        <a href="#" className={`basket uk-margin-medium-left ${this.isInCart(this.props.product) && 'in'}`} title="Добавить в корзину" data-uk-tooltip
+                        onClick={this.addOrRemoveFromCart}><span
+                                className=" uk-icon" data-uk-icon="icon: cart; ratio: 2"></span></a>
+                    </div>
+                </div>
+            </div>
+            <div className="uk-padding-small uk-grid uk-margin-remove footer">
+                <h4 className="uk-width-3-5@l uk-width-3-5@m uk-padding-remove">{this.props.product.title}</h4>
+                <div className="uk-width-2-5@l uk-width-2-5@m uk-padding-remove">
+                    <p >{this.props.product.get_price_function} сом </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        )
+    }
+}
+
+export default Product;

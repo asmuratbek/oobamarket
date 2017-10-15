@@ -10,27 +10,27 @@ export default function urlmaker (productsCount, productsByPage, pageNumber,
 
       const sort = () => {
         if (orderBy === '-created_at') {
-            return {'created_at': 'desc'}
+            return {created_at: 'desc'}
         } else if (orderBy === 'title'){
-            return {'title': 'asc'}
+            return {title: 'asc'}
         } else if (orderBy === 'price') {
-            return {'get_price_function': 'asc'}
+            return {get_price_function: 'asc'}
         } else if (orderBy === '-price') {
-            return {'get_price_function': 'desc'}
+            return {get_price_function: 'desc'}
         }
       };
 
       const sorting = () => {
             if (priceFrom && priceTo) {
-                return [{"range": {"get_price_function": {"gte": priceFrom}}},
-                    {"range": {"get_price_function": {"lte": priceTo}}}]
+                return [{range: {get_price_function: {gte: priceFrom}}},
+                    {range: {get_price_function: {lte: priceTo}}}]
             } else if (priceFrom) {
                 return [
-                    {"range": {"get_price_function": {"gte": priceFrom}}}
+                    {range: {get_price_function: {gte: priceFrom}}}
                 ]
             } else if (priceTo) {
                 return [
-                    {"range": {"get_price_function": {"lte": priceTo}}}
+                    {range: {get_price_function: {lte: priceTo}}}
                 ]
             }
       };
@@ -39,28 +39,28 @@ export default function urlmaker (productsCount, productsByPage, pageNumber,
       const q = () => {
         if (queryText) {
             return [
-                { "match": { "text":  queryText }},
-                { "match_phrase": { "global_slug":  categorySlug }},
+                { match: { text:  queryText }},
+                { match_phrase: { global_slug:  categorySlug }},
             ]
         } else {
             return [
-                { "match_phrase": { "global_slug":  categorySlug }}
+                { match_phrase: { global_slug:  categorySlug }}
             ]
         }
       };
 
         const query = {
-            'query': {
-                    "bool": {
-                        "must": q,
-                        "filter": sorting
+            query: {
+                    bool: {
+                        must: q(),
+                        filter: sorting()
                     }
 
                   },
-            "size":  productsByPage,
-            "from": pageNumber === 1 ? 0 : from,
-            "sort": [
-                sort,
+            size:  productsByPage,
+            from: pageNumber === 1 ? 0 : from,
+            sort: [
+                sort(),
             ],
           };
 
