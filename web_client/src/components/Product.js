@@ -1,29 +1,6 @@
 import React, {Component} from 'react';
 
 class Product extends Component {
-    deliveryColor = (product) => {
-      if (this.props.product.delivery_type === 'paid') {
-          return (
-              <span className="truck pull-right yellow" data-toggle="tooltip" title=""
-                        data-placement="top" data-original-title={this.props.product.delivery_type_display}>
-                  <i className="fa fa-truck" aria-hidden="true"></i></span>
-          )
-      }
-      else if (this.props.product.delivery_type === 'free') {
-          return (
-              <span className="truck pull-right green" data-toggle="tooltip" title=""
-                        data-placement="top" data-original-title={this.props.product.delivery_type_display}>
-                  <i className="fa fa-truck" aria-hidden="true"></i></span>
-          )
-      }
-      else {
-          return (
-              <span className="truck pull-right" data-toggle="tooltip" title=""
-                        data-placement="top" data-original-title={this.props.product.delivery_type_display}>
-                  <i className="fa fa-truck" aria-hidden="true"></i></span>
-          )
-      }
-    };
 
     AddOrRemoveFavorite = (e) => {
         e.preventDefault();
@@ -63,8 +40,10 @@ class Product extends Component {
         <div className="shadow uk-text-center">
             <div className="setting">
                 <a href="" data-uk-icon="icon: file-edit" title="Редактировать товар" data-uk-tooltip></a>
-                <a className="product-vision" href="" data-uk-icon="icon: copy" title="Скрыть товар" data-uk-tooltip></a>
-                <a href="" data-uk-icon="icon: close" title="Удалить товар" data-uk-tooltip></a>
+                <a className="product-vision" href="#" data-uk-icon="icon: copy" title="Скрыть товар" data-uk-tooltip
+                data-item-id={this.props.product.pk}></a>
+                <a href="#" data-uk-icon="icon: close" title="Удалить товар" data-uk-tooltip
+                data-item-id={this.props.product.pk}></a>
             </div>
             <div className="uk-inline-clip uk-transition-toggle">
                 <div className="border">
@@ -77,14 +56,14 @@ class Product extends Component {
                 <div className="uk-transition-fade uk-position-cover uk-overlay uk-overlay-default">
                     <a href="" className="uk-position-cover"></a>
                     <small className="uk-display-block">Магазин</small>
-                    <h4 className="uk-margin-remove"><a href="##">{this.props.product.shop}</a></h4>
+                    <h4 className="uk-margin-remove"><a href="#">{this.props.product.shop}</a></h4>
                     <p>{this.props.product.short_description}</p>
                     <div className="control">
                         <a href="#" className={`favorite uk-margin-medium-right ${this.isInFavorites(this.props.product) && 'like'}`} title="Добавить в избранные" data-uk-tooltip
-                        onClick={this.AddOrRemoveFavorite}><span
+                           data-item-id={this.props.product.pk}><span
                                 className=" uk-icon" data-uk-icon="icon: heart; ratio: 2"></span></a>
                         <a href="#" className={`basket uk-margin-medium-left ${this.isInCart(this.props.product) && 'in'}`} title="Добавить в корзину" data-uk-tooltip
-                        onClick={this.addOrRemoveFromCart}><span
+                        data-item-id={this.props.product.pk}><span
                                 className=" uk-icon" data-uk-icon="icon: cart; ratio: 2"></span></a>
                     </div>
                 </div>

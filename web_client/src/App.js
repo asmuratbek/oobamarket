@@ -54,7 +54,6 @@ class App extends Component {
             .then(function(res) {
                 return res.json();
             }).then(function(data) {
-                console.log(data);
                 const favorites = data.favorites.map(obj => obj.id);
                 const cartItems = data.cart_items.map(obj => obj.id);
                 this.setState({
@@ -69,7 +68,6 @@ class App extends Component {
         }).then(function(res) {
                 return res.json();
             }).then(function(data) {
-                console.log(data)
                 const products = data.hits.hits.map(obj => obj._source);
                 const pagesCount = Math.ceil(data.hits.total / this.state.productsByPage);
                 this.setState({
@@ -116,8 +114,6 @@ class App extends Component {
         let query = urlmaker(this.state.productsCount, this.state.productsByPage, 1,
                             this.state.activePage, orderBy, this.state.priceFrom,
                             this.state.priceTo, this.state.queryText, this.state.categorySlug);
-
-        console.log(query)
 
       fetch(`http://${this.state.domain}:9200/_search/`, {
             method: "POST",
