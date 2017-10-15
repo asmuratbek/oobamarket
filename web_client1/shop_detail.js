@@ -50,9 +50,9 @@ var MainInterface = createClass({
             type: "GET",
               url: `/api/v1/shop/` + this.state.shopSlug + '/shop/for-react/',
               success: function (data) {
-                   var owner = data[0].shop[0].is_owner;
-                    var parentCategories = data[1].category.map(obj =>obj);
-                    var categories = data[2].category.map(obj =>obj);
+                    let owner = data[0].shop[0].is_owner;
+                    let parentCategories = data[1].category.map(obj =>obj);
+                    let categories = data[2].category.map(obj =>obj);
                     this.setState({
                         owner: owner,
                         parentCategories:parentCategories,

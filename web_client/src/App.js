@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import urlmaker from './urlmaker';
 import Product from './components/Product';
 import SearchForm from './components/SearchFrom';
+import CategoryList from "./components/CategoryList";
+import ChildCategory from "./components/ChildCategory";
 import Pagination from 'react-js-pagination';
 import $ from 'jquery';
 
@@ -20,9 +22,10 @@ class App extends Component {
         favorites: [],
         cartItems: [],
         categories: [],
+        parentCategories: [],
+        activeCategory: '',
         pageType: this.pageType(),
         loaded: false,
-        activeCategories: [],
         productsByPage: 20,
         domain: window.location.href.split("/")[2].split(":")[0],
         categorySlug: window.location.href.split("/")[window.location.href.split("/").length - 2],
@@ -33,7 +36,7 @@ class App extends Component {
   pageType = () => {
        if (window.location.href.split("/")[4] && window.location.href.split("/")[4] === 'parent') {
             return "parent"
-        } else if (window.location.href.split("/")[4] && window.location.href.split("/")[4] === 'shops') {
+        } else if (window.location.href.split("/")[3] && window.location.href.split("/")[3] === 'shops') {
             return "shop"
         } else if (window.location.href.split("/").length === 6) {
             return "child"
@@ -75,8 +78,6 @@ class App extends Component {
                 ]
               };
 
-        console.log(query)
-
       $.ajax({
             type: "GET",
               url: `http://${this.state.domain}:8000/api/v1/my-list/`,
@@ -94,7 +95,29 @@ class App extends Component {
                   console.log(response);
                   console.log(error);
               }
+        });
+
+      if (this.state.pageType === 'shop') {
+          $.ajax({
+            type: "GET",
+              url: `/api/v1/shop/` + this.state.shopSlug + '/shop/for-react/',
+              success: function (data) {
+                    let owner = data[0].shop[0].is_owner;
+                    let parentCategories = data[1].category.map(obj =>obj);
+                    let categories = data[2].category.map(obj =>obj);
+                    this.setState({
+                        owner: owner,
+                        parentCategories:parentCategories,
+                        categories: categories
+
+                    });
+              }.bind(this),
+              error: function (response, error) {
+                  console.log(response);
+                  console.log(error);
+              }
         })
+      }
 
         fetch(`http://${this.state.domain}:9200/_search/`, {
             method: "POST",
@@ -262,7 +285,7 @@ class App extends Component {
 
         filteredProducts = this.state.products.map(function (item, index) {
             return (
-                <Product key={ index }
+                <Product key={ item.pk }
                          onProductDelete={productDelete}
                          favorites={this.state.favorites}
                          cartItems={this.state.cartItems}
