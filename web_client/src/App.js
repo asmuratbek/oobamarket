@@ -50,7 +50,9 @@ class App extends Component {
                 ]
               };
 
-        fetch(`http://${this.state.domain}:8000/api/v1/my-list/`)
+        fetch(`http://${this.state.domain}:8000/api/v1/my-list/`, {
+            method: "GET"
+        })
             .then(function(res) {
                 return res.json();
             }).then(function(data) {

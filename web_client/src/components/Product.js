@@ -59,10 +59,12 @@ class Product extends Component {
                     <h4 className="uk-margin-remove"><a href="#">{this.props.product.shop}</a></h4>
                     <p>{this.props.product.short_description}</p>
                     <div className="control">
-                        <a href="#" className={`favorite uk-margin-medium-right ${this.isInFavorites(this.props.product) && 'like'}`} title="Добавить в избранные" data-uk-tooltip
+                        <a href="#" className={`favorite uk-margin-medium-right ${this.isInFavorites(this.props.product) && 'like'}`}
+                           title={this.isInFavorites(this.props.product) ? 'Удалить из избранных' : 'Добавить в избранное'} data-uk-tooltip
                            data-item-id={this.props.product.pk}><span
                                 className=" uk-icon" data-uk-icon="icon: heart; ratio: 2"></span></a>
-                        <a href="#" className={`basket uk-margin-medium-left ${this.isInCart(this.props.product) && 'in'}`} title="Добавить в корзину" data-uk-tooltip
+                        <a href="#" className={`basket cart uk-margin-medium-left ${this.isInCart(this.props.product) && 'in'}`}
+                           title={this.isInCart(this.props.product) ? 'В корзине' : 'Добавить в корзину'} data-uk-tooltip
                         data-item-id={this.props.product.pk}><span
                                 className=" uk-icon" data-uk-icon="icon: cart; ratio: 2"></span></a>
                     </div>

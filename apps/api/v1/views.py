@@ -237,7 +237,7 @@ class GlobalCategoryDetailApiView(APIView):
 
 class MyListView(APIView):
     permission_classes = (AllowAny,)
-    authentication_classes = (SessionAuthentication, TokenAuthentication)
+    authentication_classes = [SessionAuthentication, TokenAuthentication]
 
     def get(self, request):
         cart_items = request.user.cart_set.last().cartitem_set.all().values("product__id")\
