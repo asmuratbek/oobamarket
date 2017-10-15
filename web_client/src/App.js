@@ -20,6 +20,7 @@ class App extends Component {
         favorites: [],
         cartItems: [],
         categories: [],
+        pageType: this.pageType(),
         loaded: false,
         activeCategories: [],
         productsByPage: 20,
@@ -27,6 +28,18 @@ class App extends Component {
         categorySlug: window.location.href.split("/")[window.location.href.split("/").length - 2]
     }
   }
+
+  pageType = () => {
+       if (window.location.href.split("/")[4] && window.location.href.split("/")[4] === 'parent') {
+            return "parent"
+        } else if (window.location.href.split("/")[4] && window.location.href.split("/")[4] === 'shops') {
+            return "shop"
+        } else if (window.location.href.split("/").length === 6) {
+            return "child"
+        } else {
+            return "global"
+        }
+  };
 
   componentDidMount = () => {
         const params = window.location.search.substr(1).split("&");
