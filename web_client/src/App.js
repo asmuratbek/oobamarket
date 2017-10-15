@@ -25,7 +25,8 @@ class App extends Component {
         activeCategories: [],
         productsByPage: 20,
         domain: window.location.href.split("/")[2].split(":")[0],
-        categorySlug: window.location.href.split("/")[window.location.href.split("/").length - 2]
+        categorySlug: window.location.href.split("/")[window.location.href.split("/").length - 2],
+        shopSlug: window.location.href.split("/")[4] ? window.location.href.split("/")[4] : window.location.href.split(".")[0].split("http://")[1]
     }
   }
 
@@ -41,6 +42,18 @@ class App extends Component {
         }
   };
 
+  getMatchPhrase = () => {
+    if (this.state.pageType === 'global') {
+        return {global_slug: this.state.categorySlug}
+    } else if (this.state.pageType === 'parent') {
+        return {parent_category_slug: this.state.categorySlug}
+    } else if (this.state.pageType === 'shop') {
+        return {shop_slug: this.state.shopSlug}
+    } else {
+        return {category_slug: this.state.categorySlug}
+    }
+  };
+
   componentDidMount = () => {
         const params = window.location.search.substr(1).split("&");
         params.forEach(function (i) {
@@ -53,9 +66,7 @@ class App extends Component {
 
         const query = {
                 query: {
-                    match_phrase: {
-                        global_slug: this.state.categorySlug
-                    }
+                    match_phrase: this.getMatchPhrase()
                 },
                 size:  this.state.productsByPage,
                 from: 0,
@@ -64,19 +75,7 @@ class App extends Component {
                 ]
               };
 
-        // fetch(`http://${this.state.domain}:8000/api/v1/my-list/`, {
-        //     method: "GET"
-        // })
-        //     .then(function(res) {
-        //         return res.json();
-        //     }).then(function(data) {
-        //         const favorites = data.favorites.map(obj => obj.id);
-        //         const cartItems = data.cart_items.map(obj => obj.id);
-        //         this.setState({
-        //             favorites: favorites,
-        //             cartItems: cartItems
-        //         });
-        //     }.bind(this));
+        console.log(query)
 
       $.ajax({
             type: "GET",
@@ -122,7 +121,7 @@ class App extends Component {
 
         let query = urlmaker(this.state.productsCount, this.state.productsByPage, pageNumber,
                             this.state.activePage, this.state.orderBy, this.state.priceFrom,
-                            this.state.priceTo, this.state.queryText, this.state.categorySlug);
+                            this.state.priceTo, this.state.queryText, this.state.categorySlug, this.getMatchPhrase());
 
       fetch(`http://${this.state.domain}:9200/_search/`, {
             method: "POST",
@@ -148,7 +147,7 @@ class App extends Component {
 
         let query = urlmaker(this.state.productsCount, this.state.productsByPage, 1,
                             this.state.activePage, orderBy, this.state.priceFrom,
-                            this.state.priceTo, this.state.queryText, this.state.categorySlug);
+                            this.state.priceTo, this.state.queryText, this.state.categorySlug, this.getMatchPhrase());
 
       fetch(`http://${this.state.domain}:9200/_search/`, {
             method: "POST",
@@ -174,7 +173,7 @@ class App extends Component {
 
         let query = urlmaker(this.state.productsCount, this.state.productsByPage, 1,
                             this.state.activePage, this.state.orderBy, this.state.priceFrom,
-                            this.state.priceTo, q, this.state.categorySlug);
+                            this.state.priceTo, q, this.state.categorySlug, this.getMatchPhrase());
 
       fetch(`http://${this.state.domain}:9200/_search/`, {
             method: "POST",
@@ -204,7 +203,7 @@ class App extends Component {
 
         let query = urlmaker(this.state.productsCount, this.state.productsByPage, 1,
                             this.state.activePage, this.state.orderBy, price,
-                            this.state.priceTo, this.state.queryText, this.state.categorySlug);
+                            this.state.priceTo, this.state.queryText, this.state.categorySlug, this.getMatchPhrase());
 
       fetch(`http://${this.state.domain}:9200/_search/`, {
             method: "POST",
@@ -234,7 +233,7 @@ class App extends Component {
 
         let query = urlmaker(this.state.productsCount, this.state.productsByPage, 1,
                             this.state.activePage, this.state.orderBy, this.state.priceFrom,
-                            price, this.state.queryText, this.state.categorySlug);
+                            price, this.state.queryText, this.state.categorySlug, this.getMatchPhrase());
 
       fetch(`http://${this.state.domain}:9200/_search/`, {
             method: "POST",
