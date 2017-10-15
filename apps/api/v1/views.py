@@ -259,7 +259,7 @@ class MyListView(APIView):
         return JsonResponse({
             "favorites": favs if favs else [],
             "cart_items": items if items else [],
-            "is_authenticated": request.user.is_authenticated()
+
         })
 
 

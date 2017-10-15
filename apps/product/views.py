@@ -329,14 +329,33 @@ class ProductDeleteView(LoginRequiredMixin, DeleteProductMixin, DeleteView):
 
 def change_publish_status(request):
     product = get_object_or_404(Product, id=request.GET.get('item'))
-    if product.published:
-        product.published = False
+    if request.user.is_authenticated:
+        is_owner = product.shop.is_owner(request.user)
+        if not is_owner:
+            status = "error"
+            message = "Вы не можете изменять чужой продукт"
+            return JsonResponse({
+                "message": message,
+                "status": status
+            })
+        message = ""
+        if product.published:
+            message = "Продукт успешно опубликован"
+            product.published = False
+
+        else:
+            message = "Продукт успешно скрыт"
+            product.published = True
+        product.save()
+        status = "success"
     else:
-        product.published = True
-    product.save()
+        status = "error"
+        message = "Вы не можете изменять чужой продукт"
     data = {
         "item": product.id,
-        "message": "Продукт успешно опубликован" if product.published else "Продукт успешно скрыт"
+        "status": status,
+        "published": product.published,
+        "message": message
     }
     return JsonResponse(data)
 

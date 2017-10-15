@@ -39,8 +39,10 @@ class Product extends Component {
             <div className="uk-grid-match">
         <div className="shadow uk-text-center">
             <div className="setting">
-                <a href="" data-uk-icon="icon: file-edit" title="Редактировать товар" data-uk-tooltip></a>
-                <a className="product-vision" href="#" data-uk-icon="icon: copy" title="Скрыть товар" data-uk-tooltip
+                <a href={`${this.props.product.detail_view}${this.props.product.slug}/update-product/`}
+                   data-uk-icon="icon: file-edit" title="Редактировать товар" data-uk-tooltip></a>
+                <a className={`product-vision ${!this.props.product.published && ' disabled'}`} href="#"
+                   data-uk-icon="icon: copy" title={this.props.product.published ? "Скрыть товар" : "Опубликовать товар"} data-uk-tooltip
                 data-item-id={this.props.product.pk}></a>
                 <a href="#" data-uk-icon="icon: close" title="Удалить товар" data-uk-tooltip
                 data-item-id={this.props.product.pk}></a>
@@ -54,7 +56,7 @@ class Product extends Component {
                     </div>
                 </div>
                 <div className="uk-transition-fade uk-position-cover uk-overlay uk-overlay-default">
-                    <a href="" className="uk-position-cover"></a>
+                    <a href={this.props.product.detail_view} className="uk-position-cover"></a>
                     <small className="uk-display-block">Магазин</small>
                     <h4 className="uk-margin-remove"><a href="#">{this.props.product.shop}</a></h4>
                     <p>{this.props.product.short_description}</p>

@@ -3,6 +3,7 @@ import urlmaker from './urlmaker';
 import Product from './components/Product';
 import SearchForm from './components/SearchFrom';
 import Pagination from 'react-js-pagination';
+import $ from 'jquery';
 
 class App extends Component {
 
@@ -50,19 +51,36 @@ class App extends Component {
                 ]
               };
 
-        fetch(`http://${this.state.domain}:8000/api/v1/my-list/`, {
-            method: "GET"
+        // fetch(`http://${this.state.domain}:8000/api/v1/my-list/`, {
+        //     method: "GET"
+        // })
+        //     .then(function(res) {
+        //         return res.json();
+        //     }).then(function(data) {
+        //         const favorites = data.favorites.map(obj => obj.id);
+        //         const cartItems = data.cart_items.map(obj => obj.id);
+        //         this.setState({
+        //             favorites: favorites,
+        //             cartItems: cartItems
+        //         });
+        //     }.bind(this));
+
+      $.ajax({
+            type: "GET",
+              url: `http://${this.state.domain}:8000/api/v1/my-list/`,
+              success: function (data) {
+                    let favorites = data.favorites.map(obj => obj.id);
+                    let cartItems = data.cart_items.map(obj => obj.id);
+                    this.setState({
+                        favorites: favorites,
+                        cartItems: cartItems
+                    });
+              }.bind(this),
+              error: function (response, error) {
+                  console.log(response);
+                  console.log(error);
+              }
         })
-            .then(function(res) {
-                return res.json();
-            }).then(function(data) {
-                const favorites = data.favorites.map(obj => obj.id);
-                const cartItems = data.cart_items.map(obj => obj.id);
-                this.setState({
-                    favorites: favorites,
-                    cartItems: cartItems
-                });
-            }.bind(this));
 
         fetch(`http://${this.state.domain}:9200/_search/`, {
             method: "POST",

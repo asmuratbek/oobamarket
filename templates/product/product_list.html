@@ -20,9 +20,11 @@
                             {% if product.published %}
                             {% else %}
                             disabled
-                            {% endif %} " href="" uk-icon="icon: copy" title="Скрыть товар" uk-tooltip
+                            {% endif %} " href="" uk-icon="icon: copy"
+                       title="{% if product.published %}Скрыть товар{% else %} Опубликовать товар{% endif %}" uk-tooltip
                        data-status="{% if product.published %}false{% else %}true {% endif %}"
-                       data-item="{{ product.id }}">
+                       data-item-id="{{ product.id }}"
+                    >
                     </a>
                     <a class="model-trigger delete-object" uk-toggle="target: #DeleteModal"
                        data-url="{% url 'product:delete_product' slug=product.slug %}"

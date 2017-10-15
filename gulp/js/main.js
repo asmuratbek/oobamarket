@@ -200,6 +200,38 @@ $(document).ready(function(){
         })
     });
 
+    $(".product-vision").click(function (event) {
+        event.preventDefault();
+        var thisIcon = $(this);
+        var productId = $(this).attr("data-item-id");
+        $.ajax({
+            type: "GET",
+            url: '/change_publish_status/',
+            data: {
+                'item': productId
+            },
+            success: function (data) {
+                showFlashMessage(data.message);
+                if (data.published && data.status !== "error") {
+                    console.log(data)
+                    thisIcon.removeClass("disabled");
+                    thisIcon.attr("title", "Опубликовать товар");
+                }
+                else if (!data.published && data.status !== "error") {
+                    console.log(data)
+                    thisIcon.toggleClass("disabled");
+                    thisIcon.attr("title", "Скрыть товар");
+                }
+                // $('.cart_count').html('<span class="uk-margin-small-right uk-icon" uk-icon="icon: cart"></span> Корзина' +
+                //                     '(<span>' + data.total_items + '</span>)')
+            },
+            error: function (response, error) {
+                console.log(response);
+                console.log(error);
+            }
+        })
+    });
+
     // ---------------------------------
     // Функция скрыть раскрыть товар
     // ---------------------------------
