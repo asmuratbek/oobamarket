@@ -92,8 +92,8 @@
         </div>
     </header>
 
-    <section class="dropdown-category">
-        <div class="uk-container">
+    <section class="dropdown-category ">
+        <div class="uk-container uk-width-auto">
             <div class="uk-text-center uk-flex-middle uk-grid uk-visible@l" uk-grid>
                 {% for object in fixed_categories %}
                     <div class="uk-width-expand@m">
@@ -165,10 +165,10 @@
 
 {% block content %}
 
-    <section class="home">
+    <section class="home uk-margin-medium-top">
         <div class="uk-container">
-            <div class="uk-grid">
-                <div class="uk-width-1-4">
+            <div class="uk-grid slider" uk-grid>
+                <div class="uk-width-1-4@m">
                     <a href="">
                         <img src="{% static 'img/mini jpg.jpg' %}" alt="">
                     </a>
@@ -182,66 +182,121 @@
                     </div>
                 </div>
             </div>
+            <div class="reklama uk-margin-medium-top uk-margin-small-bottom">
+
+                <div class="uk-grid uk-grid-small uk-child-width-1-3" uk-grid>
+                    <div class="item">
+                        <div class="uk-grid-margin img-wrapper uk-margin-small">
+                            <a href=""><img src="{% static 'img/01elecrtomica.jpg' %}" alt=""></a>
+                        </div>
+                        <div class="uk-grid-margin img-wrapper uk-margin-small">
+                            <a href=""><img src="{% static 'img/02souvenir.jpg' %}" alt=""></a>
+                        </div>
+                    </div>
+                    <div class="item ">
+                        <div class="uk-grid-margin img-wrapper uk-margin-small">
+                            <img src="{% static 'img/16sport.jpg' %}" alt="">
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="uk-grid-margin img-wrapper uk-margin-small">
+                            <a href=""><img src="{% static 'img/03pen.jpg' %}" alt=""></a>
+                        </div>
+                        <div class="uk-grid-margin img-wrapper uk-margin-small">
+                            <a href=""><img src="{% static 'img/04juice.jpg' %}" alt=""></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="uk-grid uk-grid-small" uk-grid>
+                    <div class="uk-width-expand">
+                        <div class="img-wrapper">
+                            <a href="">
+                                <img src="{% static 'img/15car.jpg' %}" alt="">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="uk-width-1-3">
+                        <div class="item img-wrapper uk-grid-margin uk-margin-small"><a href=""><img
+                                src="{% static 'img/05boots.jpg' %}" alt=""></a></div>
+                        <div class="item img-wrapper uk-grid-margin uk-margin-small"><a href=""><img
+                                src="{% static 'img/06build.jpg' %}" alt=""></a></div>
+                    </div>
+                </div>
+
+                <div class="uk-grid uk-child-width-1-3 uk-grid-small" uk-grid>
+                    <div class="item img-wrapper"><a href=""><img src="{% static 'img/07clothes.jpg' %}" alt=""></a></div>
+                    <div class="item img-wrapper"><a href=""><img src="{% static 'img/08bag.jpg' %}" alt=""></a></div>
+                    <div class="item img-wrapper"><a href=""><img src="{% static 'img/09child.jpg' %}" alt=""></a></div>
+                    <div class="item img-wrapper"><a href=""><img src="{% static 'img/10tech.jpg' %}" alt=""></a></div>
+                    <div class="item img-wrapper"><a href=""><img src="{% static 'img/10house.jpg' %}" alt=""></a></div>
+                    <div class="item img-wrapper"><a href=""><img src="{% static 'img/11jewerky.jpg' %}" alt=""></a></div>
+                    <div class="item img-wrapper"><a href=""><img src="{% static 'img/12tshirt.jpg' %}" alt=""></a></div>
+                    <div class="item img-wrapper"><a href=""><img src="{% static 'img/13cosmetic.jpg' %}" alt=""></a></div>
+                    <div class="item img-wrapper"><a href=""><img src="{% static 'img/14book.jpg' %}" alt=""></a></div>
+                </div>
+
+            </div>
         </div>
     </section>
 
-        <section class="global-category">
-            <div class="uk-container">
-                <div class="logo uk-margin-large-top uk-margin-medium-bottom">
-                    <img src="{% static 'img/logo.png' %}" alt="">
-                </div>
-                <h1 class="uk-margin-large-bottom">Лучший сервиc по поиску товаров в Бишкеке</h1>
-                <form class="uk-flex-center uk-grid uk-margin-remove" method="get" action="/search/">
-                    <input class="uk-input uk-form-width-large" type="text" placeholder="Поиск товаров..."
-                           id="search-form-index" name="q">
-                    <button class="uk-button uk-button-default">Найти</button>
-                </form>
-
-                <div class="category uk-margin-large-top uk-grid-small uk-child-width-1-2 uk-child-width-1-3@s uk-child-width-1-4@m uk-child-width-1-@l uk-flex-center uk-text-center"
-                     uk-grid>
-                    {% for object in fixed_categories %}
-                        <div class="item uk-transition-toggle">
-                            <div class="uk-card uk-padding-small uk-card-default">
-                                <a href="{{ object.get_absolute_url }}" class="uk-position-cover"></a>
-                                <img class="uk-transition-scale-up uk-transition-opaque" src="{{ object.get_icon }}" alt="">
-                                <div class="fl"><h3 class="uk-margin-small-top">{{ object.title }}</h3></div>
-
-                            </div>
-                        </div>
-                    {% endfor %}
-                </div>
-
+    <section class="global-category">
+        <div class="uk-container">
+            <div class="logo uk-margin-large-top uk-margin-medium-bottom">
+                <img src="{% static 'img/logo.png' %}" alt="">
             </div>
-        </section>
-        {% if weeks_best_products %}
-            <section class="product-list uk-margin-xlarge-top">
-                <div class="uk-container">
-                    <h3 class="uk-margin-medium-bottom"><a href="{% url 'product:product_list' %}">Последние добавленные
-                        товары</a></h3>
-                    <div class="uk-child-width-1-1 uk-child-width-1-2@s uk-child-width-1-3@m  uk-child-width-1-4@l uk-grid-small"
-                         uk-grid>
-                        {% include 'product/product_list.html' with object_list=weeks_best_products %}
+            <h1 class="uk-margin-large-bottom">Лучший сервиc по поиску товаров в Бишкеке</h1>
+            <form class="uk-flex-center uk-grid uk-margin-remove" method="get" action="/search/">
+                <input class="uk-input uk-form-width-large" type="text" placeholder="Поиск товаров..."
+                       id="search-form-index" name="q">
+                <button class="uk-button uk-button-default">Найти</button>
+            </form>
+
+            <div class="category uk-margin-large-top uk-grid-small uk-child-width-1-2 uk-child-width-1-3@s uk-child-width-1-4@m uk-child-width-1-@l uk-flex-center uk-text-center"
+                 uk-grid>
+                {% for object in fixed_categories %}
+                    <div class="item uk-transition-toggle">
+                        <div class="uk-card uk-padding-small uk-card-default">
+                            <a href="{{ object.get_absolute_url }}" class="uk-position-cover"></a>
+                            <img class="uk-transition-scale-up uk-transition-opaque" src="{{ object.get_icon }}" alt="">
+                            <div class="fl"><h3 class="uk-margin-small-top">{{ object.title }}</h3></div>
+
+                        </div>
                     </div>
-                    <div class="see-more uk-margin-medium-bottom uk-margin-medium-top uk-text-center">
-                        <a href="{% url 'product:product_list' %}" class="uk-button uk-button-default">Показать все
-                            товары</a>
-                    </div>
-                </div>
-            </section>
-        {% endif %}
-        <section class="shop-list uk-margin-xlarge-top">
+                {% endfor %}
+            </div>
+
+        </div>
+    </section>
+    {% if weeks_best_products %}
+        <section class="product-list uk-margin-xlarge-top">
             <div class="uk-container">
-                <h3 class="uk-margin-medium-bottom"><a href="{% url 'shops:list' %}">Магазины</a></h3>
+                <h3 class="uk-margin-medium-bottom"><a href="{% url 'product:product_list' %}">Последние добавленные
+                    товары</a></h3>
                 <div class="uk-child-width-1-1 uk-child-width-1-2@s uk-child-width-1-3@m  uk-child-width-1-4@l uk-grid-small"
                      uk-grid>
-                    {% include 'shop/shops.html' with shops=shops %}
+                    {% include 'product/product_list.html' with object_list=weeks_best_products %}
                 </div>
                 <div class="see-more uk-margin-medium-bottom uk-margin-medium-top uk-text-center">
-                    <a href="{% url 'shops:list' %}" class="uk-button uk-button-default">Показать все товары</a>
+                    <a href="{% url 'product:product_list' %}" class="uk-button uk-button-default">Показать все
+                        товары</a>
                 </div>
-
             </div>
         </section>
+    {% endif %}
+    <section class="shop-list uk-margin-xlarge-top">
+        <div class="uk-container">
+            <h3 class="uk-margin-medium-bottom"><a href="{% url 'shops:list' %}">Магазины</a></h3>
+            <div class="uk-child-width-1-1 uk-child-width-1-2@s uk-child-width-1-3@m  uk-child-width-1-4@l uk-grid-small"
+                 uk-grid>
+                {% include 'shop/shops.html' with shops=shops %}
+            </div>
+            <div class="see-more uk-margin-medium-bottom uk-margin-medium-top uk-text-center">
+                <a href="{% url 'shops:list' %}" class="uk-button uk-button-default">Показать все товары</a>
+            </div>
+
+        </div>
+    </section>
 {% endblock %}
 {% block footer %}
 {% endblock footer %}
