@@ -37,7 +37,13 @@ class UserFavoritesListView(LoginRequiredMixin, ListView):
 class FavoriteCreateView(LoginRequiredMixin, View):
     def get(self, request):
         item_id = request.GET.get("item")
-        favorite, created = FavoriteProduct.objects.get_or_create(product_id=item_id, user=request.user)
+        if item_id:
+            favorite, created = FavoriteProduct.objects.get_or_create(product_id=item_id, user=request.user)
+        else:
+            return JsonResponse({
+                "status": "error",
+                "message": "item query param is required"
+            })
         if not created:
             favorite.delete()
             flash_message = "Продукт успешно удален из избранных"
@@ -323,14 +329,33 @@ class ProductDeleteView(LoginRequiredMixin, DeleteProductMixin, DeleteView):
 
 def change_publish_status(request):
     product = get_object_or_404(Product, id=request.GET.get('item'))
-    if product.published:
-        product.published = False
+    if request.user.is_authenticated:
+        is_owner = product.shop.is_owner(request.user)
+        if not is_owner:
+            status = "error"
+            message = "Вы не можете изменять чужой продукт"
+            return JsonResponse({
+                "message": message,
+                "status": status
+            })
+        message = ""
+        if product.published:
+            message = "Продукт успешно скрыт"
+            product.published = False
+
+        else:
+            message = "Продукт успешно опубликован"
+            product.published = True
+        product.save()
+        status = "success"
     else:
-        product.published = True
-    product.save()
+        status = "error"
+        message = "Вы не можете изменять чужой продукт"
     data = {
         "item": product.id,
-        "message": "Продукт успешно опубликован" if product.published else "Продукт успешно скрыт"
+        "status": status,
+        "published": product.published,
+        "message": message
     }
     return JsonResponse(data)
 

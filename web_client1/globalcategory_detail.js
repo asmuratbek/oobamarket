@@ -32,7 +32,7 @@ var MainInterface = createClass({
     },
 
     componentDidMount() {
-        var params = location.search.substr(1).split("&")
+        const params = location.search.substr(1).split("&")
         params.forEach(function (i) {
             if (i.split("=")[0] == "q") {
                 this.setState({
@@ -41,7 +41,13 @@ var MainInterface = createClass({
             }
         }.bind(this));
 
-        var query = {
+        const elasticsearch = require('elasticsearch');
+        const client = new elasticsearch.Client({
+          host: 'localhost:9200',
+          log: 'trace'
+        });
+
+        const query = {
                 'query': {
                     'match_phrase': {
                         'global_slug': this.state.categorySlug
@@ -53,47 +59,31 @@ var MainInterface = createClass({
                     {"created_at": "desc"},
                 ]
               };
+        client.search({
+              query
+            }).then(function (data) {
+                const products = data.hits.hits.map(obj => obj._source);
+                const pagesCount = Math.ceil(data.hits.total / this.state.productsByPage);
+                this.setState({
+                    products: products,
+                    productsCount: data.hits.total,
+                    activePage: 1,
+                    pagesCount: pagesCount,
+                    loaded: true
+                });
+            }, function (err) {
+                console.trace(err.message);
+            });
 
-        $.ajax({
-            type: "POST",
-              url: `http://${this.state.domain}:9200/_search/`,
-              data: JSON.stringify(query),
-              contentType: 'application/json',
-              dataType : 'json',
-              success: function (data) {
-                    var products = data.hits.hits.map(obj => obj._source);
-                    var pagesCount = Math.ceil(data.hits.total / 20);
-                    this.setState({
-                        products: products,
-                        productsCount: data.hits.total,
-                        activePage: 1,
-                        pagesCount: pagesCount,
-                        baseUrl: `/api/v1/globalcategory/` + this.state.categorySlug + '/',
-                        loaded: true
-                    });
-              }.bind(this),
-              error: function (response, error) {
-                  console.log(response);
-                  console.log(error);
-              }
-        })
-
-         $.ajax({
-            type: "GET",
-              url: `http://${this.state.domain}:8000/api/v1/my-list/`,
-              success: function (data) {
-                    var favorites = data.favorites.map(obj => obj.id);
-                    var cartItems = data.cart_items.map(obj => obj.id);
-                    this.setState({
-                        favorites: favorites,
-                        cartItems: cartItems
-                    });
-              }.bind(this),
-              error: function (response, error) {
-                  console.log(response);
-                  console.log(error);
-              }
-        })
+        fetch(`http://${this.state.domain}:8000/api/v1/my-list/`)
+          .then(function(data) {
+                const favorites = data.favorites.map(obj => obj.id);
+                const cartItems = data.cart_items.map(obj => obj.id);
+                this.setState({
+                    favorites: favorites,
+                    cartItems: cartItems
+                });
+          })
     },
 
     handlePageChange: function(pageNumber) {

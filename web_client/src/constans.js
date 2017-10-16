@@ -1,1 +1,0 @@
-export const SEARCH_TICKETS = 'SEARCH_TICKETS'

@@ -33,26 +33,26 @@
                         {#                            магазин</a></li>#}
                         {% if user.is_authenticated %}
                             <li class="favorite">
-                                <a href="{{ user.get_favorites_link }}">
+                                <a href="{{ user.get_favorites_link }}" class="favorites_count">
                                     <span class="uk-margin-small-right uk-icon" uk-icon="icon: heart"></span> Избранные
                                     (<span>{{ user.get_favorites_count }}</span>)
                                 </a>
                             </li>
                             <li class="basket">
-                                <a href="{% url 'cart:detail' %}">
+                                <a href="{% url 'cart:detail' %}" class="cart_count">
                                     <span class="uk-margin-small-right uk-icon" uk-icon="icon: cart"></span> Корзина
                                     (<span>{{ user.get_cart_count }}</span>)
                                 </a>
                             </li>
                         {% else %}
                             <li class="favorite">
-                                <a href="{% url 'account_login' %}">
+                                <a href="{% url 'account_login' %}" class="favorites_count">
                                     <span class="uk-margin-small-right uk-icon" uk-icon="icon: heart"></span> Избранные
                                     <span>{{ user.get_favorites_count }}</span>
                                 </a>
                             </li>
                             <li class="basket">
-                                <a href="{% url 'cart:detail' %}">
+                                <a href="{% url 'cart:detail' %}" class="cart_count">
                                     <span class="uk-margin-small-right uk-icon" uk-icon="icon: cart"></span> Корзина
                                     (<span>{{ cart_count }}</span>)
                                 </a>

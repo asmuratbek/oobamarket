@@ -20,11 +20,15 @@
                             {% if product.published %}
                             {% else %}
                             disabled
-                            {% endif %} " href="" uk-icon="icon: copy" title="Скрыть товар" uk-tooltip
+                            {% endif %} " href="" uk-icon="icon: copy"
+                       title="{% if product.published %}Скрыть товар{% else %} Опубликовать товар{% endif %}" uk-tooltip
                        data-status="{% if product.published %}false{% else %}true {% endif %}"
-                       data-item="{{ product.id }}">
+                       data-item-id="{{ product.id }}"
+                    >
                     </a>
-                    <a class="model-trigger delete-object" uk-toggle="target: #DeleteModal" data-url="{% url 'product:delete_product' slug=product.slug %}"  uk-icon="icon: close" title="Удалить товар" uk-tooltip></a>
+                    <a class="model-trigger delete-object" uk-toggle="target: #DeleteModal"
+                       data-url="{% url 'product:delete_product' slug=product.slug %}"
+                       uk-icon="icon: close" title="Удалить товар" uk-tooltip></a>
                 </div>
             {% endif %}
             <div class="uk-inline-clip uk-transition-toggle">
@@ -42,15 +46,17 @@
                 <div class="uk-transition-fade uk-position-cover uk-overlay uk-overlay-default">
                     <a href="{{ product.get_absolute_url }}" class="uk-position-cover"></a>
                     <small class="uk-display-block">Магазин</small>
-                    <h4 class="uk-margin-remove"><a href="##">{{ product.shop.title }}</a></h4>
+                    <h4 class="uk-margin-remove"><a href={{ product.shop.get_absolute_url }}>{{ product.shop.title }}</a></h4>
                     <p>{{ product.short_description }}</p>
                     <div class="control">
-                        <a href="#" class="favorite uk-margin-medium-right" title="Добавить в избранные"
-                           uk-tooltip><span
+                        <a href="#" class="favorite uk-margin-medium-right {% is_favorite_for_like product request.user %}"
+                           title="{% is_favorite_for_tooltip product request.user %}"
+                           data-item-id={{ product.id }} uk-tooltip><span
                                 class=" uk-icon" uk-icon="icon: heart; ratio: 2"></span></a>
-                        <a href="#" class="basket uk-margin-medium-left" title="Добавить в корзину"
-                           uk-tooltip><span
-                                class=" uk-icon" uk-icon="icon: cart; ratio: 2"></span></a>
+                        {% cart_message request product %}
+{#                        <a href="#" class="basket uk-margin-medium-left" title="Добавить в корзину"#}
+{#                           data-item-id={{ product.id }} uk-tooltip><span#}
+{#                                class=" uk-icon" uk-icon="icon: cart; ratio: 2"></span></a>#}
                     </div>
                 </div>
             </div>

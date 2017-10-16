@@ -1,7 +1,7 @@
 {% for category in object.get_parent_categories %}
     <div class="uk-width-expand@m">
 
-        <a href="{% url 'categories:detail' global_slug=global_slug slug=category.slug %}" class="uk-button">
+        <a href="{% url 'categories:parent_detail' global_slug=global_slug slug=category.slug %}" class="uk-button">
             {{ category.title }}
         </a>
 

@@ -55,6 +55,9 @@ class User(AbstractUser):
     def shops_name(self):
         return self.shop_set.all()
 
+    def shop_titles(self):
+        return self.shop_set.all().values('title')
+
 
 class Subscription(models.Model):
     user = models.ForeignKey(User)

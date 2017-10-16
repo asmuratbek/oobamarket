@@ -237,28 +237,36 @@ class GlobalCategoryDetailApiView(APIView):
 
 class MyListView(APIView):
     permission_classes = (AllowAny,)
-    authentication_classes = (SessionAuthentication,)
+    authentication_classes = [SessionAuthentication, TokenAuthentication]
 
     def get(self, request):
         cart_items = request.user.cart_set.last().cartitem_set.all().values("product__id")\
             if request.user.is_authenticated and request.user.cart_set else False
         items = list()
         favs = list()
+        shop_titles = list()
         if cart_items:
             for item in cart_items:
                 items.append({
                     "id": item.get("product__id")
                 })
         favorites = request.user.favoriteproduct_set.all()\
-            if request.user.is_authenticated and  request.user.favoriteproduct_set else False
+            if request.user.is_authenticated and request.user.favoriteproduct_set else False
         if favorites:
             for fav in favorites:
                 favs.append({
                     "id": fav.product.id
                 })
+        shops = request.user.shop_titles() if request.user.is_authenticated and request.user.shop_set else False
+        if shops:
+            for shop in shops:
+                shop_titles.append({
+                    "title": shop.get("title")
+                })
         return JsonResponse({
             "favorites": favs if favs else [],
-            "cart_items": items if items else []
+            "cart_items": items if items else [],
+            "shops": shop_titles if shop_titles else []
         })
 
 

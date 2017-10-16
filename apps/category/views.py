@@ -12,19 +12,18 @@ from apps.properties.models import Properties, Values
 def category_detail(request, global_slug, slug):
     category = Category.objects.get(slug=slug)
     global_category = get_object_or_404(GlobalCategory, slug=global_slug)
-    # _property = Properties.objects.filter(category=category.id)
-    # properties = list()
-    # for prop in _property:
-    #     item = model_to_dict(prop)
-    #     item['values'] = Values.objects.filter(properties=prop.id)
-    #     properties.append(item)
+    template = "category/category_detail.html"
+    context = {
+        "object": category,
+        "global_slug": global_slug,
+    }
+    return render(request, template, context)
 
-    # print(properties)
-    if category.get_level() == 0:
-        template = "category/category_parent_detail.html"
-    else:
-        template = "category/category_detail.html"
 
+def parent_category_detail(request, global_slug, slug):
+    category = Category.objects.get(slug=slug)
+    global_category = get_object_or_404(GlobalCategory, slug=global_slug)
+    template = "category/category_parent_detail.html"
     context = {
         "object": category,
         "global_slug": global_slug,
