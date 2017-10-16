@@ -13,6 +13,19 @@ $(document).ready(function(){
 
 
     // ---------------------------------
+    // Слайдер на главной
+    // ---------------------------------
+
+    
+    $('.home-slider').slick({
+        adaptiveHeight: true,
+        fade: true,
+        nextArrow: '<span class="next" uk-icon="ratio: 2; icon: chevron-right"></span>',
+        prevArrow: '<span class="prev" uk-icon="ratio: 2; icon: chevron-left"></span>'
+    });
+
+
+    // ---------------------------------
     // функция timepicker на странице создание магазина
     // ---------------------------------
 
