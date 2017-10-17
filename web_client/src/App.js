@@ -279,6 +279,19 @@ class App extends Component {
             });
   };
 
+    handleCategorySort = (id) => {
+        console.log(id)
+    };
+
+    handleChildCategorySort = (id) => {
+        console.log(id);
+    };
+
+    deleteActiveCategory = (e) => {
+      e.preventDefault();
+      console.log('del')
+    };
+
   render() {
         let filteredProducts = [];
         let productDelete = this.productDelete;
@@ -305,7 +318,7 @@ class App extends Component {
                         <ChildCategory
                             key={item.id}
                             category={item}
-                            onChangeCategory={this.changeCategory}
+                            // onChangeCategory={this.changeCategory}
                             activeCategory={this.state.activeCategory}
                             categorySort={this.handleChildCategorySort}
                         />
@@ -316,7 +329,7 @@ class App extends Component {
                     key={parent.id}
                     category={parent}
                     descendants={descendants}
-                    onChangeCategory={this.changeCategory}
+                    // onChangeCategory={this.changeCategory}
                     activeCategory={this.state.activeCategory}
                     categorySort={this.handleCategorySort}
                 />
