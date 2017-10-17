@@ -282,6 +282,8 @@ class App extends Component {
   render() {
         let filteredProducts = [];
         let productDelete = this.productDelete;
+        let categories = [];
+        let descendants = [];
 
         filteredProducts = this.state.products.map(function (item, index) {
             return (
@@ -293,6 +295,34 @@ class App extends Component {
                          product={ item }/>
             ) //return
         }.bind(this));
+
+        if (this.state.pageType === 'shop') {
+           categories = this.state.parentCategories.map(function (parent) {
+            descendants = this.state.categories.map(function (item) {
+                if (item.parent_id === parent.id) {
+                    return (
+                        <ChildCategory
+                            key={item.id}
+                            category={item}
+                            onChangeCategory={this.changeCategory}
+                            activeCategory={this.state.activeCategory}
+                            categorySort={this.handleChildCategorySort}
+                        />
+                    )
+                }
+            }.bind(this));
+            return (
+                <CategoryList
+                    key={parent.id}
+                    category={parent}
+                    descendants={descendants}
+                    onChangeCategory={this.changeCategory}
+                    activeCategory={this.state.activeCategory}
+                    categorySort={this.handleCategorySort}
+                />
+            )
+        }.bind(this));
+        }
 
 
         return (
@@ -308,11 +338,62 @@ class App extends Component {
                     onChangePriceTo={ this.changePriceTo }
                 />
 
-                <div className="uk-child-width-1-1 uk-child-width-1-2@s uk-child-width-1-3@m  uk-child-width-1-4@l uk-grid-small" data-uk-grid>
+                    {this.state.pageType === 'shop' ? (
+                        <div className="uk-grid uk-grid-small">
+                            <div className="uk-width-1-4@m">
+                                <ul data-uk-accordion="collapsible: true; duration: 600;">
+                                    <li className={this.state.activeCategory === '' && 'uk-open'}>
+                                        <a className="uk-accordion-title uk-display-block uk-text-left" onClick={this.deleteActiveCategory}>
+                                         Все категории
+                                        </a>
+                                    </li>
+                                    {categories}
+                                </ul>
+                            </div>
+                            <div className="uk-width-expand@m">
+                                <div className="uk-child-width-1-1 uk-child-width-1-2@s uk-child-width-1-2@m  uk-child-width-1-3@l uk-grid-small" data-uk-grid>
 
-                    {filteredProducts}
+                                    {this.state.isOwner && (
+                                        <div className="uk-grid-match add-product-item">
+                                            <div className="shadow uk-text-center">
+                                                <div className="uk-inline-clip uk-transition-toggle">
+                                                    <div className="border">
+                                                        <a href="" className="uk-position-cover">{}</a>
+                                                        <div className="uk-cover-container">
+                                                            <div className="cover">
+                                                                <span className="uk-display-block uk-margin-small-bottom" data-uk-icon="ratio: 3; icon:  plus-circle">{}</span>
+                                                                Добавить новый товар
+                                                            </div>
 
-                </div>
+                                                            <canvas width="400" height="500">{}</canvas>
+                                                            <img data-uk-cover src="img/white.jpg" alt=""/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div className="uk-padding-small uk-margin-remove uk-padding-remove footer">
+                                                   <a href="">Добавить акцию</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    )}
+
+
+
+                                    {filteredProducts}
+
+
+                                </div>
+                            </div>
+
+                        </div>
+                    ): (
+                        <div className="uk-child-width-1-1 uk-child-width-1-2@s uk-child-width-1-3@m  uk-child-width-1-4@l uk-grid-small" data-uk-grid>
+                            {filteredProducts}
+                        </div>
+                    )}
+
+
+
 
                 {this.state.pagesCount > 1 ?
                 <Pagination
