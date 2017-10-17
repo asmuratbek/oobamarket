@@ -2,18 +2,25 @@ import React, {Component} from 'react';
 
 class CategoryList extends Component {
     handleCategoriesSort = (e) => {
-        if (this.props.activeCategories.indexOf(this.props.category) !== -1) {
-            e.target.parentElement.className = "";
-        } else {
-            e.target.parentElement.className += "active ";
-        }
-
-        this.props.onChangeCategory(e.target.text);
-    };
+        e.preventDefault();
+        this.props.categorySort(e.target.getAttribute('data-id'));
+    }
 
     render () {
+        let parent_id = this.props.index;
+        let descendants = this.props.descendants;
+
         return (
-             <li><a href="" onClick={this.handleCategoriesSort}>{this.props.category}</a></li>
+             <li className={this.props.category.id === this.props.activeCategory ? "uk-open" : ""}>
+                    <a className="uk-accordion-title uk-display-block uk-text-left" href={`#${this.props.category.id}`}
+                       onClick={this.handleCategoriesSort}
+                       data-id={this.props.category.id}
+                       data-parent="#accordion">{this.props.category.title}</a>
+
+                    <div id={this.props.category.id} className="uk-accordion-content">
+                        {descendants}
+                    </div>
+            </li>
         )
     }
 }

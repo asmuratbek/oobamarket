@@ -298,8 +298,9 @@ class App extends Component {
 
         if (this.state.pageType === 'shop') {
            categories = this.state.parentCategories.map(function (parent) {
-            descendants = this.state.categories.map(function (item) {
-                if (item.parent_id === parent.id) {
+            descendants = this.state.categories.filter(function(item){
+                return item.parent_id === parent.id
+            }).map(function (item) {
                     return (
                         <ChildCategory
                             key={item.id}
@@ -309,7 +310,6 @@ class App extends Component {
                             categorySort={this.handleChildCategorySort}
                         />
                     )
-                }
             }.bind(this));
             return (
                 <CategoryList
@@ -338,7 +338,7 @@ class App extends Component {
                     onChangePriceTo={ this.changePriceTo }
                 />
 
-                    {this.state.pageType === 'shop' ? (
+                    {this.state.pageType === "shop" ? (
                         <div className="uk-grid uk-grid-small">
                             <div className="uk-width-1-4@m">
                                 <ul data-uk-accordion="collapsible: true; duration: 600;">
@@ -396,13 +396,13 @@ class App extends Component {
 
 
                 {this.state.pagesCount > 1 ?
-                <Pagination
-                  activePage={this.state.activePage}
-                  itemsCountPerPage={this.state.productsByPage}
-                  totalItemsCount={this.state.productsCount}
-                  pageRangeDisplayed={5}
-                  onChange={this.handlePageChange}
-                />
+                    <Pagination
+                      activePage={this.state.activePage}
+                      itemsCountPerPage={this.state.productsByPage}
+                      totalItemsCount={this.state.productsCount}
+                      pageRangeDisplayed={5}
+                      onChange={this.handlePageChange}
+                    />
                 : ''}
             </div>
         )
