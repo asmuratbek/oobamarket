@@ -77,6 +77,10 @@ class ShopCreateView(LoginRequiredMixin1, FormsetMixin, CreateView):
         context['days'] = DAYS
         return context
 
+    def form_invalid(self, form, formset):
+        messages.add_message(self.request, messages.WARNING, form.errors)
+        return self.render_to_response(self.get_context_data(form=form))
+
     def form_valid(self, form, formset):
         random_int = random.randrange(0, 1010)
         form.instance.slug = slugify(form.instance.title, max_length=32) + str(random_int)
@@ -105,6 +109,10 @@ class ShopUpdateView(LoginRequiredMixin, FormsetMixin, ShopMixin, UpdateView):
             context['longitude'] = ""
             context['latitude'] = ""
         return context
+
+    def form_invalid(self, form, formset):
+        messages.add_message(self.request, messages.WARNING, form.errors)
+        return self.render_to_response(self.get_context_data(form=form))
 
     def form_valid(self, form, formset):
         form.save()
