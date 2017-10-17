@@ -15,8 +15,8 @@
 
 {% endfor %}
 {% endif %}
-<li style="list-style: none">
-  <a title="{{provider.name}}" class="socialaccount_provider {{provider.id}}{% if provider.name == "Google" %} vk{% endif %}"
+<li class="uk-margin-small-bottom" style="list-style: none">
+  <a title="{{provider.name}}" class="socialaccount_provider uk-button uk-button-default {{provider.id}}{% if provider.name == "Google" %} vk{% endif %}"
      href="{% provider_login_url provider.id process=process scope=scope auth_params=auth_params %}">
       {% if provider.name == "Facebook" %}
       <i class="fa fa-facebook-square" aria-hidden="true"></i>

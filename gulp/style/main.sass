@@ -1266,14 +1266,80 @@ header
       background-color: $hover-orange
       color: #fff
       border-color: $hover-orange
-.landing-header
-  padding: 100px 0
-  background: #f3481c url(../img/landing/p10.png) 0 0 repeat
-  h1
-    font-weight: 300
-    color: #fff
-    font-size: 30px
-    text-transform: uppercase
+.landing
+  .landing-header
+    padding: 100px 0
+    background: #f3481c url(../img/landing/p10.png) 0 0 repeat
+    h2
+      font-weight: 300
+      color: #fff
+      font-size: 24px
+      text-transform: uppercase
+      margin: 40px 0
+    p
+      color: #fff
+      font-weight: 300
+      font-size: 14px
+      b
+        font-weight: bold
+    hr
+      width: 200px
+      margin: 0 auto
+      display: block
+  .step, .client
+    padding: 100px 0 0 0
+    background-color: #fff
+    h3
+      margin-bottom: 100px
+      text-align: center
+      text-transform: uppercase
+      font-weight: 400
+    span
+      font-size: 70px
+      color: #000
+      font-weight: bold
+  .client
+    padding: 50px 0 100px 0
+    hr
+      width: 100px
+      margin: 0 auto
+  .video
+    background-color: #fff
+  .form-landing
+    padding: 100px 0
+    .facebook
+      width: 100%
+      background-color: #3b5998
+      color: #fff
+      &:hover
+        background-color: #314775
+        border-color: #314775
+      i
+        color: #fff
+        display: inline-block
+        margin-right: 5px
+    .google
+      width: 100%
+      background-color: #e2481a
+      color: #fff
+      &:hover
+        background-color: #b73711
+        border-color: #b73711
+      i
+        color: #fff
+        display: inline-block
+        margin-right: 5px
+    h2
+      font-size: 24px
+      font-weight: 300
+    button
+      background-color: $orange
+      color: #fff
+      border-color: $orange
+      &:hover
+        background-color: $hover-orange
+        color: #fff
+        border-color: $hover-orange
 .about-ooba
   padding: 100px 0
   img
@@ -1304,7 +1370,16 @@ header
       color: #fff
       border-color: $hover-orange
 footer
-  background-color: #f6f5f3
+  background-color: #333 !important
   padding-top: 80px
   padding-bottom: 80px
+  ul
+    padding: 0
+    li
+      list-style: none
+      a
+        color: #fff
+        font-weight: 400
+        &:hover
+          color: $hover-orange
 @import "media.sass"
