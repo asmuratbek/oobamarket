@@ -20,11 +20,13 @@ var MainInterface = createClass({
             queryText: '',
             products: [],
             activePage: 1,
+            favorites: [],
+            cartItems: [],
             shops: [],
             categories: [],
             loaded: false,
             activeCategories: [],
-            productsByPage: 20,
+            productsByPage: 52,
             domain: location.href.split("/")[2].split(":")[0],
             categorySlug: location.href.split("/")[location.href.split("/").length - 2]
         }
@@ -61,7 +63,7 @@ var MainInterface = createClass({
               dataType : 'json',
               success: function (data) {
                     var products = data.hits.hits.map(obj => obj._source);
-                    var pagesCount = Math.ceil(data.hits.total / 20);
+                    var pagesCount = Math.ceil(data.hits.total / this.state.productsByPage);
                     this.setState({
                         products: products,
                         productsCount: data.hits.total,
@@ -69,6 +71,23 @@ var MainInterface = createClass({
                         pagesCount: pagesCount,
                         baseUrl: `/api/v1/globalcategory/` + this.state.categorySlug + '/',
                         loaded: true
+                    });
+              }.bind(this),
+              error: function (response, error) {
+                  console.log(response);
+                  console.log(error);
+              }
+        })
+
+        $.ajax({
+            type: "GET",
+              url: `http://${this.state.domain}:8000/api/v1/my-list/`,
+              success: function (data) {
+                    var favorites = data.favorites.map(obj => obj.id);
+                    var cartItems = data.cart_items.map(obj => obj.id);
+                    this.setState({
+                        favorites: favorites,
+                        cartItems: cartItems
                     });
               }.bind(this),
               error: function (response, error) {
@@ -305,7 +324,7 @@ var MainInterface = createClass({
               dataType : 'json',
               success: function (data) {
                     var products = data.hits.hits.map(obj => obj._source);
-                    var pagesCount = Math.ceil(data.hits.total / 20);
+                    var pagesCount = Math.ceil(data.hits.total / this.state.productsByPage);
                     this.setState({
                         products: products,
                         loaded: true,
@@ -382,7 +401,7 @@ var MainInterface = createClass({
               dataType : 'json',
               success: function (data) {
                     var products = data.hits.hits.map(obj => obj._source);
-                    var pagesCount = Math.ceil(data.hits.total / 20);
+                    var pagesCount = Math.ceil(data.hits.total / this.state.productsByPage);
                     this.setState({
                         products: products,
                         loaded: true,
@@ -458,7 +477,7 @@ var MainInterface = createClass({
               dataType : 'json',
               success: function (data) {
                     var products = data.hits.hits.map(obj => obj._source);
-                    var pagesCount = Math.ceil(data.hits.total / 20);
+                    var pagesCount = Math.ceil(data.hits.total / this.state.productsByPage);
                     this.setState({
                         products: products,
                         loaded: true,
@@ -484,6 +503,8 @@ var MainInterface = createClass({
             return (
                 <Product key={ index }
                          onProductDelete={productDelete}
+                         favorites={this.state.favorites}
+                         cartItems={this.state.cartItems}
                          product={ item }/>
             ) //return
         }.bind(this));
@@ -511,7 +532,7 @@ var MainInterface = createClass({
                 {this.state.pagesCount > 1 ?
                 <Pagination
                   activePage={this.state.activePage}
-                  itemsCountPerPage={20}
+                  itemsCountPerPage={this.state.productsByPage}
                   totalItemsCount={this.state.productsCount}
                   pageRangeDisplayed={5}
                   onChange={this.handlePageChange}

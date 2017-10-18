@@ -119,7 +119,7 @@ HAYSTACK_CONNECTIONS = {
     },
 }
 
-# HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
+HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
 
 # MIDDLEWARE CONFIGURATION
 # ------------------------------------------------------------------------------
@@ -348,7 +348,9 @@ ACCOUNT_ALLOW_REGISTRATION = env.bool('DJANGO_ACCOUNT_ALLOW_REGISTRATION', True)
 ACCOUNT_ADAPTER = 'apps.users.adapters.AccountAdapter'
 SOCIALACCOUNT_ADAPTER = 'apps.users.adapters.SocialAccountAdapter'
 SOCIALACCOUNT_QUERY_EMAIL = True
-
+SOCIALACCOUNT_EMAIL_REQUIRED = False
+SOCIALACCOUNT_AUTO_SIGNUP = True
+SOCIALACCOUNT_EMAIL_VERIFICATION = None
 # Custom user app defaults
 # Select the correct user model
 AUTH_USER_MODEL = 'users.User'
@@ -401,7 +403,7 @@ SOCIALACCOUNT_PROVIDERS = {
             'updated_time',
         ],
         'EXCHANGE_TOKEN': True,
-        'VERIFIED_EMAIL': False,
+        'VERIFIED_EMAIL': True,
         'VERSION': 'v2.4',
     }
 }

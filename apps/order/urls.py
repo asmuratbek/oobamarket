@@ -9,13 +9,13 @@ urlpatterns = [
     url(r'^change_status/$', shop_change_status, name='change_status'),
     url(r'^delete_product/$', shop_delete_cartitem_product, name='delete_product'),
     url(r'^(?P<slug>[\w.@+-]+)/order-list/$', ShopSimpleOrderListView.as_view(), name='shop_order_list'),
-    url(r'^(?P<slug>[\w.@+-]+)/order-detail/(?P<pk>\d+)/$', ShopSimpleOrderDetailView.as_view(), name='shop_simple_order_detail'),
-    url(r'^(?P<pk>\d+)/shop_detail$', ShopSimpleOrderUpdateView.as_view(), name='shop_simple_order_update'),
+    url(r'^(?P<slug>[\w.@+-]+)/order-detail/(?P<pk>\d+)/$', ShopSimpleOrderDetailView.as_view(),
+        name='shop_simple_order_detail'),
+    url(r'^(?P<pk>\d+)/order_update$', ShopSimpleOrderUpdateView.as_view(), name='shop_simple_order_update'),
     # url(r'^(?P<pk>\d+)/delete/$', DeleteSimpleOrderShop.as_view(), name='shop_order_delete'),
     # url(r'^(?P<pk>\d+)/$', OrderDetail.as_view(), name='detail'),
     url(r'^(?P<pk>\d+)/user_detail$', UserSimpleOrderDetailView.as_view(), name='user_order_detail'),
-    url(r'^(?P<username>[\w.@+-]+)/order_list/$', UserSimpleOrderListView.as_view(), name='user_order_list'),
-
-
+    url(r'^(?P<username'
+        r'>[\w.@+-]+)/order_list/$', UserSimpleOrderListView.as_view(), name='user_order_list'),
 
 ]

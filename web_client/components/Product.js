@@ -55,7 +55,7 @@ var ProductList = createClass({
             type: "GET",
             url: "/favorite/add",
             data: {
-                'item': this.props.product.id
+                'item': this.props.product.pk
             },
             success: function (data) {
                 if (data.created) {
@@ -88,7 +88,7 @@ var ProductList = createClass({
           url: "/cart/",
           data:
               {
-                  "item":  this.props.product.id
+                  "item":  this.props.product.pk
               },
           success: function (data) {
               $('.cart-count').text(data.total_items);
@@ -97,7 +97,7 @@ var ProductList = createClass({
                       target.setAttribute('data-tip', "В корзине");
                       target.setAttribute('data-message', "Товар успешно удален из корзины");
                   }
-                  else if (data.deleted) {
+                  else {
                       target.classList.remove("enable");
                       target.setAttribute('data-tip', "Добавить в корзину");
                       target.setAttribute('data-message', "Товар успешно добавлен в корзину");
@@ -143,32 +143,28 @@ var ProductList = createClass({
     var showAlert = this.showAlert(e);
   },
 
-  inCart : function (product) {
-    return (
-        <span className="glyphicon glyphicon-shopping-cart enable" data-toggle="tooltip"
-              data-placement="top" data-product-id={this.props.product.id}
-                          data-tip="В корзине" onClick={this.addOrRemoveFromCart}></span>
-    )
-  },
-
-  notInCart : function (product) {
-    return (
-        <span className="glyphicon glyphicon-shopping-cart" data-toggle="tooltip"
-              data-placement="top" data-product-id={this.props.product.id}
-                          data-tip="Добавить в корзину" onClick={this.addOrRemoveFromCart}></span>
-    )
-  },
+  // inCart : function (product) {
+  //   return (
+  //       <span className="glyphicon glyphicon-shopping-cart enable" data-toggle="tooltip"
+  //             data-placement="top" data-product-id={this.props.product.id}
+  //                         data-tip="В корзине" onClick={this.addOrRemoveFromCart}></span>
+  //   )
+  // },
+  //
+  // notInCart : function (product) {
+  //   return (
+  //       <span className="glyphicon glyphicon-shopping-cart" data-toggle="tooltip"
+  //             data-placement="top" data-product-id={this.props.product.id}
+  //                         data-tip="Добавить в корзину" onClick={this.addOrRemoveFromCart}></span>
+  //   )
+  // },
 
   isInCart : function (product) {
-      if (this.props.product.is_in_cart) {
-          return (
-              this.inCart(product)
-          )
-      } else {
-          return (
-              this.notInCart(product)
-          )
-      }
+      return this.props.cartItems.indexOf(product.pk) !== -1
+  },
+
+  isInFavorites: function (product) {
+      return this.props.favorites.indexOf(product.pk) !== -1
   },
 
   handleDelete: function(product_id){
@@ -270,11 +266,22 @@ var ProductList = createClass({
                 </div>
 
                 <div className="button-basket-favorite">
-                    {this.isInCart(this.props.product)}
-                    <span className={`glyphicon glyphicon-heart ${this.props.product.is_favorite && 'enable like'}`}
+                    {this.isInCart(this.props.product) ? (
+                        <span className="glyphicon glyphicon-shopping-cart enable" data-toggle="tooltip"
+              data-placement="top" data-product-id={this.props.product.id}
+                          data-tip="В корзине" onClick={this.addOrRemoveFromCart}
+                        data-message="Товар успешно удален из корзины"></span>)
+                        : (
+                            <span className="glyphicon glyphicon-shopping-cart" data-toggle="tooltip"
+              data-placement="top" data-product-id={this.props.product.id}
+                          data-tip="Добавить в корзину" onClick={this.addOrRemoveFromCart}
+                            data-message="Товар успешно добавлен в корзину"></span>
+                        )}
+                    <span className={`glyphicon glyphicon-heart ${this.isInFavorites(this.props.product) && 'enable like'}`}
                           data-product-id={this.props.product.id} data-toggle="tooltip" title=""
                           data-placement="top"
-                          data-tip={this.props.product.is_favorite ? "Удалить из избранных" : "Добавить в избранное"}
+                          data-tip={this.isInFavorites(this.props.product) ? "Удалить из избранных" : "Добавить в избранное"}
+                          data-message={this.isInFavorites(this.props.product) ? "Товар удален из избранных" : "Товар добавлен в избранное"}
                         onClick={this.AddOrRemoveFavorite}></span>
                     <ReactTooltip/>
                 </div>

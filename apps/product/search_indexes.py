@@ -20,7 +20,7 @@ class ProductIndex(indexes.SearchIndex, indexes.Indexable):
     currency = indexes.CharField(model_attr='currency')
     shop = indexes.CharField(model_attr='get_shop_title')
     shop_slug = indexes.CharField(model_attr='get_shop_slug')
-    short_description = indexes.CharField(model_attr='short_description')
+    short_description = indexes.CharField(model_attr='short_description', null=True)
     get_shop_url = indexes.CharField(model_attr='get_shop_url')
     main_image = indexes.CharField(model_attr='get_main_image')
     detail_view = indexes.CharField(model_attr='get_absolute_url')

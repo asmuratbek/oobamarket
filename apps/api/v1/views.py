@@ -1,14 +1,17 @@
+import uuid
 from allauth.socialaccount.providers.facebook.views import FacebookOAuth2Adapter
 from allauth.socialaccount.providers.google.views import GoogleOAuth2Adapter
 from django.db.models import Q
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
+from django.conf import settings
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
 from drf_multiple_model.views import MultipleModelAPIView
 from rest_auth.registration.views import SocialLoginView
 from rest_framework import filters
 from rest_framework.authentication import SessionAuthentication, TokenAuthentication
+from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from rest_framework.filters import (
     SearchFilter,
     OrderingFilter
@@ -24,28 +27,22 @@ from rest_framework.permissions import (
     IsAdminUser,
     IsAuthenticated)
 from rest_framework.views import APIView
-
-from apps.api.v1.serializers import (
-    ProductSerializer,
-    ProductCreateSerializer,
-    ShopSerializer,
-    ShopCreateSerializer,
-    CategorySerializer,
-    GlobalCategorySerializer,
-    PlaceSerializer, ParentCategorySerializer, ProductDetailSerializer)
+from slugify import slugify
+from django.forms.models import model_to_dict
+from apps.api.v1.serializers import *
 from apps.cart.models import Cart, CartItem
 from apps.category.models import Category
 from apps.global_category.models import GlobalCategory
 from apps.product.models import Product, ProductImage, FavoriteProduct
 from apps.shop.models import Shop, Contacts, Place
-from apps.users.models import User
+from apps.users.models import User, Subscription
 from .pagination import (
     CategoryLimitPagination,
     ProductLimitPagination,
     ShopLimitPagination,
     ShopProductsLimitPagination
 )
-from .permissions import IsOwnerOrReadOnly
+from .permissions import *
 
 ORDER_TYPES = ["price", "-price", "title", "created_at"]
 
@@ -122,13 +119,17 @@ class LentaView(APIView):
                 "price": product.get_price(),
                 "is_favorite": product.favorite.filter(
                     user=self.request.user).exists() if self.request.user.is_authenticated else False,
-                "is_in_cart": True
+                "is_in_cart": self.request.user.cart_set.last().cartitem_set.filter(product=product).exists()\
+                    if self.request.user.is_authenticated \
+                       and self.request.user.cart_set.all() \
+                    else False
             })
         return JsonResponse({
             "status": "success",
             "page": page if page else 1,
             "items" : items
         })
+
 
 class ProductAddToCartView(APIView):
     permission_classes = (IsAuthenticated,)
@@ -243,20 +244,11 @@ class CategoryDetailChildrenApiView(ListAPIView):
         return Category.objects.filter(parent__slug=self.kwargs.get('slug'), parent__isnull=False)
 
 
-class GlobalCategoryDetailApiView(MultipleModelAPIView):
-    # queryList = [
-    #     (Shop.objects.all(), ShopSerializer),
-    #     (Product.objects.all(), ProductSerializer),
-    # ]
-    pagination_class = CategoryLimitPagination
-    flat = True
-    filter_backends = (filters.OrderingFilter,)
-    serializer_class = ProductSerializer
+class GlobalCategoryDetailApiView(APIView):
     permission_classes = (AllowAny, )
-    authentication_classes = (SessionAuthentication, TokenAuthentication)
+    authentication_classes = (TokenAuthentication,)
 
-    def get_queryList(self):
-        slug = self.kwargs.get('slug')
+    def get(self, request, slug):
         q = self.request.GET.get('q')
         order = self.request.GET.get('order')
         price_from = self.request.GET.get('priceFrom')
@@ -274,10 +266,53 @@ class GlobalCategoryDetailApiView(MultipleModelAPIView):
             products = products.filter(price__gt=int(price_from))
         if price_to and price_to != 'NaN':
             products = products.filter(price__lt=int(price_to))
-        queryList = [
-            (products, ProductDetailSerializer),
-        ]
-        return queryList
+
+        product_list = list()
+        for product in products:
+            product_list.append({
+                "title": product.title,
+                "slug": product.slug,
+                "short_description": product.short_description,
+                "shop": product.get_shop_title(),
+                "main_image": product.get_main_thumb_image(),
+                "price": product.get_price(),
+                "is_favorite": product.favorite.filter(
+                    user=self.request.user).exists() if self.request.user.is_authenticated else False,
+                "is_in_cart": self.request.user.cart_set.last().cartitem_set.filter(product=product).exists()\
+                    if self.request.user.is_authenticated \
+                       and self.request.user.cart_set.all() \
+                    else False
+            })
+
+        return JsonResponse({
+            "status": "success",
+            "products": product_list
+        })
+
+
+class MyListView(APIView):
+    permission_classes = (AllowAny,)
+    authentication_classes = (SessionAuthentication,)
+
+    def get(self, request):
+        cart_items = request.user.cart_set.last().cartitem_set.all().values("product__id") if request.user.cart_set.all() else False
+        items = list()
+        if cart_items:
+            for item in cart_items:
+                items.append({
+                    "id": item.get("product__id")
+                })
+        favorites = request.user.favoriteproduct_set.all() if request.user.favoriteproduct_set.all() else False
+        favs = list()
+        if favorites:
+            for fav in favorites:
+                favs.append({
+                    "id": fav.product.id
+                })
+        return JsonResponse({
+            "favorites": favs if favs else [],
+            "cart_items": items if items else []
+        })
 
 
 class ProductListApiView(ListAPIView):
@@ -331,10 +366,36 @@ class ProductDetailApiView(APIView):
 
 class ProductUpdateApiView(RetrieveUpdateAPIView):
     queryset = Product.objects.all()
-    serializer_class = ProductSerializer
+    serializer_class = ProductPostSerializer
     lookup_field = 'slug'
-    permission_classes = [IsOwnerOrReadOnly]
+    permission_classes = [IsAuthenticated, IsOwnerShop4Product]
     authentication_classes = (SessionAuthentication, TokenAuthentication)
+
+    def get(self, request, *args, **kwargs):
+        product = get_object_or_404(Product, slug=kwargs['slug'])
+        product_images = [{'image_id': i.id, 'image_url': i.image.url}
+                                     for i in product.productimage_set.all()]
+        product_dict = model_to_dict(product, exclude=['shop', 'category'])
+        product_dict['shop'] = dict(id=product.shop.id, title=product.shop.title, slug=product.shop.slug)
+        product_dict['global_category'] = dict(id=product.category.parent.section.id,
+                                               title=product.category.parent.section.title,
+                                               slug=product.category.parent.section.slug)
+        product_dict['parent_category'] = dict(id=product.category.parent.id, title=product.category.parent.title,
+                                               slug=product.category.parent.slug)
+        product_dict['category'] = dict(id=product.category.id, title=product.category.title, slug=product.category.slug)
+        return JsonResponse(dict(images=product_images, product=product_dict))
+
+    def perform_update(self, serializer):
+        remove_images_list = [int(i) for i in self.request.data.getlist('delete_images', [])
+                                  if i != '' and i != None]
+        delete_images = ProductImage.objects.filter(id__in=remove_images_list).delete()
+        product = serializer.save(category=get_object_or_404(Category, slug=self.request.data.get('category', '')),
+                                    shop=get_object_or_404(Shop, slug=self.request.data.get('shop', '')))
+        images_files = self.request.FILES.getlist('images_files', '')
+        if images_files:
+            image_list = [ProductImage(product=product, image=img) for img in images_files]
+            ProductImage.objects.bulk_create(image_list)
+        return JsonResponse({'status': 0, 'message': 'Product is successfully updated.'})
 
 
 class ProductDeleteApiView(DestroyAPIView):
@@ -346,10 +407,19 @@ class ProductDeleteApiView(DestroyAPIView):
 
 class ProductCreateApiView(CreateAPIView):
     queryset = Product.objects.all()
-    serializer_class = ProductCreateSerializer
+    serializer_class = ProductPostSerializer
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated, IsOwnerShop4Product,)
 
-    # def perform_create(self, serializer):
-    #     serializer.save(author=self.request.user)
+    def perform_create(self, serializer):
+        product = serializer.save(shop=get_object_or_404(Shop, slug=self.request.data.get('shop', '')),
+                                  category=get_object_or_404(Category, slug=self.request.data.get('category', '')),
+                                  slug=str(slugify(self.request.data.get("title", ""))) + "-" + str(uuid.uuid4())[:4])
+        images_files = self.request.FILES.getlist('images_files', '')
+        if images_files:
+            image_list = [ProductImage(product=product, image=img) for img in images_files]
+            ProductImage.objects.bulk_create(image_list)
+        return JsonResponse({'status': 0, 'message': 'Product is successfully created.'})
 
 
 class ShopListApiView(ListAPIView):
@@ -443,6 +513,7 @@ class ShopApiMobileView(APIView):
         return JsonResponse({
             "title": shop.title,
             "slug": shop.slug,
+            "email": shop.email,
             "short_description": shop.short_description,
             "description": shop.description,
             "logo": shop.get_logo(),
@@ -480,17 +551,48 @@ class ShopSalesView(APIView):
         sales = list()
         for sale in shop.sales_set.all():
             sales.append({
+                "id": sale.id,
                 "title": sale.title,
                 "short_description": sale.short_description,
                 "description": sale.description,
                 "discount": sale.discount,
-                "image": sale.image.url
+                "image": sale.image.url if sale.image else None
             })
 
         return JsonResponse({
             "status": "success",
             "sales": sales
         })
+
+    def post(self, *args, **kwargs):
+        self.permission_classes = [IsOwnerShop4Shop]
+        shop = get_object_or_404(Shop, slug=kwargs.get('slug', ''))
+        serializer = SalesSerializer(data=self.request.data)
+        if serializer.is_valid():
+            serializer.save(shop=shop)
+            return JsonResponse({'status': 0, 'message': 'Sale is successfully created.'})
+        return JsonResponse({'status': 1, 'message': 'Sale values is not valid.'})
+
+
+class SalesUpdate(RetrieveUpdateAPIView):
+    queryset = Sales.objects.all()
+    serializer_class = SalesSerializer
+    lookup_field = 'pk'
+    permission_classes = [IsAuthenticated, IsOwnerShop4Shop, IsSaleOfShop]
+    authentication_classes = (SessionAuthentication, TokenAuthentication)
+
+    def get(self, *args, **kwargs):
+        sale = get_object_or_404(Sales, id=kwargs.get('pk'))
+        sale_dict = model_to_dict(sale, exclude=['image'])
+        sale_dict['image'] = sale.image.url if sale.image else None
+        return JsonResponse({'status': 0, 'sale': sale_dict})
+
+
+class SaleDelete(DestroyAPIView):
+    queryset = Sales.objects.all()
+    lookup_field = 'pk'
+    permission_classes = [IsAuthenticated, IsOwnerShop4Shop, IsSaleOfShop]
+    authentication_classes = (SessionAuthentication, TokenAuthentication)
 
 
 class ShopContactsView(APIView):
@@ -499,30 +601,14 @@ class ShopContactsView(APIView):
 
     def get(self, request, slug):
         shop = get_object_or_404(Shop, slug=slug)
-        contacts = list()
-        for contact in shop.contacts_set.all():
-            places = list()
-            contacts.append({
-                "address": contact.address,
-                "phone": contact.phone,
-                "monday": contact.monday,
-                "tuesday": contact.tuesday,
-                "wednesday": contact.wednesday,
-                "thursday": contact.thursday,
-                "friday": contact.friday,
-                "saturday": contact.saturday,
-                "sunday": contact.sunday,
-                "round_the_clock": contact.round_the_clock,
-                "place": contact.place.__str__() if contact.place else "",
-                "latitude": contact.place.latitude if contact.place.latitude else None,
-                "longitude": contact.place.longitude if contact.place.longitude else None
-
-            })
-
-        return JsonResponse({
-            "status": "success",
-            "contacts": contacts
-        })
+        contact = shop.contacts_set.first()
+        if contact:
+            contact_dict = model_to_dict(contact, exclude=['place', 'latitude', 'longitude', 'shop'])
+            contact_dict['latitude'] = contact.place.latitude if contact.place else contact.latitude
+            contact_dict['longitude'] = contact.place.longitude if contact.place else contact.longitude
+            contact_dict['place'] = contact.place.__str__() if contact.place else None
+            return JsonResponse({"status": "success", "contacts": contact_dict})
+        return JsonResponse({'status': "success", "contacts": None})
 
 
 class ShopReviewsView(APIView):
@@ -536,13 +622,35 @@ class ShopReviewsView(APIView):
             reviews.append({
                 "user": review.user.username if review.user.username else review.user.email,
                 "text": review.text,
-                "stars": review.stars
+                "stars": len(review.stars) if review.stars else None
             })
 
         return JsonResponse({
             "status": "success",
             "reviews": reviews
         })
+
+    def post(self, request, slug):
+        self.permission_classes = [IsAuthenticated]
+        shop = get_object_or_404(Shop, slug=slug)
+        stars_count = request.POST.get("stars")
+        if stars_count:
+            try:
+                if int(stars_count) > 5:
+                    stars_count = 5
+                elif int(stars_count) < 1:
+                    stars_count = 1
+                stars = "*" * int(stars_count)
+            except (ValueError, TypeError):
+                stars = None
+        else:
+            stars = None
+        serializer = ShopReviewsSerializer(data=request.POST)
+        if serializer.is_valid():
+            serializer.save(stars=stars, user=request.user, shop=shop)
+            return JsonResponse({'status': 0, 'message': 'Review is successfully created.'})
+        else:
+            return JsonResponse({'status': 1, 'message': serializer.errors})
 
 
 class ShopCategoryChildrenApiView(APIView):
@@ -568,9 +676,55 @@ class ShopCategoryChildrenApiView(APIView):
 
 class ShopUpdateApiView(RetrieveUpdateAPIView):
     queryset = Shop.objects.all()
-    serializer_class = ShopSerializer
+    serializer_class = ShopCreateSerializer
     lookup_field = 'slug'
-    permission_classes = [IsOwnerOrReadOnly]
+    permission_classes = [IsAuthenticated, IsOwnerShop4Shop]
+    authentication_classes = (TokenAuthentication,)
+
+    def get(self, *args, **kwargs):
+        shop = get_object_or_404(Shop, slug=kwargs['slug'])
+        shop_dict = model_to_dict(shop, exclude=['logo', 'user'])
+        shop_dict['logo'] = shop.logo.url
+        shop_dict['users'] = [user.id for user in shop.user.all()]
+        shop_dict['contact'] = model_to_dict(shop.contacts_set.first())
+        return JsonResponse(shop_dict)
+
+    def perform_update(self, serializer):
+        shop = serializer.save(user=[self.request.user.id])
+        remove_logo = self.request.data.get("remove_logo", 'false')
+        new_logo = self.request.FILES.get("new_logo")
+        if remove_logo == 'true':
+            shop.logo = None
+            shop.save()
+        if new_logo:
+            shop.logo = new_logo
+            shop.save()
+        contact = shop.contacts_set.first()
+        place_id = self.request.data.get("place_id")
+        contact_dict = dict(
+            phone=self.request.data.get("phone"),
+            address=self.request.data.get("address"),
+            monday=self.request.data.get("monday"),
+            tuesday=self.request.data.get("tuesday"),
+            wednesday=self.request.data.get("wednesday"),
+            thursday=self.request.data.get("thursday"),
+            friday=self.request.data.get("friday"),
+            shop=shop,
+            saturday=self.request.data.get("saturday"),
+            sunday=self.request.data.get("sunday"),
+            round_the_clock=self.request.data.get("round_the_clock", False),
+            longitude=self.request.data.get("longitude"),
+            latitude=self.request.data.get("latitude"),
+            place=Place.objects.filter(id=place_id).first())
+        are_values = [contact_dict[k] for k in contact_dict.keys()
+                      if k != "shop" and contact_dict[k] != None and contact_dict[k] != ""]
+        if contact:
+            contact(**contact_dict)
+            contact.save()
+        else:
+            if are_values:
+                Contacts.objects.create(**contact_dict)
+
 
 
 class ShopDeleteApiView(DestroyAPIView):
@@ -587,47 +741,53 @@ class ShopCreateApiView(CreateAPIView):
     authentication_classes = (TokenAuthentication,)
 
     def perform_create(self, serializer):
-        serializer.save(user=[self.request.user.id])
-        slug = self.request.POST.get("slug")
-        phone = self.request.POST.get("phone")
-        address = self.request.POST.get("address")
-        monday = self.request.POST.get("monday")
-        tuesday = self.request.POST.get("tuesday")
-        wednesday = self.request.POST.get("wednesday")
-        thursday = self.request.POST.get("thursday")
-        friday = self.request.POST.get("friday")
-        saturday = self.request.POST.get("saturday")
-        sunday = self.request.POST.get("sunday")
-        round_the_clock = self.request.POST.get("round_the_clock")
-        longitude = self.request.POST.get("longitude")
-        latitude = self.request.POST.get("latitude")
+        shop = serializer.save(user=[self.request.user.id],
+                               slug=str(slugify(self.request.POST.get("title"))) + "-" + str(uuid.uuid4())[:4],
+                               published=True)
         place_id = self.request.POST.get("place_id")
-        place = get_object_or_404(Place, id=place_id)
-        shop = get_object_or_404(Shop, slug=slug)
-        if phone or address or monday or tuesday or wednesday or thursday or friday or saturday or sunday or round_the_clock:
-             contact = Contacts.objects.create(shop=shop, phone=phone, address=address,
-                                    monday=monday, tuesday=tuesday, wednesday=wednesday,
-                                    thursday=thursday, friday=friday, saturday=saturday,
-                                    sunday=sunday, round_the_clock=round_the_clock if round_the_clock else False,
-                                    longitude=longitude, latitude=latitude, place=place if place else None
-                                               )
+        place = Place.objects.filter(id=int(place_id)).first()
+        round_the_clock = self.request.POST.get("round_the_clock", False)
+        contact_dict = dict(
+            phone=self.request.POST.get("phone"),
+            address=self.request.POST.get("address"),
+            monday=self.request.POST.get("monday"),
+            tuesday=self.request.POST.get("tuesday"),
+            wednesday=self.request.POST.get("wednesday"),
+            thursday=self.request.POST.get("thursday"),
+            friday=self.request.POST.get("friday"),
+            shop=shop.id,
+            saturday=self.request.POST.get("saturday"),
+            sunday=self.request.POST.get("sunday"),
+            round_the_clock=round_the_clock,
+            longitude=self.request.POST.get("longitude"),
+            latitude=self.request.POST.get("latitude"),
+            place=place.id if place else None)
+        are_values = [contact_dict[k] for k in contact_dict.keys()
+                      if k != "shop" and contact_dict[k] != None
+                      and contact_dict[k] != "" and contact_dict[k] != False]
+        if are_values:
+            contact = ShopContactsSerializer(data=contact_dict)
+            if contact.is_valid():
+                contact.save()
+            else:
+                print(contact.errors)
 
 
-class UserShopsListView(ListAPIView):
-    """
-       Возвращает все Магазины пользователя
-    """
-    serializer_class = ShopSerializer
-    filter_backends = [SearchFilter, OrderingFilter]
-    pagination_class = ShopProductsLimitPagination
-    permission_classes = [AllowAny]
-    authentication_classes = (SessionAuthentication, TokenAuthentication)
-
-    def get_queryset(self):
-        user_id = self.kwargs.get('pk')
-        user = User.objects.filter(id=user_id)
-        shops = Shop.objects.filter(user=user)
-        return shops
+# class UserShopsListView(ListAPIView):
+#     """
+#        Возвращает все Магазины пользователя
+#     """
+#     serializer_class = ShopSerializer
+#     filter_backends = [SearchFilter, OrderingFilter]
+#     pagination_class = ShopProductsLimitPagination
+#     permission_classes = [AllowAny]
+#     authentication_classes = (SessionAuthentication, TokenAuthentication)
+#
+#     def get_queryset(self):
+#         user_id = self.kwargs.get('pk')
+#         user = User.objects.filter(id=user_id)
+#         shops = Shop.objects.filter(user=user)
+#         return shops
 
 
 class UserDetailView(APIView):
@@ -649,6 +809,7 @@ class UserDetailView(APIView):
         return JsonResponse({
             "status": "success",
             "shops": shops,
+            "id": user.id,
             "username": user.username,
             "first_name": user.first_name,
             "last_name": user.last_name,
@@ -658,6 +819,14 @@ class UserDetailView(APIView):
             "cart_count": user.get_cart_count(),
             "favorites_count": user.get_favorites_count()
         })
+
+    def post(self, request, *args, **kwargs):
+        user = get_object_or_404(User, id=request.POST.get('id'))
+        serializer = UserSerializer(user, data=request.POST)
+        if serializer.is_valid():
+            serializer.save()
+            return JsonResponse({'status': 0, 'message': 'User is successfully updated.'})
+        return JsonResponse({'status': 1, 'message': serializer.errors})
 
 
 class UserCartItemsView(APIView):
@@ -689,13 +858,14 @@ class UserCartItemsView(APIView):
             shops.append({
                 "title": shop.title,
                 "logo": shop.get_logo(),
-                "items": items
+                "items": items,
             })
 
         return JsonResponse({
             "status": "success",
             "delivery_total": user.cart_set.last().get_delivery_total(),
-            "shops": shops
+            "shops": shops,
+            "total": user.cart_set.last().subtotal
         })
 
 
@@ -741,7 +911,10 @@ class UserFavoritesView(APIView):
                 "price": item.product.get_price(),
                 "image": item.product.get_main_thumb_image(),
                 "is_favorite": item.product.favorite.filter(user=user).exists(),
-                "is_in_cart": True
+                "is_in_cart": self.request.user.cart_set.last().cartitem_set.filter(product=item.product).exists()\
+                    if self.request.user.is_authenticated \
+                       and self.request.user.cart_set.all() \
+                    else False
             })
 
         return JsonResponse({
@@ -774,6 +947,20 @@ class ShopDetailView(MultipleModelAPIView):
     def dispatch(self, *args, **kwargs):
         return super(ShopDetailView, self).dispatch(*args, **kwargs)
 
+
+class Subscribe(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated, IsNotOwnerShop]
+
+    def post(self, *args, **kwargs):
+        shop_slug = self.request.POST.get("shop", "")
+        shop = get_object_or_404(Shop, slug=shop_slug)
+        user = self.request.user
+        subcribe, create = Subscription.objects.get_or_create(user=user, subscription=shop)
+        if not create:
+            subcribe.delete()
+            return JsonResponse({'status': 0, 'message': 'Вы успешно отписаны.'})
+        return JsonResponse({'status': 0, 'message': 'Вы успешно подписаны.'})
 
 # class ShopSalesView(ListAPIView):
 #     """

@@ -26,3 +26,14 @@ class MetaData(models.Model):
     def get_h1(self):
         return str(self.title)
 
+
+class Claim(models.Model):
+    class Meta:
+        verbose_name = 'Заявка'
+        verbose_name_plural = 'Заявки'
+
+    name = models.CharField(max_length=300, verbose_name='Название магазина')
+    phone = models.CharField(max_length=255, verbose_name='Телефон')
+
+    def __str__(self):
+        return self.name

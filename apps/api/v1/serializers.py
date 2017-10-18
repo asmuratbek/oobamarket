@@ -251,25 +251,20 @@ class ProductDetailSerializer(ModelSerializer):
                     return False
 
 
-class ProductCreateSerializer(ModelSerializer):
+class ProductPostSerializer(ModelSerializer):
 
     class Meta:
         model = Product
-        fields = (
-            'title',
-            'slug',
-            'category',
-            'shop',
-            'price',
-            'discount',
-            'currency',
-            'published',
-        )
+        exclude = ('id', 'slug', 'created_at', 'updated_at', 'counter', 'currency',
+                   'partner_price', 'sell_count', 'delivery_type', 'delivery_cost',
+                   'availability', 'meta_title', 'meta_description', 'meta_keywords', 'seo_text',
+                   'long_description',)
 
-    slug = SerializerMethodField()
+    shop = serializers.CharField(max_length=300)
+    category = serializers.CharField(max_length=300)
 
-    def get_slug(self, obj):
-        return slugify(obj.title)
+    # def get_slug(self, obj):
+    #     return slugify(obj.title)
 
 
 class ProductImageSerializer(ModelSerializer):
@@ -386,53 +381,30 @@ class ShopCreateSerializer(ModelSerializer):
 
     class Meta:
         model = Shop
-        validators = [
-            UniqueTogetherValidator(
-                queryset=Shop.objects.all(),
-                fields=('slug',)
-            )
-        ]
-        fields = (
-            'id',
-            'title',
-            'slug',
-            'user',
-            'email',
-            'description',
-            'short_description',
-            'created_at',
-            'updated_at',
-            'logo'
-        )
+        exclude = ['id', 'slug', 'counter', 'meta_title', 'meta_description',
+                   'meta_keywords', 'seo_text', 'created_at', 'updated_at']
+
+
+class ShopUpdateSerializer(ModelSerializer):
+
+    class Meta:
+        model = Shop
+        exclude = ['id', 'user', 'logo', 'slug', 'counter', 'meta_title', 'meta_description',
+                   'meta_keywords', 'seo_text', 'created_at', 'updated_at']
 
 
 class UserSerializer(ModelSerializer):
 
     class Meta:
         model = User
-        fields = (
-            'id',
-            'name',
-            'email',
-            'phone',
-            'address'
-        )
+        exclude = ['id', 'is_staff', 'is_active', 'name', 'password']
 
 
 class SalesSerializer(ModelSerializer):
 
     class Meta:
         model = Sales
-        fields = (
-            'id',
-            'title',
-            'short_description',
-            'description',
-            'discount',
-            'image',
-            'created_at',
-            'updated_at'
-        )
+        exclude = ['id', 'shop', 'created_at', 'updated_at']
 
 
 class ShopReviewsSerializer(ModelSerializer):
@@ -441,14 +413,7 @@ class ShopReviewsSerializer(ModelSerializer):
 
     class Meta:
         model = ShopReviews
-        fields = (
-            'id',
-            'username',
-            'text',
-            'stars',
-            'created_at',
-            'updated_at'
-        )
+        exclude = ['id', 'user', 'shop', 'created_at', 'updated_at', 'stars']
 
     def get_username(self, obj):
         return obj.user.username if obj.user.username else obj.user.email
@@ -467,24 +432,11 @@ class ShopContactsSerializer(ModelSerializer):
 
     class Meta:
         model = Contacts
-        fields = (
+        exclude = (
             'id',
-            'address',
-            'phone',
-            'place',
-            'latitude',
-            'longitude',
-            'monday',
-            'tuesday',
-            'wednesday',
-            'thursday',
-            'friday',
-            'saturday',
-            'sunday',
-            'round_the_clock',
+            'published',
             'created_at',
             'updated_at'
-
         )
 
 

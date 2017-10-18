@@ -16,12 +16,6 @@ class ShopForm(ModelForm):
                 'class': 'form-control'
             })
 
-    def clean_logo(self):
-        logo = self.cleaned_data['logo']
-        if not logo:
-            raise forms.ValidationError("Логотип обязателен для заполнения", code='no_logo')
-        return logo
-
     def clean(self):
         cleaned_data = super(ShopForm, self).clean()
         title = cleaned_data.get('title', '')

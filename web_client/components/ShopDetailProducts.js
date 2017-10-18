@@ -159,7 +159,7 @@ var ProductList = createClass({
   },
 
   isInCart : function (product) {
-      if (this.props.product.is_in_cart) {
+       if (this.props.cartItems.indexOf(product.pk) !== -1 ) {
           return (
               this.inCart(product)
           )
@@ -168,6 +168,10 @@ var ProductList = createClass({
               this.notInCart(product)
           )
       }
+  },
+
+    isInFavorites: function (product) {
+      return this.props.favorites.indexOf(product.pk) !== -1
   },
 
   // handleDelete: function(product_id){
@@ -286,10 +290,10 @@ var ProductList = createClass({
 
                 <div className="button-basket-favorite">
                     {this.isInCart(this.props.product)}
-                    <span className={`glyphicon glyphicon-heart ${this.props.product.is_favorite && 'enable like'}`}
+                    <span className={`glyphicon glyphicon-heart ${this.isInFavorites(this.props.product) && 'enable like'}`}
                           data-product-id={this.props.product.pk} data-toggle="tooltip" title=""
                           data-placement="top"
-                          data-tip={this.props.product.is_favorite ? "Удалить из избранных" : "Добавить в избранное"}
+                          data-tip={this.isInFavorites(this.props.product) ? "Удалить из избранных" : "Добавить в избранное"}
                         onClick={this.AddOrRemoveFavorite}></span>
                     <ReactTooltip/>
                 </div>
