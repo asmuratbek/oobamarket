@@ -12,7 +12,7 @@ GLOBAL_CATEGORIES_QUANTITY = 5
 
 @given("prepared set of global categories")
 def step_impl(context):
-    img = SimpleUploadedFile(name='category.png', content=open('%s/../assets/global_category_icon.png' % os.path.dirname(os.path.abspath(__file__)), 'rb').read(),
+    img = SimpleUploadedFile(name='category.png', content=open('%s/../assets/category_icon.png' % os.path.dirname(os.path.abspath(__file__)), 'rb').read(),
                              content_type='image/png')
 
     for _ in range(0, GLOBAL_CATEGORIES_QUANTITY):
@@ -26,7 +26,7 @@ def step_impl(context):
     context.response = context.client.get('/api/v1/globalcategory/')
 
 
-@then("it should get response with list of categories")
+@then("it should get response with list of global categories")
 def step_impl(context):
     response = context.response
 

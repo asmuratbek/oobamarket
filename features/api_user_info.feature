@@ -1,5 +1,3 @@
-Feature: #Enter feature name here
-  # Enter feature description here
+Feature: User info
 
-  Scenario: # Enter scenario name here
-    # Enter steps here
+  Scenario:

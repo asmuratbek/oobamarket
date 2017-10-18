@@ -7,12 +7,13 @@ import json
 from features.helpers import *
 import os
 
+
 use_step_matcher("re")
 
-GLOBAL_CATEGORY_CHILDREN_CATEGORIES_QUANTITY = 5
+SUBCATEGORY_CHILDREN_CATEGORIES_QUANTITY = 5
 
 
-@given("prepared global category with children categories")
+@given("prepared subcategory with children categories")
 def step_impl(context):
     gc_title = context.faker.name()
     gc_slug = 'slug_%s' % context.faker.words()[0]
@@ -23,28 +24,36 @@ def step_impl(context):
     img = SimpleUploadedFile(name='category.png', content=open('%s/../assets/category_icon.png' % os.path.dirname(os.path.abspath(__file__)), 'rb').read(),
                              content_type='image/png')
 
-    for i in range(0, GLOBAL_CATEGORY_CHILDREN_CATEGORIES_QUANTITY):
+    subcategory_title = context.faker.name()
+    subcategory_slug = 'subcategory_slug_%s' % context.faker.words()[0]
+    subcategory = Category.objects.create(title=subcategory_title, slug=subcategory_slug, section=global_category,
+                                          image=img)
+
+    subcategory.save()
+
+    for i in range(0, SUBCATEGORY_CHILDREN_CATEGORIES_QUANTITY):
         cc_title = context.faker.name()
         child_category = Category.objects.create(title=cc_title, slug='child_slug_%s_%s' % (context.faker.words()[0], i), image=img,
-                                                 section=global_category, order=i)
+                                                 section=global_category, order=i, parent=subcategory)
         child_category.save()
 
-    context.global_category_slug = gc_slug
+    context.subcategory_slug = subcategory_slug
 
 
-@when('app sends request to "/api/v1/globalcategory/<slug>/children/"')
+@when('app sends request to "/api/v1/category/<slug>/children/"')
 def step_impl(context):
-    context.response = context.client.get('/api/v1/globalcategory/%s/children/' % context.global_category_slug)
+    context.response = context.client.get('/api/v1/category/%s/children/' % context.subcategory_slug)
 
 
-@then("it should get response with list of children categories")
+@then("it should get response with list of given subcategory's children categories")
 def step_impl(context):
     response = context.response
 
     assert_status_code_and_content_type(context, response, 200, 'application/json')
 
     items = json.loads(str(response.content, encoding='utf8'))
-    context.test.assertEqual(len(items), GLOBAL_CATEGORY_CHILDREN_CATEGORIES_QUANTITY)
+    context.test.assertEqual(len(items), SUBCATEGORY_CHILDREN_CATEGORIES_QUANTITY)
 
     for item in items:
         context.test.assertTrue(dict_has_keys(['id', 'title', 'slug', 'parent_id'], item))
+        context.test.assertIsNotNone(item['parent_id'])
