@@ -352,6 +352,9 @@ class ProductDetailApiView(APIView):
     def get(self, request, slug):
         product = Product.objects.filter(slug=slug).first()
         images = list()
+        user = request.user
+        user_cart = user.cart_set.last() if user.is_authenticated() else None
+        products_in_cart = [item.product for item in user_cart.cartitem_set.all()] if user_cart else None
         for image in ProductImage.objects.filter(product__slug=slug):
             images.append({
                 "image": image.image.url
@@ -363,7 +366,7 @@ class ProductDetailApiView(APIView):
             "price": product.get_price(),
             "images": images,
             "is_favorite": product.favorite.filter(user=self.request.user).exists() if self.request.user.is_authenticated else 0,
-            "is_in_cart": True
+            "is_in_cart": True if products_in_cart and product in products_in_cart else False
         })
 
 
