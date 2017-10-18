@@ -29,7 +29,7 @@ class App extends Component {
         productsByPage: 20,
         domain: window.location.href.split("/")[2].split(":")[0],
         categorySlug: window.location.href.split("/")[window.location.href.split("/").length - 2],
-        shopSlug: window.location.href.split("/")[4] ? window.location.href.split("/")[4] : window.location.href.split(".")[0].split("http://")[1]
+        shopSlug: this.pageType() === 'shop' ? window.location.href.split("/")[4] : null
     }
   }
 
@@ -144,7 +144,9 @@ class App extends Component {
 
         let query = urlmaker(this.state.productsCount, this.state.productsByPage, pageNumber,
                             this.state.activePage, this.state.orderBy, this.state.priceFrom,
-                            this.state.priceTo, this.state.queryText, this.state.categorySlug, this.getMatchPhrase());
+                            this.state.priceTo, this.state.queryText, this.state.categorySlug,
+                            this.getMatchPhrase(), this.state.shopSlug, this.state.activeCategory,
+                            this.state.parent ? this.state.parent : null);
 
       fetch(`http://${this.state.domain}:9200/_search/`, {
             method: "POST",
@@ -170,7 +172,9 @@ class App extends Component {
 
         let query = urlmaker(this.state.productsCount, this.state.productsByPage, 1,
                             this.state.activePage, orderBy, this.state.priceFrom,
-                            this.state.priceTo, this.state.queryText, this.state.categorySlug, this.getMatchPhrase());
+                            this.state.priceTo, this.state.queryText, this.state.categorySlug,
+                            this.getMatchPhrase(), this.state.shopSlug, this.state.activeCategory,
+                            this.state.parent ? this.state.parent : null);
 
       fetch(`http://${this.state.domain}:9200/_search/`, {
             method: "POST",
@@ -196,7 +200,9 @@ class App extends Component {
 
         let query = urlmaker(this.state.productsCount, this.state.productsByPage, 1,
                             this.state.activePage, this.state.orderBy, this.state.priceFrom,
-                            this.state.priceTo, q, this.state.categorySlug, this.getMatchPhrase());
+                            this.state.priceTo, q, this.state.categorySlug, this.getMatchPhrase(),
+                            this.state.shopSlug, this.state.activeCategory,
+                            this.state.parent ? this.state.parent : null);
 
       fetch(`http://${this.state.domain}:9200/_search/`, {
             method: "POST",
@@ -226,7 +232,9 @@ class App extends Component {
 
         let query = urlmaker(this.state.productsCount, this.state.productsByPage, 1,
                             this.state.activePage, this.state.orderBy, price,
-                            this.state.priceTo, this.state.queryText, this.state.categorySlug, this.getMatchPhrase());
+                            this.state.priceTo, this.state.queryText, this.state.categorySlug,
+                            this.getMatchPhrase(), this.state.shopSlug, this.state.activeCategory,
+                            this.state.parent ? this.state.parent : null);
 
       fetch(`http://${this.state.domain}:9200/_search/`, {
             method: "POST",
@@ -256,7 +264,8 @@ class App extends Component {
 
         let query = urlmaker(this.state.productsCount, this.state.productsByPage, 1,
                             this.state.activePage, this.state.orderBy, this.state.priceFrom,
-                            price, this.state.queryText, this.state.categorySlug, this.getMatchPhrase());
+                            price, this.state.queryText, this.state.categorySlug, this.getMatchPhrase(),
+                            this.state.shopSlug, this.state.activeCategory, this.state.parent ? this.state.parent : null);
 
       fetch(`http://${this.state.domain}:9200/_search/`, {
             method: "POST",
