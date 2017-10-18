@@ -1,6 +1,5 @@
 $(document).ready(function () {
     var csrftoken = getCookie('csrftoken');
-    console.log(csrftoken);
     $.ajax({
         type: "POST",
         url: '/sub-list/?page=1',
