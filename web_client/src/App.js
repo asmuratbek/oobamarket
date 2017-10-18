@@ -29,7 +29,7 @@ class App extends Component {
         productsByPage: 20,
         domain: window.location.href.split("/")[2].split(":")[0],
         categorySlug: window.location.href.split("/")[window.location.href.split("/").length - 2],
-        shopSlug: window.location.href.split("/")[4] ? window.location.href.split("/")[4] : window.location.href.split(".")[0].split("http://")[1]
+        shopSlug: this.pageType() === 'shop' ? window.location.href.split("/")[4] : null
     }
   }
 
@@ -144,7 +144,9 @@ class App extends Component {
 
         let query = urlmaker(this.state.productsCount, this.state.productsByPage, pageNumber,
                             this.state.activePage, this.state.orderBy, this.state.priceFrom,
-                            this.state.priceTo, this.state.queryText, this.state.categorySlug, this.getMatchPhrase());
+                            this.state.priceTo, this.state.queryText, this.state.categorySlug,
+                            this.getMatchPhrase(), this.state.shopSlug, this.state.activeCategory,
+                            this.state.parent ? this.state.parent : null);
 
       fetch(`http://${this.state.domain}:9200/_search/`, {
             method: "POST",
@@ -170,7 +172,9 @@ class App extends Component {
 
         let query = urlmaker(this.state.productsCount, this.state.productsByPage, 1,
                             this.state.activePage, orderBy, this.state.priceFrom,
-                            this.state.priceTo, this.state.queryText, this.state.categorySlug, this.getMatchPhrase());
+                            this.state.priceTo, this.state.queryText, this.state.categorySlug,
+                            this.getMatchPhrase(), this.state.shopSlug, this.state.activeCategory,
+                            this.state.parent ? this.state.parent : null);
 
       fetch(`http://${this.state.domain}:9200/_search/`, {
             method: "POST",
@@ -196,7 +200,9 @@ class App extends Component {
 
         let query = urlmaker(this.state.productsCount, this.state.productsByPage, 1,
                             this.state.activePage, this.state.orderBy, this.state.priceFrom,
-                            this.state.priceTo, q, this.state.categorySlug, this.getMatchPhrase());
+                            this.state.priceTo, q, this.state.categorySlug, this.getMatchPhrase(),
+                            this.state.shopSlug, this.state.activeCategory,
+                            this.state.parent ? this.state.parent : null);
 
       fetch(`http://${this.state.domain}:9200/_search/`, {
             method: "POST",
@@ -226,7 +232,9 @@ class App extends Component {
 
         let query = urlmaker(this.state.productsCount, this.state.productsByPage, 1,
                             this.state.activePage, this.state.orderBy, price,
-                            this.state.priceTo, this.state.queryText, this.state.categorySlug, this.getMatchPhrase());
+                            this.state.priceTo, this.state.queryText, this.state.categorySlug,
+                            this.getMatchPhrase(), this.state.shopSlug, this.state.activeCategory,
+                            this.state.parent ? this.state.parent : null);
 
       fetch(`http://${this.state.domain}:9200/_search/`, {
             method: "POST",
@@ -256,7 +264,8 @@ class App extends Component {
 
         let query = urlmaker(this.state.productsCount, this.state.productsByPage, 1,
                             this.state.activePage, this.state.orderBy, this.state.priceFrom,
-                            price, this.state.queryText, this.state.categorySlug, this.getMatchPhrase());
+                            price, this.state.queryText, this.state.categorySlug, this.getMatchPhrase(),
+                            this.state.shopSlug, this.state.activeCategory, this.state.parent ? this.state.parent : null);
 
       fetch(`http://${this.state.domain}:9200/_search/`, {
             method: "POST",
@@ -280,16 +289,99 @@ class App extends Component {
   };
 
     handleCategorySort = (id) => {
-        console.log(id)
+        this.setState({
+            loaded: false
+        });
+         let query = urlmaker(this.state.productsCount, this.state.productsByPage, 1,
+                            1, this.state.orderBy, this.state.priceFrom,
+                            this.state.priceTo, '', this.state.categorySlug, this.getMatchPhrase(),
+                            this.state.shopSlug, id, true);
+
+      fetch(`http://${this.state.domain}:9200/_search/`, {
+            method: "POST",
+            body: JSON.stringify(query)
+        }).then(function(res) {
+                return res.json();
+            }).then(function (data) {
+                let products = data.hits.hits.map(obj => obj._source);
+                let pagesCount = Math.ceil(data.hits.total / this.state.productsByPage);
+                this.setState({
+                    products: products,
+                    loaded: true,
+                    pagesCount: pagesCount,
+                    productsCount: data.hits.total,
+                    activePage: 1,
+                    activeCategory: id,
+                    parent: true,
+                    fromPage: 21
+                });
+            }.bind(this), function (err) {
+                console.trace(err.message);
+            });
     };
 
     handleChildCategorySort = (id) => {
-        console.log(id);
+        this.setState({
+            loaded: false
+        });
+         let query = urlmaker(this.state.productsCount, this.state.productsByPage, 1,
+                            1, this.state.orderBy, this.state.priceFrom,
+                            this.state.priceTo, null, this.state.categorySlug, this.getMatchPhrase(),
+                            this.state.shopSlug, id, false);
+
+      fetch(`http://${this.state.domain}:9200/_search/`, {
+            method: "POST",
+            body: JSON.stringify(query)
+        }).then(function(res) {
+                return res.json();
+            }).then(function (data) {
+                let products = data.hits.hits.map(obj => obj._source);
+                let pagesCount = Math.ceil(data.hits.total / this.state.productsByPage);
+                this.setState({
+                    products: products,
+                    loaded: true,
+                    pagesCount: pagesCount,
+                    productsCount: data.hits.total,
+                    activePage: 1,
+                    activeCategory: id,
+                    parent: false,
+                    fromPage: 21
+                });
+            }.bind(this), function (err) {
+                console.trace(err.message);
+            });
     };
 
     deleteActiveCategory = (e) => {
       e.preventDefault();
-      console.log('del')
+      this.setState({
+          loaded: false
+      });
+      let query = urlmaker(this.state.productsCount, this.state.productsByPage, 1,
+                            1, this.state.orderBy, this.state.priceFrom,
+                            this.state.priceTo, null, this.state.categorySlug, this.getMatchPhrase(),
+                            this.state.shopSlug, '', false);
+
+      fetch(`http://${this.state.domain}:9200/_search/`, {
+            method: "POST",
+            body: JSON.stringify(query)
+        }).then(function(res) {
+                return res.json();
+            }).then(function (data) {
+                let products = data.hits.hits.map(obj => obj._source);
+                let pagesCount = Math.ceil(data.hits.total / this.state.productsByPage);
+                this.setState({
+                    products: products,
+                    loaded: true,
+                    activeCategory: '',
+                    pagesCount: pagesCount,
+                    productsCount: data.hits.total,
+                    activePage: 1
+                });
+            }.bind(this), function (err) {
+                console.trace(err.message);
+            });
+
     };
 
   render() {

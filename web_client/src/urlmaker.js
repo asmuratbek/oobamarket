@@ -1,6 +1,6 @@
 export default function urlmaker (productsCount, productsByPage, pageNumber,
                 activePage, orderBy, priceFrom, priceTo,
-                queryText, categorySlug, matchPhrase) {
+                queryText, categorySlug, matchPhrase, shopSlug, activeCategory, parent) {
 
       const from = productsCount > productsByPage * pageNumber ? (
             productsByPage * pageNumber
@@ -35,16 +35,31 @@ export default function urlmaker (productsCount, productsByPage, pageNumber,
             }
       };
 
-
       const q = () => {
-        if (queryText) {
+        if (queryText && activeCategory !== '') {
+            return [
+                { match: { text:  queryText }},
+                { match_phrase: matchPhrase },
+                { match_phrase: { category_id: activeCategory }}
+            ]
+        } else if (queryText) {
             return [
                 { match: { text:  queryText }},
                 { match_phrase: matchPhrase },
             ]
+        } else if (activeCategory && parent) {
+            return [
+                { match_phrase: { parent_category_id: activeCategory }},
+                { match_phrase: matchPhrase},
+            ]
+        } else if (activeCategory && !parent) {
+            return [
+                { match_phrase: { category_id: activeCategory }},
+                { match_phrase: matchPhrase},
+            ]
         } else {
             return [
-                { match_phrase: matchPhrase }
+                { match_phrase: matchPhrase}
             ]
         }
       };
