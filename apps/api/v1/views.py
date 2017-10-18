@@ -1022,13 +1022,13 @@ def search_products(request):
     db_type = db.connections.databases['default']['ENGINE']
     db_name = db_type.split(".")[-1]
     q = request.GET.get("q")
-    if db_name == 'postgresql':
-        title = SearchVector('title')
-        short_desc= SearchVector('short_description')
-        search_q = SearchQuery(str(q))
-        products = Product.objects.filter(Q(rank=SearchRank(title, search_q))|
-                                          Q(rank=SearchRank(short_desc, search_q)))
-    elif db_name == 'mysql':
+    # if db_name == 'postgresql':
+    #     title = SearchVector('title')
+    #     short_desc= SearchVector('short_description')
+    #     search_q = SearchQuery(str(q))
+    #     products = Product.objects.filter(Q(rank=SearchRank(title, search_q))|
+    #                                       Q(rank=SearchRank(short_desc, search_q)))
+    if db_name == 'mysql' or db_name == 'postgresql':
         products = Product.objects.filter(Q(title__search=q)|Q(short_description__search=q))
     else:
         products = Product.objects.filter(Q(title__icontains=q) | Q(short_description__icontains=q))
