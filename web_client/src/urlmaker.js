@@ -35,7 +35,6 @@ export default function urlmaker (productsCount, productsByPage, pageNumber,
             }
       };
 
-
       const q = () => {
         if (queryText && activeCategory !== '') {
             return [

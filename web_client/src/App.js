@@ -289,16 +289,99 @@ class App extends Component {
   };
 
     handleCategorySort = (id) => {
-        console.log(id)
+        this.setState({
+            loaded: false
+        });
+         let query = urlmaker(this.state.productsCount, this.state.productsByPage, 1,
+                            1, this.state.orderBy, this.state.priceFrom,
+                            this.state.priceTo, '', this.state.categorySlug, this.getMatchPhrase(),
+                            this.state.shopSlug, id, true);
+
+      fetch(`http://${this.state.domain}:9200/_search/`, {
+            method: "POST",
+            body: JSON.stringify(query)
+        }).then(function(res) {
+                return res.json();
+            }).then(function (data) {
+                let products = data.hits.hits.map(obj => obj._source);
+                let pagesCount = Math.ceil(data.hits.total / this.state.productsByPage);
+                this.setState({
+                    products: products,
+                    loaded: true,
+                    pagesCount: pagesCount,
+                    productsCount: data.hits.total,
+                    activePage: 1,
+                    activeCategory: id,
+                    parent: true,
+                    fromPage: 21
+                });
+            }.bind(this), function (err) {
+                console.trace(err.message);
+            });
     };
 
     handleChildCategorySort = (id) => {
-        console.log(id);
+        this.setState({
+            loaded: false
+        });
+         let query = urlmaker(this.state.productsCount, this.state.productsByPage, 1,
+                            1, this.state.orderBy, this.state.priceFrom,
+                            this.state.priceTo, null, this.state.categorySlug, this.getMatchPhrase(),
+                            this.state.shopSlug, id, false);
+
+      fetch(`http://${this.state.domain}:9200/_search/`, {
+            method: "POST",
+            body: JSON.stringify(query)
+        }).then(function(res) {
+                return res.json();
+            }).then(function (data) {
+                let products = data.hits.hits.map(obj => obj._source);
+                let pagesCount = Math.ceil(data.hits.total / this.state.productsByPage);
+                this.setState({
+                    products: products,
+                    loaded: true,
+                    pagesCount: pagesCount,
+                    productsCount: data.hits.total,
+                    activePage: 1,
+                    activeCategory: id,
+                    parent: false,
+                    fromPage: 21
+                });
+            }.bind(this), function (err) {
+                console.trace(err.message);
+            });
     };
 
     deleteActiveCategory = (e) => {
       e.preventDefault();
-      console.log('del')
+      this.setState({
+          loaded: false
+      });
+      let query = urlmaker(this.state.productsCount, this.state.productsByPage, 1,
+                            1, this.state.orderBy, this.state.priceFrom,
+                            this.state.priceTo, null, this.state.categorySlug, this.getMatchPhrase(),
+                            this.state.shopSlug, '', false);
+
+      fetch(`http://${this.state.domain}:9200/_search/`, {
+            method: "POST",
+            body: JSON.stringify(query)
+        }).then(function(res) {
+                return res.json();
+            }).then(function (data) {
+                let products = data.hits.hits.map(obj => obj._source);
+                let pagesCount = Math.ceil(data.hits.total / this.state.productsByPage);
+                this.setState({
+                    products: products,
+                    loaded: true,
+                    activeCategory: '',
+                    pagesCount: pagesCount,
+                    productsCount: data.hits.total,
+                    activePage: 1
+                });
+            }.bind(this), function (err) {
+                console.trace(err.message);
+            });
+
     };
 
   render() {
