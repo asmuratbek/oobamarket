@@ -1,8 +1,8 @@
 from behave import *
 from django.core.files.uploadedfile import SimpleUploadedFile
+from django.urls import reverse
 from apps.global_category.models import GlobalCategory
 import os
-import json
 from features.helpers import *
 
 use_step_matcher("re")
@@ -21,9 +21,9 @@ def step_impl(context):
         category.save()
 
 
-@when('app sends request to "/api/v1/globalcategory/"')
+@when('app sends request to "api_global_category" url')
 def step_impl(context):
-    context.response = context.client.get('/api/v1/globalcategory/')
+    context.response = context.client.get(reverse('api:globalcategory_list'))
 
 
 @then("it should get response with list of global categories")
@@ -32,7 +32,7 @@ def step_impl(context):
 
     assert_status_code_and_content_type(context, response, 200, 'application/json')
 
-    items = json.loads(str(response.content, encoding='utf8'))
+    items = response.json()
     context.test.assertEqual(len(items), GLOBAL_CATEGORIES_QUANTITY)
 
     for item in items:

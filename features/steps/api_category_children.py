@@ -1,9 +1,9 @@
 from behave import *
 from django.core.files.uploadedfile import SimpleUploadedFile
+from django.urls import reverse
 from apps.global_category.models import GlobalCategory
 from apps.category.models import Category
 
-import json
 from features.helpers import *
 import os
 
@@ -40,9 +40,9 @@ def step_impl(context):
     context.subcategory_slug = subcategory_slug
 
 
-@when('app sends request to "/api/v1/category/<slug>/children/"')
+@when('app sends request to "api_category_children" url')
 def step_impl(context):
-    context.response = context.client.get('/api/v1/category/%s/children/' % context.subcategory_slug)
+    context.response = context.client.get(reverse('api:category_children', kwargs={'slug': context.subcategory_slug}))
 
 
 @then("it should get response with list of given subcategory's children categories")
@@ -51,7 +51,7 @@ def step_impl(context):
 
     assert_status_code_and_content_type(context, response, 200, 'application/json')
 
-    items = json.loads(str(response.content, encoding='utf8'))
+    items = response.json()
     context.test.assertEqual(len(items), SUBCATEGORY_CHILDREN_CATEGORIES_QUANTITY)
 
     for item in items:
