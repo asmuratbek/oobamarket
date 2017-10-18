@@ -45,6 +45,7 @@ from .pagination import (
 )
 from .permissions import *
 from django.contrib.postgres.search import SearchQuery, SearchRank, SearchVector
+from django.contrib.postgres.search import TrigramSimilarity
 
 ORDER_TYPES = ["price", "-price", "title", "created_at"]
 
@@ -1025,8 +1026,8 @@ def search_products(request):
         title = SearchVector('title')
         short_desc= SearchVector('short_description')
         search_q = SearchQuery(str(q))
-        products = Product.objects.filter(Q(title=SearchRank(title, search_q))|
-                                          Q(short_description=SearchRank(short_desc, search_q)))
+        products = Product.objects.filter(Q(rank=SearchRank(title, search_q))|
+                                          Q(rank=SearchRank(short_desc, search_q)))
     elif db_name == 'mysql':
         products = Product.objects.filter(Q(title__search=q)|Q(short_description__search=q))
     else:
