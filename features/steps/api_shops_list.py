@@ -14,6 +14,19 @@ KEYWORD = 'my'
 SHOPS_LIST_URL = reverse('api:shop_list')
 
 
+def assert_json_response(context, json_result, results_quantity):
+    results = json_result['results']
+
+    context.test.assertEqual(len(results), results_quantity)
+
+    for item in results:
+        context.test.assertTrue(dict_has_keys(['id', 'title', 'slug', 'user', 'email',
+                                               'phone', 'places', 'is_authenticated',
+                                               'is_subscribed', 'is_owner', 'description',
+                                               'short_description', 'created_at',
+                                               'updated_at', 'logo', 'get_absolute_url'], item))
+
+
 @given("prepared set of shops")
 def step_impl(context):
     faker = context.faker
@@ -53,9 +66,7 @@ def step_impl(context):
 
     assert_status_code(context, response, 200)
     assert_response_json_keys_exist(context, ['count', 'next', 'previous', 'results'])
-
-    json_result = response.json()
-    context.test.assertEqual(len(json_result['results']), SHOPS_WITH_SAME_TITLE_QUANTITY)
+    assert_json_response(context, response.json(), SHOPS_WITH_SAME_TITLE_QUANTITY)
 
 
 @when('app sends request to "api_shops_list" url with place param')
@@ -69,6 +80,4 @@ def step_impl(context):
 
     assert_status_code(context, response, 200)
     assert_response_json_keys_exist(context, ['count', 'next', 'previous', 'results'])
-
-    json_result = response.json()
-    context.test.assertEqual(len(json_result['results']), SHOPS_IN_MALL_QUANTITY)
+    assert_json_response(context, response.json(), SHOPS_IN_MALL_QUANTITY)
