@@ -19,6 +19,11 @@ BLOCK_TYPES = (
     ("down_right_corner_2", "Нижняя правая сторона нижний блок"),
 )
 
+BANNERS_TYPES = (
+    ("offer", "Рекламное предложение"),
+    ("slider", "Банер на слайдер"),
+)
+
 
 class IndexBlocks(PublishBaseModel):
     title = models.CharField(max_length=400, verbose_name="Название блока", null=True, blank=True)
@@ -47,3 +52,16 @@ class PremiumIndexBlocks(PublishBaseModel):
 
     def __str__(self):
         return self.get_block_type_display()
+
+
+class IndexBanner(PublishBaseModel):
+    image = models.ImageField(upload_to='images/index/banners/', verbose_name='Изображение банера')
+    banner_type = models.CharField(max_length=50, verbose_name='Тип банера', choices=BANNERS_TYPES)
+    url = models.CharField(max_length=450, verbose_name='Ссылка')
+
+    class Meta:
+        verbose_name = 'Банер'
+        verbose_name_plural = 'Банера на главной странице'
+
+    def __str__(self):
+        return self.get_banner_type_display()
