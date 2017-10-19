@@ -1,0 +1,51 @@
+from behave import *
+from apps.shop.models import *
+from django.urls import reverse
+from features.helpers import *
+
+use_step_matcher("re")
+
+SHOP_CONTACTS_QUANTITY = 3
+
+
+@given("shop with its contacts")
+def step_impl(context):
+    faker = context.faker
+    shop_title = faker.name()[0]
+    shop_slug = 'slug_with_contacts_%s' % shop_title
+
+    shop = Shop.objects.create(title=shop_title, slug=shop_slug, email=faker.email(), short_description='')
+
+    for i in range(0, SHOP_CONTACTS_QUANTITY):
+        Contacts.objects.create(address=faker.address(), phone=faker.text(), shop=shop)
+
+    context.shop_slug = shop_slug
+
+
+@when('app sends request to "api_shop_contacts" url containing a slug of the shop')
+def step_impl(context):
+    context.response = context.client.get(reverse('api:shop_contacts', kwargs=dict(slug=context.shop_slug)))
+
+
+@then("it should get response with list of contacts info")
+def step_impl(context):
+    response = context.response
+
+    assert_status_code(context, response, 200)
+    assert_response_json_keys_exist(context, ['status', 'contacts'])
+
+    json_content = response.json()
+    contacts = json_content['contacts']
+
+    context.test.assertEqual(json_content['status'], 'success')
+    context.test.assertIsNotNone(contacts)
+
+    context.test.assertTrue(dict_has_keys(['saturday', 'published', 'friday', 'tuesday',
+                                           'wednesday', 'phone', 'thursday', 'address',
+                                           'latitude', 'monday', 'id', 'sunday',
+                                           'round_the_clock', 'place', 'longitude'], contacts))
+
+
+@when('app sends request to "api_shop_contacts" url containing non-existing slug')
+def step_impl(context):
+    context.response = context.client.get(reverse('api:shop_contacts', kwargs=dict(slug='non_existing_slug')))

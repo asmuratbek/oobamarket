@@ -39,8 +39,3 @@ def step_impl(context):
 @when('app sends request to "api_shop_info" url containing non-existing slug')
 def step_impl(context):
     context.response = context.client.get(reverse('api:shop-detail', kwargs=dict(slug='slug_unknown')))
-
-
-@then("it should get 404 error code")
-def step_impl(context):
-    assert_status_code(context, context.response, 404)
