@@ -94,6 +94,7 @@ LOCAL_APPS = [
     'apps.meta',
     'apps.utils',
     'apps.reviews',
+    'apps.index',
 ]
 
 # CHANNEL_LAYERS = {
