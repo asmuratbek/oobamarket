@@ -28,7 +28,7 @@ def step_impl(context):
 
 @then("it should get authentication token")
 def step_impl(context):
-    assert_status_code_and_content_type(context, context.response, 200, 'application/json')
+    assert_status_code(context, context.response, 200)
     assert_response_json_keys_exist(context, ['key'])
 
 
@@ -42,7 +42,7 @@ def step_impl(context):
 
 @then("it should get message saying that username is invalid")
 def step_impl(context):
-    assert_status_code_and_content_type(context, context.response, 400, 'application/json')
+    assert_status_code(context, context.response, 400)
     assert_response_json_keys_exist(context, ['email'])
 
 
@@ -56,5 +56,5 @@ def step_impl(context):
 
 @then("it should get message saying that password is invalid")
 def step_impl(context):
-    assert_status_code_and_content_type(context, context.response, 400, 'application/json')
+    assert_status_code(context, context.response, 400)
     assert_response_json_keys_exist(context, ['non_field_errors'])
