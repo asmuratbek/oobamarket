@@ -1,7 +1,7 @@
 import uuid
 from allauth.socialaccount.providers.facebook.views import FacebookOAuth2Adapter
 from allauth.socialaccount.providers.google.views import GoogleOAuth2Adapter
-from django.core.paginator import Paginator
+from django.core.paginator import Paginator, EmptyPage
 from django.db.models import Q
 from django import db
 from django.http import JsonResponse
@@ -1030,29 +1030,29 @@ def search_products(request):
             products = Product.objects.filter(Q(title__search=q)|Q(short_description__search=q))
         else:
             products = Product.objects.filter(Q(title__icontains=q) | Q(short_description__icontains=q))
-        p = Paginator(products, 10)
-        pages_count = p.num_pages
+        paginator = Paginator(products, 10)
         page = request.GET.get('page')
-        if page and int(page) <= pages_count:
-            p = p.page(int(page))
-        else:
-            p = p.page(1)
+        try:
+            p = paginator.page(int(page))
+        except (AttributeError, EmptyPage, ValueError):
+            p = None
         product_list = list()
-        for product in p.object_list:
-            product_list.append({
-                "title": product.title,
-                "slug": product.slug,
-                "short_description": product.short_description,
-                "shop": product.get_shop_title(),
-                "main_image": product.get_main_thumb_image(),
-                "price": product.get_price(),
-                "is_favorite": product.favorite.filter(
-                    user=request.user).exists() if request.user.is_authenticated else False,
-                "is_in_cart": request.user.cart_set.last().cartitem_set.filter(product=product).exists() \
-                    if request.user.is_authenticated \
-                       and request.user.cart_set.all() \
-                    else False
-            })
+        if p:
+            for product in p.object_list:
+                product_list.append({
+                    "title": product.title,
+                    "slug": product.slug,
+                    "short_description": product.short_description,
+                    "shop": product.get_shop_title(),
+                    "main_image": product.get_main_thumb_image(),
+                    "price": product.get_price(),
+                    "is_favorite": product.favorite.filter(
+                        user=request.user).exists() if request.user.is_authenticated else False,
+                    "is_in_cart": request.user.cart_set.last().cartitem_set.filter(product=product).exists() \
+                        if request.user.is_authenticated \
+                           and request.user.cart_set.all() \
+                        else False
+                })
         return JsonResponse({'status': 0,
                              'page': page if page else 1,
                              'result': product_list})
