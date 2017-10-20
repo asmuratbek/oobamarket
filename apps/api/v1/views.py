@@ -1,6 +1,7 @@
 import uuid
 from allauth.socialaccount.providers.facebook.views import FacebookOAuth2Adapter
 from allauth.socialaccount.providers.google.views import GoogleOAuth2Adapter
+from django.core.paginator import Paginator
 from django.db.models import Q
 from django import db
 from django.http import JsonResponse
@@ -1022,27 +1023,36 @@ class Subscribe(APIView):
 @permission_classes([AllowAny])
 @authentication_classes([TokenAuthentication])
 def search_products(request):
-    db_type = db.connections.databases['default']['ENGINE']
-    db_name = db_type.split(".")[-1]
-    q = request.GET.get("q")
-    if db_name == 'mysql' or db_name == 'postgresql':
-        products = Product.objects.filter(Q(title__search=q)|Q(short_description__search=q))
-    else:
-        products = Product.objects.filter(Q(title__icontains=q) | Q(short_description__icontains=q))
-    product_list = list()
-    for product in products:
-        product_list.append({
-            "title": product.title,
-            "slug": product.slug,
-            "short_description": product.short_description,
-            "shop": product.get_shop_title(),
-            "main_image": product.get_main_thumb_image(),
-            "price": product.get_price(),
-            "is_favorite": product.favorite.filter(
-                user=request.user).exists() if request.user.is_authenticated else False,
-            "is_in_cart": request.user.cart_set.last().cartitem_set.filter(product=product).exists() \
-                if request.user.is_authenticated \
-                   and request.user.cart_set.all() \
-                else False
-        })
-    return JsonResponse({'status': 0, 'result': product_list})
+        db_type = db.connections.databases['default']['ENGINE']
+        db_name = db_type.split(".")[-1]
+        q = request.GET.get("q")
+        if db_name == 'mysql' or db_name == 'postgresql':
+            products = Product.objects.filter(Q(title__search=q)|Q(short_description__search=q))
+        else:
+            products = Product.objects.filter(Q(title__icontains=q) | Q(short_description__icontains=q))
+        p = Paginator(products, 10)
+        pages_count = p.num_pages
+        page = request.GET.get('page')
+        if page and int(page) <= pages_count:
+            p = p.page(int(page))
+        else:
+            p = p.page(1)
+        product_list = list()
+        for product in p.object_list:
+            product_list.append({
+                "title": product.title,
+                "slug": product.slug,
+                "short_description": product.short_description,
+                "shop": product.get_shop_title(),
+                "main_image": product.get_main_thumb_image(),
+                "price": product.get_price(),
+                "is_favorite": product.favorite.filter(
+                    user=request.user).exists() if request.user.is_authenticated else False,
+                "is_in_cart": request.user.cart_set.last().cartitem_set.filter(product=product).exists() \
+                    if request.user.is_authenticated \
+                       and request.user.cart_set.all() \
+                    else False
+            })
+        return JsonResponse({'status': 0,
+                             'page': page if page else 1,
+                             'result': product_list})
