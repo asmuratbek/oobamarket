@@ -3,6 +3,7 @@ from features.helpers import *
 from django.urls import reverse
 from apps.category.models import *
 import random
+from features.steps import IMAGE_ASSET_PATH
 
 use_step_matcher("re")
 
@@ -10,13 +11,23 @@ LOGIN_URL = reverse('api:rest_login')
 PRODUCT_CREATE_URL = reverse('api:product_create')
 
 
-def do_request(context, faker, shop_slug, category_slug):
+def do_request(context, faker, shop_slug, category_slug, image_path=None):
+    image = None
     post_data = dict(shop=shop_slug, category=category_slug, published=True,
                      title=faker.name(), price=random.randint(50, 10000), discount=random.randint(0, 99),
                      short_description=faker.text())
 
-    return context.client.post(PRODUCT_CREATE_URL, post_data,
-                               **dict(HTTP_AUTHORIZATION='Token %s' % context.auth_token))
+    if image_path is not None:
+        image = open(image_path, 'rb')
+        post_data['images'] = [image]
+
+    response = context.client.post(PRODUCT_CREATE_URL, post_data,
+                                   **dict(HTTP_AUTHORIZATION='Token %s' % context.auth_token))
+
+    if image is not None:
+        image.close()
+
+    return response
 
 
 @given("a user's shop")
@@ -36,7 +47,7 @@ def step_impl(context):
 @when('app sends request to "api_product_create" url with all required data')
 def step_impl(context):
     context.response = do_request(context, context.faker, shop_slug=context.shop_slug,
-                                  category_slug=context.category_slug)
+                                  category_slug=context.category_slug, image_path=IMAGE_ASSET_PATH)
 
 
 @then("it should get response with success status")
@@ -50,10 +61,10 @@ def step_impl(context):
 @when('app sends request to "api_product_create" url with invalid shop slug')
 def step_impl(context):
     context.response = do_request(context, context.faker, shop_slug='invalid_shop_slug',
-                                  category_slug=context.category_slug)
+                                  category_slug=context.category_slug, image_path=IMAGE_ASSET_PATH)
 
 
 @when('app sends request to "api_product_create" url with invalid category slug')
 def step_impl(context):
     context.response = do_request(context, context.faker, shop_slug=context.shop_slug,
-                                  category_slug='invalid_category_slug')
+                                  category_slug='invalid_category_slug', image_path=IMAGE_ASSET_PATH)
