@@ -32,7 +32,7 @@ def step_impl(context):
     response = context.response
 
     assert_status_code(context, response, 200)
-    assert_response_json_keys_exist(context, ['status', 'contacts'])
+    assert_response_json_keys_exist(context, response, ['status', 'contacts'])
 
     json_content = response.json()
     contacts = json_content['contacts']

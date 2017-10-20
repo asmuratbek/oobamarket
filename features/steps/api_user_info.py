@@ -36,8 +36,10 @@ def step_impl(context):
 
 @then("it should get response with user information")
 def step_impl(context):
-    assert_status_code(context, context.response, 200)
-    assert_response_json_keys_exist(context, ['status', 'address', 'favorites_count', 'cart_count', 'email',
+    response = context.response
+
+    assert_status_code(context, response, 200)
+    assert_response_json_keys_exist(context, response, ['status', 'address', 'favorites_count', 'cart_count', 'email',
                                               'first_name', 'phone', 'shops', 'username', 'last_name'])
 
 

@@ -17,8 +17,7 @@ def assert_status_code(context, response, status_code):
     context.test.assertEqual(response.status_code, status_code)
 
 
-def assert_response_json_keys_exist(context, keys):
-    response = context.response
+def assert_response_json_keys_exist(context, response, keys):
     json_content = response.json()
 
     context.test.assertTrue(dict_has_keys(keys, json_content))

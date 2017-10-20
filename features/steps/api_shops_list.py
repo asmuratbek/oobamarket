@@ -65,7 +65,7 @@ def step_impl(context):
     response = context.response
 
     assert_status_code(context, response, 200)
-    assert_response_json_keys_exist(context, ['count', 'next', 'previous', 'results'])
+    assert_response_json_keys_exist(context, response, ['count', 'next', 'previous', 'results'])
     assert_json_response(context, response.json(), SHOPS_WITH_SAME_TITLE_QUANTITY)
 
 
@@ -79,5 +79,5 @@ def step_impl(context):
     response = context.response
 
     assert_status_code(context, response, 200)
-    assert_response_json_keys_exist(context, ['count', 'next', 'previous', 'results'])
+    assert_response_json_keys_exist(context, response, ['count', 'next', 'previous', 'results'])
     assert_json_response(context, response.json(), SHOPS_IN_MALL_QUANTITY)
