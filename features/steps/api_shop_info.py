@@ -1,6 +1,5 @@
 from behave import *
 from features.helpers import *
-from apps.shop.models import *
 
 from django.urls import reverse
 
@@ -13,15 +12,8 @@ def step_impl(context):
     user_data = create_user(faker)
     user = user_data['user']
 
-    title = faker.name()[0]
-    slug = 'slug_%s' % title
-    short_description = 'some description'
-
-    shop = Shop.objects.create(title=title, email=faker.email(), short_description=short_description, slug=slug)
-    shop.user = [user]
-    shop.save()
-
-    context.shop_slug = slug
+    shop_data = create_shop(faker, user=user)
+    context.shop_slug = shop_data['slug']
 
 
 @when('app sends request to "api_shop_info" url containing a slug of the shop')

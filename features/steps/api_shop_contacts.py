@@ -1,5 +1,4 @@
 from behave import *
-from apps.shop.models import *
 from django.urls import reverse
 from features.helpers import *
 
@@ -11,15 +10,13 @@ SHOP_CONTACTS_QUANTITY = 3
 @given("shop with its contacts")
 def step_impl(context):
     faker = context.faker
-    shop_title = faker.name()[0]
-    shop_slug = 'slug_with_contacts_%s' % shop_title
-
-    shop = Shop.objects.create(title=shop_title, slug=shop_slug, email=faker.email(), short_description='')
+    shop_data = create_shop(faker, slug_prefix='contacts')
+    shop = shop_data['shop']
 
     for i in range(0, SHOP_CONTACTS_QUANTITY):
         Contacts.objects.create(address=faker.address(), phone=faker.text(), shop=shop)
 
-    context.shop_slug = shop_slug
+    context.shop_slug = shop_data['slug']
 
 
 @when('app sends request to "api_shop_contacts" url containing a slug of the shop')

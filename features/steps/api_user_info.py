@@ -2,12 +2,15 @@ from behave import *
 from django.urls import reverse
 from features.helpers import *
 from apps.shop.models import *
+import random
 
 use_step_matcher("re")
 
 SHOPS_QUANTITY = 5
 USER_INFO_URL = reverse('api:user_detail')
 LOGIN_URL = reverse('api:rest_login')
+
+SHOPS_ALREADY_CREATED = False
 
 
 @given("user with list of shops")
@@ -18,13 +21,7 @@ def step_impl(context):
     auth_token = login_and_get_auth_token(context, LOGIN_URL, user_data['email'], user_data['password'])
 
     for i in range(0, SHOPS_QUANTITY):
-        title = faker.name()[0]
-        slug = 'slug_%s_%s' % (title, i)
-        short_description = 'some description'
-
-        shop = Shop.objects.create(title=title, email=faker.email(), short_description=short_description, slug=slug)
-        shop.user = [user]
-        shop.save()
+        create_shop(faker, user=user, slug_prefix='user_info_%s_%s' % (random.randint(0, 1000), i))
 
     context.auth_token = auth_token
 

@@ -36,21 +36,10 @@ def step_impl(context):
     user = user_data['user']
 
     for i in range(0, SHOPS_WITH_SAME_TITLE_QUANTITY):
-        title = SHOP_TITLE_TEMPLATE % i
-        slug = 'slug_%s_%s' % (title, i)
-        short_description = 'some description'
+        create_shop(faker, user=user, default_title=SHOP_TITLE_TEMPLATE % i, slug_prefix='list_%s' % i)
 
-        shop = Shop.objects.create(title=title, email=faker.email(), short_description=short_description, slug=slug)
-        shop.user = [user]
-        shop.save()
-
-    mall_shop_title = faker.name()[0]
-    mall_shop_slug = 'slug_mall_%s' % mall_shop_title
-
-    shop_in_mall = Shop.objects.create(title=mall_shop_title, email=faker.email(), short_description='',
-                                       slug=mall_shop_slug)
-
-    Contacts.objects.create(shop=shop_in_mall, place=place)
+    shop_in_mall_data = create_shop(faker, user=user, slug_prefix='mall')
+    Contacts.objects.create(shop=shop_in_mall_data['shop'], place=place)
 
     context.place_id = place.id
 

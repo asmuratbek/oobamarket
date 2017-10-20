@@ -5,6 +5,17 @@ from django.urls import reverse
 use_step_matcher("re")
 
 LOGIN_URL = reverse('api:rest_login')
+SHOP_CREATE_URL = reverse('api:shop_create')
+
+
+def do_request(context, title=None, email=None):
+    post_data = dict(title=title, short_description='', email=email, place_id=0)
+
+    if title is None and email is None:
+        post_data = dict(short_description='', place_id=0)
+
+    return context.client.post(SHOP_CREATE_URL, post_data,
+                               **dict(HTTP_AUTHORIZATION='Token %s' % context.auth_token))
 
 
 @given("a registered user")
@@ -18,13 +29,10 @@ def step_impl(context):
 @when('app sends request to "api_shop_create" url with all required data')
 def step_impl(context):
     faker = context.faker
-    post_data = dict(title=faker.name(), short_description=faker.text(), email=faker.email(), place_id=0)
-
-    context.response = context.client.post(reverse('api:shop_create'), post_data,
-                                           **dict(HTTP_AUTHORIZATION='Token %s' % context.auth_token))
+    context.response = do_request(context, faker.name(), faker.email())
 
 
-@then("it should get response with an information of created shop")
+@then("it should get 201 code response with an information of created shop")
 def step_impl(context):
     response = context.response
 
@@ -35,11 +43,7 @@ def step_impl(context):
 
 @when('app sends request to "api_shop_create" url missing required data')
 def step_impl(context):
-    faker = context.faker
-    post_data = dict(short_description=faker.text(), place_id=0) # missed required title,email fields
-
-    context.response = context.client.post(reverse('api:shop_create'), post_data,
-                                           **dict(HTTP_AUTHORIZATION='Token %s' % context.auth_token))
+    context.response = do_request(context)
 
 
 @then("it should get 400 error code")

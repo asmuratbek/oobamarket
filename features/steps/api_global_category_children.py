@@ -1,7 +1,5 @@
 from behave import *
 from django.urls import reverse
-from apps.global_category.models import GlobalCategory
-from apps.category.models import Category
 
 from features.helpers import *
 
@@ -12,16 +10,15 @@ GLOBAL_CATEGORY_CHILDREN_CATEGORIES_QUANTITY = 5
 
 @given("prepared global category with children categories")
 def step_impl(context):
-    gc_title = context.faker.name()
-    gc_slug = 'slug_%s' % context.faker.words()[0]
-    global_category = GlobalCategory.objects.create(title=gc_title, slug=gc_slug)
+    faker = context.faker
+
+    global_category_data = create_category(faker, slug_prefix='gc_children', is_global=True)
+    global_category = global_category_data['category']
 
     for i in range(0, GLOBAL_CATEGORY_CHILDREN_CATEGORIES_QUANTITY):
-        cc_title = context.faker.name()
-        Category.objects.create(title=cc_title, slug='child_slug_%s_%s' % (context.faker.words()[0], i),
-                                                section=global_category, order=i)
+        create_category(faker, slug_prefix='child_slug_%s' % i, section=global_category, order=i)
 
-    context.global_category_slug = gc_slug
+    context.global_category_slug = global_category_data['slug']
 
 
 @when('app sends request to "api_global_category_children" url')

@@ -1,6 +1,5 @@
 from behave import *
 from django.urls import reverse
-from apps.global_category.models import GlobalCategory
 from features.helpers import *
 
 use_step_matcher("re")
@@ -10,9 +9,8 @@ GLOBAL_CATEGORIES_QUANTITY = 5
 
 @given("prepared set of global categories")
 def step_impl(context):
-    for _ in range(0, GLOBAL_CATEGORIES_QUANTITY):
-        title = context.faker.name()
-        GlobalCategory.objects.create(title=title, slug='slug_%s' % context.faker.words()[0])
+    for i in range(0, GLOBAL_CATEGORIES_QUANTITY):
+        create_category(context.faker, slug_prefix='global_category_%s' % i, is_global=True)
 
 
 @when('app sends request to "api_global_category" url')
