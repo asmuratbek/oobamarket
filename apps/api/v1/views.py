@@ -270,26 +270,33 @@ class GlobalCategoryDetailApiView(APIView):
             products = products.filter(price__gt=int(price_from))
         if price_to and price_to != 'NaN':
             products = products.filter(price__lt=int(price_to))
-
+        paginator = Paginator(products, 20)
+        page = request.GET.get('page', 1)
+        try:
+            p = paginator.page(int(page))
+        except (AttributeError, EmptyPage, ValueError):
+            p = None
         product_list = list()
-        for product in products:
-            product_list.append({
-                "title": product.title,
-                "slug": product.slug,
-                "short_description": product.short_description,
-                "shop": product.get_shop_title(),
-                "main_image": product.get_main_thumb_image(),
-                "price": product.get_price(),
-                "is_favorite": product.favorite.filter(
-                    user=self.request.user).exists() if self.request.user.is_authenticated else False,
-                "is_in_cart": self.request.user.cart_set.last().cartitem_set.filter(product=product).exists()\
-                    if self.request.user.is_authenticated \
-                       and self.request.user.cart_set.all() \
-                    else False
-            })
+        if p:
+            for product in p.object_list:
+                product_list.append({
+                    "title": product.title,
+                    "slug": product.slug,
+                    "short_description": product.short_description,
+                    "shop": product.get_shop_title(),
+                    "main_image": product.get_main_thumb_image(),
+                    "price": product.get_price(),
+                    "is_favorite": product.favorite.filter(
+                        user=self.request.user).exists() if self.request.user.is_authenticated else False,
+                    "is_in_cart": self.request.user.cart_set.last().cartitem_set.filter(product=product).exists()\
+                        if self.request.user.is_authenticated \
+                           and self.request.user.cart_set.all() \
+                        else False
+                })
 
         return JsonResponse({
             "status": "success",
+            "page": page,
             "products": product_list
         })
 
