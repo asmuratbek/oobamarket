@@ -5,9 +5,15 @@
 {% block head_title %}{% trans "Подтвердите ваш E-mail адрес" %}{% endblock %}
 
 {% block inner %}
-    <h1>{% trans "Подтвердите ваш E-mail адрес" %}</h1>
+    <div class="uk-container uk-margin-medium-top">
+    <div class="shadow uk-padding-large">
+        <h1>{% trans "Подтвердите ваш E-mail адрес" %}</h1>
 
-    <p>{% blocktrans %}Мы выслали вам e-mail для подтверждения. Пройдте по ссылке, чтобы завершить регистрацию. Свяжитесь с нами если не получили письмо или не можете подтвердить регистрацию.{% endblocktrans %}</p>
+         <p>{% blocktrans %}Мы выслали вам e-mail для подтверждения. Пройдте по ссылке, чтобы завершить регистрацию.
+        Свяжитесь с нами если не получили письмо или не можете подтвердить регистрацию.{% endblocktrans %}</p>
+    </div>
+    </div>
+
 
 {% endblock %}
 
