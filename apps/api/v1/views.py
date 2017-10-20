@@ -189,7 +189,7 @@ class CategoryDetailApiView(MultipleModelAPIView):
         order = self.request.GET.get('order')
         price_from = self.request.GET.get('priceFrom')
         price_to = self.request.GET.get('priceTo')
-        category = Category.objects.get(slug=slug)
+        category = get_object_or_404(Category, slug=slug)
         if category.get_level() == 0:
             if order and order in ORDER_TYPES:
                 products = Product.objects.filter(
@@ -202,11 +202,11 @@ class CategoryDetailApiView(MultipleModelAPIView):
         else:
             if order and order in ORDER_TYPES:
                 products = Product.objects.filter(
-                    Q(category__in=category.get_descendants()),
+                    Q(category=category),
                 ).order_by(order)
             else:
                 products = Product.objects.filter(
-                    Q(category__in=category.get_descendants()),
+                    Q(category=category),
                 )
         if q:
             products = products.filter(
