@@ -32,7 +32,7 @@
                         {#                                                                                  uk-icon="icon: world"></span> Добавить#}
                         {#                            магазин</a></li>#}
                         {% if user.is_authenticated %}
-                            <li class="favorite">
+                            <li class="favorite-li">
                                 <a href="{{ user.get_favorites_link }}" class="favorites_count">
                                     <span class="uk-margin-small-right uk-icon" uk-icon="icon: heart"></span> Избранные
                                     (<span>{{ user.get_favorites_count }}</span>)
@@ -45,7 +45,7 @@
                                 </a>
                             </li>
                         {% else %}
-                            <li class="favorite">
+                            <li class="favorite-li">
                                 <a href="{% url 'account_login' %}" class="favorites_count">
                                     <span class="uk-margin-small-right uk-icon" uk-icon="icon: heart"></span> Избранные
                                     <span>{{ user.get_favorites_count }}</span>
@@ -79,7 +79,7 @@
                                                            uk-icon="icon: bookmark"></span>Лента</a></li>
                     <li class="create-shop"><a href="#"><span class="uk-margin-small-right uk-icon"
                                                               uk-icon="icon: world"></span> Добавить магазин</a></li>
-                    <li class="favorite"><a href="#"><span class="uk-margin-small-right uk-icon"
+                    <li class="favorite-li"><a href="#"><span class="uk-margin-small-right uk-icon"
                                                            uk-icon="icon: heart"></span> Избранные
                         (<span> 2 </span>)</a></li>
                     <li class="basket"><a href="#"><span class="uk-margin-small-right uk-icon"
