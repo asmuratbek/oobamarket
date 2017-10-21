@@ -114,43 +114,14 @@
 {% endfor %}
 
 <script>
-    $('.basket').click(function (event) {
-        event.preventDefault();
-        var thisItem = $(this);
-        var productId = thisItem.attr("data-product-id");
-        $.ajax({
-            type: "GET",
-            url: "/cart/",
-            data: {
-                "item": productId
-            },
-            success: function (data) {
-                showFlashMessage(data.flash_message);
-                console.log(data);
-                console.log(data.total_items);
-                $('.cart-count').text(data.total_items);
-                if (data.item_added) {
-                    thisItem.toggleClass("in");
-                    thisItem.attr('title', "В корзине");
-                }
-                else {
-                    thisItem.removeClass("in");
-                    thisItem.attr('title', "Добавить в корзину");
-                }
-            },
-            error: function (response, error) {
-                console.log(response);
-                console.log(error);
-            }
-        })
-    });
-
+    // ---------------------------------
+    // функция добавление в избранные на главной
+    // ---------------------------------
 
     $(".favorite").click(function (event) {
         event.preventDefault();
         var thisIcon = $(this);
-        var productId = $(this).attr("data-product-id");
-        console.log(productId);
+        var productId = $(this).attr("data-item-id");
         $.ajax({
             type: "GET",
             url: "/favorite/add",
@@ -159,7 +130,6 @@
             },
             success: function (data) {
                 showFlashMessage(data.flash_message);
-                console.log(data);
                 if (data.created) {
                     thisIcon.toggleClass("like");
                     thisIcon.attr("title", "Удалить из избранных");
@@ -171,27 +141,61 @@
                         thisIcon.parent().parent().parent().parent().fadeOut();
                     }
                 }
-                $('.favorites_count').text(data.favorites_count)
+                $('.favorites_count').html('<span class="uk-margin-small-right uk-icon" uk-icon="icon: heart"></span> Избранные' +
+                                    '(<span>' + data.favorites_count + '</span>)')
             },
             error: function (response, error) {
                 console.log(response);
                 console.log(error);
             }
         })
+    });
 
+
+    // ---------------------------------
+    // функция добавление в корзину на главной
+    // ---------------------------------
+
+    $(".cart").click(function (event) {
+        event.preventDefault();
+        var thisIcon = $(this);
+        var productId = $(this).attr("data-item-id");
+        $.ajax({
+            type: "GET",
+            url: "/cart/",
+            data: {
+                'item': productId
+            },
+            success: function (data) {
+                showFlashMessage(data.flash_message);
+                if (data.item_added) {
+                    thisIcon.toggleClass("in");
+                    thisIcon.attr("title", "В корзине");
+                }
+                else {
+                    thisIcon.removeClass("in");
+                    thisIcon.attr("title", "Добавить в корзину");
+                }
+                $('.cart_count').html('<span class="uk-margin-small-right uk-icon" uk-icon="icon: cart"></span> Корзина' +
+                                    '(<span>' + data.total_items + '</span>)')
+            },
+            error: function (response, error) {
+                console.log(response);
+                console.log(error);
+            }
+        })
     });
 
     function showFlashMessage(message) {
-        var template = "<div class='container container-alert-flash'>" +
-            "<div class='col-sm-3 col-sm-offset-8'> " +
-            "<div class='alert alert-success alert-dismissible' role='alert'>" +
-            "<button type='button' class='close' data-dismiss='alert' aria-label='Close'>" +
-            "<span aria-hidden='true'>&times;</span></button>"
+        var template = "<div class='uk-container flash'>" +
+            "<div class='uk-alert-primary' uk-alert> " +
+            "<div class=''>" +
+            "<a class='uk-alert-close' uk-close></a>"
             + message + "</div></div></div>";
         $("body").append(template);
-        $(".container-alert-flash").fadeIn();
+        $(".uk-container.flash").fadeIn();
         setTimeout(function () {
-            $(".container-alert-flash").fadeOut();
+            $(".uk-container.flash").fadeOut();
         }, 1800);
 
     }

@@ -10,7 +10,32 @@ $hover-orange: #c7440b
 $red: #ed1c24
 $blue: #0071bc
 $gray: #6d6d6d
-
+.uk-container.flash
+  display: block
+  position: fixed
+  top: 118px
+  right: 0
+  z-index: 10
+  padding-right: 0
+  .uk-alert-close
+    right: 10px
+ul.pagination
+  margin: 40px 0 0 0
+  padding: 0
+  text-align: center
+  li.disabled
+    a
+      color: #cacaca
+      cursor: not-allowed
+  li.active
+    a
+      color: $orange
+  li
+    display: inline-block
+    a
+      padding: 10px 20px
+      color: #333
+      text-decoration: none
 //.uk-container
 //  max-width: 100%
 // -------------------------------------------
