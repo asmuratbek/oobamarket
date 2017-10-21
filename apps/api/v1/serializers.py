@@ -75,7 +75,6 @@ class ProductSerializer(ModelSerializer):
     detail_view = SerializerMethodField()
     update_view = SerializerMethodField()
     delete_view = SerializerMethodField()
-    get_price_function = SerializerMethodField()
 
     class Meta:
         model = Product
@@ -98,7 +97,7 @@ class ProductSerializer(ModelSerializer):
             'detail_view',
             'update_view',
             'delete_view',
-            'get_price_function',
+            'price',
             'created_at',
             'updated_at',
         )
@@ -108,9 +107,6 @@ class ProductSerializer(ModelSerializer):
 
     def get_category_title(self, obj):
         return obj.category.title
-
-    def get_get_price_function(self, obj):
-        return obj.get_price()
 
     def get_is_owner(self, obj):
         user = None
@@ -176,12 +172,12 @@ class ProductDetailSerializer(ModelSerializer):
         lookup_field="slug"
     )
     shop = SerializerMethodField()
+    price = SerializerMethodField()
     category_title = SerializerMethodField()
     is_owner = SerializerMethodField()
     main_image = SerializerMethodField()
     is_in_cart = SerializerMethodField()
     is_favorite = SerializerMethodField()
-    get_price_function = SerializerMethodField()
 
     class Meta:
         model = Product
@@ -201,7 +197,7 @@ class ProductDetailSerializer(ModelSerializer):
             'main_image',
             'is_in_cart',
             'is_favorite',
-            'get_price_function',
+            'price',
             'created_at',
             'updated_at',
             'get_category_title'
@@ -210,11 +206,11 @@ class ProductDetailSerializer(ModelSerializer):
     def get_shop(self, obj):
         return str(obj.shop)
 
+    def get_price(self, obj):
+        return obj.get_price()
+
     def get_category_title(self, obj):
         return obj.category.title
-
-    def get_get_price_function(self, obj):
-        return obj.get_price()
 
     def get_is_owner(self, obj):
         user = None
@@ -251,25 +247,20 @@ class ProductDetailSerializer(ModelSerializer):
                     return False
 
 
-class ProductCreateSerializer(ModelSerializer):
+class ProductPostSerializer(ModelSerializer):
 
     class Meta:
         model = Product
-        fields = (
-            'title',
-            'slug',
-            'category',
-            'shop',
-            'price',
-            'discount',
-            'currency',
-            'published',
-        )
+        exclude = ('id', 'slug', 'created_at', 'updated_at', 'counter', 'currency',
+                   'partner_price', 'sell_count', 'delivery_type', 'delivery_cost',
+                   'availability', 'meta_title', 'meta_description', 'meta_keywords', 'seo_text',
+                   'long_description',)
 
-    slug = SerializerMethodField()
+    shop = serializers.CharField(max_length=300)
+    category = serializers.CharField(max_length=300)
 
-    def get_slug(self, obj):
-        return slugify(obj.title)
+    # def get_slug(self, obj):
+    #     return slugify(obj.title)
 
 
 class ProductImageSerializer(ModelSerializer):
@@ -285,20 +276,20 @@ from apps.product.models import Shop
 
 
 class ShopSerializer(ModelSerializer):
-    detail_url = HyperlinkedIdentityField(
-        view_name='api:shop_detail',
-        lookup_field='slug'
-    )
-
-    update_url = HyperlinkedIdentityField(
-        view_name='api:shop_update',
-        lookup_field="slug"
-    )
-
-    delete_url = HyperlinkedIdentityField(
-        view_name='api:shop_delete',
-        lookup_field="slug"
-    )
+    # detail_url = HyperlinkedIdentityField(
+    #     view_name='api:shop_detail',
+    #     lookup_field='slug'
+    # )
+    #
+    # update_url = HyperlinkedIdentityField(
+    #     view_name='api:shop_update',
+    #     lookup_field="slug"
+    # )
+    #
+    # delete_url = HyperlinkedIdentityField(
+    #     view_name='api:shop_delete',
+    #     lookup_field="slug"
+    # )
 
     # used_categories = SerializerMethodField()
     is_owner = SerializerMethodField()
@@ -310,9 +301,9 @@ class ShopSerializer(ModelSerializer):
     class Meta:
         model = Shop
         fields = (
-            'detail_url',
-            'update_url',
-            'delete_url',
+            # 'detail_url',
+            # 'update_url',
+            # 'delete_url',
             'id',
             'title',
             'slug',
@@ -386,53 +377,30 @@ class ShopCreateSerializer(ModelSerializer):
 
     class Meta:
         model = Shop
-        validators = [
-            UniqueTogetherValidator(
-                queryset=Shop.objects.all(),
-                fields=('slug',)
-            )
-        ]
-        fields = (
-            'id',
-            'title',
-            'slug',
-            'user',
-            'email',
-            'description',
-            'short_description',
-            'created_at',
-            'updated_at',
-            'logo'
-        )
+        exclude = ['id', 'slug', 'counter', 'meta_title', 'meta_description',
+                   'meta_keywords', 'seo_text', 'created_at', 'updated_at']
+
+
+class ShopUpdateSerializer(ModelSerializer):
+
+    class Meta:
+        model = Shop
+        exclude = ['id', 'user', 'logo', 'slug', 'counter', 'meta_title', 'meta_description',
+                   'meta_keywords', 'seo_text', 'created_at', 'updated_at']
 
 
 class UserSerializer(ModelSerializer):
 
     class Meta:
         model = User
-        fields = (
-            'id',
-            'name',
-            'email',
-            'phone',
-            'address'
-        )
+        exclude = ['id', 'is_staff', 'is_active', 'name', 'password']
 
 
 class SalesSerializer(ModelSerializer):
 
     class Meta:
         model = Sales
-        fields = (
-            'id',
-            'title',
-            'short_description',
-            'description',
-            'discount',
-            'image',
-            'created_at',
-            'updated_at'
-        )
+        exclude = ['id', 'shop', 'created_at', 'updated_at']
 
 
 class ShopReviewsSerializer(ModelSerializer):
@@ -441,14 +409,7 @@ class ShopReviewsSerializer(ModelSerializer):
 
     class Meta:
         model = ShopReviews
-        fields = (
-            'id',
-            'username',
-            'text',
-            'stars',
-            'created_at',
-            'updated_at'
-        )
+        exclude = ['id', 'user', 'shop', 'created_at', 'updated_at', 'stars']
 
     def get_username(self, obj):
         return obj.user.username if obj.user.username else obj.user.email
@@ -467,24 +428,11 @@ class ShopContactsSerializer(ModelSerializer):
 
     class Meta:
         model = Contacts
-        fields = (
+        exclude = (
             'id',
-            'address',
-            'phone',
-            'place',
-            'latitude',
-            'longitude',
-            'monday',
-            'tuesday',
-            'wednesday',
-            'thursday',
-            'friday',
-            'saturday',
-            'sunday',
-            'round_the_clock',
+            'published',
             'created_at',
             'updated_at'
-
         )
 
 

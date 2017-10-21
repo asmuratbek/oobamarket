@@ -62,7 +62,7 @@ class CartDetailView(SingleObjectMixin, View):
                 item_added = True
             # elif not created and cart_item.quantity == qty:
             #     delete_item = True
-            if delete_item:
+            if not created and qty == 1:
                 flash_message = "Продукт успешно удален из корзины"
                 cart_item.delete()
             else:

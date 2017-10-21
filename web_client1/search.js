@@ -36,6 +36,9 @@ var MainInterface = createClass({
             queryText: params['q'] ? decodeURIComponent(params['q']) : '',
             activePage: 1,
             shops: [],
+            favorites: [],
+            cartItems: [],
+            productsByPage: 52,
             categories: [],
             loaded: false,
             activeCategories: [],
@@ -49,7 +52,7 @@ var MainInterface = createClass({
               '&priceFrom=' + this.state.priceFrom + '&priceTo=' + this.state.priceTo + '&q=' + this.state.queryText,
               success: function (data) {
                     var products = data.results.map(obj => obj);
-                    var pagesCount = Math.ceil(data.count / 20);
+                    var pagesCount = Math.ceil(data.count / this.state.productsByPage);
                     this.setState({
                         products: products,
                         productsCount: data.count,
@@ -143,7 +146,7 @@ var MainInterface = createClass({
               '&q=' + q.toLowerCase(),
               success: function (data) {
                     var products = data.results.map(obj => obj);
-                    var pagesCount = Math.ceil(data.count / 20);
+                    var pagesCount = Math.ceil(data.count / this.state.productsByPage);
                     this.setState({
                         products: products,
                         loaded: true,
@@ -171,7 +174,7 @@ var MainInterface = createClass({
               '&priceFrom=' + parseInt(price) + '&priceTo=' + this.state.priceTo + '&q=' + this.state.queryText,
               success: function (data) {
                     var products = data.results.map(obj => obj);
-                    var pagesCount = Math.ceil(data.count / 20);
+                    var pagesCount = Math.ceil(data.count / this.state.productsByPage);
                     this.setState({
                         products: products,
                         loaded: true,
@@ -198,7 +201,7 @@ var MainInterface = createClass({
               '&priceFrom=' + this.state.priceFrom + '&priceTo=' + parseInt(price) + '&q=' + this.state.queryText,
               success: function (data) {
                     var products = data.results.map(obj => obj);
-                    var pagesCount = Math.ceil(data.count / 20);
+                    var pagesCount = Math.ceil(data.count / this.state.productsByPage);
                     this.setState({
                         products: products,
                         loaded: true,
@@ -224,6 +227,8 @@ var MainInterface = createClass({
             return (
                 <Product key={ index }
                          onProductDelete={productDelete}
+                         favorites={this.state.favorites}
+                         cartItems={this.state.cartItems}
                          product={ item }/>
             ) //return
         }.bind(this));

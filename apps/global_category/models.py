@@ -19,6 +19,9 @@ class GlobalCategory(PublishBaseModel):
     def __str__(self):
         return self.title
 
+    def get_url(self):
+        return "/" + str(self.slug) + '/'
+
     def get_absolute_url(self):
         return settings.DOMAIN_URL + "/" + str(self.slug) + "/"
 

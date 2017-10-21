@@ -127,23 +127,22 @@
 
                 {% endfor %}
 
-
-                <div class="uk-width-1-1 uk-grid uk-margin-remove-left uk-margin-small-top shadow uk-padding uk-padding-remove-left">
-                    <div class="total-price ">
-                        <div class="">
-                            <h3>Итого к оплате</h3>
-                        </div>
-                        <div class="">
-                            <h4 id="subtotal">{{ object.subtotal }}</h4>
-                        </div>
-                    </div>
-                    <div class="uk-width-1-1">
-                        <a href="" class="init-modal uk-button uk-button-default" uk-toggle="target: #basket-modal">Оформить
-                            покупку</a>
-                    </div>
-                </div>
-
             </div>
+            {% if not object.get_shops %}
+                <h4>Ваша корзина пуста</h4>
+            {% else %}
+            <div class="col-lg-offset-2 col-lg-10 text-center">
+                <div class="row">
+                     <div class="total-price ">
+                    <div class="col-lg-6">
+                        <h6>Итого к оплате</h6>
+
+            <div class="col-lg-offset-2 col-lg-10">
+                <a href="" class="btn-modal" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">Оформить
+                    покупку</a>
+            </div>
+        {% endif %}
+
 
         </div>
     </section>

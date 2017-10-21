@@ -15,6 +15,8 @@ var MainInterface = createClass({
         return {
             products: [],
             activePage: 1,
+            favorites: [],
+            cartItems: [],
             loaded: false,
             activeCategories: [],
             categorySlug: location.href.split("/")[location.href.split("/").length - 2]
@@ -44,6 +46,23 @@ var MainInterface = createClass({
                         pagesCount: pagesCount,
                         baseUrl: `/api/v1/product/`,
                         loaded: true
+                    });
+              }.bind(this),
+              error: function (response, error) {
+                  console.log(response);
+                  console.log(error);
+              }
+        })
+
+        $.ajax({
+            type: "GET",
+              url: `http://${this.state.domain}:8000/api/v1/my-list/`,
+              success: function (data) {
+                    var favorites = data.favorites.map(obj => obj.id);
+                    var cartItems = data.cart_items.map(obj => obj.id);
+                    this.setState({
+                        favorites: favorites,
+                        cartItems: cartItems
                     });
               }.bind(this),
               error: function (response, error) {
@@ -102,6 +121,8 @@ var MainInterface = createClass({
             return (
                 <Product key={ index }
                          onProductDelete={productDelete}
+                         favorites={this.state.favorites}
+                         cartItems={this.state.cartItems}
                          product={ item }/>
             ) //return
         }.bind(this));

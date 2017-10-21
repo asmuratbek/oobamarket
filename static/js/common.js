@@ -1,5 +1,23 @@
 
 $(document).ready(function () {
+<<<<<<< HEAD
+=======
+       if ($('.owl-carousel.home').length > 0) {
+           $('.owl-carousel.home').owlCarousel({
+               loop: true,
+               items: 1,
+               dots: true,
+               nav: true,
+               autoplay: true,
+               autoplayTimeout: 4000
+           });
+       }
+
+    // $('.dropdown-toggle.custom').on('show.bs.dropdown-menu', function () {
+
+
+    // });
+>>>>>>> 801b2ba5ef9235593895eb70ab71a5efe53e9203
 
 
     function readURL(input) {
@@ -110,8 +128,6 @@ $(document).ready(function () {
 
         });
     });
-
-
 
 
     // //фукция удаления одного или массива списков с истории продаж магазина
@@ -528,7 +544,7 @@ $(document).ready(function () {
                     thisItem.toggleClass("enable");
                     thisItem.attr('data-original-title', "В корзине");
                 }
-                else if (data.deleted) {
+                else {
                     thisItem.removeClass("enable");
                     thisItem.attr('data-original-title', "Добавить в корзину");
                 }
