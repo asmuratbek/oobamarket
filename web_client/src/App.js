@@ -524,13 +524,13 @@ class App extends Component {
         });
 
         return (
-        <section className="shop-list uk-margin-xlarge-top">
+        <section className="shop-list uk-margin-large-top">
         <div className="uk-container">
             <h3 className="uk-margin-medium-bottom"><a href="">Магазины</a></h3>
 
-                <form action="" className="pull-right col-md-6">
-                    <div className="form-group col-md-5">
-                        <select className="demo-default " onChange={this.handleChangePlace}>
+                <form action="" className="uk-grid uk-margin-medium-bottom uk-grid-small uk-flex-right uk-child-width-1-4@s uk-child-width-1-1" data-uk-grid>
+                    <div className="">
+                        <select className="uk-select" onChange={this.handleChangePlace}>
                         <option>Выбрать ТЦ</option>
                           {this.state.places.map(function (item, index) {
                             return (
@@ -539,25 +539,27 @@ class App extends Component {
                                 value={item.id}>{item.title} {item.ttype}</option>
                             );
                           })}
-                    </select>
+                        </select>
                     </div>
 
-                    <div className="form-search col-md-7">
-                        <input className="form-control" type="search" placeholder="Поиск магазина..." onChange={this.searchApts} />
-                        <button type="submit">
-                            <span className="glyphicon glyphicon-search"></span>
-                        </button>
+                    <div className="">
+                        <div class="uk-inline uk-width-1-1">
+                            <button type="submit" className="uk-form-icon uk-form-icon-flip" data-uk-icon="icon: search"></button>
+                            <input className="uk-input uk-width-1-1" type="search" placeholder="Поиск магазина..." onChange={this.searchApts} />
+                        </div>
                     </div>
                 </form>
-                <div className="uk-child-width-1-1 uk-child-width-1-2@s uk-child-width-1-3@m  uk-child-width-1-4@l uk-grid-small" data-uk-grid>
 
-                    {filteredShops}
 
-                </div>
+                    <div className="uk-child-width-1-1 uk-child-width-1-2@s uk-child-width-1-3@m uk-grid-small uk-child-width-1-4@l " data-uk-grid>
+                        {filteredShops}
+                    </div>
+
+
                 {this.state.pagesCount > 1 ?
                         <Pagination
                           activePage={this.state.activePage}
-                          itemsCountPerPage={8}
+                          itemsCountPerPage={24}
                           totalItemsCount={this.state.shopCount}
                           pageRangeDisplayed={5}
                           onChange={this.handlePageChange}
