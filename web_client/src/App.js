@@ -4,6 +4,7 @@ import Product from './components/Product';
 import SearchForm from './components/SearchFrom';
 import CategoryList from "./components/CategoryList";
 import ChildCategory from "./components/ChildCategory";
+import Shop from './components/Shop';
 import Pagination from 'react-js-pagination';
 import $ from 'jquery';
 
@@ -26,6 +27,9 @@ class App extends Component {
         activeCategory: '',
         pageType: this.pageType(),
         loaded: false,
+        places: [],
+        markets: [],
+        activePlace: '',
         productsByPage: 20,
         domain: window.location.href.split("/")[2].split(":")[0],
         categorySlug: window.location.href.split("/")[window.location.href.split("/").length - 2],
@@ -35,7 +39,9 @@ class App extends Component {
 
   pageType = () => {
        if (window.location.href.split("/")[4] && window.location.href.split("/")[4] === 'parent') {
-            return "parent"
+           return "parent"
+       } else if(window.location.href.split("/").length === 5 && window.location.href.split("/")[3] === 'shops') {
+            return "shops"
         } else if (window.location.href.split("/")[3] && window.location.href.split("/")[3] === 'shops') {
             return "shop"
         } else if (window.location.href.split("/").length === 6) {
@@ -67,7 +73,42 @@ class App extends Component {
             }
         }.bind(this));
 
-        const query = {
+        if (this.state.pageType === 'shops') {
+            $.ajax({
+                type: "GET",
+                  url: `/api/v1/shop/`,
+                  success: function (data) {
+                        let shops = data.results.map(obj =>obj);
+                        let pagesCount = Math.ceil(data.count / 24);
+                        this.setState({
+                            shops: shops,
+                            pagesCount: pagesCount,
+                            shopCount: data.count,
+                        });
+                  }.bind(this),
+                  error: function (response, error) {
+                      console.log(response);
+                      console.log(error);
+                  }
+                });
+                $.ajax({
+                 type: "GET",
+                  url: `/api/v1/place/`,
+                  success: function (data) {
+                        let places = data.map(obj =>obj);
+                        this.setState({
+                            places: places,
+                            loaded: true
+                        });
+                  }.bind(this),
+                  error: function (response, error) {
+                      console.log(response);
+                      console.log(error);
+                  }
+            })
+
+        } else {
+            const query = {
                 query: {
                     match_phrase: this.getMatchPhrase()
                 },
@@ -135,6 +176,9 @@ class App extends Component {
                     loaded: true
                 });
             }.bind(this));
+        }
+
+
   };
 
   handlePageChange = (pageNumber) => {
@@ -142,27 +186,79 @@ class App extends Component {
            loaded: false
         });
 
-        let query = urlmaker(this.state.productsCount, this.state.productsByPage, pageNumber,
+        if (this.state.pageType === 'shops') {
+             $.ajax({
+                    type: "GET",
+                      url: '/api/v1/shop/?page=' + pageNumber + '&q=' + this.state.queryText + '&place=' + this.state.activePlace,
+                      success: function (data) {
+                            let shops = data.results.map(obj => obj);
+                            this.setState({
+                                shops: shops,
+                                activePage: pageNumber,
+                                loaded: true,
+                            });
+                      }.bind(this),
+                      error: function (response, error) {
+                          console.log(response);
+                          console.log(error);
+                      }
+                })
+        } else {
+            let query = urlmaker(this.state.productsCount, this.state.productsByPage, pageNumber,
                             this.state.activePage, this.state.orderBy, this.state.priceFrom,
                             this.state.priceTo, this.state.queryText, this.state.categorySlug,
                             this.getMatchPhrase(), this.state.shopSlug, this.state.activeCategory,
                             this.state.parent ? this.state.parent : null);
 
-      fetch(`http://${this.state.domain}:9200/_search/`, {
-            method: "POST",
-            body: JSON.stringify(query)
-        }).then(function(res) {
-                return res.json();
-            }).then(function (data) {
-                const products = data.hits.hits.map(obj => obj._source);
-                this.setState({
-                    products: products,
-                    activePage: pageNumber,
-                    loaded: true,
-                });
-            }.bind(this), function (err) {
-                console.trace(err.message);
-            });
+              fetch(`http://${this.state.domain}:9200/_search/`, {
+                    method: "POST",
+                    body: JSON.stringify(query)
+                }).then(function(res) {
+                        return res.json();
+                    }).then(function (data) {
+                        const products = data.hits.hits.map(obj => obj._source);
+                        this.setState({
+                            products: products,
+                            activePage: pageNumber,
+                            loaded: true,
+                        });
+                    }.bind(this), function (err) {
+                        console.trace(err.message);
+                    });
+        }
+
+
+  };
+
+  handleChangePlace = (e) => {
+        if (isNaN(e.target.value)) {
+            var activePlace = '';
+        } else {
+            var activePlace = parseInt(e.target.value);
+        }
+        this.setState({
+            loaded: false,
+        });
+        $.ajax({
+            type: "GET",
+              url: '/api/v1/shop/?page=' + this.state.activePage + '&q=' + this.state.queryText + '&place=' + activePlace,
+              success: function (data) {
+                    let shops = data.results.map(obj => obj);
+                    let pagesCount = Math.ceil(data.count / 24);
+                    this.setState({
+                        shops: shops,
+                        loaded: true,
+                        pagesCount: pagesCount,
+                        shopCount: data.count,
+                        activePage: 1,
+                        activePlace: activePlace
+                    });
+              }.bind(this),
+              error: function (response, error) {
+                  console.log(response);
+                  console.log(error);
+              }
+        })
   };
 
   reOrder = (orderBy) => {
@@ -194,35 +290,63 @@ class App extends Component {
   };
 
   searchApts = (q) => {
-      this.setState({
-           loaded: false
+      if (this.state.pageType === 'shops') {
+          let query = q;
+        this.setState({
+            loaded: false,
         });
-
-        let query = urlmaker(this.state.productsCount, this.state.productsByPage, 1,
-                            this.state.activePage, this.state.orderBy, this.state.priceFrom,
-                            this.state.priceTo, q, this.state.categorySlug, this.getMatchPhrase(),
-                            this.state.shopSlug, this.state.activeCategory,
-                            this.state.parent ? this.state.parent : null);
-
-      fetch(`http://${this.state.domain}:9200/_search/`, {
-            method: "POST",
-            body: JSON.stringify(query)
-        }).then(function(res) {
-                return res.json();
-            }).then(function (data) {
-                let products = data.hits.hits.map(obj => obj._source);
-                let pagesCount = Math.ceil(data.hits.total / this.state.productsByPage);
-                this.setState({
-                    products: products,
-                    loaded: true,
-                    pagesCount: pagesCount,
-                    productsCount: data.hits.total,
-                    queryText: q,
-                    activePage: 1
-                });
-            }.bind(this), function (err) {
-                console.trace(err.message);
+        $.ajax({
+            type: "GET",
+              url: '/api/v1/shop/?page=' + this.state.activePage + '&q=' + query + '&place=' + this.state.activePlace,
+              success: function (data) {
+                    let shops = data.results.map(obj => obj);
+                    let pagesCount = Math.ceil(data.count / 24);
+                    this.setState({
+                        shops: shops,
+                        loaded: true,
+                        pagesCount: pagesCount,
+                        shopCount: data.count,
+                        queryText: query,
+                        activePage: 1
+                    });
+              }.bind(this),
+              error: function (response, error) {
+                  console.log(response);
+                  console.log(error);
+              }
+        })
+      } else {
+              this.setState({
+               loaded: false
             });
+
+            let query = urlmaker(this.state.productsCount, this.state.productsByPage, 1,
+                                this.state.activePage, this.state.orderBy, this.state.priceFrom,
+                                this.state.priceTo, q, this.state.categorySlug, this.getMatchPhrase(),
+                                this.state.shopSlug, this.state.activeCategory,
+                                this.state.parent ? this.state.parent : null);
+
+          fetch(`http://${this.state.domain}:9200/_search/`, {
+                method: "POST",
+                body: JSON.stringify(query)
+            }).then(function(res) {
+                    return res.json();
+                }).then(function (data) {
+                    let products = data.hits.hits.map(obj => obj._source);
+                    let pagesCount = Math.ceil(data.hits.total / this.state.productsByPage);
+                    this.setState({
+                        products: products,
+                        loaded: true,
+                        pagesCount: pagesCount,
+                        productsCount: data.hits.total,
+                        queryText: q,
+                        activePage: 1
+                    });
+                }.bind(this), function (err) {
+                    console.trace(err.message);
+                });
+      }
+
   };
 
   changePriceFrom = (price) => {
@@ -385,7 +509,66 @@ class App extends Component {
     };
 
   render() {
-        let filteredProducts = [];
+        if (this.state.pageType === 'shops'){
+            let filteredShops = [];
+            let subscribe = this.subscribe;
+
+        filteredShops = this.state.shops.map(function (item) {
+            return (
+                <Shop
+                    key={item.id}
+                    shop={item}
+                    subscribe={subscribe}
+                />
+            )
+        });
+
+        return (
+        <section className="shop-list uk-margin-xlarge-top">
+        <div className="uk-container">
+            <h3 className="uk-margin-medium-bottom"><a href="">Магазины</a></h3>
+
+                <form action="" className="pull-right col-md-6">
+                    <div className="form-group col-md-5">
+                        <select className="demo-default " onChange={this.handleChangePlace}>
+                        <option>Выбрать ТЦ</option>
+                          {this.state.places.map(function (item, index) {
+                            return (
+                              <option
+                                key={index}
+                                value={item.id}>{item.title} {item.ttype}</option>
+                            );
+                          })}
+                    </select>
+                    </div>
+
+                    <div className="form-search col-md-7">
+                        <input className="form-control" type="search" placeholder="Поиск магазина..." onChange={this.searchApts} />
+                        <button type="submit">
+                            <span className="glyphicon glyphicon-search"></span>
+                        </button>
+                    </div>
+                </form>
+                <div className="uk-child-width-1-1 uk-child-width-1-2@s uk-child-width-1-3@m  uk-child-width-1-4@l uk-grid-small" data-uk-grid>
+
+                    {filteredShops}
+
+                </div>
+                {this.state.pagesCount > 1 ?
+                        <Pagination
+                          activePage={this.state.activePage}
+                          itemsCountPerPage={8}
+                          totalItemsCount={this.state.shopCount}
+                          pageRangeDisplayed={5}
+                          onChange={this.handlePageChange}
+                        />
+                    : ''}
+
+            </div>
+        </section>
+        )
+        } else {
+            let filteredProducts = [];
         let productDelete = this.productDelete;
         let categories = [];
         let descendants = [];
@@ -511,6 +694,8 @@ class App extends Component {
                 : ''}
             </div>
         )
+        }
+
   }
 }
 
