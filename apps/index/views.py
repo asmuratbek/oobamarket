@@ -4,6 +4,7 @@ from django.shortcuts import render
 from django.views import generic
 from .models import IndexBlocks, PremiumIndexBlocks, BLOCK_TYPES, IndexBanner
 from itertools import zip_longest
+from apps.shop.models import Shop
 
 
 class IndexView(generic.TemplateView):
@@ -13,6 +14,7 @@ class IndexView(generic.TemplateView):
         context = super(IndexView, self).get_context_data(**kwargs)
         context['banners'] = IndexBanner.objects.filter(banner_type='slider', published=True)
         context['offer_banner'] = IndexBanner.objects.filter(banner_type='offer', published=True).last()
+        context['shops'] = Shop.objects.all()[:8]
         # if self.request.user.is_authenticated:
         #     context['subscribe_shops'] = [sub.subscription.id for sub in self.request.user.subscription_set.all()]
         first_col = IndexBlocks.objects.filter(column='first_col', published=True).order_by('row')

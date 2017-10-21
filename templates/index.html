@@ -83,16 +83,15 @@
         <div class="uk-container">
             <div class="uk-grid slider" uk-grid>
                 <div class="uk-width-1-4@m">
-                    <a href="">
-                        <img src="{% static 'img/mini jpg.jpg' %}" alt="">
+                    <a href="{{ offer_banner.url }}">
+                        <img src="{{ offer_banner.image.url }}" alt="">
                     </a>
                 </div>
                 <div class="uk-width-expand">
                     <div class="home-slider">
-                        <div class="item"><img src="{% static 'img/slider01.jpg' %}" alt=""></div>
-                        <div class="item"><img src="{% static 'img/slider02.jpg' %}" alt=""></div>
-                        <div class="item"><img src="{% static 'img/slider03.jpg' %}" alt=""></div>
-                        <div class="item"><img src="{% static 'img/slider04.jpg' %}" alt=""></div>
+                        {% for banner in banners %}
+                        <div class="item"><img src="{{ banner.image.url }}" alt=""></div>
+                        {% endfor %}
                     </div>
                 </div>
             </div>
@@ -101,23 +100,23 @@
                 <div class="uk-grid uk-grid-small uk-child-width-1-3" uk-grid>
                     <div class="item">
                         <div class="uk-grid-margin img-wrapper uk-margin-small">
-                            <a href=""><img src="{% static 'img/01elecrtomica.jpg' %}" alt=""></a>
+                            <a href="{{ up_left_corner_1.url }}"><img src="{{ up_left_corner_1.image.url }}" alt=""></a>
                         </div>
                         <div class="uk-grid-margin img-wrapper uk-margin-small">
-                            <a href=""><img src="{% static 'img/02souvenir.jpg' %}" alt=""></a>
+                            <a href="{{ up_left_corner_2.url }}"><img src="{{ up_left_corner_2.image.url }}" alt=""></a>
                         </div>
                     </div>
                     <div class="item ">
                         <div class="uk-grid-margin img-wrapper uk-margin-small">
-                            <img src="{% static 'img/16sport.jpg' %}" alt="">
+                            <a href="{{ big_up_block.url }}"><img src="{{ big_up_block.image.url }}" alt=""></a>
                         </div>
                     </div>
                     <div class="item">
                         <div class="uk-grid-margin img-wrapper uk-margin-small">
-                            <a href=""><img src="{% static 'img/03pen.jpg' %}" alt=""></a>
+                            <a href="{{ up_right_corner_1.url }}"><img src="{{ up_right_corner_1.image.url }}" alt=""></a>
                         </div>
                         <div class="uk-grid-margin img-wrapper uk-margin-small">
-                            <a href=""><img src="{% static 'img/04juice.jpg' %}" alt=""></a>
+                            <a href="{{ up_right_corner_2.url }}"><img src="{{ up_right_corner_2.image.url }}" alt=""></a>
                         </div>
                     </div>
                 </div>
@@ -125,29 +124,23 @@
                 <div class="uk-grid uk-grid-small" uk-grid>
                     <div class="uk-width-expand">
                         <div class="img-wrapper">
-                            <a href="">
-                                <img src="{% static 'img/15car.jpg' %}" alt="">
+                            <a href="{{ big_down_block.url }}">
+                                <img src="{{ big_down_block.image.url }}" alt="">
                             </a>
                         </div>
                     </div>
                     <div class="uk-width-1-3">
-                        <div class="item img-wrapper uk-grid-margin uk-margin-small"><a href=""><img
-                                src="{% static 'img/05boots.jpg' %}" alt=""></a></div>
-                        <div class="item img-wrapper uk-grid-margin uk-margin-small"><a href=""><img
-                                src="{% static 'img/06build.jpg' %}" alt=""></a></div>
+                        <div class="item img-wrapper uk-grid-margin uk-margin-small"><a href="{{ down_right_corner_1.url }}"><img
+                                src="{{ down_right_corner_1.image.url }}" alt=""></a></div>
+                        <div class="item img-wrapper uk-grid-margin uk-margin-small"><a href="{{ down_right_corner_2.url }}"><img
+                                src="{{ down_right_corner_2.image.url }}" alt=""></a></div>
                     </div>
                 </div>
 
                 <div class="uk-grid uk-child-width-1-3 uk-grid-small" uk-grid>
-                    <div class="item img-wrapper"><a href=""><img src="{% static 'img/07clothes.jpg' %}" alt=""></a></div>
-                    <div class="item img-wrapper"><a href=""><img src="{% static 'img/08bag.jpg' %}" alt=""></a></div>
-                    <div class="item img-wrapper"><a href=""><img src="{% static 'img/09child.jpg' %}" alt=""></a></div>
-                    <div class="item img-wrapper"><a href=""><img src="{% static 'img/10tech.jpg' %}" alt=""></a></div>
-                    <div class="item img-wrapper"><a href=""><img src="{% static 'img/10house.jpg' %}" alt=""></a></div>
-                    <div class="item img-wrapper"><a href=""><img src="{% static 'img/11jewerky.jpg' %}" alt=""></a></div>
-                    <div class="item img-wrapper"><a href=""><img src="{% static 'img/12tshirt.jpg' %}" alt=""></a></div>
-                    <div class="item img-wrapper"><a href=""><img src="{% static 'img/13cosmetic.jpg' %}" alt=""></a></div>
-                    <div class="item img-wrapper"><a href=""><img src="{% static 'img/14book.jpg' %}" alt=""></a></div>
+                    {% for block in blocks %}
+                    <div class="item img-wrapper"><a href="{{ block.url }}"><img src="{{ block.image.url }}" alt=""></a></div>
+                    {% endfor %}
                 </div>
 
             </div>
