@@ -1061,5 +1061,6 @@ def search_products(request):
                         else False
                 })
         return JsonResponse({'status': 0,
+                             'search_word': str(q),
                              'page': page if page else 1,
                              'result': product_list})
