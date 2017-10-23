@@ -1,10 +1,14 @@
+from itertools import zip_longest
+
 from .models import GlobalCategory
 from django.conf import settings
 
 
 def fixed_categories(request):
+    global_cats = GlobalCategory.objects.filter(published=True)
     return {
-        'fixed_categories': GlobalCategory.objects.filter(published=True),
+        'fixed_categories': global_cats,
+        'footer_cats': list(zip_longest(*[iter(global_cats)] * 3))
     }
 
 
