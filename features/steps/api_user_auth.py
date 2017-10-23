@@ -2,11 +2,11 @@ from behave import *
 from features.helpers import *
 from django.urls import reverse
 
+from features.steps import LOGIN_URL
+
 use_step_matcher("re")
 
 # helper functions
-
-LOGIN_URL = reverse('api:rest_login')
 
 
 @given("registered user")

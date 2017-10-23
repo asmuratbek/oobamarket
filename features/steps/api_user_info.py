@@ -3,12 +3,12 @@ from django.urls import reverse
 from features.helpers import *
 from apps.shop.models import *
 import random
+from features.steps import LOGIN_URL
 
 use_step_matcher("re")
 
 SHOPS_QUANTITY = 5
 USER_INFO_URL = reverse('api:user_detail')
-LOGIN_URL = reverse('api:rest_login')
 
 SHOPS_ALREADY_CREATED = False
 

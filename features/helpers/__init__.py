@@ -6,6 +6,10 @@ from allauth.account.models import EmailAddress
 from apps.shop.models import *
 from apps.category.models import *
 from apps.global_category.models import *
+from apps.product.models import *
+
+import random
+
 
 def dict_has_keys(keys, dict):
     for k in keys:
@@ -64,6 +68,31 @@ def create_category(faker, slug_prefix='', order=0, section=None, parent_categor
         category = Category.objects.create(title=title, slug=slug, section=section, parent=parent_category, order=order)
 
     return dict(title=title, slug=slug, category=category)
+
+
+def create_product(faker, shop, category, slug_prefix=''):
+    title = faker.name()[0]
+    slug = '%s_product_slug_%s' % (slug_prefix, title)
+    price = random.randint(50, 10000)
+    discount = random.randint(0, 80)
+
+    product = Product.objects.create(title=title, slug=slug, price=price, partner_price=price, discount=discount,
+                                     shop=shop, category=category)
+
+    return dict(title=title, slug=slug, price=price, discount=discount, product=product)
+
+
+def create_instances(faker, slug_prefix=''):
+    global_category_info = create_category(faker, slug_prefix='%s_add_to_cart_global_' % slug_prefix, is_global=True)
+    category_info = create_category(faker, slug_prefix='%s_add_to_cart_' % slug_prefix, section=global_category_info['category'])
+    user_info = create_user(faker)
+    shop_info = create_shop(faker, user=user_info['user'], slug_prefix='%s_add_to_cart_' % slug_prefix)
+    product_info = create_product(faker, shop=shop_info['shop'],
+                                  category=category_info['category'],
+                                  slug_prefix='%s_add_to_cart_' % slug_prefix)
+
+    return dict(category_info=category_info, user_info=user_info, shop_info=shop_info,
+                product_info=product_info)
 
 
 def do_request_to_login(context, url, email, password):

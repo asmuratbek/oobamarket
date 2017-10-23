@@ -4,10 +4,10 @@ from django.urls import reverse
 from apps.category.models import *
 import random
 from features.steps import IMAGE_ASSET_PATH
+from features.steps import LOGIN_URL
 
 use_step_matcher("re")
 
-LOGIN_URL = reverse('api:rest_login')
 PRODUCT_CREATE_URL = reverse('api:product_create')
 
 
