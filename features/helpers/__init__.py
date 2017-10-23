@@ -5,6 +5,7 @@ from allauth.account.models import EmailAddress
 
 from apps.shop.models import *
 from apps.category.models import *
+from apps.cart.models import *
 from apps.global_category.models import *
 from apps.product.models import *
 
@@ -93,6 +94,15 @@ def create_instances(faker, slug_prefix=''):
 
     return dict(category_info=category_info, user_info=user_info, shop_info=shop_info,
                 product_info=product_info)
+
+
+def create_cart_item(user, product, cart=None):
+    if cart is None:
+        cart = Cart.objects.create(user=user)
+
+    cart_item = CartItem.objects.create(cart=cart, product=product, quantity=1)
+
+    return dict(cart=cart, cart_item=cart_item)
 
 
 def do_request_to_login(context, url, email, password):

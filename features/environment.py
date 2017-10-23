@@ -4,6 +4,7 @@ from config.settings.base import MEDIA_ROOT
 import os
 import glob
 import shutil
+from django.core.management import call_command
 
 
 def before_all(context):
@@ -22,7 +23,7 @@ def after_all(context):
 
 
 def before_feature(context, feature):
-    pass
+    call_command('flush', verbosity=0, interactive=False)
 
 
 def before_scenario(context, scenario):

@@ -53,11 +53,10 @@ def step_impl(context):
     user_info = instances['user_info']
     product_info = instances['product_info']
 
-    cart = Cart.objects.create(user=user_info['user'])
-
-    CartItem.objects.create(cart=cart, product=product_info['product'], quantity=1)
-
+    cart_item_info = create_cart_item(user_info['user'], product_info['product'])
     auth_token = login_and_get_auth_token(context, LOGIN_URL, user_info['email'], user_info['password'])
+
+    cart = cart_item_info['cart']
 
     context.auth_token = auth_token
     context.product_slug = product_info['slug']
