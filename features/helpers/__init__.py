@@ -93,7 +93,7 @@ def create_instances(faker, slug_prefix=''):
                                   slug_prefix='%s_add_to_cart_' % slug_prefix)
 
     return dict(category_info=category_info, user_info=user_info, shop_info=shop_info,
-                product_info=product_info)
+                product_info=product_info, global_category_info=global_category_info)
 
 
 def create_cart_item(user, product, cart=None):
