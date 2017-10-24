@@ -1,5 +1,6 @@
-Feature: #Enter feature name here
-  # Enter feature description here
+Feature: User's favorite products list
 
-  Scenario: # Enter scenario name here
-    # Enter steps here
+  Scenario:
+    Given products in user's favorites
+    When app sends request to "api_user_favorites" url
+    Then it should get response with list of favorite products

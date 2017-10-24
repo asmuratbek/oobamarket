@@ -105,6 +105,10 @@ def create_cart_item(user, product, cart=None):
     return dict(cart=cart, cart_item=cart_item)
 
 
+def create_favorite_product(user, product):
+    FavoriteProduct.objects.create(user=user, product=product)
+
+
 def do_request_to_login(context, url, email, password):
     return context.client.post(url, {
         'email': email, 'password': password
