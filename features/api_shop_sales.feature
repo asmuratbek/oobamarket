@@ -1,5 +1,6 @@
-Feature: #Enter feature name here
-  # Enter feature description here
+Feature: Shop sales list
 
-  Scenario: # Enter scenario name here
-    # Enter steps here
+  Scenario:
+    Given some shop with a set of sales
+    When app sends request to "api_shop_sales" url with the shop's slug
+    Then it should get response with list of published sales of the shop

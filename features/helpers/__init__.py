@@ -8,8 +8,12 @@ from apps.category.models import *
 from apps.cart.models import *
 from apps.global_category.models import *
 from apps.product.models import *
+from apps.reviews.models import *
 
 import random
+
+
+REVIEWS_STARS = ['*', '**', '***', '****', '*****']
 
 
 def dict_has_keys(keys, dict):
@@ -107,6 +111,26 @@ def create_cart_item(user, product, cart=None):
 
 def create_favorite_product(user, product):
     FavoriteProduct.objects.create(user=user, product=product)
+
+
+def create_sales(faker, shop):
+    title = faker.name()
+    description = faker.text()
+
+    Sales.objects.create(title=title, short_description=description, description=description,
+                         shop=shop)
+
+
+def create_review(faker, user, shop=None, product=None):
+    text = faker.text()
+    stars = random.choice(REVIEW_STARS)
+
+    if shop is not None:
+        ShopReviews.objects.create(text=text, stars=stars, user=user, shop=shop)
+    elif product is not None:
+        ProductReviews.objects.create(text=text, stars=stars, user=user, product=product)
+    else:
+        raise Exception("Please provide shop or product instance")
 
 
 def do_request_to_login(context, url, email, password):
