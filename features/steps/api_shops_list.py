@@ -17,7 +17,7 @@ SHOPS_LIST_URL = reverse('api:shop_list')
 def assert_json_response(context, json_result, results_quantity):
     results = json_result['results']
 
-    context.test.assertEqual(len(results), results_quantity)
+    context.test.assertEqual(json_result['count'], results_quantity)
 
     for item in results:
         context.test.assertTrue(dict_has_keys(['id', 'title', 'slug', 'user', 'email',

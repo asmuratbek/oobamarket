@@ -1,5 +1,6 @@
-Feature: #Enter feature name here
-  # Enter feature description here
+Feature: Shop's products list
 
-  Scenario: # Enter scenario name here
-    # Enter steps here
+  Scenario:
+    Given some shop with products
+    When app sends request to "api_shop_products" url with the shop slug
+    Then it should get response with products list of given shop

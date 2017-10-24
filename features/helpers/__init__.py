@@ -17,9 +17,14 @@ REVIEWS_STARS = ['*', '**', '***', '****', '*****']
 
 
 def dict_has_keys(keys, dict):
+    non_existing_keys = []
+
     for k in keys:
         if k not in dict:
-            return False
+            non_existing_keys.append(k)
+
+    if len(non_existing_keys) > 0:
+        raise Exception('keys %s dont exist in dict' % non_existing_keys)
 
     return True
 
