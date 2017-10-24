@@ -947,25 +947,52 @@ class UserFavoritesView(APIView):
         })
 
 
-class ShopDetailView(MultipleModelAPIView):
+class ShopDetailView(APIView):
     """
     Возвращает поля Магазина и его Товары
     """
 
     filter_backends = (filters.OrderingFilter,)
-    serializer_class = ShopSerializer
     permission_classes = (AllowAny,)
     authentication_classes = (SessionAuthentication, TokenAuthentication)
 
-    def get_queryList(self):
-        slug = self.kwargs.get('slug')
-        shop = Shop.objects.filter(slug=slug)
-        products = Product.objects.filter(shop=shop)
-        queryList = [
-            (shop, ShopSerializer),
-            (products, ProductSerializer),
-        ]
-        return queryList
+    def get(self, request, *args, **kwargs):
+        user = request.user
+        db_type = db.connections.databases['default']['ENGINE']
+        db_name = db_type.split(".")[-1]
+        shop = get_object_or_404(Shop, slug=kwargs.get('slug'))
+        q = request.GET.get("q")
+        order = request.GET.get("order")
+        products = shop.product_set.all()
+        if q:
+            if db_name == 'mysql' or db_name == 'postgresql':
+                products = products.filter(Q(title__search=str(q))|
+                                           Q(short_description__search=str(q)))
+            else:
+                products = products.filter(Q(title__icontains=str(q))|
+                                           Q(short_description__icontains=str(q)))
+        if order and order in ["price", "-price", "title", "created_at"]:
+            products = products.order_by(order)
+        paginator = Paginator(products, 20)
+        page = request.GET.get('page', 1)
+        try:
+            p = paginator.page(int(page))
+        except (AttributeError, EmptyPage, ValueError):
+            p = None
+        products_dict = [model_to_dict(product) for product in p.object_list] if p else list()
+        for prod in products_dict:
+            product = get_object_or_404(Product, id=prod['id'])
+            prod["is_in_cart"] = user.cart_set.last().cartitem_set.filter(product=product).exist() \
+                                    if user.is_authenticated() else False
+            prod["is_favourite"] = product.favorite.filter(user=user).exists() if user.is_authenticated() else False
+            prod["main_image"] = product.get_main_thumb_image()
+        shop_dict = model_to_dict(shop, exclude=['logo', 'user'])
+        shop_dict['logo'] = shop.logo.url if shop.logo else None
+        shop_dict['users'] = [user for user in shop.user.all()]
+        return JsonResponse({'status': 0,
+                             'page': page if page else 1,
+                             'shop': shop_dict if page is 1 else None,
+                             'products': products_dict})
 
     @method_decorator(cache_page(60))
     def dispatch(self, *args, **kwargs):
