@@ -988,7 +988,7 @@ class ShopDetailView(APIView):
             prod["main_image"] = product.get_main_thumb_image()
         shop_dict = model_to_dict(shop, exclude=['logo', 'user'])
         shop_dict['logo'] = shop.logo.url if shop.logo else None
-        shop_dict['users'] = [user for user in shop.user.all()]
+        shop_dict['users'] = [user.username for user in shop.user.all()]
         return JsonResponse({'status': 0,
                              'page': page if page else 1,
                              'shop': shop_dict if page is 1 else None,
