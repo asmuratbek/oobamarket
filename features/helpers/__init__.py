@@ -12,7 +12,6 @@ from apps.reviews.models import *
 
 import random
 
-
 REVIEWS_STARS = ['*', '**', '***', '****', '*****']
 
 
@@ -40,8 +39,8 @@ def assert_response_json_keys_exist(context, response, keys):
     context.test.assertTrue(dict_has_keys(keys, json_content))
 
 
-def create_user(faker):
-    username = faker.name()[0]
+def create_user(faker, username_prefix=''):
+    username = '%s_%s' % (faker.name()[0], username_prefix)
     email = '%s@somemail.com' % username
     password = '%s_password' % username
 
@@ -54,12 +53,17 @@ def create_user(faker):
     return dict(user=user, email_address=email_address, username=username, email=email, password=password)
 
 
-def create_shop(faker, user=None, slug_prefix='', default_title=None):
+def create_shop(faker, user=None, slug_prefix='', default_title=None, logo=None):
     title = default_title if default_title is not None else faker.name()[0]
     slug = '%s_slug_%s' % (slug_prefix, title)
     short_description = 'some description'
 
-    shop = Shop.objects.create(title=title, email=faker.email(), short_description=short_description, slug=slug)
+    params = dict(title=title, email=faker.email(), short_description=short_description, slug=slug)
+
+    if logo is not None:
+        params['logo'] = logo
+
+    shop = Shop.objects.create(**params)
 
     if user is not None:
         shop.user = [user]
@@ -92,11 +96,18 @@ def create_product(faker, shop, category, slug_prefix=''):
     return dict(title=title, slug=slug, price=price, discount=discount, product=product)
 
 
-def create_instances(faker, slug_prefix=''):
+def create_contacts(faker, shop):
+    Contacts.objects.create(address=faker.text(), phone=faker.text(), shop=shop)
+
+
+def create_instances(faker, slug_prefix='', shop_logo=None):
     global_category_info = create_category(faker, slug_prefix=slug_prefix, is_global=True)
-    category_info = create_category(faker, slug_prefix=slug_prefix, section=global_category_info['category'])
+    parent_category_info = create_category(faker, slug_prefix='%s_parent_' % slug_prefix,
+                                           section=global_category_info['category'])
+    category_info = create_category(faker, slug_prefix=slug_prefix, section=global_category_info['category'],
+                                    parent_category=parent_category_info['category'])
     user_info = create_user(faker)
-    shop_info = create_shop(faker, user=user_info['user'], slug_prefix=slug_prefix)
+    shop_info = create_shop(faker, user=user_info['user'], slug_prefix=slug_prefix, logo=shop_logo)
     product_info = create_product(faker, shop=shop_info['shop'],
                                   category=category_info['category'],
                                   slug_prefix=slug_prefix)

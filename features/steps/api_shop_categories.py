@@ -13,8 +13,10 @@ PARENT_CATEGORIES_COUNT = 2
 def step_impl(context):
     faker = context.faker
     instances = create_instances(faker, slug_prefix='shop_categories_')
+    user_info = instances['user_info']
     global_category_info = instances['global_category_info']
-    shop_info = instances['shop_info']
+    shop_info = create_shop(faker, user=user_info['user'], slug_prefix='shop_categories_')
+
     shop = shop_info['shop']
     global_category = global_category_info['category']
 

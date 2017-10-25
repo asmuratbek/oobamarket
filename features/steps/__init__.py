@@ -5,7 +5,9 @@ from django.urls import reverse
 
 __author__ = 'akoikelov'
 
-IMAGE_ASSET_PATH = '%s/assets/category_icon.png' % (environ.Path(__file__) - 2)
+IMAGE_ASSET_PATH = '%s/assets/asset_image.png' % (environ.Path(__file__) - 2)
+IMAGE_ASSET_NAME = 'asset_image.png'
+IMAGE_ASSET_TYPE = 'image/png'
 LOGIN_URL = reverse('api:rest_login')
 
 

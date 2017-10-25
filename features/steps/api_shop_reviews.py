@@ -19,7 +19,7 @@ def step_impl(context):
     users_infos = []
 
     for i in range(0, USERS_QUANTITY):
-        users_infos.append(create_user(faker))
+        users_infos.append(create_user(faker, username_prefix=i))
 
     for i in range(0, SHOP_REVIEWS_QUANTITY):
         user = random.choice(users_infos)['user']

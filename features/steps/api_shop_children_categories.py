@@ -14,7 +14,9 @@ def step_impl(context):
     faker = context.faker
     instances = create_instances(faker, slug_prefix='shop_child_categories_')
     global_category_info = instances['global_category_info']
-    shop_info = instances['shop_info']
+    user_info = instances['user_info']
+    shop_info = create_shop(faker, user=user_info['user'], slug_prefix='shop_children_categories_')
+
     shop = shop_info['shop']
     global_category = global_category_info['category']
 
