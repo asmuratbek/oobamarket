@@ -1,18 +1,13 @@
 {% extends 'base-1.html' %}
 {% load staticfiles %}
 
-    {% block content %}
-    <section class="shop-category global-category">
-        <div class="goods-of-week search_results">
-            <div class="container" id="root">
-
-            </div>
-        </div>
+   {% block content %}
+    <section class="product-list uk-margin-medium-top" id="root">
     </section>
 {% endblock %}
 
 
 {% block js %}
     {{ block.super }}
-    <script type="text/javascript" src="{% static 'js/search.js' %}"></script>
+    <script src="{% static 'react/static/js/react.js' %}"></script>
 {% endblock %}

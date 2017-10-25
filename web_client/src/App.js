@@ -44,7 +44,9 @@ class App extends Component {
             return "shops"
         } else if (window.location.href.split("/")[3] && window.location.href.split("/")[3] === 'shops') {
             return "shop"
-        } else if (window.location.href.split("/").length === 6) {
+        } else if (window.location.href.split("/")[3] === 'search') {
+          return "search"
+       } else if (window.location.href.split("/").length === 6) {
             return "child"
         } else {
             return "global"
@@ -52,27 +54,36 @@ class App extends Component {
   };
 
   getMatchPhrase = () => {
+  const params = window.location.search.substr(1).split("&");
+    params.forEach(function (i) {
+        if (i.split("=")[0] === "q") {
+            this.setState({
+                queryText: decodeURIComponent(i.split("=")[1])
+            })
+        }
+    }.bind(this));
+
     if (this.state.pageType === 'global') {
         return {global_slug: this.state.categorySlug}
     } else if (this.state.pageType === 'parent') {
         return {parent_category_slug: this.state.categorySlug}
     } else if (this.state.pageType === 'shop') {
         return {shop_slug: this.state.shopSlug}
+    } else if (this.state.pageType === 'search') {
+        const params = window.location.search.substr(1).split("&");
+        params.forEach(function (i) {
+            if (i.split("=")[0] === "q") {
+                console.log('bingo')
+                return {match: {text: i.split("=")[1]}}
+            }
+        }.bind(this));
+
     } else {
         return {category_slug: this.state.categorySlug}
     }
   };
 
   componentDidMount = () => {
-        const params = window.location.search.substr(1).split("&");
-        params.forEach(function (i) {
-            if (i.split("=")[0] === "q") {
-                this.setState({
-                    queryText: i.split("=")[1]
-                })
-            }
-        }.bind(this));
-
         if (this.state.pageType === 'shops') {
             $.ajax({
                 type: "GET",
@@ -108,16 +119,18 @@ class App extends Component {
             })
 
         } else {
+            let match = this.getMatchPhrase();
+            console.log(match)
             const query = {
-                query: {
-                    match_phrase: this.getMatchPhrase()
-                },
+                query: this.state.pageType !== 'search' ? {match_phrase: match} : match,
                 size:  this.state.productsByPage,
                 from: 0,
                 sort: [
                     {created_at: "desc"},
                 ]
               };
+
+            console.log(query)
 
       $.ajax({
             type: "GET",
@@ -212,7 +225,7 @@ class App extends Component {
                             this.state.activePage, this.state.orderBy, this.state.priceFrom,
                             this.state.priceTo, this.state.queryText, this.state.categorySlug,
                             this.getMatchPhrase(), this.state.shopSlug, this.state.activeCategory,
-                            this.state.parent ? this.state.parent : null);
+                            this.state.parent ? this.state.parent : null, this.state.pageType === 'search');
               $.ajax({
                     type: "POST",
                     url: `http://${this.state.domain}:9200/_search/`,
@@ -275,7 +288,7 @@ class App extends Component {
                             this.state.activePage, orderBy, this.state.priceFrom,
                             this.state.priceTo, this.state.queryText, this.state.categorySlug,
                             this.getMatchPhrase(), this.state.shopSlug, this.state.activeCategory,
-                            this.state.parent ? this.state.parent : null);
+                            this.state.parent ? this.state.parent : null, this.state.pageType === 'search');
 
       $.ajax({
             type: "POST",
@@ -331,7 +344,7 @@ class App extends Component {
                                 this.state.activePage, this.state.orderBy, this.state.priceFrom,
                                 this.state.priceTo, q, this.state.categorySlug, this.getMatchPhrase(),
                                 this.state.shopSlug, this.state.activeCategory,
-                                this.state.parent ? this.state.parent : null);
+                                this.state.parent ? this.state.parent : null, this.state.pageType === 'search');
 
           $.ajax({
                     type: "POST",
@@ -367,7 +380,7 @@ class App extends Component {
                             this.state.activePage, this.state.orderBy, price,
                             this.state.priceTo, this.state.queryText, this.state.categorySlug,
                             this.getMatchPhrase(), this.state.shopSlug, this.state.activeCategory,
-                            this.state.parent ? this.state.parent : null);
+                            this.state.parent ? this.state.parent : null, this.state.pageType === 'search');
 
       $.ajax({
             type: "POST",
@@ -400,7 +413,8 @@ class App extends Component {
         let query = urlmaker(this.state.productsCount, this.state.productsByPage, 1,
                             this.state.activePage, this.state.orderBy, this.state.priceFrom,
                             price, this.state.queryText, this.state.categorySlug, this.getMatchPhrase(),
-                            this.state.shopSlug, this.state.activeCategory, this.state.parent ? this.state.parent : null);
+                            this.state.shopSlug, this.state.activeCategory, this.state.parent ? this.state.parent : null,
+                            this.state.pageType === 'search');
 
         $.ajax({
             type: "POST",
@@ -432,7 +446,7 @@ class App extends Component {
          let query = urlmaker(this.state.productsCount, this.state.productsByPage, 1,
                             1, this.state.orderBy, this.state.priceFrom,
                             this.state.priceTo, '', this.state.categorySlug, this.getMatchPhrase(),
-                            this.state.shopSlug, id, true);
+                            this.state.shopSlug, id, true, this.state.pageType === 'search');
 
        $.ajax({
             type: "POST",
@@ -466,7 +480,7 @@ class App extends Component {
          let query = urlmaker(this.state.productsCount, this.state.productsByPage, 1,
                             1, this.state.orderBy, this.state.priceFrom,
                             this.state.priceTo, null, this.state.categorySlug, this.getMatchPhrase(),
-                            this.state.shopSlug, id, false);
+                            this.state.shopSlug, id, false, this.state.pageType === 'search');
 
          $.ajax({
             type: "POST",
@@ -501,7 +515,7 @@ class App extends Component {
       let query = urlmaker(this.state.productsCount, this.state.productsByPage, 1,
                             1, this.state.orderBy, this.state.priceFrom,
                             this.state.priceTo, null, this.state.categorySlug, this.getMatchPhrase(),
-                            this.state.shopSlug, '', false);
+                            this.state.shopSlug, '', false, this.state.pageType === 'search');
 
       $.ajax({
             type: "POST",
