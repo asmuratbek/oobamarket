@@ -22,6 +22,8 @@ from rest_framework.generics import (
     CreateAPIView,
     RetrieveUpdateAPIView
 )
+from rest_framework.parsers import FormParser, FileUploadParser
+from rest_framework.parsers import MultiPartParser
 from rest_framework.permissions import (
     AllowAny,
     IsAdminUser,
@@ -388,7 +390,9 @@ class ProductUpdateApiView(RetrieveUpdateAPIView):
     def perform_update(self, serializer):
         remove_images_list = [int(i) for i in self.request.data.getlist('delete_images', [])
                                   if i != '' and i != None]
-        delete_images = ProductImage.objects.filter(id__in=remove_images_list).delete()
+
+        ProductImage.objects.filter(id__in=remove_images_list).delete()
+
         product = serializer.save(category=get_object_or_404(Category, slug=self.request.data.get('category', '')),
                                     shop=get_object_or_404(Shop, slug=self.request.data.get('shop', '')))
         images_files = self.request.FILES.getlist('images_files', '')

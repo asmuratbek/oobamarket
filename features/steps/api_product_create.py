@@ -33,11 +33,10 @@ def do_request(context, faker, shop_slug, category_slug, image_path=None):
 @given("a user's shop")
 def step_impl(context):
     faker = context.faker
-    user_data = create_user(faker)
-    shop_data = create_shop(faker, user_data['user'], slug_prefix='product_create')
-    global_category_data = create_category(faker, slug_prefix='product_create_section', is_global=True)
-    category_data = create_category(faker, slug_prefix='product_create', is_global=False,
-                                    section=global_category_data['category'])
+    instances = create_instances(faker, slug_prefix='product_create_')
+    user_data = instances['user_info']
+    shop_data = instances['shop_info']
+    category_data = instances['category_info']
 
     context.auth_token = login_and_get_auth_token(context, LOGIN_URL, user_data['email'], user_data['password'])
     context.shop_slug = shop_data['slug']

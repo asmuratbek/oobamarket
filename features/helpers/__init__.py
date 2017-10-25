@@ -93,13 +93,13 @@ def create_product(faker, shop, category, slug_prefix=''):
 
 
 def create_instances(faker, slug_prefix=''):
-    global_category_info = create_category(faker, slug_prefix='%s_add_to_cart_global_' % slug_prefix, is_global=True)
-    category_info = create_category(faker, slug_prefix='%s_add_to_cart_' % slug_prefix, section=global_category_info['category'])
+    global_category_info = create_category(faker, slug_prefix=slug_prefix, is_global=True)
+    category_info = create_category(faker, slug_prefix=slug_prefix, section=global_category_info['category'])
     user_info = create_user(faker)
-    shop_info = create_shop(faker, user=user_info['user'], slug_prefix='%s_add_to_cart_' % slug_prefix)
+    shop_info = create_shop(faker, user=user_info['user'], slug_prefix=slug_prefix)
     product_info = create_product(faker, shop=shop_info['shop'],
                                   category=category_info['category'],
-                                  slug_prefix='%s_add_to_cart_' % slug_prefix)
+                                  slug_prefix=slug_prefix)
 
     return dict(category_info=category_info, user_info=user_info, shop_info=shop_info,
                 product_info=product_info, global_category_info=global_category_info)
