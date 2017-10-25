@@ -127,8 +127,8 @@ class LentaView(APIView):
                     })
                 else:
                     items.append(dict(shop=item.shop.title, title=item.title, short_description=item.short_description,
-                                      description=item.description, discount=item.discount, image=item.image.url,
-                                      type="sale"))
+                                      description=item.description, discount=item.discount,
+                                      image=item.image.url if item.image else None, type="sale"))
         return JsonResponse({
             "status": "success",
             "page": page if page else 1,
