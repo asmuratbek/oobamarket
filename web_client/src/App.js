@@ -160,22 +160,26 @@ class App extends Component {
         })
       }
 
-        fetch(`http://${this.state.domain}:9200/_search/`, {
-            method: "POST",
-            body: JSON.stringify(query)
-        }).then(function(res) {
-                return res.json();
-            }).then(function(data) {
-                const products = data.hits.hits.map(obj => obj._source);
-                const pagesCount = Math.ceil(data.hits.total / this.state.productsByPage);
-                this.setState({
-                    products: products,
-                    productsCount: data.hits.total,
-                    activePage: 1,
-                    pagesCount: pagesCount,
-                    loaded: true
-                });
-            }.bind(this));
+          $.ajax({
+                type: "POST",
+                url: `http://${this.state.domain}:9200/_search/`,
+                data: JSON.stringify(query),
+                success: function (data) {
+                        const products = data.hits.hits.map(obj => obj._source);
+                        const pagesCount = Math.ceil(data.hits.total / this.state.productsByPage);
+                        this.setState({
+                            products: products,
+                            productsCount: data.hits.total,
+                            activePage: 1,
+                            pagesCount: pagesCount,
+                            loaded: true
+                        });
+                  }.bind(this),
+                  error: function (response, error) {
+                      console.log(response);
+                      console.log(error);
+                  }
+            })
         }
 
 
@@ -209,22 +213,23 @@ class App extends Component {
                             this.state.priceTo, this.state.queryText, this.state.categorySlug,
                             this.getMatchPhrase(), this.state.shopSlug, this.state.activeCategory,
                             this.state.parent ? this.state.parent : null);
-
-              fetch(`http://${this.state.domain}:9200/_search/`, {
-                    method: "POST",
-                    body: JSON.stringify(query)
-                }).then(function(res) {
-                        return res.json();
-                    }).then(function (data) {
-                        const products = data.hits.hits.map(obj => obj._source);
-                        this.setState({
-                            products: products,
-                            activePage: pageNumber,
-                            loaded: true,
-                        });
-                    }.bind(this), function (err) {
-                        console.trace(err.message);
-                    });
+              $.ajax({
+                    type: "POST",
+                    url: `http://${this.state.domain}:9200/_search/`,
+                    data: JSON.stringify(query),
+                    success: function (data) {
+                           const products = data.hits.hits.map(obj => obj._source);
+                            this.setState({
+                                products: products,
+                                activePage: pageNumber,
+                                loaded: true,
+                            });
+                      }.bind(this),
+                      error: function (response, error) {
+                          console.log(response);
+                          console.log(error);
+                      }
+                })
         }
 
 
@@ -272,21 +277,23 @@ class App extends Component {
                             this.getMatchPhrase(), this.state.shopSlug, this.state.activeCategory,
                             this.state.parent ? this.state.parent : null);
 
-      fetch(`http://${this.state.domain}:9200/_search/`, {
-            method: "POST",
-            body: JSON.stringify(query)
-        }).then(function(res) {
-                return res.json();
-            }).then(function (data) {
-                const products = data.hits.hits.map(obj => obj._source);
-                this.setState({
-                    products: products,
-                    orderBy: orderBy,
-                    loaded: true,
-                });
-            }.bind(this), function (err) {
-                console.trace(err.message);
-            });
+      $.ajax({
+            type: "POST",
+            url: `http://${this.state.domain}:9200/_search/`,
+            data: JSON.stringify(query),
+            success: function (data) {
+                   const products = data.hits.hits.map(obj => obj._source);
+                    this.setState({
+                        products: products,
+                        orderBy: orderBy,
+                        loaded: true,
+                    });
+              }.bind(this),
+              error: function (response, error) {
+                  console.log(response);
+                  console.log(error);
+              }
+        })
   };
 
   searchApts = (q) => {
@@ -326,25 +333,27 @@ class App extends Component {
                                 this.state.shopSlug, this.state.activeCategory,
                                 this.state.parent ? this.state.parent : null);
 
-          fetch(`http://${this.state.domain}:9200/_search/`, {
-                method: "POST",
-                body: JSON.stringify(query)
-            }).then(function(res) {
-                    return res.json();
-                }).then(function (data) {
-                    let products = data.hits.hits.map(obj => obj._source);
-                    let pagesCount = Math.ceil(data.hits.total / this.state.productsByPage);
-                    this.setState({
-                        products: products,
-                        loaded: true,
-                        pagesCount: pagesCount,
-                        productsCount: data.hits.total,
-                        queryText: q,
-                        activePage: 1
-                    });
-                }.bind(this), function (err) {
-                    console.trace(err.message);
-                });
+          $.ajax({
+                    type: "POST",
+                    url: `http://${this.state.domain}:9200/_search/`,
+                    data: JSON.stringify(query),
+                    success: function (data) {
+                           let products = data.hits.hits.map(obj => obj._source);
+                            let pagesCount = Math.ceil(data.hits.total / this.state.productsByPage);
+                            this.setState({
+                                products: products,
+                                loaded: true,
+                                pagesCount: pagesCount,
+                                productsCount: data.hits.total,
+                                queryText: q,
+                                activePage: 1
+                            });
+                      }.bind(this),
+                      error: function (response, error) {
+                          console.log(response);
+                          console.log(error);
+                      }
+                })
       }
 
   };
@@ -360,25 +369,27 @@ class App extends Component {
                             this.getMatchPhrase(), this.state.shopSlug, this.state.activeCategory,
                             this.state.parent ? this.state.parent : null);
 
-      fetch(`http://${this.state.domain}:9200/_search/`, {
-            method: "POST",
-            body: JSON.stringify(query)
-        }).then(function(res) {
-                return res.json();
-            }).then(function (data) {
-                let products = data.hits.hits.map(obj => obj._source);
-                let pagesCount = Math.ceil(data.hits.total / this.state.productsByPage);
-                this.setState({
-                    products: products,
-                    loaded: true,
-                    priceFrom: parseInt(price, 10),
-                    pagesCount: pagesCount,
-                    productsCount: data.hits.total,
-                    activePage: 1
-                });
-            }.bind(this), function (err) {
-                console.trace(err.message);
-            });
+      $.ajax({
+            type: "POST",
+            url: `http://${this.state.domain}:9200/_search/`,
+            data: JSON.stringify(query),
+            success: function (data) {
+                   let products = data.hits.hits.map(obj => obj._source);
+                    let pagesCount = Math.ceil(data.hits.total / this.state.productsByPage);
+                    this.setState({
+                        products: products,
+                        loaded: true,
+                        priceFrom: parseInt(price, 10),
+                        pagesCount: pagesCount,
+                        productsCount: data.hits.total,
+                        activePage: 1
+                    });
+              }.bind(this),
+              error: function (response, error) {
+                  console.log(response);
+                  console.log(error);
+              }
+        })
   };
 
   changePriceTo = (price) => {
@@ -391,13 +402,12 @@ class App extends Component {
                             price, this.state.queryText, this.state.categorySlug, this.getMatchPhrase(),
                             this.state.shopSlug, this.state.activeCategory, this.state.parent ? this.state.parent : null);
 
-      fetch(`http://${this.state.domain}:9200/_search/`, {
-            method: "POST",
-            body: JSON.stringify(query)
-        }).then(function(res) {
-                return res.json();
-            }).then(function (data) {
-                let products = data.hits.hits.map(obj => obj._source);
+        $.ajax({
+            type: "POST",
+            url: `http://${this.state.domain}:9200/_search/`,
+            data: JSON.stringify(query),
+            success: function (data) {
+                   let products = data.hits.hits.map(obj => obj._source);
                 let pagesCount = Math.ceil(data.hits.total / this.state.productsByPage);
                 this.setState({
                     products: products,
@@ -407,9 +417,12 @@ class App extends Component {
                     productsCount: data.hits.total,
                     activePage: 1
                 });
-            }.bind(this), function (err) {
-                console.trace(err.message);
-            });
+              }.bind(this),
+              error: function (response, error) {
+                  console.log(response);
+                  console.log(error);
+              }
+        })
   };
 
     handleCategorySort = (id) => {
@@ -421,13 +434,12 @@ class App extends Component {
                             this.state.priceTo, '', this.state.categorySlug, this.getMatchPhrase(),
                             this.state.shopSlug, id, true);
 
-      fetch(`http://${this.state.domain}:9200/_search/`, {
-            method: "POST",
-            body: JSON.stringify(query)
-        }).then(function(res) {
-                return res.json();
-            }).then(function (data) {
-                let products = data.hits.hits.map(obj => obj._source);
+       $.ajax({
+            type: "POST",
+            url: `http://${this.state.domain}:9200/_search/`,
+            data: JSON.stringify(query),
+            success: function (data) {
+                  let products = data.hits.hits.map(obj => obj._source);
                 let pagesCount = Math.ceil(data.hits.total / this.state.productsByPage);
                 this.setState({
                     products: products,
@@ -439,9 +451,12 @@ class App extends Component {
                     parent: true,
                     fromPage: 21
                 });
-            }.bind(this), function (err) {
-                console.trace(err.message);
-            });
+              }.bind(this),
+              error: function (response, error) {
+                  console.log(response);
+                  console.log(error);
+              }
+        })
     };
 
     handleChildCategorySort = (id) => {
@@ -453,13 +468,12 @@ class App extends Component {
                             this.state.priceTo, null, this.state.categorySlug, this.getMatchPhrase(),
                             this.state.shopSlug, id, false);
 
-      fetch(`http://${this.state.domain}:9200/_search/`, {
-            method: "POST",
-            body: JSON.stringify(query)
-        }).then(function(res) {
-                return res.json();
-            }).then(function (data) {
-                let products = data.hits.hits.map(obj => obj._source);
+         $.ajax({
+            type: "POST",
+            url: `http://${this.state.domain}:9200/_search/`,
+            data: JSON.stringify(query),
+            success: function (data) {
+                  let products = data.hits.hits.map(obj => obj._source);
                 let pagesCount = Math.ceil(data.hits.total / this.state.productsByPage);
                 this.setState({
                     products: products,
@@ -471,9 +485,12 @@ class App extends Component {
                     parent: false,
                     fromPage: 21
                 });
-            }.bind(this), function (err) {
-                console.trace(err.message);
-            });
+              }.bind(this),
+              error: function (response, error) {
+                  console.log(response);
+                  console.log(error);
+              }
+        })
     };
 
     deleteActiveCategory = (e) => {
@@ -486,13 +503,12 @@ class App extends Component {
                             this.state.priceTo, null, this.state.categorySlug, this.getMatchPhrase(),
                             this.state.shopSlug, '', false);
 
-      fetch(`http://${this.state.domain}:9200/_search/`, {
-            method: "POST",
-            body: JSON.stringify(query)
-        }).then(function(res) {
-                return res.json();
-            }).then(function (data) {
-                let products = data.hits.hits.map(obj => obj._source);
+      $.ajax({
+            type: "POST",
+            url: `http://${this.state.domain}:9200/_search/`,
+            data: JSON.stringify(query),
+            success: function (data) {
+                  let products = data.hits.hits.map(obj => obj._source);
                 let pagesCount = Math.ceil(data.hits.total / this.state.productsByPage);
                 this.setState({
                     products: products,
@@ -502,9 +518,12 @@ class App extends Component {
                     productsCount: data.hits.total,
                     activePage: 1
                 });
-            }.bind(this), function (err) {
-                console.trace(err.message);
-            });
+              }.bind(this),
+              error: function (response, error) {
+                  console.log(response);
+                  console.log(error);
+              }
+        })
 
     };
 
