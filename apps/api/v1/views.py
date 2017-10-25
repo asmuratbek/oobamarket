@@ -1077,7 +1077,7 @@ def search_products(request):
         else:
             products = Product.objects.filter(Q(title__icontains=q) | Q(short_description__icontains=q))
         paginator = Paginator(products, 10)
-        page = request.GET.get('page')
+        page = request.GET.get('page', 1)
         try:
             p = paginator.page(int(page))
         except (AttributeError, EmptyPage, ValueError):
