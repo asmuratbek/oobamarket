@@ -1,7 +1,5 @@
 
 $(document).ready(function () {
-<<<<<<< HEAD
-=======
        if ($('.owl-carousel.home').length > 0) {
            $('.owl-carousel.home').owlCarousel({
                loop: true,
@@ -17,7 +15,6 @@ $(document).ready(function () {
 
 
     // });
->>>>>>> 801b2ba5ef9235593895eb70ab71a5efe53e9203
 
 
     function readURL(input) {
@@ -210,14 +207,17 @@ $(document).ready(function () {
     });
 
 
-    $('#global_category').on('change', function () {
+    $('#global_category').on('keyup change click', function () {
         var categoryList = $('#category_list');
         var subcategoryList = $('#subcategory_list');
-        if ($(this)[0].selectedIndex === 0) {
-            categoryList.html("").attr('disabled', "");
-            subcategoryList.html("").attr('disabled', "");
-        }
-        else {
+        // console.log('1')
+        // if ($(this)[0].selectedIndex === 0) {
+        //     console.log('2')
+        //     categoryList.html("").attr('disabled', "");
+        //     subcategoryList.html("").attr('disabled', "");
+        // }
+        // else {
+        //     console.log('3')
             $.ajax({
                 type: "GET",
                 url: "/get_category_list/",
@@ -225,6 +225,7 @@ $(document).ready(function () {
                     "global_category": $("#global_category option:selected").text()
                 },
                 success: function (data) {
+                    console.log(data)
                     if (data.count > 0) {
                         categoryList.removeAttr('disabled');
                         subcategoryList.html("").attr('disabled', "");
@@ -244,7 +245,7 @@ $(document).ready(function () {
                     console.log(error);
                 }
             });
-        }
+        // }
 
     });
 
