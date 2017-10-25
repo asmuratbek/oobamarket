@@ -92,8 +92,7 @@ class LentaView(APIView):
     authentication_classes = (TokenAuthentication,)
 
     def get(self, request):
-        from django.core.paginator import Paginator
-        user = self.request.user
+        user = request.user
         sub_list = list()
         for sub in user.subscription_set.all():
             if sub.subscription_type == 'only_actions':
@@ -104,33 +103,36 @@ class LentaView(APIView):
                 [sub_list.append(item) for item in sub.subscription.sales_set.all().order_by("created_at")]
                 [sub_list.append(item) for item in sub.subscription.product_set.all().order_by("created_at")]
         sorted_list = sorted(sub_list, key=lambda x: x.created_at, reverse=True)
-        p = Paginator(sorted_list, 10)
-        pages_count = p.num_pages
-        page = self.request.GET.get('page')
-        if page and int(page) <= pages_count:
-            p = p.page(int(page))
-        else:
-            p = p.page(1)
+        paginator = Paginator(sorted_list, 10)
+        page = self.request.GET.get('page', 1)
+        try:
+            p = paginator.page(int(page))
+        except (EmptyPage, ValueError):
+            p = None
         items = list()
-        for product in p.object_list:
-            items.append({
-                "title": product.title,
-                "slug": product.slug,
-                "short_description": product.short_description,
-                "shop": product.get_shop_title(),
-                "main_image": product.get_main_thumb_image(),
-                "price": product.get_price(),
-                "is_favorite": product.favorite.filter(
-                    user=self.request.user).exists() if self.request.user.is_authenticated else False,
-                "is_in_cart": self.request.user.cart_set.last().cartitem_set.filter(product=product).exists()\
-                    if self.request.user.is_authenticated \
-                       and self.request.user.cart_set.all() \
-                    else False
-            })
+        if p:
+            for item in p.object_list:
+                if item.__class__.__name__ == "Product":
+                    items.append({
+                        "title": item.title,
+                        "type": "product",
+                        "slug": item.slug,
+                        "short_description": item.short_description,
+                        "shop": item.get_shop_title(),
+                        "main_image": item.get_main_thumb_image(),
+                        "price": item.get_price(),
+                        "is_favorite": item.favorite.filter(user=user).exists(),
+                        "is_in_cart": user.cart_set.last().cartitem_set.filter(product=item).exists()\
+                            if user.cart_set.all() else False
+                    })
+                else:
+                    items.append(dict(shop=item.shop.title, title=item.title, short_description=item.short_description,
+                                      description=item.description, discount=item.discount, image=item.image.url,
+                                      type="sale"))
         return JsonResponse({
             "status": "success",
             "page": page if page else 1,
-            "items" : items
+            "items": items
         })
 
 
