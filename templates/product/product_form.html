@@ -13,28 +13,28 @@
                             <div>
                                 <div class="">
                                     <div class="uk-form-controls {% if form.shop.errors %}uk-form-danger{% endif %}">
-                                        {% render_field form.shop|add_error_attr:"aria-invalid:true" class="selectize demo-default" placeholder="Выбрать магазин" %}
+                                        {% render_field form.shop|add_error_attr:"aria-invalid:true" class="uk-select" placeholder="Выбрать магазин" %}
                                     </div>
                                 </div>
                             </div>
                             <div>
                                 <div class="">
                                     <div class="uk-form-controls {% if form.shop.errors %}uk-form-danger{% endif %}">
-                                        {% render_field form.section|attr:"id:global_category"|add_error_attr:"aria-invalid:true" class="selectize demo-default" placeholder="Выбрать родителей" %}
+                                        {% render_field form.section|attr:"id:global_category"|add_error_attr:"aria-invalid:true" class="uk-select" placeholder="Выбрать родителей" %}
                                     </div>
                                 </div>
                             </div>
                             <div>
                                 <div class="">
                                     <div class="uk-form-controls uk-form-danger">
-                                        {% render_field form.parent_categories|attr:"id:category_list"|add_error_attr:"aria-invalid:true" class="selectize demo-default" placeholder="Выбрать детей" %}
+                                        {% render_field form.parent_categories|attr:"id:category_list"|add_error_attr:"aria-invalid:true" class="uk-select" placeholder="Выбрать детей" %}
                                     </div>
                                 </div>
                             </div>
                             <div>
                                 <div class="">
                                     <div class="uk-form-controls">
-                                        {% render_field form.category|attr:"id:subcategory_list" class="selectize demo-default" placeholder="Выбрать внуков" %}
+                                        {% render_field form.category|attr:"id:subcategory_list" class="uk-select" placeholder="Выбрать внуков" %}
                                     </div>
                                 </div>
                             </div>
