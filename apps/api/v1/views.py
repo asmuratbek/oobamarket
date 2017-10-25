@@ -984,7 +984,7 @@ class ShopDetailView(APIView):
         products_dict = [model_to_dict(product) for product in p.object_list] if p else list()
         for prod in products_dict:
             product = get_object_or_404(Product, id=prod['id'])
-            prod["is_in_cart"] = user.cart_set.last().cartitem_set.filter(product=product).exist() \
+            prod["is_in_cart"] = user.cart_set.last().cartitem_set.filter(product=product).exists() \
                                     if user.is_authenticated() else False
             prod["is_favourite"] = product.favorite.filter(user=user).exists() if user.is_authenticated() else False
             prod["main_image"] = product.get_main_thumb_image()
