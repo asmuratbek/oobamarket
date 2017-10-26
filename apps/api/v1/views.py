@@ -825,7 +825,7 @@ class UserDetailView(APIView):
         })
 
     def post(self, request, *args, **kwargs):
-        user = get_object_or_404(User, id=request.POST.get('id'))
+        user = request.user
         serializer = UserSerializer(user, data=request.POST)
         if serializer.is_valid():
             serializer.save()
