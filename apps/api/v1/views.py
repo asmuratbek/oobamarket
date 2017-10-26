@@ -134,7 +134,8 @@ class LentaView(APIView):
         return JsonResponse({
             "status": "success",
             "page": page if page else 1,
-            "items": items
+            "items": items,
+            "count": paginator.count
         })
 
 
