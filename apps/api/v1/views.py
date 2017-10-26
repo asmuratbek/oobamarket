@@ -965,6 +965,7 @@ class ShopDetailView(APIView):
         shop = get_object_or_404(Shop, slug=kwargs.get('slug'))
         q = request.GET.get("q")
         order = request.GET.get("order")
+        category_slug = request.GET.get("category")
         products = shop.product_set.all()
         if q:
             if db_name == 'mysql' or db_name == 'postgresql':
@@ -975,6 +976,12 @@ class ShopDetailView(APIView):
                                            Q(short_description__icontains=str(q)))
         if order and order in ["price", "-price", "title", "created_at"]:
             products = products.order_by(order)
+        if category_slug:
+            category = get_object_or_404(Category, slug=category_slug)
+            if category.get_level() == 0:
+                products = [product for cat in category.get_descendants() for product in cat.product_set.all()]
+            else:
+                products = products.filter(category=category)
         paginator = Paginator(products, 20)
         page = request.GET.get('page', 1)
         try:
