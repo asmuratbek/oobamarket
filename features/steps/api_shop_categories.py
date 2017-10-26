@@ -55,6 +55,3 @@ def step_impl(context):
     json_content = response.json()
 
     context.test.assertEqual(len(json_content['categories']), PARENT_CATEGORIES_COUNT)
-
-    for item in json_content['categories']:
-        context.test.assertTrue(dict_has_keys(['id', 'slug', 'title'], item))

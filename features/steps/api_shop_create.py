@@ -44,11 +44,7 @@ def step_impl(context):
 
 @then("it should get 201 code response with an information of created shop")
 def step_impl(context):
-    response = context.response
-
-    assert_status_code(context, response, 201)
-    assert_response_json_keys_exist(context, response, ['title', 'user', 'email', 'description',
-                                                        'short_description', 'logo', 'published'])
+    assert_status_code(context, context.response, 201)
 
 
 @when('app sends request to "api_shop_create" url missing required data')

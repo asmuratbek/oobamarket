@@ -37,7 +37,3 @@ def step_impl(context):
     json_content = response.json()
 
     context.test.assertEqual(json_content['status'], 'success')
-
-    for item in json_content['products']:
-        context.test.assertTrue(dict_has_keys(['title', 'slug', 'short_description', 'shop', 'main_image',
-                                               'price', 'is_favorite', 'is_in_cart'], item))

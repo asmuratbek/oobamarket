@@ -31,17 +31,6 @@ def step_impl(context):
     assert_status_code(context, response, 200)
     assert_response_json_keys_exist(context, response, ['status', 'contacts'])
 
-    json_content = response.json()
-    contacts = json_content['contacts']
-
-    context.test.assertEqual(json_content['status'], 'success')
-    context.test.assertIsNotNone(contacts)
-
-    context.test.assertTrue(dict_has_keys(['saturday', 'published', 'friday', 'tuesday',
-                                           'wednesday', 'phone', 'thursday', 'address',
-                                           'latitude', 'monday', 'id', 'sunday',
-                                           'round_the_clock', 'place', 'longitude'], contacts))
-
 
 @when('app sends request to "api_shop_contacts" url containing non-existing slug')
 def step_impl(context):

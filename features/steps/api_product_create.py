@@ -52,9 +52,6 @@ def step_impl(context):
 @then("it should get response with success status")
 def step_impl(context):
     assert_status_code(context, context.response, 201)
-    assert_response_json_keys_exist(context, context.response, ['published', 'short_description',
-                                                                'price', 'category', 'title', 'shop',
-                                                                'discount'])
 
 
 @when('app sends request to "api_product_create" url with invalid shop slug')

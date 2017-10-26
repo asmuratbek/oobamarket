@@ -33,14 +33,3 @@ def step_impl(context):
 
     assert_status_code(context, response, 200)
     assert_response_json_keys_exist(context, response, ['count', 'next', 'previous', 'results'])
-    json_content = response.json()
-
-    for item in json_content['results']:
-        context.test.assertTrue(dict_has_keys(['detail_url', 'update_url', 'delete_url', 'id', 'title',
-                                               'short_description', 'slug', 'category_title', 'shop',
-                                               'price', 'sell_count', 'discount', 'currency',
-                                               'delivery_type', 'delivery_cost', 'availability',
-                                               'published', 'is_owner', 'main_image', 'is_in_cart',
-                                               'delivery_type_display', 'is_favorite', 'get_price_function',
-                                               'detail_view', 'update_view', 'delete_view',
-                                               'created_at', 'updated_at', 'get_category_title', 'type'], item))

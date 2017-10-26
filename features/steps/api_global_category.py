@@ -26,6 +26,3 @@ def step_impl(context):
 
     items = response.json()
     context.test.assertEqual(len(items), GLOBAL_CATEGORIES_QUANTITY)
-
-    for item in items:
-        context.test.assertTrue(dict_has_keys(['id', 'title', 'slug', 'icon'], item))

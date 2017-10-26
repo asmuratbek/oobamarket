@@ -29,7 +29,3 @@ def step_impl(context):
 
     assert_status_code(context, response, 200)
     assert_response_json_keys_exist(context, response, ['images', 'product'])
-    json_content = response.json()
-
-    context.test.assertTrue(dict_has_keys(['shop', 'global_category', 'parent_category',
-                                           'category'], json_content['product']))

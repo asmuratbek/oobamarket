@@ -29,15 +29,7 @@ def step_impl(context):
 
 @then("it should get response with info that product is added to favorites")
 def step_impl(context):
-    response = context.response
-
-    assert_status_code(context, response, 200)
-    json_content = response.json()
-
-    assert_response_json_keys_exist(context, response, ['status', 'message'])
-
-    context.test.assertEqual(json_content['status'], 'success')
-    context.test.assertEqual(json_content['message'], 'added to favorites list')
+    assert_status_code(context, context.response, 200)
 
     favorite_product = FavoriteProduct.objects.filter(user=context.user, product=context.product)
     context.test.assertIsNotNone(favorite_product)
@@ -64,14 +56,5 @@ def step_impl(context):
 
 @then("it should get response with info that product is removed from favorites")
 def step_impl(context):
-    response = context.response
-
-    assert_status_code(context, response, 200)
-    json_content = response.json()
-
-    assert_response_json_keys_exist(context, response, ['status', 'message'])
-
-    context.test.assertEqual(json_content['status'], 'success')
-    context.test.assertEqual(json_content['message'], 'deleted from favorite')
-
+    assert_status_code(context, context.response, 200)
     context.test.assertIsNone(FavoriteProduct.objects.filter(user=context.user, product=context.product).first())

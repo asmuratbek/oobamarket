@@ -59,11 +59,3 @@ def step_impl(context):
 
     assert_status_code(context, response, 200)
     assert_response_json_keys_exist(context, response, ['items', 'status'])
-    json_content = response.json()
-
-    context.test.assertEqual(json_content['status'], 'success')
-
-    for item in json_content['items']:
-        context.test.assertTrue(dict_has_keys(['title', 'slug', 'short_description',
-                                               'shop', 'price', 'image', 'is_favorite',
-                                               'is_in_cart'], item))

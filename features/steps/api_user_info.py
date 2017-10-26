@@ -37,7 +37,7 @@ def step_impl(context):
 
     assert_status_code(context, response, 200)
     assert_response_json_keys_exist(context, response, ['status', 'address', 'favorites_count', 'cart_count', 'email',
-                                              'first_name', 'phone', 'shops', 'username', 'last_name'])
+                                                        'first_name', 'phone', 'shops', 'username', 'last_name'])
 
 
 @when('app sends request without auth token/with wrong auth token')

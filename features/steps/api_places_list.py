@@ -32,6 +32,3 @@ def step_impl(context):
     items = response.json()
 
     context.test.assertEqual(len(items), PLACES_COUNT)
-
-    for item in items:
-        context.test.assertTrue(dict_has_keys(['id', 'title', 'ttype'], item))

@@ -30,15 +30,7 @@ def step_impl(context):
 
 @then("it should get response with info that product is added to cart")
 def step_impl(context):
-    response = context.response
-
-    assert_status_code(context, response, 200)
-    json_content = response.json()
-
-    assert_response_json_keys_exist(context, response, ['status', 'message'])
-
-    context.test.assertEqual(json_content['status'], 'success')
-    context.test.assertEqual(json_content['message'], 'added to cart')
+    assert_status_code(context, context.response, 200)
 
     cart = Cart.objects.filter(user=context.user).first()
     cart_item = CartItem.objects.filter(cart=cart, product=context.product).first()
@@ -68,14 +60,5 @@ def step_impl(context):
 
 @then("it should get response with info that product is removed from cart")
 def step_impl(context):
-    response = context.response
-
-    assert_status_code(context, response, 200)
-    json_content = response.json()
-
-    assert_response_json_keys_exist(context, response, ['status', 'message'])
-
-    context.test.assertEqual(json_content['status'], 'success')
-    context.test.assertEqual(json_content['message'], 'removed from cart')
-
+    assert_status_code(context, context.response, 200)
     context.test.assertIsNone(CartItem.objects.filter(cart=context.cart, product=context.product).first())

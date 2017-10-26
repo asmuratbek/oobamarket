@@ -27,13 +27,5 @@ def step_impl(context):
 
 @then("it should get response with all information of the product")
 def step_impl(context):
-    response = context.response
-
-    assert_status_code(context, response, 200)
-    assert_response_json_keys_exist(context, response, ['price', 'title', 'is_in_cart', 'is_favorite',
-                                                        'images', 'short_description', 'shop'])
-    json_content = response.json()
-
-    for item in json_content['images']:
-        context.test.assertTrue(dict_has_keys(['image'], item))
+    assert_status_code(context, context.response, 200)
 

@@ -67,8 +67,3 @@ def step_impl(context):
 
     for shop in json_content['shops']:
         context.test.assertTrue(dict_has_keys(['title', 'logo', 'items'], shop))
-
-        for item in shop['items']:
-            context.test.assertTrue(dict_has_keys(['title', 'quantity', 'slug', 'short_description',
-                                                   'shop', 'price', 'total', 'image',
-                                                   'is_favorite', 'is_in_cart'], item))

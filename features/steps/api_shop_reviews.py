@@ -41,8 +41,4 @@ def step_impl(context):
     assert_response_json_keys_exist(context, response, ['reviews', 'status'])
     json_content = response.json()
 
-    context.test.assertEqual(json_content['status'], 'success')
     context.test.assertEqual(len(json_content['reviews']), SHOP_REVIEWS_QUANTITY)
-
-    for item in json_content['reviews']:
-        context.test.assertTrue(dict_has_keys(['user', 'text', 'stars'], item))
