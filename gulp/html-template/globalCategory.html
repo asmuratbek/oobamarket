@@ -1,0 +1,430 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta property="og:image" content="path/to/image.jpg">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="author" content="">
+    <title>Главная</title>
+    <link rel="shortcut icon" href="img/favicon/favicon.ico" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700&amp;subset=cyrillic" rel="stylesheet">
+    <link rel="stylesheet" href="css/main.css">
+</head>
+
+<body>
+<div class="uk-offcanvas-content">
+
+    <header uk-sticky="media: 320" class="uk-sticky uk-sticky-fixed ">
+        <a href="" class="logo-svg uk-hidden@l mobile-logo">
+            <img src="img/logo.svg" alt="" width="120">
+        </a>
+        <button class="mobile-button-nav uk-button uk-button-default uk-margin-small-right uk-hidden@l" type="button" uk-toggle="target: #offcanvas-reveal">
+            <span uk-icon="icon: grid"></span>
+            Навигация
+        </button>
+        <button class="mobile-button-category uk-button uk-button-default uk-margin-small-right uk-hidden@l" type="button" uk-toggle="target: #global-category-slide">
+            <span class="uk-margin-small-right" uk-icon="icon: list"></span>Категории
+        </button>
+        <div class="uk-container uk-visible@l">
+            <nav class="uk-navbar-container " uk-navbar >
+                
+                <div class="uk-navbar-left logo">
+                    <a href="" class="logo-svg">
+                        <img src="img/logo.svg" alt="" width="120">
+                    </a>
+                    <a href="" class="name-category">Одежда, обувь</a>
+                </div>
+                <div class="uk-navbar-right search">
+                    <form class="uk-flex-center uk-grid">
+                        <input class="uk-input uk-form-width-large" type="text" placeholder="Поиск товаров...">
+                        <button class="uk-button uk-button-default">Найти</button>
+                    </form>
+                </div>
+                <div class="uk-navbar-left">
+                    <ul class="uk-navbar-nav">
+                        <li class="favorite"><a href="#"><span class="uk-margin-small-right uk-icon" uk-icon="icon: heart"></span> Избранные (<span>2</span>)</a></li>
+                        <li class="basket"><a href="#"><span class="uk-margin-small-right uk-icon" uk-icon="icon: cart"></span> Корзина (<span>10</span>)</a></li>
+                        <li class="enter">
+                            <a href="#">Войти</a>
+                            <div class="uk-navbar-dropdown uk-padding-remove">
+                                <ul class="uk-nav uk-navbar-dropdown-nav">
+                                    <li><a href="#"><b>Кабинет</b></a></li>
+                                    <li><a href="#"><b>Создать магазин</b></a></li>
+                                    <li><a href="#"><b>Добавить товар</b></a></li>
+                                    <li><a href="#"><b>История заказов</b></a></li>
+                                    <li><a href="#">Ооба Маркет</a></li>
+                                    <li><a href="#">Альянс</a></li>
+                                    <li><a href="#"><b>Выйти</b></a></li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+
+        <div id="offcanvas-reveal" class="mobile-nav" uk-offcanvas="mode: reveal; overlay: true">
+            <div class="uk-offcanvas-bar">
+                <button class="uk-offcanvas-close" type="button" uk-close></button>
+                <a href=""> <img src="img/logo.png" alt=""></a>
+                <ul class="">
+                    <li class="for-shop"><a href="#"><span class="uk-margin-small-right uk-icon" uk-icon="icon: star"></span> Для Магазина</a></li>
+                    <li class="sub-list"><a href="#"><span class="uk-margin-small-right uk-icon" uk-icon="icon: bookmark"></span>Лента</a></li>
+                    <li class="create-shop"><a href="#"><span class="uk-margin-small-right uk-icon" uk-icon="icon: world"></span> Добавить магазин</a></li>
+                    <li class="favorite"><a href="#"><span class="uk-margin-small-right uk-icon" uk-icon="icon: heart"></span> Избранные (<span> 2 </span>)</a></li>
+                    <li class="basket"><a href="#"><span class="uk-margin-small-right uk-icon" uk-icon="icon: cart"></span> Корзина (<span> 10 </span>)</a></li>
+                    <li class="enter"><a href="#">Войти</a></li>
+                </ul>
+            </div>
+        </div>
+    </header>
+<section class="dropdown-category">
+    <div class="uk-container">
+
+        <div class="uk-text-center uk-flex-middle uk-grid uk-visible@l" uk-grid>
+            <div class="uk-width-expand@m">
+                <a href="" class="uk-button">
+                    Мужская обувьasd asd asd
+                </a>
+                <div uk-dropdown="pos: bottom-justify; animation: uk-animation-slide-top-small; duration: 300; offset: 3">
+                    <ul class="uk-nav uk-dropdown-nav">
+                        <li><a href="#">Аксессуары для ухода за обувью</a></li>
+                        <li><a href="#">Item</a></li>
+                        <li><a href="#">Item</a></li>
+                        <li><a href="#">Item</a></li>
+                        <li><a href="#">Item</a></li>
+                        <li><a href="#">Item</a></li>
+                        <li><a href="#">Item</a></li>
+                        <li><a href="#">Item</a></li>
+                        <li><a href="#">Item</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="uk-width-expand@m">
+                <a href="" class="uk-button ">
+                    Аксессуары
+                </a>
+                <div uk-dropdown="pos: bottom-justify; animation: uk-animation-slide-top-small; duration: 300; offset: 3">
+                    <ul class="uk-nav uk-dropdown-nav">
+                        <li><a href="#">Item</a></li>
+                        <li><a href="#">Item</a></li>
+                        <li><a href="#">Item</a></li>
+                        <li><a href="#">Item</a></li>
+                        <li><a href="#">Item</a></li>
+                        <li><a href="#">Item</a></li>
+                        <li><a href="#">Item</a></li>
+                        <li><a href="#">Item</a></li>
+                        <li><a href="#">Item</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="uk-width-expand@m">
+                <a href="" class="uk-button">
+                    Женская обувь
+                </a>
+                <div uk-dropdown="pos: bottom-justify; animation: uk-animation-slide-top-small; duration: 300; offset: 3">
+                    <ul class="uk-nav uk-dropdown-nav">
+                        <li><a href="#">Item</a></li>
+                        <li><a href="#">Item</a></li>
+                        <li><a href="#">Item</a></li>
+                        <li><a href="#">Item</a></li>
+                        <li><a href="#">Item</a></li>
+                        <li><a href="#">Item</a></li>
+                        <li><a href="#">Item</a></li>
+                        <li><a href="#">Item</a></li>
+                        <li><a href="#">Item</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="uk-width-expand@m">
+                <a href="" class="uk-button ">
+                    Аксессуары
+                </a>
+                <div uk-dropdown="pos: bottom-justify; animation: uk-animation-slide-top-small; duration: 300; offset: 3">
+                    <ul class="uk-nav uk-dropdown-nav">
+                        <li><a href="#">Item</a></li>
+                        <li><a href="#">Item</a></li>
+                        <li><a href="#">Item</a></li>
+                        <li><a href="#">Item</a></li>
+                        <li><a href="#">Item</a></li>
+                        <li><a href="#">Item</a></li>
+                        <li><a href="#">Item</a></li>
+                        <li><a href="#">Item</a></li>
+                        <li><a href="#">Item</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="uk-width-expand@m">
+                <a href="" class="uk-button">
+                    Женская обувь
+                </a>
+                <div uk-dropdown="pos: bottom-justify; animation: uk-animation-slide-top-small; duration: 300; offset: 3">
+                    <ul class="uk-nav uk-dropdown-nav">
+                        <li><a href="#">Item</a></li>
+                        <li><a href="#">Item</a></li>
+                        <li><a href="#">Item</a></li>
+                        <li><a href="#">Item</a></li>
+                        <li><a href="#">Item</a></li>
+                        <li><a href="#">Item</a></li>
+                        <li><a href="#">Item</a></li>
+                        <li><a href="#">Item</a></li>
+                        <li><a href="#">Item</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="uk-width-expand@m">
+                <a href="" class="uk-button ">
+                    Мужская обувь
+                </a>
+                <div uk-dropdown="pos: bottom-justify; animation: uk-animation-slide-top-small; duration: 300; offset: 3">
+                    <ul class="uk-nav uk-dropdown-nav">
+                        <li><a href="#">Item</a></li>
+                        <li><a href="#">Item</a></li>
+                        <li><a href="#">Item</a></li>
+                        <li><a href="#">Item</a></li>
+                        <li><a href="#">Item</a></li>
+                        <li><a href="#">Item</a></li>
+                        <li><a href="#">Item</a></li>
+                        <li><a href="#">Item</a></li>
+                        <li><a href="#">Item</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="uk-width-expand@m">
+                <a href="" class="uk-button ">
+                    Мужская обувь
+                </a>
+                <div uk-dropdown="pos: bottom-justify; animation: uk-animation-slide-top-small; duration: 300; offset: 3">
+                    <ul class="uk-nav uk-dropdown-nav">
+                        <li><a href="#">Item</a></li>
+                        <li><a href="#">Item</a></li>
+                        <li><a href="#">Item</a></li>
+                        <li><a href="#">Item</a></li>
+                        <li><a href="#">Item</a></li>
+                        <li><a href="#">Item</a></li>
+                        <li><a href="#">Item</a></li>
+                        <li><a href="#">Item</a></li>
+                        <li><a href="#">Item</a></li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+
+        <div id="global-category-slide" uk-offcanvas>
+            <div class="uk-offcanvas-bar">
+
+                <button class="uk-offcanvas-close" type="button" uk-close></button>
+
+                <h3>Категории</h3>
+                <ul uk-accordion>
+                    <li class="">
+                        <h3 class="uk-accordion-title">Item 1</h3>
+                        <div class="uk-accordion-content">
+                            <ul class="uk-nav uk-dropdown-nav">
+                                <li><a href="#">Item</a></li>
+                                <li><a href="#">Item</a></li>
+                                <li><a href="#">Item</a></li>
+                                <li><a href="#">Item</a></li>
+                                <li><a href="#">Item</a></li>
+                                <li><a href="#">Item</a></li>
+                                <li><a href="#">Item</a></li>
+                                <li><a href="#">Item</a></li>
+                                <li><a href="#">Item</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li>
+                        <h3 class="uk-accordion-title">Item 2</h3>
+                        <div class="uk-accordion-content">
+                            <ul class="uk-nav uk-dropdown-nav">
+                                <li><a href="#">Item</a></li>
+                                <li><a href="#">Item</a></li>
+                                <li><a href="#">Item</a></li>
+                                <li><a href="#">Item</a></li>
+                                <li><a href="#">Item</a></li>
+                                <li><a href="#">Item</a></li>
+                                <li><a href="#">Item</a></li>
+                                <li><a href="#">Item</a></li>
+                                <li><a href="#">Item</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li>
+                        <h3 class="uk-accordion-title">Item 3</h3>
+                        <div class="uk-accordion-content">
+                            <ul class="uk-nav uk-dropdown-nav">
+                                <li><a href="#">Item</a></li>
+                                <li><a href="#">Item</a></li>
+                                <li><a href="#">Item</a></li>
+                                <li><a href="#">Item</a></li>
+                                <li><a href="#">Item</a></li>
+                                <li><a href="#">Item</a></li>
+                                <li><a href="#">Item</a></li>
+                                <li><a href="#">Item</a></li>
+                                <li><a href="#">Item</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+
+
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<section class="product-list uk-margin-medium-top">
+    <div class="uk-container">
+        <form class="uk-grid-small search-global-category" uk-grid>
+            <div class="uk-width-1-3@l uk-width-1-2@s uk-padding-remove">
+                <div class="bg-white">
+                    <select class="selectize demo-default" placeholder="Укажите...">
+                        <option selected="" value="-created_at">Сначала новые</option>
+                        <option value="title">По названию</option>
+                        <option value="price">Цена по возрастанию</option>
+                        <option value="-price">Цена по убыванию</option>
+                    </select>
+                </div>
+
+            </div>
+            <div class="uk-width-1-6@l uk-width-1-2@s">
+                <input class="uk-input"  type="number"  placeholder="от 2000 сом">
+            </div>
+            <div class="uk-width-1-6@l uk-width-1-2@s">
+                <input class="uk-input" type="number"  placeholder="от 4000 сом">
+            </div>
+            <div class="uk-width-1-3@l uk-width-1-2@s">
+                <input class="uk-input" type="text" placeholder="Поиск товара">
+            </div>
+        </form>
+
+        <div class="uk-child-width-1-1 uk-child-width-1-2@s uk-child-width-1-3@m  uk-child-width-1-4@l uk-grid-small" uk-grid>
+<div class="uk-grid-match add-product-item">
+    <div class="shadow uk-text-center">
+        <div class="uk-inline-clip uk-transition-toggle">
+            <div class="border">
+                <a href="" class="uk-position-cover"></a>
+                <div class="uk-cover-container">
+                    <div class="cover">
+                        <span class="uk-display-block uk-margin-small-bottom" uk-icon="ratio: 3; icon:  plus-circle"></span>
+                        Добавить новый товар
+                    </div>
+
+                    <canvas width="400" height="500"></canvas>
+                    <img uk-cover src="img/white.jpg" alt="">
+                </div>
+            </div>
+        </div>
+        <div class="uk-padding-small uk-margin-remove uk-padding-remove footer">
+           <a href="">Добавить акцию</a>
+        </div>
+    </div>
+</div>
+
+<div class="uk-grid-match disabled-product">
+    <div class="shadow uk-text-center uk-transition-toggle">
+        <div class="setting">
+            <a href="" uk-icon="icon: file-edit" title="Редактировать товар" uk-tooltip></a>
+            <a class="product-vision disabled" href="" uk-icon="icon: copy" title="Товар скрыт" uk-tooltip></a>
+            <a href="" uk-icon="icon: close" title="Удалить товар" uk-tooltip></a>
+        </div>
+        <div class="uk-inline-clip uk-transition-toggle">
+            <div class="border">
+                <a href="" class="uk-position-cover"></a>
+                <div class="uk-cover-container">
+                    <canvas width="400" height="500"></canvas>
+                    <img uk-cover src="img/t1.png" alt="">
+                </div>
+            </div>
+            <div class="uk-transition-fade uk-position-cover uk-overlay uk-overlay-default">
+                <a href="" class="uk-position-cover"></a>
+                <small class="uk-display-block">Магазин</small>
+                <h4 class="uk-margin-remove"><a href="##">Magazin name</a></h4>
+                <p>Товар скрыт на странице</p>
+                <div class="control">
+                    <a href="#" class="favorite like uk-margin-medium-right" title="Удалить с избранных"
+                       uk-tooltip><span class=" uk-icon" uk-icon="icon: heart; ratio: 2"></span></a>
+                    <a href="#" class="basket in uk-margin-medium-left" title="Удалить из корзины" uk-tooltip><span
+                            class=" uk-icon" uk-icon="icon: cart; ratio: 2"></span></a>
+                </div>
+            </div>
+        </div>
+        <div class="uk-padding-small uk-grid uk-margin-remove footer">
+            <h4 class="uk-width-3-5@l uk-width-3-5@m uk-padding-remove">Папка-портфель Chanyi 1758Папка-портфель Chanyi
+                1758 Папка-портфель Chanyi 1758</h4>
+            <div class="uk-width-2-5@l uk-width-2-5@m uk-padding-remove">
+                <p >1999 сом </p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="uk-grid-match">
+    <div class="shadow uk-text-center">
+        <div class="setting">
+            <a href="" uk-icon="icon: file-edit" title="Редактировать товар" uk-tooltip></a>
+            <a class="product-vision" href="" uk-icon="icon: copy" title="Скрыть товар" uk-tooltip></a>
+            <a href="" uk-icon="icon: close" title="Удалить товар" uk-tooltip></a>
+        </div>
+        <div class="uk-inline-clip uk-transition-toggle">
+            <div class="border">
+                <a href="" class="uk-position-cover"></a>
+                <div class="uk-cover-container">
+                    <canvas width="400" height="500"></canvas>
+                    <img uk-cover src="img/template.jpg" alt="">
+                </div>
+            </div>
+            <div class="uk-transition-fade uk-position-cover uk-overlay uk-overlay-default">
+                <a href="" class="uk-position-cover"></a>
+                <small class="uk-display-block">Магазин</small>
+                <h4 class="uk-margin-remove"><a href="##">Magazin name</a></h4>
+                <p>Метал: Серебро
+                    Проба: 925
+                    Вес: 10,46
+                    Камень: Сваровский</p>
+                <div class="control">
+                    <a href="#" class="favorite uk-margin-medium-right" title="Добавить в избранные" uk-tooltip><span
+                            class=" uk-icon" uk-icon="icon: heart; ratio: 2"></span></a>
+                    <a href="#" class="basket uk-margin-medium-left" title="Добавить в корзину" uk-tooltip><span
+                            class=" uk-icon" uk-icon="icon: cart; ratio: 2"></span></a>
+                </div>
+            </div>
+        </div>
+        <div class="uk-padding-small uk-grid uk-margin-remove footer">
+            <h4 class="uk-width-3-5@l uk-width-3-5@m uk-padding-remove">Папка-портфель Chanyi 1758Папка-портфель Chanyi
+                1758 Папка-портфель Chanyi 1758</h4>
+            <div class="uk-width-2-5@l uk-width-2-5@m uk-padding-remove">
+                <p >1999 сом </p>
+            </div>
+        </div>
+    </div>
+</div>
+        </div>
+
+        <ul class="uk-margin-medium uk-pagination uk-flex-center" uk-margin>
+            <li><a href="#"><span uk-pagination-previous></span></a></li>
+            <li><a href="#">1</a></li>
+            <li class="uk-disabled"><span>...</span></li>
+            <li><a href="#">5</a></li>
+            <li><a href="#">6</a></li>
+            <li class="uk-active"><span>7</span></li>
+            <li><a href="#">8</a></li>
+            <li><a href="#"><span uk-pagination-next></span></a></li>
+        </ul>
+    </div>
+</section>
+
+
+</div> <!--end uk-offcanvas-content-->
+<script src="js/main.js"></script>
+
+</body>
+</html>

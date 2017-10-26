@@ -2,20 +2,29 @@
 {% load shop_tags %}
 
 {% block shopcontent %}
-            <div class="sale-page-detail">
-                <div class="img-wrapper">
-                    {% if sale.image %}
-                        <img src="{{ sale.image.url }}" alt="">
-                    {% else %}
-                        <img src="http://via.placeholder.com/1140x200" alt="">
-                    {% endif %}
-                </div>
-                <div class="description">
-                    <h1>{{ sale.title }}</h1>
-                    {{ sale.description|safe }}
-                    <div class="center">
+    <section class="sale sale-detail uk-margin-medium-top">
+        <div class="uk-container">
+            <div class="shadow uk-padding-large">
+                <div class="uk-child-width-1-1 " uk-grid>
+                    <div>
+                        <div class="uk-card uk-card-default">
+                            <span class="descount">{{ sales.discount }}%</span>
+                            <div class="uk-card-media-top uk-cover-container">
+                                {% if sales.image %}
+                                    <img src="{{ sales.image.url }}" alt="" uk-cover>
+                                {% else %}
+                                    <img src="http://via.placeholder.com/1140x200" alt="" uk-cover>
+                                {% endif %}
+                                <canvas width="700" height="300"></canvas>
+                            </div>
+                            <div class="uk-card-body uk-padding-small">
+                                <h1>{{ sales.title }}</h1>
+                                {{ sales.description|safe }}
+                            </div>
+                        </div>
                     </div>
-
                 </div>
             </div>
+        </div>
+    </section>
 {% endblock %}

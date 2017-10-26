@@ -4,7 +4,9 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.views.generic import TemplateView
 from django.views import defaults as default_views
-from apps.global_category.views import IndexView
+from apps.global_category.views import IndexView, landing
+from apps.product.views import FavoriteCreateView, product_reviews, change_publish_status
+from apps.index.views import IndexView
 from apps.product.views import FavoriteCreateView, product_reviews
 from apps.shop.views import agreement, shop_reviews
 from apps.product.views import search_predict_html, search
@@ -25,6 +27,7 @@ sitemaps = {
 
 urlpatterns = [
                   url(r'^$', IndexView.as_view(), name='home'),
+                  url(r'^change_publish_status/$', change_publish_status, name='change_publish_status'),
                   url(r'^api/v1/', include('apps.api.v1.urls', namespace='api')),
                   url(r'^docs/', include('rest_framework_docs.urls')),
                   url(r'^favorite/add/', FavoriteCreateView.as_view(), name="create_favorite"),

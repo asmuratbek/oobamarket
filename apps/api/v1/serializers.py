@@ -75,7 +75,6 @@ class ProductSerializer(ModelSerializer):
     detail_view = SerializerMethodField()
     update_view = SerializerMethodField()
     delete_view = SerializerMethodField()
-    get_price_function = SerializerMethodField()
 
     class Meta:
         model = Product
@@ -98,7 +97,7 @@ class ProductSerializer(ModelSerializer):
             'detail_view',
             'update_view',
             'delete_view',
-            'get_price_function',
+            'price',
             'created_at',
             'updated_at',
         )
@@ -108,9 +107,6 @@ class ProductSerializer(ModelSerializer):
 
     def get_category_title(self, obj):
         return obj.category.title
-
-    def get_get_price_function(self, obj):
-        return obj.get_price()
 
     def get_is_owner(self, obj):
         user = None

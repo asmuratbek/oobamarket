@@ -1,5 +1,4 @@
 from django.conf.urls import url, include
-
 from .views import *
 
 urlpatterns = [
@@ -43,6 +42,7 @@ urlpatterns = [
     url(r'^shop/(?P<slug>[-_\w]+)/delete/$', ShopDeleteApiView.as_view(), name='shop_delete'),
     url(r'^shop/$', ShopListApiView.as_view(), name='shop_list'),
     # url(r'^user/(?P<pk>[0-9]+)/shops/$', UserShopsListView.as_view(), name="user_shops_list"),
+    url(r'^search/', search_products, name='search_products'),
     url(r'^user/cart/$', UserCartItemsView.as_view(), name="user_cart"),
     url(r'^user/favorites/$', UserFavoritesView.as_view(), name="user_favorites"),
     url(r'^user/$', UserDetailView.as_view(), name="user_detail"),

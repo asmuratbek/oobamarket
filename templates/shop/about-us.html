@@ -1,7 +1,11 @@
 {% extends 'shop/shop_detail.html' %}
 
 {% block shopcontent %}
-            <div class="about-us-page">
+    <section class="about-us uk-margin-medium-top">
+        <div class="uk-container">
+            <div class="shadow uk-padding-large">
                 {{ shop.description }}
             </div>
+        </div>
+    </section>
 {% endblock %}

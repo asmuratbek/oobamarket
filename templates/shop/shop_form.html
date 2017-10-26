@@ -3,9 +3,349 @@
 {% load staticfiles %}
 {% block head %}
     {{ block.super }}
-
 {% endblock %}
 {% block content %}
+    <section class="creat-shop  uk-margin-medium-top">
+        <div class="uk-container">
+            <div class="shadow uk-padding-large">
+                <form class="uk-grid" method="post" enctype="multipart/form-data" id="add-shop-form">
+                    {% csrf_token %}
+                    <fieldset class="uk-fieldset uk-width-1-1@l">
+                        <legend class="uk-legend uk-margin-medium-bottom">Создание и редактирование магазина</legend>
+                        <div class="uk-grid uk-child-width-1-2@s" uk-grid>
+                            <div class="">
+                                <label class="uk-form-label ">Название магазина</label>
+                                <div class="uk-form-controls ">
+                                    {% render_field form.title|attr:"type:text" placeholder="" class="uk-input" %}
+                                </div>
+                            </div>
+                            <div>
+                                <label class="uk-form-label">E-mail магазина:</label>
+                                <div class="uk-form-controls">
+                                    {% render_field form.email|attr:"type:email" class="uk-input" placeholder="" %}
+                                </div>
+                            </div>
+                            {% include 'shop/partials/shop_inline_form.html' %}
+                        </div>
+
+                        <div class="uk-grid uk-child-width-1-2@s uk-margin-remove-top" uk-grid>
+                            <div>
+                                <button href="#toggle-animation"
+                                        class="uk-button uk-button-default uk-width-1-1 border-red"
+                                        type="button"
+                                        uk-toggle="target: #toggle-animation; animation: uk-animation-fade">
+                                    <span class="uk-margin-small-right" uk-icon="icon:  clock"></span>
+                                    Указать время работы
+                                </button>
+
+                                <div id="toggle-animation"
+                                     class="uk-card uk-card-default uk-card-body uk-margin-small uk-width-1-1@l "
+                                     hidden>
+                                    {{ form.round_the_clock|attr:"class:switch__input"|attr:"id:id_piblished" }}
+
+                                    <div class="weekdays">
+                                        <label class="uk-margin-medium-bottom uk-display-block"><input class="uk-checkbox " type="checkbox"> Всегда открыто</label>
+                                        {% for i, day in days %}
+                                            <div class="" data-key={{ i }}
+                                                    {% if forloop.counter == 1 %}data-first{% endif %}>
+                                                <label><input class="uk-checkbox checked_day" type="checkbox" {% if i != 'sunday' %}checked="checked"{% endif %}> {{ day }}</label>
+
+                                                <div class="uk-grid-small uk-grid" uk-grid>
+                                                    <div class="uk-width-1-2@s uk-inline" style="margin-bottom: 25px;">
+                                                        <a class="uk-form-icon" style="margin-left: 15px;" href="#" uk-icon="icon: clock"></a>
+                                                        <input class="uk-input timepicker" type="text" placeholder="С" {% if i == 'sunday' %}disabled="disabled"{% endif %}>
+                                                    </div>
+                                                    <div class="uk-width-1-2@s uk-inline" style="margin-bottom: 25px;">
+                                                        <a class="uk-form-icon" style="margin-left: 15px;" href="#" uk-icon="icon: future" ></a>
+                                                        <input class="uk-input timepicker" type="text" placeholder="До" {% if i == 'sunday' %}disabled="disabled"{% endif %}>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+
+                                </div>{#  end toggle-animation#}
+
+
+                            </div>
+                            <div>
+                                <a href="#modal-map" class="uk-button uk-button-default uk-width-1-1 border-red"
+                                   uk-toggle><span class="uk-margin-small-right" uk-icon="icon:  location"> </span>
+                                    Поставить метку на карте</a>
+                            </div>
+                        </div>
+                        <div class="uk-grid uk-child-width-1-1@l" uk-grid>
+                            <div class="uk-form-controls">
+                                <label class="uk-form-label">Короткое описание магазина:</label>
+                                {% render_field form.short_description|attr:"rows:6" placeholder="Введите до 300 символов" class="uk-textarea" %}
+                            </div>
+                            <div class="uk-form-controls">
+                                <label class="uk-form-label">О компании</label>
+                                {% render_field form.description|attr:"rows:6" placeholder="Введите полное описание" class="uk-textarea" %}
+                            </div>
+                        </div>
+
+{#                        <hr class="uk-divider-icon uk-margin-medium-top uk-margin-remove-bottom">#}
+
+                        {#                        <legend class="uk-legend uk-margin-medium-bottom uk-margin-large-top">Если у вас есть филиалы,#}
+                        {#                            добавьте их#}
+                        {#                        </legend>#}
+                        {##}
+                        {#                        <!--по клику аппендится этот блок-->#}
+                        {#                        <div class="append-shop-form">#}
+                        {#                            <a class="close" href="" uk-icon="icon: close" title="Удалить филиал" uk-tooltip></a>#}
+                        {#                            <hr class="uk-divider-icon uk-margin-medium-top uk-margin-medium-bottom">#}
+                        {#                            <div class="uk-grid uk-child-width-1-2@s" uk-grid>#}
+                        {#                                <div>#}
+                        {#                                    <label class="uk-form-label">Телефон</label>#}
+                        {#                                    <div class="uk-form-controls">#}
+                        {#                                        <input class="uk-input" type="number" placeholder="">#}
+                        {#                                    </div>#}
+                        {#                                </div>#}
+                        {#                                <div>#}
+                        {#                                    <label class="uk-form-label">Адрес магазина:</label>#}
+                        {#                                    <div class="uk-form-controls">#}
+                        {#                                        <input class="uk-input" type="email" placeholder="">#}
+                        {#                                    </div>#}
+                        {#                                </div>#}
+                        {#                                <div>#}
+                        {#                                    <label class="uk-form-label">Расположение вашего магазина</label>#}
+                        {#                                    <div class="uk-form-controls">#}
+                        {#                                        <select class="selectize demo-default" placeholder="Укажите...">#}
+                        {#                                            <option value="" selected="selected"></option>#}
+                        {#                                            <option value="27">ТЦ-Beta Stores</option>#}
+                        {#                                            <option value="28">ТЦ-Beta Stores 2</option>#}
+                        {#                                            <option value="8">ТЦ-Bishkek Park</option>#}
+                        {#                                            <option value="13">ТЦ-Caravan</option>#}
+                        {#                                            <option value="25">ТЦ-Gallery</option>#}
+                        {#                                            <option value="22">ТЦ-Grand Stone</option>#}
+                        {#                                            <option value="7">ТЦ-Red Centre</option>#}
+                        {#                                            <option value="21">ТЦ-Баумаркт</option>#}
+                        {#                                            <option value="19">ТЦ-Береке</option>#}
+                        {#                                            <option value="12">ТЦ-Берекет Гранд</option>#}
+                        {#                                            <option value="9">ТЦ-Берен Голд</option>#}
+                        {#                                            <option value="14">ТЦ-Бишкек-Сити</option>#}
+                        {#                                            <option value="4">ТЦ-Весна</option>#}
+                        {#                                            <option value="17">ТЦ-Гоин</option>#}
+                        {#                                            <option value="26">ТЦ-Гранд Комфорт</option>#}
+                        {#                                        </select>#}
+                        {#                                    </div>#}
+                        {#                                </div>#}
+                        {#                            </div>#}
+                        {##}
+                        {#                            <div class="uk-grid uk-child-width-1-2@s" uk-grid>#}
+                        {#                                <div>#}
+                        {#                                    <button href="#toggle-animation"#}
+                        {#                                            class="uk-button uk-button-default uk-width-1-1 border-red" type="button"#}
+                        {#                                            uk-toggle="target: #toggle-animation3; animation: uk-animation-fade"><span#}
+                        {#                                            class="uk-margin-small-right" uk-icon="icon: clock"></span>Указать время#}
+                        {#                                        работы#}
+                        {#                                    </button>#}
+                        {#                                    <div id="toggle-animation3"#}
+                        {#                                         class="uk-card uk-card-default uk-card-body uk-margin-small uk-width-1-1@l "#}
+                        {#                                         hidden>Указать время работы#}
+                        {#                                    </div>#}
+                        {#                                </div>#}
+                        {#                                <div>#}
+                        {#                                    <a href="#modal-map" class="uk-button uk-button-default uk-width-1-1 border-red"#}
+                        {#                                       uk-toggle><span class="uk-margin-small-right" uk-icon="icon:  location"></span>Поставить#}
+                        {#                                        метку на карте</a>#}
+                        {#                                </div>#}
+                        {#                            </div>#}
+                        {#                        </div>   <!--append-shop-form-->#}
+                        {#                        <!--по клику аппендится этот блок-->#}
+                        {##}
+                        {#                        <!--по клику аппендится этот блок-->#}
+                        {#                        <div class="append-shop-form">#}
+                        {#                            <a class="close" href="" uk-icon="icon: close" title="Удалить филиал" uk-tooltip></a>#}
+                        {#                            <hr class="uk-divider-icon uk-margin-medium-top uk-margin-medium-bottom">#}
+                        {#                            <div class="uk-grid uk-child-width-1-2@s" uk-grid>#}
+                        {#                                <div>#}
+                        {#                                    <label class="uk-form-label">Телефон</label>#}
+                        {#                                    <div class="uk-form-controls">#}
+                        {#                                        <input class="uk-input" type="number" placeholder="">#}
+                        {#                                    </div>#}
+                        {#                                </div>#}
+                        {#                                <div>#}
+                        {#                                    <label class="uk-form-label">Адрес магазина:</label>#}
+                        {#                                    <div class="uk-form-controls">#}
+                        {#                                        <input class="uk-input" type="email" placeholder="">#}
+                        {#                                    </div>#}
+                        {#                                </div>#}
+                        {#                                <div>#}
+                        {#                                    <label class="uk-form-label">Расположение вашего магазина</label>#}
+                        {#                                    <div class="uk-form-controls">#}
+                        {#                                        <select class="selectize demo-default" placeholder="Укажите...">#}
+                        {#                                            <option value="" selected="selected"></option>#}
+                        {#                                            <option value="27">ТЦ-Beta Stores</option>#}
+                        {#                                            <option value="28">ТЦ-Beta Stores 2</option>#}
+                        {#                                            <option value="8">ТЦ-Bishkek Park</option>#}
+                        {#                                            <option value="13">ТЦ-Caravan</option>#}
+                        {#                                            <option value="25">ТЦ-Gallery</option>#}
+                        {#                                            <option value="22">ТЦ-Grand Stone</option>#}
+                        {#                                            <option value="7">ТЦ-Red Centre</option>#}
+                        {#                                            <option value="21">ТЦ-Баумаркт</option>#}
+                        {#                                            <option value="19">ТЦ-Береке</option>#}
+                        {#                                            <option value="12">ТЦ-Берекет Гранд</option>#}
+                        {#                                            <option value="9">ТЦ-Берен Голд</option>#}
+                        {#                                            <option value="14">ТЦ-Бишкек-Сити</option>#}
+                        {#                                            <option value="4">ТЦ-Весна</option>#}
+                        {#                                            <option value="17">ТЦ-Гоин</option>#}
+                        {#                                            <option value="26">ТЦ-Гранд Комфорт</option>#}
+                        {#                                        </select>#}
+                        {#                                    </div>#}
+                        {#                                </div>#}
+                        {#                            </div>#}
+                        {##}
+                        {#                            <div class="uk-grid uk-child-width-1-2@s" uk-grid>#}
+                        {#                                <div>#}
+                        {#                                    <button href="#toggle-animation"#}
+                        {#                                            class="uk-button uk-button-default uk-width-1-1 border-red" type="button"#}
+                        {#                                            uk-toggle="target: #toggle-animation2; animation: uk-animation-fade"><span#}
+                        {#                                            class="uk-margin-small-right" uk-icon="icon: clock"></span>Указать время#}
+                        {#                                        работы#}
+                        {#                                    </button>#}
+                        {#                                    <div id="toggle-animation2"#}
+                        {#                                         class="uk-card uk-card-default uk-card-body uk-margin-small uk-width-1-1@l "#}
+                        {#                                         hidden>Указать время работы#}
+                        {#                                    </div>#}
+                        {#                                </div>#}
+                        {#                                <div>#}
+                        {#                                    <a href="#modal-map" class="uk-button uk-button-default uk-width-1-1 border-red"#}
+                        {#                                       uk-toggle><span class="uk-margin-small-right" uk-icon="icon:  location"></span>Поставить#}
+                        {#                                        метку на карте 2</a>#}
+                        {#                                </div>#}
+                        {#                            </div>#}
+                        {#                        </div>   <!--append-shop-form-->#}
+                        {#                        <!--по клику аппендится этот блок-->#}
+                        <div class="seo">
+                            <hr class="uk-divider-icon uk-margin-medium-top uk-margin-medium-bottom">
+                            <button href="#toggle-animation"
+                                    class="uk-button uk-button-default uk-width-1-3@l border-red" type="button"
+                                    uk-toggle="target: #seo; animation: uk-animation-fade"
+                                    title="Служит для продвижения ваших товаров в сети" uk-tooltip><span
+                                    class="uk-margin-small-right" uk-icon="icon:  info"></span>Для Seo
+                            </button>
+                            <div id="seo"
+                                 class="uk-card uk-card-default uk-card-body uk-margin-small uk-width-1-1@l "
+                                 hidden>
+                                <div class="uk-grid uk-child-width-1-1@l" uk-grid>
+                                    <div class="">
+                                        <label class="uk-form-label">Мета заголовок магазина:</label>
+                                        <div class="uk-form-controls">
+                                            {% render_field form.meta_title|attr:"type:text" placeholder="" class="uk-input" %}
+                                        </div>
+                                        <small>Введи до 45 символов название которое будет отображаться с посковиках.
+                                            Для
+                                            лучшего
+                                            отображения введите ключевое слово товаров которые вы продаете в на сайте.
+                                            Например
+                                            если вы продаете кроссовки от найка и адидас. Правильный заголовок будет:
+                                            "Купить
+                                            кроссовки adidas и nike". Мы добавим в конце Бишкек и Ваше название
+                                            магазина. Т.е.
+                                            заголовок в последующем будет выглядеть так:"Купить кроссовки adidas и nike
+                                            Бишкек -
+                                            Кроссовки Центр."
+                                        </small>
+                                    </div>
+                                    <div class="">
+                                        <label class="uk-form-label">Мета описание магазина:</label>
+                                        <div class="uk-form-controls">
+                                             {% render_field form.meta_description|attr:"rows:6" placeholder="Введите до 220 символов"  class="uk-input" %}
+                                        </div>
+                                        <small>В мета описании вы можете описать в кратце, какие товары вы продаете и
+                                            чем
+                                            занимаетесь.
+                                            Лучше всего описание формируется, где включены несколько ключевых слов по
+                                            которым вас
+                                            будут искать. Чем лучше соответсвие,тем выше позиция.
+                                        </small>
+                                    </div>
+                                    <div class="">
+                                        <label class="uk-form-label">Мета ключевые слова магазина:</label>
+                                        <div class="uk-form-controls">
+                                            {% render_field form.meta_keywords|attr:"rows:6" placeholder="Введите до 10 ключевых слов" class="uk-input" %}
+                                        </div>
+                                        <small>В поле нужно вводить ключевые слова, например, если вы продаете
+                                            кроссовки. То
+                                            правильным
+                                            набором ключевых слов будет: "Кроссовки, адидас, найк, бишкек, adidas, nike,
+                                            купить и т.д."
+                                        </small>
+                                    </div>
+                                    <div class="">
+                                        <label class="uk-form-label">СЕО текс магазина:</label>
+                                        <div class="uk-form-controls">
+                                            {% render_field form.seo_text|attr:"rows:6" placeholder="Введите сео описание магазина" class="uk-textarea" %}
+                                        </div>
+
+                                        <small>Это поле не ограничено в заполнении. Но лучше всего чтобы он был не более
+                                            500
+                                            знаков.
+                                            Сео описание влияет на продвижение вашего интернет магазина в поисковике,
+                                            так что вам
+                                            нужно самому написать текст. Мы настоятельно не рекомендуем копировать чужой
+                                            текст,
+                                            так как это не продвинет ваш магазин, а даже снизит его рейтинг в
+                                            поисковике. Самым
+                                            лучшим способом является составить текст из ключевых слов.
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    {#                    <div class="uk-width-1-1@l">#}
+                    {#                        <div class=" uk-width-1-2@l uk-margin-medium-top">#}
+                    {#                            <a href="" class="uk-button border-red uk-width-1-2@l"><span class="uk-margin-small-right"#}
+                    {#                                                                                         uk-icon="icon: plus"> </span>Добавить#}
+                    {#                                филиал</a>#}
+                    {#                        </div>#}
+                    {#                    </div>#}
+
+                    <div class="uk-fieldset uk-width-1-1@l upload-shop-logo uk-margin-remove-top">
+                        <hr class="uk-divider-icon uk-margin-medium-top uk-margin-medium-bottom">
+                        <legend class="uk-legend uk-text-center uk-margin-small-bottom">Добавьте лого вашей фирмы
+                        </legend>
+                        <small class="uk-text-center uk-display-block uk-margin-medium-bottom uk-alert-danger">Размер
+                            картинки должен быть 1:1
+                        </small>
+                        <div class="image-preview">
+                            <label for="image-upload" class="image-label">Выбрать лого</label>
+                            <input type="file" name="image" id="image-upload"/>
+                        </div>
+                    </div>
+
+
+                    <div class="uk-width-1-1@l">
+                        <div class=" uk-width-1-2@s uk-margin-medium-top">
+                            <a href="" class="uk-button uk-button-default border-red bg-red uk-width-1-2@l"><span
+                                    class="uk-margin-small-right" uk-icon="icon: check"> </span>Сохранить</a>
+                        </div>
+                    </div>
+
+
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <div id="modal-map"  class=" uk-modal-container " uk-modal>
+        <div class="modal-map uk-modal-dialog uk-modal-body ">
+
+            <button class="uk-modal-close-default" type="button" uk-close></button>
+            <h2 class="uk-modal-title uk-margin-medium-bottom">Укажите ваши координаты</h2>
+            <div id="yandex_map" style="width: 100%; height: 500px;"></div>
+        </div>
+    </div>
+
+
+
+
+
+    {#!!!!!!!!!!!!!!!!#}
 
     <section class="edit-shop-detail">
         <div class="container">
@@ -117,13 +457,13 @@
                             </div>
                         </label>
 
-                        <div class="info">
-                            <span>Рекомендация для фото</span>
-                            <p>Размер: 380x380 или больше</p>
-                            <p>Фон: белый или прозрачный</p>
-                            <br>
-                            <span id="file-counter" style="color: red;"></span>
-                        </div>
+{#                        <div class="info">#}
+{#                            <span>Рекомендация для фото</span>#}
+{#                            <p>Размер: 380x380 или больше</p>#}
+{#                            <p>Фон: белый или прозрачный</p>#}
+{#                            <br>#}
+{#                            <span id="file-counter" style="color: red;"></span>#}
+{#                        </div>#}
 
                         <div class="img-wrapper">
 
@@ -148,16 +488,16 @@
                                 <div class="inline-appended"></div>
 
 
-{#                                <div class="form-group col-md-12" style="margin-top: 10px; margin-bottom: 10px">#}
-{#                                    <p style="margin: 0; text-align: left;">Если у вас есть филиалы, добавьте их</p><br>#}
-{##}
-{#                                </div>#}
-{#                                <div class="form-group btn-group-form col-md-12">#}
-{#                                    <button type="button" id="add-new-contact" class="btn add no-bg-2"> + Добавить#}
-{#                                        филиал#}
-{#                                    </button>#}
-{##}
-{#                                </div>#}
+                                {#                                <div class="form-group col-md-12" style="margin-top: 10px; margin-bottom: 10px">#}
+                                {#                                    <p style="margin: 0; text-align: left;">Если у вас есть филиалы, добавьте их</p><br>#}
+                                {##}
+                                {#                                </div>#}
+                                {#                                <div class="form-group btn-group-form col-md-12">#}
+                                {#                                    <button type="button" id="add-new-contact" class="btn add no-bg-2"> + Добавить#}
+                                {#                                        филиал#}
+                                {#                                    </button>#}
+                                {##}
+                                {#                                </div>#}
                                 <div class="form-group btn-group-form col-md-12">
                                     <button type="submit" class="btn add">Сохранить</button>
                                     {% if object %}
@@ -179,14 +519,8 @@
 
 {% endblock %}
 {% block js %}
-
+    {{ block.super }}
+    <script type="text/javascript" src="{% static "js/common.js" %}"></script>
     {% include 'shop/partials/shop_form_javascript.html' %}
-<script src="{% static 'js/picker.js' %}"></script>
-<script src="{% static 'js/picker.time.js' %}"></script>
-  <script>
-    $('.timepicker').pickatime({
-        format: 'HH:i'
-    })
-    </script>
 {% endblock %}
 

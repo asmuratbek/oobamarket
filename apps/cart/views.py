@@ -49,13 +49,14 @@ class CartDetailView(SingleObjectMixin, View):
         if item_id:
             item_instance = get_object_or_404(Product, id=item_id)
             qty = request.GET.get("qty", 1)
+            cart_item, created = CartItem.objects.get_or_create(cart=cart, product=item_instance)
             try:
-                if int(qty) < 1:
+                if int(qty) < 1 or not created and cart_item.quantity == qty:
                     delete_item = True
             except:
                 raise Http404
 
-            cart_item, created = CartItem.objects.get_or_create(cart=cart, product=item_instance)
+
             if created:
                 flash_message = "Продукт успешно добавлен в корзину"
                 item_added = True

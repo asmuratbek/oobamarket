@@ -3,252 +3,224 @@
 {% block header %}
 {% endblock %}
 {% block body %}
-    <body class="landing">
+    <body>
 {% endblock %}
 {% block category_link %}
 
 {% endblock %}
 {% block content %}
+    <div class="landing">
+        <section class="landing-header">
+            <div class="uk-container uk-text-center">
+                <div class="logo">
+                    <a href="{% url 'home' %}">
+                        <img src="{% static 'img/landing/logo.png' %}" width="240" alt="На главную">
+                    </a>
+                </div>
 
-    <section class="landing-header">
-        <div class="container">
-            <div class="row">
-                <a href="{% url 'home' %}">
-                    <img src="{% static 'img/landing/logo.png' %}" width="240" alt="На главную">
-                </a>
                 <h2>У вас есть магазин и <br> вы ищете способ увеличить продажи?</h2>
                 <hr>
                 <h2>Желаете охватить еще больше<br> покупателей без особых вложений ?</h2>
+
             </div>
-        </div>
-    </section>
-    <div class="text-landing">
-    <div class="container">
-        <div class="row">
-            <h2> <b>Ooba Market</b> - площадка, созданная для Вас, чтобы Вы могли продавать круглосуточно.<br>
+        </section>
+
+        <section class="text-landing">
+            <div class="uk-container">
+                <h2>
+                    <b>Ooba Market</b> - площадка, созданная для Вас, чтобы Вы могли продавать круглосуточно.<br>
                     Достаточно зарегистрироваться и добавить товары, создав витрину своего магазина.<br>
                     Остальное мы сделаем за Вас: продвижение, доставка, аналитика и многое другое!
                 </h2>
-        </div>
-    </div>
-    </div>
-    <section class="step">
-        <div class="container">
-            <h3>что мы готовы предложить магазинам?</h3>
-            <div class="row">
-                <div class="col-lg-5">
-                    <img src="{% static 'img/landing/Group 146.png' %}" alt="">
-                </div>
-                <div class="col-lg-2"><span>1</span></div>
-                <div class="col-lg-5">
-                    <p>Собственный сайт - интернет-магазин, теперь можно не тратиться на разработку сайта, а получить
-                        его бесплатно!</p>
-                </div>
             </div>
-            <div class="row">
-                <div class="col-lg-5">
-                    <p>Возможность собирать подписчиков и отправлять им автоматическое уведомление об акциях и
-                        скидках </p>
-                </div>
-                <div class="col-lg-2"><span>2</span></div>
-                <div class="col-lg-5"><img src="{% static 'img/landing/Group 1461.png' %}" alt=""></div>
-            </div>
-            <div class="row">
-                <div class="col-lg-5">
-                    <img src="{% static 'img/landing/Group 1147.png' %}" alt="">
-                </div>
-                <div class="col-lg-2"><span>3</span></div>
-                <div class="col-lg-5">
-                    <p>Продвижение вместе с нашей рекламной компанией, которая охватывает более 50 тысяч пользователей в
-                        день </p>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-5">
-                    <p>Возможность размещение рекламы на сайте </p>
-                </div>
-                <div class="col-lg-2"><span>4</span></div>
-                <div class="col-lg-5">
-                    <img src="{% static 'img/landing/Group 1132.png' %}" alt="">
-                </div>
-            </div>
+        </section>
 
-            <div class="row">
-                <div class="col-lg-5">
-                    <img src="{% static 'img/landing/Prancheta 1@4x-100.png' %}" alt="">
-                </div>
-                <div class="col-lg-2"><span>5</span></div>
-                <div class="col-lg-5">
-                    <p>Надежная курьерская служба, которая доставит ваш товар клиенту в целости и сохранности </p>
-                </div>
-            </div>
-
-        </div>
-    </section>
-    <section class="client">
-        <div class="container">
-            <h3>Для клиентов мы предлогаем</h3>
-            <div class="row">
-                <div class="col-lg-3">
-                    <div class="img-wrapper"><img src="{% static 'img/landing/shopping-online.png' %}" alt=""></div>
-                    <p>Самая большая интернет-площадка по поиску и покупке товаров со всех магазинов страны </p>
-                </div>
-                <div class="col-lg-3">
-                    <div class="img-wrapper"><img src="{% static 'img/landing/Group 1462.png' %}" alt=""></div>
-                    <p>Возможность подписаться на любимый магазин, чтобы получать первыми уведомления об акциях и
-                        скидках </p>
-                </div>
-                <div class="col-lg-3">
-                    <div class="img-wrapper"><img src="{% static 'img/landing/Group 1464.png' %}" alt=""></div>
-                    <p>Удобный каталог для поиска определенного магазина и его ассортимента </p>
-                </div>
-                <div class="col-lg-3">
-                    <div class="img-wrapper"><img src="{% static 'img/landing/Group 1463.png' %}" alt=""></div>
-                    <p>Курьерская служба с доставкой по всему городу</p>
-                </div>
-            </div>
-        </div>
-    </section>
-    <section class="client">
-        <div class="container">
-            <h3>Как подключиться?</h3>
-            <div class="row">
-                <div class="col-lg-3">
-                    <div class="img-wrapper"><img src="{% static 'img/landing/Group 1465.png' %}" alt=""></div>
-                    <span>1</span>
-                    <hr>
-                    <p>Регистрацаия на сайте </p>
-                </div>
-                <div class="col-lg-3">
-                    <div class="img-wrapper"><img src="{% static 'img/landing/Group 1466.png' %}" alt=""></div>
-                    <span>2</span>
-                    <hr>
-                    <p>Создание магазина</p>
-                </div>
-                <div class="col-lg-3">
-                    <div class="img-wrapper"><img src="{% static 'img/landing/test.png' %}" alt=""></div>
-                    <span>3</span>
-                    <hr>
-                    <p>Размещение товаров </p>
-                </div>
-                <div class="col-lg-3">
-                    <div class="img-wrapper"><img src="{% static 'img/landing/board.png' %}" alt=""></div>
-                    <span>4</span>
-                    <hr>
-                    <p>Продажа</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="video">
-        <div class="container">
-            <div class="row">
-              <iframe width="100%" height="600" src="https://www.youtube.com/embed/CB78P9Y3rBg" frameborder="0" allowfullscreen></iframe>
-            </div>
-        </div>
-    </section>
-
-    <section class="form-landing">
-        <div class="container">
-            <div class="row">
-                <form id="signup_form" method="post" action="{% url 'account_signup' %}">
-                    {% csrf_token %}
-                    <legend class="col-lg-8 col-lg-offset-2">А еще мы предоставляем первый месяц бесплатного<br>
-                        продвижение, если вы
-                        зарегистрируетесь/оставите заявку<br> прямо сейчас!
-                    </legend>
-
-                    <div class="col-md-6">
-                        <h2>Регистрация</h2>
-                        <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Имя" name="username" required>
+        <section class="step">
+            <div class="uk-container">
+                <h3>что мы готовы предложить магазинам?</h3>
+                <div class="wrapper ">
+                    <div uk-grid class="uk-grid uk-flex-middle">
+                        <div class="uk-width-1-3@m uk-text-center">
+                            <img src="{% static 'img/landing/Group 146.png' %}" alt="">
                         </div>
-                        <div class="form-group">
-                            <input type="email" class="form-control" placeholder="Email" name="email" required>
+                        <div class="uk-width-1-3@m uk-text-center"><span>1</span></div>
+                        <div class="uk-width-1-3@m">
+                            <p>Собственный сайт - интернет-магазин, теперь можно не тратиться на разработку сайта, а
+                                получить
+                                его бесплатно!</p>
                         </div>
-                        <div class="form-group">
-                            <input type="password" class="form-control" placeholder="Пароль" name="password1"
-                                   required>
-                        </div>
-                        <div class="form-group">
-                            <input type="password" class="form-control" placeholder="Повторный Пароль"
-                                   name="password2"
-                                   required>
-                        </div>
-                        <div class="socialaccount_ballot">
-                            <ul class="socialaccount_providers">
-                                {% include 'socialaccount/snippets/provider_list.html' %}
-                            </ul>
-                        </div>
-
-                        <button type="submit" name="submit" class="btn btn-default">Регистрация</button>
                     </div>
+                    <hr class="uk-divider-icon uk-hidden@m">
+                    <div uk-grid class="uk-grid uk-flex-middle">
+                        <div class="uk-width-1-3@m">
+                            <p>Возможность собирать подписчиков и отправлять им автоматическое уведомление об акциях и
+                                скидках </p>
+                        </div>
+                        <div class="uk-width-1-3@m uk-text-center"><span>2</span></div>
+                        <div class="uk-width-1-3@m uk-text-center"><img src="{% static 'img/landing/Group 1461.png' %}" alt=""></div>
+                    </div>
+                    <hr class="uk-divider-icon uk-hidden@m">
+                    <div uk-grid class="uk-grid uk-flex-middle">
+                        <div class="uk-width-1-3@m uk-text-center">
+                            <img src="{% static 'img/landing/Group 1147.png' %}" alt="">
+                        </div>
+                        <div class="uk-width-1-3@m uk-text-center"><span>3</span></div>
+                        <div class="uk-width-1-3@m">
+                            <p>Продвижение вместе с нашей рекламной компанией, которая охватывает более 50 тысяч
+                                пользователей в
+                                день </p>
+                        </div>
+                    </div>
+                    <hr class="uk-divider-icon uk-hidden@m">
+                    <div uk-grid class="uk-grid uk-flex-middle">
+                        <div class="uk-width-1-3@m">
+                            <p>Возможность размещение рекламы на сайте </p>
+                        </div>
+                        <div class="uk-width-1-3@m uk-text-center"><span>4</span></div>
+                        <div class="uk-width-1-3@m uk-text-center">
+                            <img src="{% static 'img/landing/Group 1132.png' %}" alt="">
+                        </div>
+                    </div>
+                    <hr class="uk-divider-icon uk-hidden@m">
+                    <div uk-grid class="uk-grid uk-flex-middle">
+                        <div class="uk-width-1-3@m uk-text-center">
+                            <img src="{% static 'img/landing/Prancheta 1@4x-100.png' %}" alt="">
+                        </div>
+                        <div class="uk-width-1-3@m uk-text-center"><span>5</span></div>
+                        <div class="uk-width-1-3@m">
+                            <p>Надежная курьерская служба, которая доставит ваш товар клиенту в целости и
+                                сохранности </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="client">
+            <div class="uk-container">
+                <h3>Для клиентов мы предлогаем</h3>
+                <div class="uk-grid uk-child-width-1-4@m uk-child-width-1-2@s uk-child-width-1-1 uk-text-center"
+                     uk-grid>
+                    <div>
+                        <div class="img-wrapper"><img src="{% static 'img/landing/shopping-online.png' %}" alt=""></div>
+                        <p>Самая большая интернет-площадка по поиску и покупке товаров со всех магазинов страны </p>
+                    </div>
+                    <div>
+                        <div class="img-wrapper"><img src="{% static 'img/landing/Group 1462.png' %}" alt=""></div>
+                        <p>Возможность подписаться на любимый магазин, чтобы получать первыми уведомления об акциях и
+                            скидках </p>
+                    </div>
+                    <div>
+                        <div class="img-wrapper"><img src="{% static 'img/landing/Group 1464.png' %}" alt=""></div>
+                        <p>Удобный каталог для поиска определенного магазина и его ассортимента </p>
+                    </div>
+                    <div>
+                        <div class="img-wrapper"><img src="{% static 'img/landing/Group 1463.png' %}" alt=""></div>
+                        <p>Курьерская служба с доставкой по всему городу</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="client">
+            <div class="uk-container">
+                <h3>Как подключиться?</h3>
+                <div class="uk-grid uk-child-width-1-4@m uk-child-width-1-2@s uk-child-width-1-1 uk-text-center"
+                     uk-grid>
+                    <div class="">
+                        <div class="img-wrapper"><img src="{% static 'img/landing/Group 1465.png' %}" alt=""></div>
+                        <span>1</span>
+                        <hr>
+                        <p>Регистрацаия на сайте </p>
+                    </div>
+                    <div class="">
+                        <div class="img-wrapper"><img src="{% static 'img/landing/Group 1466.png' %}" alt=""></div>
+                        <span>2</span>
+                        <hr>
+                        <p>Создание магазина</p>
+                    </div>
+                    <div class="">
+                        <div class="img-wrapper"><img src="{% static 'img/landing/test.png' %}" alt=""></div>
+                        <span>3</span>
+                        <hr>
+                        <p>Размещение товаров </p>
+                    </div>
+                    <div class="">
+                        <div class="img-wrapper"><img src="{% static 'img/landing/board.png' %}" alt=""></div>
+                        <span>4</span>
+                        <hr>
+                        <p>Продажа</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="video">
+            <div class="uk-container">
+                <div class="row">
+                   <iframe width="100%" height="600" src="https://www.youtube.com/embed/eIsNzjmZjUY" frameborder="0" allowfullscreen></iframe>
+                </div>
+            </div>
+        </section>
+
+        <section class="form-landing">
+            <div class="uk-container">
+                <h2 class="uk-text-center uk-margin-medium-bottom">А еще мы предоставляем первый месяц бесплатного<br>
+                    продвижение, если вы
+                    зарегистрируетесь/оставите заявку<br> прямо сейчас!
+                </h2>
+                <div class="uk-grid uk-text-center" uk-grid>
+                    <form class="uk-width-1-2@m" id="signup_form" method="post" action="{% url 'account_signup' %}">
+                        {% csrf_token %}
+                        <div class="">
+                            <label>Регистрация</label>
+                            <div class="uk-margin">
+                                <input type="text" class="uk-input" placeholder="Имя" name="username" required>
+                            </div>
+                            <div class="uk-margin">
+                                <input type="email" class="uk-input" placeholder="Email" name="email" required>
+                            </div>
+                            <div class="uk-margin">
+                                <input type="password" class="uk-input" placeholder="Пароль" name="password1"
+                                       required>
+                            </div>
+                            <div class="uk-margin">
+                                <input type="password" class="uk-input" placeholder="Повторный Пароль"
+                                       name="password2"
+                                       required>
+                            </div>
+                            <div class="socialaccount_ballot">
+                                <ul class="socialaccount_providers uk-padding-remove">
+                                    {% include 'socialaccount/snippets/provider_list.html' %}
+                                </ul>
+                            </div>
+
+                            <button type="submit" name="submit" class="uk-button uk-button-default">Регистрация</button>
+                        </div>
                     </form>
-                <form method="post" action="{% url 'landing' %}">{% csrf_token %}
-                    <div class="col-lg-6">
-                        <h2>Оставить заявку </h2>
-                        <div class="form-group {% if form.name.errors %}has-error{% endif %}">
-                            <input type="text" class="form-control" placeholder="Название магазина " name="name"
-                                   required>
-                            <label class="label-error">{{ form.name.errors }}</label>
-                        </div>
-                        <div class="form-group {% if form.phone.errors %}has-error{% endif %}">
+                    <form class="uk-width-1-2@m" method="post" action="{% url 'landing' %}">{% csrf_token %}
+                        <div class="">
+                            <label>Оставить заявку </label>
+                            <div class="uk-margin {% if form.name.errors %}has-error{% endif %}">
+                                <input type="text" class="uk-input" placeholder="Название магазина " name="name"
+                                       required>
+                                <label class="label-error">{{ form.name.errors }}</label>
+                            </div>
+                            <div class="uk-margin {% if form.phone.errors %}has-error{% endif %}">
 
-                            <input type="text" class="form-control" placeholder="Телефон" name="phone" required>
-                            <label class="label-error">{{ form.phone.errors }}</label>
+                                <input type="text" class="uk-input" placeholder="Телефон" name="phone" required>
+                                <label class="label-error">{{ form.phone.errors }}</label>
+                            </div>
+                            <button type="submit" name="submit" class="uk-button uk-button-default">Оставить завку
+                            </button>
                         </div>
-                        <button type="submit" name="submit" class="btn btn-default">Оставить завку</button>
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <footer>
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-2" style="padding-left: 0;">
-                     <a href="{% url 'home' %}">
-                    <img src="{% static 'img/landing/logo.png' %}" width="240" alt="На главную">
-                </a>
-                </div>
-            </div>
-            <div class="row">
-                <hr>
-                <div class="col-lg-2" style="padding-left: 0;">
-                    <p><a href="">Электроника</a></p>
-                    <p><a href="">Одежда и обувь</a></p>
-                    <p><a href="">Авто</a></p>
-                </div>
-                <div class="col-lg-3">
-                    <p><a href="">Строительство и ремонт </a></p>
-                    <p><a href="">Подарки </a></p>
-                    <p><a href="">Красота и здоровье</a></p>
-                </div>
-                <div class="col-lg-3">
-                    <p><a href="">Все для предприятий </a></p>
-                    <p><a href="">Спорт, туризм и хобби </a></p>
-                    <p><a href="">Все для детей</a></p>
-                </div>
-                <div class="col-lg-2">
-                    <p><a href="">Продукты</a></p>
-                    <p><a href="">Все для дома</a></p>
-                    <p><a href="">Еда</a></p>
-                </div>
-                <div class="col-lg-2">
-                    <p><a href="">Для магазинов</a></p>
-                    <p><a href="">Добавить магазин</a></p>
-                    <p><a href="">Лента</a></p>
-                </div>
-            </div>
-        </div>
-    </footer>
+    </div>
 
 {% endblock %}
 {% block js %}
-    <script src="{% static 'js/jquery.2.2.4.js' %}"></script>
-    <script src="{% static 'js/bootstrap.min.js' %}"></script>
     <script src="{% static 'js/common.js' %}"></script>
 
 {% endblock %}

@@ -1,151 +1,145 @@
 {% load product_tags %}
-<form class="form-inline sm-form hidden-lg hidden-md" method="get" action="/search/">
-    {% csrf_token %}
-    <div class="form-group">
-        <input type="text" class="form-control" placeholder="Поиск товаров..." id="search-form-index"
-               name="q">
-        <button type="submit" class="btn btn-default">Найти</button>
-    </div>
-</form>
-<div class="row">
-    {% for product in object_list %}
+{#<form class="form-inline sm-form hidden-lg hidden-md" method="get" action="/search/">#}
+{#    {% csrf_token %}#}
+{#    <div class="form-group">#}
+{#        <input type="text" class="form-control" placeholder="Поиск товаров..." id="search-form-index"#}
+{#               name="q">#}
+{#        <button type="submit" class="btn btn-default">Найти</button>#}
+{#    </div>#}
+{#</form>#}
 
-        <div class="col-md-{{ col }} col-sm-6 new-design">
-            <div class="img-wrapper {% if not product.published %} disabled {% endif %}">
-                {% if user.is_authenticated and user in product.shop.user.all or user.is_staff %}
 
-                    <div class="setting-control">
-                        <a href="{% url 'product:update_product' slug=product.slug %}"
-                           class="glyphicon glyphicon-pencil"
-                           data-toggle="tooltip" title="" data-placement="top"
-                           data-original-title="Редактировать товар"></a>
-                        <a href="" class="glyphicon eye {% if product.published %}glyphicon-eye-open
-                            {% else %} glyphicon-eye-close {% endif %}" data-toggle="tooltip"
-                           title="" data-placement="top"
-                           data-original-title="Показать товар"
-                           data-status="{% if product.published %}false{% else %}true {% endif %}"
-                           data-item="{{ product.id }}"></a>
-                        <a class="remove glyphicon glyphicon-remove model-trigger delete-object"
-                           data-url="{% url 'product:delete_product' slug=product.slug %}" data-toggle="tooltip"
-                           title="" data-placement="top" data-original-title="Удалить"></a>
-                    </div>
-                {% endif %}
-
-                {% if product.get_avatar_thumb_image %}
-                    <img src="{{ product.get_avatar_thumb_image }}" alt="">
-                {% else %}
-                    <img src="http://via.placeholder.com/222x225" alt="">
-                {% endif %}
-
-                <div class="back-fade">
-
-                    <a href="{{ product.get_absolute_url }}"></a>
-
-                    <div class="name-magazin-title">
-                        <h3>
-                            <small>Магaзин</small>
-                            {{ product.shop.title }}
-                        </h3>
-                        <p>{{ product.short_description }}</p>
-                    </div>
-
-                    <div class="button-basket-favorite">
-                        {% cart_message request product %}
-                        <span class="glyphicon glyphicon-heart  enable {% is_favorite_for_like product request.user %}"
-                              data-product-id="{{ product.id }}" data-toggle="tooltip" title=""
-                              data-placement="top"
-                              data-original-title="{% is_favorite_for_tooltip product request.user %}"></span>
-                    </div>
-
-                    <div class="title-price">
-                        <div class="col-md-8">
-                            <h4>{{ product.title }}</h4>
-                        </div>
-                        <div class="col-md-4">
-                            {% if product.discount %}
-                                <span>{{ product.get_price }} {{ product.currency }}</span>
-                                <span class="old-price"><strike>{{ product.price }} {{ product.currency }}</strike></span>
+{% for product in object_list %}
+    <div class="uk-grid-match {% if not product.published %} disabled-product {% endif %}">
+        <div class="shadow uk-text-center">
+            {% if user.is_authenticated and user in product.shop.user.all or user.is_staff %}
+                <div class="setting">
+                    <a href="{% url 'product:update_product' slug=product.slug %}" uk-icon="icon: file-edit"
+                       title="Редактировать товар" uk-tooltip></a>
+                    <a class="product-vision
+                            {% if product.published %}
                             {% else %}
-                                <span>{{ product.get_price }} {{ product.currency }}</span>
-                            {% endif %}
-                        </div>
+                            disabled
+                            {% endif %} " href="" uk-icon="icon: copy"
+                       title="{% if product.published %}Скрыть товар{% else %} Опубликовать товар{% endif %}" uk-tooltip
+                       data-status="{% if product.published %}false{% else %}true {% endif %}"
+                       data-item-id="{{ product.id }}"
+                    >
+                    </a>
+                    <a class="model-trigger delete-object" uk-toggle="target: #DeleteModal"
+                       data-url="{% url 'product:delete_product' slug=product.slug %}"
+                       uk-icon="icon: close" title="Удалить товар" uk-tooltip></a>
+                </div>
+            {% endif %}
+            <div class="uk-inline-clip uk-transition-toggle">
+                <div class="border">
+                    <a href="" class="uk-position-cover"></a>
+                    <div class="uk-cover-container">
+                        <canvas width="" height="350"></canvas>
+                        {% if product.get_avatar_thumb_image %}
+                            <img uk-cover src="{{ product.get_avatar_thumb_image }}" alt="">
+                        {% else %}
+                            <img uk-cover src="http://via.placeholder.com/222x225" alt="">
+                        {% endif %}
                     </div>
-
+                </div>
+                <div class="uk-transition-fade uk-position-cover uk-overlay uk-overlay-default">
+                    <a href="{{ product.get_absolute_url }}" class="uk-position-cover"></a>
+                    <small class="uk-display-block">Магазин</small>
+                    <h4 class="uk-margin-remove"><a href={{ product.shop.get_absolute_url }}>{{ product.shop.title }}</a></h4>
+                    <p>{{ product.short_description }}</p>
+                    <div class="control">
+                        <a href="#" class="favorite uk-margin-medium-right {% is_favorite_for_like product request.user %}"
+                           title="{% is_favorite_for_tooltip product request.user %}"
+                           data-item-id={{ product.id }} uk-tooltip><span
+                                class=" uk-icon" uk-icon="icon: heart; ratio: 2"></span></a>
+                        {% cart_message request product %}
+{#                        <a href="#" class="basket uk-margin-medium-left" title="Добавить в корзину"#}
+{#                           data-item-id={{ product.id }} uk-tooltip><span#}
+{#                                class=" uk-icon" uk-icon="icon: cart; ratio: 2"></span></a>#}
+                    </div>
+                </div>
+            </div>
+            <div class="uk-padding-small uk-grid uk-margin-remove footer">
+                <h4 class="uk-width-3-5@l uk-width-3-5@m uk-padding-remove">{{ product.title }}</h4>
+                <div class="uk-width-2-5@l uk-width-2-5@m uk-padding-remove">
+                    {% if product.discount %}
+                        <p>{{ product.get_price }} {{ product.currency }}</p>
+                        <strike>{{ product.price }} {{ product.currency }}</strike>
+                    {% else %}
+                        <p>{{ product.get_price }} {{ product.currency }}</p>
+                    {% endif %}
                 </div>
             </div>
         </div>
+    </div>
 
-        {##}
-        {##}
-        {##}
-        {##}
-        {##}
-        {##}
-        {#    <div class="col-md-{{ col }} col-sm-6 old-design">#}
-        {#        <div class="cover {% if not product.published %} active{% endif %}">#}
-        {#            {% if product.discount %}#}
-        {#                <span class="discount" data-toggle="tooltip" title="" data-placement="left"#}
-        {#                      data-original-title="Скидка %" aria-describedby="tooltip409378">- {{ product.discount }} %</span>#}
-        {#            {% endif %}#}
-        {#            <a class="url-item" href="{{ product.get_absolute_url }}"></a>#}
-        {#            <div class="top-line">#}
-        {#                <h3>#}
-        {#                    <a href="{{ product.shop.get_absolute_url }}">#}
-        {#                        {{ product.get_shop_title |truncatechars:28 }}#}
-        {#                    </a>#}
-        {#                </h3>#}
-        {#                {% if user.is_authenticated %}#}
-        {#                    {% if user in product.shop.user.all %}#}
-        {#                        <a class="edited glyphicon glyphicon-cog"#}
-        {#                           href="{% url 'product:update_product' slug=product.slug %}" data-toggle="tooltip" title=""#}
-        {#                           data-placement="bottom" data-original-title="Редактировать"></a>#}
-        {#                        <a href=""#}
-        {#                           class="eye glyphicon glyphicon-eye-{% if product.published %}open{% else %}close{% endif %}"#}
-        {#                           data-toggle="tooltip" title="" data-placement="bottom" data-original-title="Скрыть"#}
-        {#                           data-status="{% if product.published %}false{% else %}true {% endif %}"#}
-        {#                           data-item="{{ product.id }}"></a>#}
-        {#                        <a class="remove glyphicon glyphicon-remove-circle model-trigger delete-object"#}
-        {#                           data-url="{% url 'product:delete_product' slug=product.slug %}" data-toggle="tooltip"#}
-        {#                           title="" data-placement="bottom" data-original-title="Удалить"></a>#}
-        {#                    {% endif %}#}
-        {#                {% endif %}#}
-        {##}
-        {#            </div>#}
-        {#            <div class="img-wrapper">#}
-        {#                {% if product.get_main_image %}#}
-        {#                    <img src="{{ product.get_main_image }}" alt="">#}
-        {#                {% else %}#}
-        {#                    <img src="http://via.placeholder.com/222x225" alt="">#}
-        {#                {% endif %}#}
-        {#            </div>#}
-        {##}
-        {#            <div class="title">#}
-        {#                <p>{{ product.title }}</p>#}
-        {#                {% if product.discount %}#}
-        {#                    <span>{{ product.get_price }} {{ product.currency }}</span>#}
-        {#                    <span class="old-price"><strike>{{ product.price }} {{ product.currency }}</strike></span>#}
-        {#                {% else %}#}
-        {#                    <span>{{ product.get_price }} {{ product.currency }}</span>#}
-        {#                {% endif %}#}
-        {#            </div>#}
-        {#            <div class="bottom-line">#}
-        {##}
-        {#                {% cart_message request product %}#}
-        {#                <span class="truck pull-right {% if product.delivery_type == 'paid' %} yellow#}
-        {#                    {% elif product.delivery_type == 'free' %} green {% endif %}" data-toggle="tooltip" title=""#}
-        {#                      data-placement="top" data-original-title="{{ product.get_delivery_type }}"><i class="fa fa-truck" aria-hidden="true"></i></span>#}
-        {#                {% if user.is_authenticated %}#}
-        {#                    <span class="hearth pull-right {% is_favorite_for_like product request.user %}"#}
-        {#                          data-product-id="{{ product.id }}" data-toggle="tooltip" title="" data-placement="top"#}
-        {#                          data-original-title="{% is_favorite_for_tooltip product request.user %}"><i#}
-        {#                            class="glyphicon glyphicon-heart"></i></span>#}
-        {#                {% endif %}#}
-        {##}
-        {#            </div>#}
-        {#        </div>#}
-        {#    </div>#}
+    {#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!#}
 
+{#    <div class="col-md-{{ col }} col-sm-6 new-design">#}
+{#        <div class="img-wrapper {% if not product.published %} disabled-product {% endif %}">#}
+{#            {% if user.is_authenticated and user in product.shop.user.all or user.is_staff %}#}
+{##}
+{#                <div class="setting-control">#}
+{#                    <a href="{% url 'product:update_product' slug=product.slug %}"#}
+{#                       class="glyphicon glyphicon-pencil"#}
+{#                       data-toggle="tooltip" title="" data-placement="top"#}
+{#                       data-original-title="Редактировать товар"></a>#}
+{#                    <a href="" class="glyphicon eye {% if product.published %}glyphicon-eye-open#}
+{#                            {% else %} glyphicon-eye-close {% endif %}" data-toggle="tooltip"#}
+{#                       title="" data-placement="top"#}
+{#                       data-original-title="Показать товар"#}
+{#                       data-status="{% if product.published %}false{% else %}true {% endif %}"#}
+{#                       data-item="{{ product.id }}"></a>#}
+{#                    <a class="remove glyphicon glyphicon-remove model-trigger delete-object"#}
+{#                       data-url="{% url 'product:delete_product' slug=product.slug %}" data-toggle="tooltip"#}
+{#                       title="" data-placement="top" data-original-title="Удалить"></a>#}
+{#                </div>#}
+{#            {% endif %}#}
+{##}
+{#            {% if product.get_avatar_thumb_image %}#}
+{#                <img src="{{ product.get_avatar_thumb_image }}" alt="">#}
+{#            {% else %}#}
+{#                <img src="http://via.placeholder.com/222x225" alt="">#}
+{#            {% endif %}#}
+{##}
+{#            <div class="back-fade">#}
+{##}
+{#                <a href="{{ product.get_absolute_url }}"></a>#}
+{##}
+{#                <div class="name-magazin-title">#}
+{#                    <h3>#}
+{#                        <small>Магaзин</small>#}
+{#                        {{ product.shop.title }}#}
+{#                    </h3>#}
+{#                    <p>{{ product.short_description }}</p>#}
+{#                </div>#}
+{##}
+{#                <div class="button-basket-favorite">#}
+{#                    {% cart_message request product %}#}
+{#                    <span class="glyphicon glyphicon-heart  enable {% is_favorite_for_like product request.user %}"#}
+{#                          data-product-id="{{ product.id }}" data-toggle="tooltip" title=""#}
+{#                          data-placement="top"#}
+{#                          data-original-title="{% is_favorite_for_tooltip product request.user %}"></span>#}
+{#                </div>#}
+{##}
+{#                <div class="title-price">#}
+{#                    <div class="col-md-8">#}
+{#                        <h4>{{ product.title }}</h4>#}
+{#                    </div>#}
+{#                    <div class="col-md-4">#}
+{#                        {% if product.discount %}#}
+{#                            <span>{{ product.get_price }} {{ product.currency }}</span>#}
+{#                            <span class="old-price"><strike>{{ product.price }} {{ product.currency }}</strike></span>#}
+{#                        {% else %}#}
+{#                            <span>{{ product.get_price }} {{ product.currency }}</span>#}
+{#                        {% endif %}#}
+{#                    </div>#}
+{#                </div>#}
+{##}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
 
-    {% endfor %}
+{% endfor %}
 
-</div>

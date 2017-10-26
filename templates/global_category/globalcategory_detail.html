@@ -12,31 +12,54 @@
 
 
 {% block categories %}
-    <section class="category-link ">
-        <div class="container-fluid">
-            <div class="clearfix"></div>
-            {% include 'layout/categories.html' with object=object %}
+    <section class="dropdown-category">
+        <div class="uk-container">
+
+            <div class="uk-text-center uk-flex-middle uk-grid" uk-grid>
+                {% include 'layout/categories.html' with object=object %}
+            </div>
+
+{#            <div id="global-category-slide" uk-offcanvas>#}
+{#                <div class="uk-offcanvas-bar">#}
+{##}
+{#                    <button class="uk-offcanvas-close" type="button" uk-close></button>#}
+{##}
+{#                    <h3>Категории</h3>#}
+{#                    <ul uk-accordion>#}
+{#                        <li class="">#}
+{#                            <h3 class="uk-accordion-title">Item 1</h3>#}
+{#                            <div class="uk-accordion-content">#}
+{#                                <ul class="uk-nav uk-dropdown-nav">#}
+{#                                    <li><a href="#">Item</a></li>#}
+{#                                    <li><a href="#">Item</a></li>#}
+{#                                    <li><a href="#">Item</a></li>#}
+{#                                    <li><a href="#">Item</a></li>#}
+{#                                    <li><a href="#">Item</a></li>#}
+{#                                    <li><a href="#">Item</a></li>#}
+{#                                    <li><a href="#">Item</a></li>#}
+{#                                    <li><a href="#">Item</a></li>#}
+{#                                    <li><a href="#">Item</a></li>#}
+{#                                </ul>#}
+{#                            </div>#}
+{#                        </li>#}
+{#                    </ul>#}
+{##}
+{##}
+{#                </div>#}
+{#            </div>#}
         </div>
     </section>
 {% endblock %}
 
 
 {% block content %}
-    <section class="shop-category global-category">
-        <div class="goods-of-week search_results">
-            <div class="container" id="root">
-
-            </div>
-        </div>
+    <section class="product-list uk-margin-medium-top" id="root">
     </section>
 {% endblock %}
 
 
 {% block js %}
-
     {{ block.super }}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.1/js/standalone/selectize.min.js"></script>
-    <script src="{% static 'js/globalcategory_detail.js' %}"></script>
-   <script src="{% static 'js/select2.js' %}"></script>
+    <script src="{% static 'react/static/js/react.js' %}"></script>
 {% endblock %}
 

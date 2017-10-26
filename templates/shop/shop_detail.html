@@ -1,189 +1,221 @@
 {% extends 'base-1.html' %}
-    {% load staticfiles product_tags shop_tags %}
-
+{% load staticfiles product_tags shop_tags %}
 
 {% block meta %}
- <meta name="description" content="{% if object.meta_description %}{{ object.meta_description }}{% else %}{{ object.title }} инетрнет-магазин Бишкек.{% if object.contacts_set.first.phone %} Телефон:{{ object.contacts_set.first.phone }}, {% endif %}{{ object.email }}.{% if not object.short_description %} {{ object.get_used_categories_title }},{% else %}{{ object.short_description }}{% endif %} {{ object.get_used_categories_title }}{% endif %}">
-    <meta name="keywords" content="{% if object.meta_keywords %}{{ object.meta_keywords }}{% else %}{{ object.title }}, интернет магазин, купить, в бишкеке, отзывы магазина, {{ object.get_used_categories_title }}{% endif %}">
+    <meta name="description" content="
+
+
+
+
+
+
+            {% if object.meta_description %}{{ object.meta_description }}{% else %}{{ object.title }} инетрнет-магазин Бишкек.{% if object.contacts_set.first.phone %} Телефон:{{ object.contacts_set.first.phone }}, {% endif %}{{ object.email }}.{% if not object.short_description %} {{ object.get_used_categories_title }},{% else %}{{ object.short_description }}{% endif %} {{ object.get_used_categories_title }}{% endif %}">
+    <meta name="keywords" content="
+
+
+
+
+
+
+            {% if object.meta_keywords %}{{ object.meta_keywords }}{% else %}{{ object.title }}, интернет магазин, купить, в бишкеке, отзывы магазина, {{ object.get_used_categories_title }}{% endif %}">
     <meta name="author" content="Oobamarket.kg интернет магазин в Бишкеке">
-    <title>{% block title %} {% if object.meta_title %}{{ object.meta_title }} интернет-магазин в Бишкеке{% else %}{{object.title}} - интернет-магазин в Бишкеке.Товары, Акции, Отзывы, Контакты{% endif %} {% endblock %}</title>
+    <title>{% block title %}
+        {% if object.meta_title %}{{ object.meta_title }} интернет-магазин в Бишкеке{% else %}{{ object.title }} -
+            интернет-магазин в Бишкеке.Товары, Акции, Отзывы, Контакты{% endif %} {% endblock %}
+    </title>
 {% endblock %}
 
 {% block header %}
     {% include 'layout/header.html' with global=object.get_global_category %}
 {% endblock %}
 
-{#{% block categories %}#}
-{#    <section class="category-link hidden-sm hidden-xs">#}
-{#        <div class="container-fluid">#}
-{#            <div class="clearfix"></div>#}
-{#            {% include 'layout/categories_without_global.html' with object_list=shop.get_used_categories %}#}
-{#        </div>#}
-{#    </section>#}
-{#{% endblock %}#}
-
 {% block content %}
-
-    <div class="shop-page-page">
-        <div class="container">
-            <div class="col-md-12 col-lg-3">
-                {% show_edit_shop_button shop request.user %}
-                    <div class="img-wrapper">
-                        <img src="{{ object.get_logo }}" alt="">
-                    </div>
-                <h2>{{ object.title|truncatechars:27 }}</h2>
-                <p class="see-more-toogle">{{ object.short_description|truncatechars:70  }}</p>
-                <div class="bottom-line">
-                    {% if object.contacts_set.all %}
-                        <div>
-                            <a href="tel: 0312 89 53 33" class="">
-                                <span class="glyphicon glyphicon-earphone"></span>
-                                {{ object.contacts_set.first.phone }}
-                            </a>
+    <section class="shop-banner uk-margin-medium-top">
+        <div class="uk-container">
+            <div class="uk-grid uk-grid-small" uk-grid>
+                <div class="uk-width-1-4@l uk-width-1-3@m image-shop">
+                    <div class="uk-card shadow">
+                        {% show_edit_shop_button shop request.user %}
+                        <div class="uk-card-media-top uk-padding-small">
+                            <div class="uk-cover-container">
+                                <img src="{{ object.get_logo }}" alt="">
+                            </div>
                         </div>
-                    {% endif %}
-                    <div>
-                        <a href="" class="">
-                            <span class="glyphicon glyphicon-envelope"></span>
-                            {{ object.email }}
-                        </a>
+                        <div class="uk-card-body uk-padding-remove-top uk-padding-small">
+                            <h3 class="uk-card-title uk-text-center">{{ object.title|truncatechars:27 }}</h3>
+                            <p>{{ object.short_description|truncatechars:70  }}</p>
+                            {% if object.contacts_set.all %}
+                                <p class="uk-margin-remove"><span
+                                        uk-icon="icon: phone"></span> {{ object.contacts_set.first.phone }}</p>
+                            {% endif %}
+                            <p class="uk-margin-remove"><span uk-icon="icon: mail"></span> {{ object.email }}</p>
+                        </div>
                     </div>
-
-
                 </div>
-            </div>
-            <div class="col-lg-9 col-md-12">
-                <div class="cover">
-
-                    <div class="wrapper">
-
+                <div class="uk-width-expand@m">
+                    <div class="shadow">
                         {% show_add_banner_button shop request.user %}
-
-                        {% if not object.banners_set.all %}
-                            <a href="">
-                                <img class="placehold" src="http://via.placeholder.com/827x330" alt="">
-                            </a>
-                        {% else %}
-                            <div class="owl-carousel shop-page">
+                        <div class="single-item-slider">
+                            {% if not object.banners_set.all %}
+                                <div class="item">
+                                    <img src="http://via.placeholder.com/1200x500" alt="">
+                                </div>
+                            {% else %}
                                 {% for banner in object.banners_set.all %}
                                     <div class="item">
-
-                                        <a href="">
-                                            <img src="{{ banner.image.url }}" alt="">
-                                        </a>
-
+                                        <img src="{{ banner.image.url }}" alt="">
                                     </div>
-
                                 {% endfor %}
-                            </div>
-                        {% endif %}
+                            {% endif %}
+                        </div>
+                        <div class="social uk-padding-small">
 
-                    </div>
-
-
-                    <div class="bottom-line">
-                        {% if user not in admin %}
-                            <div class="col-md-6" style="padding-left: 0;">
-                                <form id="subscribe-form" class="subscribe">{% csrf_token %}
-                                    <div class="row">
-
-                                        <div class="form-group col-md-6">
-                                            <button type="button" class="pull-left" id="sub_button"><span
-                                                    class="glyphicon glyphicon-send">
-                                        </span>{% if subscribe %}Отписаться{% else %}Подписаться{% endif %}</button>
-                                            <div class="dropdown pull-left"
-                                                 {% if not subscribe %}style="display: none"{% endif %} id="sub_select">
-                                                <button class="dropdown-toggle custom" type="button"
-                                                        id="dropdownMenuButton" data-toggle="dropdown"
-                                                        aria-haspopup="true"
-                                                        aria-expanded="false">
-                                                    <span class="glyphicon glyphicon-menu-down"></span>
-                                                </button>
-                                                <div class="dropdown-menu">
-                                                    {% for val, text in sub_types %}
-                                                        <div class="form-group">
-                                                            <label for="optionsRadios{{ forloop.counter }}"
-                                                                   class="form-check-label ">{{ text }}</label>
-                                                            <input type="radio" class="form-check-input pull-left"
-                                                                   id="optionsRadios{{ forloop.counter }}"
-                                                                   {% if subscribe.subscription_type == val %}checked{% endif %}
-                                                                   value="{{ val }}">
-                                                            <div class="indicator"></div>
-                                                        </div>
-                                                    {% endfor %}
-                                                </div>
-                                            </div>
-                                        </div>
-
+                            <button class="uk-button uk-button-default subscript" type="button">Подписаться</button>
+                            <div uk-dropdown="mode: click; animation: uk-animation-slide-top-small; duration: 300; pos: bottom-center">
+                                <div class="uk-margin">
+                                    <div class="uk-form-controls">
+                                        <label class="uk-margin-small-top uk-display-block"><input class="uk-radio" type="radio" name="radio1"> Option 01</label>
+                                        <label class="uk-margin-small-top uk-display-block"><input class="uk-radio " type="radio" name="radio1"> Option 02</label>
+                                        <label class="uk-margin-small-top uk-display-block"><input class="uk-radio " type="radio" name="radio1"> Option 03</label>
                                     </div>
-                                    <input type="hidden" name="shop_slug" value="{{ shop.slug }}"/>
-                                </form>
+                                    <button class="uk-margin-medium-top uk-button uk-button-default">Сохранить</button>
+                                </div>
                             </div>
-                        {% endif %}
 
-                        {% if object.sociallinks %}
-                            <div class="pull-right">
-                                {% show_add_social_button shop request.user %}
-                                {% if object.sociallinks.facebook %}
-                                    <a href="{{ DOMAIN_URL }}{{ object.sociallinks.facebook }}" class="facebook social"></a>
+                            <div class="uk-float-right">
+                                {% if object.sociallinks %}
+                                    <div class="pull-right">
+                                        {% if object.sociallinks.facebook %}
+                                            <a href="{{ DOMAIN_URL }}{{ object.sociallinks.facebook }}"
+                                               class="facebook social"><span class="uk-icon-button uk-icon "
+                                                                             uk-icon="icon: facebook"></span></a>
+                                        {% endif %}
+                                        {% if object.sociallinks.twitter %}
+                                            <a href="{{ DOMAIN_URL }}{{ object.sociallinks.twitter }}"
+                                               class="tweet social"><span class="uk-icon-button uk-icon "
+                                                                          uk-icon="icon: twitter"></span></a>
+                                        {% endif %}
+                                        {% if object.sociallinks.vk %}
+                                            <a href="{{ DOMAIN_URL }}{{ object.sociallinks.vk }}"
+                                               class="vk social"><span class="uk-icon-button uk-icon "><i
+                                                    class="fa fa-vk" aria-hidden="true"></i></span></a>
+                                        {% endif %}
+                                        {% if object.sociallinks.instagram %}
+                                            <a href="{{ DOMAIN_URL }}{{ object.sociallinks.instagram }}"
+                                               class="instagram social"><span class="uk-icon-button uk-icon "
+                                                                              uk-icon="icon: instagram"></span></a>
+                                        {% endif %}
+                                        {% show_add_social_button shop request.user %}
+                                    </div>
                                 {% endif %}
-                                {% if object.sociallinks.twitter %}
-                                    <a href="{{ DOMAIN_URL }}{{ object.sociallinks.twitter }}" class="tweet social"></a>
-                                {% endif %}
-                                {% if object.sociallinks.vk %}
-                                    <a href="{{ DOMAIN_URL }}{{ object.sociallinks.vk }}" class="vk social"></a>
-                                {% endif %}
-                                {% if object.sociallinks.instagram %}
-                                    <a href="{{ DOMAIN_URL }}{{ object.sociallinks.instagram }}" class="instagram social"></a>
-                                {% endif %}
-
                             </div>
-                        {% endif %}
-                        <div class="clearfix"></div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 
-    <section class="shop-category">
-        <div class="container">
-            <ul class="category-tab">
-                {% show_order_history_button shop request.user  %}
+
+{#    <div class="shop-page-page">#}
+{#        <div class="container">#}
+{#            <div class="col-lg-9 col-md-12">#}
+{#                <div class="bottom-line">#}
+{#                    {% if user not in admin %}#}
+{#                        <form id="subscribe-form" class="subscribe">{% csrf_token %}#}
+{#                            <button type="button" class="" id="sub_button"><span>#}
+{#                                            </span>{% if subscribe %}Отписаться{% else %}Подписаться{% endif %}#}
+{#                            </button>#}
+{#                            <div class="dropdown"#}
+{#                                 {% if not subscribe %}style="display: none"{% endif %} id="sub_select">#}
+{#                                <button class="dropdown-toggle custom" type="button"#}
+{#                                        id="dropdownMenuButton">#}
+{#                                </button>#}
+{#                                <div class="dropdown-menu">#}
+{#                                    {% for val, text in sub_types %}#}
+{#                                        <div class="form-group">#}
+{#                                            <label for="optionsRadios{{ forloop.counter }}"#}
+{#                                                   class="form-check-label ">{{ text }}</label>#}
+{#                                            <input type="radio" class="form-check-input"#}
+{#                                                   id="optionsRadios{{ forloop.counter }}"#}
+{#                                                   {% if subscribe.subscription_type == val %}checked{% endif %}#}
+{#                                                   value="{{ val }}">#}
+{#                                        </div>#}
+{#                                    {% endfor %}#}
+{#                                </div>#}
+{#                            </div>#}
+{#                            <input type="hidden" name="shop_slug" value="{{ shop.slug }}"/>#}
+{#                        </form>#}
+{#                    {% endif %}#}
+{##}
+{#                    {% if object.sociallinks %}#}
+{#                        <div class="pull-right">#}
+{#                            {% show_add_social_button shop request.user %}#}
+{#                            {% if object.sociallinks.facebook %}#}
+{#                                <a href="{{ DOMAIN_URL }}{{ object.sociallinks.facebook }}"#}
+{#                                   class="facebook social"></a>#}
+{#                            {% endif %}#}
+{#                            {% if object.sociallinks.twitter %}#}
+{#                                <a href="{{ DOMAIN_URL }}{{ object.sociallinks.twitter }}" class="tweet social"></a>#}
+{#                            {% endif %}#}
+{#                            {% if object.sociallinks.vk %}#}
+{#                                <a href="{{ DOMAIN_URL }}{{ object.sociallinks.vk }}" class="vk social"></a>#}
+{#                            {% endif %}#}
+{#                            {% if object.sociallinks.instagram %}#}
+{#                                <a href="{{ DOMAIN_URL }}{{ object.sociallinks.instagram }}"#}
+{#                                   class="instagram social"></a>#}
+{#                            {% endif %}#}
+{#                        </div>#}
+{#                    {% endif %}#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
+
+    <section class="nav-cotnrol-shop uk-margin-medium-top">
+        <div class="uk-container">
+            <ul class="uk-child-width-1-6@m uk-child-width-1-3@s uk-flex-center uk-grid uk-grid-small" uk-grid>
+                {% show_order_history_button shop request.user %}
                 {% url 'shops:detail' slug=shop.slug as shop_detail %}
                 {% url 'shops:about_us' slug=shop.slug as about_us %}
                 {% url 'shops:sale' slug=shop.slug as sale %}
                 {% url 'shops:review' slug=shop.slug as review %}
                 {% url 'shops:contacts_detail' slug=shop.slug as contacts %}
-                <li {% if request.path == shop_detail %}class="active"{% endif %}><a href="{{ DOMAIN_URL }}{{ shop_detail }}">Товары</a>
+                <li {% if request.path == shop_detail %}class="uk-active"{% endif %}><a
+                        href="{{ DOMAIN_URL }}{{ shop_detail }}" class="uk-button uk-button-default">Товары</a></li>
+                <li {% if request.path == about_us %}class="uk-active"{% endif %}><a
+                        href="{{ DOMAIN_URL }}{{ about_us }}" class="uk-button uk-button-default">О компании</a></li>
+                <li {% if request.path == sale %}class="uk-active"{% endif %}><a href="{{ DOMAIN_URL }}{{ sale }}"
+                                                                                 class="uk-button uk-button-default">Акции</a>
                 </li>
-                <li {% if request.path == about_us %}class="active"{% endif %}><a href="{{ DOMAIN_URL }}{{ about_us }}">О компании</a>
+                <li {% if request.path == review %}class="uk-active"{% endif %}><a href="{{ DOMAIN_URL }}{{ review }}"
+                                                                                   class="uk-button uk-button-default">Отзывы</a>
                 </li>
-                <li {% if request.path == sale %}class="active"{% endif %}><a href="{{ DOMAIN_URL }}{{ sale }}">Акции</a></li>
-                <li {% if request.path == review %}class="active"{% endif %}><a href="{{ DOMAIN_URL }}{{ review }}">Отзывы</a></li>
-                <li {% if request.path == contacts %}class="active"{% endif %}><a href="{{ DOMAIN_URL }}{{ contacts }}">Контакты</a>
+                <li {% if request.path == contacts %}class="active"{% endif %}><a href="{{ DOMAIN_URL }}{{ contacts }}"
+                                                                                  class="uk-button uk-button-default">Контакты</a>
                 </li>
-
             </ul>
-            {% block shopcontent %}
-                <div class="goods-of-week filter-dropdown">
-
-                    <div class="" id="root"></div>
-                </div>
-            {% endblock %}
-
         </div>
     </section>
 
+    {% block shopcontent %}
+        <section class="product-list uk-margin-medium-top">
+            <div class="uk-container">
+                <div class="uk-grid-small uk-grid">
+                    <div class="uk-width-expand@m" id="root">
+
+                    </div>
+                </div>
+            </div>
+        </section>
+    {% endblock %}
 
 {% endblock %}
 
 
 {% block js %}
     {{ block.super }}
-    <script src="{% static 'js/readmore.min.js' %}"></script>
-    <script src="{% static 'js/shop_detail.js' %}"></script>
-
+    <script src="{% static 'react/static/js/react.js' %}"></script>
     <script src="{% static 'js/subscribe.js' %}"></script>
     <script src="{% static 'js/counter.js' %}"></script>
 {% endblock %}

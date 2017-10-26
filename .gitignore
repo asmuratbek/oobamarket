@@ -59,7 +59,8 @@ ooba.sqlite3
 
 # npm
 node_modules/
-
+ooba_env/
+ooba_env
 # Compass
 .sass-cache
 

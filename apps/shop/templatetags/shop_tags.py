@@ -39,11 +39,7 @@ def show_add_banner_button(shop, user):
         if user.is_authenticated:
             if shop.is_owner(user):
                 return mark_safe('''
-                                <div class="auch-edit" >
-                                    <a href="%s" >
-                                       Редактировать баннер
-                                    </a>
-                                </div>
+                                <a href="%s" class="edit-button">Редактировать</a>
                                     ''' % (settings.DOMAIN_URL + reverse('shops:add_banner', kwargs={'slug': shop.slug})))
             elif not shop.is_owner(user):
                 return mark_safe('')
@@ -57,7 +53,7 @@ def show_order_history_button(shop, user):
         if user.is_authenticated:
             if shop.is_owner(user):
                 return mark_safe('''
-                                    <li class="always" ><a href="%s">История заказов</a></li>
+                                    <li class="always" ><a href="%s" class="uk-button uk-button-default">История заказов</a></li>
                                 ''' % (settings.DOMAIN_URL + reverse('order:shop_order_list', kwargs={'slug': shop.slug})))
             elif not shop.is_owner(user):
                 return mark_safe('')
@@ -70,7 +66,7 @@ def show_add_social_button(shop, user):
         if user.is_authenticated:
             if shop.is_owner(user):
                 return mark_safe('''
-                                    <a href="%s" class="edit-social">+ Добавить соц.сети</a>
+                                    <a href="%s" class="uk-button-default uk-margin-small-left uk-button edit-social">+ Добавить соц.сети</a>
                                     ''' % (settings.DOMAIN_URL + reverse('shops:update_social', kwargs={'slug': shop.slug})))
             elif not shop.is_owner(user):
                 return mark_safe('')
@@ -84,11 +80,7 @@ def show_edit_shop_button(shop, user):
         if user.is_authenticated:
             if shop.is_owner(user):
                 return mark_safe('''
-                                <div class="auch-edit">
-                                    <a href="%s" >
-                                        Редактировать
-                                    </a>
-                                </div>
+                                <a href="%s" class="edit-button">Редактировать</a>
                                     ''' % (settings.DOMAIN_URL + reverse('shops:update', kwargs={'slug': shop.slug})))
             elif not shop.is_owner(user):
                 return mark_safe('')
@@ -101,7 +93,7 @@ def show_create_sale_button(shop, user):
         if user.is_authenticated:
             if shop.is_owner(user):
                 return mark_safe('''
-                                    <li class="active"><a href="%s">Создать Акцию</a></li>
+                                    <li class="uk-active"><a href="%s" class="uk-button uk-button-default">Создать Акцию</a></li>
                                 ''' % (settings.DOMAIN_URL + reverse('shops:add_sale', kwargs={'slug': shop.slug})))
             elif not shop.is_owner(user):
                 return mark_safe('')
@@ -114,7 +106,7 @@ def show_update_sale_button(shop, sale, user):
         if user.is_authenticated:
             if shop.is_owner(user):
                 return mark_safe('''
-                                    <a class="btn add" href="%s">Редактировать</a>
+                                    <a href="%s"  class="uk-button-default uk-button">Редактировать</a>
                                 ''' % (settings.DOMAIN_URL +reverse('shops:update_sale', kwargs={'slug': shop.slug, 'pk': sale.pk})))
             elif not shop.is_owner(user):
                 return mark_safe('')
