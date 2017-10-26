@@ -1,5 +1,6 @@
 from django.shortcuts import get_object_or_404
 from rest_framework.permissions import BasePermission
+from apps.product.models import Product
 
 from apps.shop.models import Shop, Sales
 
@@ -57,3 +58,11 @@ class IsUserOwner(BasePermission):
         if request.user.is_authenticated:
             return request.user.id == int(view.kwargs.get('pk')) if view.kwargs.get('pk') else None
         return False
+
+
+class IsOwnerOfProduct(BasePermission):
+    message = 'You must be the owner of this product'
+
+    def has_permission(self, request, view):
+        product = get_object_or_404(Product, slug=view.kwargs.get('slug'))
+        return request.user in product.shop.user.all()

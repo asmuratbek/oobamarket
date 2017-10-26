@@ -433,7 +433,7 @@ class ProductDeleteApiView(DestroyAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
     lookup_field = 'slug'
-    permission_classes = [IsOwnerOrReadOnly, IsAdminUser]
+    permission_classes = [IsOwnerOrReadOnly, IsOwnerOfProduct]
 
 
 class ProductCreateApiView(CreateAPIView):
@@ -757,12 +757,11 @@ class ShopUpdateApiView(RetrieveUpdateAPIView):
                 Contacts.objects.create(**contact_dict)
 
 
-
 class ShopDeleteApiView(DestroyAPIView):
     queryset = Shop.objects.all()
     serializer_class = ShopSerializer
     lookup_field = 'slug'
-    permission_classes = [IsOwnerOrReadOnly, IsAdminUser]
+    permission_classes = [IsOwnerShop4Shop]
 
 
 class ShopCreateApiView(CreateAPIView):
