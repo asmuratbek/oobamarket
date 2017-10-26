@@ -34,13 +34,11 @@ def assert_status_code(context, response, status_code):
 
 
 def assert_response_json_keys_exist(context, response, keys):
-    json_content = response.json()
-
-    context.test.assertTrue(dict_has_keys(keys, json_content))
+    context.test.assertTrue(dict_has_keys(keys, response.json()))
 
 
 def create_user(faker, username_prefix=''):
-    username = '%s_%s' % (faker.name()[0], username_prefix)
+    username = '%s_%s' % (faker.words()[0].replace(' ', '_'), username_prefix)
     email = '%s@somemail.com' % username
     password = '%s_password' % username
 
@@ -54,8 +52,8 @@ def create_user(faker, username_prefix=''):
 
 
 def create_shop(faker, user=None, slug_prefix='', default_title=None, logo=None):
-    title = default_title if default_title is not None else faker.name()[0]
-    slug = '%s_slug_%s' % (slug_prefix, title)
+    title = default_title if default_title is not None else faker.words()[0]
+    slug = '%s_slug_%s' % (slug_prefix, title.replace(' ', '_'))
     short_description = 'some description'
 
     params = dict(title=title, email=faker.email(), short_description=short_description, slug=slug)
@@ -73,8 +71,8 @@ def create_shop(faker, user=None, slug_prefix='', default_title=None, logo=None)
 
 
 def create_category(faker, slug_prefix='', order=0, section=None, parent_category=None, is_global=False):
-    title = faker.name()[0]
-    slug = '%s_slug_%s' % (slug_prefix, title)
+    title = faker.words()[0]
+    slug = '%s_slug_%s' % (slug_prefix, title.replace(' ', '_'))
 
     if is_global:
         category = GlobalCategory.objects.create(title=title, slug=slug)
@@ -84,9 +82,9 @@ def create_category(faker, slug_prefix='', order=0, section=None, parent_categor
     return dict(title=title, slug=slug, category=category)
 
 
-def create_product(faker, shop, category, slug_prefix=''):
-    title = faker.name()[0]
-    slug = '%s_product_slug_%s' % (slug_prefix, title)
+def create_product(faker, shop, category, slug_prefix='', title_prefix=''):
+    title = '%s %s' % (title_prefix, faker.words()[0])
+    slug = '%s_product_slug_%s' % (slug_prefix, title.replace(' ', '_'))
     price = random.randint(50, 10000)
     discount = random.randint(0, 80)
 
@@ -130,7 +128,7 @@ def create_favorite_product(user, product):
 
 
 def create_sales(faker, shop, image=None):
-    title = faker.words()
+    title = faker.words()[0]
     description = faker.words()
 
     sale = Sales.objects.create(title=title, short_description=description, description=description,
