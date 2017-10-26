@@ -129,12 +129,14 @@ def create_favorite_product(user, product):
     FavoriteProduct.objects.create(user=user, product=product)
 
 
-def create_sales(faker, shop):
-    title = faker.name()
-    description = faker.text()
+def create_sales(faker, shop, image=None):
+    title = faker.words()
+    description = faker.words()
 
-    Sales.objects.create(title=title, short_description=description, description=description,
-                         shop=shop)
+    sale = Sales.objects.create(title=title, short_description=description, description=description,
+                                shop=shop, image=image)
+
+    return dict(sale=sale)
 
 
 def create_review(faker, user, shop=None, product=None):
