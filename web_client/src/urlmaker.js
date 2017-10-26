@@ -1,6 +1,6 @@
 export default function urlmaker (productsCount, productsByPage, pageNumber,
                 activePage, orderBy, priceFrom, priceTo,
-                queryText, categorySlug, matchPhrase, shopSlug, activeCategory, parent) {
+                queryText, categorySlug, matchPhrase, shopSlug, activeCategory, parent, isSearch) {
 
       const from = productsCount > productsByPage * pageNumber ? (
             productsByPage * pageNumber
@@ -41,6 +41,10 @@ export default function urlmaker (productsCount, productsByPage, pageNumber,
                 { match: { text:  queryText }},
                 { match_phrase: matchPhrase },
                 { match_phrase: { category_id: activeCategory }}
+            ]
+        } else if (queryText && isSearch) {
+            return [
+                { match: { text:  queryText }}
             ]
         } else if (queryText) {
             return [
