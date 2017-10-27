@@ -506,7 +506,7 @@ class ShopDetailApiView(MultipleModelAPIView):
             products = Product.objects.filter(shop=shop)
         if category:
             products = products.filter(
-                Q(category_id=int(category))
+                Q(category__slug=category)
             )
         if q:
             products = products.filter(
