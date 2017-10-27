@@ -76,3 +76,6 @@ staticfiles/
 .cache/
 !/dump/media/
 
+geckodriver
+*.log
+*.output

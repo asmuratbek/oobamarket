@@ -46,7 +46,6 @@ class Shop(PublishBaseModel, MetaBaseModel, Counter):
     logo = models.ImageField(upload_to='images/shop/logo/', null=True, blank=True,
                              verbose_name='Логотип')
 
-
     def __str__(self):
         return self.title
 
@@ -90,12 +89,16 @@ class Shop(PublishBaseModel, MetaBaseModel, Counter):
     def get_parent_categories_of_used(self):
         from apps.category.models import Category
         categories = self.get_used_categories()
-        parents = Category.objects.none()
-        for i in categories:
-            parents = parents | Category.objects.filter(id=i.parent.id) if i.parent else None
-        parents = parents.distinct()
-        return parents
+        parent_categories_ids = []
 
+        for i in categories:
+            if i.parent:
+                parent_categories_ids.append(i.parent.id)
+
+        parents = Category.objects.filter(id__in=parent_categories_ids).distinct() if len(
+            parent_categories_ids) > 0 else Category.objects.none()
+
+        return parents
 
     def get_used_categories_title(self):
         return ", ".join([i.title for i in self.get_used_categories()])
