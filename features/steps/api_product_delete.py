@@ -21,10 +21,11 @@ def step_impl(context):
 
 @when('app sends request to "api_product_delete" url with the product slug')
 def step_impl(context):
-    context.response = context.client.delete(reverse('api:product_delete', kwargs=dict(slug=context.product_slug)),
-                                             **dict(HTTP_AUTHORIZATION='Token %s' % context.auth_token))
+    context.response = context.client.post(reverse('api:product_delete', kwargs=dict(slug=context.product_slug)),
+                                           data={}, **dict(HTTP_AUTHORIZATION='Token %s' % context.auth_token))
 
 
 @then("it should get response with product delete success status")
 def step_impl(context):
+    assert_status_code(context, context.response, 200)
     context.test.assertIsNone(Product.objects.filter(id=context.product_id).first())

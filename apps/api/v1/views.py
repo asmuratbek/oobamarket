@@ -433,7 +433,7 @@ class ProductDeleteApiView(APIView):
     permission_classes = [IsAuthenticated, IsOwnerOfProduct]
     authentication_classes = [TokenAuthentication]
 
-    def post(self, **kwargs):
+    def post(self,  *args, **kwargs):
         product = get_object_or_404(Product, slug=kwargs.get('slug'))
         product.delete()
         return JsonResponse({'status': 0, 'message': 'Product is successfully deleted.'})
@@ -986,7 +986,7 @@ class ShopDetailView(APIView):
         if category_slug:
             category = get_object_or_404(Category, slug=category_slug)
             if category.get_level() == 0:
-                products = [product for cat in category.get_descendants() for product in cat.product_set.all()]
+                products = products.filter(category__id__in=[cat.id for cat in category.get_descendants()])
             else:
                 products = products.filter(category=category)
         paginator = Paginator(products, 20)
