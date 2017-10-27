@@ -123,6 +123,10 @@ def create_cart_item(user, product, cart=None):
     return dict(cart=cart, cart_item=cart_item)
 
 
+def create_cart(user):
+    Cart.objects.create(user=user)
+
+
 def create_favorite_product(user, product):
     FavoriteProduct.objects.create(user=user, product=product)
 

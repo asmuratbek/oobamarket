@@ -20,7 +20,9 @@ def step_impl(context):
     category_info = instances['category_info']
 
     global_category = instances['global_category_info']['category']
-    category2_info = create_category(faker, slug_prefix='shop_products_2', order=2, section=global_category)
+    category2_pc_info = create_category(faker, slug_prefix='shop_products_parent_2', order=3, section=global_category)
+    category2_info = create_category(faker, slug_prefix='shop_products_2', order=2, section=global_category,
+                                     parent_category=category2_pc_info['category'])
 
     category = category_info['category']
     category2 = category2_info['category']
@@ -36,9 +38,12 @@ def step_impl(context):
         create_product(faker, shop=shop, category=category2, slug_prefix='shop_products_2_%s' % i)
 
     for i in range(0, FAVORITE_PRODUCTS_QUANTITY):
-        product = random.choice(products_infos)['product']
+        product = products_infos[i]['product']
         create_favorite_product(user=user, product=product)
 
+    create_cart(user)
+
+    context.user = user
     context.shop_slug = shop_info['slug']
     context.search_by_category_slug = category2.slug
     context.auth_token = login_and_get_auth_token(context, LOGIN_URL, user_info['email'], user_info['password'])
@@ -46,7 +51,7 @@ def step_impl(context):
 
 @when('app sends request to "api_shop_products" url with the shop slug')
 def step_impl(context):
-    context.response = context.client.get(reverse('api:shop_detail', kwargs=dict(slug=context.shop_slug)),
+    context.response = context.client.get(reverse('api:shop', kwargs=dict(slug=context.shop_slug)),
                                           **dict(HTTP_AUTHORIZATION='Token %s' % context.auth_token))
 
 
@@ -57,13 +62,13 @@ def step_impl(context):
     favorite_products_quantity = 0
 
     assert_status_code(context, response, 200)
-    assert_response_json_keys_exist(context, response, ['count', 'next', 'previous', 'results'])
+    assert_response_json_keys_exist(context, response, ['count'])
     json_content = response.json()
 
     context.test.assertEqual(json_content['count'], SHOP_PRODUCTS_OF_CATEGORY_QUANTITY + SHOP_PRODUCTS_QUANTITY)
 
-    for item in json_content['results']:
-        if item['is_favorite']:
+    for item in json_content['products']:
+        if item['is_favourite']:
             favorite_products_quantity += 1
 
     context.test.assertEqual(favorite_products_quantity, FAVORITE_PRODUCTS_QUANTITY)
@@ -71,7 +76,7 @@ def step_impl(context):
 
 @when('app sends request to "api_shop_products" url with the shop and the category slugs')
 def step_impl(context):
-    context.response = context.client.get(reverse('api:shop_detail', kwargs=dict(slug=context.shop_slug)),
+    context.response = context.client.get(reverse('api:shop', kwargs=dict(slug=context.shop_slug)),
                                                  dict(category=context.search_by_category_slug))
 
 
@@ -80,7 +85,7 @@ def step_impl(context):
     response = context.response
 
     assert_status_code(context, response, 200)
-    assert_response_json_keys_exist(context, response, ['count', 'next', 'previous', 'results'])
+    assert_response_json_keys_exist(context, response, ['count'])
     json_content = response.json()
 
     context.test.assertEqual(json_content['count'], SHOP_PRODUCTS_OF_CATEGORY_QUANTITY)

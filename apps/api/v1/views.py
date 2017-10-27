@@ -503,7 +503,7 @@ class ShopDetailApiView(MultipleModelAPIView):
             products = Product.objects.filter(shop=shop)
         if category:
             products = products.filter(
-                Q(category__slug=category)
+                Q(category_id=int(category))
             )
         if q:
             products = products.filter(
@@ -1005,7 +1005,8 @@ class ShopDetailView(APIView):
         return JsonResponse({'status': 0,
                              'page': page if page else 1,
                              'shop': shop_dict if page is 1 else None,
-                             'products': products_dict})
+                             'products': products_dict,
+                             'count': paginator.count})
 
     @method_decorator(cache_page(60))
     def dispatch(self, *args, **kwargs):
