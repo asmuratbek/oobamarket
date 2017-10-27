@@ -236,7 +236,6 @@ class ProductDetailSerializer(ModelSerializer):
             return False
 
     def get_is_favorite(self, product):
-        user = None
         request = self.context.get("request")
         if request and hasattr(request, "user"):
             user = request.user
