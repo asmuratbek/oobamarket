@@ -429,11 +429,14 @@ class ProductUpdateApiView(RetrieveUpdateAPIView):
         return JsonResponse({'status': 0, 'message': 'Product is successfully updated.'})
 
 
-class ProductDeleteApiView(DestroyAPIView):
-    queryset = Product.objects.all()
-    serializer_class = ProductSerializer
-    lookup_field = 'slug'
-    permission_classes = [IsOwnerOrReadOnly, IsOwnerOfProduct]
+class ProductDeleteApiView(APIView):
+    permission_classes = [IsAuthenticated, IsOwnerOfProduct]
+    authentication_classes = [TokenAuthentication]
+
+    def post(self, **kwargs):
+        product = get_object_or_404(Product, slug=kwargs.get('slug'))
+        product.delete()
+        return JsonResponse({'status': 0, 'message': 'Product is successfully deleted.'})
 
 
 class ProductCreateApiView(CreateAPIView):
