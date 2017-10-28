@@ -1,69 +1,51 @@
 {% if products or shops %}
-<div class="auto-complite">
+<div  class="auto-complite smart-search uk-grid uk-flex-middle uk-grid-divider uk-padding uk-margin-remove" uk-grid
+         uk-alert hidden>
+        <button class="uk-alert-close uk-padding-remove" type="button" uk-close title="Закрыть"
+                uk-tooltip="pos: left"></button>
         {% if products %}
-        <div class="media">
-            <div class="media-left media-middle goods">
-                <p>Товары</p>
+        <div class="uk-width-1-4 uk-text-center">Товары</div>
+        <div class="uk-width-expand">
+            {% for product in products %}
+            <div class="item uk-grid uk-flex-middle uk-padding-small">
+                <a href="" class="url-product"></a>
+                <div class="uk-width-1-6 image">
+                    <img src="{{ product.get_thumbnail }}" alt="">
+                </div>
+                <div class="uk-width-expand uk-text-left description">
+                    <p class="uk-margin-remove">{{ product.title }}</p>
+                    <a href="{{ product.get_absolute_url }}" class="name-shop" title="Перейти в магазин" uk-tooltip>{{ product.shop.title }}</a>
+                </div>
+                <div class="uk-width-1-6 price uk-text-right">
+                    {{ product.get_price }} сом
+                </div>
             </div>
-            <div class="media-body child-goods">
-                <ul id="prod_list">
-                    {% for product in products %}
-                        {% if forloop.counter < 4 %}
-                    <li>
-                        <a href="{{ product.get_absolute_url }}"> </a>
-                        <div class="img-wrapper">
-                            <img src="{{ product.get_main_image }}" alt="{{ product.title }}">
-                        </div>
-                        <div class="discript">
-                            <div class="name">
-                                <p>{{ product.title }}</p>
-                                <a href="{{ product.get_shop_url }}" class="magazin">{{ product.get_shop_title }}</a>
-                            </div>
-                            <div class="price">
-                                <span>{{ product.price }} {{ product.currency }}</span>
-                            </div>
-                        </div>
-                    </li>
-                        {% endif %}
-                    {% endfor %}
+            {% endfor %}
+        </div>
+    {% endif %}
 
-                </ul>
-                <a href="/search/" class="pull-right see-more">Больше товаров <i class="glyphicon glyphicon-chevron-right"></i></a>
+
+    {% if shops %}
+        <div class="uk-width-1-4 uk-text-center">Магазины</div>
+        <div class="uk-width-expand">
+            {% for shop in shops %}
+            <div class="item uk-grid uk-flex-middle uk-padding-small">
+                <a href="" class="url-product"></a>
+                <div class="uk-width-1-6 image">
+                    <img src="{{ shop.get_logo }}" alt="">
+                </div>
+                <div class="uk-width-expand uk-text-left description">
+                    <p class="uk-margin-remove">{{ shop.title }}</p>
+                    <a href="{{ shop.get_absolute_url }}" class="name-shop" title="Перейти в магазин" uk-tooltip>{{ shop.title }}</a>
+                </div>
+                <div class="uk-width-1-6 price uk-text-right">
+                </div>
             </div>
+            {% endfor %}
         </div>
 
-        {% endif %}
-
-        {% if shops %}
-
-        <div class="media">
-            <div class="media-left media-middle goods">
-                <p>Магазины</p>
-            </div>
-            <div class="media-body child-goods">
-                <ul id="shop_list">
-                    {% for shop in shops %}
-                        {% if forloop.counter < 4 %}
-                    <li>
-                        <a href="{{ shop.get_absolute_url }}"> </a>
-                        <div class="img-wrapper">
-                            <img src="{{ shop.get_logo }}" alt="{{ shop.title }}">
-                        </div>
-                        <div class="discript">
-                            <div class="name">
-                                <p>{{ shop.title }}</p>
-                                <a href="{{ shop.get_absolute_title }}" class="magazin">{{ shop.get_products_count }} товаров</a>
-                            </div>
-                        </div>
-                    </li>
-                        {% endif %}
-                    {% endfor %}
-
-                </ul>
-                <a href="/search/" class="pull-right see-more">Больше товаров <i class="glyphicon glyphicon-chevron-right"></i></a>
-            </div>
-        </div>
-
-        {% endif %}
-    </div>
+    {% endif %}
+</div>
+    {% else %}
+    Noooooo
 {% endif %}

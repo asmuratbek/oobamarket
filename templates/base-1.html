@@ -142,6 +142,53 @@
     ga('create', 'UA-106324416-1', 'auto');
     ga('send', 'pageview');
 
+
+        var _search = function (apiUrl, query) {
+
+        if (query.length < 3) {
+            $('.auto-complite').attr('hidden', true);
+            return
+        }
+
+
+        $.ajax({
+            url: apiUrl,
+            type: 'GET',
+            data: {
+                q: query,
+            },
+            success: function (data) {
+                console.log(data)
+                    $('body').append(data);
+                    $('.see-more').attr('href', '/search?q=' + query);
+            }
+        });
+    };
+
+    $('#search-form-index').bind('keyup paste change', function () {
+        _search('/search_results/', $(this).val())
+    });
+
+    var parseQueryString = function () {
+
+        var str = location.search;
+        var objURL = {};
+
+        str.replace(
+            new RegExp("([^?=&]+)(=([^&]*))?", "g"),
+            function ($0, $1, $2, $3) {
+                objURL[$1] = $3;
+            }
+        );
+        return objURL;
+    };
+
+//Example how to use it:
+    var params = parseQueryString();
+    if (params['q']) {
+        $('#search-form-index').val(decodeURIComponent(params['q']));
+    }
+
 </script>
 
 
