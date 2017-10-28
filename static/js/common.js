@@ -644,7 +644,8 @@ $(document).ready(function () {
         });
     };
 
-    $('#search-form-index').bind('keyup paste', function () {
+    $('#search-form-index').bind('keyup paste change', function () {
+        console.log('hey')
         _search('/search_results/', $(this).val())
     });
 

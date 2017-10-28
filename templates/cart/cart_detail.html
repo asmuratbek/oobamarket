@@ -126,22 +126,20 @@
                     </div>
 
                 {% endfor %}
+                <div class="shadow uk-padding uk-margin-small-top">
+                    {% if not object.get_shops %}
+                        <h4>Ваша корзина пуста</h4>
+                    {% else %}
 
-            </div>
-            {% if not object.get_shops %}
-                <h4>Ваша корзина пуста</h4>
-            {% else %}
-            <div class="col-lg-offset-2 col-lg-10 text-center">
-                <div class="row">
-                     <div class="total-price ">
-                    <div class="col-lg-6">
-                        <h6>Итого к оплате</h6>
+                        <h5>Итого к оплате</h5>
 
-            <div class="col-lg-offset-2 col-lg-10">
-                <a href="" class="btn-modal" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">Оформить
-                    покупку</a>
+                        <div class="col-lg-offset-2 col-lg-10">
+                            <a href="#basket-modal" class="uk-button uk-button-default" uk-toggle>Оформить
+                                покупку</a>
+                        </div>
+                    {% endif %}
+                </div>
             </div>
-        {% endif %}
 
 
         </div>
@@ -150,6 +148,7 @@
     <!-- This is the modal -->
     <div id="basket-modal" uk-modal>
         <div class="uk-modal-dialog basket-modal uk-modal-body">
+            <button class="uk-modal-close-default" type="button" uk-close></button>
             <form action="{% url 'order:create' %}" method="POST">
                 {% csrf_token %}
                 <input type="hidden" name="cart" value="{{ object }}">
