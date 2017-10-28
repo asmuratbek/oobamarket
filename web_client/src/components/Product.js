@@ -80,6 +80,7 @@ class Product extends Component {
                 </div>
             </div>
             <div className="uk-padding-small uk-grid uk-margin-remove footer">
+                <h4 className="uk-visible@s uk-padding-remove"><a href="#">{this.props.product.shop}</a></h4>
                 <h4 className="uk-width-3-5@l uk-width-3-5@m uk-padding-remove">{this.props.product.title}</h4>
                 <div className="uk-width-2-5@l uk-width-2-5@m uk-padding-remove">
                     <p >{this.props.product.get_price_function} сом </p>
