@@ -146,7 +146,8 @@
         var _search = function (apiUrl, query) {
 
         if (query.length < 3) {
-            $('.auto-complite').attr('hidden', true);
+            let autoComplite = $('.auto-complite');
+            autoComplite.attr('hidden', true);
             return
         }
 
@@ -158,14 +159,22 @@
                 q: query,
             },
             success: function (data) {
-                console.log(data)
-                    $('body').append(data);
-                    $('.see-more').attr('href', '/search?q=' + query);
+                let autoComplite = $('.auto-complite');
+                if (autoComplite.length) {
+                    autoComplite.remove();
+                    $('.search-container').append(data);
+                    $('.see-more').attr('href', '/search/?q=' + query);
+
+                } else {
+                    $('.search-container').append(data);
+                    $('.see-more').attr('href', '/search/?q=' + query);
+                }
+
             }
         });
     };
 
-    $('#search-form-index').bind('keyup paste change', function () {
+    $('#search-form-index').bind('keyup paste', function () {
         _search('/search_results/', $(this).val())
     });
 
