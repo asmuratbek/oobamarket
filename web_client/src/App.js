@@ -198,6 +198,18 @@ class App extends Component {
 
   };
 
+  addToFavs = id => {
+    let favs = [...this.state.favorites]
+    favs.push(id);
+    this.setState({
+        favorites: favs
+    })
+  };
+
+  removeFromFavs = id => {
+
+  };
+
   handlePageChange = (pageNumber) => {
         this.setState({
            loaded: false
@@ -607,6 +619,8 @@ class App extends Component {
         let productDelete = this.productDelete;
         let categories = [];
         let descendants = [];
+        let addToFavs = this.addToFavs;
+        let removeFromFavs = this.removeFromFavs;
 
         filteredProducts = this.state.products.map(function (item, index) {
             return (
@@ -615,7 +629,10 @@ class App extends Component {
                          favorites={this.state.favorites}
                          cartItems={this.state.cartItems}
                          shops={this.state.shops}
-                         product={ item }/>
+                         product={ item }
+                         addToFavs={this.addToFavs}
+                         removeFromFavs={this.removeFromFavs}
+                />
             ) //return
         }.bind(this));
 
