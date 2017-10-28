@@ -25,56 +25,10 @@
                                     {% render_field form.email|attr:"type:email" class="uk-input" placeholder="" %}
                                 </div>
                             </div>
-                            {% include 'shop/partials/shop_inline_form.html' %}
+
                         </div>
-
-                        <div class="uk-grid uk-child-width-1-2@s uk-margin-remove-top" uk-grid>
-                            <div>
-                                <button href="#toggle-animation"
-                                        class="uk-button uk-button-default uk-width-1-1 border-red"
-                                        type="button"
-                                        uk-toggle="target: #toggle-animation; animation: uk-animation-fade">
-                                    <span class="uk-margin-small-right" uk-icon="icon:  clock"></span>
-                                    Указать время работы
-                                </button>
-
-                                <div id="toggle-animation"
-                                     class="uk-card uk-card-default uk-card-body uk-margin-small uk-width-1-1@l "
-                                     hidden>
-                                    {{ form.round_the_clock|attr:"class:switch__input"|attr:"id:id_piblished" }}
-
-                                    <div class="weekdays">
-                                        <label class="uk-margin-medium-bottom uk-display-block"><input class="uk-checkbox " type="checkbox"> Всегда открыто</label>
-                                        {% for i, day in days %}
-                                            <div class="" data-key={{ i }}
-                                                    {% if forloop.counter == 1 %}data-first{% endif %}>
-                                                <label><input class="uk-checkbox checked_day" type="checkbox" {% if i != 'sunday' %}checked="checked"{% endif %}> {{ day }}</label>
-
-                                                <div class="uk-grid-small uk-grid" uk-grid>
-                                                    <div class="uk-width-1-2@s uk-inline" style="margin-bottom: 25px;">
-                                                        <a class="uk-form-icon" style="margin-left: 15px;" href="#" uk-icon="icon: clock"></a>
-                                                        <input class="uk-input timepicker" type="text" placeholder="С" {% if i == 'sunday' %}disabled="disabled"{% endif %}>
-                                                    </div>
-                                                    <div class="uk-width-1-2@s uk-inline" style="margin-bottom: 25px;">
-                                                        <a class="uk-form-icon" style="margin-left: 15px;" href="#" uk-icon="icon: future" ></a>
-                                                        <input class="uk-input timepicker" type="text" placeholder="До" {% if i == 'sunday' %}disabled="disabled"{% endif %}>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        {% endfor %}
-                                    </div>
-
-                                </div>{#  end toggle-animation#}
-
-
-                            </div>
-                            <div>
-                                <a href="#modal-map" class="uk-button uk-button-default uk-width-1-1 border-red"
-                                   uk-toggle><span class="uk-margin-small-right" uk-icon="icon:  location"> </span>
-                                    Поставить метку на карте</a>
-                            </div>
-                        </div>
-                        <div class="uk-grid uk-child-width-1-1@l" uk-grid>
+                        {% include 'shop/partials/shop_inline_form.html' %}
+                        <div class="uk-grid uk-child-width-1-1@l uk-margin-medium-top" uk-grid>
                             <div class="uk-form-controls">
                                 <label class="uk-form-label">Короткое описание магазина:</label>
                                 {% render_field form.short_description|attr:"rows:6" placeholder="Введите до 300 символов" class="uk-textarea" %}
@@ -321,8 +275,8 @@
 
                     <div class="uk-width-1-1@l">
                         <div class=" uk-width-1-2@s uk-margin-medium-top">
-                            <a href="" class="uk-button uk-button-default border-red bg-red uk-width-1-2@l"><span
-                                    class="uk-margin-small-right" uk-icon="icon: check"> </span>Сохранить</a>
+                            <button type="submit" class="uk-button uk-button-default border-red bg-red uk-width-1-2@l"><span
+                                    class="uk-margin-small-right" uk-icon="icon: check"> </span>Сохранить</button>
                         </div>
                     </div>
 
@@ -346,117 +300,117 @@
 
 
     {#!!!!!!!!!!!!!!!!#}
-
-    <section class="edit-shop-detail">
-        <div class="container">
-            <h3>Создание магазина</h3>
-            <div class="form-filter">
-                <form class="form-inline" method="post" enctype="multipart/form-data" id="add-shop-form">
-                    {% csrf_token %}
-                    <div class="col-md-8">
-                        <div class="form-group {% if form.title.errors %}has-error{% endif %} input col-md-6">
-                            {% if not form.title.errors %}
-                                <label for="">Название магазина</label>{% else %}
-                                <label for="" style="color:red;">Название
-                                    магазина:{{ form.title.errors }}</label>{% endif %}
-                            {{ form.title|attr:"type:text" }}
-                        </div>
-
-                        <div class="form-group {% if form.email.errors %}has-error{% endif %} input col-md-6">
-                            {% if not form.email.errors %}
-                                <label for="">E-mail магазина:</label>{% else %}
-                                <label for="" style="color:red;">E-mail
-                                    магазина:{{ form.email.errors }}</label>{% endif %}
-                            {% render_field form.email|attr:"type:email" placeholder="" %}
-                        </div>
-
-
-                        <div class="inlines">
-
-                            {% include 'shop/partials/shop_inline_form.html' %}
-
-                            <div class="form-group input col-md-12">
-                                <label for="">Короткое описание магазина:</label>
-                                {% render_field form.short_description|attr:"rows:6" placeholder="Введите до 300 символов" %}
-                            </div>
-                            <div class="form-group input col-md-12">
-                                <label for="">О компании</label>
-
-                                {% render_field form.description|attr:"rows:6" placeholder="Введите полное описание" %}
-                            </div>
-                            <div class="clearfix"></div>
-                            <a class="btn seo" role="button" data-toggle="collapse" href="#collapseExample"
-                               aria-expanded="false" aria-controls="collapseExample">
-                                Для SEO
-                            </a>
-
-                            <div class="collapse" id="collapseExample">
-                                <div class="well">
-                                    <div class="form-group input col-md-12">
-                                        <label for="">Мета заголовок магазина:</label>
-                                        {% render_field form.meta_title|attr:"type:text" placeholder="" %}
-                                        <i>Введи до 45 символов название которое будет отображаться с посковиках. Для
-                                            лучшего
-                                            отображения введите ключевое слово товаров которые вы продаете в на сайте.
-                                            Например
-                                            если вы продаете кроссовки от найка и адидас. Правильный заголовок будет:
-                                            "Купить
-                                            кроссовки adidas и nike". Мы добавим в конце Бишкек и Ваше название
-                                            магазина. Т.е.
-                                            заголовок в последующем будет выглядеть так:"Купить кроссовки adidas и nike
-                                            Бишкек -
-                                            Кроссовки Центр."
-                                        </i>
-                                    </div>
-                                    <div class="form-group input col-md-12">
-                                        <label for="">Мета описание магазина:</label>
-                                        {% render_field form.meta_description|attr:"rows:6" placeholder="Введите до 220 символов" %}
-                                        <i>В мета описании вы можете описать в кратце, какие товары вы продаете и чем
-                                            занимаетесь.
-                                            Лучше всего описание формируется, где включены несколько ключевых слов по
-                                            которым вас
-                                            будут искать. Чем лучше соответсвие,тем выше позиция.
-                                        </i>
-                                    </div>
-                                    <div class="form-group input col-md-12">
-                                        <label for="">Мета ключевые слова магазина:</label>
-                                        {% render_field form.meta_keywords|attr:"rows:6" placeholder="Введите до 10 ключевых слов" %}
-                                        <i>В поле нужно вводить ключевые слова, например, если вы продаете кроссовки. То
-                                            правильным
-                                            набором ключевых слов будет: "Кроссовки, адидас, найк, бишкек, adidas, nike,
-                                            купить и т.д."
-                                        </i>
-                                    </div>
-                                    <div class="form-group input col-md-12">
-                                        <label for="">СЕО текс магазина:</label>
-                                        {% render_field form.seo_text|attr:"rows:6" placeholder="Введите сео описание магазина" %}
-                                        <i>Это поле не ограничено в заполнении. Но лучше всего чтобы он был не более 500
-                                            знаков.
-                                            Сео описание влияет на продвижение вашего интернет магазина в поисковике,
-                                            так что вам
-                                            нужно самому написать текст. Мы настоятельно не рекомендуем копировать чужой
-                                            текст,
-                                            так как это не продвинет ваш магазин, а даже снизит его рейтинг в
-                                            поисковике. Самым
-                                            лучшим способом является составить текст из ключевых слов.
-                                        </i>
-                                    </div>
-                                </div>
-                            </div>
-
-
-                        </div>
-
-
-                    </div>
-                    <div class="col-md-4 upload-image-magazin">
-                        <label class="upload" for="id_images">
-                            <i class="glyphicon glyphicon-plus-sign"></i>
-                            <div class="add-photo">
-                                Добавьте логотип <br>Вашего магазина
-                            </div>
-                        </label>
-
+{##}
+{#    <section class="edit-shop-detail">#}
+{#        <div class="container">#}
+{#            <h3>Создание магазина</h3>#}
+{#            <div class="form-filter">#}
+{#                <form class="form-inline" method="post" enctype="multipart/form-data" id="add-shop-form">#}
+{#                    {% csrf_token %}#}
+{#                    <div class="col-md-8">#}
+{#                        <div class="form-group {% if form.title.errors %}has-error{% endif %} input col-md-6">#}
+{#                            {% if not form.title.errors %}#}
+{#                                <label for="">Название магазина</label>{% else %}#}
+{#                                <label for="" style="color:red;">Название#}
+{#                                    магазина:{{ form.title.errors }}</label>{% endif %}#}
+{#                            {{ form.title|attr:"type:text" }}#}
+{#                        </div>#}
+{##}
+{#                        <div class="form-group {% if form.email.errors %}has-error{% endif %} input col-md-6">#}
+{#                            {% if not form.email.errors %}#}
+{#                                <label for="">E-mail магазина:</label>{% else %}#}
+{#                                <label for="" style="color:red;">E-mail#}
+{#                                    магазина:{{ form.email.errors }}</label>{% endif %}#}
+{#                            {% render_field form.email|attr:"type:email" placeholder="" %}#}
+{#                        </div>#}
+{##}
+{##}
+{#                        <div class="inlines">#}
+{##}
+{#                            {% include 'shop/partials/shop_inline_form.html' %}#}
+{##}
+{#                            <div class="form-group input col-md-12">#}
+{#                                <label for="">Короткое описание магазина:</label>#}
+{#                                {% render_field form.short_description|attr:"rows:6" placeholder="Введите до 300 символов" %}#}
+{#                            </div>#}
+{#                            <div class="form-group input col-md-12">#}
+{#                                <label for="">О компании</label>#}
+{##}
+{#                                {% render_field form.description|attr:"rows:6" placeholder="Введите полное описание" %}#}
+{#                            </div>#}
+{#                            <div class="clearfix"></div>#}
+{#                            <a class="btn seo" role="button" data-toggle="collapse" href="#collapseExample"#}
+{#                               aria-expanded="false" aria-controls="collapseExample">#}
+{#                                Для SEO#}
+{#                            </a>#}
+{##}
+{#                            <div class="collapse" id="collapseExample">#}
+{#                                <div class="well">#}
+{#                                    <div class="form-group input col-md-12">#}
+{#                                        <label for="">Мета заголовок магазина:</label>#}
+{#                                        {% render_field form.meta_title|attr:"type:text" placeholder="" %}#}
+{#                                        <i>Введи до 45 символов название которое будет отображаться с посковиках. Для#}
+{#                                            лучшего#}
+{#                                            отображения введите ключевое слово товаров которые вы продаете в на сайте.#}
+{#                                            Например#}
+{#                                            если вы продаете кроссовки от найка и адидас. Правильный заголовок будет:#}
+{#                                            "Купить#}
+{#                                            кроссовки adidas и nike". Мы добавим в конце Бишкек и Ваше название#}
+{#                                            магазина. Т.е.#}
+{#                                            заголовок в последующем будет выглядеть так:"Купить кроссовки adidas и nike#}
+{#                                            Бишкек -#}
+{#                                            Кроссовки Центр."#}
+{#                                        </i>#}
+{#                                    </div>#}
+{#                                    <div class="form-group input col-md-12">#}
+{#                                        <label for="">Мета описание магазина:</label>#}
+{#                                        {% render_field form.meta_description|attr:"rows:6" placeholder="Введите до 220 символов" %}#}
+{#                                        <i>В мета описании вы можете описать в кратце, какие товары вы продаете и чем#}
+{#                                            занимаетесь.#}
+{#                                            Лучше всего описание формируется, где включены несколько ключевых слов по#}
+{#                                            которым вас#}
+{#                                            будут искать. Чем лучше соответсвие,тем выше позиция.#}
+{#                                        </i>#}
+{#                                    </div>#}
+{#                                    <div class="form-group input col-md-12">#}
+{#                                        <label for="">Мета ключевые слова магазина:</label>#}
+{#                                        {% render_field form.meta_keywords|attr:"rows:6" placeholder="Введите до 10 ключевых слов" %}#}
+{#                                        <i>В поле нужно вводить ключевые слова, например, если вы продаете кроссовки. То#}
+{#                                            правильным#}
+{#                                            набором ключевых слов будет: "Кроссовки, адидас, найк, бишкек, adidas, nike,#}
+{#                                            купить и т.д."#}
+{#                                        </i>#}
+{#                                    </div>#}
+{#                                    <div class="form-group input col-md-12">#}
+{#                                        <label for="">СЕО текс магазина:</label>#}
+{#                                        {% render_field form.seo_text|attr:"rows:6" placeholder="Введите сео описание магазина" %}#}
+{#                                        <i>Это поле не ограничено в заполнении. Но лучше всего чтобы он был не более 500#}
+{#                                            знаков.#}
+{#                                            Сео описание влияет на продвижение вашего интернет магазина в поисковике,#}
+{#                                            так что вам#}
+{#                                            нужно самому написать текст. Мы настоятельно не рекомендуем копировать чужой#}
+{#                                            текст,#}
+{#                                            так как это не продвинет ваш магазин, а даже снизит его рейтинг в#}
+{#                                            поисковике. Самым#}
+{#                                            лучшим способом является составить текст из ключевых слов.#}
+{#                                        </i>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                            </div>#}
+{##}
+{##}
+{#                        </div>#}
+{##}
+{##}
+{#                    </div>#}
+{#                    <div class="col-md-4 upload-image-magazin">#}
+{#                        <label class="upload" for="id_images">#}
+{#                            <i class="glyphicon glyphicon-plus-sign"></i>#}
+{#                            <div class="add-photo">#}
+{#                                Добавьте логотип <br>Вашего магазина#}
+{#                            </div>#}
+{#                        </label>#}
+{##}
 {#                        <div class="info">#}
 {#                            <span>Рекомендация для фото</span>#}
 {#                            <p>Размер: 380x380 или больше</p>#}
@@ -464,30 +418,30 @@
 {#                            <br>#}
 {#                            <span id="file-counter" style="color: red;"></span>#}
 {#                        </div>#}
-
-                        <div class="img-wrapper">
-
-                            <input class="form-control" id="id_images" name="logo" style="display:none;" type="file">
-                            <img id="logo_view" src=""/><span class="remove-logo">X</span>
-                            {% if object.logo %}
-                                {% if object.logo.name != "/default.jpg" %}
-                                    <img src="{{ object.logo.url }}" alt="" id="id_logo2">
-                                    <span class="remove-logo-update">X</span>
-                                {% else %}
-                                    <img src="" alt="" id="id_logo2">
-                                {% endif %}
-                            {% endif %}
-
-                            <input type="hidden" id="slug" value="{{ object.get_slug }}"/>
-                        </div>
-                    </div>
-
-                    <div class="col-md-12" style="padding: 0; margin-top: 20px; background-color: #fff;">
-                        <div class="col-md-8">
-                            <div class="cover" style="overflow: hidden; padding: 30px 0;">
-                                <div class="inline-appended"></div>
-
-
+{##}
+{#                        <div class="img-wrapper">#}
+{##}
+{#                            <input class="form-control" id="id_images" name="logo" style="display:none;" type="file">#}
+{#                            <img id="logo_view" src=""/><span class="remove-logo">X</span>#}
+{#                            {% if object.logo %}#}
+{#                                {% if object.logo.name != "/default.jpg" %}#}
+{#                                    <img src="{{ object.logo.url }}" alt="" id="id_logo2">#}
+{#                                    <span class="remove-logo-update">X</span>#}
+{#                                {% else %}#}
+{#                                    <img src="" alt="" id="id_logo2">#}
+{#                                {% endif %}#}
+{#                            {% endif %}#}
+{##}
+{#                            <input type="hidden" id="slug" value="{{ object.get_slug }}"/>#}
+{#                        </div>#}
+{#                    </div>#}
+{##}
+{#                    <div class="col-md-12" style="padding: 0; margin-top: 20px; background-color: #fff;">#}
+{#                        <div class="col-md-8">#}
+{#                            <div class="cover" style="overflow: hidden; padding: 30px 0;">#}
+{#                                <div class="inline-appended"></div>#}
+{##}
+{##}
                                 {#                                <div class="form-group col-md-12" style="margin-top: 10px; margin-bottom: 10px">#}
                                 {#                                    <p style="margin: 0; text-align: left;">Если у вас есть филиалы, добавьте их</p><br>#}
                                 {##}
@@ -498,23 +452,23 @@
                                 {#                                    </button>#}
                                 {##}
                                 {#                                </div>#}
-                                <div class="form-group btn-group-form col-md-12">
-                                    <button type="submit" class="btn add">Сохранить</button>
-                                    {% if object %}
-                                        <a href="{% url 'shops:delete' slug=object.slug %}"
-                                           class="remove delete-object model-trigger btn add" style="cursor: pointer;">
-                                            <span class="glyphicon glyphicon-warning-sign"></span> Удалить магазин</a>
-                                    {% endif %}
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-
-                </form>
-            </div>
-        </div>
-    </section>
+{#                                <div class="form-group btn-group-form col-md-12">#}
+{#                                    <button type="submit" class="btn add">Сохранить</button>#}
+{#                                    {% if object %}#}
+{#                                        <a href="{% url 'shops:delete' slug=object.slug %}"#}
+{#                                           class="remove delete-object model-trigger btn add" style="cursor: pointer;">#}
+{#                                            <span class="glyphicon glyphicon-warning-sign"></span> Удалить магазин</a>#}
+{#                                    {% endif %}#}
+{#                                </div>#}
+{##}
+{#                            </div>#}
+{#                        </div>#}
+{#                    </div>#}
+{##}
+{#                </form>#}
+{#            </div>#}
+{#        </div>#}
+{#    </section>#}
 
 
 {% endblock %}

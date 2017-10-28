@@ -16,13 +16,18 @@
            modal_button.show();
        }
        else{
-           modal_button.hide();}
+           modal_button.hide();
+       }
     });
     $(".btn-toggle-day").click(function (e) {
         e.preventDefault();
         $(".toggle-days").slideToggle("100").attr('data-id');
 
     });
+
+    $.fn.hasAttr = function(name) {
+        return this.attr(name) !== undefined;
+    };
 
     function setCoordsPostion(lat, long) {
         $("#id_contacts_set-0-longitude").val(long);
@@ -202,46 +207,4 @@ function init() {
         });
     }
     Switch();
-{#        function initFakeInputs() {#}
-{#        $('.fake-input').each(function (i, obj) {#}
-{#            let from = $(obj).find('input.from');#}
-{#            let to = $(obj).find('input.to');#}
-{#            let trueInput = $(obj).find('input.true_input');#}
-{#            let that = $(this);#}
-{##}
-{#            from.unbind('change').bind('change', function () {#}
-{#                trueInput.val($(this).val() + ' - ' + to.val());#}
-{#                if (that.hasAttr('data-first')) {#}
-{#                    let parent = that.parent();#}
-{#                    setTime(from, to, parent);#}
-{#                }#}
-{#            });#}
-{##}
-{#            to.unbind('change').bind('change', function () {#}
-{#                trueInput.val(from.val() + ' - ' + $(this).val());#}
-{#                if (that.hasAttr('data-first')) {#}
-{#                    let parent = that.parent();#}
-{#                    setTime(from, to, parent);#}
-{#                }#}
-{#            });#}
-{#        });#}
-{#    }#}
-{##}
-{#    function setTime(_from, _to, parent) {#}
-{#        $('.fake-input', parent).each(function (i, obj) {#}
-{#            let from = $(obj).find('input.from');#}
-{#            let to = $(obj).find('input.to');#}
-{#            let trueInput = $(obj).find('input.true_input');#}
-{#            if (from[0] !== _from[0] && to[0] !== _to[0]) {#}
-{#                if (!from.hasAttr('disabled') && !to.hasAttr('disabled')) {#}
-{#                    from.val(_from.val());#}
-{#                    to.val(_to.val());#}
-{#                    from.trigger('change');#}
-{#                    to.trigger('change');#}
-{##}
-{#                }#}
-{#            }#}
-{#        });#}
-{#    }#}
-{#    initFakeInputs();#}
 </script>
