@@ -94,7 +94,9 @@ class Product extends Component {
                     <small className="uk-display-block">Магазин</small>
                     <h4 className="uk-margin-remove"><a href="#">{this.props.product.shop}</a></h4>
                     <p>{this.props.product.short_description}</p>
-                    <div className="control">
+                    {this.props.isAuth &&
+                    (
+                        <div className="control">
                         <a href="#" className={`uk-margin-medium-right ${this.isInFavorites(this.props.product) && 'like'}`}
                            title={this.isInFavorites(this.props.product) ? 'Удалить из избранных' : 'Добавить в избранное'} data-uk-tooltip
                            data-item-id={this.props.product.pk} onClick={this.addOrRemoveFromFavorites}><span
@@ -104,6 +106,8 @@ class Product extends Component {
                         data-item-id={this.props.product.pk} onClick={this.addOrRemoveFromCart}><span
                                 className=" uk-icon" data-uk-icon="icon: cart; ratio: 2"></span></a>
                     </div>
+                    )}
+
                 </div>
             </div>
             <div className="uk-padding-small uk-grid uk-margin-remove footer">

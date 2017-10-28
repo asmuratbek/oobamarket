@@ -29,6 +29,7 @@ class App extends Component {
         loaded: false,
         places: [],
         markets: [],
+        isAuth: false,
         activePlace: '',
         productsByPage: 20,
         domain: window.location.href.split("/")[2].split(":")[0],
@@ -120,7 +121,6 @@ class App extends Component {
 
         } else {
             let match = this.getMatchPhrase();
-            console.log(match)
             const query = {
                 query: this.state.pageType !== 'search' ? {match_phrase: match} : match,
                 size:  this.state.productsByPage,
@@ -129,8 +129,6 @@ class App extends Component {
                     {created_at: "desc"},
                 ]
               };
-
-            console.log(query)
 
       $.ajax({
             type: "GET",
@@ -142,7 +140,8 @@ class App extends Component {
                     this.setState({
                         favorites: favorites,
                         cartItems: cartItems,
-                        shops: shops
+                        shops: shops,
+                        isAuth: data.isAuth
                     });
               }.bind(this),
               error: function (response, error) {
@@ -664,6 +663,7 @@ class App extends Component {
                          product={ item }
                          favoritesFunc={favoritesFunc}
                          cartFunc={cartFunc}
+                         isAuth={this.state.isAuth}
                 />
             ) //return
         }.bind(this));
