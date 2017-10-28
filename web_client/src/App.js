@@ -584,7 +584,7 @@ class App extends Component {
                 </form>
 
 
-                    <div className="uk-child-width-1-1 uk-child-width-1-2@s uk-child-width-1-3@m uk-grid-small uk-child-width-1-4@l " data-uk-grid>
+                    <div className="uk-child-width-1-2 uk-child-width-1-2@s uk-child-width-1-3@m uk-grid-small uk-child-width-1-4@l " data-uk-grid>
                         {filteredShops}
                     </div>
 
