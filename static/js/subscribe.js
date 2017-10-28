@@ -76,7 +76,7 @@ $.ajax({
 
 
 $(document).on("click", ".subscribe_shop", function () {
-    var shop_slug = $(this).closest("div.back-fade").find("a.url").attr("href").split("/")[2];
+    var shop_slug = $(this).closest("div.shadow").find("a.uk-position-cover").attr("href").split("/")[2];
     var that = $(this);
     $.post("/users/subscribe/", {"shop_slug": shop_slug}, function (data) {
         if(data == 'redirect'){
@@ -94,17 +94,17 @@ $(document).on("click", ".subscribe_shop", function () {
     });
 });
 
-$('#shop_subscribe').on('click', function () {
+$('.shop_subscribe').on('click', function () {
     var that = $(this);
     var slug = window.location.href.split('/')[4];
     $.post('/users/subscribe/', {'shop_slug': slug}, function (data) {
         if (data === 'redirect'){
             window.location.href = '/accounts/login/'
         } else if(data.status === 0) {
-            $('#shop_subscribe').text('Подписаться');
+            that.text('Подписаться');
             showFlashMessage(data.message)
         }else {
-            $('#shop_subscribe').text('Отписаться');
+            that.text('Отписаться');
             console.log(data.message);
             showFlashMessage(data.message)
         }
