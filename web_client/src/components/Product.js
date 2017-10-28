@@ -5,20 +5,15 @@ class Product extends Component {
 
     addOrRemoveFromFavorites = (e) => {
         e.preventDefault();
-        let productId = $(this).attr("data-item-id");
         $.ajax({
             type: "GET",
             url: "/favorite/add",
             data: {
-                'item': productId
+                'item': this.props.product.pk
             },
             success: function (data) {
-                if (data.created) {
-                    this.props.addToFavs(productId)
-                } else {
-                    this.props.removeFromFavs(productId)
-                }
-            },
+                this.props.favoritesFunc(this.props.product.pk, data.created)
+            }.bind(this),
             error: function (response, error) {
                 console.log(response);
                 console.log(error);
