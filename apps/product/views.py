@@ -152,12 +152,14 @@ class ProductCreateView(LoginRequiredMixin, AddProductMixin, CreateView):
 
     def form_invalid(self, form):
         print('heey')
+        print(form.errors)
         form.fields.get('title').widget.attrs['disabled'] = False
         form.fields.get('parent_categories').widget.attrs['disabled'] = False
         form.fields.get('category').widget.attrs['disabled'] = False
         return self.render_to_response(self.get_context_data(form=form))
 
     def form_valid(self, form, **kwargs):
+        print("valid")
         random_int = random.randrange(0, 1010)
         product = form.instance
         product.slug = slugify(form.instance.title, max_length=32) + str(random_int)

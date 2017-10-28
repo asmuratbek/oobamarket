@@ -147,6 +147,10 @@ class Product extends Component {
                 <h4 className="uk-width-3-5@l uk-width-3-5@m uk-padding-remove">{this.props.product.title}</h4>
                 <div className="uk-width-2-5@l uk-width-2-5@m uk-padding-remove">
                     <p >{this.props.product.get_price_function} сом </p>
+                    {this.props.product.get_price_function !== this.props.product.price &&
+                        <strike>{this.props.product.price} сом</strike>
+                    }
+
                 </div>
             </div>
         </div>
