@@ -54,18 +54,21 @@ class App extends Component {
   };
 
   queryParams = () => {
+    const params = window.location.search.substr(1).split("&");
+    let result = ""
+    params.forEach(function (i) {
+        if (i.split("=")[0] === "q") {
+            result = decodeURIComponent(i.split("=")[1])
+        }
+    });
+
+    return result
+
 
   };
 
   getMatchPhrase = () => {
-  const params = window.location.search.substr(1).split("&");
-    params.forEach(function (i) {
-        if (i.split("=")[0] === "q") {
-            this.setState({
-                queryText: decodeURIComponent(i.split("=")[1])
-            })
-        }
-    }.bind(this));
+
 
     if (this.state.pageType === 'global') {
         return {global_slug: this.state.categorySlug}
@@ -74,14 +77,7 @@ class App extends Component {
     } else if (this.state.pageType === 'shop') {
         return {shop_slug: this.state.shopSlug}
     } else if (this.state.pageType === 'search') {
-        const params = window.location.search.substr(1).split("&");
-        params.forEach(function (i) {
-            if (i.split("=")[0] === "q") {
-                console.log('bingo')
-                return {match: {text: i.split("=")[1]}}
-            }
-        }.bind(this));
-
+        return {match: {text: this.state.queryText}}
     } else {
         return {category_slug: this.state.categorySlug}
     }

@@ -44,7 +44,7 @@ class SearchForm extends Component {
                 value={this.props.priceTo} onChange={this.handlePriceToChange}/>
             </div>
             <div className="uk-width-1-3@l uk-width-1-2@s">
-                <input className="uk-input" type="text" placeholder="Поиск товара" onChange={this.search}/>
+                <input className="uk-input" type="text" placeholder="Поиск товара" value={this.props.query} onChange={this.search}/>
             </div>
         </form>
 
