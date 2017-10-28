@@ -1000,7 +1000,7 @@ class ShopDetailView(APIView):
             product = get_object_or_404(Product, id=prod['id'])
             prod["is_in_cart"] = user.cart_set.last().cartitem_set.filter(product=product).exists() \
                                     if user.is_authenticated() else False
-            prod["is_favourite"] = product.favorite.filter(user=user).exists() if user.is_authenticated() else False
+            prod["is_favorite"] = product.favorite.filter(user=user).exists() if user.is_authenticated() else False
             prod["main_image"] = product.get_main_thumb_image()
         shop_dict = model_to_dict(shop, exclude=['logo', 'user'])
         shop_dict['logo'] = shop.logo.url if shop.logo else None
