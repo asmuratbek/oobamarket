@@ -69,19 +69,7 @@
                             {% endif %}
                         </div>
                         <div class="social uk-padding-small">
-
-                            <button class="uk-button uk-button-default subscript" type="button">Подписаться</button>
-                            <div uk-dropdown="mode: click; animation: uk-animation-slide-top-small; duration: 300; pos: bottom-center">
-                                <div class="uk-margin">
-                                    <div class="uk-form-controls">
-                                        <label class="uk-margin-small-top uk-display-block"><input class="uk-radio" type="radio" name="radio1"> Option 01</label>
-                                        <label class="uk-margin-small-top uk-display-block"><input class="uk-radio " type="radio" name="radio1"> Option 02</label>
-                                        <label class="uk-margin-small-top uk-display-block"><input class="uk-radio " type="radio" name="radio1"> Option 03</label>
-                                    </div>
-                                    <button class="uk-margin-medium-top uk-button uk-button-default">Сохранить</button>
-                                </div>
-                            </div>
-
+                            <button class="uk-button uk-button-default shop_subscribe" id="shop_subscribe" type="button">{% if subscribe %}Отписаться{% else %}Подписаться{% endif %}</button>
                             <div class="uk-float-right">
                                 {% if object.sociallinks %}
                                     <div class="pull-right">
