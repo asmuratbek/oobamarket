@@ -1,4 +1,6 @@
 import uuid
+from allauth.socialaccount.helpers import complete_social_login
+from allauth.socialaccount.models import SocialApp, SocialToken, SocialLogin
 from allauth.socialaccount.providers.facebook.views import FacebookOAuth2Adapter
 from allauth.socialaccount.providers.google.views import GoogleOAuth2Adapter
 from django.core.paginator import Paginator, EmptyPage
@@ -13,6 +15,7 @@ from drf_multiple_model.views import MultipleModelAPIView
 from rest_auth.registration.views import SocialLoginView
 from rest_framework import filters
 from rest_framework.authentication import SessionAuthentication, TokenAuthentication
+from rest_framework.authtoken.models import Token
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from rest_framework.filters import (
     SearchFilter,
@@ -34,6 +37,7 @@ from rest_framework.views import APIView
 from slugify import slugify
 from django.forms.models import model_to_dict
 from apps.api.v1.serializers import *
+from apps.api.v1.social_auth import SocialAuth
 from apps.cart.models import Cart, CartItem
 from apps.category.models import Category
 from apps.global_category.models import GlobalCategory
@@ -50,14 +54,25 @@ from .permissions import *
 from django.contrib.postgres.search import SearchQuery, SearchRank, SearchVector
 from django.contrib.postgres.search import TrigramSimilarity
 
+from requests.exceptions import HTTPError
+
 ORDER_TYPES = ["price", "-price", "title", "created_at"]
 
-class FacebookLogin(SocialLoginView):
-    adapter_class = FacebookOAuth2Adapter
+
+class FacebookLogin(APIView):
+    permission_classes = (AllowAny, )
+
+    def post(self, request):
+        social_auth = SocialAuth(token_key='social_token', provider='facebook')
+        return social_auth.login(request)
 
 
-class GoogleLogin(SocialLoginView):
-    adapter_class = GoogleOAuth2Adapter
+class GoogleLogin(APIView):
+    permission_classes = (AllowAny, )
+
+    def post(self, request):
+        social_auth = SocialAuth(token_key='social_token', provider='google')
+        return social_auth.login(request)
 
 
 class CategoryListApiView(ListAPIView):

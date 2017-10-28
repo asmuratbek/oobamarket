@@ -1,3 +1,6 @@
+from allauth.socialaccount.models import SocialApp
+from django.contrib.sites.models import Site
+
 __author__ = 'akoikelov'
 
 from allauth.utils import get_user_model
@@ -151,6 +154,22 @@ def create_review(faker, user, shop=None, product=None):
         ProductReviews.objects.create(text=text, stars=stars, user=user, product=product)
     else:
         raise Exception("Please provide shop or product instance")
+
+
+def create_site_for_social_app(domain, name):
+    site = Site.objects.create(domain=domain, name=name)
+
+    return dict(site=site)
+
+
+def create_social_app(provider, name, client_id, secret, site):
+    social_app = SocialApp.objects.create(provider=provider, name=name, client_id=client_id,
+                                          secret=secret)
+
+    social_app.sites.add(site)
+    social_app.save()
+
+    return dict(social_app=social_app)
 
 
 def do_request_to_login(context, url, email, password):
