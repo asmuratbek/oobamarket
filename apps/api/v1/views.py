@@ -717,10 +717,12 @@ class ShopUpdateApiView(RetrieveUpdateAPIView):
 
     def get(self, *args, **kwargs):
         shop = get_object_or_404(Shop, slug=kwargs['slug'])
+        contact = shop.contacts_set.first()
+
         shop_dict = model_to_dict(shop, exclude=['logo', 'user'])
-        shop_dict['logo'] = shop.logo.url
+        shop_dict['logo'] = shop.logo.url if shop.logo else None
         shop_dict['users'] = [user.id for user in shop.user.all()]
-        shop_dict['contact'] = model_to_dict(shop.contacts_set.first())
+        shop_dict['contact'] = model_to_dict(contact) if contact is not None else None
         return JsonResponse(shop_dict)
 
     def perform_update(self, serializer):

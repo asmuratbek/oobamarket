@@ -34,3 +34,14 @@ def step_impl(context):
 
     assert_status_code(context, response, 200)
     assert_response_json_keys_exist(context, response, ['logo', 'users', 'contact'])
+
+
+@given("some shop without any contact and logo")
+def step_impl(context):
+    faker = context.faker
+    instances = create_instances(faker, slug_prefix='shop_update_get_info_2')
+    shop_info = instances['shop_info']
+    user_info = instances['user_info']
+
+    context.shop_slug = shop_info['slug']
+    context.auth_token = login_and_get_auth_token(context, LOGIN_URL, user_info['email'], user_info['password'])
