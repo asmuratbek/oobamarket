@@ -25,7 +25,7 @@
                 <h4 class="uk-width-1-2@l uk-width-3-5@m uk-padding-remove">{{ shop.title|truncatechars:28 }}</h4>
                 <div class="subscribe uk-width-1-2@l uk-width-2-5@m uk-padding-remove">
                     {% if user not in shop.user.all %}
-                        {% if shop.id in subscribe_shops %}
+                        {% if shop in subscribe_shops %}
                             <a class="subscribe_shop disabled">Подписаны</a>
                         {% else %}
                             <a class="subscribe_shop enable">Подписаться</a>

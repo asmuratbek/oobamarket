@@ -207,7 +207,11 @@ class App extends Component {
   };
 
   removeFromFavs = id => {
-
+    let favs = [...this.state.favorites]
+    favs.splice(id, 1);
+    this.setState({
+        favorites: favs
+    })
   };
 
   handlePageChange = (pageNumber) => {
