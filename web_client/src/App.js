@@ -16,7 +16,7 @@ class App extends Component {
         orderBy: '-created_at',
         priceFrom: '',
         priceTo: '',
-        queryText: '',
+        queryText: this.queryParams(),
         products: [],
         activePage: 1,
         shops: [],
@@ -29,6 +29,7 @@ class App extends Component {
         loaded: false,
         places: [],
         markets: [],
+        isAuth: false,
         activePlace: '',
         productsByPage: 20,
         domain: window.location.href.split("/")[2].split(":")[0],
@@ -53,15 +54,22 @@ class App extends Component {
         }
   };
 
-  getMatchPhrase = () => {
-  const params = window.location.search.substr(1).split("&");
+  queryParams = () => {
+    const params = window.location.search.substr(1).split("&");
+    let result = ""
     params.forEach(function (i) {
         if (i.split("=")[0] === "q") {
-            this.setState({
-                queryText: decodeURIComponent(i.split("=")[1])
-            })
+            result = decodeURIComponent(i.split("=")[1])
         }
-    }.bind(this));
+    });
+
+    return result
+
+
+  };
+
+  getMatchPhrase = () => {
+
 
     if (this.state.pageType === 'global') {
         return {global_slug: this.state.categorySlug}
@@ -70,14 +78,7 @@ class App extends Component {
     } else if (this.state.pageType === 'shop') {
         return {shop_slug: this.state.shopSlug}
     } else if (this.state.pageType === 'search') {
-        const params = window.location.search.substr(1).split("&");
-        params.forEach(function (i) {
-            if (i.split("=")[0] === "q") {
-                console.log('bingo')
-                return {match: {text: i.split("=")[1]}}
-            }
-        }.bind(this));
-
+        return {match: {text: this.state.queryText}}
     } else {
         return {category_slug: this.state.categorySlug}
     }
@@ -120,7 +121,6 @@ class App extends Component {
 
         } else {
             let match = this.getMatchPhrase();
-            console.log(match)
             const query = {
                 query: this.state.pageType !== 'search' ? {match_phrase: match} : match,
                 size:  this.state.productsByPage,
@@ -129,8 +129,6 @@ class App extends Component {
                     {created_at: "desc"},
                 ]
               };
-
-            console.log(query)
 
       $.ajax({
             type: "GET",
@@ -142,7 +140,8 @@ class App extends Component {
                     this.setState({
                         favorites: favorites,
                         cartItems: cartItems,
-                        shops: shops
+                        shops: shops,
+                        isAuth: data.isAuth
                     });
               }.bind(this),
               error: function (response, error) {
@@ -195,6 +194,50 @@ class App extends Component {
             })
         }
 
+
+  };
+
+  favoritesFunc = (id, isCreated) => {
+      let favs = this.state.favorites;
+      if (isCreated) {
+            favs.push(id);
+            this.setState({
+                favorites: favs
+            })
+    } else {
+        let index = favs.indexOf(id);
+        if (index !== -1) {
+            favs.splice(index, 1)
+            this.setState({
+                    favorites: favs
+                })
+        }
+    }
+
+    $('.favorites_count').html('<span class="uk-margin-small-right uk-icon" uk-icon="icon: heart"></span> Избранные' +
+                                    '(<span>' + this.state.favorites.length + '</span>)')
+
+  };
+
+  cartFunc = (id, isAdded) => {
+      let cartItems = this.state.cartItems;
+      if (isAdded) {
+            cartItems.push(id);
+            this.setState({
+                cartItems: cartItems
+            })
+    } else {
+        let index = cartItems.indexOf(id);
+        if (index !== -1) {
+            cartItems.splice(index, 1)
+            this.setState({
+                    cartItems: cartItems
+                })
+        }
+    }
+
+    $('.cart_count').html('<span class="uk-margin-small-right uk-icon" uk-icon="icon: cart"></span> Корзина' +
+                                    '(<span>' + this.state.cartItems.length + '</span>)')
 
   };
 
@@ -584,7 +627,7 @@ class App extends Component {
                 </form>
 
 
-                    <div className="uk-child-width-1-1 uk-child-width-1-2@s uk-child-width-1-3@m uk-grid-small uk-child-width-1-4@l " data-uk-grid>
+                    <div className="uk-child-width-1-2 uk-child-width-1-2@s uk-child-width-1-3@m uk-grid-small uk-child-width-1-4@l " data-uk-grid>
                         {filteredShops}
                     </div>
 
@@ -607,6 +650,8 @@ class App extends Component {
         let productDelete = this.productDelete;
         let categories = [];
         let descendants = [];
+        let favoritesFunc = this.favoritesFunc;
+        let cartFunc = this.cartFunc;
 
         filteredProducts = this.state.products.map(function (item, index) {
             return (
@@ -615,7 +660,11 @@ class App extends Component {
                          favorites={this.state.favorites}
                          cartItems={this.state.cartItems}
                          shops={this.state.shops}
-                         product={ item }/>
+                         product={ item }
+                         favoritesFunc={favoritesFunc}
+                         cartFunc={cartFunc}
+                         isAuth={this.state.isAuth}
+                />
             ) //return
         }.bind(this));
 
@@ -674,7 +723,7 @@ class App extends Component {
                                 </ul>
                             </div>
                             <div className="uk-width-expand@m">
-                                <div className="uk-child-width-1-1 uk-child-width-1-2@s uk-child-width-1-2@m  uk-child-width-1-3@l uk-grid-small" data-uk-grid>
+                                <div className="uk-child-width-1-2 uk-child-width-1-2@s uk-child-width-1-2@m  uk-child-width-1-3@l uk-grid-small" data-uk-grid>
 
                                     {this.state.isOwner && (
                                         <div className="uk-grid-match add-product-item">
@@ -710,7 +759,7 @@ class App extends Component {
 
                         </div>
                     ): (
-                        <div className="uk-child-width-1-1 uk-child-width-1-2@s uk-child-width-1-3@m  uk-child-width-1-4@l uk-grid-small" data-uk-grid>
+                        <div className="uk-child-width-1-2 uk-child-width-1-2@s uk-child-width-1-3@m  uk-child-width-1-4@l uk-grid-small" data-uk-grid>
                             {filteredProducts}
                         </div>
                     )}

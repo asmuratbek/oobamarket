@@ -5,53 +5,53 @@
         {% include 'layout/header.html' %}
 
     {#    для того чтобы скрыть умный поиск добавь атрибудт hidden#}
-    <div  class="smart-search uk-grid uk-flex-middle uk-grid-divider uk-padding uk-margin-remove" uk-grid
-         uk-alert>
-        <button class="uk-alert-close uk-padding-remove" type="button" uk-close title="Закрыть"
-                uk-tooltip="pos: left"></button>
-        <div class="uk-width-1-4 uk-text-center">Товары</div>
-        <div class="uk-width-expand">
-            <div class="item uk-grid uk-flex-middle uk-padding-small">
-                <a href="" class="url-product"></a>
-                <div class="uk-width-1-6 image">
-                    <img src="{% static 'img/Alliance-infogr.png' %}" alt="">
-                </div>
-                <div class="uk-width-expand uk-text-left description">
-                    <p class="uk-margin-remove">Telephone Panasonic KX-TG8621 Gigarange Cordless Color</p>
-                    <a href="" class="name-shop" title="Перейти в магазин" uk-tooltip>Enter.kg</a>
-                </div>
-                <div class="uk-width-1-6 price uk-text-right">
-                    1300 сом
-                </div>
-            </div>
-            <div class="item uk-grid uk-flex-middle uk-padding-small">
-                <a href="" class="url-product"></a>
-                <div class="uk-width-1-6 image">
-                    <img src="{% static 'img/Alliance-infogr.png' %}" alt="">
-                </div>
-                <div class="uk-width-expand uk-text-left description">
-                    <p class="uk-margin-remove">Telephone Panasonic KX-TG8621 Gigarange Cordless Color</p>
-                    <a href="" class="name-shop" title="Перейти в магазин" uk-tooltip>Enter.kg</a>
-                </div>
-                <div class="uk-width-1-6 price uk-text-right">
-                    1300 сом
-                </div>
-            </div>
-            <div class="item uk-grid uk-flex-middle uk-padding-small">
-                <a href="" class="url-product"></a>
-                <div class="uk-width-1-6 image">
-                    <img src="{% static 'img/Alliance-infogr.png' %}" alt="">
-                </div>
-                <div class="uk-width-expand uk-text-left description">
-                    <p class="uk-margin-remove">Telephone Panasonic KX-TG8621 Gigarange Cordless Color</p>
-                    <a href="" class="name-shop" title="Перейти в магазин" uk-tooltip>Enter.kg</a>
-                </div>
-                <div class="uk-width-1-6 price uk-text-right">
-                    1300 сом
-                </div>
-            </div>
-        </div>
-    </div>
+{#    <div  class="smart-search uk-grid uk-flex-middle uk-grid-divider uk-padding uk-margin-remove" uk-grid#}
+{#         uk-alert hidden>#}
+{#        <button class="uk-alert-close uk-padding-remove" type="button" uk-close title="Закрыть"#}
+{#                uk-tooltip="pos: left"></button>#}
+{#        <div class="uk-width-1-4 uk-text-center">Товары</div>#}
+{#        <div class="uk-width-expand">#}
+{#            <div class="item uk-grid uk-flex-middle uk-padding-small">#}
+{#                <a href="" class="url-product"></a>#}
+{#                <div class="uk-width-1-6 image">#}
+{#                    <img src="{% static 'img/Alliance-infogr.png' %}" alt="">#}
+{#                </div>#}
+{#                <div class="uk-width-expand uk-text-left description">#}
+{#                    <p class="uk-margin-remove">Telephone Panasonic KX-TG8621 Gigarange Cordless Color</p>#}
+{#                    <a href="" class="name-shop" title="Перейти в магазин" uk-tooltip>Enter.kg</a>#}
+{#                </div>#}
+{#                <div class="uk-width-1-6 price uk-text-right">#}
+{#                    1300 сом#}
+{#                </div>#}
+{#            </div>#}
+{#            <div class="item uk-grid uk-flex-middle uk-padding-small">#}
+{#                <a href="" class="url-product"></a>#}
+{#                <div class="uk-width-1-6 image">#}
+{#                    <img src="{% static 'img/Alliance-infogr.png' %}" alt="">#}
+{#                </div>#}
+{#                <div class="uk-width-expand uk-text-left description">#}
+{#                    <p class="uk-margin-remove">Telephone Panasonic KX-TG8621 Gigarange Cordless Color</p>#}
+{#                    <a href="" class="name-shop" title="Перейти в магазин" uk-tooltip>Enter.kg</a>#}
+{#                </div>#}
+{#                <div class="uk-width-1-6 price uk-text-right">#}
+{#                    1300 сом#}
+{#                </div>#}
+{#            </div>#}
+{#            <div class="item uk-grid uk-flex-middle uk-padding-small">#}
+{#                <a href="" class="url-product"></a>#}
+{#                <div class="uk-width-1-6 image">#}
+{#                    <img src="{% static 'img/Alliance-infogr.png' %}" alt="">#}
+{#                </div>#}
+{#                <div class="uk-width-expand uk-text-left description">#}
+{#                    <p class="uk-margin-remove">Telephone Panasonic KX-TG8621 Gigarange Cordless Color</p>#}
+{#                    <a href="" class="name-shop" title="Перейти в магазин" uk-tooltip>Enter.kg</a>#}
+{#                </div>#}
+{#                <div class="uk-width-1-6 price uk-text-right">#}
+{#                    1300 сом#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
 
     <section class="dropdown-category ">
         <div class="uk-container uk-width-auto">
@@ -208,6 +208,8 @@
 {% block footer %}
     {{ block.super }}
 {% endblock footer %}
-
+{% block js %}
+    <script src="{% static "js/subscribe.js" %}"></script>
+{% endblock %}
 
 

@@ -1,15 +1,42 @@
 import React, {Component} from 'react';
+import $ from 'jquery';
 
 class Product extends Component {
 
-    AddOrRemoveFavorite = (e) => {
+    addOrRemoveFromFavorites = (e) => {
         e.preventDefault();
-        console.log('fav')
+        $.ajax({
+            type: "GET",
+            url: "/favorite/add",
+            data: {
+                'item': this.props.product.pk
+            },
+            success: function (data) {
+                this.props.favoritesFunc(this.props.product.pk, data.created)
+            }.bind(this),
+            error: function (response, error) {
+                console.log(response);
+                console.log(error);
+            }
+        })
     };
 
     addOrRemoveFromCart = (e) => {
         e.preventDefault();
-        console.log('cart')
+        $.ajax({
+            type: "GET",
+            url: "/cart/",
+            data: {
+                'item': this.props.product.pk
+            },
+            success: function (data) {
+                this.props.cartFunc(this.props.product.pk, data.item_added)
+            }.bind(this),
+            error: function (response, error) {
+                console.log(response);
+                console.log(error);
+            }
+        })
     };
 
     changePublishStatus = (e) => {
@@ -58,8 +85,8 @@ class Product extends Component {
                 <div className="border">
                     <a href="" className="uk-position-cover"></a>
                     <div className="uk-cover-container">
-                        <canvas width="400" height="500"></canvas>
                         <img data-uk-cover src={this.props.product.main_image} alt=""/>
+                        <canvas width="400" height="500"></canvas>
                     </div>
                 </div>
                 <div className="uk-transition-fade uk-position-cover uk-overlay uk-overlay-default">
@@ -67,19 +94,24 @@ class Product extends Component {
                     <small className="uk-display-block">Магазин</small>
                     <h4 className="uk-margin-remove"><a href="#">{this.props.product.shop}</a></h4>
                     <p>{this.props.product.short_description}</p>
-                    <div className="control">
-                        <a href="#" className={`favorite uk-margin-medium-right ${this.isInFavorites(this.props.product) && 'like'}`}
+                    {this.props.isAuth &&
+                    (
+                        <div className="control">
+                        <a href="#" className={`uk-margin-medium-right ${this.isInFavorites(this.props.product) && 'like'}`}
                            title={this.isInFavorites(this.props.product) ? 'Удалить из избранных' : 'Добавить в избранное'} data-uk-tooltip
-                           data-item-id={this.props.product.pk}><span
+                           data-item-id={this.props.product.pk} onClick={this.addOrRemoveFromFavorites}><span
                                 className=" uk-icon" data-uk-icon="icon: heart; ratio: 2"></span></a>
-                        <a href="#" className={`basket cart uk-margin-medium-left ${this.isInCart(this.props.product) && 'in'}`}
+                        <a href="#" className={`basket uk-margin-medium-left ${this.isInCart(this.props.product) && 'in'}`}
                            title={this.isInCart(this.props.product) ? 'В корзине' : 'Добавить в корзину'} data-uk-tooltip
-                        data-item-id={this.props.product.pk}><span
+                        data-item-id={this.props.product.pk} onClick={this.addOrRemoveFromCart}><span
                                 className=" uk-icon" data-uk-icon="icon: cart; ratio: 2"></span></a>
                     </div>
+                    )}
+
                 </div>
             </div>
             <div className="uk-padding-small uk-grid uk-margin-remove footer">
+                <h4 className="uk-hidden@s uk-padding-remove"><a href="#">{this.props.product.shop}</a></h4>
                 <h4 className="uk-width-3-5@l uk-width-3-5@m uk-padding-remove">{this.props.product.title}</h4>
                 <div className="uk-width-2-5@l uk-width-2-5@m uk-padding-remove">
                     <p >{this.props.product.get_price_function} сом </p>

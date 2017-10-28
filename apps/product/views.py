@@ -299,6 +299,7 @@ def remove_uploaded_image(request):
 
 def search_predict_html(request):
     q = request.GET.get('q')
+    print(q)
     products = Product.objects.filter(
         Q(title__icontains=str(q))
     ).distinct()

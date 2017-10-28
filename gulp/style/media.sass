@@ -110,6 +110,63 @@
   .order-list
     h1
       font-size: 25px
+  .product-list
+    .footer
+      padding: 10px
+      h4
+        height: 30px
+        font-size: 10px
+        text-align: center
+        width: 100%
+        a
+          color: #444
+          font-weight: bold
+          font-size: 15px
+      h4 + div
+        height: auto
+    .uk-transition-fade
+      opacity: 1 !important
+      background: transparent !important
+      a.uk-position-cover
+        z-index: 100
+      small
+        display: none !important
+      h4
+        display: none
+      p
+        display: none
+
+    .uk-overlay
+
+      .control
+        top: 0
+        a:first-child
+          position: absolute
+          left: 10px
+          top: 10px
+          margin: 0 !important
+        a:last-child
+          position: absolute
+          right: 10px
+          top: 10px
+          margin: 0 !important
+        a
+          span
+            svg
+              width: 20px
+              height: 20px
+    .control.uk-hidden\@s
+      position: absolute
+      right: 7px
+      top: 8px
+      width: auto
+      padding: 0
+      a:last-child
+        margin-left: 10px !important
+      span
+        svg
+          width: 20px
+          height: 20px
 @media (min-width: 960px)
   .uk-container
       padding-left: 80px
