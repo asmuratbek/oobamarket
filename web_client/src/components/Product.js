@@ -58,8 +58,8 @@ class Product extends Component {
                 <div className="border">
                     <a href="" className="uk-position-cover"></a>
                     <div className="uk-cover-container">
-                        <canvas width="400" height="500"></canvas>
                         <img data-uk-cover src={this.props.product.main_image} alt=""/>
+                        <canvas width="400" height="500"></canvas>
                     </div>
                 </div>
                 <div className="uk-transition-fade uk-position-cover uk-overlay uk-overlay-default">
