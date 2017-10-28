@@ -16,7 +16,7 @@ class App extends Component {
         orderBy: '-created_at',
         priceFrom: '',
         priceTo: '',
-        queryText: '',
+        queryText: this.queryParams(),
         products: [],
         activePage: 1,
         shops: [],
@@ -51,6 +51,10 @@ class App extends Component {
         } else {
             return "global"
         }
+  };
+
+  queryParams = () => {
+
   };
 
   getMatchPhrase = () => {
@@ -674,7 +678,7 @@ class App extends Component {
                                 </ul>
                             </div>
                             <div className="uk-width-expand@m">
-                                <div className="uk-child-width-1-1 uk-child-width-1-2@s uk-child-width-1-2@m  uk-child-width-1-3@l uk-grid-small" data-uk-grid>
+                                <div className="uk-child-width-1-2 uk-child-width-1-2@s uk-child-width-1-2@m  uk-child-width-1-3@l uk-grid-small" data-uk-grid>
 
                                     {this.state.isOwner && (
                                         <div className="uk-grid-match add-product-item">
@@ -710,7 +714,7 @@ class App extends Component {
 
                         </div>
                     ): (
-                        <div className="uk-child-width-1-1 uk-child-width-1-2@s uk-child-width-1-3@m  uk-child-width-1-4@l uk-grid-small" data-uk-grid>
+                        <div className="uk-child-width-1-2 uk-child-width-1-2@s uk-child-width-1-3@m  uk-child-width-1-4@l uk-grid-small" data-uk-grid>
                             {filteredProducts}
                         </div>
                     )}
