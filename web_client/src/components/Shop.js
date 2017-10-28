@@ -29,7 +29,12 @@ class Shop extends Component {
                                 {this.props.shop.is_owner ? (
                                                     ""
                                                 ):(
-                                                    <a href="">{this.props.shop.is_subscribed ? "Подписаны" : "Подписаться" }</a>
+                                                    this.props.shop.is_subscribed ? (
+                                                        <a href="" className="subscribe_shop enabled">Подписаны</a>
+                                                        ) : (
+
+                                                            <a href="" className="subscribe_shop">Подписаться</a>
+                                                            )
                                                 )}
 
                             </div>
