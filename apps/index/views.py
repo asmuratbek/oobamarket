@@ -14,6 +14,8 @@ class IndexView(generic.TemplateView):
         context = super(IndexView, self).get_context_data(**kwargs)
         context['banners'] = IndexBanner.objects.filter(banner_type='slider', published=True)
         context['offer_banner'] = IndexBanner.objects.filter(banner_type='offer', published=True).last()
+        if self.request.user.is_authenticated():
+            context['subscribe_shops'] = [sub.subscription for sub in self.request.user.subscription_set.all()]
         context['shops'] = Shop.objects.all()[:8]
         # if self.request.user.is_authenticated:
         #     context['subscribe_shops'] = [sub.subscription.id for sub in self.request.user.subscription_set.all()]
