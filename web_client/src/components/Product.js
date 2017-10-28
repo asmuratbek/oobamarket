@@ -3,22 +3,25 @@ import $ from 'jquery';
 
 class Product extends Component {
 
+    constructor(props){
+        super(props);
+        this.state = {
+            published: this.props.product.published
+        }
+    }
+
+
     addOrRemoveFromFavorites = (e) => {
         e.preventDefault();
-        let productId = $(this).attr("data-item-id");
         $.ajax({
             type: "GET",
             url: "/favorite/add",
             data: {
-                'item': productId
+                'item': this.props.product.pk
             },
             success: function (data) {
-                if (data.created) {
-                    this.props.addToFavs(productId)
-                } else {
-                    this.props.removeFromFavs(productId)
-                }
-            },
+                this.props.favoritesFunc(this.props.product.pk, data.created)
+            }.bind(this),
             error: function (response, error) {
                 console.log(response);
                 console.log(error);
@@ -28,12 +31,49 @@ class Product extends Component {
 
     addOrRemoveFromCart = (e) => {
         e.preventDefault();
-        console.log('cart')
+        $.ajax({
+            type: "GET",
+            url: "/cart/",
+            data: {
+                'item': this.props.product.pk
+            },
+            success: function (data) {
+                this.props.cartFunc(this.props.product.pk, data.item_added)
+            }.bind(this),
+            error: function (response, error) {
+                console.log(response);
+                console.log(error);
+            }
+        })
     };
 
     changePublishStatus = (e) => {
         e.preventDefault();
-        console.log('pub')
+        let thisIcon = $(this);
+        console.log(thisIcon)
+        $.ajax({
+            type: "GET",
+            url: '/change_publish_status/',
+            data: {
+                'item': this.props.product.pk
+            },
+            success: function (data) {
+                if (data.published && data.status !== "error") {
+                    this.setState({
+                        published:false
+                    })
+                }
+                else if (!data.published && data.status !== "error") {
+                    this.setState({
+                        published:true
+                    })
+                }
+            }.bind(this),
+            error: function (response, error) {
+                console.log(response);
+                console.log(error);
+            }
+        })
     };
 
     isInCart = (product) => {
@@ -65,9 +105,9 @@ class Product extends Component {
                 <div className="setting">
                     <a href={`${this.props.product.detail_view}${this.props.product.slug}/update-product/`}
                        data-uk-icon="icon: file-edit" title="Редактировать товар" data-uk-tooltip></a>
-                    <a className={`product-vision ${!this.props.product.published && ' disabled'}`} href="#"
-                       data-uk-icon="icon: copy" title={this.props.product.published ? "Скрыть товар" : "Опубликовать товар"} data-uk-tooltip
-                    data-item-id={this.props.product.pk}></a>
+                    <a className={!this.state.published ? 'disabled' : ''} href="#"
+                       data-uk-icon="icon: copy" title={this.state.published ? "Скрыть товар" : "Опубликовать товар"} data-uk-tooltip
+                    data-item-id={this.props.product.pk} onClick={this.changePublishStatus}></a>
                     <a href="#" data-uk-icon="icon: close" title="Удалить товар" data-uk-tooltip
                     data-item-id={this.props.product.pk}></a>
                 </div>
@@ -86,7 +126,9 @@ class Product extends Component {
                     <small className="uk-display-block">Магазин</small>
                     <h4 className="uk-margin-remove"><a href="#">{this.props.product.shop}</a></h4>
                     <p>{this.props.product.short_description}</p>
-                    <div className="control">
+                    {this.props.isAuth &&
+                    (
+                        <div className="control">
                         <a href="#" className={`uk-margin-medium-right ${this.isInFavorites(this.props.product) && 'like'}`}
                            title={this.isInFavorites(this.props.product) ? 'Удалить из избранных' : 'Добавить в избранное'} data-uk-tooltip
                            data-item-id={this.props.product.pk} onClick={this.addOrRemoveFromFavorites}><span
@@ -96,6 +138,8 @@ class Product extends Component {
                         data-item-id={this.props.product.pk} onClick={this.addOrRemoveFromCart}><span
                                 className=" uk-icon" data-uk-icon="icon: cart; ratio: 2"></span></a>
                     </div>
+                    )}
+
                 </div>
             </div>
             <div className="uk-padding-small uk-grid uk-margin-remove footer">

@@ -68,7 +68,7 @@ def step_impl(context):
     context.test.assertEqual(json_content['count'], SHOP_PRODUCTS_OF_CATEGORY_QUANTITY + SHOP_PRODUCTS_QUANTITY)
 
     for item in json_content['products']:
-        if item['is_favourite']:
+        if item['is_favorite']:
             favorite_products_quantity += 1
 
     context.test.assertEqual(favorite_products_quantity, FAVORITE_PRODUCTS_QUANTITY)

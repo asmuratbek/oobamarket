@@ -39,7 +39,8 @@
                     <div class="border">
                         <a href="{{ sub.get_absolute_url }}" class="uk-position-cover"></a>
                         <div class="uk-cover-container">
-                            <canvas width="400" height="500"></canvas>
+                            <canvas class="uk-visible@s" width="400" height="500"></canvas>
+                            <canvas class="uk-hidden@s" width="200" height="300"></canvas>
                             <img uk-cover src="{{ sub.get_all_images.first.image.url }}" alt="">
                         </div>
                     </div>
@@ -49,8 +50,7 @@
                         <h4 class="uk-margin-remove"><a
                                 href="{% url 'shops:detail' slug=sub.shop.slug %}"> {{ sub.shop.title }}</a></h4>
                         <p>{{ sub.short_description }}</p>
-                        <div class="control">
-
+                        <div class="control uk-visible@s">
                             <a href="#" class="favorite uk-margin-medium-right {% is_favorite_for_like sub request.user %}" data-product-id="{{ sub.id }}" title="{% is_favorite_for_tooltip sub request.user %}" uk-tooltip>
                                 <span class=" uk-icon" uk-icon="icon: heart; ratio: 2"></span>
                             </a>
@@ -58,10 +58,23 @@
                         </div>
                     </div>
                 </div>
-                <div class="uk-padding-small uk-grid uk-margin-remove footer">
+                <div class="uk-visible@s uk-padding-small uk-grid uk-margin-remove footer">
                     <h4 class="uk-width-3-5@l uk-width-3-5@m uk-padding-remove">{{ sub.title }}</h4>
-                    <div class="uk-width-2-5@l uk-width-2-5@m uk-padding-remove">
+                    <div class="uk-width-2-5@l uk-text-right uk-width-2-5@m uk-padding-remove">
                         <p>{{ sub.price }} {{ sub.currency }}</p>
+                    </div>
+                </div>
+                <div class="uk-hidden@s uk-padding-small uk-position-relative  uk-grid uk-margin-remove footer">
+                     <div class="control uk-hidden@s uk-text-right">
+                            <a href="#" class="favorite {% is_favorite_for_like sub request.user %}" data-product-id="{{ sub.id }}" title="{% is_favorite_for_tooltip sub request.user %}" uk-tooltip>
+                                <span class=" uk-icon" uk-icon="icon: heart; ratio: 2"></span>
+                            </a>
+                            {% cart_message request sub %}
+                        </div>
+                    <h4 style="height: auto;" class="uk-hidden@s uk-margin-small-bottom uk-text-left uk-padding-remove"><b><a style="color: #444; font-size: 15px;" href="{% url 'shops:detail' slug=sub.shop.slug %}">{{ sub.shop.title }}</a></b></h4>
+                    <h4 style="height: auto;" class="uk-width-3-5@l uk-text-left uk-width-3-5@m uk-padding-remove">{{ sub.title }}</h4>
+                    <div class="uk-width-2-5@l uk-text-left uk-width-2-5@m uk-padding-remove">
+                        <p class="uk-text-left">{{ sub.price }} {{ sub.currency }}</p>
                     </div>
                 </div>
             </div>

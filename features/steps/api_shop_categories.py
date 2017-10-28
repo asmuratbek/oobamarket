@@ -15,7 +15,7 @@ def step_impl(context):
     instances = create_instances(faker, slug_prefix='shop_categories_')
     user_info = instances['user_info']
     global_category_info = instances['global_category_info']
-    shop_info = create_shop(faker, user=user_info['user'], slug_prefix='shop_categories_')
+    shop_info = create_shop(faker, user=user_info['user'], slug_prefix='shop_categories_shop')
 
     shop = shop_info['shop']
     global_category = global_category_info['category']
@@ -24,6 +24,8 @@ def step_impl(context):
                                             section=global_category)
     second_p_category_info = create_category(faker, slug_prefix='shop_categories_parent_2', order=2,
                                              section=global_category)
+    create_category(faker, slug_prefix='shop_categories_parent_3', order=3,
+                    section=global_category)  # unused parent category
 
     first_category_info = create_category(faker, slug_prefix='shop_categories_1', order=3, section=global_category,
                                           parent_category=first_p_category_info['category'])

@@ -29,6 +29,7 @@ class App extends Component {
         loaded: false,
         places: [],
         markets: [],
+        isAuth: false,
         activePlace: '',
         productsByPage: 20,
         domain: window.location.href.split("/")[2].split(":")[0],
@@ -120,7 +121,6 @@ class App extends Component {
 
         } else {
             let match = this.getMatchPhrase();
-            console.log(match)
             const query = {
                 query: this.state.pageType !== 'search' ? {match_phrase: match} : match,
                 size:  this.state.productsByPage,
@@ -129,8 +129,6 @@ class App extends Component {
                     {created_at: "desc"},
                 ]
               };
-
-            console.log(query)
 
       $.ajax({
             type: "GET",
@@ -142,7 +140,8 @@ class App extends Component {
                     this.setState({
                         favorites: favorites,
                         cartItems: cartItems,
-                        shops: shops
+                        shops: shops,
+                        isAuth: data.isAuth
                     });
               }.bind(this),
               error: function (response, error) {
@@ -198,15 +197,47 @@ class App extends Component {
 
   };
 
-  addToFavs = id => {
-    let favs = [...this.state.favorites]
-    favs.push(id);
-    this.setState({
-        favorites: favs
-    })
+  favoritesFunc = (id, isCreated) => {
+      let favs = this.state.favorites;
+      if (isCreated) {
+            favs.push(id);
+            this.setState({
+                favorites: favs
+            })
+    } else {
+        let index = favs.indexOf(id);
+        if (index !== -1) {
+            favs.splice(index, 1)
+            this.setState({
+                    favorites: favs
+                })
+        }
+    }
+
+    $('.favorites_count').html('<span class="uk-margin-small-right uk-icon" uk-icon="icon: heart"></span> Избранные' +
+                                    '(<span>' + this.state.favorites.length + '</span>)')
+
   };
 
-  removeFromFavs = id => {
+  cartFunc = (id, isAdded) => {
+      let cartItems = this.state.cartItems;
+      if (isAdded) {
+            cartItems.push(id);
+            this.setState({
+                cartItems: cartItems
+            })
+    } else {
+        let index = cartItems.indexOf(id);
+        if (index !== -1) {
+            cartItems.splice(index, 1)
+            this.setState({
+                    cartItems: cartItems
+                })
+        }
+    }
+
+    $('.cart_count').html('<span class="uk-margin-small-right uk-icon" uk-icon="icon: cart"></span> Корзина' +
+                                    '(<span>' + this.state.cartItems.length + '</span>)')
 
   };
 
@@ -619,8 +650,8 @@ class App extends Component {
         let productDelete = this.productDelete;
         let categories = [];
         let descendants = [];
-        let addToFavs = this.addToFavs;
-        let removeFromFavs = this.removeFromFavs;
+        let favoritesFunc = this.favoritesFunc;
+        let cartFunc = this.cartFunc;
 
         filteredProducts = this.state.products.map(function (item, index) {
             return (
@@ -630,8 +661,9 @@ class App extends Component {
                          cartItems={this.state.cartItems}
                          shops={this.state.shops}
                          product={ item }
-                         addToFavs={this.addToFavs}
-                         removeFromFavs={this.removeFromFavs}
+                         favoritesFunc={favoritesFunc}
+                         cartFunc={cartFunc}
+                         isAuth={this.state.isAuth}
                 />
             ) //return
         }.bind(this));
