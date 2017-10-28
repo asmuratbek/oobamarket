@@ -213,8 +213,10 @@ class App extends Component {
                     favorites: favs
                 })
         }
-
     }
+
+    $('.favorites_count').html('<span class="uk-margin-small-right uk-icon" uk-icon="icon: heart"></span> Избранные' +
+                                    '(<span>' + this.state.favorites.length + '</span>)')
 
   };
 
@@ -233,9 +235,10 @@ class App extends Component {
                     cartItems: cartItems
                 })
         }
-        console.log(cartItems)
-
     }
+
+    $('.cart_count').html('<span class="uk-margin-small-right uk-icon" uk-icon="icon: cart"></span> Корзина' +
+                                    '(<span>' + this.state.cartItems.length + '</span>)')
 
   };
 
