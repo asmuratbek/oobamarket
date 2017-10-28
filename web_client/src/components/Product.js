@@ -23,7 +23,20 @@ class Product extends Component {
 
     addOrRemoveFromCart = (e) => {
         e.preventDefault();
-        console.log('cart')
+        $.ajax({
+            type: "GET",
+            url: "/cart/",
+            data: {
+                'item': this.props.product.pk
+            },
+            success: function (data) {
+                this.props.cartFunc(this.props.product.pk, data.item_added)
+            }.bind(this),
+            error: function (response, error) {
+                console.log(response);
+                console.log(error);
+            }
+        })
     };
 
     changePublishStatus = (e) => {

@@ -201,16 +201,40 @@ class App extends Component {
   favoritesFunc = (id, isCreated) => {
       let favs = this.state.favorites;
       if (isCreated) {
-          console.log('created')
             favs.push(id);
             this.setState({
                 favorites: favs
             })
     } else {
-        favs.splice(id, 1);
-        this.setState({
-            favorites: favs
-        })
+        let index = favs.indexOf(id);
+        if (index !== -1) {
+            favs.splice(index, 1)
+            this.setState({
+                    favorites: favs
+                })
+        }
+
+    }
+
+  };
+
+  cartFunc = (id, isAdded) => {
+      let cartItems = this.state.cartItems;
+      if (isAdded) {
+            cartItems.push(id);
+            this.setState({
+                cartItems: cartItems
+            })
+    } else {
+        let index = cartItems.indexOf(id);
+        if (index !== -1) {
+            cartItems.splice(index, 1)
+            this.setState({
+                    cartItems: cartItems
+                })
+        }
+        console.log(cartItems)
+
     }
 
   };
@@ -625,6 +649,7 @@ class App extends Component {
         let categories = [];
         let descendants = [];
         let favoritesFunc = this.favoritesFunc;
+        let cartFunc = this.cartFunc;
 
         filteredProducts = this.state.products.map(function (item, index) {
             return (
@@ -635,6 +660,7 @@ class App extends Component {
                          shops={this.state.shops}
                          product={ item }
                          favoritesFunc={favoritesFunc}
+                         cartFunc={cartFunc}
                 />
             ) //return
         }.bind(this));
