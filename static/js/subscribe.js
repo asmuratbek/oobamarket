@@ -1,6 +1,21 @@
 /**
  * Created by daniyar on 7/5/17.
  */
+
+function showFlashMessage(message) {
+    // var template = "{% include 'alert.html' with message='" + message + "' %}"
+    var template = "<div class='container container-alert-flash'>" +
+        "<div class='col-sm-3 col-sm-offset-8'> " +
+        "<div class='alert alert-success alert-dismissible' role='alert'>" +
+        "<button type='button' class='close' data-dismiss='alert' aria-label='Close'>" +
+        "<span aria-hidden='true'>&times;</span></button>"
+        + message + "</div></div></div>";
+    $("body").append(template);
+    $(".container-alert-flash").fadeIn();
+    setTimeout(function () {
+        $(".container-alert-flash").fadeOut().remove();
+    }, 1800);
+}
 var sub_select = $('#sub_select');
 var icon = "<span class='glyphicon glyphicon-send'></span>";
 $('#sub_button').on('click', function () {
@@ -77,5 +92,22 @@ $(document).on("click", ".subscribe_shop", function () {
             that.removeClass("enable");
         }
     });
+});
+
+$('#shop_subscribe').on('click', function () {
+    var that = $(this);
+    var slug = window.location.href.split('/')[4];
+    $.post('/users/subscribe/', {'shop_slug': slug}, function (data) {
+        if (data === 'redirect'){
+            window.location.href = '/accounts/login/'
+        } else if(data.status === 0) {
+            $('#shop_subscribe').text('Подписаться');
+            showFlashMessage(data.message)
+        }else {
+            $('#shop_subscribe').text('Отписаться');
+            console.log(data.message);
+            showFlashMessage(data.message)
+        }
+    })
 });
 
