@@ -132,7 +132,7 @@ class App extends Component {
 
       $.ajax({
             type: "GET",
-              url: `http://${this.state.domain}:8000/api/v1/my-list/`,
+              url: `http://${this.state.domain !== 'localhost' ? this.state.domain : 'localhost:8000'}/api/v1/my-list/`,
               success: function (data) {
                     let favorites = data.favorites.map(obj => obj.id);
                     let cartItems = data.cart_items.map(obj => obj.id);
