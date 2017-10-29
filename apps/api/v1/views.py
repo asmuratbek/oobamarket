@@ -60,7 +60,7 @@ ORDER_TYPES = ["price", "-price", "title", "created_at"]
 
 
 class FacebookLogin(APIView):
-    permission_classes = (AllowAny, )
+    permission_classes = (AllowAny,)
 
     def post(self, request):
         social_auth = SocialAuth(token_key='social_token', provider='facebook')
@@ -68,7 +68,7 @@ class FacebookLogin(APIView):
 
 
 class GoogleLogin(APIView):
-    permission_classes = (AllowAny, )
+    permission_classes = (AllowAny,)
 
     def post(self, request):
         social_auth = SocialAuth(token_key='social_token', provider='google')
@@ -83,7 +83,7 @@ class CategoryListApiView(ListAPIView):
 
 class ProductAddToFavoriteView(APIView):
     permission_classes = (IsAuthenticated,)
-    authentication_classes = (TokenAuthentication, )
+    authentication_classes = (TokenAuthentication,)
 
     def post(self, request, slug):
         favorite = FavoriteProduct.objects.filter(product__slug=slug, user=request.user)
@@ -139,7 +139,7 @@ class LentaView(APIView):
                         "main_image": item.get_main_thumb_image(),
                         "price": item.get_price(),
                         "is_favorite": item.favorite.filter(user=user).exists(),
-                        "is_in_cart": user.cart_set.last().cartitem_set.filter(product=item).exists()\
+                        "is_in_cart": user.cart_set.last().cartitem_set.filter(product=item).exists() \
                             if user.cart_set.all() else False
                     })
                 else:
@@ -268,7 +268,7 @@ class CategoryDetailChildrenApiView(ListAPIView):
 
 
 class GlobalCategoryDetailApiView(APIView):
-    permission_classes = (AllowAny, )
+    permission_classes = (AllowAny,)
     authentication_classes = (TokenAuthentication,)
 
     def get(self, request, slug):
@@ -307,7 +307,7 @@ class GlobalCategoryDetailApiView(APIView):
                     "price": product.get_price(),
                     "is_favorite": product.favorite.filter(
                         user=self.request.user).exists() if self.request.user.is_authenticated else False,
-                    "is_in_cart": self.request.user.cart_set.last().cartitem_set.filter(product=product).exists()\
+                    "is_in_cart": self.request.user.cart_set.last().cartitem_set.filter(product=product).exists() \
                         if self.request.user.is_authenticated \
                            and self.request.user.cart_set.all() \
                         else False
@@ -325,7 +325,7 @@ class MyListView(APIView):
     authentication_classes = [SessionAuthentication, TokenAuthentication]
 
     def get(self, request):
-        cart_items = request.user.cart_set.last().cartitem_set.all().values("product__id")\
+        cart_items = request.user.cart_set.last().cartitem_set.all().values("product__id") \
             if request.user.is_authenticated and request.user.cart_set else False
         items = list()
         favs = list()
@@ -335,7 +335,7 @@ class MyListView(APIView):
                 items.append({
                     "id": item.get("product__id")
                 })
-        favorites = request.user.favoriteproduct_set.all()\
+        favorites = request.user.favoriteproduct_set.all() \
             if request.user.is_authenticated and request.user.favoriteproduct_set else False
         if favorites:
             for fav in favorites:
@@ -356,12 +356,11 @@ class MyListView(APIView):
         })
 
 
-
 class ProductListApiView(ListAPIView):
     serializer_class = ProductSerializer
     filter_backends = [SearchFilter, OrderingFilter]
     search_fields = ['title', 'short_description']
-    pagination_class = ProductLimitPagination#PageNumberPagination
+    pagination_class = ProductLimitPagination  # PageNumberPagination
     permission_classes = (AllowAny,)
     authentication_classes = (SessionAuthentication, TokenAuthentication)
 
@@ -404,12 +403,13 @@ class ProductDetailApiView(APIView):
             "shop": product.get_shop_title(),
             "price": product.get_price(),
             "images": images,
-            "is_favorite": product.favorite.filter(user=self.request.user).exists() if self.request.user.is_authenticated else 0,
+            "is_favorite": product.favorite.filter(
+                user=self.request.user).exists() if self.request.user.is_authenticated else 0,
             "is_in_cart": True if products_in_cart and product in products_in_cart else False
         })
 
 
-class ProductUpdateApiView(RetrieveUpdateAPIView):
+class ProductUpdateApiView(APIView):
     queryset = Product.objects.all()
     serializer_class = ProductPostSerializer
     lookup_field = 'slug'
@@ -419,7 +419,7 @@ class ProductUpdateApiView(RetrieveUpdateAPIView):
     def get(self, request, *args, **kwargs):
         product = get_object_or_404(Product, slug=kwargs['slug'])
         product_images = [{'image_id': i.id, 'image_url': i.image.url}
-                                     for i in product.productimage_set.all()]
+                          for i in product.productimage_set.all()]
         product_dict = model_to_dict(product, exclude=['shop', 'category'])
         product_dict['shop'] = dict(id=product.shop.id, title=product.shop.title, slug=product.shop.slug)
         product_dict['global_category'] = dict(id=product.category.parent.section.id,
@@ -427,29 +427,37 @@ class ProductUpdateApiView(RetrieveUpdateAPIView):
                                                slug=product.category.parent.section.slug)
         product_dict['parent_category'] = dict(id=product.category.parent.id, title=product.category.parent.title,
                                                slug=product.category.parent.slug)
-        product_dict['category'] = dict(id=product.category.id, title=product.category.title, slug=product.category.slug)
+        product_dict['category'] = dict(id=product.category.id, title=product.category.title,
+                                        slug=product.category.slug)
         return JsonResponse(dict(images=product_images, product=product_dict))
 
-    def perform_update(self, serializer):
-        remove_images_list = [int(i) for i in self.request.data.getlist('delete_images', [])
-                                  if i != '' and i != None]
+    def post(self, *args, **kwargs):
+        product = get_object_or_404(klass=Product, slug=kwargs['slug'])
+        product_serializer = ProductPostSerializer(product, data=self.request.data)
 
-        ProductImage.objects.filter(id__in=remove_images_list).delete()
+        if product_serializer.is_valid():
+            product_serializer.save(category=get_object_or_404(Category, slug=self.request.POST.get('category', '')),
+                                    shop=get_object_or_404(Shop, slug=self.request.POST.get('shop', '')))
 
-        product = serializer.save(category=get_object_or_404(Category, slug=self.request.data.get('category', '')),
-                                    shop=get_object_or_404(Shop, slug=self.request.data.get('shop', '')))
-        images_files = self.request.FILES.getlist('images_files', '')
-        if images_files:
-            image_list = [ProductImage(product=product, image=img) for img in images_files]
-            ProductImage.objects.bulk_create(image_list)
-        return JsonResponse({'status': 0, 'message': 'Product is successfully updated.'})
+            images_files = self.request.FILES.getlist('images_files', '')
+            remove_images_list = [int(i) for i in self.request.data.getlist('delete_images', [])
+                                  if i not in ['', None]]
+
+            ProductImage.objects.filter(id__in=remove_images_list).delete()
+
+            if images_files:
+                image_list = [ProductImage(product=product, image=img) for img in images_files]
+                ProductImage.objects.bulk_create(image_list)
+            return JsonResponse({'status': 0, 'message': 'Product is successfully updated.'})
+        else:
+            return JsonResponse(dict(status=1, message='Product data is invalid'), status=400)
 
 
 class ProductDeleteApiView(APIView):
     permission_classes = [IsAuthenticated, IsOwnerOfProduct]
     authentication_classes = [TokenAuthentication]
 
-    def post(self,  *args, **kwargs):
+    def post(self, *args, **kwargs):
         product = get_object_or_404(Product, slug=kwargs.get('slug'))
         product.delete()
         return JsonResponse({'status': 0, 'message': 'Product is successfully deleted.'})
@@ -568,7 +576,8 @@ class ShopApiMobileView(APIView):
             "description": shop.description,
             "logo": shop.get_logo(),
             "is_owner": shop.is_owner(request.user) if is_authenticated else False,
-            "is_subscribed": request.user.subscription_set.filter(subscription=shop).exists() if is_authenticated else False,
+            "is_subscribed": request.user.subscription_set.filter(
+                subscription=shop).exists() if is_authenticated else False,
         })
 
 
@@ -962,7 +971,7 @@ class UserFavoritesView(APIView):
                 "price": item.product.get_price(),
                 "image": item.product.get_main_thumb_image(),
                 "is_favorite": item.product.favorite.filter(user=user).exists(),
-                "is_in_cart": self.request.user.cart_set.last().cartitem_set.filter(product=item.product).exists()\
+                "is_in_cart": self.request.user.cart_set.last().cartitem_set.filter(product=item.product).exists() \
                     if self.request.user.is_authenticated \
                        and self.request.user.cart_set.all() \
                     else False
@@ -994,10 +1003,10 @@ class ShopDetailView(APIView):
         products = shop.product_set.all()
         if q:
             if db_name == 'mysql' or db_name == 'postgresql':
-                products = products.filter(Q(title__search=str(q))|
+                products = products.filter(Q(title__search=str(q)) |
                                            Q(short_description__search=str(q)))
             else:
-                products = products.filter(Q(title__icontains=str(q))|
+                products = products.filter(Q(title__icontains=str(q)) |
                                            Q(short_description__icontains=str(q)))
         if order and order in ["price", "-price", "title", "created_at"]:
             products = products.order_by(order)
@@ -1017,7 +1026,7 @@ class ShopDetailView(APIView):
         for prod in products_dict:
             product = get_object_or_404(Product, id=prod['id'])
             prod["is_in_cart"] = user.cart_set.last().cartitem_set.filter(product=product).exists() \
-                                    if user.is_authenticated() else False
+                if user.is_authenticated() else False
             prod["is_favorite"] = product.favorite.filter(user=user).exists() if user.is_authenticated() else False
             prod["main_image"] = product.get_main_thumb_image()
         shop_dict = model_to_dict(shop, exclude=['logo', 'user'])
@@ -1047,6 +1056,7 @@ class Subscribe(APIView):
             subcribe.delete()
             return JsonResponse({'status': 0, 'message': 'Вы успешно отписаны.'})
         return JsonResponse({'status': 0, 'message': 'Вы успешно подписаны.'})
+
 
 # class ShopSalesView(ListAPIView):
 #     """
@@ -1102,37 +1112,37 @@ class Subscribe(APIView):
 @permission_classes([AllowAny])
 @authentication_classes([TokenAuthentication])
 def search_products(request):
-        db_type = db.connections.databases['default']['ENGINE']
-        db_name = db_type.split(".")[-1]
-        q = request.GET.get("q")
-        if db_name == 'mysql' or db_name == 'postgresql':
-            products = Product.objects.filter(Q(title__search=q)|Q(short_description__search=q))
-        else:
-            products = Product.objects.filter(Q(title__icontains=q) | Q(short_description__icontains=q))
-        paginator = Paginator(products, 10)
-        page = request.GET.get('page', 1)
-        try:
-            p = paginator.page(int(page))
-        except (AttributeError, EmptyPage, ValueError):
-            p = None
-        product_list = list()
-        if p:
-            for product in p.object_list:
-                product_list.append({
-                    "title": product.title,
-                    "slug": product.slug,
-                    "short_description": product.short_description,
-                    "shop": product.get_shop_title(),
-                    "main_image": product.get_main_thumb_image(),
-                    "price": product.get_price(),
-                    "is_favorite": product.favorite.filter(
-                        user=request.user).exists() if request.user.is_authenticated else False,
-                    "is_in_cart": request.user.cart_set.last().cartitem_set.filter(product=product).exists() \
-                        if request.user.is_authenticated \
-                           and request.user.cart_set.all() \
-                        else False
-                })
-        return JsonResponse({'status': 0,
-                             'search_word': str(q),
-                             'page': page if page else 1,
-                             'result': product_list})
+    db_type = db.connections.databases['default']['ENGINE']
+    db_name = db_type.split(".")[-1]
+    q = request.GET.get("q")
+    if db_name == 'mysql' or db_name == 'postgresql':
+        products = Product.objects.filter(Q(title__search=q) | Q(short_description__search=q))
+    else:
+        products = Product.objects.filter(Q(title__icontains=q) | Q(short_description__icontains=q))
+    paginator = Paginator(products, 10)
+    page = request.GET.get('page', 1)
+    try:
+        p = paginator.page(int(page))
+    except (AttributeError, EmptyPage, ValueError):
+        p = None
+    product_list = list()
+    if p:
+        for product in p.object_list:
+            product_list.append({
+                "title": product.title,
+                "slug": product.slug,
+                "short_description": product.short_description,
+                "shop": product.get_shop_title(),
+                "main_image": product.get_main_thumb_image(),
+                "price": product.get_price(),
+                "is_favorite": product.favorite.filter(
+                    user=request.user).exists() if request.user.is_authenticated else False,
+                "is_in_cart": request.user.cart_set.last().cartitem_set.filter(product=product).exists() \
+                    if request.user.is_authenticated \
+                       and request.user.cart_set.all() \
+                    else False
+            })
+    return JsonResponse({'status': 0,
+                         'search_word': str(q),
+                         'page': page if page else 1,
+                         'result': product_list})
