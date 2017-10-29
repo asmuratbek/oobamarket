@@ -69,7 +69,9 @@
                             {% endif %}
                         </div>
                         <div class="social uk-padding-small">
+                        {% if request.user not in object.user.all %}
                             <button class="uk-button uk-button-default shop_subscribe" id="shop_subscribe" type="button">{% if subscribe %}Отписаться{% else %}Подписаться{% endif %}</button>
+                        {% endif %}
                             <div class="uk-float-right">
                                 {% if object.sociallinks %}
                                     <div class="pull-right">
