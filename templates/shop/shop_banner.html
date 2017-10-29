@@ -15,30 +15,21 @@
                             <div class="image-preview-parent">
                                 <div class="wrapper">
                                     <label for="image-upload" class="image-label">Выбрать изображения</label>
-                                    <input type="file" name="image" id="image-upload"/>
+                                    <input type="file" name="image" id="image-upload" multiple/>
                                 </div>
                             </div>
-                            <div class="image-preview active">
-                                <div class="wrapper">
-                                    <a class="remove-image" href="" uk-icon="icon:  minus-circle"
-                                       title="Удалить изображение" uk-tooltip></a>
-                                    <img src="img/cat11.png" alt="">
-                                </div>
+
+                            <div class="gallery">
+
                             </div>
-                            <div class="image-preview">
-                                <div class="wrapper">
-                                    <a class="remove-image" href="" uk-icon="icon:  minus-circle"
-                                       title="Удалить изображение" uk-tooltip></a>
-                                    <img src="img/t2.jpg" alt="">
-                                </div>
-                            </div>
-                            <div class="image-preview">
-                                <div class="wrapper">
-                                    <a class="remove-image" href="" uk-icon="icon:  minus-circle"
-                                       title="Удалить изображение" uk-tooltip></a>
-                                    <img src="img/template.jpg" alt="">
-                                </div>
-                            </div>
+{#                            <div class="image-preview active">#}
+{#                                <div class="wrapper">#}
+{#                                    <a class="remove-image" href="" uk-icon="icon:  minus-circle"#}
+{#                                       title="Удалить изображение" uk-tooltip></a>#}
+{#                                    <img src="img/cat11.png" alt="">#}
+{#                                </div>#}
+{#                            </div>#}
+
                         </div>
 
                     </div>
@@ -56,43 +47,59 @@
             </div>
         </div>
     </section>
-    <section class="edit-banner">
-        <div class="container">
-            <h1 class="create">Редактировать Баннер</h1>
-            <div class="col-md-offset-2 col-md-8">
-                <div id="gallery" class="table">
-                    <div class="banners-list">
-                        {% for banner in banners %}
-                            <div class="img-wrapper">
-                                <div>
-                                    <img src="{{ banner.image.url }}" class="img-responsive"/>
+
+
+    <script>
+        $('#image-upload').change(function (e) {
+            let files = e.target.files;
+            console.log(files)
+            $.each(files, function (i, file) {
+               var template =  '<div class="image-preview active">' +
+                                '<div class="wrapper">' +
+                                    '<a class="remove-image" href="" uk-icon="icon:  minus-circle" title="Удалить изображение" uk-tooltip></a>'+
+                                    '<img src="' + URL.createObjectURL(file) + '" alt=""></div></div>'
+                $('.gallery').append(template)
+
+            });
+        })
+    </script>
+{#    <section class="edit-banner">#}
+{#        <div class="container">#}
+{#            <h1 class="create">Редактировать Баннер</h1>#}
+{#            <div class="col-md-offset-2 col-md-8">#}
+{#                <div id="gallery" class="table">#}
+{#                    <div class="banners-list">#}
+{#                        {% for banner in banners %}#}
+{#                            <div class="img-wrapper">#}
+{#                                <div>#}
+{#                                    <img src="{{ banner.image.url }}" class="img-responsive"/>#}
                                     {#                                <p>{{ banner.image.name }}</p>#}
-                                    <span class="delete-banner" data-banner-id="{{ banner.id }}">X</span>
-                                </div>
-                            </div>
-                        {% endfor %}
-                    </div>
-                </div>
-                <div id="form-div">
-                    <input class="hidden" id="fileupload" type="file" name="image" multiple
-                           data-url="{% url 'shops:add_banner' slug=slug %}"
-                           data-form-data='{"csrfmiddlewaretoken": "{{ csrf_token }}"}'/>
-                    <label class="image-preview" for="fileupload">
-                        <i class="glyphicon glyphicon-plus-sign"></i>
-                        <div class="add-photo">
-                            Добавить<br>фотографии
-                        </div>
-                    </label>
-
-                    <input id="shop_slug" class="hidden" type="text" value="{{ slug }}"/>
-                    <input id="csrf_token" type="hidden" value="{{ csrf_token }}">
-                    <a href="{% url 'shops:detail' slug=slug %}" class="btn add">В магазин</a>
-                </div>
-
-
-            </div>
-        </div>
-    </section>
+{#                                    <span class="delete-banner" data-banner-id="{{ banner.id }}">X</span>#}
+{#                                </div>#}
+{#                            </div>#}
+{#                        {% endfor %}#}
+{#                    </div>#}
+{#                </div>#}
+{#                <div id="form-div">#}
+{#                    <input class="hidden" id="fileupload" type="file" name="image" multiple#}
+{#                           data-url="{% url 'shops:add_banner' slug=slug %}"#}
+{#                           data-form-data='{"csrfmiddlewaretoken": "{{ csrf_token }}"}'/>#}
+{#                    <label class="image-preview" for="fileupload">#}
+{#                        <i class="glyphicon glyphicon-plus-sign"></i>#}
+{#                        <div class="add-photo">#}
+{#                            Добавить<br>фотографии#}
+{#                        </div>#}
+{#                    </label>#}
+{##}
+{#                    <input id="shop_slug" class="hidden" type="text" value="{{ slug }}"/>#}
+{#                    <input id="csrf_token" type="hidden" value="{{ csrf_token }}">#}
+{#                    <a href="{% url 'shops:detail' slug=slug %}" class="btn add">В магазин</a>#}
+{#                </div>#}
+{##}
+{##}
+{#            </div>#}
+{#        </div>#}
+{#    </section>#}
 
 
 

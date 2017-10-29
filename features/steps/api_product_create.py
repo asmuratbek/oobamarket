@@ -19,7 +19,7 @@ def do_request(context, faker, shop_slug, category_slug, image_path=None):
 
     if image_path is not None:
         image = open(image_path, 'rb')
-        post_data['images'] = [image]
+        post_data['images_files'] = [image]
 
     response = context.client.post(PRODUCT_CREATE_URL, post_data,
                                    **dict(HTTP_AUTHORIZATION='Token %s' % context.auth_token))
