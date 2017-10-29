@@ -63,7 +63,10 @@
                         <small class="uk-text-center uk-display-block uk-margin-medium-bottom uk-alert-danger">Размер
                             картинки должен быть 1:1
                         </small>
-                        <div class="image-preview">
+                        <div class="image-preview"
+                             {% if form.initial.image %}
+                             style='background-image: url("{{ form.initial.image.url }}");background-size: cover;background-position: center center;'
+                             {% endif %}   >
                             <label for="image-upload" class="image-label">Выбрать картинку</label>
                             <input type="file" name="image" id="image-upload"/>
                         </div>
