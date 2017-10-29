@@ -52,7 +52,7 @@ class Shop(PublishBaseModel, MetaBaseModel, Counter):
         return self.title
 
     def save(self, *args, **kwargs):
-        if self.logo and not self.logo_thumb:
+        if self.logo:
             self.create_thumbnail()
         if not self.slug:
             self.slug = slugify(self.title)
@@ -227,7 +227,7 @@ class Sales(PublishBaseModel):
     image_thumb = models.ImageField(upload_to='shops/sales/thumb', null=True, blank=True)
 
     def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
-        if self.image and not self.image_thumb:
+        if self.image:
             self.create_thumbnail()
 
         super().save(force_insert, force_update, using, update_fields)
