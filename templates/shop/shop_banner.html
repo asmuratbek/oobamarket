@@ -5,7 +5,8 @@
     <section class="creat-product  uk-margin-medium-top">
         <div class="uk-container">
             <div class="shadow uk-padding-large">
-                <form class="uk-grid">
+                <form class="uk-grid" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
                     <legend class="uk-legend uk-margin-medium-bottom">Редактировать Баннер</legend>
                     <div class="uk-fieldset uk-width-1-1@l upload-product-image uk-margin-remove-top">
                         <small class="uk-text-center uk-display-block uk-margin-medium-bottom uk-alert-danger">Размер
@@ -37,8 +38,8 @@
 
                     <div class="uk-width-1-1@l">
                         <div class=" uk-width-1-2@s uk-margin-medium-top">
-                            <a href="" class="uk-button uk-button-default border-red bg-red uk-width-1-2@l"><span
-                                    class="uk-margin-small-right" uk-icon="icon: check"> </span>Сохранить</a>
+                            <button type="submit" class="uk-button uk-button-default border-red bg-red uk-width-1-2@l"><span
+                                    class="uk-margin-small-right" uk-icon="icon: check"> </span>Сохранить</button>
                         </div>
                     </div>
 
@@ -50,9 +51,11 @@
 
 
     <script>
+
+        var filesList = [];
         $('#image-upload').change(function (e) {
             let files = e.target.files;
-            console.log(files)
+            filesList = files
             $.each(files, function (i, file) {
                var template =  '<div class="image-preview active">' +
                                 '<div class="wrapper">' +
@@ -61,6 +64,14 @@
                 $('.gallery').append(template)
 
             });
+
+        })
+
+
+        $(document).on('click', '.remove-image', function (e) {
+            e.preventDefault();
+            $(this).parent().parent().fadeOut();
+
         })
     </script>
 {#    <section class="edit-banner">#}

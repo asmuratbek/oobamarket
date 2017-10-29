@@ -146,7 +146,7 @@ class Banners(models.Model):
         self.title = str(self.image)
 
     def __str__(self):
-        return self.title
+        return self.shop.title
 
 
 class Contacts(PublishBaseModel, PostionMapModel):

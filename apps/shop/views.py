@@ -4,6 +4,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, AccessMixin
 from django.http import JsonResponse, HttpResponseRedirect, HttpResponseBadRequest
 from django.shortcuts import render, get_object_or_404, redirect, render_to_response
 from django.urls import reverse
+from django.utils.decorators import method_decorator
 from django.views import View
 from django.views import generic
 from django.views.decorators.csrf import csrf_exempt
@@ -289,6 +290,10 @@ class ShopBannersView(LoginRequiredMixin, ShopMixin, CreateView):
 
 
 class CreateBanners(LoginRequiredMixin, ShopMixin, View):
+    @method_decorator(csrf_exempt)
+    def dispatch(self, request, *args, **kwargs):
+        return super(CreateBanners, self).dispatch(request, *args, **kwargs)
+
     def get(self, request, *args, **kwargs):
         slug = self.kwargs['slug']
         shop = get_object_or_404(Shop, slug=slug)
@@ -297,15 +302,24 @@ class CreateBanners(LoginRequiredMixin, ShopMixin, View):
                                                               'slug': slug})
 
     def post(self, request, *args, **kwargs):
-        form = ShopBannersForm(request.POST, request.FILES)
-        if form.is_valid():
-            shop = Shop.objects.get(slug=self.kwargs['slug'])
-            form.instance.shop = shop
-            banner = form.save()
-            data = {'is_valid': True, 'banner_id': banner.id, 'name': banner.image.name, 'url': banner.image.url}
-        else:
-            data = {'is_valid': False}
-        return JsonResponse(data)
+        shop = get_object_or_404(Shop, slug=self.kwargs['slug'])
+        if request.is_ajax():
+            for image in request.POST:
+                Banners.objects.create(title="", image=image, shop=shop)
+
+            banners = list()
+            for banner in shop.banners_set.all():
+                banners.append({
+                    'image': banner.image.url
+                })
+            return JsonResponse({
+                "banners": banners
+            })
+        # else:
+        #     print(len(request.FILES['image']))
+        #     for file in request.FILES.getlist('image'):
+        #         Banners.objects.create(title="", image=file, shop=shop)
+        # return HttpResponseRedirect(shop.get_absolute_url())
 
 
 class ShopBannerDeleteView(LoginRequiredMixin, ShopMixin, DeleteView):
