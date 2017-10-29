@@ -8,6 +8,7 @@ class ProductIndex(indexes.SearchIndex, indexes.Indexable):
     pk = indexes.IntegerField(model_attr='pk')
     title = indexes.FacetCharField(model_attr='title')
     slug = indexes.CharField(model_attr='slug')
+    price = indexes.IntegerField(model_attr='price')
     get_price_function = indexes.FacetIntegerField(model_attr='get_price')
     created_at = indexes.DateField(model_attr='created_at')
     category_title = indexes.CharField(model_attr='get_category_title')

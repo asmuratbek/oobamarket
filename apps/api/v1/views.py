@@ -136,6 +136,7 @@ class LentaView(APIView):
                         "slug": item.slug,
                         "short_description": item.short_description,
                         "shop": item.get_shop_title(),
+                        "shop_logo": item.shop.logo.url if item.shop.logo else None,
                         "main_image": item.get_main_thumb_image(),
                         "price": item.get_price(),
                         "is_favorite": item.favorite.filter(user=user).exists(),
