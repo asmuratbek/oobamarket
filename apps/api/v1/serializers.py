@@ -296,6 +296,7 @@ class ShopSerializer(ModelSerializer):
     is_authenticated = SerializerMethodField()
     is_subscribed = SerializerMethodField()
     places = SerializerMethodField()
+    logo = SerializerMethodField()
 
     class Meta:
         model = Shop
@@ -317,8 +318,8 @@ class ShopSerializer(ModelSerializer):
             'short_description',
             'created_at',
             'updated_at',
-            'logo',
             'get_absolute_url',
+            'logo'
             # 'used_categories',
 
         )
@@ -368,6 +369,9 @@ class ShopSerializer(ModelSerializer):
     def get_places(self, obj):
         places = [contact.place.id if contact.place else None for contact in obj.contacts_set.all()]
         return places
+
+    def get_logo(self, obj):
+        return obj.get_logo_thumb()
 
 
 class ShopCreateSerializer(ModelSerializer):

@@ -7,6 +7,7 @@ from django.db.models.signals import post_save
 from django.urls import reverse
 from django.utils.translation import ugettext as _
 from slugify import slugify
+from apps.product.helpers import create_thumbnail_image
 
 from config.settings import base as settings
 from apps.users.models import User
@@ -45,11 +46,14 @@ class Shop(PublishBaseModel, MetaBaseModel, Counter):
     description = models.TextField(verbose_name='Полное описание магазина', blank=True, null=True)
     logo = models.ImageField(upload_to='images/shop/logo/', null=True, blank=True,
                              verbose_name='Логотип')
+    logo_thumb = models.ImageField(upload_to='images/shop/thumb/', null=True, blank=True)
 
     def __str__(self):
         return self.title
 
     def save(self, *args, **kwargs):
+        if self.logo:
+            self.create_thumbnail()
         if not self.slug:
             self.slug = slugify(self.title)
         super(Shop, self).save(*args, **kwargs)
@@ -66,6 +70,11 @@ class Shop(PublishBaseModel, MetaBaseModel, Counter):
     def get_logo(self):
         if self.logo:
             return self.logo.url
+        return settings.DEFAULT_IMAGE
+
+    def get_logo_thumb(self):
+        if self.logo_thumb:
+            return self.logo_thumb.url
         return settings.DEFAULT_IMAGE
 
     def get_shop_user(self):
@@ -118,6 +127,9 @@ class Shop(PublishBaseModel, MetaBaseModel, Counter):
 
     def is_owner(self, user):
         return True if len(self.user.filter(id=user.id)) > 0 else False
+
+    def create_thumbnail(self):
+        create_thumbnail_image(main_image=self.logo, thumb_image=self.logo_thumb, thumbnail_size=(340, 340))
 
 
 class Banners(models.Model):
@@ -212,6 +224,16 @@ class Sales(PublishBaseModel):
     description = RichTextUploadingField(null=True, blank=True)
     discount = models.IntegerField(verbose_name='Скидка', null=True, blank=True)
     image = models.ImageField(upload_to='shops/sales', verbose_name='Изображение', null=True, blank=True)
+    image_thumb = models.ImageField(upload_to='shops/sales/thumb', null=True, blank=True)
+
+    def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
+        if self.image:
+            self.create_thumbnail()
+
+        super().save(force_insert, force_update, using, update_fields)
 
     def __str__(self):
         return self.title
+
+    def create_thumbnail(self):
+        create_thumbnail_image(main_image=self.image, thumb_image=self.image_thumb, thumbnail_size=(340, 340))
