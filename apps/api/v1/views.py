@@ -3,6 +3,7 @@ from allauth.socialaccount.helpers import complete_social_login
 from allauth.socialaccount.models import SocialApp, SocialToken, SocialLogin
 from allauth.socialaccount.providers.facebook.views import FacebookOAuth2Adapter
 from allauth.socialaccount.providers.google.views import GoogleOAuth2Adapter
+from braces.views import CsrfExemptMixin
 from django.core.paginator import Paginator, EmptyPage
 from django.db.models import Q
 from django import db
@@ -410,7 +411,7 @@ class ProductDetailApiView(APIView):
         })
 
 
-class ProductUpdateApiView(APIView):
+class ProductUpdateApiView(CsrfExemptMixin, APIView):
     queryset = Product.objects.all()
     serializer_class = ProductPostSerializer
     lookup_field = 'slug'
@@ -634,7 +635,7 @@ class ShopSalesView(APIView):
         return JsonResponse({'status': 1, 'message': 'Sale values is not valid.'})
 
 
-class SalesUpdate(APIView):
+class SalesUpdate(CsrfExemptMixin, APIView):
     queryset = Sales.objects.all()
     serializer_class = SalesSerializer
     lookup_field = 'pk'
@@ -750,7 +751,7 @@ class ShopCategoryChildrenApiView(APIView):
         })
 
 
-class ShopUpdateApiView(RetrieveUpdateAPIView):
+class ShopUpdateApiView(CsrfExemptMixin, APIView):
     queryset = Shop.objects.all()
     serializer_class = ShopCreateSerializer
     lookup_field = 'slug'
@@ -767,41 +768,49 @@ class ShopUpdateApiView(RetrieveUpdateAPIView):
         shop_dict['contact'] = model_to_dict(contact) if contact is not None else None
         return JsonResponse(shop_dict)
 
-    def perform_update(self, serializer):
-        shop = serializer.save(user=[self.request.user.id])
-        remove_logo = self.request.data.get("remove_logo", 'false')
-        new_logo = self.request.FILES.get("new_logo")
-        if remove_logo == 'true':
-            shop.logo = None
-            shop.save()
-        if new_logo:
-            shop.logo = new_logo
-            shop.save()
-        contact = shop.contacts_set.first()
-        place_id = self.request.data.get("place_id")
-        contact_dict = dict(
-            phone=self.request.data.get("phone"),
-            address=self.request.data.get("address"),
-            monday=self.request.data.get("monday"),
-            tuesday=self.request.data.get("tuesday"),
-            wednesday=self.request.data.get("wednesday"),
-            thursday=self.request.data.get("thursday"),
-            friday=self.request.data.get("friday"),
-            shop=shop,
-            saturday=self.request.data.get("saturday"),
-            sunday=self.request.data.get("sunday"),
-            round_the_clock=self.request.data.get("round_the_clock", False),
-            longitude=self.request.data.get("longitude"),
-            latitude=self.request.data.get("latitude"),
-            place=Place.objects.filter(id=place_id).first())
-        are_values = [contact_dict[k] for k in contact_dict.keys()
-                      if k != "shop" and contact_dict[k] != None and contact_dict[k] != ""]
-        if contact:
-            contact(**contact_dict)
-            contact.save()
+    def post(self, *args, **kwargs):
+        shop = get_object_or_404(Shop, slug=kwargs['slug'])
+        shop_serializer = ShopUpdateSerializer(shop, data=self.request.data)
+
+        if shop_serializer.is_valid():
+            shop_serializer.save()
+            remove_logo = self.request.data.get("remove_logo", 'false')
+            new_logo = self.request.FILES.get("new_logo")
+            if remove_logo == 'true':
+                shop.logo = None
+                shop.save()
+            if new_logo:
+                shop.logo = new_logo
+                shop.save()
+            contact = shop.contacts_set.first()
+            place_id = self.request.data.get("place_id")
+            contact_dict = dict(
+                phone=self.request.data.get("phone"),
+                address=self.request.data.get("address"),
+                monday=self.request.data.get("monday"),
+                tuesday=self.request.data.get("tuesday"),
+                wednesday=self.request.data.get("wednesday"),
+                thursday=self.request.data.get("thursday"),
+                friday=self.request.data.get("friday"),
+                shop=shop,
+                saturday=self.request.data.get("saturday"),
+                sunday=self.request.data.get("sunday"),
+                round_the_clock=self.request.data.get("round_the_clock", False),
+                longitude=self.request.data.get("longitude"),
+                latitude=self.request.data.get("latitude"),
+                place=Place.objects.filter(id=place_id).first())
+            are_values = [contact_dict[k] for k in contact_dict.keys()
+                          if k != "shop" and contact_dict[k] not in [None, '']]
+            if contact:
+                contact(**contact_dict)
+                contact.save()
+            else:
+                if are_values:
+                    Contacts.objects.create(**contact_dict)
+
+            return JsonResponse(dict(success=0, message='Shop successfully updated'))
         else:
-            if are_values:
-                Contacts.objects.create(**contact_dict)
+            return JsonResponse(dict(message='Shop data is invalid'), status=400)
 
 
 class ShopDeleteApiView(DestroyAPIView):
