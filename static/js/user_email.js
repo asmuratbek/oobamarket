@@ -15,6 +15,9 @@ function showFlashMessage(message) {
         $(".container-alert-flash").fadeOut().remove();
     }, 1800);
 }
+$.fn.hasAttr = function (name) {
+    return this.attr(name) !== undefined;
+};
 var username = window.location.href.split('/')[4];
 var csrf = $('#add_email_form input[name=csrfmiddlewaretoken]').val();
 $('#add-email-button').on('click', function () {
@@ -22,11 +25,10 @@ $('#add-email-button').on('click', function () {
             if(email.val() !== ""){
                 $.post('/users/' + username + '/', {'email': email.val(), 'only_email': true, 'csrfmiddlewaretoken': csrf}, function (data) {
                     if(data.status === 0){
-                    $('#email-list').append("<div class='form-group input col-md-12'><label for='email_radio_" + data.email_count + "' class='primary_email radio-button radio-button--material'>" +
-                        "<input class='radio-button__input radio-button--material__input' " +
-                        "id='email_radio_" + data.email_count + "' type='radio' name='email' value='" + data.emailaddress +
-                        "' ><div class='radio-button__checkmark radio-button--material__checkmark'></div>" +
-                        data.emailaddress + " <span class='unverified'>Неподтверждено</span></label></div>");
+                    $('#email-list').append("<div class='uk-margin-small-bottom'><label class=''>" +
+                        "<input class='uk-radio' type='radio' name='radio1' value='" + data.emailaddress +
+                        "'>" + data.emailaddress +
+                        "<span class='unverified uk-text-danger'> Неподтверждено</span></label></div>");
                     email.val("");
                     }
                     showFlashMessage(data.message);
@@ -43,6 +45,13 @@ $('#remove_email').on('click', function () {
         }
         showFlashMessage(data.message)
     });
+});
+
+$(document).on('change', '.check_email', function () {
+    $(this).attr('checked', true);
+    $('.check_email').not(this).each(function (i, item) {
+        $(item).attr("checked", false);
+    })
 });
 
 $('#send_email_button').on('click', function () {

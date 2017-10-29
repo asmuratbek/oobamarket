@@ -8,6 +8,7 @@
     <section class="admin  uk-margin-medium-top">
         <div class="uk-container">
             <form id="add_email_form" action="{% url 'users:detail' username=user.username %}" method="POST">
+                {% csrf_token %}
                 <div class="shadow uk-padding-large">
                     <div class="uk-grid-divider uk-grid" uk-grid>
                         <div class="uk-width-1-2@m ">
@@ -63,41 +64,37 @@
                         <div class="uk-width-1-2@m">
 
                             <fieldset class="uk-fieldset">
-                                <legend class="uk-legend uk-text-center">Адрес электронной почты</legend>
+                                <legend class="uk-legend uk-text-center">{% trans 'Адреса электронной почты' %}</legend>
                                 <div class="uk-margin">
-                                    <small class="uk-margin-small-bottom uk-margin-medium-top uk-display-block">К вашему
-                                        аккаунту привязаны следующие адреса электронной почты
+                                    <small class="uk-margin-small-bottom uk-margin-medium-top uk-display-block">
+                                        {% trans 'К вашему аккаунту привязаны следующие адреса электронной почты' %}
                                     </small>
-                                    <div class="uk-form-controls ">
+                                    <div class="uk-form-controls " id="email-list">
+                                    {% if user.emailaddress_set.all %}
+                                        {% for email in user.emailaddress_set.all %}
                                         <div class="uk-margin-small-bottom">
                                             <label class="">
-                                                <input class="uk-radio" type="radio" name="radio1" checked>
-                                                admin@localhost
-                                                <span class="primary">Основной</span>
+                                                <input class="uk-radio check_email" type="radio" name="radio1"
+                                                {% if email.primary %}checked="checked"{% endif %} value="{{ email.email }}">
+                                                {{ email.email }}
+                                                {% if email.primary %}<span class="primary">Основной</span>{% endif %}
+                                                {% if email.verified %}
+                                                <span class="verified uk-text-success">{% trans "Verified" %}</span>
+                                                {% else %}
+                                                <span class="unverified uk-text-danger">{% trans "Unverified" %}</span>
+                                                {% endif %}
                                             </label>
                                         </div>
-                                        <div class="uk-margin-small-bottom">
-                                            <label class="">
-                                                <input class="uk-radio" type="radio" name="radio1">
-                                                admin@localhost
-                                                <span class="verified uk-text-success">Подтвержден</span>
-                                            </label>
-                                        </div>
-                                        <div class="uk-margin-small-bottom">
-                                            <label class="">
-                                                <input class="uk-radio" type="radio" name="radio1">
-                                                admin@localhost
-                                                <span class="unverified uk-text-danger">Неподтверждено</span>
-                                            </label>
-                                        </div>
+                                        {% endfor %}
+                                    {% endif %}
                                     </div>
                                 </div>
                                 <div class="uk-margin">
-                                    <div class="uk-form-controls">
+                                    <div class="uk-form-controls add_input_email">
                                         <input class="uk-input" type="text" placeholder="Ваша почта">
                                     </div>
                                     <div class="uk-margin-small-top">
-                                        <button class="uk-button uk-button-default">Добавить</button>
+                                        <button type="button" class="uk-button uk-button-default" id="add-email-button">Добавить</button>
                                     </div>
                                 </div>
                                 <div class="uk-margin">
@@ -124,157 +121,160 @@
     </section>
 
     {#    !!!!!!!!!!!!!!!!!!!!!!!!!!!#}
-
-    <section class="user_update">
-        <div class="container">
-            <div class="col-md-7 col-md-offset-1">
-
-                <h2>{{ object.username }}</h2>
-
-
-                <form id="add_email_form" class="form-horizontal"
-                      action="{% url 'users:detail' username=user.username %}" method="POST">
-                    {% csrf_token %}
-
-
-                    <div class="info-user">
-                        <h3>Профиль</h3>
-                        <div class="form-group">
-                            <label for="name" class="">
-                                <div class="col-md-3">Логин:</div>
-                                <div class="col-md-6">
-                                    <input class="form-control" id="name" name="username" value="{{ user.username }}"/>
-
-                                </div>
-                                <div class="col-md-1">
-                                    <span class="glyphicon glyphicon-pencil"></span>
-                                </div>
-                            </label>
-
-                        </div>
-
-                        <div class="form-group">
-                            <label for="username" class="">
-                                <div class="col-md-3">Имя:</div>
-
-                                <div class="col-md-6">
-                                    <input class="form-control" id="username" name="first_name"
-                                           value="{{ user.first_name }}"/>
-
-                                </div>
-                                <span class="col-md-1">
-                                    <span class="glyphicon glyphicon-pencil"></span>
-                                </span>
-                            </label>
-
-                        </div>
-
-                        <div class="form-group">
-                            <label for="first_name" class="">
-                                <div class="col-md-3">Фамилия:</div>
-                                <div class="col-md-6">
-                                    <input class="form-control" id="first_name" name="last_name"
-                                           value="{{ user.last_name }}"/>
-                                </div>
-                                <div class="col-md-1">
-                                    <span class="glyphicon glyphicon-pencil"></span>
-                                </div>
-                            </label>
-
-                        </div>
-
-                        <div class="form-group">
-                            <label for="last_name" class="" style="display: block;">
-                                <div class="col-md-3">Номер телефона:</div>
-                                <div class="col-md-6">
-                                    <input class="form-control" id="phone" name="phone" value="{{ user.phone }}"/>
+{##}
+{#    <section class="user_update">#}
+{#        <div class="container">#}
+{#            <div class="col-md-7 col-md-offset-1">#}
+{##}
+{#                <h2>{{ object.username }}</h2>#}
+{##}
+{##}
+{#                <form id="add_email_form" class="form-horizontal"#}
+{#                      action="{% url 'users:detail' username=user.username %}" method="POST">#}
+{#                    {% csrf_token %}#}
+{##}
+{##}
+{#                    <div class="info-user">#}
+{#                        <h3>Профиль</h3>#}
+{#                        <div class="form-group">#}
+{#                            <label for="name" class="">#}
+{#                                <div class="col-md-3">Логин:</div>#}
+{#                                <div class="col-md-6">#}
+{#                                    <input class="form-control" id="name" name="username" value="{{ user.username }}"/>#}
+{##}
+{#                                </div>#}
+{#                                <div class="col-md-1">#}
+{#                                    <span class="glyphicon glyphicon-pencil"></span>#}
+{#                                </div>#}
+{#                            </label>#}
+{##}
+{#                        </div>#}
+{##}
+{#                        <div class="form-group">#}
+{#                            <label for="username" class="">#}
+{#                                <div class="col-md-3">Имя:</div>#}
+{##}
+{#                                <div class="col-md-6">#}
+{#                                    <input class="form-control" id="username" name="first_name"#}
+{#                                           value="{{ user.first_name }}"/>#}
+{##}
+{#                                </div>#}
+{#                                <span class="col-md-1">#}
+{#                                    <span class="glyphicon glyphicon-pencil"></span>#}
+{#                                </span>#}
+{#                            </label>#}
+{##}
+{#                        </div>#}
+{##}
+{#                        <div class="form-group">#}
+{#                            <label for="first_name" class="">#}
+{#                                <div class="col-md-3">Фамилия:</div>#}
+{#                                <div class="col-md-6">#}
+{#                                    <input class="form-control" id="first_name" name="last_name"#}
+{#                                           value="{{ user.last_name }}"/>#}
+{#                                </div>#}
+{#                                <div class="col-md-1">#}
+{#                                    <span class="glyphicon glyphicon-pencil"></span>#}
+{#                                </div>#}
+{#                            </label>#}
+{##}
+{#                        </div>#}
+{##}
+{#                        <div class="form-group">#}
+{#                            <label for="last_name" class="" style="display: block;">#}
+{#                                <div class="col-md-3">Номер телефона:</div>#}
+{#                                <div class="col-md-6">#}
+{#                                    <input class="form-control" id="phone" name="phone" value="{{ user.phone }}"/>#}
                                     {#                                    {{ form.last_name|attr:"class:form-control"|attr:"id:last_name" }}#}
-                                </div>
-                                <div class="col-md-1">
-                                    <span class="glyphicon glyphicon-pencil"></span>
-                                </div>
-                            </label>
-
-                        </div>
-
-                        <div class="form-group">
-                            <label for="last_name" class="" style="display: block;">
-                                <div class="col-md-3">Адрес:</div>
-                                <div class="col-md-6">
-                                    <input class="form-control" id="address" name="address" value="{{ user.address }}"/>
+{#                                </div>#}
+{#                                <div class="col-md-1">#}
+{#                                    <span class="glyphicon glyphicon-pencil"></span>#}
+{#                                </div>#}
+{#                            </label>#}
+{##}
+{#                        </div>#}
+{##}
+{#                        <div class="form-group">#}
+{#                            <label for="last_name" class="" style="display: block;">#}
+{#                                <div class="col-md-3">Адрес:</div>#}
+{#                                <div class="col-md-6">#}
+{#                                    <input class="form-control" id="address" name="address" value="{{ user.address }}"/>#}
                                     {#                                    {{ form.last_name|attr:"class:form-control"|attr:"id:last_name" }}#}
-                                </div>
-                                <div class="col-md-1">
-                                    <span class="glyphicon glyphicon-pencil"></span>
-                                </div>
-                            </label>
-
-                        </div>
-                        <a class="lost-pass" href="{% url 'account_change_password' %}">Изменить пароль</a>
-                    </div>
-
+{#                                </div>#}
+{#                                <div class="col-md-1">#}
+{#                                    <span class="glyphicon glyphicon-pencil"></span>#}
+{#                                </div>#}
+{#                            </label>#}
+{##}
+{#                        </div>#}
+{#                        <a class="lost-pass" href="{% url 'account_change_password' %}">Изменить пароль</a>#}
+{#                    </div>#}
+{##}
                     {#                    type mail#}
-
-                    <div class="radio" id="email-list">
-                        <h3>{% trans 'Адрес электронной почты' %}</h3>
-                        {% if user.emailaddress_set.all %}
-                            <p>{% trans 'К вашему аккаунту привязаны следующие адреса электронной почты' %}</p>
-                            {% for email in user.emailaddress_set.all %}
-                                <div class="form-group input col-md-12">
-                                    <label for="email_radio_{{ forloop.counter }}"
-                                           class="primary_email radio-button radio-button--material">
-
-                                        <input class="radio-button__input radio-button--material__input"
-                                               id="email_radio_{{ forloop.counter }}"
-                                               type="radio" name="email"
-                                               {% if email.primary %}checked="checked"{% endif %}
-                                               value="{{ email.email }}">
-                                        <div class="radio-button__checkmark radio-button--material__checkmark"></div>
-                                        {{ email.email }}
-                                        {% if email.verified %}
-                                            <span class="verified">{% trans 'Подтвержден' %}</span>
-                                        {% else %}
-                                            <span class="unverified">{% trans 'Unverified' %}</span>
-                                        {% endif %}
-                                        {% if email.primary %}
-                                            <span class="primary">{% trans 'Primary' %}</span>{% endif %}
-                                    </label>
-                                </div>
-                            {% endfor %}
-                        {% endif %}
-                    </div>
-
-                    <div class="add-email">
-                        <div class="add_input_email" id="add_email_input">
-                            <div class="form-group col-md-6" style="margin-right: 0;">
-                                <input type="text" class="form-control">
-                            </div>
-                            <div class="form-group col-md-3">
-                                <button type="button" class="btn add no-bg set-market-trigger"
-                                        id="add-email-button">{% trans 'Добавить' %}</button>
-
-                            </div>
-                        </div>
-                        <div class="clearfix"></div>
-                        <div class="form-group col-md-12">
+{##}
+{#                    <div class="radio" id="email-list">#}
+{#                        <h3>{% trans 'Адрес электронной почты' %}</h3>#}
+{#                        {% if user.emailaddress_set.all %}#}
+{#                            <p>{% trans 'К вашему аккаунту привязаны следующие адреса электронной почты' %}</p>#}
+{#                            {% for email in user.emailaddress_set.all %}#}
+{#                                <div class="form-group input col-md-12">#}
+{#                                    <label for="email_radio_{{ forloop.counter }}"#}
+{#                                           class="primary_email radio-button radio-button--material">#}
+{##}
+{#                                        <input class="radio-button__input radio-button--material__input"#}
+{#                                               id="email_radio_{{ forloop.counter }}"#}
+{#                                               type="radio" name="email"#}
+{#                                               {% if email.primary %}checked="checked"{% endif %}#}
+{#                                               value="{{ email.email }}">#}
+{#                                        <div class="radio-button__checkmark radio-button--material__checkmark"></div>#}
+{#                                        {{ email.email }}#}
+{#                                        {% if email.verified %}#}
+{#                                            <span class="verified">{% trans 'Подтвержден' %}</span>#}
+{#                                        {% else %}#}
+{#                                            <span class="unverified">{% trans 'Unverified' %}</span>#}
+{#                                        {% endif %}#}
+{#                                        {% if email.primary %}#}
+{#                                            <span class="primary">{% trans 'Primary' %}</span>{% endif %}#}
+{#                                    </label>#}
+{#                                </div>#}
+{#                            {% endfor %}#}
+{#                        {% endif %}#}
+{#                    </div>#}
+{##}
+{#                    <div class="add-email">#}
+{#                        <div class="add_input_email" id="add_email_input">#}
+{#                            <div class="form-group col-md-6" style="margin-right: 0;">#}
+{#                                <input type="text" class="form-control">#}
+{#                            </div>#}
+{#                            <div class="form-group col-md-3">#}
+{#                                <button type="button" class="btn add no-bg set-market-trigger"#}
+{#                                        id="add-email-button">{% trans 'Добавить' %}</button>#}
+{##}
+{#                            </div>#}
+{#                        </div>#}
+{#                        <div class="clearfix"></div>#}
+{#                        <div class="form-group col-md-12">#}
                             {#                             <button class="add btn">Сделать основным</button>#}
-                            <button type="button" class="btn add no-bg set-market-trigger"
-                                    id="send_email_button">{% trans 'Отправить письмо с проверкой' %}</button>
-                            <button type="button" class="btn add no-bg set-market-trigger"
-                                    id="remove_email">{% trans 'Удалить' %}</button>
-                            <button type="submit" class="add btn">Сохранить</button>
-                        </div>
-                    </div>
-
-
-                </form>
-            </div>
-
-
-        </div> <!-- /container -->
-    </section>
+{#                            <button type="button" class="btn add no-bg set-market-trigger"#}
+{#                                    id="send_email_button">{% trans 'Отправить письмо с проверкой' %}</button>#}
+{#                            <button type="button" class="btn add no-bg set-market-trigger"#}
+{#                                    id="remove_email">{% trans 'Удалить' %}</button>#}
+{#                            <button type="submit" class="add btn">Сохранить</button>#}
+{#                        </div>#}
+{#                    </div>#}
+{##}
+{##}
+{#                </form>#}
+{#            </div>#}
+{##}
+{##}
+{#        </div> <!-- /container -->#}
+{#    </section>#}
 
 
 
 {% endblock %}
-
+{% block js %}
+    {{ block.super }}
+    <script src="{% static "js/user_email.js" %}"></script>
+{% endblock %}
