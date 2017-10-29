@@ -137,7 +137,7 @@ class LentaView(APIView):
                         "slug": item.slug,
                         "short_description": item.short_description,
                         "shop": item.get_shop_title(),
-                        "shop_logo": item.shop.logo.url if item.shop.logo else None,
+                        "shop_logo": item.shop.logo_thumb.url if item.shop.logo_thumb else None,
                         "main_image": item.get_main_thumb_image(),
                         "price": item.get_price(),
                         "is_favorite": item.favorite.filter(user=user).exists(),
@@ -617,7 +617,7 @@ class ShopSalesView(APIView):
                 "short_description": sale.short_description,
                 "description": sale.description,
                 "discount": sale.discount,
-                "image": sale.image.url if sale.image else None
+                "image": sale.image_thumb.url if sale.image_thumb else None
             })
 
         return JsonResponse({
@@ -644,8 +644,8 @@ class SalesUpdate(CsrfExemptMixin, APIView):
 
     def get(self, *args, **kwargs):
         sale = get_object_or_404(Sales, id=kwargs.get('pk'))
-        sale_dict = model_to_dict(sale, exclude=['image'])
-        sale_dict['image'] = sale.image.url if sale.image else None
+        sale_dict = model_to_dict(sale, exclude=['image', 'image_thumb'])
+        sale_dict['image'] = sale.image_thumb.url if sale.image_thumb else None
         return JsonResponse({'status': 0, 'sale': sale_dict})
 
     def post(self, *args, **kwargs):
@@ -762,8 +762,8 @@ class ShopUpdateApiView(CsrfExemptMixin, APIView):
         shop = get_object_or_404(Shop, slug=kwargs['slug'])
         contact = shop.contacts_set.first()
 
-        shop_dict = model_to_dict(shop, exclude=['logo', 'user'])
-        shop_dict['logo'] = shop.logo.url if shop.logo else None
+        shop_dict = model_to_dict(shop, exclude=['logo', 'user', 'logo_thumb'])
+        shop_dict['logo'] = shop.logo_thumb.url if shop.logo_thumb else None
         shop_dict['users'] = [user.id for user in shop.user.all()]
         shop_dict['contact'] = model_to_dict(contact) if contact is not None else None
         return JsonResponse(shop_dict)
@@ -887,7 +887,7 @@ class UserDetailView(APIView):
             shops.append({
                 "title": shop.title,
                 "slug": shop.slug,
-                "logo": shop.get_logo(),
+                "logo": shop.get_logo_thumb(),
                 "short_description": shop.short_description,
                 "email": shop.email
             })
@@ -943,7 +943,7 @@ class UserCartItemsView(APIView):
                     items.append(item)
             shops.append({
                 "title": shop.title,
-                "logo": shop.get_logo(),
+                "logo": shop.get_logo_thumb(),
                 "items": items,
             })
 
@@ -1055,8 +1055,8 @@ class ShopDetailView(APIView):
                 if user.is_authenticated() else False
             prod["is_favorite"] = product.favorite.filter(user=user).exists() if user.is_authenticated() else False
             prod["main_image"] = product.get_main_thumb_image()
-        shop_dict = model_to_dict(shop, exclude=['logo', 'user'])
-        shop_dict['logo'] = shop.logo.url if shop.logo else None
+        shop_dict = model_to_dict(shop, exclude=['logo', 'user', 'logo_thumb'])
+        shop_dict['logo'] = shop.logo_thumb.url if shop.logo_thumb else None
         shop_dict['users'] = [user.username for user in shop.user.all()]
         return JsonResponse({'status': 0,
                              'page': page if page else 1,
