@@ -414,7 +414,7 @@ class ProductUpdateApiView(CsrfExemptMixin, APIView):
     serializer_class = ProductPostSerializer
     lookup_field = 'slug'
     permission_classes = [IsAuthenticated, IsOwnerShop4Product]
-    authentication_classes = (SessionAuthentication, TokenAuthentication)
+    authentication_classes = (TokenAuthentication, )
 
     def get(self, request, *args, **kwargs):
         product = get_object_or_404(Product, slug=kwargs['slug'])
@@ -638,7 +638,7 @@ class SalesUpdate(CsrfExemptMixin, APIView):
     serializer_class = SalesSerializer
     lookup_field = 'pk'
     permission_classes = [IsAuthenticated, IsOwnerShop4Shop, IsSaleOfShop]
-    authentication_classes = (SessionAuthentication, TokenAuthentication)
+    authentication_classes = (TokenAuthentication, )
 
     def get(self, *args, **kwargs):
         sale = get_object_or_404(Sales, id=kwargs.get('pk'))
