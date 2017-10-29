@@ -56,44 +56,26 @@
                     </fieldset>
 
 
-                    <div class="uk-fieldset uk-width-1-1@l upload-product-image uk-margin-remove-top">
+                    <div class="uk-fieldset uk-width-1-1@l upload-shop-logo uk-margin-remove-top">
                         <hr class="uk-divider-icon uk-margin-medium-top uk-margin-medium-bottom">
-                        <legend class="uk-legend uk-text-center uk-margin-small-bottom">Добавьте лого вашей фирмы
+                        <legend class="uk-legend uk-text-center uk-margin-small-bottom">Добавьте картинку для вашей акции
                         </legend>
                         <small class="uk-text-center uk-display-block uk-margin-medium-bottom uk-alert-danger">Размер
                             картинки должен быть 1:1
                         </small>
-                        <div class="uk-child-width-1-4@m uk-grid">
-                            <div class="image-preview-parent">
-                                <div class="wrapper">
-                                    <label for="image-upload" class="image-label">Выбрать изображения</label>
-                                    <input type="file" name="image" id="image-upload"/>
-                                </div>
-                            </div>
-                            <div class="image-preview active">
-                                <div class="wrapper">
-                                    <a class="remove-image" href="" uk-icon="icon:  minus-circle"
-                                       title="Удалить изображение" uk-tooltip></a>
-                                    <img src="img/cat11.png" alt="">
-                                </div>
-                            </div>
-                            <div class="image-preview">
-                                <div class="wrapper">
-                                    <a class="remove-image" href="" uk-icon="icon:  minus-circle"
-                                       title="Удалить изображение" uk-tooltip></a>
-                                    <img src="img/t2.jpg" alt="">
-                                </div>
-                            </div>
-                            <div class="image-preview">
-                                <div class="wrapper">
-                                    <a class="remove-image" href="" uk-icon="icon:  minus-circle"
-                                       title="Удалить изображение" uk-tooltip></a>
-                                    <img src="img/template.jpg" alt="">
-                                </div>
-                            </div>
+                        <div class="image-preview">
+                            <label for="image-upload" class="image-label">Выбрать картинку</label>
+                            <input type="file" name="image" id="image-upload"/>
                         </div>
-
                     </div>
+
+{#                            <div class="image-preview active">#}
+{#                                <div class="wrapper">#}
+{#                                    <a class="remove-image" href="" uk-icon="icon:  minus-circle"#}
+{#                                       title="Удалить изображение" uk-tooltip></a>#}
+{#                                    <img src="img/cat11.png" alt="">#}
+{#                                </div>#}
+{#                            </div>#}
 
 
                     <div class="uk-width-1-1@l">
@@ -107,6 +89,16 @@
             </div>
         </div>
     </section>
+
+    <script>
+    $.uploadPreview({
+        input_field: "#image-upload",
+        preview_box: ".image-preview",
+        label_field: ".image-label",
+        label_selected: "Заменить картинку",
+        label_default: "Выбрать картинку"
+    });
+    </script>
 
 {#    <section class="add-sale add-product">#}
 {#        <div class="container">#}
