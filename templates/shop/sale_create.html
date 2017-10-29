@@ -108,98 +108,98 @@
         </div>
     </section>
 
-    <section class="add-sale add-product">
-        <div class="container">
-            <h1>Добавление акций</h1>
-            <form method="post" enctype="multipart/form-data">
-                {% csrf_token %}
-                <div class="col-md-8">
-                    <div class="form-group {% if form.title.errors %}has-error{% endif %} input col-md-6">
-                        {% if not form.title.errors %}
-                            <label>Название акции</label>
-                        {% else %}
-                            <label>Название акции:{{ form.title.errors }}</label>
-                        {% endif %}
-                        {{ form.title|attr:"class:form-control"|attr:"required" }}
-                    </div>
-
-
-                    <div class="form-group input col-md-4">
-                        <label>Размер скидки</label>
+{#    <section class="add-sale add-product">#}
+{#        <div class="container">#}
+{#            <h1>Добавление акций</h1>#}
+{#            <form method="post" enctype="multipart/form-data">#}
+{#                {% csrf_token %}#}
+{#                <div class="col-md-8">#}
+{#                    <div class="form-group {% if form.title.errors %}has-error{% endif %} input col-md-6">#}
+{#                        {% if not form.title.errors %}#}
+{#                            <label>Название акции</label>#}
+{#                        {% else %}#}
+{#                            <label>Название акции:{{ form.title.errors }}</label>#}
+{#                        {% endif %}#}
+{#                        {{ form.title|attr:"class:form-control"|attr:"required" }}#}
+{#                    </div>#}
+{##}
+{##}
+{#                    <div class="form-group input col-md-4">#}
+{#                        <label>Размер скидки</label>#}
                         {#                        <input class="form-control" placeholder="0%" type="number">#}
-                        {{ form.discount|attr:"class:form-control"|attr:"type:number"|attr:"placeholder:0%" }}
-                    </div>
-                    <div class="form-group input col-md-12">
-                        <label for="">Короткое описание</label>
+{#                        {{ form.discount|attr:"class:form-control"|attr:"type:number"|attr:"placeholder:0%" }}#}
+{#                    </div>#}
+{#                    <div class="form-group input col-md-12">#}
+{#                        <label for="">Короткое описание</label>#}
                         {#                        <input class="form-control" type="text" required="">#}
-                        {{ form.short_description|attr:"class:form-control"|attr:"textarea" }}
-                    </div>
-                    <div class="form-group input col-md-12">
-                        <label>Описание</label>
+{#                        {{ form.short_description|attr:"class:form-control"|attr:"textarea" }}#}
+{#                    </div>#}
+{#                    <div class="form-group input col-md-12">#}
+{#                        <label>Описание</label>#}
                         {#                        <textarea name="" id="" rows="10"></textarea>#}
-                        {{ form.description|attr:"rows:10" }}
-                    </div>
-
-                    <div class="form-group input col-md-12">
-                        <label class="switch">
-                            {% if sales.published == TRUE %}
-                                {{ form.published|attr:"class:switch__input"|attr:"id_published"|attr:"checked:checked" }}
-                            {% else %}
-                                {{ form.published|attr:"class:switch__input"|attr:"id_published" }}
-                            {% endif %}
-                            <div class="switch__toggle">
-                                <div class="switch__handle"></div>
-                            </div>
-
-                        </label>
-                        <label>Опубликовать</label>
-                    </div>
-
-                    <div class="col-md-12">
-                        <button type="submit" class="btn add">Сохранить</button>
-                    </div>
-                </div>
-                <div class="col-md-4" id="shop-update-form">
-                    <div class="form-group input">
-                        <label for="id_logo" class="upload">
-
-                            <i class="glyphicon glyphicon-plus-sign"></i>
-                            <div class="add-photo">
-                                Добавить<br>фотографии
-                            </div>
-                        </label>
-                        <div class="info">
-                            <span>Рекомендация для фото:</span>
-                            <p>Размер: 540x270 или больше</p>
-                            <p>Фон: белый или прозрачный</p>
-                            <br>
-                            <span id="file-counter" style="color: red;"></span>
-                        </div>
-                        <div class="img-upload hidden">
-                            Currently: <a href=""></a>
+{#                        {{ form.description|attr:"rows:10" }}#}
+{#                    </div>#}
+{##}
+{#                    <div class="form-group input col-md-12">#}
+{#                        <label class="switch">#}
+{#                            {% if sales.published == TRUE %}#}
+{#                                {{ form.published|attr:"class:switch__input"|attr:"id_published"|attr:"checked:checked" }}#}
+{#                            {% else %}#}
+{#                                {{ form.published|attr:"class:switch__input"|attr:"id_published" }}#}
+{#                            {% endif %}#}
+{#                            <div class="switch__toggle">#}
+{#                                <div class="switch__handle"></div>#}
+{#                            </div>#}
+{##}
+{#                        </label>#}
+{#                        <label>Опубликовать</label>#}
+{#                    </div>#}
+{##}
+{#                    <div class="col-md-12">#}
+{#                        <button type="submit" class="btn add">Сохранить</button>#}
+{#                    </div>#}
+{#                </div>#}
+{#                <div class="col-md-4" id="shop-update-form">#}
+{#                    <div class="form-group input">#}
+{#                        <label for="id_logo" class="upload">#}
+{##}
+{#                            <i class="glyphicon glyphicon-plus-sign"></i>#}
+{#                            <div class="add-photo">#}
+{#                                Добавить<br>фотографии#}
+{#                            </div>#}
+{#                        </label>#}
+{#                        <div class="info">#}
+{#                            <span>Рекомендация для фото:</span>#}
+{#                            <p>Размер: 540x270 или больше</p>#}
+{#                            <p>Фон: белый или прозрачный</p>#}
+{#                            <br>#}
+{#                            <span id="file-counter" style="color: red;"></span>#}
+{#                        </div>#}
+{#                        <div class="img-upload hidden">#}
+{#                            Currently: <a href=""></a>#}
                             {#                            <input class="form-control" id="id_logo" name="logo" type="file">#}
-                            {{ form.image|attr:"class:form-control"|attr:"id:id_logo"|attr:"type:file" }}
-                        </div>
-
-                    </div>
-                    <div class="img-wrapper">
-                        {% if sales.image %}
-                            <img src="{{ sales.image.url }}" alt="" id="id_logo2">
-                            <span class="remove-logo-update">X</span>
-                        {% else %}
-                            <img src="" alt="" id="id_logo2">
-                        {% endif %}
-                        <span class="remove-logo-update" style="display: none;">X</span>
-
-                        <input type="hidden" id="slug" value="igrolend">
-                    </div>
-
-
-                </div>
-            </form>
-
-        </div>
-    </section>
+{#                            {{ form.image|attr:"class:form-control"|attr:"id:id_logo"|attr:"type:file" }}#}
+{#                        </div>#}
+{##}
+{#                    </div>#}
+{#                    <div class="img-wrapper">#}
+{#                        {% if sales.image %}#}
+{#                            <img src="{{ sales.image.url }}" alt="" id="id_logo2">#}
+{#                            <span class="remove-logo-update">X</span>#}
+{#                        {% else %}#}
+{#                            <img src="" alt="" id="id_logo2">#}
+{#                        {% endif %}#}
+{#                        <span class="remove-logo-update" style="display: none;">X</span>#}
+{##}
+{#                        <input type="hidden" id="slug" value="igrolend">#}
+{#                    </div>#}
+{##}
+{##}
+{#                </div>#}
+{#            </form>#}
+{##}
+{#        </div>#}
+{#    </section>#}
     {#    <form class="form-inline" method="post" enctype="multipart/form-data">#}
     {#        {% csrf_token %}#}
     {#        {{ form.as_p }}#}
