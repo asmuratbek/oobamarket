@@ -132,6 +132,7 @@
                     {% else %}
 
                         <h5>Итого к оплате</h5>
+                        <h5 id="subtotal">{{ object.subtotal }} сом</h5>
 
                         <div class="col-lg-offset-2 col-lg-10">
                             <a href="#basket-modal" class="uk-button uk-button-default" uk-toggle>Оформить
@@ -204,4 +205,25 @@
         </div>
     </div>
 
+    <script>
+    $('.item-qty').change(function () {
+        var formData = $(this).closest('.cart-form').serialize();
+        console.log(formData);
+        $.ajax({
+            type: "GET",
+            url: "/cart/",
+            data: formData,
+            success: function (data) {
+                showFlashMessage(data.flash_message);
+                $('.cart-count').text(data.total_items);
+                $('#line-total-' + data.id).text(data.line_total + ' сом');
+                $('#subtotal').text(data.subtotal + ' сом');
+            },
+            error: function (response, error) {
+                console.log(response);
+                console.log(error);
+            }
+        })
+    });
+    </script>
 {% endblock %}
