@@ -69,28 +69,30 @@
                             {% endif %}
                         </div>
                         <div class="social uk-padding-small">
+                        {% if request.user not in object.user.all %}
                             <button class="uk-button uk-button-default shop_subscribe" id="shop_subscribe" type="button">{% if subscribe %}Отписаться{% else %}Подписаться{% endif %}</button>
+                        {% endif %}
                             <div class="uk-float-right">
                                 {% if object.sociallinks %}
                                     <div class="pull-right">
                                         {% if object.sociallinks.facebook %}
-                                            <a href="{{ DOMAIN_URL }}{{ object.sociallinks.facebook }}"
-                                               class="facebook social"><span class="uk-icon-button uk-icon "
+                                            <a href="{{ object.sociallinks.facebook }}"
+                                               class="facebook social" target="blank"><span class="uk-icon-button uk-icon "
                                                                              uk-icon="icon: facebook"></span></a>
                                         {% endif %}
                                         {% if object.sociallinks.twitter %}
-                                            <a href="{{ DOMAIN_URL }}{{ object.sociallinks.twitter }}"
-                                               class="tweet social"><span class="uk-icon-button uk-icon "
+                                            <a href="{{ object.sociallinks.twitter }}"
+                                               class="tweet social" target="blank"><span class="uk-icon-button uk-icon "
                                                                           uk-icon="icon: twitter"></span></a>
                                         {% endif %}
                                         {% if object.sociallinks.vk %}
-                                            <a href="{{ DOMAIN_URL }}{{ object.sociallinks.vk }}"
-                                               class="vk social"><span class="uk-icon-button uk-icon "><i
+                                            <a href="{{ object.sociallinks.vk }}"
+                                               class="vk social" target="blank"><span class="uk-icon-button uk-icon "><i
                                                     class="fa fa-vk" aria-hidden="true"></i></span></a>
                                         {% endif %}
                                         {% if object.sociallinks.instagram %}
-                                            <a href="{{ DOMAIN_URL }}{{ object.sociallinks.instagram }}"
-                                               class="instagram social"><span class="uk-icon-button uk-icon "
+                                            <a href="{{ object.sociallinks.instagram }}"
+                                               class="instagram social" target="blank"><span class="uk-icon-button uk-icon "
                                                                               uk-icon="icon: instagram"></span></a>
                                         {% endif %}
                                         {% show_add_social_button shop request.user %}

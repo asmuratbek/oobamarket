@@ -22,7 +22,9 @@
                         {% if sale.published == True %}
                             <div>
                                 <div class="uk-card uk-card-default">
+                                    {% if sale.discount %}
                                     <span class="descount">{{ sale.discount }}%</span>
+                                        {% endif %}
                                     <div class="uk-card-media-top uk-cover-container">
                                         {% if sale.image %}
                                             <img src="{{ sale.image.url }}" alt="" uk-cover>
