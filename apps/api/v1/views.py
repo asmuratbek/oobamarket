@@ -632,7 +632,7 @@ class ShopSalesView(APIView):
         return JsonResponse({'status': 1, 'message': 'Sale values is not valid.'})
 
 
-class SalesUpdate(RetrieveUpdateAPIView):
+class SalesUpdate(APIView):
     queryset = Sales.objects.all()
     serializer_class = SalesSerializer
     lookup_field = 'pk'
@@ -644,6 +644,22 @@ class SalesUpdate(RetrieveUpdateAPIView):
         sale_dict = model_to_dict(sale, exclude=['image'])
         sale_dict['image'] = sale.image.url if sale.image else None
         return JsonResponse({'status': 0, 'sale': sale_dict})
+
+    def post(self, *args, **kwargs):
+        sale = get_object_or_404(Sales, pk=kwargs['pk'])
+        sale_serializer = SalesSerializer(sale, data=self.request.data)
+
+        if sale_serializer.is_valid():
+            image = self.request.FILES.get('image', None)
+
+            if image:
+                sale_serializer.save(image=image)
+            else:
+                sale_serializer.save()
+
+            return JsonResponse(dict(success=0, message='Sale successfully updated'))
+        else:
+            return JsonResponse(dict(message='Sale data is invalid'), status=400)
 
 
 class SaleDelete(DestroyAPIView):
