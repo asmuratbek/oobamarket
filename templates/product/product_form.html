@@ -12,15 +12,17 @@
                         <div class="uk-grid uk-child-width-1-2@s" uk-grid>
                             <div>
                                 <div class="">
-                                    <div class="uk-form-controls {% if form.shop.errors %}uk-form-danger{% endif %}">
+                                    <div class="uk-form-controls uk-form-danger">
                                         {% render_field form.shop|add_error_attr:"aria-invalid:true" class="uk-select" placeholder="Выбрать магазин" %}
+                                        <label class="label-error">{{ form.shop.errors }}</label>
                                     </div>
                                 </div>
                             </div>
                             <div>
                                 <div class="">
-                                    <div class="uk-form-controls {% if form.shop.errors %}uk-form-danger{% endif %}">
+                                    <div class="uk-form-controls uk-form-danger">
                                         {% render_field form.section|attr:"id:global_category"|add_error_attr:"aria-invalid:true" class="uk-select" placeholder="Выбрать родителей" %}
+                                        <label class="label-error">{{ form.section.errors }}</label>
                                     </div>
                                 </div>
                             </div>
@@ -28,13 +30,15 @@
                                 <div class="">
                                     <div class="uk-form-controls uk-form-danger">
                                         {% render_field form.parent_categories|attr:"id:category_list"|add_error_attr:"aria-invalid:true" class="uk-select" placeholder="Выбрать детей" %}
+                                        <label class="label-error">{{ form.parent_categories.errors }}</label>
                                     </div>
                                 </div>
                             </div>
                             <div>
                                 <div class="">
-                                    <div class="uk-form-controls">
+                                    <div class="uk-form-controls uk-form-danger">
                                         {% render_field form.category|attr:"id:subcategory_list" class="uk-select" placeholder="Выбрать внуков" %}
+                                        <label class="label-error">{{ form.category.errors }}</label>
                                     </div>
                                 </div>
                             </div>
@@ -42,20 +46,22 @@
                         <div class="uk-grid uk-child-width-1-1@l" uk-grid>
                             <div>
                                 <label class="uk-form-label">Название товара</label>
-                                <div class="uk-form-controls">
+                                <div class="uk-form-controls uk-form-danger">
                                     {% render_field form.title|add_error_attr:"aria-invalid:true"|attr:"uk-tooltip"|attr:"title:Рекомендация - для лучшего поиска, пишите тип товара в начале названия. Автомобильные шины MAXXIS AT-771 Bravo" class="uk-input" placeholder="Название товара" %}
+                                    <label class="label-error">{{ form.title.errors }}</label>
                                 </div>
                             </div>
                         </div>
                         <div class="uk-grid-small uk-margin-medium-top uk-width-1-1@l" uk-grid>
                             <div class="uk-width-1-5@s">
                                 <label class="uk-form-label">Цена</label>
-                                <div class="uk-form-controls">
+                                <div class="uk-form-controls uk-form-danger">
                                     {% if not form.price.errors %}
                                         {% render_field form.price|add_error_attr:"aria-invalid:true" class="uk-input" placeholder="Цена" %}
                                     {% else %}
                                         {% render_field form.price|add_error_attr:"aria-invalid:true" class="uk-input uk-form-danger" placeholder="Цена" %}
                                     {% endif %}
+                                    <label class="label-error">{{ form.price.errors }}</label>
                                 </div>
                             </div>
                             <div class="uk-width-1-6@s">
@@ -187,7 +193,7 @@
                         <small class="uk-text-center uk-display-block uk-margin-medium-bottom uk-alert-danger">Размер
                             картинки должен быть 1:1
                         </small>
-                        <div class="uk-child-width-1-4@m uk-grid">
+                        <div class="uk-child-width-1-4@m uk-grid" id="wrapper-files">
                             <div class="image-preview-parent">
                                 <div class="wrapper">
                                     <label for="uploading-images" class="image-label upload">Выбрать изображения</label>
@@ -199,27 +205,27 @@
                                 </div>
                             </div>
 
-                            <div class="image-preview active">
-                                <div class="wrapper">
-                                    <a class="remove-image" href="" uk-icon="icon:  minus-circle"
-                                       title="Удалить изображение" uk-tooltip></a>
-                                    <img src="http://via.placeholder.com/350x350" alt="">
-                                </div>
-                            </div>
+{#                            <div class="image-preview active">#}
+{#                                <div class="wrapper">#}
+{#                                    <a class="remove-image" href="" uk-icon="icon:  minus-circle"#}
+{#                                       title="Удалить изображение" uk-tooltip></a>#}
+{#                                    <img src="http://via.placeholder.com/350x350" alt="">#}
+{#                                </div>#}
+{#                            </div>#}
+{##}
+{#                            <div class="image-preview">#}
+{#                                <div class="wrapper">#}
+{#                                    <a class="remove-image" href="" uk-icon="icon:  minus-circle"#}
+{#                                       title="Удалить изображение" uk-tooltip></a>#}
+{#                                    <img src="http://via.placeholder.com/350x350" alt="">#}
+{#                                </div>#}
+{#                            </div>#}
 
-                            <div class="image-preview">
-                                <div class="wrapper">
-                                    <a class="remove-image" href="" uk-icon="icon:  minus-circle"
-                                       title="Удалить изображение" uk-tooltip></a>
-                                    <img src="http://via.placeholder.com/350x350" alt="">
-                                </div>
-                            </div>
-
-                            <div class="col-md-4">
-                                <div id="wrapper-files">
-
-                                </div>
-                            </div>
+{#                            <div class="col-md-4">#}
+{#                                <div >#}
+{##}
+{#                                </div>#}
+{#                            </div>#}
                         </div>
 
                     </div>
@@ -227,7 +233,7 @@
 
                     <div class="uk-width-1-1@l">
                         <div class=" uk-width-1-2@s uk-margin-medium-top">
-                            <button type="submit" class="uk-button uk-button-default border-red bg-red uk-width-1-2@l"><span
+                            <button type="button" id="add-product-button" class="uk-button uk-button-default border-red bg-red uk-width-1-2@l"><span
                                     class="uk-margin-small-right" uk-icon="icon: check"> </span>Сохранить</button>
                         </div>
                     </div>
