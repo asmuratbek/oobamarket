@@ -20,6 +20,8 @@ $(document).ready(function () {
     }
 });
 
+console.log(oldAvatarId);
+
 function getCookie(name) {
         var cookieValue = null;
         if (document.cookie && document.cookie !== '') {
@@ -40,30 +42,31 @@ var csrftoken = getCookie('csrftoken');
 
 function showFlashMessage(message) {
     // var template = "{% include 'alert.html' with message='" + message + "' %}"
-    var template = "<div class='container container-alert-flash'>" +
+    var template = "<div class='uk-alert-primary' uk-alert " +
+        "style='position: fixed; top: 50px; right: 10px;'>" +
         "<div class='col-sm-3 col-sm-offset-8'> " +
         "<div class='alert alert-success alert-dismissible' role='alert'>" +
-        "<button type='button' class='close' data-dismiss='alert' aria-label='Close'>" +
-        "<span aria-hidden='true'>&times;</span></button>"
+        "<a class='uk-alert-close uk-margin-small-left' uk-close></a>"
         + message + "</div></div></div>";
     $("body").append(template);
-    $(".container-alert-flash").fadeIn();
+    $(".uk-alert-primary").fadeIn();
     setTimeout(function () {
-        $(".container-alert-flash").fadeOut().remove();
-    }, 1800);
+        $(".uk-alert-primary").fadeOut().remove();
+    }, 3600);
 }
 
 
 $('.delete_prod_images').on('click', function () {
    delete_obj_list.push($(this).data('productimage-id'));
+   $(this).closest('div.image-preview').remove();
    $(this).parent().find("img").remove();
    $(this).parent().find("p").remove();
    $(this).parent().remove();
    $(this).remove();
    allImages--;
    if (!images_div.find("*").hasClass('active-border')) {
-       images_div.find("div").first().find("img").attr("class", "active-border");
-       images_div.find("div").first().find("p").text("Главная")
+        images_div.find("div.image-preview").first().find("img").attr("class", "active-border");
+        images_div.find("div.image-preview").first().addClass("active")
    }
 });
 
@@ -73,25 +76,26 @@ $('#uploading-images').on('change', function (e) {
     $.each(files, function (i, file) {
         imageFiles.push(file);
         var img = $('<img>', {src: URL.createObjectURL(file),data_name: file.name,id: obj_id});
-        var remove_link = $('<button/>', {type: 'button', class: 'delete-img-el',
-                                            id: obj_id, text: 'X'});
-        var p_text = $('<p/>', {text: 'Главная'});
-        var div = $('<div/>', {class: 'product-images-block'});
+        var remove_link = $('<button/>', {type: 'button', class: 'delete-img-el', 'uk-tooltip': '',
+                                            id: obj_id, 'uk-icon':"icon:  minus-circle"});
+        var div_wrap = $('<div/>', {'class': 'image-preview'});
+        var div = $('<div/>', {class: 'wrapper'});
         if (allImages === 0)
         {
+            div_wrap.addClass('active');
             img.addClass('active-border');
             div.append(img)
-                .append(remove_link)
-                .append(p_text);
-            images_div.append(div)
+                .append(remove_link);
+            div_wrap.append(div);
+            images_div.append(div_wrap)
         }
         else
         {
             img.addClass('add-img-el');
             div.append(img)
-                .append(remove_link)
-                .append("<p></p>");
-            images_div.append(div)
+                .append(remove_link);
+            div_wrap.append(div);
+            images_div.append(div_wrap)
         }
         allImages++;
         obj_id++;
@@ -100,22 +104,22 @@ $('#uploading-images').on('change', function (e) {
 
 $(document).on('click', '.add-img-el', function () {
     $('img.active-border').attr('class', 'add-img-el')
-                            .parent().find("p").text("");
+            .closest("div.image-preview").attr('class', 'image-preview');
     $(this).attr('class', 'active-border')
-            .parent().find("p").text("Главная");
+            .closest("div.image-preview").addClass('active');
 });
 
 $(document).on('click', '.delete-img-el', function () {
     var el_id = parseInt($(this).attr('id'));
     delete imageFiles[el_id];
     $('img#' + el_id).remove();
-    $(this).parent('div').remove();
+    $(this).closest('div.image-preview').remove();
     $(this).remove();
     $('#uploading-images').val("");
     allImages--;
     if (!images_div.find("*").hasClass('active-border')) {
-        images_div.find("div").first().find("img").attr("class", "active-border");
-        images_div.find("div").first().find("p").text("Главная")
+        images_div.find("div.image-preview").first().find("img").attr("class", "active-border");
+        images_div.find("div.image-preview").first().addClass("active")
     }
 });
 
