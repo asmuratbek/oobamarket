@@ -5,6 +5,7 @@ from allauth.socialaccount.providers.google.views import GoogleOAuth2Adapter
 from django.http import JsonResponse
 from requests import HTTPError
 from rest_framework.authtoken.models import Token
+from apps.users.models import User
 
 __author__ = 'kolyakoikelov'
 
@@ -25,6 +26,18 @@ class SocialAuth(object):
             social_auth_token = SocialToken(app=app, token=token)
             login = google_auth_adapter.complete_login(request=original_request, app=app, token=social_auth_token) \
                 if self.provider is 'google' else fb_complete_login(request=request, app=app, token=social_auth_token)
+
+            extra_data = login.account.extra_data
+            json_error_response = None
+
+            if 'email' not in extra_data:
+                json_error_response = JsonResponse(dict(message='email is not provided'), status=400)
+            elif User.objects.filter(email=extra_data['email']).exists():
+                json_error_response = JsonResponse(dict(message='email is already registered'), status=400)
+
+            if json_error_response is not None:
+                return json_error_response
+
             login.token = social_auth_token
             login.state = SocialLogin.state_from_request(original_request)
 
