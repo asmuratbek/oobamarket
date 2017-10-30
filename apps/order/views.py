@@ -174,14 +174,12 @@ class ShopSimpleOrderListView(LoginRequiredMixin, ShopMixin, ListView):
         return Shop.objects.get(slug=self.kwargs['slug'])
 
     def get_queryset(self):
-        return SimpleOrder.objects.filter(cart__cartitem__product__shop__slug=self.kwargs.get('slug'))
+        return SimpleOrder.objects.filter(cart__cartitem__product__shop__slug=self.kwargs.get('slug')).distinct()
 
     def post(self, request, *args, **kwargs):
-        # if request.POST.get('ids[]'):
         for id in request.POST.getlist('ids[]'):
             SimpleOrder.objects.filter(pk=id).update(is_visible=False)
         return redirect(request.path)
-        # return JsonResponse(dict(messages=False))
 
 
 class ShopSimpleOrderUpdateView(LoginRequiredMixin, ShopMixin, UpdateView):

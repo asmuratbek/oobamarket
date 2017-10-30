@@ -24,10 +24,8 @@
                                 <tr>
                                     <td>
                                     </td>
-                                    <td>{{ order.cart.id }}</td>
-                                    <td>
-                                        <a href="{% url 'order:user_order_detail' pk=order.id %}"
-                                   style="position: relative;">{{ order.created_at|date:"d.m.y H:i" }}</a>
+                                    <td><a href="{% url 'cart:detail_by_pk' pk=order.cart.id %}">{{ order.cart.id }}</a></td>
+                                    <td>{{ order.created_at|date:"d.m.y H:i" }}
                                     </td>
                                     <td>{{ order.name }}</td>
                                     <td>
