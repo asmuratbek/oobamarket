@@ -39,9 +39,10 @@
                     <div class="border">
                         <a href="{{ sub.get_absolute_url }}" class="uk-position-cover"></a>
                         <div class="uk-cover-container">
+                            <img uk-cover src="{{ sub.get_all_images.first.image.url }}" alt="">
                             <canvas class="uk-visible@s" width="400" height="500"></canvas>
                             <canvas class="uk-hidden@s" width="200" height="300"></canvas>
-                            <img uk-cover src="{{ sub.get_all_images.first.image.url }}" alt="">
+
                         </div>
                     </div>
                     <div class="uk-transition-fade uk-position-cover uk-overlay uk-overlay-default">
