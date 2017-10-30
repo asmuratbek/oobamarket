@@ -55,13 +55,28 @@ class SimpleOrderForm(forms.ModelForm):
             'last_name',
             'phone',
             'address',
-            'status',
-            'comments',
         ]
 
     def __init__(self, *args, **kwargs):
         super(SimpleOrderForm, self).__init__(*args, **kwargs)
-        # self.status = kwargs['initial']['status']
+
+    def clean(self):
+        cleaned_data = super(SimpleOrderForm, self).clean()
+        name = cleaned_data.get('name', '')
+        last_name = cleaned_data.get('last_name', '')
+        phone = cleaned_data.get('phone', '')
+        address = cleaned_data.get('address', '')
+
+        error_msg = "*Обязательное поле"
+
+        if name is None or name == "":
+            self._errors['name'] = error_msg
+        if last_name is None or last_name == "":
+            self._errors['last_name'] = error_msg
+        if phone is None or phone == "":
+            self._errors['phone'] = error_msg
+        if address is None or address == "":
+            self._errors['address'] = error_msg
 
 
 class ShopSimpleOrderForm(forms.ModelForm):

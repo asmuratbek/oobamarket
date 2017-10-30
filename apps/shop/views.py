@@ -315,6 +315,7 @@ class CreateBanners(LoginRequiredMixin, ShopMixin, View):
             return JsonResponse({
                 "banners": banners
             })
+        return JsonResponse({'status': 1, 'message': 'Your request is very bad!'})
         # else:
         #     print(len(request.FILES['image']))
         #     for file in request.FILES.getlist('image'):
