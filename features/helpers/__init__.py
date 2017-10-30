@@ -40,9 +40,9 @@ def assert_response_json_keys_exist(context, response, keys):
     context.test.assertTrue(dict_has_keys(keys, response.json()))
 
 
-def create_user(faker, username_prefix=''):
+def create_user(faker, username_prefix='', default_email=''):
     username = '%s_%s' % (faker.words()[0].replace(' ', '_'), username_prefix)
-    email = '%s@somemail.com' % username
+    email = '%s@somemail.com' % username if default_email == '' else default_email
     password = '%s_password' % username
 
     user = get_user_model().objects.create(username=username, email=email)

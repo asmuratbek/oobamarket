@@ -581,18 +581,17 @@ $(document).ready(function () {
 
     function showFlashMessage(message) {
         // var template = "{% include 'alert.html' with message='" + message + "' %}"
-        var template = "<div class='container container-alert-flash'>" +
+        var template = "<div class='uk-alert-primary' uk-alert " +
+            "style='position: fixed; top: 50px; right: 10px;'>" +
             "<div class='col-sm-3 col-sm-offset-8'> " +
             "<div class='alert alert-success alert-dismissible' role='alert'>" +
-            "<button type='button' class='close' data-dismiss='alert' aria-label='Close'>" +
-            "<span aria-hidden='true'>&times;</span></button>"
+            "<a class='uk-alert-close uk-margin-small-left' uk-close></a>"
             + message + "</div></div></div>";
         $("body").append(template);
-        $(".container-alert-flash").fadeIn();
+        $(".uk-alert-primary").fadeIn();
         setTimeout(function () {
-            $(".container-alert-flash").fadeOut();
-        }, 1800);
-
+            $(".uk-alert-primary").fadeOut().remove();
+        }, 3600);
     }
 
 

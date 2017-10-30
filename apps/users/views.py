@@ -128,7 +128,7 @@ def subscribe(request):
                 data['message'] = 'Параметры подписки изменены'
                 return JsonResponse(data)
         return HttpResponseBadRequest()
-    msg = "Для того чтобы подписаться вам необходимо зарегестрироваться."
+    msg = "Для того чтобы подписаться вам необходимо зарегистрироваться."
     messages.add_message(request, messages.INFO, msg)
     return HttpResponse('redirect')
 

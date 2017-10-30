@@ -30,17 +30,17 @@ var csrftoken = getCookie('csrftoken');
 
 function showFlashMessage(message) {
     // var template = "{% include 'alert.html' with message='" + message + "' %}"
-    var template = "<div class='container container-alert-flash'>" +
+    var template = "<div class='uk-alert-primary' uk-alert " +
+        "style='position: fixed; top: 50px; right: 10px;'>" +
         "<div class='col-sm-3 col-sm-offset-8'> " +
         "<div class='alert alert-success alert-dismissible' role='alert'>" +
-        "<button type='button' class='close' data-dismiss='alert' aria-label='Close'>" +
-        "<span aria-hidden='true'>&times;</span></button>"
+        "<a class='uk-alert-close uk-margin-small-left' uk-close></a>"
         + message + "</div></div></div>";
     $("body").append(template);
-    $(".container-alert-flash").fadeIn();
+    $(".uk-alert-primary").fadeIn();
     setTimeout(function () {
-        $(".container-alert-flash").fadeOut().remove();
-    }, 1800);
+        $(".uk-alert-primary").fadeOut().remove();
+    }, 3600);
 }
 
 
@@ -51,24 +51,26 @@ $('#uploading-images').on('change', function (e) {
         imagesFiles.push(file);
         var img = $('<img>', {src: URL.createObjectURL(file), data_name: file.name,id: obj_id});
         var remove_link = $('<button/>', {type: 'button', class: 'delete-img-el',
-                                            id: obj_id, text: 'X'});
-        var p_text = $('<p/>', {text: 'Главная'});
-        var div = $('<div/>');
+                                            id: obj_id, 'uk-tooltip': '', title: 'Удалить',
+                                            'uk-icon': 'icon:  minus-circle'});
+        var div_wrap = $('<div/>', {'class': 'image-preview'});
+        var div = $('<div/>', {'class': 'wrapper'});
         if (count === 0)
         {
             img.addClass("active-border");
+            div_wrap.addClass("active");
             div.append(img)
-               .append(remove_link)
-               .append(p_text);
-            images_div.append(div)
+               .append(remove_link);
+            div_wrap.append(div);
+            images_div.append(div_wrap)
         }
         else
         {
             img.addClass("add-img-el");
             div.append(img)
-                .append(remove_link)
-                .append("<p></p>");
-            images_div.append(div);
+                .append(remove_link);
+            div_wrap.append(div);
+            images_div.append(div_wrap)
         }
         obj_id += 1;
         count += 1;
@@ -76,9 +78,9 @@ $('#uploading-images').on('change', function (e) {
 
 $(document).on('click', '.add-img-el', function () {
     $('img.active-border').attr('class', 'add-img-el')
-                            .parent().find("p").text("");
+        .closest("div.image-preview").attr('class', 'image-preview');
     $(this).attr('class', 'active-border')
-            .parent().find("p").text("Главная");
+            .closest("div.image-preview").addClass('active');
 });
 });
 
@@ -87,13 +89,13 @@ $(document).on('click', '.delete-img-el', function () {
     // imagesFiles.splice(el_id, 1);
     delete imagesFiles[el_id];
     $('img#' + el_id).remove();
-    $(this).parent('div').remove();
+    $(this).closest('div.image-preview').remove();
     $(this).remove();
     $('#uploading-images').val("");
     count = count - 1;
     if (!images_div.find("*").hasClass('active-border')) {
-        images_div.find("div").first().find("img").attr("class", "active-border");
-        images_div.find("div").first().find("p").text("Главная")
+        images_div.find("div.image-preview").first().find("img").attr("class", "active-border");
+        images_div.find("div.image-preview").first().addClass("active")
     }
 });
 var clickCount = 0;
