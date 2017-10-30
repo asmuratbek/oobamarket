@@ -1,5 +1,5 @@
 from allauth.socialaccount.helpers import complete_social_login
-from allauth.socialaccount.models import SocialApp, SocialToken, SocialLogin
+from allauth.socialaccount.models import SocialApp, SocialToken, SocialLogin, SocialAccount
 from allauth.socialaccount.providers.facebook.views import fb_complete_login
 from allauth.socialaccount.providers.google.views import GoogleOAuth2Adapter
 from django.http import JsonResponse
@@ -32,7 +32,8 @@ class SocialAuth(object):
 
             if 'email' not in extra_data:
                 json_error_response = JsonResponse(dict(message='email is not provided'), status=400)
-            elif User.objects.filter(email=extra_data['email']).exists():
+            elif not SocialAccount.objects.filter(user__email=extra_data['email']).exists() and User.objects.filter(
+                    email=extra_data['email']).exists():
                 json_error_response = JsonResponse(dict(message='email is already registered'), status=400)
 
             if json_error_response is not None:
