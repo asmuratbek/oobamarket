@@ -51,8 +51,12 @@ class Shop(PublishBaseModel, MetaBaseModel, Counter):
     def __str__(self):
         return self.title
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.current_img = self.logo
+
     def save(self, *args, **kwargs):
-        if self.logo:
+        if self.logo and self.logo != self.current_img:
             self.create_thumbnail()
         if not self.slug:
             self.slug = slugify(self.title)
@@ -227,10 +231,14 @@ class Sales(PublishBaseModel):
     image_thumb = models.ImageField(upload_to='shops/sales/thumb', null=True, blank=True)
 
     def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
-        if self.image:
+        if self.image and self.image != self.current_img:
             self.create_thumbnail()
 
         super().save(force_insert, force_update, using, update_fields)
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.current_img = self.image
 
     def __str__(self):
         return self.title
