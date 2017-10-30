@@ -40,7 +40,7 @@ class ShopForm(ModelForm):
 class ShopBannersForm(ModelForm):
     class Meta:
         model = Banners
-        fields = ['title', 'image']
+        fields = ['image',]
 
 
 class ShopSocialLinksForm(ModelForm):
