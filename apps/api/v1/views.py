@@ -328,8 +328,9 @@ class MyListView(APIView):
     authentication_classes = [SessionAuthentication, TokenAuthentication]
 
     def get(self, request):
-        cart_items = request.user.cart_set.last().cartitem_set.all().values("product__id") \
-            if request.user.is_authenticated and request.user.cart_set else False
+        cart = request.user.cart_set.last()
+        cart_items = cart.cartitem_set.all().values("product__id") \
+            if request.user.is_authenticated and cart is not None else False
         items = list()
         favs = list()
         shop_titles = list()
@@ -1052,8 +1053,9 @@ class ShopDetailView(APIView):
         products_dict = [model_to_dict(product) for product in p.object_list] if p else list()
         for prod in products_dict:
             product = get_object_or_404(Product, id=prod['id'])
-            prod["is_in_cart"] = user.cart_set.last().cartitem_set.filter(product=product).exists() \
-                if user.is_authenticated() else False
+            cart = user.cart_set.last()
+            prod["is_in_cart"] = cart.cartitem_set.filter(product=product).exists() \
+                if user.is_authenticated() and cart is not None else False
             prod["is_favorite"] = product.favorite.filter(user=user).exists() if user.is_authenticated() else False
             prod["main_image"] = product.get_main_thumb_image()
         shop_dict = model_to_dict(shop, exclude=['logo', 'user', 'logo_thumb'])

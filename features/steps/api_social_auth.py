@@ -8,13 +8,13 @@ use_step_matcher("re")
 
 @given("some google and facebook accounts")
 def step_impl(context):
-    google_client_id = '115196085804923'
-    google_secret = 'ff850821f566bdb18ec20a38a8bc2645'
+    google_client_id = '230288808995-4c5f9sf26l43u1jpcgftv6uh8vcoipsq.apps.googleusercontent.com'
+    google_secret = 'qzOus6dbh4ncyZhR_TMVr2aR'
     facebook_client_id = '115196085804923'
     facebook_secret = 'ff850821f566bdb18ec20a38a8bc2645'
 
-    google_account_token = ''
-    facebook_account_token = ''
+    google_account_token = 'ya29.Glv0BP9I32wXOfQvux3dElqN3S9VnI9AxZ_2tNNT3BOnz7CPZ534wyBFXwmKhsv4PxhErRfYW-LhP0Q5RhUc2pHTIpMHIYF9jV1wqstrRTpjjqjZ660MyU_xBETw'
+    facebook_account_token = 'EAABoxS3GH3sBADZBksZAXTAzKH7EZBO7jZAvhIZB6isyj5k33bSZBBJZCFi08kY5ZC1l8lcSBdwLTl3XblsIGdpqZCCebtchZAsYZBrIV3S7082rMv3l7ZAQgPL8r85lq4ZAKVmcBpQITKYqUhmSiFoOx22ZBabVOeCzocxiZBWYC8sUEfxahcdJrghIl2d6lSagqrSQXsoRpuoxNpynQZDZD'
 
     site_info = create_site_for_social_app('localhost:8000', 'localhost')
     create_social_app('google', name='Google', client_id=google_client_id,

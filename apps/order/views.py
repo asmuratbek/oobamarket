@@ -112,18 +112,19 @@ class AddressSelectFormView(CartOrderMixin, FormView):
 
 class SimpleOrderCreateView(View):
     def post(self, request, *args, **kwargs):
-        data = request.POST.copy()
-        order = SimpleOrder()
-        order.name = data['name']
-        order.last_name = data['last_name']
-        order.phone = data['phone']
-        order.address = data['address']
-        order.user = request.user if request.user.is_authenticated else None
-        cart = Cart.objects.get(id=data['cart'])
-        cart.completed = True
-        cart.save()
-        order.cart = cart
-        order.save()
+        form = SimpleOrderForm(request.POST)
+        if form.is_valid():
+            order = form.save(commit=False)
+            order.user = request.user if request.user.is_authenticated else None
+            cart = Cart.objects.get(id=request.POST.get('cart'))
+            cart.completed = True
+            cart.save()
+            order.cart = cart
+            order.save()
+        else:
+            msg = "Заполните все обязательные поля"
+            messages.add_message(request, messages.WARNING, msg)
+            return redirect(reverse("cart:detail"))
         if request.user.is_authenticated():
             cart = Cart.objects.create(user=request.user)
         else:
@@ -173,14 +174,12 @@ class ShopSimpleOrderListView(LoginRequiredMixin, ShopMixin, ListView):
         return Shop.objects.get(slug=self.kwargs['slug'])
 
     def get_queryset(self):
-        return SimpleOrder.objects.filter(cart__cartitem__product__shop__slug=self.kwargs.get('slug'))
+        return SimpleOrder.objects.filter(cart__cartitem__product__shop__slug=self.kwargs.get('slug')).distinct()
 
     def post(self, request, *args, **kwargs):
-        # if request.POST.get('ids[]'):
         for id in request.POST.getlist('ids[]'):
             SimpleOrder.objects.filter(pk=id).update(is_visible=False)
         return redirect(request.path)
-        # return JsonResponse(dict(messages=False))
 
 
 class ShopSimpleOrderUpdateView(LoginRequiredMixin, ShopMixin, UpdateView):

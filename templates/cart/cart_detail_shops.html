@@ -1,0 +1,91 @@
+{% extends 'base-1.html' %}
+{% load staticfiles %}
+{% block categories %}
+{% endblock %}
+
+
+{% block content %}
+    <section class="basket-page uk-margin-medium-top">
+        <div class="uk-container">
+            <div class="shadow  uk-padding-small">
+                                {% for item in items %}
+{#                                    {% if item.product.shop == shop %}#}
+
+                                        <div class="body uk-grid">
+                                            <div class="uk-width-1-2@m uk-grid">
+                                                <div class="uk-width-1-3@m">
+                                                    <div class="uk-padding-small uk-text-center">
+                                                        <img src="{{ item.product.get_avatar_image }}" width="50"
+                                                             alt="{{ item.product.title }}">
+                                                    </div>
+
+                                                </div>
+                                                <div class="uk-width-expand@m " style="padding-left: 10px;">
+                                                    <h3>
+                                                        <a href="{{ item.product.get_absolute_url }}">{{ item.product.title }}</a>
+                                                    </h3>
+                                                    <p class="description-shop">{{ item.product.short_description }}</p>
+                                                    <div class="availability">
+                                                        <p>
+                                                            Наличие:
+                                                            <span class="{% if item.product.availability == "available" %} stock
+                                                        {% elif item.product.availability == "waiting" %} expectation
+                                                        {% else %} not-stock {% endif %}">{{ item.product.get_availability }}
+                                                        </span>
+                                                        </p>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="uk-width-expand@m uk-margin-remove-top uk-grid">
+                                                <form action="" class="cart-form uk-width-expand@m uk-grid">
+                                                    <input type="hidden" name="item" value="{{ item.product.id }}">
+                                                    <div class="uk-width-1-2@m">
+                                                        <div class="form-group col-lg-6 col-lg-offset-3">
+                                                            <p class="form-control uk-input item-qty">
+                                                                {{ item.quantity }}
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="uk-width-expand@m">
+                                                        <p class="price"
+                                                           id="line-total-{{ item.product.id }}">{{ item.total }} {{ item.product.currency }}</p>
+                                                    </div>
+                                                    <div class="uk-width-auto@m uk-padding-remove-left uk-text-right">
+                                                    </div>
+                                                    <div class="uk-width-1-1@m uk-margin-medium-top">
+
+                                                        <div class="form-group">
+                                            <div name="" class="form-control uk-textarea item-comment">{% if item.comments %}
+                                                {{ item.comments }}{% endif %}
+                                            </div>
+
+                                                        </div>
+
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                        <hr class="uk-divider-icon">
+{#                                    {% endif %}#}
+                                {% endfor %}
+                                {# end body#}
+                <h1>{{ total_price }} сом</h1>
+                            </div>
+
+
+                        </div>
+
+{#                        <div class="uk-width-1-1 uk-grid uk-margin-medium-left shadow uk-padding uk-padding-remove-left">#}
+{#                            <div class="border-top">#}
+{#                                <div class="col-lg-6">#}
+{#                                    <h3>Доставка</h3>#}
+{#                                </div>#}
+{#                                <div class="col-lg-6">#}
+{#                                    <h4>{% if forloop.first %}150{% else %}100{% endif %} сом</h4>#}
+{#                                </div>#}
+{#                            </div>#}
+{##}
+{#                        </div>#}
+    </section>
+{% endblock %}

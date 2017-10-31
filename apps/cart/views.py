@@ -2,10 +2,11 @@ from django.http import JsonResponse, HttpResponseRedirect, Http404
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from django.views.generic.detail import SingleObjectMixin
-
+from django.views.generic import DetailView
 from apps.product.models import Product
 from .models import Cart, CartItem
 from django.views import View
+from .mixins import CartOwnerUsers
 
 
 # Create your views here.
@@ -118,4 +119,17 @@ class CartDetailView(SingleObjectMixin, View):
             "object": self.get_object()
         }
         template = self.template_name
+        return render(request, template, context)
+
+
+class CartDetailByPk(CartOwnerUsers, View):
+    def get(self, request, *args, **kwargs):
+        cart = get_object_or_404(Cart, id=kwargs.get('pk'))
+        if cart.user == request.user:
+            template = 'cart/cart_detail_user.html'
+            context = dict(object=cart)
+        else:
+            items = cart.cartitem_set.filter(product__shop__user__id=request.user.id)
+            template = 'cart/cart_detail_shops.html'
+            context = dict(items=items, total_price=sum(items.values_list('total', flat=True)))
         return render(request, template, context)
