@@ -127,7 +127,9 @@ def create_cart_item(user, product, cart=None):
 
 
 def create_cart(user):
-    Cart.objects.create(user=user)
+    cart = Cart.objects.create(user=user)
+
+    return dict(cart=cart)
 
 
 def create_favorite_product(user, product):
