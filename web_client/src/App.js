@@ -725,12 +725,12 @@ class App extends Component {
                             <div className="uk-width-expand@m">
                                 <div className="uk-child-width-1-2 uk-child-width-1-2@s uk-child-width-1-2@m  uk-child-width-1-3@l uk-grid-small" data-uk-grid>
 
-                                    {this.state.isOwner && (
+                                    {this.state.owner && (
                                         <div className="uk-grid-match add-product-item">
                                             <div className="shadow uk-text-center">
                                                 <div className="uk-inline-clip uk-transition-toggle">
                                                     <div className="border">
-                                                        <a href="" className="uk-position-cover">{}</a>
+                                                        <a href="/product/add-product/" className="uk-position-cover">{}</a>
                                                         <div className="uk-cover-container">
                                                             <div className="cover">
                                                                 <span className="uk-display-block uk-margin-small-bottom" data-uk-icon="ratio: 3; icon:  plus-circle">{}</span>
@@ -743,7 +743,7 @@ class App extends Component {
                                                     </div>
                                                 </div>
                                                 <div className="uk-padding-small uk-margin-remove uk-padding-remove footer">
-                                                   <a href="">Добавить акцию</a>
+                                                   <a href={`/shops/${this.state.shopSlug}/sale/create/`}>Добавить акцию</a>
                                                 </div>
                                             </div>
                                         </div>

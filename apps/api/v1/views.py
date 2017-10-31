@@ -328,8 +328,9 @@ class MyListView(APIView):
     authentication_classes = [SessionAuthentication, TokenAuthentication]
 
     def get(self, request):
-        cart_items = request.user.cart_set.last().cartitem_set.all().values("product__id") \
-            if request.user.is_authenticated and request.user.cart_set else False
+        cart = request.user.cart_set.last()
+        cart_items = cart.cartitem_set.all().values("product__id") \
+            if request.user.is_authenticated and cart is not None else False
         items = list()
         favs = list()
         shop_titles = list()
