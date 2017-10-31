@@ -10,6 +10,8 @@
     <section class="basket-page uk-margin-medium-top">
         <div class="uk-container">
             <div class="shadow  uk-padding-small">
+            <form id="save_cart_form" method="post"
+                  enctype="multipart/form-data">{% csrf_token %}
                 {% for shop in object.get_shops %}
 
                     <div class="cync-shop uk-grid">
@@ -72,12 +74,13 @@
                                                 </div>
                                             </div>
                                             <div class="uk-width-expand@m uk-margin-remove-top uk-grid">
-                                                <form action="" class="cart-form uk-width-expand@m uk-grid">
-                                                    <input type="hidden" name="item" value="{{ item.product.id }}">
+{#                                                <form action="" class="cart-form uk-width-expand@m uk-grid">#}
+                                                    <input type="hidden" name="item" value="{{ item.id }}">
+                                                    <input type="hidden" class="product-price" value="{{ item.product.price }}">
                                                     <div class="uk-width-1-2@m">
                                                         <div class="form-group col-lg-6 col-lg-offset-3">
                                                             <input type="number" class="form-control uk-input item-qty"
-                                                                   value="{{ item.quantity }}" name="qty">
+                                                                   value="{{ item.quantity }}" name="qty" min="0">
                                                         </div>
                                                     </div>
                                                     <div class="uk-width-expand@m">
@@ -85,22 +88,18 @@
                                                            id="line-total-{{ item.product.id }}">{{ item.total }} {{ item.product.currency }}</p>
                                                     </div>
                                                     <div class="uk-width-auto@m uk-padding-remove-left uk-text-right">
-                                                        <a href="{{ item.product.remove_from_cart }}"
-                                                           uk-icon="icon: close" title="Удалить" uk-tooltip></a>
+                                                        <a class="delete-item" uk-icon="icon: close" title="Удалить" uk-tooltip></a>
                                                     </div>
                                                     <div class="uk-width-1-1@m uk-margin-medium-top">
 
                                                         <div class="form-group">
-                                            <textarea name="" class="form-control uk-textarea item-comment"
+                                            <textarea name="text" class="form-control uk-textarea item-comment"
                                                       data-product-id="{{ item.product.id }}" id="" cols="30" rows="5"
-                                                      placeholder="Ваш коментарий к данному товару">{% if item.comments %}
-                                                {{ item.comments }}{% endif %}
-                                            </textarea>
-
+                                                      placeholder="Ваш коментарий к данному товару">{% if item.comments %}{{ item.comments }}{% endif %}</textarea>
                                                         </div>
 
                                                     </div>
-                                                </form>
+{#                                                </form>#}
                                             </div>
                                         </div>
                                         <hr class="uk-divider-icon">
@@ -118,11 +117,14 @@
                                     <h3>Доставка</h3>
                                 </div>
                                 <div class="col-lg-6">
-                                    <h4>{% if forloop.first %}150{% else %}100{% endif %} сом</h4>
+                                    <h4 class="delivery_price">{% if forloop.first %}150{% else %}100{% endif %} сом</h4>
                                 </div>
                             </div>
 
                         </div>
+                    <div class="one-shop-total">
+                        <h2>Сумма: <span class="item-total"></span> сом</h2>
+                    </div>
                     </div>
 
                 {% endfor %}
@@ -133,97 +135,65 @@
 
                         <h5>Итого к оплате</h5>
                         <h5 id="subtotal">{{ object.subtotal }} сом</h5>
-
-                        <div class="col-lg-offset-2 col-lg-10">
-                            <a href="#basket-modal" class="uk-button uk-button-default" uk-toggle>Оформить
-                                покупку</a>
-                             <a href="#delevery" class="uk-button uk-button-default" uk-toggle>Условия доставки</a>
-
-                        </div>
                     {% endif %}
                 </div>
+                <div>
+                        <button type="submit">Сохранить</button>
+                </div>
+                </form>
             </div>
 
 
         </div>
     </section>
 
-    <!-- This is the modal -->
-    <div id="basket-modal" uk-modal>
-        <div class="uk-modal-dialog basket-modal uk-modal-body">
-            <button class="uk-modal-close-default" type="button" uk-close></button>
-            <form action="{% url 'order:create' %}" method="POST">
-                {% csrf_token %}
-                <input type="hidden" name="cart" value="{{ object }}">
-                {% if user.is_authenticated %}
-                    <div class="uk-form-controls uk-margin">
-                        <input type="text" class="uk-input" placeholder="Имя" name="name"
-                               {% if object.user.first_name %}value="{{ object.user.first_name }}"{% endif %}
-                               required>
-                    </div>
-
-                    <div class="uk-form-controls uk-margin">
-                        <input type="text" class="uk-input" placeholder="Фамилия" name="last_name"
-                               {% if object.user.last_name %}value="{{ object.user.last_name }}"{% endif %}>
-                    </div>
-                    <div class="uk-form-controls uk-margin">
-                        <input type="text" class="uk-input" placeholder="Номер телефона" name="phone"
-                               {% if object.user.phone %}value="{{ object.user.phone }}"{% endif %} required>
-                    </div>
-                    <div class="uk-form-controls uk-margin">
-                        <input type="text" class="uk-input" placeholder="Ваш адрес" name="address"
-                               {% if object.user.address %}value="{{ object.user.address }}"{% endif %}
-                               required>
-                    </div>
-                {% else %}
-                    <div class="uk-form-controls uk-margin">
-                        <input type="text" class="uk-input" placeholder="Имя" name="name" required>
-                    </div>
-
-                    <div class="uk-form-controls uk-margin">
-                        <input type="text" class="uk-input" placeholder="Фамилия" name="last_name">
-                    </div>
-                    <div class="uk-form-controls uk-margin">
-                        <input type="text" class="uk-input" placeholder="Номер телефона" name="phone"
-                               required>
-                    </div>
-                    <div class="uk-form-controls uk-margin">
-                        <input type="text" class="uk-input" placeholder="Ваш адрес" name="address" required>
-                    </div>
-                {% endif %}
-                <button type="submit" class="send uk-button uk-button-default">Отправить</button>
-                <button class="uk-modal-close uk-button uk-button-default" type="button">Закрыть</button>
-            </form>
-
-        </div>
-    </div>
-
-    <!-- This is the modal -->
-    <div id="delevery" class="uk-modal-container" uk-modal>
-        <div class="uk-modal-dialog basket-modal uk-modal-body">
-            <button class="uk-modal-close-default" type="button" uk-close></button>
-        </div>
-    </div>
-
     <script>
-    $('.item-qty').change(function () {
-        var formData = $(this).closest('.cart-form').serialize();
-        console.log(formData);
-        $.ajax({
-            type: "GET",
-            url: "/cart/",
-            data: formData,
-            success: function (data) {
-                showFlashMessage(data.flash_message);
-                $('.cart-count').text(data.total_items);
-                $('#line-total-' + data.id).text(data.line_total + ' сом');
-                $('#subtotal').text(data.subtotal + ' сом');
-            },
-            error: function (response, error) {
-                console.log(response);
-                console.log(error);
+        var total_price = parseFloat($('#subtotal').text());
+        $('.cync-shop').each(function (i, item) {
+           var sum = 0;
+           $(item).find('.price').each(function (i, item) {
+            sum += parseFloat($(item).text());
+           });
+            $(item).find('span.item-total').append(sum);
+        });
+        $('.delete-item').on('click', function () {
+            var global_parent = $(this).closest('div.cync-shop');
+            var parent = $(this).closest('div.body');
+            var delivery_price = parseFloat($(global_parent).find('.delivery_price').text());
+            var item_price = parseFloat($(parent).find('.price').text());
+            var item_total = parseFloat($(global_parent).find('span.item-total').text());
+            $(parent).next().remove();
+            $(parent).empty().remove();
+            total_price -= item_price;
+            item_total -= item_price;
+            $(global_parent).find('span.item-total').text(item_total);
+            if(global_parent.find('div.body').length === 0){
+                global_parent.empty().remove();
+                total_price -= delivery_price;
             }
+            $('#subtotal').text(total_price + ' сом');
+        });
+        $(document).on('change', '.item-qty', function () {
+            var item_qty = parseFloat($(this).val());
+            var global_parent = $(this).closest('div.cync-shop');
+            var item_total = parseFloat($(global_parent).find('span.item-total').text());
+            var parent = $(this).closest('div.body');
+            var item_price = $(parent).find('p.price');
+            var item_price_val = parseFloat(item_price.text());
+            if(item_qty < 0) {
+                item_price.text('0.00 сом');
+                $(this).val(0);
+                return
+            }
+            var product_price = parseFloat($(parent).find('input.product-price').val());
+            var new_price = product_price * item_qty;
+            item_price.text(new_price + ' сом');
+            item_total -= item_price_val;
+            item_total += new_price;
+            total_price -= item_price_val;
+            total_price += new_price;
+            $(global_parent).find('span.item-total').text(item_total);
+            $('#subtotal').text(total_price + ' сом');
         })
-    });
     </script>
 {% endblock %}

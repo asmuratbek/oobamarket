@@ -133,3 +133,26 @@ class CartDetailByPk(CartOwnerUsers, View):
             template = 'cart/cart_detail_shops.html'
             context = dict(items=items, total_price=sum(items.values_list('total', flat=True)))
         return render(request, template, context)
+
+    def post(self, request, *args, **kwargs):
+        cart = get_object_or_404(Cart, id=kwargs.get('pk'))
+        all_cartitems = cart.cartitem_set.values_list('id', flat=True)
+        cartitems_ids = [int(i) for i in request.POST.getlist('item')]
+        cartitem_text = request.POST.getlist('text')
+        cartitem_qty = [int(q) for q in request.POST.getlist('qty')]
+        combine_values = list(zip(cartitems_ids, cartitem_text, cartitem_qty))
+        deleted_ids = list(set(all_cartitems).difference(set(cartitems_ids)))
+        if deleted_ids:
+            cart.cartitem_set.filter(id__in=deleted_ids).delete()
+        for i, t, q in combine_values:
+            cartitem = get_object_or_404(CartItem, id=i)
+            if q < 1:
+                cartitem.delete()
+            else:
+                cartitem.comments = t.strip()
+                cartitem.quantity = q
+                cartitem.save()
+        return HttpResponseRedirect(reverse('cart:detail_by_pk', kwargs={'pk': cart.id}))
+
+
+

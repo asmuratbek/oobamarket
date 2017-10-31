@@ -8,9 +8,12 @@ class CartOwnerUsers(object):
     def dispatch(self, request, *args, **kwargs):
         cart = get_object_or_404(Cart, id=kwargs.get('pk', ''))
         user = cart.user
-        users_list = [user for item in cart.cartitem_set.all()
-                      for user in item.product.shop.user.all()]
-        users_list.append(user)
+        if request.method == 'GET':
+            users_list = [user for item in cart.cartitem_set.all()
+                          for user in item.product.shop.user.all()]
+            users_list.append(user)
+        else:
+            users_list = [user]
         if request.user not in users_list:
             raise Http404
         return super(CartOwnerUsers, self).dispatch(request, *args, **kwargs)
