@@ -129,7 +129,8 @@
                         <small class="uk-text-center uk-display-block uk-margin-medium-bottom uk-alert-danger">Размер
                             картинки должен быть 1:1
                         </small>
-                        <div class="image-preview" style='background-image: url("{{ form.initial.logo.url }}");background-size: cover;background-position: center center;'>
+                        <div class="image-preview" {% if form.initial.logo %}style='background-image: url("{{ form.initial.logo.url }}");
+                                background-size: cover;background-position: center center;'{% endif %}>
                             <label for="image-upload" class="image-label">Выбрать лого</label>
                             <input type="file" name="logo" id="image-upload"/>
                         </div>
