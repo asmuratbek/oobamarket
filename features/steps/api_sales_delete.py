@@ -22,7 +22,7 @@ def step_impl(context):
 
 @when('app sends request to "api_sales_delete" url with the shop slug and the sale id')
 def step_impl(context):
-    context.response = context.client.delete(reverse('api:shop_sales_delete', kwargs=dict(slug=context.shop_slug,
+    context.response = context.client.post(reverse('api:shop_sales_delete', kwargs=dict(slug=context.shop_slug,
                                                                                           pk=context.sale_id)),
                                              **dict(HTTP_AUTHORIZATION='Token %s' % context.auth_token))
 
