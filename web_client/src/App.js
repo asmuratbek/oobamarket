@@ -31,7 +31,7 @@ class App extends Component {
         markets: [],
         isAuth: false,
         activePlace: '',
-        productsByPage: 20,
+        productsByPage: 56,
         domain: window.location.href.split("/")[2].split(":")[0],
         categorySlug: window.location.href.split("/")[window.location.href.split("/").length - 2],
         shopSlug: this.pageType() === 'shop' ? window.location.href.split("/")[4] : null
@@ -161,8 +161,8 @@ class App extends Component {
                     this.setState({
                         owner: owner,
                         parentCategories:parentCategories,
-                        categories: categories
-
+                        categories: categories,
+                        productsByPage: owner ? 56 : 57
                     });
               }.bind(this),
               error: function (response, error) {
@@ -287,6 +287,10 @@ class App extends Component {
                       }
                 })
         }
+  
+        $('body,html').animate({
+          scrollTop: 0
+        }, 600);
 
 
   };

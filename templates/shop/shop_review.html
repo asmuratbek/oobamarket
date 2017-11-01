@@ -1,146 +1,60 @@
 {% extends 'shop/shop_detail.html' %}
 {% load shop_tags staticfiles %}
+{% load widget_tweaks %}
 
 {% block shopcontent %}
     <section class="review uk-margin-medium-top">
-
         <div class="uk-container">
             <div class="shadow uk-padding-large">
-                <article class="uk-comment">
-                    <h4 class="uk-comment-title uk-margin-remove">
-                        Автор
-                        <div class="group-star uk-display-inline-block">
-                            <span class="star"></span>
-                            <span class="star"></span>
-                            <span class="star"></span>
-                            <span class="star"></span>
+                {% for item in reviews %}
+                    <article class="uk-comment">
+                        <h4 class="uk-comment-title uk-margin-remove">
+                            {{ item.user.first_name }}
+                            <div class="group-star uk-display-inline-block">
+                                {% for i in item.stars %}
+                                    <span class="star"></span>
+                                {% endfor %}
+                            </div>
+                        </h4>
+                        <ul class="uk-comment-meta uk-subnav uk-subnav-divider uk-margin-remove-top">
+                            <li><a href="#">{{ item.created_at|date:"d-m-y H:i" }}</a></li>
+                        </ul>
+                        <div class="uk-comment-body">
+                            <p>{{ item.text }}</p>
                         </div>
-                    </h4>
-                    <ul class="uk-comment-meta uk-subnav uk-subnav-divider uk-margin-remove-top">
-                        <li><a href="#">22.09.17 12:09</a></li>
-                    </ul>
-                    <div class="uk-comment-body">
-                        <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
-                            invidunt
-                            ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo
-                            duo
-                            dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum
-                            dolor
-                            sit amet.</p>
-                    </div>
-                    <hr class="uk-divider-icon">
-                </article>
+                        <hr class="uk-divider-icon">
+                    </article>
+                {% endfor %}
 
-                <article class="uk-comment">
-                    <h4 class="uk-comment-title uk-margin-remove">
-                        Автор
-                        <div class="group-star uk-display-inline-block">
-                            <span class="star"></span>
-                            <span class="star"></span>
-                            <span class="star"></span>
-                            <span class="star"></span>
-                            <span class="star"></span>
-                        </div>
-                    </h4>
-                    <ul class="uk-comment-meta uk-subnav uk-subnav-divider uk-margin-remove-top">
-                        <li><a href="#">12 дней назад</a></li>
-                    </ul>
-                    <div class="uk-comment-body">
-                        <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
-                            invidunt
-                            ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo
-                            duo
-                            dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum
-                            dolor
-                            sit amet.</p>
-                    </div>
-                    <hr class="uk-divider-icon">
-                </article>
-                <div class="uk-alert-danger uk-alert" uk-alert="">
-                    <a class="uk-alert-close uk-close uk-icon" uk-close=""></a>
-                    <h3>Ошибка</h3>
-                    <p>Вы не можете отправить пустое сообщение!!!</p>
-                </div>
-                <form class="uk-form-stacked uk-margin-medium-top">
+{#                <div class="uk-alert-danger uk-alert" uk-alert="">#}
+{#                    <a class="uk-alert-close uk-close uk-icon" uk-close=""></a>#}
+{#                    <h3>Ошибка</h3>#}
+{#                    <p>Вы не можете отправить пустое сообщение!!!</p>#}
+{#                </div>#}
+
+                <form class="uk-form-stacked uk-margin-medium-top" action="
+                                {% if not already_added %}{% url "shops:add_review" slug=shop.slug %} {% else %}
+                                {% url "shops:update_review" slug=shop.slug pk=user_review.pk %}{% endif %}"
+                        id="review_form">
                     <div class="uk-margin">
-                        <legend class="uk-legend">Добавить отзыв</legend>
-                        <select id="rating-review" class="uk-margin">
-                            <option value="1" selected>1</option>
-                            <option value="2" selected>2</option>
-                            <option value="3" selected>3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                        </select>
+                        {% csrf_token %}
+                        <legend class="uk-legend">
+                            {% if not already_added %}
+                                Добавить отзыв
+                            {% else %}
+                                Редактировать отзыв
+                            {% endif %}
+                        </legend>
+                        {% render_field form.rating  id="rating-review" class="uk-margin" %}
                         <div class="uk-form-controls">
-                            <textarea class="uk-textarea" rows="10" placeholder="Ваш отзыв"></textarea>
+                            {% render_field form.text class="uk-textarea" rows="10" placeholder="Ваш отзыв"%}
                         </div>
                     </div>
                     <button class="uk-button uk-button-default">Отправить</button>
                 </form>
             </div>
-
-
         </div>
     </section>
-
-    {#    <section class="reviews">#}
-    {#        <div class="bg-white" id="shop_review">#}
-    {#            {% include 'layout/shop_reviews.html' %}#}
-    {#        </div>#}
-    {#    </section>#}
-    {##}
-    {#    <section class="reviews edit">#}
-    {#        <div class="bg-white">#}
-    {#            <div class="item">#}
-    {#                <form id='review_form' action="{% url 'shops:add_review' slug=shop.slug %}" method="post">#}
-    {#                    {% csrf_token %}#}
-    {#                    {% if user.is_authenticated %}#}
-    {#                        <div class="name">#}
-    {##}
-    {#                            <h5>Добавить отзыв</h5>#}
-    {##}
-    {#                            <h4>#}
-    {##}
-    {#                                <div class="star-wrapper">#}
-    {#                                    <div class="star default">#}
-    {#                                        <i class="fa fa-star-o" aria-hidden="true"></i>#}
-    {#                                        <i class="fa fa-star-o" aria-hidden="true"></i>#}
-    {#                                        <i class="fa fa-star-o" aria-hidden="true"></i>#}
-    {#                                        <i class="fa fa-star-o" aria-hidden="true"></i>#}
-    {#                                        <i class="fa fa-star-o" aria-hidden="true"></i>#}
-    {#                                    </div>#}
-    {#                                    <div class="star active star-behaviour" data-save-stars="false"#}
-    {#                                         data-stars-count="0">#}
-    {#                                        <i class="fa fa-star" aria-hidden="true"></i>#}
-    {#                                        <i class="fa fa-star" aria-hidden="true"></i>#}
-    {#                                        <i class="fa fa-star" aria-hidden="true"></i>#}
-    {#                                        <i class="fa fa-star" aria-hidden="true"></i>#}
-    {#                                        <i class="fa fa-star" aria-hidden="true"></i>#}
-    {#                                    </div>#}
-    {#                                </div>#}
-    {##}
-    {#                            </h4>#}
-    {##}
-    {#                        </div>#}
-    {#                        <div class="description">#}
-    {##}
-    {#                            <div class="form-group">#}
-    {#                                <textarea name="text" id="prod-rev" cols="30" rows="10" class="form-control"></textarea>#}
-    {##}
-    {#                            </div>#}
-    {#                            <button type="submit">Отправить</button>#}
-    {#                        </div>#}
-    {#                    {% else %}#}
-    {#                        <div class="name">#}
-    {#                            <h5>Чтобы добавить отзыв вам необходимо авторизоваться</h5>#}
-    {#                        </div>#}
-    {#                    {% endif %}#}
-    {##}
-    {#                </form>#}
-    {#            </div>#}
-    {##}
-    {#        </div>#}
-    {#    </section>#}
 {% endblock %}
 
 {% block js %}
@@ -150,10 +64,8 @@
         var form = $('#review_form');
         $(form).unbind('submit').bind('submit', function (event) {
             var data = $(form).serialize();
-            console.log(data);
-            data += '&rating=' + $('.star-behaviour').getRating();
+            data += '&rating=' + $('.br-current-rating').text();
             event.preventDefault();
-            console.log('Send data function is called!');
             $.ajax({
                 method: 'POST',
                 url: $(form).attr('action'),
@@ -161,23 +73,9 @@
                 data: data,
                 success: function (response) {
                     if (response.success) {
-                        $.ajax({
-                            method: 'POST',
-                            dataType: 'HTML',
-                            url: '{% url "shop_reviews" %}',
-                            data: {'csrfmiddlewaretoken': '{{ csrf_token }}', 'shop': '{{ shop.slug }}'},
-                            success: function (response) {
-                                console.log(response);
-                                $('#shop_review').html(response);
-                            },
-                            error: function () {
-                                console.error('Can\'t send ajax to load all comments');
-                            }
-                        });
-                        $('.star-behaviour').clearRating();
-                        $('#prod-rev').val('');
-                    } else if (response.url) {
-                        document.location.href = response.url;
+                        location.reload();
+                    } else {
+                        alert('Review save/update error!');
                     }
                 }
             });

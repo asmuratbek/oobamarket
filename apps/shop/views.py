@@ -23,7 +23,7 @@ from apps.shop.forms import ShopForm, ShopBannersForm, ShopSocialLinksForm, Shop
 from apps.users.mixins import ShopMixin
 from .models import Shop, SocialLinks, Banners, Contacts, Sales, DAYS
 import random
-
+from apps.reviews.forms import ShopReviewsForm
 
 # Create your views here.
 class ShopListView(generic.ListView):
@@ -192,6 +192,24 @@ class ShopReviewListView(generic.DetailView):
     model = Shop
     template_name = 'shop/shop_review.html'
 
+    def get_context_data(self, **kwargs):
+        context =  super().get_context_data(**kwargs)
+        context['form'] = ShopReviewsForm()
+
+        shop = kwargs['object']
+        context['shop'] = shop
+        context['reviews'] = shop.shopreviews_set.all().order_by('-created_at')
+
+        current_user = self.request.user
+        user_review = shop.shopreviews_set.filter(user=current_user).first()
+
+        if user_review is not None:
+            context['already_added'] = True
+            context['user_review'] = user_review
+            context['form'] = ShopReviewsForm(instance=user_review, initial=dict(rating=len(user_review.stars)))
+
+        return context
+
 
 @login_required
 def add_shop_review(request, slug):
@@ -203,17 +221,8 @@ def add_shop_review(request, slug):
         if request.POST.get('rating'):
             review.stars = '*' * int(request.POST.get('rating'))
 
-        exists_review = ShopReviews.objects.filter(user=review.user, shop=review.shop)
-
-        if exists_review.count() <= 0:
-            review.save()
-            return JsonResponse(dict(success=True))
-        else:
-            return JsonResponse({
-                'success': False,
-                'message': 'Review is already exist',
-                'url': reverse('shops:update_review', kwargs={'slug': slug, 'pk': exists_review.first().id})
-            })
+        review.save()
+        return JsonResponse(dict(success=True))
 
     return JsonResponse(dict(success=False, message='Request is not AJAX!'))
 
@@ -222,24 +231,16 @@ def add_shop_review(request, slug):
 def update_shop_review(request, pk, slug):
     review = ShopReviews.objects.get(pk=pk)
     shop = Shop.objects.get(slug=slug)
-    if request.POST:
+    if request.is_ajax():
         review.text = request.POST.get('text')
         review.shop = shop
         review.user = request.user
         if request.POST.get('rating'):
             review.stars = '*' * int(request.POST.get('rating'))
         review.save()
-        return HttpResponseRedirect(shop.get_absolute_url())
+        return JsonResponse(dict(success=True))
 
-    lenstars = len(review.stars)
-
-    params = {
-        'review': review,
-        'object': Shop.objects.get(slug=slug),
-        'lenstars': lenstars,
-    }
-
-    return render(request, 'shop/shop_review_update.html', params)
+    return JsonResponse(dict(success=False, message='Request is not AJAX!'))
 
 
 def shop_reviews(request):

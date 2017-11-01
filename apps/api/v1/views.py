@@ -667,11 +667,14 @@ class SalesUpdate(CsrfExemptMixin, APIView):
             return JsonResponse(dict(message='Sale data is invalid'), status=400)
 
 
-class SaleDelete(DestroyAPIView):
-    queryset = Sales.objects.all()
-    lookup_field = 'pk'
+class SaleDelete(APIView):
     permission_classes = [IsAuthenticated, IsOwnerShop4Shop, IsSaleOfShop]
     authentication_classes = (SessionAuthentication, TokenAuthentication)
+
+    def post(self, *args, **kwargs):
+        sale = get_object_or_404(Sales, pk=kwargs.get('pk'))
+        sale.delete()
+        return JsonResponse({'status': 0, 'message': 'Sale is successfully deleted.'})
 
 
 class ShopContactsView(APIView):

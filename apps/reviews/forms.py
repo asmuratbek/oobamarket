@@ -1,9 +1,22 @@
 from django import forms
 from .models import ProductReviews, ShopReviews
 
-class ProductReviewsForm(forms.ModelForm):
+
+class AbstractReviewsForm(forms.ModelForm):
+    rating = forms.ChoiceField(choices=(
+        (1, 1), (2, 2), (3, 3), (4, 4), (5, 5)
+    ), initial=3)
+
+
+class ProductReviewsForm(AbstractReviewsForm):
     class Meta:
         model = ProductReviews
         exclude = ['user']
 
-    rating = forms.CharField(required=False)
+
+class ShopReviewsForm(AbstractReviewsForm):
+    class Meta:
+        model = ShopReviews
+        exclude = ['user']
+
+
