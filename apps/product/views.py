@@ -74,30 +74,25 @@ class ProductDetailView(generic.DetailView):
         get_object_or_404(Category, slug=kw['category_slug'])
         get_object_or_404(GlobalCategory, slug=kw['global_slug'])
 
-        review = ProductReviews.objects.filter(product__slug=kw['slug'])
+        reviews = product.productreviews_set.all().order_by('-created_at')
+        current_user = request.user
 
-        context['review'] = review
+        context['form'] = ProductReviewsForm()
+
+        if current_user.is_authenticated():
+            user_review = product.productreviews_set.filter(user=current_user).first()
+
+            if user_review is not None:
+                context['already_added'] = True
+                context['user_review'] = user_review
+                context['form'] = ProductReviewsForm(instance=user_review, initial=dict(rating=len(user_review.stars)))
+
+        context['reviews'] = reviews
         context['object'] = product
         context['global_slug'] = kw['global_slug']
         context['subscribe_shops'] = [sub.subscription.id for sub in request.user.subscription_set.all()] if request.user.is_authenticated else None
 
         return context
-
-
-def product_detail(request, global_slug, category_slug, slug):
-    product = get_object_or_404(Product, slug=slug)
-    category = get_object_or_404(Category, slug=category_slug)
-    global_category = get_object_or_404(GlobalCategory, slug=global_slug)
-    review = ProductReviews.objects.filter(product__slug=slug)
-
-    template = "product/product_detail.html"
-    context = {
-        'review': review,
-        "object": product,
-        "global_slug": global_slug,
-        'subscribe_shops': [sub.subscription.id for sub in request.user.subscription_set.all()] if request.user.is_authenticated else None
-    }
-    return render(request, template, context)
 
 
 @login_required
@@ -110,17 +105,8 @@ def add_product_review(request, slug):
         if request.POST.get('rating'):
             review.stars = '*' * int(request.POST.get('rating'))
 
-        exists_review = ProductReviews.objects.filter(user=review.user, product=review.product)
-
-        if exists_review.count() <= 0:
-            review.save()
-            return JsonResponse(dict(success=True))
-        else:
-            return JsonResponse({
-                'success': False,
-                'message': 'Review is already exist',
-                'url': reverse('product:update_review', kwargs={'slug': slug, 'pk': exists_review.first().id}),
-            })
+        review.save()
+        return JsonResponse(dict(success=True))
 
     return JsonResponse(dict(success=False, message='Request is not AJAX!'))
 
@@ -129,24 +115,17 @@ def add_product_review(request, slug):
 def update_product_review(request, pk, slug):
     review = ProductReviews.objects.get(pk=pk)
     product = Product.objects.get(slug=slug)
-    if request.POST:
+
+    if request.is_ajax():
         review.text = request.POST.get('text')
         review.product = product
         review.user = request.user
         if request.POST.get('rating'):
             review.stars = '*' * int(request.POST.get('rating'))
         review.save()
-        return JsonResponse(dict(success=True, url=product.get_absolute_url()))
+        return JsonResponse(dict(success=True))
 
-    lenstars = len(review.stars)
-
-    params = {
-        'review': review,
-        'object': Product.objects.get(slug=slug),
-        'lenstars': lenstars,
-    }
-
-    return render(request, 'product/prod_review_update.html', params)
+    return JsonResponse(dict(success=False, message='Request is not AJAX!'))
 
 
 def product_reviews(request):
