@@ -12,6 +12,7 @@ from  django.views.generic.list import ListView
 # Create your views here.
 from apps.cart.models import Cart
 from apps.shop.models import Shop
+from apps.utils.views import send_letters_to_shop
 from apps.users.mixins import ShopMixin, UserOderListPermMixin, UserOrderDetailPermMixin
 from .forms import AddressForm, UserAddressForm, SimpleOrderForm, ShopSimpleOrderForm
 from .mixins import CartOrderMixin, LoginRequiredMixin
@@ -121,8 +122,9 @@ class SimpleOrderCreateView(View):
             cart.save()
             order.cart = cart
             order.save()
+            send_letters_to_shop(cart)
         else:
-            msg = "Заполните все обязательные поля"
+            msg = "Убедитесь в правильности заполненных данных."
             messages.add_message(request, messages.WARNING, msg)
             return redirect(reverse("cart:detail"))
         if request.user.is_authenticated():

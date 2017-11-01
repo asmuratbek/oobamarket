@@ -1,6 +1,8 @@
-import imghdr, os
+import imghdr, os, xlwt
 import urllib.request
+from openpyxl import Workbook as new_wb, load_workbook
 
+from django.core.mail import EmailMessage
 import requests, xlrd
 from bs4 import BeautifulSoup
 from django.http import JsonResponse, HttpResponse
@@ -14,6 +16,9 @@ from xlwt import Workbook
 from apps.product.models import Product, ProductImage
 from apps.shop.models import Shop
 from django.conf import settings
+from datetime import datetime
+
+from apps.users.models import User
 
 
 @csrf_exempt
@@ -152,6 +157,52 @@ def download_images_from_optovik():
                 continue
         print("Картинки {} скачаны.".format(title))
 
+
+def send_letters_to_shop(cart):
+    shops = cart.get_shops()
+    order = cart.simpleorder_set.first()
+    name, phone, address, date = order.name, order.phone, order.address, datetime.now()
+    message = u"Поступил новый заказ: \n " + u"Имя: %s \n " % name + u"Номер телефона: %s \n " % phone \
+              + "Адрес: %s \n " % address + "Дата: %s \n " % date
+    style_string = "font: bold on"
+    style = xlwt.easyxf(style_string)
+    shop_files = list()
+    for shop in shops:
+        wb = Workbook(encoding='utf-8')
+        products_list = wb.add_sheet(u"Магазин - {}".format(shop.title), cell_overwrite_ok=True)
+        cartitems = cart.cartitem_set.filter(product__shop=shop)
+        titles = [u"Наименование товара", u"Количество", u"Цена", u"Комментарии", u"Сумма"]
+        end_rows = [u"Итого", u"Доставка"]
+        end_rows_values = [sum(cartitems.values_list('total', flat=True)), 150]
+        products_names = [item.product.title for item in cartitems]
+        products_qty = [item.quantity for item in cartitems]
+        products_price = [item.product.price for item in cartitems]
+        products_comments = [item.comments for item in cartitems]
+        products_total = [item.total for item in cartitems]
+        max_rows_num_items = cartitems.count() + 1
+        write_titles = list(map(lambda i, c: products_list.write(0, c, i, style=style), titles, [c for c in range(len(titles))]))
+        write_products_name = list(map(lambda i, c: products_list.write(c, 0, i), products_names, [c for c in range(1, len(products_names) + 1)]))
+        write_products_qty = list(map(lambda i, c: products_list.write(c, 1, i), products_qty, [c for c in range(1, len(products_qty) + 1)]))
+        write_products_price = list(map(lambda i, c: products_list.write(c, 2, i), products_price, [c for c in range(1, len(products_price) + 1)]))
+        write_products_comments = list(map(lambda i, c: products_list.write(c, 3, i), products_comments, [c for c in range(1, len(products_comments) + 1)]))
+        write_products_total = list(map(lambda i, c: products_list.write(c, 4, i), products_total, [c for c in range(1, len(products_total) + 1)]))
+        write_end_rows = list(map(lambda i, c: products_list.write(c, 0, i, style=style), end_rows, [c for c in range(max_rows_num_items, max_rows_num_items + len(end_rows) + 1)]))
+        write_end_rows_vals = list(map(lambda i, c: products_list.write(c, 4, i), end_rows_values, [c for c in range(max_rows_num_items, max_rows_num_items + len(end_rows) + 1)]))
+        file_name = "order-{}-{}.xls".format(cart.id, shop.slug)
+        shop_files.append(file_name)
+        wb.save("order_xls/" + file_name)
+        email_message = EmailMessage("{} - {}".format(name, phone), message, settings.EMAIL_HOST_USER, [user.email for user in shop.user.all()])
+        email_message.attach_file("order_xls/%s" % file_name)
+        email_message.send()
+    email_message = EmailMessage("{} - {}".format(name, phone), message, settings.EMAIL_HOST_USER,
+                                 [user.email for user in User.objects.filter(is_staff=True)])
+    [email_message.attach_file("order_xls/%s" % file_name) for file_name in shop_files]
+    email_message.send()
+    try:
+        [os.remove('order_xls/{}'.format(f)) for f in shop_files]
+    except FileNotFoundError:
+        print("file not found")
+    print("ok")
 
 
 
