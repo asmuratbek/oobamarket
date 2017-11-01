@@ -8,6 +8,7 @@ from django.db.models import Q
 from django.http import HttpResponseRedirect, HttpResponseBadRequest, Http404
 from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404, render_to_response
+from django.views import generic
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import ListView, View, UpdateView, CreateView, DeleteView
 from slugify import slugify
@@ -28,10 +29,6 @@ from .models import *
 class UserFavoritesListView(LoginRequiredMixin, ListView):
     model = FavoriteProduct
     template_name = 'users/favorites.html'
-
-
-# class ProductDetailView(DetailView):
-#     model = Product
 
 
 class FavoriteCreateView(LoginRequiredMixin, View):
@@ -61,6 +58,30 @@ class FavoriteCreateView(LoginRequiredMixin, View):
 class ProductListView(ListView):
     model = Product
     template_name = 'product/all_products.html'
+
+
+class ProductDetailView(generic.DetailView):
+    model = Product
+    template = 'product/product_detail.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        kw = self.kwargs
+        request = self.request
+
+        product = get_object_or_404(Product, slug=kw['slug'])
+
+        get_object_or_404(Category, slug=kw['category_slug'])
+        get_object_or_404(GlobalCategory, slug=kw['global_slug'])
+
+        review = ProductReviews.objects.filter(product__slug=kw['slug'])
+
+        context['review'] = review
+        context['object'] = product
+        context['global_slug'] = kw['global_slug']
+        context['subscribe_shops'] = [sub.subscription.id for sub in request.user.subscription_set.all()] if request.user.is_authenticated else None
+
+        return context
 
 
 def product_detail(request, global_slug, category_slug, slug):
