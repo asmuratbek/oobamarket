@@ -1,24 +1,10 @@
 {% extends 'base-1.html' %}
-{% load product_tags staticfiles %}
+{% load product_tags staticfiles widget_tweaks %}
 
 {% block meta %}
-    <meta name="description" content="
-
-
-
-
-
-
-
+    <meta name="description" content
             {% if object.meta_description %}{{ object.meta_description }}{% else %}{{ object.category.section }}, {{ object.category.parent }}, {{ object.category }}- {{ object.short_description }} {{ object.price }} {{ object.currency }} Бишкек, в Бишкеке{% endif %}">
     <meta name="keywords" content="
-
-
-
-
-
-
-
             {% if object.meta_keywords %}{{ object.meta_keywords }}{% else %}{{ object.title }},{{ object.get_shop_title }},интернет магазин, купить, в бишкеке, цена, отзывы{% endif %}">
     <meta name="author" content="Oobamarket.kg интернет магазин в Бишкеке">
     <title>{% block title %}{% if object.meta_title %}{{ object.meta_title }} в Бишкеке -
@@ -254,80 +240,61 @@
 
         <div class="uk-container">
             <div class="shadow uk-padding-large">
-                <article class="uk-comment">
-                    <h4 class="uk-comment-title uk-margin-remove">
-                        Автор
-                        <div class="group-star uk-display-inline-block">
-                            <span class="star"></span>
-                            <span class="star"></span>
-                            <span class="star"></span>
-                            <span class="star"></span>
+                {% for item in reviews %}
+                    <article class="uk-comment">
+                        <h4 class="uk-comment-title uk-margin-remove">
+                            {{ item.user.first_name }}
+                            <div class="group-star uk-display-inline-block">
+                                {% for i in item.stars %}
+                                    <span class="star"></span>
+                                {% endfor %}
+                            </div>
+                        </h4>
+                        <ul class="uk-comment-meta uk-subnav uk-subnav-divider uk-margin-remove-top">
+                            <li><a href="#">{{ item.created_at|date:"d-m-y H:i" }}</a></li>
+                        </ul>
+                        <div class="uk-comment-body">
+                            <p>{{ item.text }}</p>
                         </div>
-                    </h4>
-                    <ul class="uk-comment-meta uk-subnav uk-subnav-divider uk-margin-remove-top">
-                        <li><a href="#">22.09.17 12:09</a></li>
-                    </ul>
-                    <div class="uk-comment-body">
-                        <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
-                            invidunt
-                            ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo
-                            duo
-                            dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum
-                            dolor
-                            sit amet.</p>
-                    </div>
-                    <hr class="uk-divider-icon">
-                </article>
+                        <hr class="uk-divider-icon">
+                    </article>
+                {% endfor %}
 
-                <article class="uk-comment">
-                    <h4 class="uk-comment-title uk-margin-remove">
-                        Автор
-                        <div class="group-star uk-display-inline-block">
-                            <span class="star"></span>
-                            <span class="star"></span>
-                            <span class="star"></span>
-                            <span class="star"></span>
-                            <span class="star"></span>
-                        </div>
-                    </h4>
-                    <ul class="uk-comment-meta uk-subnav uk-subnav-divider uk-margin-remove-top">
-                        <li><a href="#">12 дней назад</a></li>
-                    </ul>
-                    <div class="uk-comment-body">
-                        <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
-                            invidunt
-                            ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo
-                            duo
-                            dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum
-                            dolor
-                            sit amet.</p>
-                    </div>
-                    <hr class="uk-divider-icon">
-                </article>
+{#                <div class="uk-alert-danger uk-alert" uk-alert="">#}
+{#                    <a class="uk-alert-close uk-close uk-icon" uk-close="">#}
+{#                    </a>#}
+{#                    <h3>Ошибка</h3>#}
+{#                    <p>Вы не можете отправить пустое сообщение!!!</p>#}
+{#                </div>#}
 
-                <div class="uk-alert-danger uk-alert" uk-alert="">
-                    <a class="uk-alert-close uk-close uk-icon" uk-close="">
-                    </a>
-                    <h3>Ошибка</h3>
-                    <p>Вы не можете отправить пустое сообщение!!!</p>
-                </div>
-
-                <form class="uk-form-stacked uk-margin-medium-top">
+                {% if request.user.is_authenticated %}
+                    <form class="uk-form-stacked uk-margin-medium-top" action="
+                                {% if not already_added %}{% url "product:add_review" slug=object.slug %} {% else %}
+                                {% url "product:update_review" slug=object.slug pk=user_review.pk %}{% endif %}"
+                        id="review_form">
                     <div class="uk-margin">
-                        <legend class="uk-legend">Добавить отзыв</legend>
-                        <select id="rating-review" class="uk-margin">
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                        </select>
+                        {% csrf_token %}
+                        <legend class="uk-legend">
+                            {% if not already_added %}
+                                Добавить отзыв
+                            {% else %}
+                                Редактировать отзыв
+                            {% endif %}
+                        </legend>
+                        {% render_field form.rating  id="rating-review" class="uk-margin" %}
                         <div class="uk-form-controls">
-                            <textarea class="uk-textarea" rows="10" placeholder="Ваш отзыв"></textarea>
+                            {% render_field form.text class="uk-textarea" rows="10" placeholder="Ваш отзыв"%}
                         </div>
                     </div>
                     <button class="uk-button uk-button-default">Отправить</button>
                 </form>
+                {% else %}
+                    <div class="uk-alert-danger uk-alert" uk-alert="">
+                    <a class="uk-alert-close uk-close uk-icon" uk-close="">
+                    </a>
+                    <p>Чтобы оставить отзыв, нужно авторизоваться</p>
+                    </div>
+                {% endif %}
             </div>
 
 
@@ -450,42 +417,22 @@
         var form = $('#review_form');
         $(form).unbind('submit').bind('submit', function (event) {
             var data = $(form).serialize();
-            console.log(data);
-            data += '&rating=' + $('.star-behaviour').getRating();
-            console.log(data);
+            data += '&rating=' + $('.br-current-rating').text();
             event.preventDefault();
-            console.log('Send data function is called!');
             $.ajax({
                 method: 'POST',
                 url: $(form).attr('action'),
                 dataType: 'JSON',
                 data: data,
                 success: function (response) {
-                    console.log(response);
                     if (response.success) {
-                        $.ajax({
-                            method: 'POST',
-                            dataType: 'HTML',
-                            url: '{% url "product_reviews" %}',
-                            data: {'csrfmiddlewaretoken': '{{ csrf_token }}', 'product': '{{ object.slug }}'},
-                            success: function (response) {
-                                console.log(response);
-                                $('#prod_review').html(response);
-                            },
-                            error: function () {
-                                console.error('Can\'t send ajax to load all comments');
-                            }
-                        });
-                        $('.star-behaviour').clearRating();
-                        $('#prod-rev').val('');
-                    } else if (response.url) {
-                        document.location.href = response.url;
+                        location.reload();
+                    } else {
+                        alert('Review save/update error!');
                     }
                 }
             });
         });
-
-
     </script>
 
 {% endblock %}
