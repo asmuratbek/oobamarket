@@ -88,7 +88,7 @@ class App extends Component {
         if (this.state.pageType === 'shops') {
             $.ajax({
                 type: "GET",
-                  url: `/api/v1/shop/`,
+                  url: `/api/v1/shop/?is_web=1`,
                   success: function (data) {
                         let shops = data.results.map(obj =>obj);
                         let pagesCount = Math.ceil(data.count / 24);
@@ -249,7 +249,7 @@ class App extends Component {
         if (this.state.pageType === 'shops') {
              $.ajax({
                     type: "GET",
-                      url: '/api/v1/shop/?page=' + pageNumber + '&q=' + this.state.queryText + '&place=' + this.state.activePlace,
+                      url: '/api/v1/shop/?page=' + pageNumber + '&q=' + this.state.queryText + '&place=' + this.state.activePlace + '&is_web=1',
                       success: function (data) {
                             let shops = data.results.map(obj => obj);
                             this.setState({
@@ -306,7 +306,7 @@ class App extends Component {
         });
         $.ajax({
             type: "GET",
-              url: '/api/v1/shop/?page=' + this.state.activePage + '&q=' + this.state.queryText + '&place=' + activePlace,
+              url: '/api/v1/shop/?page=' + this.state.activePage + '&q=' + this.state.queryText + '&place=' + activePlace + '&is_web=1',
               success: function (data) {
                     let shops = data.results.map(obj => obj);
                     let pagesCount = Math.ceil(data.count / 24);
@@ -364,7 +364,7 @@ class App extends Component {
         });
         $.ajax({
             type: "GET",
-              url: '/api/v1/shop/?page=' + this.state.activePage + '&q=' + query + '&place=' + this.state.activePlace,
+              url: '/api/v1/shop/?page=' + this.state.activePage + '&q=' + query + '&place=' + this.state.activePlace + '&is_web=1',
               success: function (data) {
                     let shops = data.results.map(obj => obj);
                     let pagesCount = Math.ceil(data.count / 24);

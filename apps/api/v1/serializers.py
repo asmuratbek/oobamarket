@@ -371,6 +371,11 @@ class ShopSerializer(ModelSerializer):
         return places
 
     def get_logo(self, obj):
+        request = self.context['request']
+
+        if request.GET.get('is_web', '') == '1':
+            return obj.get_logo()
+
         return obj.get_logo_thumb()
 
 
