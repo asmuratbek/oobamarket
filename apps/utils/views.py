@@ -190,16 +190,16 @@ def send_letters_to_shop(cart):
         write_end_rows_vals = list(map(lambda i, c: products_list.write(c, 4, i), end_rows_values, [c for c in range(max_rows_num_items, max_rows_num_items + len(end_rows) + 1)]))
         file_name = "order-{}-{}.xls".format(cart.id, shop.slug)
         shop_files.append(file_name)
-        wb.save("order_xls/" + file_name)
+        wb.save(file_name)
         email_message = EmailMessage("{} - {}".format(name, phone), message, settings.EMAIL_HOST_USER, [user.email for user in shop.user.all()])
-        email_message.attach_file("order_xls/%s" % file_name)
+        email_message.attach_file(file_name)
         email_message.send()
     email_message = EmailMessage("{} - {}".format(name, phone), message, settings.EMAIL_HOST_USER,
                                  [user.email for user in User.objects.filter(is_staff=True)])
-    [email_message.attach_file("order_xls/%s" % file_name) for file_name in shop_files]
+    [email_message.attach_file(file_name) for file_name in shop_files]
     email_message.send()
     try:
-        [os.remove('order_xls/{}'.format(f)) for f in shop_files]
+        [os.remove(f) for f in shop_files]
     except FileNotFoundError:
         print("file not found")
     print("ok")
