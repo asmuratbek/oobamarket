@@ -31,27 +31,34 @@
 {#                    <h3>Ошибка</h3>#}
 {#                    <p>Вы не можете отправить пустое сообщение!!!</p>#}
 {#                </div>#}
-
-                <form class="uk-form-stacked uk-margin-medium-top" action="
-                                {% if not already_added %}{% url "shops:add_review" slug=shop.slug %} {% else %}
-                                {% url "shops:update_review" slug=shop.slug pk=user_review.pk %}{% endif %}"
-                        id="review_form">
-                    <div class="uk-margin">
-                        {% csrf_token %}
-                        <legend class="uk-legend">
-                            {% if not already_added %}
-                                Добавить отзыв
-                            {% else %}
-                                Редактировать отзыв
-                            {% endif %}
-                        </legend>
-                        {% render_field form.rating  id="rating-review" class="uk-margin" %}
-                        <div class="uk-form-controls">
-                            {% render_field form.text class="uk-textarea" rows="10" placeholder="Ваш отзыв"%}
+                {% if request.user.is_authenticated %}
+                    <form class="uk-form-stacked uk-margin-medium-top" action="
+                                    {% if not already_added %}{% url "shops:add_review" slug=shop.slug %} {% else %}
+                                    {% url "shops:update_review" slug=shop.slug pk=user_review.pk %}{% endif %}"
+                            id="review_form">
+                        <div class="uk-margin">
+                            {% csrf_token %}
+                            <legend class="uk-legend">
+                                {% if not already_added %}
+                                    Добавить отзыв
+                                {% else %}
+                                    Редактировать отзыв
+                                {% endif %}
+                            </legend>
+                            {% render_field form.rating  id="rating-review" class="uk-margin" %}
+                            <div class="uk-form-controls">
+                                {% render_field form.text class="uk-textarea" rows="10" placeholder="Ваш отзыв"%}
+                            </div>
                         </div>
+                        <button class="uk-button uk-button-default">Отправить</button>
+                    </form>
+                {% else %}
+                    <div class="uk-alert-danger uk-alert" uk-alert="">
+                    <a class="uk-alert-close uk-close uk-icon" uk-close="">
+                    </a>
+                    <p>Чтобы оставить отзыв, нужно авторизоваться</p>
                     </div>
-                    <button class="uk-button uk-button-default">Отправить</button>
-                </form>
+                {% endif %}
             </div>
         </div>
     </section>
