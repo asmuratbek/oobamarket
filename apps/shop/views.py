@@ -201,12 +201,14 @@ class ShopReviewListView(generic.DetailView):
         context['reviews'] = shop.shopreviews_set.all().order_by('-created_at')
 
         current_user = self.request.user
-        user_review = shop.shopreviews_set.filter(user=current_user).first()
 
-        if user_review is not None:
-            context['already_added'] = True
-            context['user_review'] = user_review
-            context['form'] = ShopReviewsForm(instance=user_review, initial=dict(rating=len(user_review.stars)))
+        if current_user.is_authenticated():
+            user_review = shop.shopreviews_set.filter(user=current_user).first()
+
+            if user_review is not None:
+                context['already_added'] = True
+                context['user_review'] = user_review
+                context['form'] = ShopReviewsForm(instance=user_review, initial=dict(rating=len(user_review.stars)))
 
         return context
 
