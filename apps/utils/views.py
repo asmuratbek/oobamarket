@@ -162,11 +162,10 @@ def send_letters_to_shop(cart):
     shops = cart.get_shops()
     order = cart.simpleorder_set.first()
     name, phone, address, date = order.name, order.phone, order.address, datetime.now()
-    message = u"Поступил новый заказ: \n " + u"Имя: %s \n " % name + u"Номер телефона: %s \n " % phone \
-              + "Адрес: %s \n " % address + "Дата: %s \n " % date
+    message = u"Поступил новый заказ: \n " + u" Заказ № %s \n" % order.id + u"Имя: %s \n " % name + \
+              "Адрес: %s \n " % address + "Дата: %s \n " % date
     style_string = "font: bold on"
     style = xlwt.easyxf(style_string)
-    shop_files = list()
     for shop in shops:
         wb = Workbook(encoding='utf-8')
         products_list = wb.add_sheet(u"Магазин - {}".format(shop.title), cell_overwrite_ok=True)
@@ -189,19 +188,23 @@ def send_letters_to_shop(cart):
         write_end_rows = list(map(lambda i, c: products_list.write(c, 0, i, style=style), end_rows, [c for c in range(max_rows_num_items, max_rows_num_items + len(end_rows) + 1)]))
         write_end_rows_vals = list(map(lambda i, c: products_list.write(c, 4, i), end_rows_values, [c for c in range(max_rows_num_items, max_rows_num_items + len(end_rows) + 1)]))
         file_name = "order-{}-{}.xls".format(cart.id, shop.slug)
-        shop_files.append(file_name)
         wb.save(file_name)
         email_message = EmailMessage("{} - {}".format(name, phone), message, settings.EMAIL_HOST_USER, [user.email for user in shop.user.all()])
         email_message.attach_file(file_name)
         email_message.send()
-    email_message = EmailMessage("{} - {}".format(name, phone), message, settings.EMAIL_HOST_USER,
-                                 [user.email for user in User.objects.filter(is_staff=True)])
-    [email_message.attach_file(file_name) for file_name in shop_files]
-    email_message.send()
-    try:
-        [os.remove(f) for f in shop_files]
-    except FileNotFoundError:
-        print("file not found")
+        try:
+            os.remove(file_name)
+        except FileNotFoundError:
+            print("file not found")
+    # email_message = EmailMessage("{} - {}".format(name, phone), message, settings.EMAIL_HOST_USER,
+    #                              [user.email for user in User.objects.filter(is_staff=True)])
+    # [email_message.attach_file(file_name) for file_name in shop_files]
+    # email_message.send()
+    # for f in shop_files:
+    #     try:
+    #         os.remove(f)
+    #     except FileNotFoundError:
+    #         continue
     print("ok")
 
 
