@@ -15,7 +15,7 @@ from apps.shop.models import Shop
 from apps.utils.views import send_letters_to_shop
 from apps.users.mixins import ShopMixin, UserOderListPermMixin, UserOrderDetailPermMixin
 from .forms import AddressForm, UserAddressForm, SimpleOrderForm, ShopSimpleOrderForm
-from .mixins import CartOrderMixin, LoginRequiredMixin
+from .mixins import CartOrderMixin, LoginRequiredMixin, ModeratorPermMixin
 from .models import UserAddress, UserCheckout, Order, SimpleOrder
 
 
@@ -193,6 +193,14 @@ class ShopSimpleOrderListView(LoginRequiredMixin, ShopMixin, ListView):
         for id in request.POST.getlist('ids[]'):
             SimpleOrder.objects.filter(pk=id).update(is_visible=False)
         return redirect(request.path)
+
+
+class SimpleOrderListViewForModers(LoginRequiredMixin, ModeratorPermMixin, ListView):
+    model = SimpleOrder
+    template_name = 'order/user_order_list.html'
+    ordering = '-created_at'
+
+
 
 
 class ShopSimpleOrderUpdateView(LoginRequiredMixin, ShopMixin, UpdateView):

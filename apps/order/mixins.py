@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.http import Http404
 from django.utils.decorators import method_decorator
 
 from apps.cart.models import Cart
@@ -34,4 +35,10 @@ class CartOrderMixin(object):
             return None
         return cart
 
+
+class ModeratorPermMixin(object):
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.is_staff:
+            raise Http404
+        return super(ModeratorPermMixin, self).dispatch(request, *args, **kwargs)
 

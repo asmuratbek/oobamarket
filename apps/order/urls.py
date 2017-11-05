@@ -1,6 +1,6 @@
 from apps.order.views import OrderDetail, SimpleOrderCreateView, ThankYouView, UserSimpleOrderListView, \
     ShopSimpleOrderUpdateView, ShopSimpleOrderDetailView, ShopSimpleOrderListView, \
-    shop_change_status, UserSimpleOrderDetailView, shop_delete_cartitem_product
+    shop_change_status, UserSimpleOrderDetailView, shop_delete_cartitem_product, SimpleOrderListViewForModers
 from django.conf.urls import url
 
 urlpatterns = [
@@ -15,7 +15,7 @@ urlpatterns = [
     # url(r'^(?P<pk>\d+)/delete/$', DeleteSimpleOrderShop.as_view(), name='shop_order_delete'),
     # url(r'^(?P<pk>\d+)/$', OrderDetail.as_view(), name='detail'),
     url(r'^(?P<pk>\d+)/user_detail$', UserSimpleOrderDetailView.as_view(), name='user_order_detail'),
-    url(r'^(?P<username'
-        r'>[\w.@+-]+)/order_list/$', UserSimpleOrderListView.as_view(), name='user_order_list'),
+    url(r'^moderator/(?P<username>[\w.@+-]+)/order-list/$', SimpleOrderListViewForModers.as_view(), name='mod_order_list'),
+    url(r'^(?P<username>[\w.@+-]+)/order_list/$', UserSimpleOrderListView.as_view(), name='user_order_list'),
 
 ]
