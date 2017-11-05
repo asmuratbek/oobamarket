@@ -70,7 +70,17 @@
 {#                                    {% endif %}#}
                                 {% endfor %}
                                 {# end body#}
+            <input type="hidden" id="shop-slug" value="{{ shop.slug }}"/>
                 <h1>{{ total_price }} сом</h1>
+                                <button class="uk-button uk-button-default red confirm-order" type="submit"
+                                {% if status == 'confirmed' %}disabled="disabled"{% endif %}>
+                                    {% if status == 'confirmed' %}Подтверждено{% else %}
+                                    Подтвердить{% endif %}
+                                </button>
+                                <button class="uk-button uk-button-default red reject-order" type="submit"
+                                {% if status == 'rejected' %}disabled="disabled"{% endif %}>
+                                    {% if status == 'rejected' %}Отклонено
+                                    {% else %}Отклонить{% endif %}</button>
                             </div>
 
 
@@ -87,5 +97,50 @@
 {#                            </div>#}
 {##}
 {#                        </div>#}
+        </div>
     </section>
+    <script>
+
+    function showFlashMessage(message) {
+        var template = "<div class='uk-alert-primary' uk-alert " +
+            "style='position: fixed; top: 50px; right: 10px;'>" +
+            "<div class='col-sm-3 col-sm-offset-8'> " +
+            "<div class='alert alert-success alert-dismissible' role='alert'>" +
+            "<a class='uk-alert-close uk-margin-small-left' uk-close></a>"
+            + message + "</div></div></div>";
+        $("body").append(template);
+        $(".uk-alert-primary").fadeIn();
+        setTimeout(function () {
+            $(".uk-alert-primary").fadeOut().remove();
+        }, 3600);
+    }
+
+    var flag;
+    $('.confirm-order').on('click', function () {
+        var that = this;
+        flag = 'confirm';
+        var cart_id = window.location.href.split("/")[6];
+        var shop_slug = $('#shop-slug').val();
+       $.post('/cart/' + cart_id + '/confirm/', {'flag': flag, 'shop_slug': shop_slug,
+       'csrfmiddlewaretoken': '{{ csrf_token }}'}, function (data) {
+           $(that).text("Подтверждено").attr('disabled', true);
+           $('.reject-order').text('Отклонить').attr('disabled', false);
+           showFlashMessage(data.message)
+       });
+    });
+
+    $('.reject-order').on('click', function () {
+        var that = this;
+        flag = 'reject';
+        var cart_id = window.location.href.split("/")[6];
+        var shop_slug = $('#shop-slug').val();
+       $.post('/cart/' + cart_id + '/confirm/', {'flag': flag, 'shop_slug': shop_slug,
+       'csrfmiddlewaretoken': '{{ csrf_token }}'}, function (data) {
+           $(that).text("Отклонено").attr('disabled', true);
+           $('.confirm-order').text('Подтвердить').attr('disabled', false);
+           showFlashMessage(data.message)
+       });
+    });
+
+    </script>
 {% endblock %}

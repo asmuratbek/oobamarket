@@ -22,7 +22,6 @@
                         </thead>
                         <tbody>
                         {% for order in object_list %}
-                            {% if order.is_visible == True %}
                                 <tr>
                                     <td>
                                         <label for="child-{{ order.id }}">
@@ -31,7 +30,7 @@
                                                    name="todelete" value="{{ order.id }}">
                                         </label>
                                     </td>
-                                    <td><a href="{% url 'cart:detail_by_pk' pk=order.cart.id %}">{{ order.cart.id }}</a></td>
+                                    <td><a href="{% url 'cart:detail_by_pk_shop' shop_slug=object.slug pk=order.cart.id %}">{{ order.cart.id }}</a></td>
                                     <td>{{ order.created_at|date:"d.m.y H:i" }}
                                     </td>
                                     <td>{{ order.name }}</td>
@@ -55,7 +54,6 @@
                                     <td>{{ order.cart.subtotal }}</td>
                                     <td></td>
                                 </tr>
-                            {% endif %}
                         {% endfor %}
                         </tbody>
                     </table>

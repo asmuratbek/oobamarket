@@ -24,12 +24,12 @@
                                 <tr>
                                     <td>
                                     </td>
-                                    <td><a href="{% url 'cart:detail_by_pk' pk=order.cart.id %}">{{ order.cart.id }}</a></td>
+                                    <td><a href="{% url 'cart:detail_by_pk_user' username=user.username pk=order.cart.id %}">{{ order.cart.id }}</a></td>
                                     <td>{{ order.created_at|date:"d.m.y H:i" }}
                                     </td>
                                     <td>{{ order.name }}</td>
                                     <td>
-                                        {{ order.status }}
+                                        {{ order.get_status_display }}
                                     </td>
                                     <td>{{ order.address }}</td>
                                     <td>{{ order.phone }}</td>

@@ -160,7 +160,7 @@ def download_images_from_optovik():
 
 def send_letters_to_shop(cart):
     shops = cart.get_shops()
-    order = cart.simpleorder_set.first()
+    order = cart.simpleorder
     name, phone, address, date = order.name, order.phone, order.address, datetime.now()
     message = u"Поступил новый заказ: \n " + u" Заказ № %s \n" % order.id + u"Имя: %s \n " % name + \
               "Адрес: %s \n " % address + "Дата: %s \n " % date

@@ -1,12 +1,14 @@
+import os
 from django.http import JsonResponse, HttpResponseRedirect, Http404
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from django.views.generic.detail import SingleObjectMixin
 from django.views.generic import DetailView
 from apps.product.models import Product
+from apps.shop.models import Shop
 from .models import Cart, CartItem
 from django.views import View
-from .mixins import CartOwnerUsers
+from .mixins import CartOwnerUsers, ConfirmOrderByShopOwner
 
 
 # Create your views here.
@@ -122,20 +124,18 @@ class CartDetailView(SingleObjectMixin, View):
         return render(request, template, context)
 
 
-class CartDetailByPk(CartOwnerUsers, View):
+class CartDetailByPkUser(CartOwnerUsers, View):
     def get(self, request, *args, **kwargs):
-        cart = get_object_or_404(Cart, id=kwargs.get('pk'))
-        if cart.user == request.user:
+        cart = get_object_or_404(Cart, id=kwargs.get('pk', ''))
+        if cart.user == request.user or request.user.is_staff:
             template = 'cart/cart_detail_user.html'
             context = dict(object=cart)
+            return render(request, template, context)
         else:
-            items = cart.cartitem_set.filter(product__shop__user__id=request.user.id)
-            template = 'cart/cart_detail_shops.html'
-            context = dict(items=items, total_price=sum(items.values_list('total', flat=True)))
-        return render(request, template, context)
+            raise Http404
 
     def post(self, request, *args, **kwargs):
-        cart = get_object_or_404(Cart, id=kwargs.get('pk'))
+        cart = get_object_or_404(Cart, id=kwargs.get('pk', ''))
         all_cartitems = cart.cartitem_set.values_list('id', flat=True)
         cartitems_ids = [int(i) for i in request.POST.getlist('item')]
         cartitem_text = request.POST.getlist('text')
@@ -152,7 +152,45 @@ class CartDetailByPk(CartOwnerUsers, View):
                 cartitem.comments = t.strip()
                 cartitem.quantity = q
                 cartitem.save()
-        return HttpResponseRedirect(reverse('cart:detail_by_pk', kwargs={'pk': cart.id}))
+        return HttpResponseRedirect(reverse('cart:detail_by_pk_user', kwargs={'pk': cart.id,
+                                                                              'username': request.user.username}))
 
+
+class CartDetailByPkShop(CartOwnerUsers, View):
+    def get(self, request, *args, **kwargs):
+        cart = get_object_or_404(Cart, id=kwargs.get('pk', ''))
+        shop = get_object_or_404(Shop, slug=kwargs.get('shop_slug', ''))
+        items = cart.cartitem_set.filter(product__shop__user__id=request.user.id)
+        if shop in cart.simpleorder.confirm_shops.all():
+            status = 'confirmed'
+        elif shop in cart.simpleorder.rejected_shops.all():
+            status = 'rejected'
+        else:
+            status = 'none'
+        template = 'cart/cart_detail_shops.html'
+        context = dict(items=items, total_price=sum(items.values_list('total', flat=True)),
+                       shop=shop, status=status)
+        return render(request, template, context)
+
+
+class ConfirmOrderByShop(ConfirmOrderByShopOwner, View):
+    def post(self, request, *args, **kwargs):
+        flag = request.POST.get('flag')
+        cart = get_object_or_404(Cart, id=kwargs.get('pk', ''))
+        shop_slug = request.POST.get('shop_slug', '')
+        order = cart.simpleorder
+        shop = get_object_or_404(Shop, slug=shop_slug)
+        if order and flag:
+            if flag == 'confirm':
+                order.rejected_shops.remove(shop)
+                order.confirm_shops.add(shop)
+                order.save()
+                return JsonResponse({'status': 0, 'message': 'Заказ успешно подтвержден.'})
+            else:
+                order.confirm_shops.remove(shop)
+                order.rejected_shops.add(shop)
+                order.save()
+                return JsonResponse({'status': 0, 'message': 'Заказ отклонен.'})
+        return JsonResponse({'status': 1, 'message': 'Заказ не найден.'})
 
 

@@ -1,7 +1,7 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.http import Http404, HttpResponseRedirect, JsonResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.views import View
 from django.views.decorators.csrf import csrf_exempt
@@ -111,6 +111,11 @@ class AddressSelectFormView(CartOrderMixin, FormView):
         return "/checkout/"
 
 
+# class ConfirmOrderByShop(View):
+#     def post(self, request, *args, **kwargs):
+
+
+
 class SimpleOrderCreateView(View):
     def post(self, request, *args, **kwargs):
         form = SimpleOrderForm(request.POST)
@@ -176,7 +181,13 @@ class ShopSimpleOrderListView(LoginRequiredMixin, ShopMixin, ListView):
         return Shop.objects.get(slug=self.kwargs['slug'])
 
     def get_queryset(self):
-        return SimpleOrder.objects.filter(cart__cartitem__product__shop__slug=self.kwargs.get('slug')).distinct()
+        orders = SimpleOrder.objects.filter(cart__cartitem__product__shop__slug=self.kwargs.get('slug'),
+                                            is_visible=True).distinct()
+        orders_ids = orders.values_list('id', flat=True)
+        orders_carts = orders.values_list('cart', flat=True)
+        order_list = list(zip(orders_ids, orders_carts))
+        print(order_list)
+        return orders
 
     def post(self, request, *args, **kwargs):
         for id in request.POST.getlist('ids[]'):
