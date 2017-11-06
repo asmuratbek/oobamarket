@@ -29,15 +29,17 @@ var csrftoken = getCookie('csrftoken');
         $(".uk-alert-primary").fadeIn();
         setTimeout(function () {
             $(".uk-alert-primary").fadeOut().remove();
-        }, 3600);
+        }, 1800);
     }
 
     var flag;
-    $('.confirm-order').on('click', function () {
+    $(document).on('click', '.confirm-order', function () {
         var that = this;
         flag = 'confirm';
-        var cart_id = window.location.href.split("/")[6];
         var shop_slug = $('#shop-slug').val();
+        var cart_id = window.location.href.split("/")[6];
+        if(shop_slug === undefined)
+            shop_slug = $(that).closest('div.cync-shop').find('input.shop-slug').val();
        $.post('/cart/' + cart_id + '/confirm/', {'flag': flag, 'shop_slug': shop_slug,
        'csrfmiddlewaretoken': csrftoken}, function (data) {
            $(that).text("Подтверждено").attr('disabled', true);
@@ -46,11 +48,13 @@ var csrftoken = getCookie('csrftoken');
        });
     });
 
-    $('.reject-order').on('click', function () {
+    $(document).on('click', '.reject-order', function () {
         var that = this;
         flag = 'reject';
         var cart_id = window.location.href.split("/")[6];
         var shop_slug = $('#shop-slug').val();
+        if(shop_slug === undefined)
+            shop_slug = $(that).closest('div.cync-shop').find('input.shop-slug').val();
        $.post('/cart/' + cart_id + '/confirm/', {'flag': flag, 'shop_slug': shop_slug,
        'csrfmiddlewaretoken': csrftoken}, function (data) {
            $(that).text("Отклонено").attr('disabled', true);

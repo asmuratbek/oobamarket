@@ -109,6 +109,7 @@
                                     {% endfor %}
                                     {# end body#}
                                 </div>
+                            <input type="hidden" class="shop-slug" value="{{ shop.slug }}">
 
 
                             </div>
@@ -127,8 +128,12 @@
                                     <h4>Сумма: <span class="item-total"></span> сом</h4>
                                 </div>
                             {% if user.is_staff %}
-                            <button class="uk-button uk-button-default red confirm-order" type="submit">Подтвердить</button>
-                            <button class="uk-button uk-button-default red reject-order" type="submit">Отклонить</button>
+                            <button class="uk-button uk-button-default red confirm-order" type="button"
+                                {% if shop in object.simpleorder.confirm_shops.all %}disabled="disabled">Подтверждено{% else %}>Подтвердить{% endif %}
+                            </button>
+                            <button class="uk-button uk-button-default red reject-order" type="button"
+                                {% if shop in object.simpleorder.rejected_shops.all %}disabled="disabled">Отклонено{% else %}>Отклонить{% endif %}
+                            </button>
                         {% endif %}
                             </div>
                         </div>
@@ -155,5 +160,6 @@
     </section>
 {% endblock %}
 {% block js %}
+    <script src="{% static 'js/confirm_order.js' %}"></script>
     <script src="{% static 'js/calc_cart.js' %}"></script>
 {% endblock %}
