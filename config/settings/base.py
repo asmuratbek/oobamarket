@@ -71,6 +71,7 @@ THIRD_PARTY_APPS = [
     'rest_auth',
     'rest_auth.registration',
     'widget_tweaks',
+    'django_filters',
     'django_cleanup',
     'ckeditor',
     'ckeditor_uploader',

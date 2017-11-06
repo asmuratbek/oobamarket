@@ -19,6 +19,7 @@ from  django.views.generic.list import ListView
 from xlwt import Workbook
 
 from apps.cart.models import Cart
+from apps.order.filter import OrderFilter
 from apps.shop.models import Shop
 from apps.utils.views import send_letters_to_shop
 from apps.users.mixins import ShopMixin, UserOderListPermMixin, UserOrderDetailPermMixin
@@ -255,8 +256,13 @@ class SimpleOrderListViewForModers(LoginRequiredMixin, ModeratorPermMixin, ListV
     model = SimpleOrder
     template_name = 'order/user_order_list.html'
     ordering = '-created_at'
+    filterset_class = OrderFilter
 
-
+    def get_context_data(self, **kwargs):
+        context = super(SimpleOrderListViewForModers, self).get_context_data(**kwargs)
+        order_filter = self.filterset_class(self.request.GET, queryset=self.object_list)
+        context['order_filter'] = order_filter
+        return context
 
 
 class ShopSimpleOrderUpdateView(LoginRequiredMixin, ShopMixin, UpdateView):

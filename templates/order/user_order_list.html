@@ -6,6 +6,15 @@
         <div class="uk-container">
             <div class="shadow uk-padding-large">
                 <div class="uk-overflow-auto">
+                {% if order_filter %}
+                <form action="" method="GET">
+                    {{ order_filter.form.created_at_from }}
+                    {{ order_filter.form.created_at_to }}
+                    {{ order_filter.form.status }}
+                    {{ order_filter.form.search }}
+                    <button type="submit">Фильтровать</button>
+                </form>
+                {% endif %}
                     <table class="uk-table uk-text-center uk-table-small uk-table-middle uk-table-hover uk-table-striped uk-table-divider">
                         <thead>
                         <tr>
@@ -20,6 +29,40 @@
                         </tr>
                         </thead>
                         <tbody>
+                        {% if order_filter %}
+                            {% for order in order_filter.qs %}
+                                <tr>
+                                    <td>
+                                    </td>
+                                    <td><a href="{% url 'cart:detail_by_pk_user' username=user.username pk=order.cart.id %}">{{ order.cart.id }}</a></td>
+                                    <td>{{ order.created_at|date:"d.m.y H:i" }}
+                                    </td>
+                                    <td>{{ order.name }}</td>
+                                    <td style="padding: 0;" class="status-order">
+                                        {% if order.confirm_shops.count == 0  and order.rejected_shops.count == 0 %}
+                                            Новый
+                                        {% elif order.status == 'processed' %}
+                                            Обработан
+                                        {% else %}
+                                        <span class="all-shops">{{ order.cart.get_shops.count }}</span>
+                                        <span class="check" style="color: green">({{ order.confirm_shops.count }})</span>
+                                        <span class="close" style="color: red">({{ order.rejected_shops.count }})</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>{{ order.address }}</td>
+                                    <td>{{ order.phone }}</td>
+                                    <td>{{ order.cart.subtotal }}</td>
+                                    {% if user.is_staff %}
+                                    <td>
+                                        <button type="button" class="curier_send"
+                                                {% if order.status == 'processed' %}disabled="disabled">Отправлено
+                                                    {% else %}>Отправить{% endif %}</button>
+                                    </td>
+                                    {% endif %}
+                                    <input type="hidden" class="cart-id" value="{{ order.cart.id }}">
+                                </tr>
+                            {% endfor %}
+                        {% else %}
                         {% for order in object_list %}
                                 <tr>
                                     <td>
@@ -52,6 +95,7 @@
                                     <input type="hidden" class="cart-id" value="{{ order.cart.id }}">
                                 </tr>
                         {% endfor %}
+                        {% endif %}
                         </tbody>
                     </table>
                 </div>
