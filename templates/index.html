@@ -90,7 +90,8 @@
                 <div class="uk-width-expand uk-visible@s">
                     <div class="home-slider">
                         {% for banner in banners %}
-                        <div class="item"><img src="{{ banner.image.url }}" alt=""></div>
+                        <div class="item">
+                            <a href="{% url 'landing_cli' %}"><img src="{{ banner.image.url }}" alt=""></a></div>
                         {% endfor %}
                     </div>
                 </div>

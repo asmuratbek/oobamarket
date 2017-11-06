@@ -2,6 +2,7 @@ from django.conf import settings
 from django.conf.urls import include, url
 from django.conf.urls.static import static
 from django.contrib import admin
+from django.shortcuts import render
 from django.views.generic import TemplateView
 from django.views import defaults as default_views
 from apps.global_category.views import IndexView, landing
@@ -44,6 +45,7 @@ urlpatterns = [
                   url(r'^search', search),
                   url(r'^ckeditor/', include('ckeditor_uploader.urls')),
                   url(r'^landing/', ClaimCreate.as_view(), name='landing'),
+                  url(r'^landing_clients/', lambda r: render(r, 'layout/landing_clients.html'), name='landing_cli'),
                   url(r'^product_reviews/$', product_reviews, name='product_reviews'),
                   url(r'^shop_reviews/$', shop_reviews, name='shop_reviews'),
                   url(r'^sitemap\.xml$', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
