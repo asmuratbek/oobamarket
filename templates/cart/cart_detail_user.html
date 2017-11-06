@@ -108,8 +108,16 @@
                                         {% endif %}
                                     {% endfor %}
                                     {# end body#}
+                                <input type="hidden" class="shop-slug" value="{{ shop.slug }}">
+                            {% if user.is_staff %}
+                            <button class="uk-button uk-button-default red confirm-order" type="button"
+                                {% if shop in object.simpleorder.confirm_shops.all %}disabled="disabled">Подтверждено{% else %}>Подтвердить{% endif %}
+                            </button>
+                            <button class="uk-button uk-button-default red reject-order" type="button"
+                                {% if shop in object.simpleorder.rejected_shops.all %}disabled="disabled">Отклонено{% else %}>Отклонить{% endif %}
+                            </button>
+                        {% endif %}
                                 </div>
-                            <input type="hidden" class="shop-slug" value="{{ shop.slug }}">
 
 
                             </div>
@@ -127,14 +135,6 @@
                                 <div class="one-shop-total uk-width-1-1">
                                     <h4>Сумма: <span class="item-total"></span> сом</h4>
                                 </div>
-                            {% if user.is_staff %}
-                            <button class="uk-button uk-button-default red confirm-order" type="button"
-                                {% if shop in object.simpleorder.confirm_shops.all %}disabled="disabled">Подтверждено{% else %}>Подтвердить{% endif %}
-                            </button>
-                            <button class="uk-button uk-button-default red reject-order" type="button"
-                                {% if shop in object.simpleorder.rejected_shops.all %}disabled="disabled">Отклонено{% else %}>Отклонить{% endif %}
-                            </button>
-                        {% endif %}
                             </div>
                         </div>
 

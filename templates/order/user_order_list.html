@@ -28,13 +28,25 @@
                                     <td>{{ order.created_at|date:"d.m.y H:i" }}
                                     </td>
                                     <td>{{ order.name }}</td>
-                                    <td>
-                                        {{ order.get_status_display }}
+                                    <td style="padding: 0;">
+                                        {% if order.confirm_shops.count == 0  and order.rejected_shops.count == 0 %}
+                                            Новый
+                                        {% elif order.status == 'processed' %}
+                                            Обработан
+                                        {% else %}
+                                        <span class="all-shops">{{ order.cart.get_shops.count }}</span>
+                                        <span class="check" style="color: green">({{ order.confirm_shops.count }})</span>
+                                        <span class="close" style="color: red">({{ order.rejected_shops.count }})</span>
+                                        {% endif %}
                                     </td>
                                     <td>{{ order.address }}</td>
                                     <td>{{ order.phone }}</td>
                                     <td>{{ order.cart.subtotal }}</td>
-                                    <td></td>
+                                    {% if user.is_staff %}
+                                    <td>
+                                        <button type="button" class="curier_send">Отправить курьеру</button>
+                                    </td>
+                                    {% endif %}
                                 </tr>
                         {% endfor %}
                         </tbody>
