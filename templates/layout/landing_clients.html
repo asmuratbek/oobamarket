@@ -9,7 +9,139 @@
 
 {% endblock %}
 {% block content %}
-{#    Здесь должен быть HTML #}
+    <div class="landing">
+        <section class="landing-header">
+            <div class="uk-container uk-text-center">
+                <div class="logo">
+                    <a href="{% url 'home' %}">
+                        <img src="{% static 'img/landing/logo.png' %}" width="240" alt="На главную">
+                    </a>
+                </div>
+
+                <h2>самый большой онлайн-гипермаркет в бишкеке!</h2>
+                <hr>
+                <p style="font-weight: normal;font-size: 18px;">Только для Вас, мы собрали лучшие магазины города на одной странице. Чтобы Вы могли легко найти нужный Вам товар или магазин и купить не выходя из дома</p>
+
+            </div>
+        </section>
+
+
+        <section class="step">
+            <div class="uk-container">
+                <h3 style="margin-bottom: 50px;">что мы готовы предложить магазинам?</h3>
+                <p class="uk-text-center" style="margin-bottom: 50px;">Для вашего удобства, мы собрали и собираем товары со многих магазинов города на одной площадке. Сейчас доступны такие категории как:</p>
+                <div class="uk-grid uk-margin-large-bottom uk-flex-center uk-flex-middle uk-text-center uk-child-width-1-6@m" uk-grid>
+                    <div>
+                        <img src="{% static 'img/landing2/laptop.png' %}" alt="">
+                        <h4>Электроника</h4>
+                    </div>
+                    <div>
+                        <img src="{% static 'img/landing2/Path 866.png' %}" alt="">
+                        <h4>Одежда, обувь </h4>
+                    </div>
+                    <div>
+                        <img src="{% static 'img/landing2/Path 867.png' %}" alt="">
+                        <h4>Авто </h4>
+                    </div>
+                    <div>
+                        <img src="{% static 'img/landing2/Group 1586.png' %}" alt="">
+                        <h4>Строительство и ремонт </h4>
+                    </div>
+                    <div>
+                        <img src="{% static 'img/landing2/giftbox.png' %}" alt="">
+                        <h4>Подарки </h4>
+                    </div>
+                    <div>
+                        <img src="{% static 'img/landing2/beauty-products.png' %}" alt="">
+                        <h4>Здоровье и красота</h4>
+                    </div>
+                    <div>
+                        <img src="{% static 'img/landing2/Group 1593.png' %}" alt="">
+                        <h4>Все для предприятиц </h4>
+                    </div>
+                    <div>
+                        <img src="{% static 'img/landing2/Group 1587.png' %}" alt="">
+                        <h4>Спорт, Туризм, Хобби </h4>
+                    </div>
+                    <div>
+                        <img src="{% static 'img/landing2/Group 1588.png' %}" alt="">
+                        <h4>Все для детей </h4>
+                    </div>
+                    <div>
+                        <img src="{% static 'img/landing2/Path 897.png' %}" alt="">
+                        <h4>Продукты</h4>
+                    </div>
+                    <div>
+                        <img src="{% static 'img/landing2/home-icon-silhouette.png' %}" alt="">
+                        <h4>Все для дома</h4>
+                    </div>
+                </div>
+                <h3 >Вы можете</h3>
+                <div class="wrapper ">
+                    <div uk-grid class="uk-grid uk-flex-middle">
+                        <div class="uk-width-1-3@m uk-text-center">
+                            <img src="{% static 'img/landing2/Group 1669.png' %}" alt="">
+                        </div>
+                        <div class="uk-width-1-3@m uk-text-center"><span>1</span></div>
+                        <div class="uk-width-1-3@m">
+                            <p>Найти нужный Вам товар. Теперь не прийдется обходить много магазинов чтобы найти то что Вам нужно</p>
+                        </div>
+                    </div>
+                    <hr class="uk-divider-icon uk-hidden@m">
+                    <div uk-grid class="uk-grid uk-flex-middle">
+                        <div class="uk-width-1-3@m">
+                            <p>Найти определенный магазин. Вы можете здесь найти нужный вам магазин, посмотреть его товары, акции, местоположение и контакты.</p>
+                        </div>
+                        <div class="uk-width-1-3@m uk-text-center"><span>2</span></div>
+                        <div class="uk-width-1-3@m uk-text-center"><img src="{% static 'img/landing2/Group 1670.png' %}" alt=""></div>
+                    </div>
+                    <hr class="uk-divider-icon uk-hidden@m">
+                    <div uk-grid class="uk-grid uk-flex-middle">
+                        <div class="uk-width-1-3@m uk-text-center">
+                            <img src="{% static 'img/landing2/Group 1672.png' %}" alt="">
+                        </div>
+                        <div class="uk-width-1-3@m uk-text-center"><span>3</span></div>
+                        <div class="uk-width-1-3@m">
+                            <p>Подписаться на любимые магазины. ТАк же как и в инстаграм, вы подписываетесь под магазины и можете видеть их новые товары, акции в своей ленте</p>
+                        </div>
+                    </div>
+                    <hr class="uk-divider-icon uk-hidden@m">
+                    <div uk-grid class="uk-grid uk-flex-middle">
+                        <div class="uk-width-1-3@m">
+                            <p>Сравнить цены с разных магазинов. Еще одно из удобств для вас, это посмотреть и сравнить цены на один и тот же товар с разных магазинов </p>
+                        </div>
+                        <div class="uk-width-1-3@m uk-text-center"><span>4</span></div>
+                        <div class="uk-width-1-3@m uk-text-center">
+                            <img src="{% static 'img/landing2/Group 1671.png' %}" alt="">
+                        </div>
+                    </div>
+                    <hr class="uk-divider-icon uk-hidden@m">
+                    <div uk-grid class="uk-grid uk-flex-middle">
+                        <div class="uk-width-1-3@m uk-text-center">
+                            <img src="{% static 'img/landing2/Group 1673.png' %}" alt="">
+                        </div>
+                        <div class="uk-width-1-3@m uk-text-center"><span>5</span></div>
+                        <div class="uk-width-1-3@m">
+                            <p>Заказать товар с доставкой на дом. Надежная курьерская служба поедет вместо Вас в магазин и привезет Ваш заказ в целости и сохранности.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+
+
+        <section class="form-landing">
+            <div class="uk-container">
+                <h2 class="uk-text-center uk-margin-medium-bottom">Делайте умный покупки в Ооба Маркете <br> Экономьте свое Время и Деньги!</h2>
+                <div class="uk-text-center">
+                    <a href="" class="uk-button uk-button-default red" style="background-color: #f3481c;border-color: #f3481c;color: #fff">Приступить к покупкам</a>
+                </div>
+            </div>
+        </section>
+
+    </div>
 {% endblock %}
 {% block js %}
     <script src="{% static 'js/common.js' %}"></script>
