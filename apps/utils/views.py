@@ -163,7 +163,7 @@ def send_letters_to_shop(cart):
     order = cart.simpleorder
     name, phone, address, date = order.name, order.phone, order.address, datetime.now()
     message = u"Поступил новый заказ: \n " + u" Заказ № %s \n" % order.id + u"Имя: %s \n " % name + \
-              "Адрес: %s \n " % address + "Дата: %s \n " % date
+              "Адрес: %s \n " % address + "Номер: %s \n " % phone + "Дата: %s \n " % date
     style_string = "font: bold on"
     style = xlwt.easyxf(style_string)
     for shop in shops:
@@ -196,15 +196,6 @@ def send_letters_to_shop(cart):
             os.remove(file_name)
         except FileNotFoundError:
             print("file not found")
-    # email_message = EmailMessage("{} - {}".format(name, phone), message, settings.EMAIL_HOST_USER,
-    #                              [user.email for user in User.objects.filter(is_staff=True)])
-    # [email_message.attach_file(file_name) for file_name in shop_files]
-    # email_message.send()
-    # for f in shop_files:
-    #     try:
-    #         os.remove(f)
-    #     except FileNotFoundError:
-    #         continue
     print("ok")
 
 
