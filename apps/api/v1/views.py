@@ -669,7 +669,7 @@ class SalesUpdate(CsrfExemptMixin, APIView):
 
 class SaleDelete(APIView):
     permission_classes = [IsAuthenticated, IsOwnerShop4Shop, IsSaleOfShop]
-    authentication_classes = (SessionAuthentication, TokenAuthentication)
+    authentication_classes = (TokenAuthentication, )
 
     def post(self, *args, **kwargs):
         sale = get_object_or_404(Sales, pk=kwargs.get('pk'))
