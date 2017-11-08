@@ -2,22 +2,109 @@
 
 {% load i18n %}
 {% load crispy_forms_tags %}
+{% load widget_tweaks %}
+{% load helpers %}
 
 {% block head_title %}{% trans "Signup" %}{% endblock %}
 
 {% block inner %}
-<h1>{% trans "Sign Up" %}</h1>
+    <section class="login  uk-margin-medium-top">
+    <div class="uk-container">
+        <div class="shadow uk-padding-large">
+            <div class=" uk-grid uk-flex-center" uk-grid>
+                <div class="uk-width-1-1@l">
+                    <legend class="uk-legend uk-text-center">{% trans "Sign Up" %}</legend>
 
-<p>{% blocktrans %}Already have an account? Then please <a class="lost-pass" href="{{ login_url }}">sign in</a>.{% endblocktrans %}</p>
+                    <p>{% blocktrans %}У вас уже есть аккаунт? Пожалуйста
+                        <a class="lost-pass" href="{{ login_url }}">авторизуйтесь</a>.{% endblocktrans %}</p>
+                    <form id="signup_form" method="post" action="{% url 'account_signup' %}">
+                        {% csrf_token %}
+                        <fieldset class="uk-fieldset">
+                            <div class="uk-margin">
+                                <label class="uk-form-label">Имя</label>
+                                <div class="uk-form-controls">
+                                    {% set 'uk-input' as username_class %}
+                                    {% if form.username.errors %}
+                                        {% set 'uk-input uk-form-danger' as username_class %}
+                                    {% endif %}
 
-<form class="signup col-md-offset-3 col-md-6" id="signup_form" method="post" action="{% url 'account_signup' %}">
-  {% csrf_token %}
-  {{ form|crispy }}
-  {% if redirect_field_value %}
-  <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
-  {% endif %}
-  <button class="btn" type="submit">{% trans "Sign Up" %} &raquo;</button>
-</form>
+                                    {% render_field form.username placeholder="Имя" class=username_class %}
 
+                                    {% for err in form.username.errors %}
+                                        <div class="uk-alert-danger" uk-alert>
+                                            <a class="uk-alert-close" uk-close></a>
+                                            <p>{{ err }}</p>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            <div class="uk-margin">
+                                <label class="uk-form-label">E-mail</label>
+                                <div class="uk-form-controls">
+                                    {% set 'uk-input' as email_class %}
+                                    {% if form.email.errors %}
+                                        {% set 'uk-input uk-form-danger' as email_class %}
+                                    {% endif %}
+
+                                    {% render_field form.email placeholder="Ваша почта" class=email_class %}
+
+                                    {% for err in form.email.errors %}
+                                        <div class="uk-alert-danger" uk-alert>
+                                            <a class="uk-alert-close" uk-close></a>
+                                            <p>{{ err }}</p>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            <div class="uk-margin">
+                                <label class="uk-form-label">Пароль</label>
+                                <div class="uk-form-controls">
+                                    {% set 'uk-input' as password1_class %}
+                                    {% if form.password1.errors %}
+                                        {% set 'uk-input uk-form-danger' as password1_class %}
+                                    {% endif %}
+
+                                    {% render_field form.password1 placeholder="Пароль" type="password" class=password1_class %}
+
+                                    {% for err in form.password1.errors %}
+                                        <div class="uk-alert-danger" uk-alert>
+                                            <a class="uk-alert-close" uk-close></a>
+                                            <p>{{ err }}</p>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            <div class="uk-margin">
+                                <label class="uk-form-label">Повторный Пароль</label>
+                                <div class="uk-form-controls">
+                                    {% set 'uk-input' as password2_class %}
+                                    {% if form.password2.errors %}
+                                        {% set 'uk-input uk-form-danger' as password2_class %}
+                                    {% endif %}
+
+                                    {% render_field form.password2 placeholder="Повторный Пароль" type="password" class=password2_class %}
+
+                                    {% for err in form.password2.errors %}
+                                        <div class="uk-alert-danger" uk-alert>
+                                            <a class="uk-alert-close" uk-close></a>
+                                            <p>{{ err }}</p>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            {% if redirect_field_value %}
+                                <input type="hidden" name="{{ redirect_field_name }}"
+                                       value="{{ redirect_field_value }}"/>
+                            {% endif %}
+                            <div class="uk-text-center">
+                                <button class="uk-margin-medium-top uk-button uk-button-default">Регистрация</button>
+                            </div>
+
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
 
