@@ -3,7 +3,7 @@ import urllib.request
 from openpyxl import Workbook as new_wb, load_workbook
 
 from django.core.mail import EmailMessage
-import requests, xlrd
+import requests, xlrd, xml.etree.ElementTree as ET
 from bs4 import BeautifulSoup
 from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render, get_object_or_404
@@ -199,5 +199,11 @@ def send_letters_to_shop(cart):
     print("ok")
 
 
-
-
+def get_usd_currency():
+    res = requests.get('http://www.nbkr.kg/XML/daily.xml')
+    tree = ET.fromstring(res.content)
+    usd_currency = [i for i in tree.findall('Currency[@ISOCode="USD"]')]
+    if usd_currency:
+        usd = usd_currency[0].find('Value').text
+        return usd
+    return None

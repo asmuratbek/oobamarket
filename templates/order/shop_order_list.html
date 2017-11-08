@@ -34,20 +34,14 @@
                                     <td>{{ order.created_at|date:"d.m.y H:i" }}
                                     </td>
                                     <td>{{ order.name }}</td>
-                                    <td class="uk-text-left">
-                                        <form method="POST" action="{% url 'order:change_status' %}"
-                                              class="order_change">
-                                            {% csrf_token %}
-                                            <select class="selectize demo-default" id="id_status"
-                                                    name="status" required="">
-                                                {% for x,y in form.fields.status.choices %}
-                                                    <option value="{{ x }}"
-                                                            {% if order.status == x %}selected{% endif %}>{{ y }}
-                                                    </option>
-                                                {% endfor %}
-                                            </select>
-                                            <input type="hidden" name="id" value="{{ order.id }}">
-                                        </form>
+                                    <td>
+                                        {% if object in order.confirm_shops.all %}
+                                            Подтвержден
+                                        {% elif object in order.rejected_shops.all %}
+                                            Отклонен
+                                        {% else %}
+                                            Новый
+                                        {% endif %}
                                     </td>
                                     <td>{{ order.address }}</td>
                                     <td>{{ order.phone }}</td>
