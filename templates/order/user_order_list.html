@@ -8,8 +8,8 @@
                 <div class="uk-overflow-auto">
                 {% if order_filter %}
                 <form action="" method="GET">
-                    {{ order_filter.form.created_at_from }}
-                    {{ order_filter.form.created_at_to }}
+                    {{ order_filter.form.created_at_from|attr:"placeholder:От" }}
+                    {{ order_filter.form.created_at_to|attr:"placeholder:До" }}
                     {{ order_filter.form.status }}
                     {{ order_filter.form.search }}
                     <button type="submit">Фильтровать</button>
