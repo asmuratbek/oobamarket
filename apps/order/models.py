@@ -81,9 +81,6 @@ class UserAddress(models.Model):
 ORDER_STATUS_CHOICES = (
     ('created', 'Новый'),
     ('processed', 'Обработан'),
-    ('shipped', 'Доставлен'),
-    ('paid', 'Оплачен'),
-    ('refunded', 'Отказан'),
 )
 
 

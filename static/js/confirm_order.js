@@ -35,30 +35,32 @@ var csrftoken = getCookie('csrftoken');
     var flag;
     $(document).on('click', '.confirm-order', function () {
         var that = this;
+        var parent = $(that).closest('div.shadow');
         flag = 'confirm';
         var shop_slug = $('#shop-slug').val();
         var cart_id = window.location.href.split("/")[6];
         if(shop_slug === undefined)
-            shop_slug = $(that).closest('div.cync-shop').find('input.shop-slug').val();
+            shop_slug = $(parent).find('input.shop-slug').val();
        $.post('/cart/' + cart_id + '/confirm/', {'flag': flag, 'shop_slug': shop_slug,
        'csrfmiddlewaretoken': csrftoken}, function (data) {
            $(that).text("Подтверждено").attr('disabled', true);
-           $('.reject-order').text('Отклонить').attr('disabled', false);
+           $(parent).find('button.reject-order').text('Отклонить').attr('disabled', false);
            showFlashMessage(data.message)
        });
     });
 
     $(document).on('click', '.reject-order', function () {
         var that = this;
+        var parent = $(that).closest('div.shadow');
         flag = 'reject';
         var cart_id = window.location.href.split("/")[6];
         var shop_slug = $('#shop-slug').val();
         if(shop_slug === undefined)
-            shop_slug = $(that).closest('div.cync-shop').find('input.shop-slug').val();
+            shop_slug = $(parent).find('input.shop-slug').val();
        $.post('/cart/' + cart_id + '/confirm/', {'flag': flag, 'shop_slug': shop_slug,
        'csrfmiddlewaretoken': csrftoken}, function (data) {
            $(that).text("Отклонено").attr('disabled', true);
-           $('.confirm-order').text('Подтвердить').attr('disabled', false);
+           $(parent).find('button.confirm-order').text('Подтвердить').attr('disabled', false);
            showFlashMessage(data.message)
        });
     });

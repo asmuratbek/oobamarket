@@ -6,6 +6,15 @@
         <div class="uk-container">
             <div class="shadow uk-padding-large">
                 <div class="uk-overflow-auto">
+                {% if order_filter %}
+                <form action="" method="GET">
+                    {{ order_filter.form.created_at_from|attr:"placeholder:От" }}
+                    {{ order_filter.form.created_at_to|attr:"placeholder:До" }}
+                    {{ order_filter.form.status }}
+                    {{ order_filter.form.search }}
+                    <button type="submit">Фильтровать</button>
+                </form>
+                {% endif %}
                     <table class="uk-table uk-text-center uk-table-small uk-table-middle uk-table-hover uk-table-striped uk-table-divider">
                         <thead>
                         <tr>
@@ -20,6 +29,40 @@
                         </tr>
                         </thead>
                         <tbody>
+                        {% if order_filter %}
+                            {% for order in order_filter.qs %}
+                                <tr>
+                                    <td>
+                                    </td>
+                                    <td><a href="{% url 'cart:detail_by_pk_user' username=user.username pk=order.cart.id %}">{{ order.cart.id }}</a></td>
+                                    <td>{{ order.created_at|date:"d.m.y H:i" }}
+                                    </td>
+                                    <td>{{ order.name }}</td>
+                                    <td style="padding: 0;" class="status-order">
+                                        {% if order.confirm_shops.count == 0  and order.rejected_shops.count == 0 %}
+                                            Новый
+                                        {% elif order.status == 'processed' %}
+                                            Обработан
+                                        {% else %}
+                                        <span class="all-shops">{{ order.cart.get_shops.count }}</span>
+                                        <span class="check" style="color: green">({{ order.confirm_shops.count }})</span>
+                                        <span class="close" style="color: red">({{ order.rejected_shops.count }})</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>{{ order.address }}</td>
+                                    <td>{{ order.phone }}</td>
+                                    <td>{{ order.cart.subtotal }}</td>
+                                    {% if user.is_staff %}
+                                    <td>
+                                        <button type="button" class="curier_send"
+                                                {% if order.status == 'processed' %}disabled="disabled">Отправлено
+                                                    {% else %}>Отправить{% endif %}</button>
+                                    </td>
+                                    {% endif %}
+                                    <input type="hidden" class="cart-id" value="{{ order.cart.id }}">
+                                </tr>
+                            {% endfor %}
+                        {% else %}
                         {% for order in object_list %}
                                 <tr>
                                     <td>
@@ -28,15 +71,31 @@
                                     <td>{{ order.created_at|date:"d.m.y H:i" }}
                                     </td>
                                     <td>{{ order.name }}</td>
-                                    <td>
-                                        {{ order.get_status_display }}
+                                    <td style="padding: 0;" class="status-order">
+                                        {% if order.confirm_shops.count == 0  and order.rejected_shops.count == 0 %}
+                                            Новый
+                                        {% elif order.status == 'processed' %}
+                                            Обработан
+                                        {% else %}
+                                        <span class="all-shops">{{ order.cart.get_shops.count }}</span>
+                                        <span class="check" style="color: green">({{ order.confirm_shops.count }})</span>
+                                        <span class="close" style="color: red">({{ order.rejected_shops.count }})</span>
+                                        {% endif %}
                                     </td>
                                     <td>{{ order.address }}</td>
                                     <td>{{ order.phone }}</td>
                                     <td>{{ order.cart.subtotal }}</td>
-                                    <td></td>
+                                    {% if user.is_staff %}
+                                    <td>
+                                        <button type="button" class="curier_send"
+                                                {% if order.status == 'processed' %}disabled="disabled">Отправлено
+                                                    {% else %}>Отправить{% endif %}</button>
+                                    </td>
+                                    {% endif %}
+                                    <input type="hidden" class="cart-id" value="{{ order.cart.id }}">
                                 </tr>
                         {% endfor %}
+                        {% endif %}
                         </tbody>
                     </table>
                 </div>
@@ -49,6 +108,32 @@
 {% block js %}
     <script src="{% static 'js/main.js' %}"></script>
     <script src="{% static 'js/common.js' %}"></script>
+    <script>
+        function showFlashMessage(message) {
+            var template = "<div class='uk-alert-primary' uk-alert " +
+                "style='position: fixed; top: 50px; right: 10px;'>" +
+                "<div class='col-sm-3 col-sm-offset-8'> " +
+                "<div class='alert alert-success alert-dismissible' role='alert'>" +
+                "<a class='uk-alert-close uk-margin-small-left' uk-close></a>"
+                + message + "</div></div></div>";
+            $("body").append(template);
+            $(".uk-alert-primary").fadeIn();
+            setTimeout(function () {
+                $(".uk-alert-primary").fadeOut().remove();
+            }, 3600);
+}
+        $(document).on('click', '.curier_send', function (e) {
+            e.preventDefault();
+            var that = this;
+            var url = window.location.href + "send_order/";
+            var cart_id = $(this).closest('tr').find('input.cart-id').val();
+            $.post(url, {'cart_id': cart_id, 'csrfmiddlewaretoken': '{{ csrf_token }}'}, function (data) {
+                showFlashMessage(data.message);
+                $(that).text('Отправлено').attr('disabled', true);
+                $(that).closest('tr').find('td.status-order').empty().text('Обработан');
+            })
+        })
+    </script>
 {% endblock %}
 
 

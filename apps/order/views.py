@@ -1,16 +1,25 @@
+import os
+from datetime import datetime
+
+import xlwt
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.core.mail import EmailMessage
 from django.http import Http404, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.views import View
+from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import TemplateView
 from django.views.generic.edit import CreateView, FormView, UpdateView, DeleteView
 from django.views.generic.detail import DetailView
 from  django.views.generic.list import ListView
 # Create your views here.
+from xlwt import Workbook
+
 from apps.cart.models import Cart
+from apps.order.filter import OrderFilter
 from apps.shop.models import Shop
 from apps.utils.views import send_letters_to_shop
 from apps.users.mixins import ShopMixin, UserOderListPermMixin, UserOrderDetailPermMixin
@@ -144,6 +153,54 @@ class ThankYouView(TemplateView):
     template_name = 'order/thanks.html'
 
 
+class SendLetterToCurier(LoginRequiredMixin, ModeratorPermMixin, View):
+    def post(self, request, *args, **kwargs):
+        cart = get_object_or_404(Cart, id=request.POST.get('cart_id', ''))
+        order = cart.simpleorder
+        confirm_shops = order.confirm_shops.all()
+        name, phone, address, date = order.name, order.phone, order.address, datetime.now()
+        message = u"Поступил новый заказ: \n " + u" Заказ № %s \n" % order.id + u"Имя: %s \n " % name + \
+                  "Адрес: %s \n " % address + "Номер: %s \n " % phone + "Дата: %s \n " % date
+        style_string = "font: bold on"
+        style = xlwt.easyxf(style_string)
+        if order.status != 'processed':
+            order.status = 'processed'
+            order.save()
+            wb = Workbook(encoding='utf-8')
+            for shop in confirm_shops:
+                products_list = wb.add_sheet(u"Магазин - {}".format(shop.title), cell_overwrite_ok=True)
+                cartitems = cart.cartitem_set.filter(product__shop=shop)
+                titles = [u"Наименование товара", u"Количество", u"Цена", u"Комментарии", u"Сумма"]
+                end_rows = [u"Итого", u"Доставка"]
+                end_rows_values = [sum(cartitems.values_list('total', flat=True)), 150]
+                products_names = [item.product.title for item in cartitems]
+                products_qty = [item.quantity for item in cartitems]
+                products_price = [item.product.price for item in cartitems]
+                products_comments = [item.comments for item in cartitems]
+                products_total = [item.total for item in cartitems]
+                max_rows_num_items = cartitems.count() + 1
+                write_titles = list(map(lambda i, c: products_list.write(0, c, i, style=style), titles, [c for c in range(len(titles))]))
+                write_products_name = list(map(lambda i, c: products_list.write(c, 0, i), products_names, [c for c in range(1, len(products_names) + 1)]))
+                write_products_qty = list(map(lambda i, c: products_list.write(c, 1, i), products_qty, [c for c in range(1, len(products_qty) + 1)]))
+                write_products_price = list(map(lambda i, c: products_list.write(c, 2, i), products_price, [c for c in range(1, len(products_price) + 1)]))
+                write_products_comments = list(map(lambda i, c: products_list.write(c, 3, i), products_comments, [c for c in range(1, len(products_comments) + 1)]))
+                write_products_total = list(map(lambda i, c: products_list.write(c, 4, i), products_total, [c for c in range(1, len(products_total) + 1)]))
+                write_end_rows = list(map(lambda i, c: products_list.write(c, 0, i, style=style), end_rows, [c for c in range(max_rows_num_items, max_rows_num_items + len(end_rows) + 1)]))
+                write_end_rows_vals = list(map(lambda i, c: products_list.write(c, 4, i), end_rows_values, [c for c in range(max_rows_num_items, max_rows_num_items + len(end_rows) + 1)]))
+            file_name = "order-{}.xls".format(cart.id)
+            wb.save(file_name)
+            email_message = EmailMessage("{} - {}".format(name, phone), message, settings.EMAIL_HOST_USER, [settings.CURIER_EMAIL])
+            email_message.attach_file(file_name)
+            email_message.send()
+            try:
+                os.remove(file_name)
+            except FileNotFoundError:
+                print("file not found")
+            return JsonResponse({'status': 0, 'message': 'Заказ курьеру успешно отправлен'})
+        return JsonResponse({'status': 1, 'message': 'Письмо уже отправлено.'})
+
+
+
 # @login_required
 # def shop_simple_order_list_update(request, slug):
 #     object_list = SimpleOrder.objects.filter(cart__cartitem__product__shop__slug=slug).distinct()
@@ -199,8 +256,13 @@ class SimpleOrderListViewForModers(LoginRequiredMixin, ModeratorPermMixin, ListV
     model = SimpleOrder
     template_name = 'order/user_order_list.html'
     ordering = '-created_at'
+    filterset_class = OrderFilter
 
-
+    def get_context_data(self, **kwargs):
+        context = super(SimpleOrderListViewForModers, self).get_context_data(**kwargs)
+        order_filter = self.filterset_class(self.request.GET, queryset=self.object_list)
+        context['order_filter'] = order_filter
+        return context
 
 
 class ShopSimpleOrderUpdateView(LoginRequiredMixin, ShopMixin, UpdateView):
