@@ -1,0 +1,35 @@
+{% if user.is_authenticated %}
+    <li class="enter">
+        <a href="#">{{ request.user.get_username }}</a>
+        <div class="">
+            <ul class="uk-text-center">
+                {% if user.is_authenticated %}
+                    <li><a href="{% url 'users:detail' username=user.username %}"><b>Кабинет</b></a></li>
+                {% else %}
+                    <li><a href="{% url 'account_login' %}"><b>Кабинет</b></a></li>
+                {% endif %}
+                {% if user.is_staff %}
+                     <li><a href="{% url 'order:mod_order_list' username=user.username %}"><b>Все заказы</b></a></li>
+                {% endif %}
+                <li><a href="{{ DOMAIN_URL }}{% url 'shops:create' %}"><b>Создать магазин</b></a></li>
+                <li><a href="{{ DOMAIN_URL }}{% url 'product:add_product_index' %}"><b>Добавить товар</b></a></li>
+                <li><a href="{{ DOMAIN_URL }}{% url 'order:user_order_list' username=request.user.username %}"><b>История
+                    заказов</b></a></li>
+                {% for shop in request.user.shops_name %}
+                    <li><a href="{{ DOMAIN_URL }}{{ shop.get_absolute_url }}">{{ shop.title }}</a></li>
+                {% endfor %}
+                <li><a href="{{ DOMAIN_URL }}{% url 'account_logout' %}"><b>Выйти</b></a></li>
+            </ul>
+        </div>
+        {% else %}
+    </li>
+    <li class="enter">
+        <a href="{{ DOMAIN_URL }}{% url 'account_login' %}" class="enter btn" type="button">
+            Войти</a>
+        {% endif %}
+    </li>
+
+
+
+
+
