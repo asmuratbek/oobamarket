@@ -2,7 +2,7 @@ from django.shortcuts import render
 
 # Create your views here.
 from django.views import generic
-from .models import IndexBlocks, PremiumIndexBlocks, BLOCK_TYPES, IndexBanner
+from .models import IndexBlocks, PremiumIndexBlocks, BLOCK_TYPES, IndexBanner, Help
 from itertools import zip_longest
 from apps.shop.models import Shop
 
@@ -26,4 +26,14 @@ class IndexView(generic.TemplateView):
         context['blocks'] = [i for c in blocks for i in c]
         premium_blocks = {k: v for k, d in BLOCK_TYPES for v in PremiumIndexBlocks.objects.all() if v.block_type == k}
         context.update(premium_blocks)
+        return context
+
+
+class HelpView(generic.TemplateView):
+    template_name = 'pages/help.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['help_items'] = Help.objects.all()
+
         return context

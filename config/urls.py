@@ -7,7 +7,7 @@ from django.views.generic import TemplateView
 from django.views import defaults as default_views
 from apps.global_category.views import IndexView, landing
 from apps.product.views import FavoriteCreateView, product_reviews, change_publish_status
-from apps.index.views import IndexView
+from apps.index.views import IndexView, HelpView
 from apps.product.views import FavoriteCreateView, product_reviews
 from apps.shop.views import agreement, shop_reviews
 from apps.product.views import search_predict_html, search
@@ -37,7 +37,7 @@ urlpatterns = [
                   url(r'^cart/', include('apps.cart.urls', namespace='cart')),
                   url(r'^product/', include('apps.product.urls', namespace='product')),
                   url(r'^about/$', TemplateView.as_view(template_name='pages/about.html'), name='about'),
-                  url(r'^help/$', TemplateView.as_view(template_name='pages/help.html'), name='help'),
+                  url(r'^help/$', HelpView.as_view(), name='help'),
                   url(r'^agreement/$', agreement, name='agreement'),
                   url(r'^search_predict_html', search_predict_html, name='search_predict_html'),
                   url(r'^sub-list/$', SubscribeListView.as_view(), name='sub_list'),
