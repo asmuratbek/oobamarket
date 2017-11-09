@@ -108,8 +108,10 @@
                         <input type="hidden" name="item" value="{{ object.id }}">
                     </form>
                     <div class="uk-button-group uk-margin-medium-top add basket favorite uk-grid">
-                        <div class="uk-width-1-2@l uk-width-1-2@m uk-width-1-2@s">{% is_in_cart request object %} </div>
-                        <div class="uk-width-1-2@l uk-width-1-2@m uk-width-1-2@s">{% is_favorite object request.user %}</div>
+                        {% if user.is_authenticated %}
+                            <div class="uk-width-1-2@l uk-width-1-2@m uk-width-1-2@s">{% is_in_cart request object %} </div>
+                            <div class="uk-width-1-2@l uk-width-1-2@m uk-width-1-2@s">{% is_favorite object request.user %}</div>
+                        {% endif %}
                         <div class="uk-width-1-1@l uk-margin-medium-top uk-width-1-1@m uk-width-1-1@s"><a uk-toggle="target: #bye-now" style="background: #f3481c;color: #fff" class="uk-button">Купить сейчас</a></div>
                     </div>
                 </div>

@@ -37,6 +37,7 @@ urlpatterns = [
                   url(r'^cart/', include('apps.cart.urls', namespace='cart')),
                   url(r'^product/', include('apps.product.urls', namespace='product')),
                   url(r'^about/$', TemplateView.as_view(template_name='pages/about.html'), name='about'),
+                  url(r'^help/$', TemplateView.as_view(template_name='pages/help.html'), name='help'),
                   url(r'^agreement/$', agreement, name='agreement'),
                   url(r'^search_predict_html', search_predict_html, name='search_predict_html'),
                   url(r'^sub-list/$', SubscribeListView.as_view(), name='sub_list'),
