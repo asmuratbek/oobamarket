@@ -18,6 +18,8 @@ from apps.product.forms import ProductForm, ProductUpdateForm, ProductImagesForm
 from apps.properties.models import Values, Properties
 from apps.reviews.forms import ProductReviewsForm
 from apps.reviews.models import ProductReviews
+from apps.utils.views import get_usd_currency
+from decimal import Decimal
 from apps.users.mixins import AddProductMixin, DeleteProductMixin, UpdateProductMixin
 from config.settings.base import MEDIA_ROOT
 from .models import *
@@ -159,6 +161,10 @@ class ProductCreateView(LoginRequiredMixin, AddProductMixin, CreateView):
     def form_valid(self, form, **kwargs):
         random_int = random.randrange(0, 1010)
         product = form.instance
+        if product.currency == 'dollar' and product.price:
+            usd = get_usd_currency()
+            price = product.price * Decimal(usd.replace(",", ".")) if usd else product.price
+            product.price = price
         product.slug = slugify(form.instance.title, max_length=32) + str(random_int)
         product.shop = Shop.objects.get(slug=self.kwargs['slug'])
         product.save()
