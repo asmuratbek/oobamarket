@@ -71,22 +71,46 @@
             <div class="uk-offcanvas-bar">
                 <button class="uk-offcanvas-close" type="button" uk-close></button>
                 <a href="{% url 'home' %}"> <img src="img/logo.png" alt=""></a>
-                <ul class="">
-                    <li class="for-shop"><a href="{% url 'landing' %}"><span class="uk-margin-small-right uk-icon"
-                                                                             uk-icon="icon: star"></span> Для
-                        Магазина</a></li>
-                    <li class="sub-list"><a href="#"><span class="uk-margin-small-right uk-icon"
-                                                           uk-icon="icon: bookmark"></span>Лента</a></li>
-                    <li class="create-shop"><a href="#"><span class="uk-margin-small-right uk-icon"
-                                                              uk-icon="icon: world"></span> Добавить магазин</a></li>
-                    <li class="favorite-li"><a href="#"><span class="uk-margin-small-right uk-icon"
-                                                           uk-icon="icon: heart"></span> Избранные
-                        (<span> 2 </span>)</a></li>
-                    <li class="basket"><a href="#"><span class="uk-margin-small-right uk-icon"
-                                                         uk-icon="icon: cart"></span> Корзина (<span> 10 </span>)</a>
-                    </li>
-                    <li class="enter"><a href="#">Войти</a></li>
-                </ul>
+                 <ul class="uk-navbar-nav uk-display-block">
+                        <li class="for-shop"><a href="{% url 'shops:list' %}"><span class="uk-margin-small-right uk-icon"
+                                                                                 uk-icon="icon: star"></span>Магазины</a>
+                        </li>
+                        <li class="sub-list_nav"><a href="{% url 'sub_list' %}"><span class="uk-margin-small-right uk-icon"
+                                                                                  uk-icon="icon: bookmark"></span>Лента</a>
+                        </li>
+                        {#                        <li class="create-shop"><a href="{% url 'shops:create' %}" title="Добавьте свой магазин!"#}
+                        {#                                                   uk-tooltip="pos: bottom"><span class="uk-margin-small-right uk-icon"#}
+                        {#                                                                                  uk-icon="icon: world"></span> Добавить#}
+                        {#                            магазин</a></li>#}
+                        {% if user.is_authenticated %}
+                            <li class="favorite-li">
+                                <a href="{{ user.get_favorites_link }}" class="favorites_count">
+                                    <span class="uk-margin-small-right uk-icon" uk-icon="icon: heart"></span> Избранные
+                                    (<span>{{ user.get_favorites_count }}</span>)
+                                </a>
+                            </li>
+                            <li class="basket">
+                                <a href="{% url 'cart:detail' %}" class="cart_count">
+                                    <span class="uk-margin-small-right uk-icon" uk-icon="icon: cart"></span> Корзина
+                                    (<span>{{ user.get_cart_count }}</span>)
+                                </a>
+                            </li>
+                        {% else %}
+                            <li class="favorite-li">
+                                <a href="{% url 'account_login' %}" class="favorites_count">
+                                    <span class="uk-margin-small-right uk-icon" uk-icon="icon: heart"></span> Избранные
+                                    <span>{{ user.get_favorites_count }}</span>
+                                </a>
+                            </li>
+                            <li class="basket">
+                                <a href="{% url 'cart:detail' %}" class="cart_count">
+                                    <span class="uk-margin-small-right uk-icon" uk-icon="icon: cart"></span> Корзина
+                                    (<span>{{ cart_count }}</span>)
+                                </a>
+                            </li>
+                        {% endif %}
+                        {% include 'layout/dropdown-mobile.html' %}
+                    </ul>
             </div>
         </div>
     </header>

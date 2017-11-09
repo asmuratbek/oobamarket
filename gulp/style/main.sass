@@ -351,15 +351,19 @@ header
       a
         text-decoration: none
         span
-
-  .uk-navbar-nav>li.for-shop>a
+  .uk-navbar-nav>li
+    margin-bottom: 0
+  .uk-navbar-nav>li>a
     //background-color: $orange
     height: 40px
-    margin: 20px 10px 20px 0
+    margin: 10px 0
     color: #fff
     border-radius: 3px
     //&:hover
     //  background-color: $hover-orange
+  .uk-navbar-nav>li.enter
+    li.enter
+      text-align: center
   li.for-shop>a>span
     color: $red
   li.sub-list_nav>a>span
@@ -836,6 +840,10 @@ header
       text-overflow: ellipsis
       text-align: left
       line-height: 30px
+    a.disabled
+      background-color: #fff
+      border: 1px solid #e3e3e3
+      color: #000
     a
       margin-bottom: 0
       margin-top: 0
@@ -857,6 +865,7 @@ header
       &:hover
         background-color: $hover-orange
         color: #fff
+
 // -------------------------------------------
 // search-global-category
 //----------------------------------------------
