@@ -165,6 +165,7 @@ class ProductCreateView(LoginRequiredMixin, AddProductMixin, CreateView):
             usd = get_usd_currency()
             price = product.price * Decimal(usd.replace(",", ".")) if usd else product.price
             product.price = price
+            product.currency = 'som' if usd else "dollar"
         product.slug = slugify(form.instance.title, max_length=32) + str(random_int)
         product.shop = Shop.objects.get(slug=self.kwargs['slug'])
         product.save()
