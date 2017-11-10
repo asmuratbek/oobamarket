@@ -113,7 +113,7 @@ def is_favorite_for_like(product, user):
         if product.favorite.filter(user=user).exists():
             return 'like'
         else:
-            return ''
+            return 'false'
 
 @register.assignment_tag
 def is_favorite_for_tooltip(product, user):
