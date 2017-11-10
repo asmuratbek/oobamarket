@@ -306,19 +306,15 @@ class CreateBanners(LoginRequiredMixin, ShopMixin, View):
 
     def post(self, request, *args, **kwargs):
         shop = get_object_or_404(Shop, slug=self.kwargs['slug'])
-        if request.is_ajax():
-            for image in request.POST:
-                Banners.objects.create(title="", image=image, shop=shop)
-
-            banners = list()
-            for banner in shop.banners_set.all():
-                banners.append({
-                    'image': banner.image.url
-                })
-            return JsonResponse({
-                "banners": banners
-            })
-        return JsonResponse({'status': 1, 'message': 'Your request is very bad!'})
+        images = request.FILES.getlist('image_file')
+        delete_images = request.POST.get('delete_images')
+        if images:
+            images_list = [Banners(image=file, shop=shop) for file in images]
+            Banners.objects.bulk_create(images_list)
+        if delete_images:
+            delete_list = Banners.objects.filter(id__in=delete_images.split(","))
+            delete_list.delete()
+        return JsonResponse({'status': 0, 'url': str(shop.get_absolute_url())})
         # else:
         #     print(len(request.FILES['image']))
         #     for file in request.FILES.getlist('image'):
