@@ -167,7 +167,14 @@
                     продвижения, если вы
                     зарегистрируетесь или оставите заявку<br> прямо сейчас!
                 </h2>
-                <div class="uk-grid uk-text-center" uk-grid>
+                {% if request.user.is_authenticated %}
+                    <div class="see-more uk-margin-medium-bottom uk-margin-medium-top uk-text-center">
+                        <a href="{% url "shops:create" %}">
+                            <button class="uk-button uk-button-default">Создать магазин</button>
+                        </a>
+                    </div>
+                {% else %}
+                    <div class="uk-grid uk-text-center" uk-grid>
                     <form class="uk-width-1-2@m" id="signup_form" method="post" action="{% url 'account_signup' %}">
                         {% csrf_token %}
                         <div class="">
@@ -214,6 +221,7 @@
                         </div>
                     </form>
                 </div>
+                {% endif %}
             </div>
         </section>
 
