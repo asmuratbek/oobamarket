@@ -1,11 +1,14 @@
-{% extends 'base-1.html' %}
 
-{% block content %}
-    <<div class="container">
-<form action="{% url 'shops:delete' slug=object.slug %}" method="post" id="ProductDelete">{% csrf_token %}
-    <h1>Вы уверены что хотите удалить магазин "{{ object }}" ?</h1><br>
-    <p>Удалив магазин вы его не востановите. Все данные связанные с магазином удалятся!</p><br>
-    <button class="btn" type="submit">Подтвердить</button>
-</form>
+<!-- This is the modal remove shop-->
+<div id="remove-shop-modal" uk-modal>
+    <div class="uk-modal-dialog uk-modal-body">
+        <button class="uk-modal-close-default" type="button" uk-close></button>
+        <form action="{% url 'shops:delete' slug=object.slug %}" method="post" id="ProductDelete">{% csrf_token %}
+            <h4>Вы уверены что хотите удалить магазин "{{ object }}" ?</h4><br>
+            <p>Удалив магазин вы его не востановите. Все данные связанные с магазином удалятся!</p><br>
+            <button class="uk-button-default uk-button" type="submit">Подтвердить</button>
+        </form>
+
+        </p>
     </div>
-{% endblock %}
+</div>
