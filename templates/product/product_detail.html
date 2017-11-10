@@ -104,9 +104,6 @@
                     <!-- {% if product.delivery_type == 'paid' %}
                     <p>Стоимость доставки:{{ product.delivery_cost }}</p>
                 {% endif %} -->
-                    <form action="" id="favorite-form" style="display: none;">
-                        <input type="hidden" name="item" value="{{ object.id }}">
-                    </form>
                     <div class="uk-button-group uk-margin-medium-top add basket favorite uk-grid">
                         {% if user.is_authenticated %}
                             <div class="uk-width-1-2@l uk-width-1-2@m uk-width-1-2@s">{% is_in_cart request object %} </div>
@@ -412,8 +409,6 @@
     {{ block.super }}
     {#    <script src={% static 'js/jquare-zoom.js' %}></script>#}
     {#    <script src={% static 'js/subscribe.js' %}></script>#}
-    <script src="{% static 'js/main.js' %}"></script>
-
 
     <script>
         var form = $('#review_form');

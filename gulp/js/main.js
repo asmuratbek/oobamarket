@@ -82,44 +82,45 @@ $(document).ready(function(){
     // функция добавление в корзину
     // ---------------------------------
 
-    // $('.basket').click(function (event) {
-    //     event.preventDefault();
-    //     var formData = $('#favorite-form').serialize();
-    //     $.ajax({
-    //         type: "GET",
-    //         url: "/cart/",
-    //         data: formData,
-    //         success: function (data) {
-    //             showFlashMessage(data.flash_message);
-    //             $('.cart-count').text(data.total_items);
-    //             if (data.item_added) {
-    //                 $(this).toggleClass("active");
-    //                 $('.basket-btn').html('<span class="uk-margin-small-right" uk-icon="icon:  cart"></span>В корзине');
-    //             }
-    //             else {
-    //                 $(this).removeClass("active");
-    //                 $('.basket-btn').html('<span class="uk-margin-small-right" uk-icon="icon:  cart"></span>Добавить в корзину');
-    //             }
-    //         },
-    //         error: function (response, error) {
-    //             console.log(response);
-    //             console.log(error);
-    //         }
-    //     })
-    // });
+    $('a.basket').click(function (event) {
+        event.preventDefault();
+        var itemId = $(this).attr('data-item-id');
+
+        $.ajax({
+            type: "GET",
+            url: "/cart/?item=" + itemId,
+            success: function (data) {
+                showFlashMessage(data.flash_message);
+                $('.cart_count').html('<span class="uk-margin-small-right uk-icon" uk-icon="icon: cart"></span> Корзина' +
+                                    '(<span>' + data.total_items + '</span>)')
+
+                if (data.item_added) {
+                    $(this).toggleClass("active");
+                    $('.basket-btn').html('<span class="uk-margin-small-right" uk-icon="icon:  cart"></span>В корзине');
+                }
+                else {
+                    $(this).removeClass("active");
+                    $('.basket-btn').html('<span class="uk-margin-small-right" uk-icon="icon:  cart"></span>Добавить в корзину');
+                }
+            },
+            error: function (response, error) {
+                console.log(response);
+                console.log(error);
+            }
+        })
+    });
 
     // ---------------------------------
     // функция добавление в избранные на странице одного товара
     // ---------------------------------
 
-    $('.favorite-btn').click(function (event) {
+    $('a.favorite-btn').click(function (event) {
         event.preventDefault();
-        var span = $(this).next();
-        var formData = $('#favorite-form').serialize();
+
+        var itemId = $(this).attr('data-item-id');
         $.ajax({
             type: "GET",
-            url: "/favorite/add",
-            data: formData,
+            url: "/favorite/add?item=" + itemId,
             success: function (data) {
                 console.log(data);
                 if (data.created) {
@@ -130,7 +131,9 @@ $(document).ready(function(){
                     $(this).removeClass("active");
                     $('.favorite-btn').html('<span class="uk-margin-small-right" uk-icon="icon: heart">Добавить в избранное</a>');
                 }
-                $('.favorites_count').text(data.favorites_count)
+
+                $('.favorites_count').html('<span class="uk-margin-small-right uk-icon" uk-icon="icon: heart"></span> Избранные' +
+                                    '(<span>' + data.favorites_count + '</span>)')
             },
             error: function (response, error) {
                 console.log(response);
@@ -144,38 +147,38 @@ $(document).ready(function(){
     // функция добавление в избранные на главной
     // ---------------------------------
 
-    $(".favorite").click(function (event) {
-        event.preventDefault();
-        var thisIcon = $(this);
-        var productId = $(this).attr("data-item-id");
-        $.ajax({
-            type: "GET",
-            url: "/favorite/add",
-            data: {
-                'item': productId
-            },
-            success: function (data) {
-                showFlashMessage(data.flash_message);
-                if (data.created) {
-                    thisIcon.toggleClass("like");
-                    thisIcon.attr("title", "Удалить из избранных");
-                }
-                else {
-                    thisIcon.removeClass("like");
-                    thisIcon.attr("title", "Добавить в избранное");
-                    if (thisIcon.parent().parent().parent().parent().parent().parent().hasClass('favorite-products')) {
-                        thisIcon.parent().parent().parent().parent().fadeOut();
-                    }
-                }
-                $('.favorites_count').html('<span class="uk-margin-small-right uk-icon" uk-icon="icon: heart"></span> Избранные' +
-                                    '(<span>' + data.favorites_count + '</span>)')
-            },
-            error: function (response, error) {
-                console.log(response);
-                console.log(error);
-            }
-        })
-    });
+    // $(".favorite").click(function (event) {
+    //     event.preventDefault();
+    //     var thisIcon = $(this);
+    //     var productId = $(this).attr("data-item-id");
+    //     $.ajax({
+    //         type: "GET",
+    //         url: "/favorite/add",
+    //         data: {
+    //             'item': productId
+    //         },
+    //         success: function (data) {
+    //             showFlashMessage(data.flash_message);
+    //             if (data.created) {
+    //                 thisIcon.toggleClass("like");
+    //                 thisIcon.attr("title", "Удалить из избранных");
+    //             }
+    //             else {
+    //                 thisIcon.removeClass("like");
+    //                 thisIcon.attr("title", "Добавить в избранное");
+    //                 if (thisIcon.parent().parent().parent().parent().parent().parent().hasClass('favorite-products')) {
+    //                     thisIcon.parent().parent().parent().parent().fadeOut();
+    //                 }
+    //             }
+    //             $('.favorites_count').html('<span class="uk-margin-small-right uk-icon" uk-icon="icon: heart"></span> Избранные' +
+    //                                 '(<span>' + data.favorites_count + '</span>)')
+    //         },
+    //         error: function (response, error) {
+    //             console.log(response);
+    //             console.log(error);
+    //         }
+    //     })
+    // });
 
 
     // ---------------------------------
