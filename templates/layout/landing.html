@@ -57,7 +57,8 @@
                                 скидках </p>
                         </div>
                         <div class="uk-width-1-3@m uk-text-center"><span>2</span></div>
-                        <div class="uk-width-1-3@m uk-text-center"><img src="{% static 'img/landing/Group 1461.png' %}" alt=""></div>
+                        <div class="uk-width-1-3@m uk-text-center"><img src="{% static 'img/landing/Group 1461.png' %}"
+                                                                        alt=""></div>
                     </div>
                     <hr class="uk-divider-icon uk-hidden@m">
                     <div uk-grid class="uk-grid uk-flex-middle">
@@ -156,7 +157,8 @@
         <section class="video">
             <div class="uk-container">
                 <div class="row">
-                   <iframe width="100%" height="600" src="https://www.youtube.com/embed/ZULfBxBK6w8" frameborder="0" allowfullscreen></iframe>
+                    <iframe width="100%" height="600" src="https://www.youtube.com/embed/ZULfBxBK6w8" frameborder="0"
+                            allowfullscreen></iframe>
                 </div>
             </div>
         </section>
@@ -167,35 +169,45 @@
                     продвижения, если вы
                     зарегистрируетесь или оставите заявку<br> прямо сейчас!
                 </h2>
-                <div class="uk-grid uk-text-center" uk-grid>
-                    <form class="uk-width-1-2@m" id="signup_form" method="post" action="{% url 'account_signup' %}">
-                        {% csrf_token %}
-                        <div class="">
-                            <label>Регистрация</label>
-                            <div class="uk-margin">
-                                <input type="text" class="uk-input" placeholder="Имя" name="username" required>
-                            </div>
-                            <div class="uk-margin">
-                                <input type="email" class="uk-input" placeholder="Email" name="email" required>
-                            </div>
-                            <div class="uk-margin">
-                                <input type="password" class="uk-input" placeholder="Пароль" name="password1"
-                                       required>
-                            </div>
-                            <div class="uk-margin">
-                                <input type="password" class="uk-input" placeholder="Повторный Пароль"
-                                       name="password2"
-                                       required>
-                            </div>
-                            <div class="socialaccount_ballot">
-                                <ul class="socialaccount_providers uk-padding-remove">
-                                    {% include 'socialaccount/snippets/provider_list.html' %}
-                                </ul>
-                            </div>
+                {% if not user.is_authenticated %}
+                    <div class="uk-grid uk-flex-center uk-text-center" uk-grid>
 
-                            <button type="submit" name="submit" class="uk-button uk-button-default">Регистрация</button>
-                        </div>
-                    </form>
+                        <form class="uk-width-1-2@m" id="signup_form" method="post" action="{% url 'account_signup' %}">
+                            {% csrf_token %}
+                            <div class="">
+                                <label>Регистрация</label>
+                                <div class="uk-margin">
+                                    <input type="text" class="uk-input" placeholder="Имя" name="username" required>
+                                </div>
+                                <div class="uk-margin">
+                                    <input type="email" class="uk-input" placeholder="Email" name="email" required>
+                                </div>
+                                <div class="uk-margin">
+                                    <input type="password" class="uk-input" placeholder="Пароль" name="password1"
+                                           required>
+                                </div>
+                                <div class="uk-margin">
+                                    <input type="password" class="uk-input" placeholder="Повторный Пароль"
+                                           name="password2"
+                                           required>
+                                </div>
+                                <div class="socialaccount_ballot">
+                                    <ul class="socialaccount_providers uk-padding-remove">
+                                        {% include 'socialaccount/snippets/provider_list.html' %}
+                                    </ul>
+                                </div>
+
+                                <button type="submit" name="submit" class="uk-button uk-button-default">Регистрация
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                {% else %}
+                    <div class="uk-text-center uk-margin-medium-bottom">
+                        <a href="{% url 'shops:create' %}" class="uk-button uk-button-default">Создать магазин</a>
+                    </div>
+                {% endif %}
+                <div class="uk-grid uk-flex-center uk-text-center" uk-grid>
                     <form class="uk-width-1-2@m" method="post" action="{% url 'landing' %}">{% csrf_token %}
                         <div class="">
                             <label>Оставить заявку </label>
@@ -214,6 +226,7 @@
                         </div>
                     </form>
                 </div>
+
             </div>
         </section>
 
