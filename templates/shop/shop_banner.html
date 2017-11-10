@@ -5,40 +5,40 @@
     <section class="creat-product  uk-margin-medium-top">
         <div class="uk-container">
             <div class="shadow uk-padding-large">
-                <form class="uk-grid" method="post" enctype="multipart/form-data">
+                <form class="uk-grid" id="banner-form" method="post" enctype="multipart/form-data">
                     {% csrf_token %}
                     <legend class="uk-legend uk-margin-medium-bottom">Редактировать Баннер</legend>
                     <div class="uk-fieldset uk-width-1-1@l upload-product-image uk-margin-remove-top">
                         <small class="uk-text-center uk-display-block uk-margin-medium-bottom uk-alert-danger">Размер
                             картинки должен быть 16:9
                         </small>
-                        <div class="uk-child-width-1-4@m uk-grid">
+                        <div class="uk-child-width-1-4@m uk-grid gallery">
                             <div class="image-preview-parent">
                                 <div class="wrapper">
                                     <label for="image-upload" class="image-label">Выбрать изображения</label>
-                                    <input type="file" name="image" id="image-upload" multiple/>
+                                    <input type="file" name="images" id="image-upload" multiple/>
                                 </div>
                             </div>
 
-                            <div class="gallery">
-
+                            {% for banner in banners %}
+                            <div class="image" data-banner-id="{{ banner.id }}"
+                                style="background:  url('{{ banner.image.url }}') 0 0 no-repeat;">
+                                <div class="wrapper">
+                                    <a class="remove-image" href="" uk-icon="icon:  minus-circle"
+                                       title="Удалить изображение" uk-tooltip></a>
+                                </div>
                             </div>
-{#                            <div class="image-preview active">#}
-{#                                <div class="wrapper">#}
-{#                                    <a class="remove-image" href="" uk-icon="icon:  minus-circle"#}
-{#                                       title="Удалить изображение" uk-tooltip></a>#}
-{#                                    <img src="img/cat11.png" alt="">#}
-{#                                </div>#}
-{#                            </div>#}
-
+                            {% endfor %}
                         </div>
-
+                        <div id="image_inputs">
+                            <input name="delete_images" id="delete_images" type="hidden">
+                        </div>
                     </div>
 
 
                     <div class="uk-width-1-1@l">
                         <div class=" uk-width-1-2@s uk-margin-medium-top">
-                            <button type="submit" class="uk-button uk-button-default border-red bg-red uk-width-1-2@l"><span
+                            <button type="submit" id="save_banners" class="uk-button uk-button-default border-red bg-red uk-width-1-2@l"><span
                                     class="uk-margin-small-right" uk-icon="icon: check"> </span>Сохранить</button>
                         </div>
                     </div>
@@ -48,81 +48,63 @@
             </div>
         </div>
     </section>
-
-
-    <script>
-
-        var filesList = [];
-        $('#image-upload').change(function (e) {
-            let files = e.target.files;
-            filesList = files
-            $.each(files, function (i, file) {
-               var template =  '<div class="image-preview active">' +
-                                '<div class="wrapper">' +
-                                    '<a class="remove-image" href="" uk-icon="icon:  minus-circle" title="Удалить изображение" uk-tooltip></a>'+
-                                    '<img src="' + URL.createObjectURL(file) + '" alt=""></div></div>'
-                $('.gallery').append(template)
-
-            });
-
-        })
-
-
-        $(document).on('click', '.remove-image', function (e) {
-            e.preventDefault();
-            $(this).parent().parent().fadeOut();
-
-        })
-    </script>
-{#    <section class="edit-banner">#}
-{#        <div class="container">#}
-{#            <h1 class="create">Редактировать Баннер</h1>#}
-{#            <div class="col-md-offset-2 col-md-8">#}
-{#                <div id="gallery" class="table">#}
-{#                    <div class="banners-list">#}
-{#                        {% for banner in banners %}#}
-{#                            <div class="img-wrapper">#}
-{#                                <div>#}
-{#                                    <img src="{{ banner.image.url }}" class="img-responsive"/>#}
-                                    {#                                <p>{{ banner.image.name }}</p>#}
-{#                                    <span class="delete-banner" data-banner-id="{{ banner.id }}">X</span>#}
-{#                                </div>#}
-{#                            </div>#}
-{#                        {% endfor %}#}
-{#                    </div>#}
-{#                </div>#}
-{#                <div id="form-div">#}
-{#                    <input class="hidden" id="fileupload" type="file" name="image" multiple#}
-{#                           data-url="{% url 'shops:add_banner' slug=slug %}"#}
-{#                           data-form-data='{"csrfmiddlewaretoken": "{{ csrf_token }}"}'/>#}
-{#                    <label class="image-preview" for="fileupload">#}
-{#                        <i class="glyphicon glyphicon-plus-sign"></i>#}
-{#                        <div class="add-photo">#}
-{#                            Добавить<br>фотографии#}
-{#                        </div>#}
-{#                    </label>#}
-{##}
-{#                    <input id="shop_slug" class="hidden" type="text" value="{{ slug }}"/>#}
-{#                    <input id="csrf_token" type="hidden" value="{{ csrf_token }}">#}
-{#                    <a href="{% url 'shops:detail' slug=slug %}" class="btn add">В магазин</a>#}
-{#                </div>#}
-{##}
-{##}
-{#            </div>#}
-{#        </div>#}
-{#    </section>#}
-
-
-
 {% endblock %}
 
 {% block js %}
 
     {{ block.super }}
-    <script src="{% static 'js/jquery.ui.widget.js' %}"></script>
-    <script src="{% static 'js/jquery.iframe-transport.js' %}"></script>
-    <script src="{% static 'js/jquery.fileupload.js' %}"></script>
-    <script src="{% static 'js/images_upload.js' %}"></script>
-    <script src="{% static 'js/jquery.uploadPreview.js' %}"></script>
+    <script>
+        var filesList = [];
+        $('#image-upload').change(function (e) {
+            let files = e.target.files;
+            $.each(files, function (i, file) {
+                filesList.push(file);
+                var template = $('<div>', {'class': 'image', 'data-image-index': i})
+                    .append($('<div>', {'class': 'wrapper'}))
+                    .append($('<a>', {'class': 'remove-image', 'uk-icon': 'icon: minus-circle', 'title': 'Удалить изображение',
+                                        'uk-tooltip':''})).css('background-image', 'url(' + URL.createObjectURL(file) + ')');
+                $('.gallery').append(template);
 
+            });
+            console.log(filesList);
+        });
+        $(document).on('click', '.remove-image', function (e) {
+            e.preventDefault();
+            var parent_div = $(this).closest('div.image');
+            if($(parent_div)[0].hasAttribute('data-banner-id')) {
+                if($('#delete_images').val().length)
+                    $('#delete_images').val($('#delete_images').val() + ", " + $(parent_div).attr("data-banner-id"));
+                else
+                    $('#delete_images').val($(parent_div).attr("data-banner-id"));
+            } else if($(parent_div)[0].hasAttribute('data-image-index')){
+                var index = parseInt($(parent_div).attr('data-image-index'));
+                delete filesList[index];
+                console.log(filesList)
+            }
+            $(parent_div).empty().remove();
+            console.log(filesList)
+        });
+
+        $(document).on('submit', '#banner-form', function (e) {
+            e.preventDefault();
+            var form = new FormData($('#banner-form')[0]);
+            var csrftoken = $('input[name=csrfmiddlewaretoken]').val();
+            var new_files_arr = [];
+            filesList.filter(function (n) {if(n !== undefined) new_files_arr.push(n)});
+            $.each(new_files_arr, function (i, file) {
+                form.append('image_file', file);
+            });
+            form.append('csrfmiddlewaretoken', csrftoken);
+            $.ajax({
+                url: window.location.href,
+                type: "POST",
+                data: form,
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    window.location.href = data.url;
+                }
+        });
+        })
+    </script>
 {% endblock %}
