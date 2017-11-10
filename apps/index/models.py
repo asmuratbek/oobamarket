@@ -1,3 +1,4 @@
+from ckeditor_uploader.fields import RichTextUploadingField
 from django.db import models
 from apps.utils.models import PublishBaseModel
 # Create your models here.
@@ -65,3 +66,15 @@ class IndexBanner(PublishBaseModel):
 
     def __str__(self):
         return self.get_banner_type_display()
+
+
+class Help(models.Model):
+    class Meta:
+        verbose_name = 'Помощь'
+        verbose_name_plural = 'Помощь'
+
+    title = models.CharField(max_length=1000, verbose_name='Заголовок', null=False)
+    description = RichTextUploadingField(verbose_name='Описание', null=True)
+
+    def __str__(self):
+        return self.title

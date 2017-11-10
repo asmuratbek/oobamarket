@@ -7,46 +7,17 @@
 
                 <ul class="shadow uk-margin-remove  uk-width-1-4@s uk-display-block uk-subnav uk-subnav-pill"
                     uk-switcher="animation: uk-animation-slide-left-medium, uk-animation-slide-right-medium">
-                    <li class=" uk-padding-remove"><a href="#">Что такое Ooba Market ?</a></li>
-                    <li class=" uk-padding-remove"><a href="#">Как найти товары и выбрать товары ?</a></li>
-                    <li class=" uk-padding-remove"><a href="#">Заказать товары</a></li>
-                    <li class=" uk-padding-remove"><a href="#">Отзывы </a></li>
-                    <li class=" uk-padding-remove"><a href="#">Мобильное приложение</a></li>
-                    <li class=" uk-padding-remove"><a href="#">Мобильное приложение</a></li>
-                    <li class=" uk-padding-remove"><a href="#">Мобильное приложение</a></li>
+                    {% for item in help_items %}
+                        <li class=" uk-padding-remove"><a href="#">{{ item.title }}</a></li>
+                    {% endfor %}
                 </ul>
                 <ul class="uk-width-expand@s uk-switcher uk-margin">
-                    <li>
-                        <h1>Lorem ipsum dolor sit amet.</h1>
-                        <h2>Lorem ipsum dolor sit amet.</h2>
-                        <h3>Lorem ipsum dolor sit amet.</h3>
-                        <h4>Lorem ipsum dolor sit amet.</h4>
-                        <h5>Lorem ipsum dolor sit amet.</h5>
-                        <h6>Lorem ipsum dolor sit amet.</h6>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid, quis?</p>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid, quis?</p>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid, quis?</p>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid, quis?</p>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid, quis?</p>
-                        <ul>
-                            <li>Lorem ipsum dolor sit amet.</li>
-                            <li>Lorem ipsum dolor sit amet.</li>
-                            <li>Lorem ipsum dolor sit amet.</li>
-                            <li>Lorem ipsum dolor sit amet.</li>
-                        </ul>
-                        <ol>
-                            <li>Lorem ipsum dolor sit amet.</li>
-                            <li>At autem cumque explicabo sed!</li>
-                            <li>Esse fuga itaque minus rerum?</li>
-                            <li>Aspernatur dicta mollitia natus non.</li>
-                        </ol>
-                        <img src="{% static 'img/01elecrtomica.jpg' %}" alt="">
-                    </li>
+                    {% for item in help_items %}
+                        <li>
+                            {{ item.description|safe }}
+                        </li>
+                    {% endfor %}
 
-                    <li>Hello again!</li>
-                    <li>Bazinga!</li>
-                    <li>Bazinga!</li>
-                    <li>Bazinga!</li>
                 </ul>
 
             </div>

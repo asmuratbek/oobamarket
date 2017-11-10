@@ -8,19 +8,14 @@ register = template.Library()
 
 @register.assignment_tag
 def is_favorite(product, user):
-    if user.is_authenticated:
-        if product.favorite.filter(user=user).exists():
-            return mark_safe('''<a class="favorite-btn uk-button uk-button-default favorite active " href="">
-                        <span class="uk-margin-small-right" uk-icon="icon: heart"></span>
-                        Удалить из избранного</a>''')
-        else:
-            return mark_safe('''<a class="favorite-btn uk-button uk-button-default  favorite" href="">
-                        <span class="uk-margin-small-right" uk-icon="icon:  heart"></span>
-                        Добавить в избранное</a>''')
+    if product.favorite.filter(user=user).exists():
+        return mark_safe('''<a class="favorite-btn uk-button uk-button-default active " href="" data-item-id="%s">
+                    <span class="uk-margin-small-right" uk-icon="icon: heart"></span>
+                    Удалить из избранного</a>''' % product.id)
     else:
-        return mark_safe('''<a class="favorite uk-button uk-button-default  favorite" href="/accounts/login/">
-                        <span class="uk-margin-small-right" uk-icon="icon:  heart"></span>
-                        Добавить в избранное</a>''')
+        return mark_safe('''<a class="favorite-btn uk-button uk-button-default " href="" data-item-id="%s">
+                    <span class="uk-margin-small-right" uk-icon="icon:  heart"></span>
+                    Добавить в избранное</a>''' % product.id)
 
 
 @register.assignment_tag
@@ -64,25 +59,28 @@ def is_in_cart(request, product):
         cart, created = Cart.objects.get_or_create(id=cart_id)
         if cart.cartitem_set.filter(product=product).exists():
             cart_message = """
-                <a class="basket-btn in-the-basket uk-button uk-button-default  basket active " href="">
+                <a class="basket-btn in-the-basket uk-button uk-button-default  basket active " href=""
+                    data-item-id="%s">
                     <span class="uk-margin-small-right" uk-icon="icon:  cart"></span>
                     В корзине
                 </a>
-            """
+            """ % product.id
         else:
             cart_message = """
-                 <a class="basket-btn uk-button uk-button-default  basket" href="">
+                 <a class="basket-btn uk-button uk-button-default  basket" href=""
+                     data-item-id="%s">
                      <span class="uk-margin-small-right" uk-icon="icon:  cart"></span>
                      Добавить в корзину
                  </a>
-            """
+            """ % product.id
     else:
         cart_message = """
-                         <a class="basket-btn uk-button uk-button-default  basket" href="">
+                         <a class="basket-btn uk-button uk-button-default  basket" href=""
+                            data-item-id="%s">
                             <span class="uk-margin-small-right" uk-icon="icon:  cart"></span>
                             Добавить в корзину
                         </a>
-                    """
+                    """ % product.id
 
     return mark_safe(cart_message)
 
