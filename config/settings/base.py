@@ -380,7 +380,7 @@ INSTAGRAM_CODE = "d62cd7a0155a47ab809f1f1b615afade"
 
 # Location of root django.contrib.admin URL, use {% url 'admin:index' %}
 ADMIN_URL = r'^admin/'
-CURIER_EMAIL = 'donnietruth@gmail.com'
+CURIER_EMAIL = 'sunrisestudiopro@gmail.com'
 # Your common stuff: Below this line define 3rd party library settings
 # ------------------------------------------------------------------------------
 
