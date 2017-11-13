@@ -106,8 +106,8 @@
                 {% endif %} -->
                     <div class="uk-button-group uk-margin-medium-top add basket favorite uk-grid">
                         {% if request.user.is_authenticated %}
-                            <div class="uk-width-1-2@l uk-width-1-2@m uk-width-1-2@s">{% is_in_cart request object %} </div>
-                            <div class="uk-width-1-2@l uk-width-1-2@m uk-width-1-2@s">{% is_favorite object request.user %}</div>
+                            <div class="uk-width-1-2@l uk-width-1-2@m uk-width-1-2@s">{% cart_block request object %} </div>
+                            <div class="uk-width-1-2@l uk-width-1-2@m uk-width-1-2@s">{% favorite_block object request.user %}</div>
                         {% else %}
                             <div class="uk-width-1-2@l uk-width-1-2@m uk-width-1-2@s">
                                 <a class="uk-button uk-button-default  basket" uk-toggle="target: #auth-register-modal">
@@ -122,7 +122,17 @@
                                     Добавить в избранное</a>
                             </div>
                         {% endif %}
-                        <div class="uk-width-1-1@l uk-margin-medium-top uk-width-1-1@m uk-width-1-1@s"><a uk-toggle="target: #auth-register-modal" style="background: #f3481c;color: #fff" class="uk-button">Купить сейчас</a></div>
+                        {% if request.user.is_authenticated %}
+                            {% is_in_cart request object as already_in_cart %}
+
+                            {% if already_in_cart %}
+                                                            <div class="uk-width-1-1@l uk-margin-medium-top uk-width-1-1@m uk-width-1-1@s"><a href="{% url "cart:detail" %}" style="background: #f3481c;color: #fff" class="uk-button">Купить сейчас</a></div>
+                            {% else %}
+                                <div class="uk-width-1-1@l uk-margin-medium-top uk-width-1-1@m uk-width-1-1@s"><a style="background: #f3481c;color: #fff" class="uk-button basket-with-redirect" data-item-id="{{ object.pk }}">Купить сейчас</a></div>
+                            {% endif %}
+                        {% else %}
+                            <div class="uk-width-1-1@l uk-margin-medium-top uk-width-1-1@m uk-width-1-1@s"><a uk-toggle="target: #auth-register-modal" style="background: #f3481c;color: #fff" class="uk-button">Купить сейчас</a></div>
+                        {% endif %}
                     </div>
                 </div>
                 <div class="uk-width-1-4@l uk-width-1-2@m">

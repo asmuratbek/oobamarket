@@ -88,13 +88,30 @@ class Product extends Component {
         return this.props.shops.indexOf(product.shop) !== -1
     };
 
-    handleDelete = (product_id) => {
-        console.log('delete')
-    };
+    // handleDelete = (product_id) => {
+    //     console.log('delete')
+    // };
 
     deleteProduct = (e) => {
         e.preventDefault();
-        console.log('do del')
+
+        const url = '/product/' + this.props.product.slug + '/delete-product/';
+
+        if (window.confirm('Вы действительно хотите удалить?')) {
+            $.ajax({
+                type: "POST",
+                url: url,
+                success: function (data) {
+                    if (data.success) {
+                        window.location.reload();
+                    }
+                },
+                error: function (response, error) {
+                    console.log(response);
+                    console.log(error);
+                }
+            })
+        }
     };
 
     render () {
@@ -105,11 +122,11 @@ class Product extends Component {
                 <div className="setting">
                     <a href={`${this.props.product.detail_view}${this.props.product.slug}/update-product/`}
                        data-uk-icon="icon: file-edit" title="Редактировать товар" data-uk-tooltip></a>
-                    <a className={!this.state.published ? 'disabled' : ''} href="#"
+                    <a className={!this.state.published ? 'product-vision uk-icon disabled' : 'product-vision uk-icon'} href="#"
                        data-uk-icon="icon: copy" title={this.state.published ? "Скрыть товар" : "Опубликовать товар"} data-uk-tooltip
                     data-item-id={this.props.product.pk} onClick={this.changePublishStatus}></a>
-                    <a href="#" data-uk-icon="icon: close" title="Удалить товар" data-uk-tooltip
-                    data-item-id={this.props.product.pk}></a>
+                    <a href="" data-uk-icon="icon: close" title="Удалить товар" data-uk-tooltip
+                    data-item-id={this.props.product.pk} onClick={this.deleteProduct}></a>
                 </div>
             ): ''}
 
