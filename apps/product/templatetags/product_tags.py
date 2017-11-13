@@ -7,7 +7,7 @@ register = template.Library()
 
 
 @register.assignment_tag
-def is_favorite(product, user):
+def favorite_block(product, user):
     if user.is_authenticated:
         if product.favorite.filter(user=user).exists():
             return mark_safe('''<a class="favorite-btn uk-button uk-button-default active " href="" data-item-id="%s">
@@ -58,59 +58,37 @@ def cart_message(request, product):
 
 
 @register.assignment_tag
-def is_in_cart(request, product):
-    if request.session.get("cart_id"):
-        cart_id = request.session.get("cart_id")
-        cart, created = Cart.objects.get_or_create(id=cart_id)
-        if cart.cartitem_set.filter(product=product).exists():
-            cart_message = """
-                <a class="basket-btn in-the-basket uk-button uk-button-default  basket active " href=""
-                    data-item-id="%s">
-                    <span class="uk-margin-small-right" uk-icon="icon:  cart"></span>
-                    В корзине
-                </a>
-            """ % product.id
-        else:
-            cart_message = """
-                 <a class="basket-btn uk-button uk-button-default  basket" href=""
-                     data-item-id="%s">
-                     <span class="uk-margin-small-right" uk-icon="icon:  cart"></span>
-                     Добавить в корзину
-                 </a>
-            """ % product.id
+def cart_block(request, product):
+    if is_in_cart(request, product):
+        cart_message = """
+                        <a class="basket-btn in-the-basket uk-button uk-button-default  basket active " href=""
+                            data-item-id="%s">
+                            <span class="uk-margin-small-right" uk-icon="icon:  cart"></span>
+                            В корзине
+                        </a>
+                    """ % product.id
     else:
         cart_message = """
                          <a class="basket-btn uk-button uk-button-default  basket" href=""
-                            data-item-id="%s">
-                            <span class="uk-margin-small-right" uk-icon="icon:  cart"></span>
-                            Добавить в корзину
-                        </a>
+                             data-item-id="%s">
+                             <span class="uk-margin-small-right" uk-icon="icon:  cart"></span>
+                             Добавить в корзину
+                         </a>
                     """ % product.id
 
     return mark_safe(cart_message)
 
-# @register.assignment_tag
-# def is_in_cart_block(product, user):
-#     if user.is_authenticated:
-#         if not product.cartitem_set.filter(cart__user=user).exists():
-#             return mark_safe('''
-#                 <a href="/cart/?item=%s" class="add-basket">
-#                             <span class="glyphicon glyphicon-shopping-cart"></span>
-#                             Добавить в корзину
-#                         </a>
-#             ''') % product.id
-#         else:
-#             return mark_safe('''<a href="/cart/?item=%s" class="add-basket in-the-basket">
-#                             <span class="glyphicon glyphicon-shopping-cart"></span>
-#                             Удалить из корзины
-#                         </a>''') % product.id
-#     else:
-#         return mark_safe('''
-#                         <a href="/cart/?item=%s" class="add-basket">
-#                                     <span class="glyphicon glyphicon-shopping-cart"></span>
-#                                     Добавить в корзину
-#                                 </a>
-#                     ''') % product.id
+
+@register.assignment_tag
+def is_in_cart(request, product):
+    if request.session.get("cart_id"):
+        cart_id = request.session.get("cart_id")
+        cart, created = Cart.objects.get_or_create(id=cart_id)
+
+        return cart.cartitem_set.filter(product=product).exists()
+
+    return False
+
 
 @register.assignment_tag
 def is_favorite_for_like(product, user):
@@ -120,6 +98,7 @@ def is_favorite_for_like(product, user):
         else:
             return 'false'
 
+
 @register.assignment_tag
 def is_favorite_for_tooltip(product, user):
     if user.is_authenticated:
@@ -128,17 +107,5 @@ def is_favorite_for_tooltip(product, user):
         else:
             return "Добавить в избранное"
 
-
-# @register.assignment_tag
-# def update_product_link(user, product):
-#     if user.is_authenticated:
-#         if user in product.shop.user.all():
-#             return format_html('''<h2>
-#                                 <a href="/products/{}/update_product">
-#                                 Редактировать
-#                                 </a>
-#                             </h2>''').format(product.slug)
-#         else:
-#             return ''
 
 
