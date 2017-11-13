@@ -125,11 +125,11 @@ $(document).ready(function(){
                 console.log(data);
                 if (data.created) {
                     $(this).toggleClass("active");
-                    $('.favorite-btn').html('<span class="uk-margin-small-right" uk-icon="icon: heart">Удалить из избранного');
+                    $('.favorite-btn').html('<span class="uk-margin-small-right" uk-icon="icon: heart"></span>Удалить из избранного');
                 }
                 else {
                     $(this).removeClass("active");
-                    $('.favorite-btn').html('<span class="uk-margin-small-right" uk-icon="icon: heart">Добавить в избранное</a>');
+                    $('.favorite-btn').html('<span class="uk-margin-small-right" uk-icon="icon: heart"></span>Добавить в избранное');
                 }
 
                 $('.favorites_count').html('<span class="uk-margin-small-right uk-icon" uk-icon="icon: heart"></span> Избранные' +

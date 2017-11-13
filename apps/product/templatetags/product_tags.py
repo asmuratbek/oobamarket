@@ -8,14 +8,19 @@ register = template.Library()
 
 @register.assignment_tag
 def is_favorite(product, user):
-    if product.favorite.filter(user=user).exists():
-        return mark_safe('''<a class="favorite-btn uk-button uk-button-default active " href="" data-item-id="%s">
-                    <span class="uk-margin-small-right" uk-icon="icon: heart"></span>
-                    Удалить из избранного</a>''' % product.id)
+    if user.is_authenticated:
+        if product.favorite.filter(user=user).exists():
+            return mark_safe('''<a class="favorite-btn uk-button uk-button-default active " href="" data-item-id="%s">
+                        <span class="uk-margin-small-right" uk-icon="icon: heart"></span>
+                        Удалить из избранного</a>''' % product.id)
+        else:
+            return mark_safe('''<a class="favorite-btn uk-button uk-button-default " href="" data-item-id="%s">
+                        <span class="uk-margin-small-right" uk-icon="icon:  heart"></span>
+                        Добавить в избранное</a>''' % product.id)
     else:
         return mark_safe('''<a class="favorite-btn uk-button uk-button-default " href="" data-item-id="%s">
-                    <span class="uk-margin-small-right" uk-icon="icon:  heart"></span>
-                    Добавить в избранное</a>''' % product.id)
+                                <span class="uk-margin-small-right" uk-icon="icon:  heart"></span>
+                                Добавить в избранное</a>''' % product.id)
 
 
 @register.assignment_tag

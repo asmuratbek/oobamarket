@@ -105,11 +105,24 @@
                     <p>Стоимость доставки:{{ product.delivery_cost }}</p>
                 {% endif %} -->
                     <div class="uk-button-group uk-margin-medium-top add basket favorite uk-grid">
-                        {% if user.is_authenticated %}
+                        {% if request.user.is_authenticated %}
                             <div class="uk-width-1-2@l uk-width-1-2@m uk-width-1-2@s">{% is_in_cart request object %} </div>
                             <div class="uk-width-1-2@l uk-width-1-2@m uk-width-1-2@s">{% is_favorite object request.user %}</div>
+                        {% else %}
+                            <div class="uk-width-1-2@l uk-width-1-2@m uk-width-1-2@s">
+                                <a class="uk-button uk-button-default  basket" uk-toggle="target: #auth-register-modal">
+                                    <span class="uk-margin-small-right" uk-icon="icon:  cart"></span>
+                                    Добавить в корзину
+                                </a>
+                            </div>
+                            <div class="uk-width-1-2@l uk-width-1-2@m uk-width-1-2@s">
+                                <a class="uk-button uk-button-default"
+                                   uk-toggle="target: #auth-register-modal">
+                                    <span class="uk-margin-small-right" uk-icon="icon:  heart"></span>
+                                    Добавить в избранное</a>
+                            </div>
                         {% endif %}
-                        <div class="uk-width-1-1@l uk-margin-medium-top uk-width-1-1@m uk-width-1-1@s"><a uk-toggle="target: #bye-now" style="background: #f3481c;color: #fff" class="uk-button">Купить сейчас</a></div>
+                        <div class="uk-width-1-1@l uk-margin-medium-top uk-width-1-1@m uk-width-1-1@s"><a uk-toggle="target: #auth-register-modal" style="background: #f3481c;color: #fff" class="uk-button">Купить сейчас</a></div>
                     </div>
                 </div>
                 <div class="uk-width-1-4@l uk-width-1-2@m">
@@ -302,7 +315,7 @@
 
 
 
-<div id="bye-now" class="uk-modal-container" uk-modal>
+<div id="auth-register-modal" class="uk-modal-container" uk-modal>
     <div class="uk-modal-dialog uk-modal-body">
          <button class="uk-modal-close-default" type="button" uk-close></button>
         <section class="login  uk-margin-medium-top">
