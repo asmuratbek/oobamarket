@@ -26,7 +26,7 @@
                        data-item-id="{{ product.id }}"
                     >
                     </a>
-                    <a class="model-trigger delete-object" uk-toggle="target: #DeleteModal"
+                    <a class="model-trigger delete-product"
                        data-url="{% url 'product:delete_product' slug=product.slug %}"
                        uk-icon="icon: close" title="Удалить товар" uk-tooltip></a>
                 </div>

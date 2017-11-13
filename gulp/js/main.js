@@ -252,6 +252,28 @@ $(document).ready(function(){
         })
     });
 
+    $('a.delete-product').on('click', function (e) {
+        e.preventDefault();
+
+        if (confirm('Вы действительно хотите удалить?')) {
+            $.ajax({
+                type: "POST",
+                url: $(this).attr('data-url'),
+                success: function (data) {
+                    if (data.success) {
+                        location.reload();
+                    } else {
+                        showFlashMessage(data.message);
+                    }
+                },
+                error: function (response, error) {
+                    console.log(response);
+                    console.log(error);
+                }
+            })
+        }
+    });
+
     // ---------------------------------
     // Функция скрыть раскрыть товар
     // ---------------------------------
