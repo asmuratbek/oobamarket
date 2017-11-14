@@ -1,6 +1,7 @@
 {% extends 'base-1.html' %}
 {% load staticfiles %}
 {% load widget_tweaks %}
+{% load helpers %}
 
 {% block categories %}
 {% endblock %}
@@ -74,16 +75,25 @@
                                 <div class="uk-form-controls">
                                     {% render_field form.currency|add_error_attr:"aria-invalid:true" class="uk-input" %}
                                 </div>
+                                <span id="currency_info" style="display: none">
+                                    цена устанавливается по курсу НБКР. <a href="http://nbkr.kg/" target="_blank">Сайт НБКР</a>
+                                </span>
                             </div>
                         </div>
                         <div class="uk-grid uk-child-width-1-1@l uk-margin-small-bottom" uk-grid>
-                            <label class="label-checkbox"><input class="uk-checkbox" type="checkbox" id="dis_id"> Скидка
+                            <label class="label-checkbox"><input class="uk-checkbox" type="checkbox" id="dis_id" {% if form.discount.value %} checked {% endif %}> Скидка
                             </label>
                         </div>
                         <div class="uk-width-1-5@s ">
                             <label class="uk-form-label">Размер скидки </label>
                             <div class="uk-form-controls uk-display-block">
-                                {% render_field form.discount|add_error_attr:"aria-invalid:true"|attr:"id:discount_id"|attr:"disabled" class="uk-input" placeholder="0%" %}
+                                {% set "disabled" as discount_disabled %}
+
+                                {% if form.discount.value %}
+                                    {% set "" as discount_disabled %}
+                                {% endif %}
+
+                                {% render_field form.discount|add_error_attr:"aria-invalid:true"|attr:"id:discount_id"|attr:discount_disabled class="uk-input" placeholder="0%" %}
                             </div>
                         </div>
                         <div class="uk-grid uk-child-width-1-1@l uk-margin-medium-top" uk-grid>
@@ -268,5 +278,6 @@
     {#    <script>#}
     {#        console.log($('#uploading-images').attr('data-product-slug'));#}
     {#    </script>#}
+    <script type="text/javascript" src="{% static "js/common.js" %}"></script>
     <script src="{% static 'js/product_update.js' %}"></script>
 {% endblock %}
