@@ -69,12 +69,13 @@
                                 <div class="uk-form-controls">
                                     {% render_field form.currency|add_error_attr:"aria-invalid:true" class="uk-input" %}
                                 </div>
-                                <span id="currency_info" style="display: none">
-                                    цена устанавливается по курсу НБКР. <a href="http://nbkr.kg/" target="_blank">Сайт НБКР</a>
-                                </span>
+
                             </div>
                         </div>
-                        <div class="uk-grid uk-child-width-1-1@l uk-margin-small-bottom" uk-grid>
+                    <span id="currency_info" style="display: none; margin-bottom: 40px">
+                                    цена устанавливается по курсу НБКР. <a href="http://nbkr.kg/" target="_blank">Сайт НБКР</a>
+                                </span>
+                        <div class="uk-grid uk-child-width-1-1@l uk-margin-small-bottom uk-margin-medium-top" uk-grid>
                             <label class="label-checkbox"><input class="uk-checkbox" type="checkbox" id="dis_id"> Скидка
                             </label>
                         </div>
