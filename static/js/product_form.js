@@ -156,3 +156,11 @@ $('#add-product-button').on('click', function () {
     }
 
 });
+
+$('select#id_currency').change(function() {
+    if ($(this).val() === 'dollar') {
+        $('#currency_info').show();
+    } else {
+        $('#currency_info').hide();
+    }
+});

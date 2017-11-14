@@ -366,6 +366,29 @@ def change_publish_status(request):
 
 @login_required
 @csrf_exempt
+def delete_product(request, slug):
+    if request.method == "POST" and request.is_ajax():
+        try:
+            product = Product.objects.get(slug=slug)
+
+            if request.user not in product.shop.user.all():
+                return JsonResponse(dict(success=False,
+                                         message='Товар не принадлежит текущему пользователю'))
+
+            product.delete()
+            return JsonResponse(dict(
+                success=True, message='Товар успешно удален'
+            ))
+        except Product.DoesNotExist:
+            return JsonResponse(dict(
+                success=False, message='Товар не найден'
+            ))
+    else:
+        return HttpResponseBadRequest
+
+
+@login_required
+@csrf_exempt
 def upload_images_product_update(request, slug):
     if request.method == "POST" and request.is_ajax():
         form = ProductImagesForm(request.POST, request.FILES)

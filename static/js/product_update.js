@@ -179,3 +179,11 @@ $(document).on("click", "#update-product-button", function () {
         showFlashMessage("Заполните все обязательные поля.");
     }
 });
+
+$('select#id_currency').change(function() {
+    if ($(this).val() === 'dollar') {
+        $('#currency_info').show();
+    } else {
+        $('#currency_info').hide();
+    }
+});
