@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Product, ProductImage, FavoriteProduct
+from .models import Product, ProductImage, FavoriteProduct, Currency
 
 
 # Register your models here.
@@ -21,3 +21,4 @@ class ProductAdmin(admin.ModelAdmin):
 admin.site.register(Product, ProductAdmin)
 admin.site.register(FavoriteProduct)
 admin.site.register(ProductImage)
+admin.site.register(Currency)

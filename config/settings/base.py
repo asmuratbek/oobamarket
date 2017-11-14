@@ -72,6 +72,7 @@ THIRD_PARTY_APPS = [
     'rest_auth.registration',
     'widget_tweaks',
     'django_filters',
+    'djcelery',
     'django_cleanup',
     'ckeditor',
     'ckeditor_uploader',
@@ -361,14 +362,21 @@ LOGIN_URL = 'account_login'
 # SLUGLIFIER
 AUTOSLUG_SLUGIFY_FUNCTION = 'slugify.slugify'
 
-########## CELERY
-INSTALLED_APPS += ['apps.taskapp.celery.CeleryConfig']
-CELERY_BROKER_URL = env('CELERY_BROKER_URL', default='django://')
-if CELERY_BROKER_URL == 'django://':
-    CELERY_RESULT_BACKEND = 'redis://'
-else:
-    CELERY_RESULT_BACKEND = CELERY_BROKER_URL
-########## END CELERY
+# ########## CELERY
+# INSTALLED_APPS += ['apps.taskapp.celery.CeleryConfig']
+# CELERY_BROKER_URL = env('CELERY_BROKER_URL', default='django://')
+# if CELERY_BROKER_URL == 'django://':
+#     CELERY_RESULT_BACKEND = 'redis://'
+# else:
+#     CELERY_RESULT_BACKEND = CELERY_BROKER_URL
+# ########## END CELERY
+
+BROKER_URL = 'redis://localhost:6379/0'
+CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
+BROKER_TRANSPORT = 'redis'
+CELERY_TASK_RESULT_EXPIRES = 7*86400
+CELERY_SEND_EVENTS = True
+CELERYBEAT_SCHEDULER = "djcelery.schedulers.DatabaseScheduler"
 
 
 # INSTGRAM
@@ -428,3 +436,5 @@ CKEDITOR_CONFIGS = {
 }
 
 JET_SIDE_MENU_COMPACT = True
+import djcelery
+djcelery.setup_loader()

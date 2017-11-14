@@ -161,11 +161,11 @@ class ProductCreateView(LoginRequiredMixin, AddProductMixin, CreateView):
     def form_valid(self, form, **kwargs):
         random_int = random.randrange(0, 1010)
         product = form.instance
-        if product.currency == 'dollar' and product.price:
-            usd = get_usd_currency()
-            price = product.price * Decimal(usd.replace(",", ".")) if usd else product.price
+        if product.currency != 'som' and product.price:
+            usd = Currency.objects.filter(currency_type=product.currency).last()
+            price = product.price * usd.exchange_rate if usd else product.price
             product.price = price
-            product.currency = 'som' if usd else "dollar"
+            product.currency = 'som' if usd else product.currency
         product.slug = slugify(form.instance.title, max_length=32) + str(random_int)
         product.shop = Shop.objects.get(slug=self.kwargs['slug'])
         product.save()

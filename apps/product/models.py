@@ -248,3 +248,15 @@ class ProductImage(models.Model):
 # post_delete.connect(delete_files, ProductImage)
 
 
+currencies = [(t, c) for t, c in CURRENCY_TYPES if t != 'som']
+
+
+class Currency(models.Model):
+    currency_type = models.CharField(max_length=20, verbose_name='Тип валюты', choices=currencies)
+    exchange_rate = models.DecimalField(max_digits=9, decimal_places=2, verbose_name='Курс')
+
+    class Meta:
+        verbose_name_plural = 'Курс валют'
+
+    def __str__(self):
+        return self.currency_type
