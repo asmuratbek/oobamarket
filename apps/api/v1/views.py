@@ -45,6 +45,7 @@ from apps.global_category.models import GlobalCategory
 from apps.product.models import Product, ProductImage, FavoriteProduct
 from apps.shop.models import Shop, Contacts, Place
 from apps.users.models import User, Subscription
+from apps.utils.views import send_letters_to_shop
 from .pagination import (
     CategoryLimitPagination,
     ProductLimitPagination,
@@ -1088,6 +1089,28 @@ class Subscribe(APIView):
             subcribe.delete()
             return JsonResponse({'status': 0, 'message': 'Вы успешно отписаны.'})
         return JsonResponse({'status': 0, 'message': 'Вы успешно подписаны.'})
+
+
+class OrderCreateView(CreateAPIView):
+    permission_classes = (IsAuthenticated, )
+    authentication_classes = (TokenAuthentication, )
+    serializer_class = OrderCreateSerializer
+
+    def perform_create(self, serializer):
+        user = self.request.user
+        cart = Cart.objects.filter(user=user).last()
+
+        cart.completed = True
+        cart.save()
+
+        serializer.save(cart=cart, user=user)
+        send_letters_to_shop(cart)
+
+        Cart.objects.create(user=user)
+
+        return JsonResponse(dict(
+            success=True, message='Order successfully created'
+        ))
 
 
 # class ShopSalesView(ListAPIView):

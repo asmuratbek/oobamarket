@@ -8,6 +8,7 @@ from rest_framework.validators import UniqueTogetherValidator
 from slugify import slugify
 
 from apps.global_category.models import GlobalCategory
+from apps.order.models import SimpleOrder
 from apps.product.models import Category, ProductImage
 from apps.reviews.models import ShopReviews
 from apps.shop.models import Sales, Contacts, Place
@@ -459,3 +460,13 @@ class PlaceSerializer(ModelSerializer):
 
     def get_ttype(self, obj):
         return obj.get_type_display()
+
+
+class OrderCreateSerializer(ModelSerializer):
+
+    class Meta:
+        model = SimpleOrder
+        exclude = (
+            'id', 'user', 'cart', 'confirm_shops', 'rejected_shops', 'status',
+            'is_visible', 'comments'
+        )
