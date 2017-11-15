@@ -133,7 +133,7 @@ class Shop(PublishBaseModel, MetaBaseModel, Counter):
         return True if len(self.user.filter(id=user.id)) > 0 else False
 
     def create_thumbnail(self):
-        create_thumbnail_image(main_image=self.logo, thumb_image=self.logo_thumb, thumbnail_size=(340, 340))
+        create_thumbnail_image(main_image=self.logo, thumb_image=self.logo_thumb, thumbnail_size=(480, 480))
 
 
 class Banners(models.Model):
@@ -244,4 +244,4 @@ class Sales(PublishBaseModel):
         return self.title
 
     def create_thumbnail(self):
-        create_thumbnail_image(main_image=self.image, thumb_image=self.image_thumb, thumbnail_size=(340, 340))
+        create_thumbnail_image(main_image=self.image, thumb_image=self.image_thumb, thumbnail_size=(480, 480))

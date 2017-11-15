@@ -228,7 +228,7 @@ class ProductImage(models.Model):
     is_avatar = models.BooleanField(verbose_name='Аватар продукта', default=False)
 
     def create_thumbnail(self):
-        create_thumbnail_image(main_image=self.image, thumb_image=self.thumb_image, thumbnail_size=(340, 340))
+        create_thumbnail_image(main_image=self.image, thumb_image=self.thumb_image, thumbnail_size=(480, 480))
 
     def save(self, *args, **kwargs):
         if self.image and self.is_avatar and not self.thumb_image:
