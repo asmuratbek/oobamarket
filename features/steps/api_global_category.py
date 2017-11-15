@@ -12,6 +12,8 @@ def step_impl(context):
     for i in range(0, GLOBAL_CATEGORIES_QUANTITY):
         create_category(context.faker, slug_prefix='global_category_%s' % i, is_global=True)
 
+    GlobalCategory.objects.create(title='global_category_hidden', slug='global_category_slug_hidden', hidden=True)
+
 
 @when('app sends request to "api_global_category" url')
 def step_impl(context):

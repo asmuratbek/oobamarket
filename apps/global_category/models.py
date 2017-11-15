@@ -15,6 +15,7 @@ class GlobalCategory(PublishBaseModel):
     title = models.CharField(max_length=255, verbose_name='Название категории')
     slug = models.CharField(max_length=255, verbose_name='Название на транслите')
     icon = models.ImageField(upload_to="category/icons", default=None)
+    hidden = models.BooleanField(verbose_name='Скрыт?', default=False)
 
     def __str__(self):
         return self.title

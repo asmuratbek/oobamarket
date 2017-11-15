@@ -246,7 +246,7 @@ class CategoryDetailApiView(MultipleModelAPIView):
 
 class GlobalCategoryListApiView(ListAPIView):
     serializer_class = GlobalCategorySerializer
-    queryset = GlobalCategory.objects.all()
+    queryset = GlobalCategory.objects.filter(hidden=False)
     filter_backends = (filters.OrderingFilter,)
     permission_classes = (AllowAny,)
     authentication_classes = (SessionAuthentication, TokenAuthentication)
