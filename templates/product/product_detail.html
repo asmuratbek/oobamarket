@@ -122,17 +122,35 @@
                                     Добавить в избранное</a>
                             </div>
                         {% endif %}
+                         <div class="delevery uk-margin-medium-top">
+                             <img src="{% static 'img/Delivery.png' %}" alt="">
+                             <span style="color: #69b143">Бесплатная доставка</span>
+                         </div>
+                        <div class="delevery uk-margin-medium-top">
+                             <img src="{% static 'img/Delivery1.png' %}" alt="">
+                            <span style="color: #ed6a50">Платная доставка</span>
+                         </div>
                         {% if request.user.is_authenticated %}
                             {% is_in_cart request object as already_in_cart %}
 
                             {% if already_in_cart %}
-                                                            <div class="uk-width-1-1@l uk-margin-medium-top uk-width-1-1@m uk-width-1-1@s"><a href="{% url "cart:detail" %}" style="background: #f3481c;color: #fff" class="uk-button">Купить сейчас</a></div>
+                                                            <div class="uk-width-1-1@l uk-margin-small-top uk-width-1-1@m uk-width-1-1@s"><a href="{% url "cart:detail" %}" style="background: #f3481c;color: #fff" class="uk-button">Купить сейчас</a></div>
                             {% else %}
                                 <div class="uk-width-1-1@l uk-margin-medium-top uk-width-1-1@m uk-width-1-1@s"><a style="background: #f3481c;color: #fff" class="uk-button basket-with-redirect" data-item-id="{{ object.pk }}">Купить сейчас</a></div>
                             {% endif %}
                         {% else %}
                             <div class="uk-width-1-1@l uk-margin-medium-top uk-width-1-1@m uk-width-1-1@s"><a uk-toggle="target: #auth-register-modal" style="background: #f3481c;color: #fff" class="uk-button">Купить сейчас</a></div>
                         {% endif %}
+                    <div class="subscribe-social uk-margin-medium-top">
+                        <span class="uk-margin-right">Поделиться: </span>
+                        <a href=""><i class="fa fa-facebook fa-2x" aria-hidden="true"></i></a>
+                        <a href=""><i class="fa fa-vk fa-2x" aria-hidden="true"></i></a>
+                        <a href=""><i class="fa fa-instagram fa-2x" aria-hidden="true"></i></a>
+                        <a href=""><i class="fa fa-odnoklassniki fa-2x" aria-hidden="true"></i></a>
+                        <a href=""><i class="fa fa-whatsapp fa-2x" aria-hidden="true"></i></a>
+                        <a href=""><i class="fa fa-telegram fa-2x" aria-hidden="true"></i></a>
+                    </div>
+
                     </div>
                 </div>
                 <div class="uk-width-1-4@l uk-width-1-2@m">
