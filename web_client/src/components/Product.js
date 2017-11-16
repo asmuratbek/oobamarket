@@ -115,6 +115,24 @@ class Product extends Component {
     };
 
     render () {
+        let delivery;
+
+        console.log(this.props.product);
+
+        if (this.props.product.delivery_type === 'self') {
+            delivery = <div><img src="/static/img/Delivery.png" alt="" /><span style={{ color: "#69b143" }}>Cамовывоз</span></div>;
+        } else if (this.props.product.delivery_type === 'paid') {
+            delivery = <div>
+                <img src="/static/img/Delivery1.png" alt="" />
+                <span style={{ color: "#ed6a50" }}>Платная доставка {this.props.product.delivery_cost} сом</span>
+            </div>
+        } else {
+            delivery = <div>
+                <img src="/static/img/Delivery.png" alt="" />
+                <span style={{ color: "#69b143" }}>Бесплатная доставка</span>
+            </div>
+        }
+
         return (
             <div className="uk-grid-match">
         <div className="shadow uk-text-center">
@@ -143,6 +161,8 @@ class Product extends Component {
                     <small className="uk-display-block">Магазин</small>
                     <h4 className="uk-margin-remove"><a href="#">{this.props.product.shop}</a></h4>
                     <p>{this.props.product.short_description}</p>
+                    {delivery}
+
                     {this.props.isAuth &&
                     (
                         <div className="control">

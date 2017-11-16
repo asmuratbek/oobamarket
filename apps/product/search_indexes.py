@@ -25,6 +25,8 @@ class ProductIndex(indexes.SearchIndex, indexes.Indexable):
     get_shop_url = indexes.CharField(model_attr='get_shop_url')
     main_image = indexes.CharField(model_attr='get_main_image')
     detail_view = indexes.CharField(model_attr='get_absolute_url')
+    delivery_type = indexes.CharField(model_attr='delivery_type', null=True)
+    delivery_cost = indexes.FloatField(model_attr='delivery_cost', null=True)
 
     def get_model(self):
         return Product
