@@ -84,7 +84,7 @@
 {#                        <p>Наличие: <b class="gray">Ожидание</b></p>#}
 {#                    </div>#}
                     {% if object.short_description %}
-                        <p class="short-description">
+                        <p class="short-description" style="font-size: 16px;">
                             <strong>Короткое описание:</strong><br> {{ object.short_description|safe }}
                         </p>
                     {% endif %}
@@ -193,10 +193,22 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="uk-padding-small uk-grid uk-margin-remove footer">
+                                <div class="uk-padding-small uk-flex-center uk-grid uk-margin-remove footer">
                                     <h4 class="uk-width-1-1@l uk-padding-remove">
                                         {{ object.shop.title|truncatechars:28 }}</h4>
-
+                                        <div class="control uk-padding-remove uk-margin-small-bottom">
+                                            {% if object.shop.contacts_set.first.phone %}
+                                                <p class="phone"><span class="uk-margin-small-right"
+                                                                       uk-icon="icon: phone"></span>
+                                                    {{ object.shop.contacts_set.first.phone }}
+                                                </p>
+                                            {% else %}
+                                                <p class="phone"><span class="uk-margin-small-right"
+                                                                       uk-icon="icon: phone"></span>
+                                                    не указан
+                                                </p>
+                                            {% endif %}
+                                        </div>
                                     {% if user.is_authenticated %}
                                         {% if user not in object.shop.user.all %}
                                             {% if object.shop.id in subscribe_shops %}
