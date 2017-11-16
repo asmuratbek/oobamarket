@@ -85,6 +85,19 @@
                                 {% render_field form.discount|add_error_attr:"aria-invalid:true"|attr:"id:discount_id"|attr:"disabled" class="uk-input" placeholder="0%" %}
                             </div>
                         </div>
+                        <div class="uk-width-1-5@s uk-margin-medium-top">
+                            <label class="uk-form-label">Виды доставки</label>
+                            <div class="uk-form-controls uk-display-block">
+                                {% render_field form.delivery_type class="uk-select" %}
+                            </div>
+                        </div>
+                        <div class="uk-width-1-5@s uk-margin-small-top delivery-cost-block uk-hidden">
+                            <label class="uk-form-label">Цена доставки</label>
+                            <div class="uk-form-controls uk-display-block">
+                                {% render_field form.delivery_cost placeholder="100" class="uk-input" %}
+                            </div>
+                        </div>
+
                         <div class="uk-grid uk-child-width-1-1@l uk-margin-medium-top" uk-grid>
                             <label class="label-checkbox uk-display-block">
                                 {% render_field form.published|add_error_attr:"aria-invalid:true"|attr:"class:uk-checkbox" %}

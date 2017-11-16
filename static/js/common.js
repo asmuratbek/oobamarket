@@ -571,10 +571,14 @@ $(document).ready(function () {
 
     $('#id_delivery_type').on('change', function () {
         var delivery_cost = $('#id_delivery_cost');
+        var delivery_cost_block = $('.delivery-cost-block');
         if ($(this).val() == 'paid') {
-            $(delivery_cost).removeAttr('disabled');
+            $(delivery_cost_block).removeClass('uk-hidden');
+            $(delivery_cost).removeClass('uk-disabled');
         } else {
-            $(delivery_cost).html("").attr('disabled', true).val('0');
+            $(delivery_cost_block).addClass('uk-hidden');
+            $(delivery_cost).html("").addClass('uk-disabled');
+            $(delivery_cost).attr('value', 0);
         }
 
     });
