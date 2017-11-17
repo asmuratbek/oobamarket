@@ -410,7 +410,8 @@ class ProductDetailApiView(APIView):
             "images": images,
             "is_favorite": product.favorite.filter(
                 user=self.request.user).exists() if self.request.user.is_authenticated else 0,
-            "is_in_cart": True if products_in_cart and product in products_in_cart else False
+            "is_in_cart": True if products_in_cart and product in products_in_cart else False,
+            "url": product.get_absolute_url()
         })
 
 

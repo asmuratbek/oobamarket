@@ -1,16 +1,17 @@
 {% if products or shops %}
-<div  class="auto-complite smart-search uk-grid uk-flex-middle uk-grid-divider uk-padding uk-margin-remove" uk-grid
-         uk-alert >
-        <button class="uk-alert-close uk-padding-remove" type="button" uk-close title="Закрыть"
+<div  class="auto-complite smart-search  uk-padding uk-margin-remove" uk-alert >
+ <button class="uk-alert-close uk-padding-remove" type="button" uk-close title="Закрыть"
                 uk-tooltip="pos: left"></button>
-        {% if products %}
+
+<div class="uk-grid uk-flex-middle uk-grid-divider" uk-grid>
+      {% if products %}
         <div class="uk-width-1-4 uk-text-center">Товары</div>
         <div class="uk-width-expand">
             {% for product in products %}
                 {% if forloop.counter < 4 %}
             <div class="item uk-grid uk-flex-middle uk-padding-small">
                 <a href="{{ product.get_absolute_url }}" class="url-product"></a>
-                <div class="uk-width-1-6 image">
+                <div class="uk-width-1-6 images">
                     <img src="{{ product.get_thumbnail }}" alt="">
                 </div>
                 <div class="uk-width-expand uk-text-left description">
@@ -26,16 +27,20 @@
             <a class="see-more" href="/search/">Больше товаров</a>
         </div>
     {% endif %}
+</div>
 
 
-    {% if shops %}
+
+
+<div class="uk-grid uk-flex-middle uk-grid-divider" uk-grid>
+        {% if shops %}
         <div class="uk-width-1-4 uk-text-center">Магазины</div>
         <div class="uk-width-expand">
             {% for shop in shops %}
                 {% if forloop.counter < 4 %}
             <div class="item uk-grid uk-flex-middle uk-padding-small">
                 <a href="" class="url-product"></a>
-                <div class="uk-width-1-6 image">
+                <div class="uk-width-1-6 images">
                     <img src="{{ shop.get_logo }}" alt="">
                 </div>
                 <div class="uk-width-expand uk-text-left description">
@@ -51,5 +56,6 @@
         </div>
 
     {% endif %}
+</div>
 </div>
 {% endif %}
