@@ -287,7 +287,7 @@ class App extends Component {
                       }
                 })
         }
-  
+
         $('body,html').animate({
           scrollTop: 0
         }, 600);
@@ -358,7 +358,7 @@ class App extends Component {
 
   searchApts = (q) => {
       if (this.state.pageType === 'shops') {
-          let query = q;
+          let query = $(q.target).val();
         this.setState({
             loaded: false,
         });
