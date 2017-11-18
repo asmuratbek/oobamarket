@@ -943,7 +943,7 @@ class UserCartItemsView(APIView):
                 "is_in_cart": True
             })
         shops = list()
-        for shop in user.cart_set.last().get_shops():
+        for index, shop in enumerate(user.cart_set.last().get_shops()):
             items = list()
             for item in cartitems:
                 if item.get('shop') == shop.title:
@@ -952,6 +952,7 @@ class UserCartItemsView(APIView):
                 "title": shop.title,
                 "logo": shop.get_logo_thumb(),
                 "items": items,
+                "delivery": 150 if index == 0 else 100
             })
 
         return JsonResponse({
