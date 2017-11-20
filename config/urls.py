@@ -59,6 +59,7 @@ urlpatterns = [
                   url(r'^users/', include('apps.users.urls', namespace='users')),
                   url(r'^accounts/', include('allauth.urls')),
                   url(r'^b85b738ce8c6.html/', mail_confirm_view),
+                  url(r'^mailru-domainW2v3UzKC1xMpwEYv.html', TemplateView.as_view(template_name='mailru-domainW2v3UzKC1xMpwEYv.html')),
                   url(r'^', include('apps.category.urls', namespace='categories')),
 
                   # Your stuff: custom urls includes go here
