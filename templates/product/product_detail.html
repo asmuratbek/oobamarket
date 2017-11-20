@@ -2,11 +2,11 @@
 {% load product_tags staticfiles widget_tweaks %}
 
 {% block meta %}
-{#    <meta name="description" content#}
-{#            {% if object.meta_description %}{{ object.meta_description }}{% else %}{{ object.category.section }}, {{ object.category.parent }}, {{ object.category }}- {{ object.short_description }} {{ object.price }} {{ object.currency }} Бишкек, в Бишкеке{% endif %}">#}
-{#    <meta name="keywords" content="#}
-{#            {% if object.meta_keywords %}{{ object.meta_keywords }}{% else %}{{ object.title }},{{ object.get_shop_title }},интернет магазин, купить, в бишкеке, цена, отзывы{% endif %}">#}
-{#    <meta name="author" content="Oobamarket.kg интернет магазин в Бишкеке">#}
+    <meta name="description" content
+            {% if object.meta_description %}{{ object.meta_description }}{% else %}{{ object.category.section }}, {{ object.category.parent }}, {{ object.category }}- {{ object.short_description }} {{ object.price }} {{ object.currency }} Бишкек, в Бишкеке{% endif %}">
+    <meta name="keywords" content="
+            {% if object.meta_keywords %}{{ object.meta_keywords }}{% else %}{{ object.title }},{{ object.get_shop_title }},интернет магазин, купить, в бишкеке, цена, отзывы{% endif %}">
+    <meta name="author" content="Oobamarket.kg интернет магазин в Бишкеке">
     <meta property="og:title" content="{{ object.title }}" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="http://oobamarket.kg{{ request.get_full_path }}" />
