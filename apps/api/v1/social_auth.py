@@ -39,7 +39,7 @@ class SocialAuth(object):
             user = User.objects.filter(email=extra_data['email']).first()
 
             if user is not None:
-                token = Token.objects.filter(user=user).first()
+                token = Token.objects.get_or_create(user=user)
                 return JsonResponse(dict(key=token.key))
 
             login.token = social_auth_token
