@@ -7,10 +7,10 @@
     <meta name="keywords" content="
             {% if object.meta_keywords %}{{ object.meta_keywords }}{% else %}{{ object.title }},{{ object.get_shop_title }},интернет магазин, купить, в бишкеке, цена, отзывы{% endif %}">
     <meta name="author" content="Oobamarket.kg интернет магазин в Бишкеке">
-    <meta property="og:title" content="Oobamarket.kg {{ object.title }} {{ object.price }}" />
+    <meta property="og:title" content="Oobamarket.kg {{ object.title|capfirst }} - {{ object.price }} {{ object.get_currency_display }}" />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="{{ DOMAIN_URL }}{{ request.get_full_path }}" />
-    <meta property="og:image" content="{{ DOMAIN_URL }}{{ object.get_avatar_image }}" />
+    <meta property="og:url" content="http://oobamarket.kg{{ request.get_full_path }}" />
+    <meta property="og:image" content="http://oobamarket.kg{{ object.get_avatar_image }}" />
     <meta property="og:description" content="{{ object.short_description }}" />
     <title>{% block title %}{% if object.meta_title %}{{ object.meta_title }} в Бишкеке -
         {{ object.get_shop_title }}{% else %}{{ object.title }} - {{ object.get_shop_title }} интернет-магазин Бишкек
@@ -154,12 +154,12 @@
                         {% endif %}
                     <div class="subscribe-social uk-margin-medium-top">
                         <span class="uk-margin-right">Поделиться: </span>
-                        <a href="https://www.facebook.com/sharer.php?u={{ DOMAIN_URL }}{{ request.get_full_path }}" id="fb_share" target="_blank"><i class="fa fa-facebook fa-2x" aria-hidden="true"></i></a>
+                        <a href="https://www.facebook.com/sharer.php?u=http://oobamarket.kg{{ request.get_full_path }}" id="fb_share" target="_blank"><i class="fa fa-facebook fa-2x" aria-hidden="true"></i></a>
                         <a href="http://vk.com/share.php?url={{ DOMAIN_URL }}{{ request.get_full_path }}" id="vk_share" target="_blank"><i class="fa fa-vk fa-2x" aria-hidden="true"></i></a>
                         <a href=""><i class="fa fa-instagram fa-2x" aria-hidden="true"></i></a>
-                        <a href="https://connect.ok.ru/dk?st.cmd=WidgetSharePreview&st.shareUrl={{ DOMAIN_URL }}{{ request.get_full_path }}&title={{ object.title }}"><i class="fa fa-odnoklassniki fa-2x" aria-hidden="true"></i></a>
-                        <a href="whatsapp://send?text={{ DOMAIN_URL }}{{ request.get_full_path }}"><i class="fa fa-whatsapp fa-2x" aria-hidden="true"></i></a>
-                        <a href="https://telegram.me/share/url?url={{ DOMAIN_URL }}{{ request.get_full_path }}&title={{ object.title }}"><i class="fa fa-telegram fa-2x" aria-hidden="true"></i></a>
+                        <a href="https://connect.ok.ru/dk?st.cmd=WidgetSharePreview&st.shareUrl={{ DOMAIN_URL }}{{ request.get_full_path }}&title={{ object.title }}" target="_blank"><i class="fa fa-odnoklassniki fa-2x" aria-hidden="true"></i></a>
+                        <a href="whatsapp://send?text={{ DOMAIN_URL }}{{ request.get_full_path }}" target="_blank"><i class="fa fa-whatsapp fa-2x" aria-hidden="true"></i></a>
+                        <a href="https://telegram.me/share/url?url={{ DOMAIN_URL }}{{ request.get_full_path }}&title={{ object.title }}" target="_blank"><i class="fa fa-telegram fa-2x" aria-hidden="true"></i></a>
                     </div>
 
                     </div>
