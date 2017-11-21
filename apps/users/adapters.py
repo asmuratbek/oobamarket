@@ -19,3 +19,11 @@ class SocialAccountAdapter(DefaultSocialAccountAdapter):
     def get_login_redirect_url(self, request):
         path = "/"
         return path
+
+    def is_auto_signup_allowed(self, request, sociallogin):
+        if request.GET.get('is_mobile', '0') == '1':
+            return True
+
+        return super().is_auto_signup_allowed(request, sociallogin)
+
+

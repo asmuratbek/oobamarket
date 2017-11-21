@@ -32,12 +32,15 @@ class SocialAuth(object):
 
             if 'email' not in extra_data:
                 json_error_response = JsonResponse(dict(message='email is not provided'), status=400)
-            elif not SocialAccount.objects.filter(user__email=extra_data['email']).exists() and User.objects.filter(
-                    email=extra_data['email']).exists():
-                json_error_response = JsonResponse(dict(message='email is already registered'), status=400)
 
             if json_error_response is not None:
                 return json_error_response
+
+            user = User.objects.filter(email=extra_data['email']).first()
+
+            if user is not None:
+                token = Token.objects.filter(user=user).first()
+                return JsonResponse(dict(key=token.key))
 
             login.token = social_auth_token
             login.state = SocialLogin.state_from_request(original_request)
