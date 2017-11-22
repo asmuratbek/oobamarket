@@ -119,7 +119,7 @@ var validate_fields = function (elems) {
 };
 
 
-$('#add-product-button').on('click', function () {
+$(form).on('submit', function () {
     clickCount++;
     if(clickCount > 1)
         return;
@@ -154,7 +154,7 @@ $('#add-product-button').on('click', function () {
     } else {
         showFlashMessage("Заполните все обязательные поля.");
     }
-
+    return false;
 });
 
 $('select#id_currency').change(function() {

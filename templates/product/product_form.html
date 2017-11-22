@@ -5,7 +5,7 @@
     <section class="creat-product  uk-margin-medium-top">
         <div class="uk-container">
             <div class="shadow uk-padding-large">
-                <form class="uk-grid" id="form" method="post">
+                <form class="uk-grid" action="#" id="form" method="post">
                     {% csrf_token %}
                     <fieldset class="uk-fieldset uk-width-1-1@l">
                         <legend class="uk-legend uk-margin-medium-bottom">1. Основные данные</legend>
@@ -250,7 +250,7 @@
 
                     <div class="uk-width-1-1@l">
                         <div class=" uk-width-1-2@s uk-margin-medium-top">
-                            <button type="button" id="add-product-button" class="uk-button uk-button-default border-red bg-red uk-width-1-2@l"><span
+                            <button type="submit" id="add-product-button" class="uk-button uk-button-default border-red bg-red uk-width-1-2@l"><span
                                     class="uk-margin-small-right" uk-icon="icon: check"> </span>Сохранить</button>
                         </div>
                     </div>
