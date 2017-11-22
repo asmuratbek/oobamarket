@@ -1064,6 +1064,7 @@ class ShopDetailView(APIView):
                 if user.is_authenticated() and cart is not None else False
             prod["is_favorite"] = product.favorite.filter(user=user).exists() if user.is_authenticated() else False
             prod["main_image"] = product.get_main_thumb_image()
+            prod["shop"] = shop.title
         shop_dict = model_to_dict(shop, exclude=['logo', 'user', 'logo_thumb'])
         shop_dict['logo'] = shop.logo_thumb.url if shop.logo_thumb else None
         shop_dict['users'] = [user.username for user in shop.user.all()]
