@@ -1,8 +1,13 @@
 from django.shortcuts import get_object_or_404
 from rest_framework.permissions import BasePermission
+
+from apps.cart.models import Cart
 from apps.product.models import Product
 
 from apps.shop.models import Shop, Sales
+from apps.users.models import User
+
+from django.db.models import Q
 
 
 class IsOwnerOrReadOnly(BasePermission):
@@ -66,3 +71,29 @@ class IsOwnerOfProduct(BasePermission):
     def has_permission(self, request, view):
         product = get_object_or_404(Product, slug=view.kwargs.get('slug'))
         return request.user in product.shop.user.all()
+
+
+class CartHistoryPerm(BasePermission):
+    message = 'You must be owner of cart or owner of shop in cart or moderator'
+
+    def has_permission(self, request, view):
+        if request.method == 'GET':
+            cart = get_object_or_404(Cart, id=view.kwargs.get('pk'))
+            users = list(User.objects.filter(Q(id__in=cart.get_shops().values_list('user', flat=True))|Q(is_staff=True)))
+            users.append(cart.user)
+            return request.user in users
+        else:
+            cart = get_object_or_404(Cart, id=view.kwargs.get('pk'))
+            flag = request.data.get('flag')
+            if flag:
+                if flag == 'shop':
+                    users = list(User.objects.filter(Q(id__in=cart.get_shops().values_list('user', flat=True)) |
+                                                     Q(is_staff=True)))
+                    return request.user in users
+                elif flag == 'user':
+                    users = list(User.objects.filter(is_staff=True))
+                    users.append(cart.user)
+                    return request.user in users
+                else:
+                    return False
+            return False

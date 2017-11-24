@@ -470,3 +470,9 @@ class OrderCreateSerializer(ModelSerializer):
             'id', 'user', 'cart', 'confirm_shops', 'rejected_shops', 'status',
             'is_visible', 'comments'
         )
+
+
+class OrderSerializer(ModelSerializer):
+    class Meta:
+        model = SimpleOrder
+        fields = '__all__'

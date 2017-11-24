@@ -1204,3 +1204,58 @@ def search_products(request):
                          'search_word': str(q),
                          'page': page if page else 1,
                          'result': product_list})
+
+class ShopOrderList(APIView):
+    permission_classes = [IsAuthenticated, IsOwnerShop4Shop]
+    authentication_classes = [TokenAuthentication]
+
+    def get(self, request, **kwargs):
+        shop = get_object_or_404(Shop, slug=kwargs.get('slug'))
+        orders = SimpleOrder.objects.filter(cart__cartitem__product__shop=shop, is_visible=True).distinct()
+        orders_list = list()
+        for order in orders:
+            order_dict = model_to_dict(order, exclude=['confirm_shops', 'rejected_shops', 'status'])
+            if shop in order.confirm_shops.all():
+                order_dict['status'] = 'accepted'
+            elif shop in order.rejected_shops.all():
+                order_dict['status'] = 'rejected'
+            else:
+                order_dict['status'] = 'waiting'
+            order_dict['total'] = order.cart.subtotal
+            orders_list.append(order_dict)
+        return JsonResponse({'status': 0, 'orders': orders_list})
+
+
+class CartDetailHistory(APIView):
+    permission_classes = [IsAuthenticated, CartHistoryPerm]
+    authentication_classes = [TokenAuthentication]
+
+    def get(self, request, **kwargs):
+        cart = get_object_or_404(Cart, id=kwargs.get('pk'))
+        if cart.simpleorder.is_visible is True:
+            items = list()
+            for item in cart.cartitem_set.all():
+                item_dict = model_to_dict(item)
+                item_dict['image'] = item.product.get_main_thumb_image()
+                item_dict['available'] = item.product.availability
+                items.append(item_dict)
+            return JsonResponse({'status': 0, 'items': items})
+        return JsonResponse({'status': 1, 'message': 'This cart is in use'})
+
+    def post(self, request, **kwargs):
+        action = request.POST.get('action')
+        shop = get_object_or_404(Shop, slug=request.POST.get('shop'))
+        cart = get_object_or_404(Cart, id=kwargs.get('pk'))
+        order = cart.simpleorder
+        if action:
+            if action == 'confirm':
+                order.rejected_shops.remove(shop)
+                order.confirm_shops.add(shop)
+                order.save()
+                return JsonResponse({'status': 0, 'message': 'Заказ успешно подтвержден.'})
+            else:
+                order.confirm_shops.remove(shop)
+                order.rejected_shops.add(shop)
+                order.save()
+                return JsonResponse({'status': 0, 'message': 'Заказ отклонен.'})
+        return JsonResponse({'status': 1, 'message': 'Action field is missing.'})
