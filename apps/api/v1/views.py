@@ -1239,6 +1239,7 @@ class CartDetailHistory(APIView):
                 item_dict = model_to_dict(item)
                 item_dict['image'] = item.product.get_main_thumb_image()
                 item_dict['available'] = item.product.availability
+                item_dict['title'] = item.product.title
                 items.append(item_dict)
             return JsonResponse({'status': 0, 'items': items})
         return JsonResponse({'status': 1, 'message': 'This cart is in use'})
