@@ -1101,7 +1101,7 @@ class OrderCreateView(CreateAPIView):
 
     def perform_create(self, serializer):
         user = self.request.user
-        cart = Cart.objects.filter(user=user).last()
+        cart = Cart.objects.filter(user=user, completed=False).first()
 
         cart.completed = True
         cart.save()

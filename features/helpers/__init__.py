@@ -12,6 +12,7 @@ from apps.cart.models import *
 from apps.global_category.models import *
 from apps.product.models import *
 from apps.reviews.models import *
+from apps.order.models import *
 
 import random
 
@@ -172,6 +173,15 @@ def create_social_app(provider, name, client_id, secret, site):
     social_app.save()
 
     return dict(social_app=social_app)
+
+
+def create_order(faker, cart, user):
+    random_word = faker.words()[0]
+
+    order = SimpleOrder.objects.create(name=random_word, last_name=random_word, phone=random_word, address=random_word,
+                                       user=user, cart=cart)
+
+    return dict(order=order, name=random_word, last_name=random_word, phone=random_word, address=random_word)
 
 
 def do_request_to_login(context, url, email, password):
