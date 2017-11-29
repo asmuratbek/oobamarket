@@ -50,7 +50,7 @@ class Cart(PublishBaseModel):
         for item in self.cartitem_set.filter(product__shop=shop):
             subtotal += item.total
 
-        subtotal += self.get_delivery_total()
+        # subtotal += self.get_delivery_total()
         return "%.2f" % (subtotal)
 
     def get_shops(self):
