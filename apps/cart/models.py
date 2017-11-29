@@ -44,6 +44,15 @@ class Cart(PublishBaseModel):
         self.subtotal = "%.2f" % (subtotal)
         self.save()
 
+    def subtotal_for_shop(self, shop):
+        subtotal = 0
+
+        for item in self.cartitem_set.filter(product__shop=shop):
+            subtotal += item.total
+
+        subtotal += self.get_delivery_total()
+        return "%.2f" % (subtotal)
+
     def get_shops(self):
         products = self.cartitem_set.all()
         product_ids = [product.product.id for product in products]

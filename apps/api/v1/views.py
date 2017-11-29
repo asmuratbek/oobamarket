@@ -1221,7 +1221,7 @@ class ShopOrderList(APIView):
                 order_dict['status'] = 'rejected'
             else:
                 order_dict['status'] = 'waiting'
-            order_dict['total'] = order.cart.subtotal
+            order_dict['total'] = order.cart.subtotal_for_shop(shop)
             order_dict['created_at'] = order.created_at
             orders_list.append(order_dict)
         return JsonResponse({'status': 0, 'orders': orders_list})
