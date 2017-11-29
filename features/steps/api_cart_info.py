@@ -14,14 +14,17 @@ def step_impl(context):
     faker = context.faker
 
     products_infos = []
+    other_user_info = create_user(faker)
     user_info = create_user(faker)
     client_user_info = create_user(faker)
     global_category_info = create_category(faker, 'cart_info_global', is_global=True)
     global_category = global_category_info['category']
     user = user_info['user']
     client_user = client_user_info['user']
+    other_user = other_user_info['user']
 
     shop_info = create_shop(faker, user=user, slug_prefix='cart_info_shop')
+    other_shop_info = create_shop(faker, user=other_user, slug_prefix='cart_info_other_shop')
     category_info = create_category(faker, slug_prefix='cart_info_global_1', section=global_category, order=1)
 
     cart = Cart.objects.create(user=client_user)
@@ -30,13 +33,15 @@ def step_impl(context):
         products_infos.append(create_product(faker, shop=shop_info['shop'], category=category_info['category'],
                                              slug_prefix='cart_info_products_%s' % i))
 
-    create_product(faker, shop=shop_info['shop'], category=category_info['category'],
-                   slug_prefix='cart_info_products_%s' % (PRODUCTS_QUANTITY + 1))
+    other_product_info = create_product(faker, shop=other_shop_info['shop'], category=category_info['category'],
+                                        slug_prefix='cart_info_products_%s' % (PRODUCTS_QUANTITY + 1))
+
+    create_cart_item(user=client_user, product=other_product_info['product'], cart=cart)
 
     for i in range(0, CART_ITEMS_QUANTITY):
         product_info = random.choice(products_infos)
 
-        create_cart_item(user, product=product_info['product'], cart=cart)
+        create_cart_item(client_user, product=product_info['product'], cart=cart)
 
     create_order(faker, cart=cart, user=user)
 
@@ -65,4 +70,3 @@ def step_impl(context):
     for item in json_content['items']:
         product = Product.objects.get(id=item['product'])
         context.test.assertEqual(product.shop, context.shop)
-

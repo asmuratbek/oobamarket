@@ -1235,7 +1235,7 @@ class CartDetailHistory(APIView):
         cart = get_object_or_404(Cart, id=kwargs.get('pk'))
         if cart.simpleorder.is_visible is True:
             items = list()
-            for item in cart.cartitem_set.all():
+            for item in cart.cartitem_set.filter(product__shop__user=request.user):
                 item_dict = model_to_dict(item)
                 item_dict['image'] = item.product.get_main_thumb_image()
                 item_dict['available'] = item.product.availability
