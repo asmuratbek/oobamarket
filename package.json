@@ -34,7 +34,7 @@
     "gulp-sass": "^2.2.0",
     "gulp-sourcemaps": "^1.6.0",
     "gulp-uglify": "^3.0.0",
-    "jquery": "^3.2.1",
+    "jquery": "^3.5.0",
     "node-bourbon": "^4.2.8",
     "react-alert": "^2.2.0",
     "react-js-pagination": "^2.2.0",
