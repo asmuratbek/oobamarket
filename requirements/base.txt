@@ -69,7 +69,7 @@ django-jet
 
 celery==3.1.24
 beautifulsoup4==4.6.0
-lxml==3.8.0
+lxml==4.6.5
 xlwt==1.2.0
 xlrd==1.0.0
 
