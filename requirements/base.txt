@@ -34,7 +34,7 @@ asgi_redis==1.0.0
 
 
 # Images
-Pillow==4.1.0
+Pillow==9.3.0
 
 
 # Password storage
